@@ -504,6 +504,12 @@ MouseArea {
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 0
+			PlasmaComponents3.ToolButton {
+				icon.name: "list-add"
+				onClicked: popup.newEvent(popup.selectedDate)
+				PlasmaComponents3.ToolTip.text: i18n("New Event")
+				PlasmaComponents3.ToolTip.visible: hovered
+			}
 			Item {
 				Layout.preferredWidth: refreshButton.implicitWidth
 				Layout.preferredHeight: refreshButton.implicitHeight
@@ -527,11 +533,13 @@ MouseArea {
 					visible: running
 				}
 			}
-			PlasmaComponents3.ToolButton {
-				icon.name: "list-add"
-				onClicked: popup.newEvent(popup.selectedDate)
-				PlasmaComponents3.ToolTip.text: i18n("New Event")
-				PlasmaComponents3.ToolTip.visible: hovered
+			Kirigami.Separator {
+				visible: popup.showPinButton
+				Layout.fillHeight: true
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				Layout.bottomMargin: Kirigami.Units.smallSpacing
+				Layout.leftMargin: Kirigami.Units.smallSpacing
+				Layout.rightMargin: Kirigami.Units.smallSpacing
 			}
 			// Keeps the popup open for reference.
 			PlasmaComponents3.ToolButton {
