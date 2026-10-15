@@ -22,6 +22,7 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
+import org.kde.kirigami as Kirigami
 
 Item {
 	id: clock
@@ -75,12 +76,20 @@ Item {
 	// readonly property int paintedWidth: showLine2 ? Math.max(timeLabel.paintedWidth, timeLabel2.paintedWidth) : timeLabel.paintedWidth
 	// onPaintedWidthChanged: console.log('paintedWidth', showLine2, timeFormatSizer1.paintedWidth, timeFormatSizer2.paintedWidth)
 	readonly property real fixedWidth: showLine2 ? Math.max(timeFormatSizer1.minWidth, timeFormatSizer2.minWidth) : timeFormatSizer1.minWidth
+
+	// Next meeting chip, right of the clock. Horizontal panels only.
+	readonly property var nextEvent: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEvent : null
+	readonly property bool showNextEventChip: plasmoid.configuration.clockShowNextEvent
+		&& plasmoid.formFactor == PlasmaCore.Types.Horizontal
+		&& !!nextEvent
+	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
 	// onFixedWidthChanged: console.log('fixedWidth', showLine2, timeFormatSizer1.minWidth, timeFormatSizer2.minWidth)
 
 	Column {
 		id: labels
 		spacing: 0
 		anchors.centerIn: parent
+		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
 
 		Item {
 			id: timeContainer1
@@ -143,6 +152,42 @@ Item {
 		}
 	}
 
+	Row {
+		id: nextEventChip
+		visible: clock.showNextEventChip
+		anchors.left: labels.right
+		anchors.leftMargin: Kirigami.Units.smallSpacing * 2
+		anchors.verticalCenter: parent.verticalCenter
+		spacing: Kirigami.Units.smallSpacing
+
+		readonly property int fontPixelSize: Math.max(Kirigami.Theme.smallFont.pixelSize, Math.round(clock.height * 0.32))
+
+		Rectangle {
+			anchors.verticalCenter: parent.verticalCenter
+			width: Math.round(nextEventChip.fontPixelSize * 0.6)
+			height: width
+			radius: width / 2
+			color: clock.nextEvent && clock.nextEvent.backgroundColor ? clock.nextEvent.backgroundColor : Kirigami.Theme.highlightColor
+			border.width: 1
+			border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.4)
+		}
+		PlasmaComponents3.Label {
+			id: nextEventLabel
+			anchors.verticalCenter: parent.verticalCenter
+			font.pointSize: -1
+			font.pixelSize: nextEventChip.fontPixelSize
+			text: {
+				if (!clock.nextEvent) {
+					return ""
+				}
+				var time = upcomingEvents.nextEventTime || i18nc("event in progress", "now")
+				return i18nc("%1 = event title, %2 = 5m / now", "%1 · %2", clock.nextEvent.summary, time)
+			}
+			elide: Text.ElideMiddle // Keep the time visible.
+			width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 12)
+		}
+	}
+
 	TimeFormatSizeHelper {
 		id: timeFormatSizer1
 		timeLabel: timeLabel1
@@ -160,9 +205,9 @@ Item {
 
 			PropertyChanges { target: clock
 				targetHeight: clock.horizontalHeight
-				width: clock.fixedWidth
-				Layout.minimumWidth: clock.fixedWidth
-				Layout.preferredWidth: clock.fixedWidth
+				width: clock.fixedWidth + clock.nextEventChipWidth
+				Layout.minimumWidth: clock.fixedWidth + clock.nextEventChipWidth
+				Layout.preferredWidth: clock.fixedWidth + clock.nextEventChipWidth
 			}
 			PropertyChanges { target: timeContainer1
 				width: clock.fixedWidth

@@ -115,10 +115,13 @@ PlasmoidItem {
 			anchors.fill: parent
 
 			property int wheelDelta: 0
+			acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
 			onClicked: function(mouse) {
 				if (mouse.button == Qt.LeftButton) {
 					root.expanded = !root.expanded
+				} else if (mouse.button == Qt.MiddleButton) {
+					upcomingEvents.joinNextEvent()
 				}
 			}
 
@@ -232,6 +235,14 @@ PlasmoidItem {
 			text: i18n("Copy to Clipboard")
 			icon.name: "edit-copy"
 			onTriggered: copyCurrentDateTime()
+		},
+		PlasmaCore.Action {
+			text: upcomingEvents.nextEventMeetingLink
+				? i18nc("%1 = Google Meet, Zoom, ..., %2 = event title", "Join %1: %2", upcomingEvents.nextEventMeetingLink.label, upcomingEvents.nextEvent.summary)
+				: ""
+			icon.name: "call-start"
+			visible: !!upcomingEvents.nextEventMeetingLink
+			onTriggered: upcomingEvents.joinNextEvent()
 		},
 		PlasmaCore.Action {
 			text: i18n("Refresh Events")

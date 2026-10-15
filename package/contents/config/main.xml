@@ -333,6 +333,12 @@
 		<entry name="eventStartingSfxPath" type="string">
 			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
 		</entry>
+		<entry name="clockShowNextEvent" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="clockNextEventMinutes" type="int">
+			<default>60</default>
+		</entry>
 		<entry name="eventReminderTimeout" type="int">
 			<!-- Seconds. 0 = keep until dismissed. -->
 			<default>12</default>

@@ -100,6 +100,25 @@ Item {
 					text: Qt.formatDate(timeModel.currentTime, Qt.locale().dateFormat(Locale.LongFormat))
 					opacity: 0.6
 				}
+
+				PlasmaComponents3.Label {
+					id: tooltipNextEvent
+					readonly property var nextEvent: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEvent : null
+					visible: !!nextEvent
+					Layout.topMargin: Kirigami.Units.smallSpacing
+					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
+					Layout.maximumWidth: preferredTextWidth
+					elide: Text.ElideRight
+					text: {
+						if (!nextEvent) {
+							return ""
+						}
+						if (upcomingEvents.nextEventTime) {
+							return i18nc("%1 = event title, %2 = 5m", "Next: %1 in %2", nextEvent.summary, upcomingEvents.nextEventTime)
+						}
+						return i18nc("%1 = event title", "Now: %1", nextEvent.summary)
+					}
+				}
 			}
 		}
 

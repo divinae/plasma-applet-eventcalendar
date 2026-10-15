@@ -303,8 +303,62 @@ CalendarManager {
 		checkSnoozedReminders()
 	}
 
+	//--- Next event (panel chip, tooltip, middle-click join)
+	property var nextEvent: null
+	property var nextEventMeetingLink: null
+	property string nextEventTime: "" // "5m" or "" when in progress
+
+	function updateNextEvent() {
+		var now = timeModel.currentTime
+		var windowEnd = now.getTime() + plasmoid.configuration.clockNextEventMinutes * 60 * 1000
+		var best = null
+		var bestInProgress = false
+		var bestHasLink = false
+		for (var calendarId in eventsByCalendar) {
+			var items = eventsByCalendar[calendarId].items
+			for (var i = 0; i < items.length; i++) {
+				var eventItem = items[i]
+				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem)) {
+					continue
+				}
+				var inProgress = isEventInProgress(eventItem)
+				if (!inProgress && !(now < eventItem.startDateTime && eventItem.startDateTime.getTime() <= windowEnd)) {
+					continue
+				}
+				var hasLink = !!MeetingLink.find(eventItem)
+				var better = !best
+					// In progress beats upcoming. Among in progress, one with a meeting link, then the latest started.
+					|| (inProgress && !bestInProgress)
+					|| (inProgress && bestInProgress && (hasLink && !bestHasLink || hasLink === bestHasLink && eventItem.startDateTime > best.startDateTime))
+					|| (!inProgress && !bestInProgress && eventItem.startDateTime < best.startDateTime)
+				if (better) {
+					best = eventItem
+					bestInProgress = inProgress
+					bestHasLink = hasLink
+				}
+			}
+		}
+		nextEvent = best
+		nextEventMeetingLink = best ? MeetingLink.find(best) : null
+		if (best && !bestInProgress) {
+			var minutes = Math.ceil((best.startDateTime - now) / 60000)
+			nextEventTime = LocaleFuncs.durationShortFormat(minutes * 60)
+		} else {
+			nextEventTime = ""
+		}
+	}
+
+	function joinNextEvent() {
+		if (nextEventMeetingLink) {
+			Qt.openUrlExternally(nextEventMeetingLink.url)
+		} else if (nextEvent && nextEvent.htmlLink) {
+			Qt.openUrlExternally(nextEvent.htmlLink)
+		}
+	}
+
 	function tick() {
 		checkForEventsStarting()
+		updateNextEvent()
 	}
 
 	Connections {
@@ -319,6 +373,7 @@ CalendarManager {
 				upcomingEvents.dateMax = eventModel.dateMax
 				upcomingEvents.eventsByCalendar = eventModel.eventsByCalendar
 				upcomingEvents.allDataFetched()
+				upcomingEvents.updateNextEvent()
 			}
 		}
 	}

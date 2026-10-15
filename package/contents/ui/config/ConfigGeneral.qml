@@ -192,6 +192,27 @@ ConfigPage {
 
 		ConfigSection {
 			RowLayout {
+				ConfigCheckBox {
+					id: clockShowNextEvent
+					configKey: 'clockShowNextEvent'
+					text: i18n("Show next meeting next to the clock, starting within:")
+				}
+				ConfigSpinBox {
+					enabled: clockShowNextEvent.checked
+					configKey: 'clockNextEventMinutes'
+					suffix: i18nc("Time in minutes", "min")
+					minimumValue: 5
+					maximumValue: 1440
+				}
+			}
+			Label {
+				text: i18n("Middle-click the clock to join the current or next meeting.")
+				opacity: 0.6
+			}
+		}
+
+		ConfigSection {
+			RowLayout {
 				Layout.fillWidth: true
 				ConfigCheckBox {
 					configKey: 'clockShowLine2'
