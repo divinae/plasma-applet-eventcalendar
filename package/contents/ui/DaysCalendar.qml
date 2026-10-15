@@ -213,7 +213,22 @@ Item {
 		}
 	}
 
-	// Paints the inner grid and the outer frame
+	// Outer frame of the grid (below the weekday names), with rounded corners.
+	Rectangle {
+		id: gridFrame
+		readonly property int top: daysCalendar.headerModel ? root.borderWidth + daysCalendar.headerHeight : 0
+		x: canvas.x
+		y: canvas.y + top
+		width: canvas.width
+		height: canvas.height - top
+		radius: 6
+		color: "transparent"
+		border.width: root.borderWidth
+		border.color: Kirigami.Theme.textColor
+		opacity: root.borderOpacity
+	}
+
+	// Paints the inner grid lines
 	Canvas {
 		id: canvas
 
@@ -251,8 +266,9 @@ Item {
 			var hasHeader = !!daysCalendar.headerModel
 			var gridTop = hasHeader ? root.borderWidth + daysCalendar.headerHeight : 0
 
+			// Inner lines only; the outer frame is a rounded Rectangle (gridFrame).
 			// horizontal lines
-			for (var i = hasHeader ? 1 : 0; i < calendarGrid.rows + 1; i++) {
+			for (var i = hasHeader ? 2 : 1; i < calendarGrid.rows; i++) {
 				var lineY = lineBasePoint + daysCalendar.gridLineY(i)
 
 				if (i === 0 || i === calendarGrid.rows || (hasHeader && i === 1)) {
@@ -264,7 +280,7 @@ Item {
 			}
 
 			// vertical lines
-			for (var i = 0; i < gridColumns + 1; i++) {
+			for (var i = 1; i < gridColumns; i++) {
 				var lineX = lineBasePoint + (daysCalendar.cellWidth + root.borderWidth) * (i)
 
 				// Draw the outer vertical lines in full height so that it closes
