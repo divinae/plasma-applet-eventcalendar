@@ -737,6 +737,8 @@ MouseArea {
 			// 	today = new Date()
 			// }
 
+			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
+
 			function parseGCalEvents(data) {
 				if (!(data && data.items)) {
 					return

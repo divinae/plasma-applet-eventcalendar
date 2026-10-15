@@ -83,6 +83,8 @@ PinchArea {
 	property alias daysModel : daysModel
 
 	signal dateSelected(date selectedDate)
+	// The day cells were recreated (other month, first open, ...): their events must be filled again.
+	signal daysRebuilt()
 	signal dateClicked(date clickedDate)
 	signal dayDoubleClicked(var dayData)
 
@@ -219,6 +221,7 @@ PinchArea {
 				daysModel.append(dayData)
 			}
 		}
+		daysRebuilt()
 	}
 
 	function updateYearOverview() {
