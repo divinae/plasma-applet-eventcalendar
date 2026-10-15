@@ -10,6 +10,7 @@ Item {
 	property date dateMax: new Date()
 
 	property bool clearingData: false
+	property int fetchGeneration: 0 // Bumped per fetchAll, lets late responses from older ranges be dropped.
 	property int asyncRequests: 0
 	property int asyncRequestsDone: 0
 	signal refresh()
@@ -105,6 +106,7 @@ Item {
 		logger.debug(calendarManager, 'fetchAllEvents', dateMin, dateMax)
 		fetchingData()
 		clear()
+		calendarManager.fetchGeneration += 1
 		if (typeof dateMin !== "undefined") {
 			calendarManager.dateMin = dateMin
 			calendarManager.dateMax = dateMax

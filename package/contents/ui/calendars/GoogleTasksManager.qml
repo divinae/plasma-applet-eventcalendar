@@ -78,8 +78,12 @@ CalendarManager {
 	}
 
 	function fetchGoogleAccountData() {
-		if (session.accessToken) {
-			fetchGoogleAccountTasks(getTasklistIdList())
+		if (!session.accessToken) {
+			return
+		}
+		var idList = getTasklistIdList()
+		if (idList.length) { // Avoid a token refresh when nothing is selected.
+			fetchGoogleAccountTasks(idList)
 		}
 	}
 
@@ -187,7 +191,12 @@ CalendarManager {
 	// Tasks
 	function fetchGoogleAccountTasks(tasklistIdList) {
 		googleTasksManager.asyncRequests += 1
+		var generation = googleTasksManager.fetchGeneration
 		var func = fetchGoogleAccountTasks_run.bind(this, tasklistIdList, function(errObj, data) {
+			if (generation !== googleTasksManager.fetchGeneration) {
+				logger.debug('fetchGoogleAccountTasks', 'dropping stale response')
+				return
+			}
 			if (errObj) {
 				fetchGoogleAccountTasks_err(errObj.err, errObj.data, errObj.xhr)
 			} else {

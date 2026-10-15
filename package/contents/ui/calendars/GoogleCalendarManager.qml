@@ -84,8 +84,12 @@ CalendarManager {
 	}
 
 	function fetchGoogleAccountData() {
-		if (session.accessToken) {
-			fetchGoogleAccountEvents(getCalendarIdList())
+		if (!session.accessToken) {
+			return
+		}
+		var idList = getCalendarIdList()
+		if (idList.length) { // Avoid a token refresh when nothing is selected.
+			fetchGoogleAccountEvents(idList)
 		}
 	}
 
@@ -165,7 +169,12 @@ CalendarManager {
 	//--- List Events
 	function fetchGoogleAccountEvents(calendarIdList) {
 		googleCalendarManager.asyncRequests += 1
+		var generation = googleCalendarManager.fetchGeneration
 		var func = fetchGoogleAccountEvents_run.bind(this, calendarIdList, function(errObj, data) {
+			if (generation !== googleCalendarManager.fetchGeneration) {
+				logger.debug('fetchGoogleAccountEvents', 'dropping stale response')
+				return
+			}
 			if (errObj) {
 				fetchGoogleAccountEvents_err(errObj.err, errObj.data, errObj.xhr)
 			} else {

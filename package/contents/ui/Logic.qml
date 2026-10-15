@@ -16,6 +16,7 @@ Item {
 
 	//--- Main
 	Component.onCompleted: {
+		lastGoogleSelectionSignature = googleSelectionSignature()
 		pollTimer.start()
 	}
 
@@ -164,7 +165,14 @@ Item {
 		function onCalendarIdListChanged() { logic.updateEvents() }
 		function onEnabledCalendarPluginsChanged() { logic.updateEvents() }
 		function onTasklistIdListChanged() { logic.updateEvents() }
-		function onGoogleAccountsChanged() { logic.updateEvents() }
+		function onGoogleAccountsChanged() {
+			// Token refreshes rewrite googleAccounts too. Only refetch when the selection changes.
+			var signature = logic.googleSelectionSignature()
+			if (signature !== logic.lastGoogleSelectionSignature) {
+				logic.lastGoogleSelectionSignature = signature
+				logic.updateEvents()
+			}
+		}
 		function onGoogleActiveAccountIdChanged() { logic.updateEvents() }
 		function onGoogleEventClickActionChanged() { logic.updateEvents() }
 
@@ -193,6 +201,12 @@ Item {
 
 	//---
 	property int currentErrorType: ErrorType.UnknownError
+	property string lastGoogleSelectionSignature: "" // Set once in onCompleted, not a binding.
+	function googleSelectionSignature() {
+		return JSON.stringify(parseGoogleAccounts().map(function(account) {
+			return [account.id, !!account.refreshToken, account.calendarIdList, account.tasklistIdList]
+		}))
+	}
 	function parseGoogleAccounts() {
 		var raw = plasmoid.configuration.googleAccounts
 		if (!raw) {
@@ -249,7 +263,7 @@ Item {
 		function onCalendarFetched(calendarId, data) {
 			logger.debug('onCalendarFetched', calendarId)
 			// logger.debug('onCalendarFetched', calendarId, JSON.stringify(data, null, '\t'))
-			if (popup) popup.deferredUpdateUI()
+			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
 		}
 		function onAllDataFetched() {
 			logger.debug('onAllDataFetched')

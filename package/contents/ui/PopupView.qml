@@ -142,11 +142,18 @@ MouseArea {
 		logger.debug('onMonthViewDateChanged', monthViewDate)
 		var startOfMonth = new Date(monthViewDate)
 		startOfMonth.setDate(1)
+		var prevMonth = agendaModel.currentMonth
+		var monthChanged = !prevMonth
+			|| prevMonth.getFullYear() !== startOfMonth.getFullYear()
+			|| prevMonth.getMonth() !== startOfMonth.getMonth()
 		agendaModel.currentMonth = new Date(startOfMonth)
 		if (agendaScrollOnMonthChange) {
 			selectedDate = startOfMonth
 		}
-		logic.updateEvents()
+		// Opening the popup resets monthViewDate to today. Only refetch when the visible month changes.
+		if (monthChanged) {
+			logic.updateEvents()
+		}
 	}
 
 	onStateChanged: {

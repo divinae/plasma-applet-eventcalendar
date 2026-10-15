@@ -26,6 +26,7 @@ QtObject {
 	}
 
 	//--- Refresh Credentials
+	property var pendingTokenCallbacks: null
 	function checkAccessToken(callback) {
 		logger.debug('checkAccessToken')
 		var account = getAccount()
@@ -33,7 +34,20 @@ QtObject {
 			return callback('No access token.')
 		}
 		if (account.accessTokenExpiresAt < Date.now() + 5000) {
-			updateAccessToken(callback)
+			// Calendar and Tasks managers share this session and ask at the same time.
+			// Refresh once and notify every waiting caller.
+			if (pendingTokenCallbacks) {
+				pendingTokenCallbacks.push(callback)
+				return
+			}
+			pendingTokenCallbacks = [callback]
+			updateAccessToken(function(err) {
+				var callbacks = pendingTokenCallbacks
+				pendingTokenCallbacks = null
+				for (var i = 0; i < callbacks.length; i++) {
+					callbacks[i](err)
+				}
+			})
 		} else {
 			callback(null)
 		}

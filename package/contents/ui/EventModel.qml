@@ -18,7 +18,9 @@ CalendarManager {
 	function fetchingDataListener() { eventModel.asyncRequests += 1 }
 	function allDataFetchedListener() { eventModel.asyncRequestsDone += 1 }
 	function calendarFetchedListener(calendarId, data) {
-		eventModel.setCalendarData(calendarId, data)
+		// Already parsed by the child manager. Skip calendarParsing.
+		eventModel.eventsByCalendar[calendarId] = data
+		eventModel.calendarFetched(calendarId, data)
 	}
 	function eventAddedListener(calendarId, data) {
 		eventModel.mergeEvents()
@@ -216,14 +218,22 @@ CalendarManager {
 		onTriggered: eventModel.update()
 	}
 	function update() {
+		// dateMin/dateMax are unset until Logic requests the first range.
+		if (dateMin >= dateMax) {
+			return
+		}
 		fetchAll()
 	}
 
 	onFetchAllCalendars: {
+		// Suppress checkIfDone while children start, otherwise children that
+		// finish synchronously trigger allDataFetched before the rest register.
+		eventModel.clearingData = true
 		for (var i = 0; i < calendarManagerList.length; i++) {
 			var calendarManager = calendarManagerList[i]
 			calendarManager.fetchAll(dateMin, dateMax)
 		}
+		eventModel.clearingData = false
 	}
 
 	onAllDataFetched: mergeEvents()
