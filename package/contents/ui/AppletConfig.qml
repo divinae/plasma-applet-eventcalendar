@@ -13,6 +13,7 @@ QtObject {
 	// Shared look for the month and week views.
 	readonly property bool showGridLines: plasmoid.configuration.monthShowBorder
 	readonly property real gridLineOpacity: 0.2
+	readonly property real faintGridLineOpacity: 0.07 // Grid lines "off": very faint lines
 	readonly property color gridLineColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, gridLineOpacity)
 	readonly property color eventBorderColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.2)
 

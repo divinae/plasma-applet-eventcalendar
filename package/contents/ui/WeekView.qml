@@ -58,7 +58,7 @@ Item {
 	// Same lines as the month grid. Hour lines stay (fainter) when grid lines are off.
 	readonly property color gridLineColor: appletConfig.showGridLines
 		? appletConfig.gridLineColor
-		: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.08)
+		: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, appletConfig.faintGridLineOpacity)
 
 	function startOfWeek(d) {
 		var day = new Date(d.getFullYear(), d.getMonth(), d.getDate())

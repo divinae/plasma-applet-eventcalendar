@@ -535,7 +535,7 @@ MouseArea {
 			id: monthView
 			visible: showCalendar
 			showHeader: false
-			borderOpacity: appletConfig.showGridLines ? appletConfig.gridLineOpacity : 0
+			borderOpacity: appletConfig.showGridLines ? appletConfig.gridLineOpacity : appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek
 
