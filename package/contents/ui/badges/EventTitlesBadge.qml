@@ -50,7 +50,7 @@ Item {
 				radius: Math.min(7, height / 2)
 				color: barColor
 				border.width: 1
-				border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.25)
+				border.color: appletConfig.eventBorderColor
 
 				Text {
 					anchors.fill: parent

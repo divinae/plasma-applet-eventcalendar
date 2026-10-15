@@ -55,7 +55,10 @@ Item {
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / dayCount)
 	readonly property int allDayRowHeight: lineHeight + 4
 	readonly property int maxVisibleAllDayRows: 3
-	readonly property color gridLineColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+	// Same lines as the month grid. Hour lines stay (fainter) when grid lines are off.
+	readonly property color gridLineColor: appletConfig.showGridLines
+		? appletConfig.gridLineColor
+		: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.08)
 
 	function startOfWeek(d) {
 		var day = new Date(d.getFullYear(), d.getMonth(), d.getDate())
@@ -369,6 +372,8 @@ Item {
 					height: weekView.allDayRowHeight
 					radius: Math.min(8, height / 2)
 					color: barColor
+					border.width: 1
+					border.color: appletConfig.eventBorderColor
 					PlasmaComponents3.Label {
 						anchors.fill: parent
 						anchors.leftMargin: 7
@@ -513,7 +518,7 @@ Item {
 									radius: Math.min(10, height / 2)
 									color: barColor
 									border.width: 1
-									border.color: Kirigami.Theme.backgroundColor
+									border.color: appletConfig.eventBorderColor
 
 									Column {
 										anchors.fill: parent
