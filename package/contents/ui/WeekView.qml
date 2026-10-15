@@ -17,7 +17,11 @@ Item {
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []
-	property int maxAllDayRows: 0
+	// All-day events laid out for the whole week: one bar per event across its days,
+	// in the same lane on every day. [{ eventItem, first, last, lane }]
+	property var allDayBars: []
+	property int allDayLaneCount: 0
+	property var allDayHiddenPerDay: [] // Events per day in lanes that aren't shown.
 
 	FontMetrics {
 		id: fontMetrics
@@ -73,7 +77,6 @@ Item {
 	function rebuild() {
 		var items = eventModel && eventModel.eventsData ? eventModel.eventsData.items : []
 		var result = []
-		var maxAllDay = 0
 		for (var i = 0; i < dayCount; i++) {
 			var dayStart = dayDate(i).getTime()
 			var dayEnd = dayDate(i + 1).getTime()
@@ -107,11 +110,10 @@ Item {
 			}
 			allDay.sort(function(a, b) { return a.startDateTime - b.startDateTime })
 			layoutTimed(timed)
-			maxAllDay = Math.max(maxAllDay, allDay.length)
 			result.push({ date: new Date(dayStart), allDay: allDay, timed: timed })
 		}
 		days = result
-		maxAllDayRows = maxAllDay
+		layoutAllDay(result)
 
 		var first = plasmoid.configuration.weekViewStartHour
 		var last = plasmoid.configuration.weekViewEndHour
@@ -125,6 +127,59 @@ Item {
 		}
 		firstHour = Math.max(0, first)
 		lastHour = Math.min(24, Math.max(last, firstHour + 1))
+	}
+
+	function layoutAllDay(dayList) {
+		// Collect each event once with its first and last day index in this week.
+		var byEvent = []
+		for (var i = 0; i < dayList.length; i++) {
+			var list = dayList[i].allDay
+			for (var j = 0; j < list.length; j++) {
+				var found = null
+				for (var k = 0; k < byEvent.length; k++) {
+					if (byEvent[k].eventItem === list[j]) {
+						found = byEvent[k]
+						break
+					}
+				}
+				if (found) {
+					found.last = i
+				} else {
+					byEvent.push({ eventItem: list[j], first: i, last: i, lane: 0 })
+				}
+			}
+		}
+		// Earlier first, then longer first, like Google Calendar.
+		byEvent.sort(function(a, b) {
+			return (a.first - b.first) || ((b.last - b.first) - (a.last - a.first))
+		})
+		var laneEnds = [] // Last day index used per lane
+		for (var e = 0; e < byEvent.length; e++) {
+			var bar = byEvent[e]
+			var lane = 0
+			while (lane < laneEnds.length && laneEnds[lane] >= bar.first) {
+				lane++
+			}
+			laneEnds[lane] = bar.last
+			bar.lane = lane
+		}
+		var laneCount = laneEnds.length
+		// Too many lanes: show maxVisibleAllDayRows - 1 lanes and a "+N" row.
+		var shownLanes = laneCount > maxVisibleAllDayRows ? maxVisibleAllDayRows - 1 : laneCount
+		var hidden = []
+		for (var d = 0; d < dayCount; d++) {
+			hidden.push(0)
+		}
+		for (var h = 0; h < byEvent.length; h++) {
+			if (byEvent[h].lane >= shownLanes) {
+				for (var day = byEvent[h].first; day <= byEvent[h].last; day++) {
+					hidden[day]++
+				}
+			}
+		}
+		allDayBars = byEvent.filter(function(bar) { return bar.lane < shownLanes })
+		allDayHiddenPerDay = hidden
+		allDayLaneCount = laneCount
 	}
 
 	// Overlapping events are placed side by side. Greedy columns per cluster of overlapping events.
@@ -273,60 +328,60 @@ Item {
 		Item {
 			id: allDayArea
 			Layout.fillWidth: true
-			readonly property int rows: Math.min(weekView.maxAllDayRows, weekView.maxVisibleAllDayRows)
+			readonly property int rows: Math.min(weekView.allDayLaneCount, weekView.maxVisibleAllDayRows)
+			readonly property bool hasHiddenRow: weekView.allDayLaneCount > weekView.maxVisibleAllDayRows
 			Layout.preferredHeight: rows * (weekView.allDayRowHeight + 1)
 			visible: rows > 0
 
 			Repeater {
-				model: weekView.days
-				Column {
-					id: allDayColumn
-					readonly property var day: modelData
-					readonly property int hiddenCount: Math.max(0, day.allDay.length - allDayArea.rows + (day.allDay.length > allDayArea.rows ? 1 : 0))
-					x: weekView.gutterWidth + index * weekView.columnWidth
-					width: weekView.columnWidth
-					spacing: 1
-
-					Repeater {
-						model: allDayColumn.day.allDay.length > allDayArea.rows ? allDayArea.rows - 1 : allDayColumn.day.allDay.length
-						Rectangle {
-							readonly property var eventItem: allDayColumn.day.allDay[index]
-							readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
-							x: 1
-							width: parent.width - 2
-							height: weekView.allDayRowHeight
-							radius: 3
-							color: barColor
-							PlasmaComponents3.Label {
-								anchors.fill: parent
-								anchors.leftMargin: 3
-								verticalAlignment: Text.AlignVCenter
-								text: parent.eventItem.summary
-								color: Shared.contrastTextColor(parent.barColor)
-								elide: Text.ElideRight
-							}
-							MouseArea {
-								anchors.fill: parent
-								cursorShape: Qt.PointingHandCursor
-								onClicked: weekView.openEvent(parent.eventItem)
-							}
-							PlasmaCore.ToolTipArea {
-								anchors.fill: parent
-								mainText: parent.eventItem.summary
-								subText: containsMouse ? weekView.eventModel.eventDetailsText(parent.eventItem) : ""
-								textFormat: Text.PlainText
-							}
-						}
-					}
+				model: weekView.allDayBars
+				Rectangle {
+					readonly property var bar: modelData
+					readonly property var eventItem: bar.eventItem
+					readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 1
+					y: bar.lane * (weekView.allDayRowHeight + 1)
+					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
+					height: weekView.allDayRowHeight
+					radius: 3
+					color: barColor
 					PlasmaComponents3.Label {
-						visible: allDayColumn.hiddenCount > 0
-						width: parent.width
-						height: weekView.allDayRowHeight
-						horizontalAlignment: Text.AlignHCenter
+						anchors.fill: parent
+						anchors.leftMargin: 4
+						anchors.rightMargin: 2
 						verticalAlignment: Text.AlignVCenter
-						text: i18nc("more events not shown", "+%1", allDayColumn.hiddenCount)
-						opacity: 0.7
+						text: parent.eventItem.summary
+						color: Shared.contrastTextColor(parent.barColor)
+						elide: Text.ElideRight
 					}
+					MouseArea {
+						anchors.fill: parent
+						cursorShape: Qt.PointingHandCursor
+						onClicked: weekView.openEvent(parent.eventItem)
+					}
+					PlasmaCore.ToolTipArea {
+						anchors.fill: parent
+						mainText: parent.eventItem.summary
+						subText: containsMouse ? weekView.eventModel.eventDetailsText(parent.eventItem) : ""
+						textFormat: Text.PlainText
+					}
+				}
+			}
+
+			// "+N" per day for events in lanes that don't fit.
+			Repeater {
+				model: allDayArea.hasHiddenRow ? weekView.dayCount : 0
+				PlasmaComponents3.Label {
+					readonly property int hiddenCount: weekView.allDayHiddenPerDay[index] || 0
+					visible: hiddenCount > 0
+					x: weekView.gutterWidth + index * weekView.columnWidth
+					y: (allDayArea.rows - 1) * (weekView.allDayRowHeight + 1)
+					width: weekView.columnWidth
+					height: weekView.allDayRowHeight
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					text: i18nc("more events not shown", "+%1", hiddenCount)
+					opacity: 0.7
 				}
 			}
 		}
