@@ -76,24 +76,35 @@ Rectangle {
 		anchors.fill: parent
 		spacing: 0
 
-		RowLayout {
+		// Back on the left, date centered, Add Event on the right.
+		Item {
 			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
+			implicitHeight: Math.max(backButton.implicitHeight, addButton.implicitHeight, dayTitle.implicitHeight)
+
 			PlasmaComponents3.ToolButton {
+				id: backButton
+				anchors.left: parent.left
+				anchors.verticalCenter: parent.verticalCenter
 				icon.name: "go-previous"
 				text: i18n("Back")
 				onClicked: dayView.closeRequested()
 			}
 			Kirigami.Heading {
-				Layout.fillWidth: true
-				Layout.leftMargin: Kirigami.Units.smallSpacing
+				id: dayTitle
+				anchors.centerIn: parent
+				width: Math.min(implicitWidth, parent.width - Math.max(backButton.width, addButton.width) * 2 - Kirigami.Units.largeSpacing * 2)
+				horizontalAlignment: Text.AlignHCenter
 				level: 3
 				elide: Text.ElideRight
 				font.capitalization: Font.Capitalize
 				text: Qt.formatDate(dayView.date, Qt.locale().dateFormat(Locale.LongFormat))
 			}
 			PlasmaComponents3.Button {
+				id: addButton
+				anchors.right: parent.right
+				anchors.verticalCenter: parent.verticalCenter
 				icon.name: "list-add"
 				text: i18n("Add Event")
 				onClicked: dayView.addRequested()
