@@ -319,6 +319,23 @@ MouseArea {
 	function closeEventDetails() {
 		detailsEvent = null
 	}
+
+	//--- Day events list (month view: click a day). Event details open on top of it.
+	property var dayListDate: null
+	function showDayEvents(date) {
+		dayListDate = date
+	}
+	function closeDayEvents() {
+		dayListDate = null
+	}
+	Connections {
+		target: monthView
+		function onDateClicked(clickedDate) {
+			if (popup.monthMode && plasmoid.configuration.monthClickOpensDay) {
+				popup.showDayEvents(clickedDate)
+			}
+		}
+	}
 	Connections {
 		target: popup.eventModel
 		function onFetchingData() { popup.refreshing = true }
@@ -440,6 +457,7 @@ MouseArea {
 						// Not checkable: the style's checked look changes the size and elides the text.
 						onClicked: {
 							popup.closeEventDetails()
+							popup.closeDayEvents()
 							plasmoid.configuration.popupMode = modelData.mode
 						}
 						Accessible.name: modelData.text
@@ -461,6 +479,37 @@ MouseArea {
 		}
 	}
 
+
+	// Day events list: same card style, below the event details.
+	Loader {
+		id: dayEventsLoader
+		active: !!popup.dayListDate
+		visible: active
+		z: 4
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		sourceComponent: Item {
+			Rectangle {
+				anchors.fill: parent
+				color: Kirigami.Theme.backgroundColor
+				opacity: 0.6
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: popup.closeDayEvents()
+			}
+			DayEventsView {
+				anchors.centerIn: parent
+				width: Math.min(Kirigami.Units.gridUnit * 30, parent.width - Kirigami.Units.gridUnit * 2)
+				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit * 2)
+				date: popup.dayListDate
+				onCloseRequested: popup.closeDayEvents()
+				onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
+			}
+		}
+	}
 
 	// Event details: a card centered over the dimmed view. Click outside or Esc closes it.
 	Loader {

@@ -99,6 +99,10 @@ ConfigPage {
 				{ value: 'browser', text: i18n("Open in Google Calendar") },
 			]
 		}
+		ConfigCheckBox {
+			configKey: 'monthClickOpensDay'
+			text: i18n("Month view: clicking a day shows its events")
+		}
 	}
 
 	HeaderText {

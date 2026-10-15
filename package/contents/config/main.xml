@@ -358,6 +358,9 @@
 		<entry name="clockNextEventMinutes" type="int">
 			<default>60</default>
 		</entry>
+		<entry name="monthClickOpensDay" type="bool">
+			<default>true</default>
+		</entry>
 		<entry name="eventClickAction" type="string">
 			<!-- details: event details in the widget. browser: open in Google Calendar. -->
 			<default>details</default>

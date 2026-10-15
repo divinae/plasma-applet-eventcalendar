@@ -442,30 +442,16 @@ Item {
 			Layout.fillHeight: true
 			clip: true
 
-			// Top line of the hour grid: only across the day columns (not the hour labels or past Sunday).
+			// Frame around the day columns (not the hour labels), with rounded corners.
 			Rectangle {
 				z: 1
 				x: weekView.gutterWidth
 				width: weekView.columnWidth * weekView.dayCount
-				height: 1
-				color: weekView.gridLineColor
-			}
-			// Bottom line, same extent.
-			Rectangle {
-				z: 1
-				anchors.bottom: parent.bottom
-				x: weekView.gutterWidth
-				width: weekView.columnWidth * weekView.dayCount
-				height: 1
-				color: weekView.gridLineColor
-			}
-			// Right edge after the last day (each day draws only its left line).
-			Rectangle {
-				z: 1
-				x: weekView.gutterWidth + weekView.columnWidth * weekView.dayCount - 1
-				width: 1
 				height: parent.height
-				color: weekView.gridLineColor
+				radius: 6
+				color: "transparent"
+				border.width: 1
+				border.color: weekView.gridLineColor
 			}
 
 
@@ -535,6 +521,7 @@ Item {
 								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
 							}
 							Rectangle {
+								visible: index > 0 // The frame draws the left edge.
 								width: 1
 								height: parent.height
 								color: weekView.gridLineColor
