@@ -518,7 +518,6 @@ Item {
 								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
 							}
 							Rectangle {
-								visible: appletConfig.showGridLines // Day separators only with grid lines on
 								width: 1
 								height: parent.height
 								color: weekView.gridLineColor
