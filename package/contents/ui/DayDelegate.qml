@@ -86,18 +86,11 @@ MouseArea {
 		// width: Math.min(parent.width, parent.height)
 		// height: width
 		// radius: width / 2
-		visible: todayStyle == "theme"
-		opacity: {
-			if (selected && today) {
-				return 0.6
-			} else if (today) {
-				return 0.4
-			} else {
-				return 0
-			}
-		}
-		Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration*2 } }
-		color: Kirigami.Theme.textColor
+		// Today: light highlight tint with a highlight-colored frame, like the week view.
+		visible: todayStyle == "theme" && today
+		color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.12)
+		border.width: 2
+		border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
 		radius: dayStyle.radius
 	}
 
@@ -108,11 +101,12 @@ MouseArea {
 		// width: Math.min(parent.width, parent.height)
 		// height: width
 		// radius: width / 2
+		// Light tints: strong fills made event titles in the cell hard to read.
 		opacity: {
 			if (selected) {
-				return 0.6
+				return 0.22
 			} else if (dayStyle.containsMouse) {
-				return 0.4
+				return 0.1
 			} else {
 				return 0
 			}
@@ -213,6 +207,7 @@ MouseArea {
 		// This is to avoid the "Both point size and
 		// pixel size set. Using pixel size" warnings
 		font.pointSize: -1
+		font.bold: today
 		color: {
 			if (today) {
 				if (todayStyle == "bigNumber") {
@@ -222,7 +217,7 @@ MouseArea {
 						return Kirigami.Theme.highlightColor
 					}
 				} else { // todayStyle == "theme"
-					return Kirigami.Theme.backgroundColor
+					return Kirigami.Theme.highlightColor
 				}
 			} else {
 				return Kirigami.Theme.textColor

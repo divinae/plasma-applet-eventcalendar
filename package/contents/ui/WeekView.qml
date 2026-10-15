@@ -515,7 +515,7 @@ Item {
 								color: "transparent"
 								radius: 6
 								border.width: 2
-								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
+								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
 							}
 							Rectangle {
 								width: 1
