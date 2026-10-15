@@ -408,7 +408,18 @@ MouseArea {
 					}
 				}
 
+				// All-day events first, then by start time. Visible with the event titles badge.
+				function compareEvents(a, b) {
+					var aAllDay = !!(a.start && a.start.date)
+					var bAllDay = !!(b.start && b.start.date)
+					if (aAllDay !== bAllDay) {
+						return aAllDay ? -1 : 1
+					}
+					return a.startDateTime - b.startDateTime
+				}
+
 				for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
+					dayEvents[dayIndex].sort(compareEvents)
 					var events = daysModel.get(dayIndex).events
 					events.clear()
 					if (dayEvents[dayIndex].length) {

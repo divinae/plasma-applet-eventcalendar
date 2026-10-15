@@ -298,6 +298,11 @@ Item {
 		EventCountBadge {}
 	}
 
+	Component {
+		id: eventTitlesBadgeComponent
+		EventTitlesBadge {}
+	}
+
 	Column {
 		id: weeksColumn
 		visible: showWeekNumbers
@@ -393,6 +398,7 @@ Item {
 					switch (daysCalendar.eventBadgeType) {
 						case 'bottomBar':
 						case 'dots':
+						case 'eventTitles':
 							return daysCalendar.eventBadgeType
 
 						case 'theme':

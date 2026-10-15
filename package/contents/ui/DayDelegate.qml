@@ -28,6 +28,9 @@ MouseArea {
 
 	hoverEnabled: true
 	property string eventBadgeType: "bottomBar"
+	// 'eventTitles': day number at the top, event titles listed below it.
+	readonly property bool showEventTitles: eventBadgeType == 'eventTitles'
+	readonly property int eventTitlesHeaderHeight: Math.round(Kirigami.Theme.smallFont.pixelSize * 1.5)
 	property string todayStyle: "theme"
 	property real radius: Math.min(width, height) * plasmoid.configuration.monthCellRadius
 
@@ -152,6 +155,8 @@ MouseArea {
 					return eventCountBadgeComponent
 				} else if (dayStyle.eventBadgeType == 'dots') {
 					return dotsBadgeComponent
+				} else if (dayStyle.eventBadgeType == 'eventTitles') {
+					return eventTitlesBadgeComponent
 				} else if (dayStyle.eventBadgeType == 'theme') {
 					return themeBadgeComponent
 				} else {
@@ -169,8 +174,21 @@ MouseArea {
 	Text {
 		id: label
 		anchors {
-			fill: parent
+			left: parent.left
+			right: parent.right
+			top: parent.top
+			bottom: parent.bottom
 			margins: Kirigami.Units.smallSpacing
+		}
+		states: State {
+			when: dayStyle.showEventTitles
+			AnchorChanges { target: label; anchors.bottom: undefined }
+			PropertyChanges { target: label
+				anchors.margins: 0
+				height: dayStyle.eventTitlesHeaderHeight
+				verticalAlignment: Text.AlignVCenter
+				font.pixelSize: Kirigami.Theme.smallFont.pixelSize
+			}
 		}
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter

@@ -105,6 +105,7 @@ ConfigPage {
 				{ value: 'bottomBar', text: i18n("Bottom Bar (Event Color)") },
 				{ value: 'bottomBarHighlight', text: i18n("Bottom Bar (Highlight)") },
 				{ value: 'count', text: i18n("Count") },
+				{ value: 'eventTitles', text: i18n("Event Titles (like Google Calendar's month view)") },
 			]
 		}
 
