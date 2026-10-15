@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
@@ -124,7 +125,8 @@ MouseArea {
 	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !fullViewMode
 	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !weekMode) || monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
-	readonly property int viewTabsHeight: topBar.implicitHeight + spacing
+	// Month and week views put the top bar inside their header row, the agenda layout above.
+	readonly property int viewTabsHeight: fullViewMode ? 0 : topBar.implicitHeight + spacing
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -292,9 +294,7 @@ MouseArea {
 	]
 
 	//--- View tabs: Month | Week | Agenda (classic layout)
-	readonly property var viewModes: ['month', 'week', 'classic']
-	// Top bar: view tabs (optional) and a refresh button, in every view.
-	property bool refreshing: false
+	property bool refreshing: false // Events are being fetched
 	Connections {
 		target: popup.eventModel
 		function onFetchingData() { popup.refreshing = true }
@@ -307,46 +307,42 @@ MouseArea {
 		onTriggered: popup.refreshing = false
 	}
 
+	// Compact bar: view switcher (optional) and refresh. In month and week views it sits at the
+	// right end of the view's own header row; the agenda layout gets a thin row above.
 	RowLayout {
 		id: topBar
+		z: 10 // Above the views, whose header row it shares in month and week mode.
 		anchors.top: parent.top
 		anchors.topMargin: popup.padding
-		anchors.left: parent.left
-		anchors.leftMargin: popup.padding
 		anchors.right: parent.right
 		// Leave room for the pin button in the top right corner when there's no padding for it.
 		anchors.rightMargin: popup.padding > 0 ? popup.padding : Math.round(Kirigami.Units.gridUnit * 1.25) + Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.smallSpacing
+		spacing: 0
 
-		PlasmaComponents3.TabBar {
-			id: viewTabs
-			visible: popup.showViewTabs
-			Layout.fillWidth: true
-			currentIndex: Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
-			onCurrentIndexChanged: {
-				var mode = popup.viewModes[currentIndex]
-				if (plasmoid.configuration.popupMode !== mode) {
-					plasmoid.configuration.popupMode = mode
-				}
-			}
-
-			PlasmaComponents3.TabButton {
-				text: i18n("Month")
-				icon.name: "view-calendar-month"
-			}
-			PlasmaComponents3.TabButton {
-				text: i18n("Week")
-				icon.name: "view-calendar-week"
-			}
-			PlasmaComponents3.TabButton {
-				text: i18n("Agenda")
-				icon.name: "view-calendar-agenda"
+		QQC2.ButtonGroup {
+			id: viewButtonGroup
+		}
+		Repeater {
+			model: popup.showViewTabs ? [
+				{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+				{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+				{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
+			] : []
+			PlasmaComponents3.ToolButton {
+				icon.name: modelData.icon
+				checkable: true
+				checked: plasmoid.configuration.popupMode === modelData.mode
+				QQC2.ButtonGroup.group: viewButtonGroup
+				onClicked: plasmoid.configuration.popupMode = modelData.mode
+				PlasmaComponents3.ToolTip.text: modelData.text
+				PlasmaComponents3.ToolTip.visible: hovered
+				Accessible.name: modelData.text
 			}
 		}
 
 		Item {
-			visible: !viewTabs.visible
-			Layout.fillWidth: true
+			implicitWidth: Kirigami.Units.smallSpacing
+			visible: popup.showViewTabs
 		}
 
 		Item {
@@ -373,12 +369,8 @@ MouseArea {
 			}
 		}
 	}
-	Connections {
-		target: plasmoid.configuration
-		function onPopupModeChanged() {
-			viewTabs.currentIndex = Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
-		}
-	}
+	readonly property int topBarInlineMargin: topBar.width + Kirigami.Units.smallSpacing
+
 
 	Loader {
 		id: weekViewLoader
@@ -387,6 +379,7 @@ MouseArea {
 		anchors.fill: widgetGrid
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
+			headerRightMargin: popup.topBarInlineMargin
 			// Make sure the visible week's month is fetched.
 			onWeekStartChanged: {
 				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 3)
@@ -477,6 +470,7 @@ MouseArea {
 		MonthView {
 			id: monthView
 			visible: showCalendar
+			headerRightMargin: popup.fullViewMode ? popup.topBarInlineMargin : 0
 			borderOpacity: plasmoid.configuration.monthShowBorder ? 0.25 : 0
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek

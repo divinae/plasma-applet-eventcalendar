@@ -117,6 +117,7 @@ Item {
 			top: parent.top
 			left: parent.left
 			right: parent.right
+			rightMargin: root.headerRightMargin // Room for the popup's view switcher
 		}
 		spacing: Kirigami.Units.smallSpacing
 

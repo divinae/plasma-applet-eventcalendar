@@ -11,6 +11,7 @@ Item {
 	id: weekView
 
 	property var eventModel
+	property int headerRightMargin: 0 // Room for the popup's view switcher in the header row
 	readonly property date currentTime: timeModel.currentTime
 	property date weekStart: startOfWeek(currentTime)
 	readonly property int dayCount: 7
@@ -264,6 +265,7 @@ Item {
 
 		RowLayout {
 			Layout.fillWidth: true
+			Layout.rightMargin: weekView.headerRightMargin
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
 				onClicked: weekView.weekStart = weekView.dayDate(-7)

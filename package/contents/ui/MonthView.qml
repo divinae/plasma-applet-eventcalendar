@@ -27,6 +27,8 @@ import org.kde.plasma.core as PlasmaCore
 PinchArea {
 	id: root
 
+	property int headerRightMargin: 0 // Room for the popup's view switcher in the header row
+
 	property alias selectedMonth: calendarBackend.monthName
 	property alias selectedYear: calendarBackend.year
 	property alias displayedDate: calendarBackend.displayedDate
