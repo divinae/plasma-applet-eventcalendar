@@ -418,7 +418,10 @@ CalendarManager {
 				}
 			}
 		}
-		tooltipNowText = current ? i18nc("%1 = event title", "Now: %1", current.summary) : ""
+		tooltipNowText = current
+			? i18nc("%1 = event title, %2 = end time", "Now: %1, until %2", current.summary,
+				Qt.formatTime(current.endDateTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'))
+			: ""
 		tooltipNextText = next ? i18nc("%1 = event title, %2 = when", "Next: %1, %2", next.summary, formatTooltipStart(next, now)) : ""
 	}
 
