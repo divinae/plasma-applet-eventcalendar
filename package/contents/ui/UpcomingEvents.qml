@@ -369,6 +369,58 @@ CalendarManager {
 		}
 	}
 
+	// Tooltip: the event in progress and the next upcoming one, without the chip's time window.
+	property string tooltipNowText: ""
+	property string tooltipNextText: ""
+
+	function formatTooltipStart(eventItem, now) {
+		var start = eventItem.startDateTime
+		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+		var startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate())
+		var days = Math.round((startDay - today) / (24 * 60 * 60 * 1000))
+		var time = Qt.formatTime(start, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+		var when
+		if (days === 0) {
+			when = time
+		} else if (days === 1) {
+			when = i18nc("%1 = time", "tomorrow %1", time)
+		} else {
+			when = Qt.formatDate(start, Locale.ShortFormat) + ' ' + time
+		}
+		var msLeft = start - now
+		if (msLeft < 24 * 60 * 60 * 1000) {
+			var minutesLeft = Math.ceil(msLeft / 60000)
+			when += ' ' + i18nc("%1 = 3h20m", "(in %1)", LocaleFuncs.durationShortFormat(minutesLeft * 60))
+		}
+		return when
+	}
+
+	function updateTooltipEvents() {
+		var now = timeModel.currentTime
+		var current = null
+		var next = null
+		for (var calendarId in eventsByCalendar) {
+			var items = eventsByCalendar[calendarId].items
+			for (var i = 0; i < items.length; i++) {
+				var eventItem = items[i]
+				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem)) {
+					continue
+				}
+				if (isEventInProgress(eventItem)) {
+					if (!current || eventItem.startDateTime > current.startDateTime) {
+						current = eventItem
+					}
+				} else if (now < eventItem.startDateTime) {
+					if (!next || eventItem.startDateTime < next.startDateTime) {
+						next = eventItem
+					}
+				}
+			}
+		}
+		tooltipNowText = current ? i18nc("%1 = event title", "Now: %1", current.summary) : ""
+		tooltipNextText = next ? i18nc("%1 = event title, %2 = when", "Next: %1, %2", next.summary, formatTooltipStart(next, now)) : ""
+	}
+
 	function joinNextEvent() {
 		if (nextEventMeetingLink) {
 			Qt.openUrlExternally(nextEventMeetingLink.url)
@@ -380,6 +432,7 @@ CalendarManager {
 	function tick() {
 		checkForEventsStarting()
 		updateNextEvent()
+		updateTooltipEvents()
 	}
 
 	Connections {
@@ -395,6 +448,7 @@ CalendarManager {
 				upcomingEvents.eventsByCalendar = eventModel.eventsByCalendar
 				upcomingEvents.allDataFetched()
 				upcomingEvents.updateNextEvent()
+				upcomingEvents.updateTooltipEvents()
 			}
 		}
 	}

@@ -103,22 +103,26 @@ Item {
 				}
 
 				PlasmaComponents3.Label {
-					id: tooltipNextEvent
-					readonly property var nextEvent: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEvent : null
-					visible: !!nextEvent
+					id: tooltipNowEvent
+					readonly property string eventText: typeof upcomingEvents !== "undefined" ? upcomingEvents.tooltipNowText : ""
+					visible: !!eventText
 					Layout.topMargin: Kirigami.Units.smallSpacing
 					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
 					Layout.maximumWidth: preferredTextWidth
 					elide: Text.ElideRight
-					text: {
-						if (!nextEvent) {
-							return ""
-						}
-						if (upcomingEvents.nextEventTime) {
-							return i18nc("%1 = event title, %2 = 5m", "Next: %1 in %2", nextEvent.summary, upcomingEvents.nextEventTime)
-						}
-						return i18nc("%1 = event title", "Now: %1", nextEvent.summary)
-					}
+					font.weight: Font.Bold
+					text: eventText
+				}
+
+				PlasmaComponents3.Label {
+					id: tooltipNextEvent
+					readonly property string eventText: typeof upcomingEvents !== "undefined" ? upcomingEvents.tooltipNextText : ""
+					visible: !!eventText
+					Layout.topMargin: tooltipNowEvent.visible ? 0 : Kirigami.Units.smallSpacing
+					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
+					Layout.maximumWidth: preferredTextWidth
+					elide: Text.ElideRight
+					text: eventText
 				}
 			}
 		}
