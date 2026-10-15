@@ -74,7 +74,7 @@ CalendarManager {
 		}
 	}
 
-	onCalendarParsing: function(calendarId, data) {
+	function parseCalendarData(calendarId, data) {
 		var calendar = getCalendar(calendarId)
 		parseEventList(calendar, data.items)
 	}

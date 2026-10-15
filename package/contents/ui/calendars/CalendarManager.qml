@@ -115,24 +115,21 @@ Item {
 
 	// Implementation
 	signal fetchAllCalendars()
-	signal calendarParsing(string calendarId, var data)
-	signal eventParsing(string calendarId, var event)
-
+	// Parsing must mutate data in place, so it's done with function calls.
+	// Qt 6.12+ copies JS objects passed through `var` signal arguments.
 	// Parsing order:
-	// CalendarManager.onCalendarParsing
-	// CalendarManager.onEventParsing
-	// SubClass.onEventParsing
 	// CalendarManager.defaultEventParsing
-	// SubClass.onCalendarParsing
-	onCalendarParsing: function(calendarId, data) {
+	// SubClass.parseCalendarData
+	function calendarParsing(calendarId, data) {
 		// logger.debug('CalendarManager.calendarParsing(', calendarManager, ')', calendarId)
 		data.items.forEach(function(event) {
-			eventParsing(calendarId, event)
 			defaultEventParsing(calendarId, event)
 		})
+		calendarManager.parseCalendarData(calendarId, data)
 	}
-	onEventParsing: function(calendarId, event) {
-		// logger.debug('CalendarManager.eventParsing(', calendarManager, ')', calendarId)
+
+	// Overridden by subclasses
+	function parseCalendarData(calendarId, data) {
 	}
 
 	// To simplify repeated code amongst implementations,
