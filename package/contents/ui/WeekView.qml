@@ -390,7 +390,15 @@ Item {
 					y: bar.lane * (weekView.allDayRowHeight + 1)
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
 					height: weekView.allDayRowHeight
-					radius: Math.min(8, height / 2)
+					// Square ends where the event continues before or after this week.
+					readonly property bool cutLeft: bar.eventItem.startDateTime < weekView.weekStart
+					readonly property bool cutRight: bar.eventItem.endDateTime > weekView.dayDate(weekView.dayCount)
+					readonly property real cornerRadius: Math.min(8, height / 2)
+					radius: cornerRadius
+					topLeftRadius: cutLeft ? 0 : cornerRadius
+					bottomLeftRadius: cutLeft ? 0 : cornerRadius
+					topRightRadius: cutRight ? 0 : cornerRadius
+					bottomRightRadius: cutRight ? 0 : cornerRadius
 					color: barColor
 					border.width: 1
 					border.color: appletConfig.eventBorderColor
@@ -546,7 +554,16 @@ Item {
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
 									width: slotWidth - 1
 									height: Math.max(weekView.lineHeight + 2, (visibleEnd - visibleStart) / 3600000 * weekView.hourHeight - 2)
-									radius: Math.min(10, height / 2)
+									// Square edges where the event continues beyond what's shown
+									// (from the previous day / before the first hour, or past the last one).
+									readonly property bool cutTop: block.continued || block.start < rangeStart
+									readonly property bool cutBottom: block.continues || block.end > rangeEnd
+									readonly property real cornerRadius: Math.min(10, height / 2)
+									radius: cornerRadius
+									topLeftRadius: cutTop ? 0 : cornerRadius
+									topRightRadius: cutTop ? 0 : cornerRadius
+									bottomLeftRadius: cutBottom ? 0 : cornerRadius
+									bottomRightRadius: cutBottom ? 0 : cornerRadius
 									color: barColor
 									border.width: 1
 									border.color: appletConfig.eventBorderColor
