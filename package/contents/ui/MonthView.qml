@@ -27,7 +27,25 @@ import org.kde.plasma.core as PlasmaCore
 PinchArea {
 	id: root
 
-	property int headerRightMargin: 0 // Room for the popup's view switcher in the header row
+	// false: the popup shows title and navigation in its own header (see currentTitle, goPrevious, ...).
+	property bool showHeader: true
+	readonly property string currentTitle: stack.currentItem ? stack.currentItem.title : ""
+	function goPrevious() {
+		if (stack.currentItem) {
+			stack.currentItem.previous()
+		}
+	}
+	function goNext() {
+		if (stack.currentItem) {
+			stack.currentItem.next()
+		}
+	}
+	// Month title click: zoom out to the year / decade view.
+	function titleClicked() {
+		if (stack.currentItem && !stack.busy) {
+			stack.currentItem.headerClicked()
+		}
+	}
 
 	property alias selectedMonth: calendarBackend.monthName
 	property alias selectedYear: calendarBackend.year

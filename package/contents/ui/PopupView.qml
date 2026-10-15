@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
+import org.kde.plasma.extras as PlasmaExtras
 
 import "lib"
 import "Shared.js" as Shared
@@ -127,7 +128,7 @@ MouseArea {
 	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !weekMode) || monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
 	// Month and week views put the top bar inside their header row, the agenda layout above.
-	readonly property int viewTabsHeight: fullViewMode ? 0 : topBar.implicitHeight + spacing
+	readonly property int viewTabsHeight: header.implicitHeight + spacing
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -308,16 +309,52 @@ MouseArea {
 		onTriggered: popup.refreshing = false
 	}
 
-	// Compact bar: view switcher (optional) and refresh. In month and week views it sits at the
-	// right end of the view's own header row; the agenda layout gets a thin row above.
-	RowLayout {
-		id: topBar
-		z: 10 // Above the views, whose header row it shares in month and week mode.
+	// Native Plasma header for all views: navigation, title (month or week), view switcher,
+	// refresh and pin. The month and week views hide their own header rows.
+	PlasmaExtras.PlasmoidHeading {
+		id: header
 		anchors.top: parent.top
-		anchors.topMargin: popup.padding
+		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.rightMargin: popup.padding
+
+		readonly property var weekView: weekViewLoader.item
+
+		contentItem: RowLayout {
+		id: topBar
 		spacing: 0
+
+		PlasmaComponents3.ToolButton {
+			icon.name: "go-previous"
+			onClicked: header.weekView ? header.weekView.goPrevious() : monthView.goPrevious()
+			PlasmaComponents3.ToolTip.text: header.weekView ? i18n("Previous Week") : i18n("Previous Month")
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
+		PlasmaComponents3.ToolButton {
+			icon.name: "go-jump-today"
+			onClicked: header.weekView ? header.weekView.goToday() : monthView.resetToToday()
+			PlasmaComponents3.ToolTip.text: i18n("Today")
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
+		PlasmaComponents3.ToolButton {
+			icon.name: "go-next"
+			onClicked: header.weekView ? header.weekView.goNext() : monthView.goNext()
+			PlasmaComponents3.ToolTip.text: header.weekView ? i18n("Next Week") : i18n("Next Month")
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
+		Kirigami.Heading {
+			Layout.fillWidth: true
+			Layout.leftMargin: Kirigami.Units.smallSpacing
+			level: 2
+			elide: Text.ElideRight
+			wrapMode: Text.NoWrap
+			font.capitalization: Font.Capitalize
+			text: header.weekView ? header.weekView.title : monthView.currentTitle
+			MouseArea {
+				anchors.fill: parent
+				enabled: !header.weekView
+				onClicked: monthView.titleClicked() // Year / decade view
+			}
+		}
 
 		// View switcher: one framed group of buttons with icon and text, the current view highlighted.
 		Rectangle {
@@ -418,8 +455,8 @@ MouseArea {
 			PlasmaComponents3.ToolTip.text: i18n("Keep Open")
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
+		}
 	}
-	readonly property int topBarInlineMargin: topBar.width + Kirigami.Units.smallSpacing
 
 
 	Loader {
@@ -429,7 +466,7 @@ MouseArea {
 		anchors.fill: widgetGrid
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
-			headerRightMargin: popup.topBarInlineMargin
+			showHeader: false
 			// Make sure the visible week's month is fetched.
 			onWeekStartChanged: {
 				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 3)
@@ -443,7 +480,7 @@ MouseArea {
 		visible: !popup.weekMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
-		anchors.topMargin: popup.padding + popup.viewTabsHeight
+		anchors.topMargin: popup.viewTabsHeight
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
 		onColumnsChanged: {
@@ -520,7 +557,7 @@ MouseArea {
 		MonthView {
 			id: monthView
 			visible: showCalendar
-			headerRightMargin: popup.fullViewMode ? popup.topBarInlineMargin : 0
+			showHeader: false
 			borderOpacity: plasmoid.configuration.monthShowBorder ? 0.25 : 0
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek

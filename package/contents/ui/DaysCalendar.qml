@@ -77,8 +77,10 @@ Item {
 	readonly property int compactHeaderHeight: Math.ceil(headerFontMetrics.height) + 4
 	// Take the calendar height, subtract the inner spacings and divide by number of rows (root.weeks + one row for day names)
 	readonly property int cellHeight: compactHeader
-		? Math.floor((stack.height - heading.height - compactHeaderHeight - calendarGrid.rows * root.borderWidth) / (calendarGrid.rows - 1))
-		: Math.floor((stack.height - heading.height - calendarGrid.rows * root.borderWidth) / calendarGrid.rows)
+		? Math.floor((stack.height - headingRowHeight - compactHeaderHeight - calendarGrid.rows * root.borderWidth) / (calendarGrid.rows - 1))
+		: Math.floor((stack.height - headingRowHeight - calendarGrid.rows * root.borderWidth) / calendarGrid.rows)
+	// The popup can show the title and navigation in its own header instead.
+	readonly property int headingRowHeight: root.showHeader ? heading.height : 0
 	readonly property int headerHeight: !headerModel ? 0 : (compactHeader ? compactHeaderHeight : cellHeight)
 	// Y of the line above grid row i (row 0 is the header row when there is one).
 	function gridLineY(i) {
@@ -113,11 +115,11 @@ Item {
 	}
 
 	RowLayout {
+		visible: root.showHeader
 		anchors {
 			top: parent.top
 			left: parent.left
 			right: parent.right
-			rightMargin: root.headerRightMargin // Room for the popup's view switcher
 		}
 		spacing: Kirigami.Units.smallSpacing
 
