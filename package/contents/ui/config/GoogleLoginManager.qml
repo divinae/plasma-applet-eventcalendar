@@ -115,17 +115,18 @@ Item {
 
 	function refreshActiveAccount() {
 		activeAccount = accountsStore.getAccount(activeAccountId)
-		if (activeAccount) {
-			calendarList = activeAccount.calendarList || []
-			calendarIdList = activeAccount.calendarIdList || []
-			tasklistList = activeAccount.tasklistList || []
-			tasklistIdList = activeAccount.tasklistIdList || []
-		} else {
-			calendarList = []
-			calendarIdList = []
-			tasklistList = []
-			tasklistIdList = []
+		// Selections first: the config page builds its checkboxes when the lists change.
+		// Only assign when the content changed, so saving a checkbox (or a token refresh)
+		// doesn't rebuild the whole list.
+		function assignIfChanged(key, value) {
+			if (JSON.stringify(session[key]) !== JSON.stringify(value)) {
+				session[key] = value
+			}
 		}
+		assignIfChanged('calendarIdList', activeAccount ? activeAccount.calendarIdList || [] : [])
+		assignIfChanged('tasklistIdList', activeAccount ? activeAccount.tasklistIdList || [] : [])
+		assignIfChanged('calendarList', activeAccount ? activeAccount.calendarList || [] : [])
+		assignIfChanged('tasklistList', activeAccount ? activeAccount.tasklistList || [] : [])
 	}
 
 	function refreshClientCredentials() {

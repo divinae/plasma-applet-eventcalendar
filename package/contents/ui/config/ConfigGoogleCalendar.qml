@@ -57,8 +57,11 @@ ConfigPage {
 		if (listA.length !== listB.length) {
 			return false
 		}
-		for (var i = 0; i < listA.length; i++) {
-			if (listA[i] !== listB[i]) {
+		// Order doesn't matter: the checkbox list is sorted by name, the saved list isn't.
+		var sortedA = listA.slice().sort()
+		var sortedB = listB.slice().sort()
+		for (var i = 0; i < sortedA.length; i++) {
+			if (sortedA[i] !== sortedB[i]) {
 				return false
 			}
 		}
@@ -230,11 +233,33 @@ ConfigPage {
 					backgroundColor: item.backgroundColor,
 					foregroundColor: item.foregroundColor,
 					show: isShown,
+					isPrimary: isPrimary,
 					isReadOnly: item.accessRole == "reader",
 				})
 				// console.log(item.summary, isShown, item.id)
 			}
 			calendarsModel.calendarsShownChanged()
+		}
+
+		// Selection changed without a new list (eg: account switched to one with the same
+		// calendars): update the checkboxes in place.
+		onCalendarIdListChanged: {
+			for (var i = 0; i < calendarsModel.count; i++) {
+				var item = calendarsModel.get(i)
+				var isShown = calendarIdList.indexOf(item.calendarId) >= 0 || (item.isPrimary && calendarIdList.indexOf('primary') >= 0)
+				if (item.show !== isShown) {
+					calendarsModel.setProperty(i, 'show', isShown)
+				}
+			}
+		}
+		onTasklistIdListChanged: {
+			for (var i = 0; i < tasklistsModel.count; i++) {
+				var item = tasklistsModel.get(i)
+				var isShown = tasklistIdList.indexOf(item.tasklistId) >= 0
+				if (item.show !== isShown) {
+					tasklistsModel.setProperty(i, 'show', isShown)
+				}
+			}
 		}
 
 		onTasklistListChanged: {
@@ -576,13 +601,21 @@ ConfigPage {
 
 			onCalendarsShownChanged: {
 				var calendarIdList = []
+				var primaryId = ''
 				for (var i = 0; i < calendarsModel.count; i++) {
 					var item = calendarsModel.get(i)
+					if (item.isPrimary) {
+						primaryId = item.calendarId
+					}
 					if (item.show) {
 						calendarIdList.push(item.calendarId)
 					}
 				}
-				if (!stringListEquals(calendarIdList, googleLoginManager.calendarIdList)) {
+				// The saved list may say 'primary' instead of the primary calendar's id.
+				var savedList = googleLoginManager.calendarIdList.map(function(id) {
+					return id === 'primary' && primaryId ? primaryId : id
+				})
+				if (!stringListEquals(calendarIdList, savedList)) {
 					googleLoginManager.setCalendarIdList(calendarIdList)
 					markDirty()
 				}
