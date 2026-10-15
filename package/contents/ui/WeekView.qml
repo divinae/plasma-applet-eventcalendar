@@ -450,6 +450,15 @@ Item {
 				height: 1
 				color: weekView.gridLineColor
 			}
+			// Bottom line, same extent.
+			Rectangle {
+				z: 1
+				anchors.bottom: parent.bottom
+				x: weekView.gutterWidth
+				width: weekView.columnWidth * weekView.dayCount
+				height: 1
+				color: weekView.gridLineColor
+			}
 
 
 			Flickable {

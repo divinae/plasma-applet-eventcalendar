@@ -26,9 +26,25 @@ Rectangle {
 	readonly property var calendar: eventItem && typeof eventModel !== "undefined" ? eventModel.getCalendar(eventItem.calendarId) : null
 	readonly property color eventColor: eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : Kirigami.Theme.highlightColor
 	readonly property bool isAllDay: !!(eventItem && eventItem.start && eventItem.start.date)
-	readonly property var attendees: eventItem ? Shared.toArray(eventItem.attendees) : []
+	readonly property var allAttendees: eventItem ? Shared.toArray(eventItem.attendees) : []
+	// Rooms and other resources are listed as attendees by Google; show them as rooms, not people.
+	readonly property var rooms: allAttendees.filter(function(a) { return !!a.resource })
+	readonly property var attendees: {
+		var order = { accepted: 2, tentative: 3, needsAction: 4, declined: 5 }
+		function rank(a) {
+			return a.organizer ? 0 : a.self ? 1 : (order[a.responseStatus] || 4)
+		}
+		return allAttendees.filter(function(a) { return !a.resource }).sort(function(a, b) {
+			return rank(a) - rank(b)
+		})
+	}
+	readonly property int collapsedGuestCount: 5
+	property bool showAllGuests: false
 	property bool confirmingDelete: false
-	onEventItemChanged: confirmingDelete = false
+	onEventItemChanged: {
+		confirmingDelete = false
+		showAllGuests = false
+	}
 
 	function isUrl(text) {
 		return /^https?:\/\/\S+$/i.test(String(text || '').trim())
@@ -58,7 +74,7 @@ Rectangle {
 		if (maybe) parts.push(i18nc("guests who said maybe", "%1 maybe", maybe))
 		if (no) parts.push(i18nc("guests who declined", "%1 no", no))
 		if (waiting) parts.push(i18nc("guests who haven't responded", "%1 awaiting", waiting))
-		return i18np("1 guest", "%1 guests", attendees.length) + (parts.length ? " (" + parts.join(", ") + ")" : "")
+		return i18np("1 guest", "%1 guests", attendees.length) + (parts.length ? " · " + parts.join(", ") : "")
 	}
 
 	function reminderText() {
@@ -197,6 +213,10 @@ Rectangle {
 					onClicked: Qt.openUrlExternally(details.meetingLink.url)
 				}
 
+				Kirigami.Separator {
+					Layout.fillWidth: true
+				}
+
 				// Properties: icon + text rows
 				GridLayout {
 					Layout.fillWidth: true
@@ -204,7 +224,7 @@ Rectangle {
 					Layout.rightMargin: Kirigami.Units.largeSpacing
 					columns: 2
 					columnSpacing: Kirigami.Units.largeSpacing
-					rowSpacing: Kirigami.Units.smallSpacing
+					rowSpacing: Kirigami.Units.largeSpacing
 
 					// Location
 					Kirigami.Icon {
@@ -224,6 +244,28 @@ Rectangle {
 						text: details.isUrl(location) ? '<a href="' + location + '">' + location + '</a>' : location
 						linkColor: Kirigami.Theme.linkColor
 						onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+					}
+
+					// Rooms
+					Kirigami.Icon {
+						visible: roomsLabel.visible
+						source: "go-home"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					PlasmaComponents3.Label {
+						id: roomsLabel
+						readonly property string location: details.eventItem && details.eventItem.location ? details.eventItem.location : ""
+						// Skip rooms already named in the location.
+						readonly property var extraRooms: details.rooms.filter(function(r) {
+							var name = r.displayName || r.email || ""
+							return name && location.indexOf(name) < 0
+						})
+						visible: extraRooms.length > 0
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						text: extraRooms.map(function(r) { return r.displayName || r.email }).join(", ")
 					}
 
 					// Calendar
@@ -264,56 +306,84 @@ Rectangle {
 						text: details.reminderText()
 					}
 
-					// Guests
-					Kirigami.Icon {
-						visible: details.attendees.length > 0
-						source: "group"
-						Layout.preferredWidth: Kirigami.Units.iconSizes.small
-						Layout.preferredHeight: Kirigami.Units.iconSizes.small
-						Layout.alignment: Qt.AlignTop
-					}
-					ColumnLayout {
-						visible: details.attendees.length > 0
+				}
+
+
+				// Guests
+				ColumnLayout {
+					visible: details.attendees.length > 0
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					spacing: Kirigami.Units.smallSpacing
+
+					Kirigami.Separator {
 						Layout.fillWidth: true
-						spacing: 2
+						Layout.leftMargin: -Kirigami.Units.largeSpacing
+						Layout.rightMargin: -Kirigami.Units.largeSpacing
+						Layout.bottomMargin: Kirigami.Units.smallSpacing
+					}
+					RowLayout {
+						Layout.fillWidth: true
+						spacing: Kirigami.Units.largeSpacing
+						Kirigami.Icon {
+							source: "group"
+							Layout.preferredWidth: Kirigami.Units.iconSizes.small
+							Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						}
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true
 							wrapMode: Text.Wrap
+							font.weight: Font.DemiBold
 							text: details.attendeeSummary()
 						}
-						Repeater {
-							model: details.attendees
-							RowLayout {
+					}
+					Repeater {
+						model: details.showAllGuests ? details.attendees : details.attendees.slice(0, details.collapsedGuestCount)
+						RowLayout {
+							Layout.fillWidth: true
+							Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.largeSpacing
+							spacing: Kirigami.Units.smallSpacing
+							Kirigami.Icon {
+								source: details.attendeeIcon(modelData.responseStatus)
+								Layout.preferredWidth: Kirigami.Units.iconSizes.small
+								Layout.preferredHeight: Kirigami.Units.iconSizes.small
+							}
+							PlasmaComponents3.Label {
 								Layout.fillWidth: true
-								spacing: Kirigami.Units.smallSpacing
-								Kirigami.Icon {
-									source: details.attendeeIcon(modelData.responseStatus)
-									Layout.preferredWidth: Kirigami.Units.iconSizes.small
-									Layout.preferredHeight: Kirigami.Units.iconSizes.small
-								}
-								PlasmaComponents3.Label {
-									Layout.fillWidth: true
-									elide: Text.ElideRight
-									text: {
-										var name = modelData.displayName || modelData.email || ""
-										var tags = []
-										if (modelData.organizer) {
-											tags.push(i18nc("event organizer", "organizer"))
-										}
-										if (modelData.self) {
-											tags.push(i18nc("the current user in a guest list", "you"))
-										}
-										return tags.length ? name + " (" + tags.join(", ") + ")" : name
+								elide: Text.ElideRight
+								text: {
+									var name = modelData.displayName || modelData.email || ""
+									var tags = []
+									if (modelData.organizer) {
+										tags.push(i18nc("event organizer", "organizer"))
 									}
-									opacity: modelData.responseStatus === 'declined' ? 0.6 : 1
+									if (modelData.self) {
+										tags.push(i18nc("the current user in a guest list", "you"))
+									}
+									return tags.length ? name + " (" + tags.join(", ") + ")" : name
 								}
+								opacity: modelData.responseStatus === 'declined' ? 0.6 : 1
 							}
 						}
 					}
+					PlasmaComponents3.ToolButton {
+						visible: details.attendees.length > details.collapsedGuestCount
+						Layout.leftMargin: Kirigami.Units.iconSizes.small
+						text: details.showAllGuests ? i18n("Show less") : i18np("Show 1 more", "Show all %1", details.attendees.length)
+						icon.name: details.showAllGuests ? "go-up" : "go-down"
+						onClicked: details.showAllGuests = !details.showAllGuests
+					}
+				}
+
+				Kirigami.Separator {
+					visible: descriptionLabel.visible
+					Layout.fillWidth: true
 				}
 
 				// Description
 				PlasmaComponents3.Label {
+					id: descriptionLabel
 					readonly property string description: details.eventItem && details.eventItem.description ? details.eventItem.description : ""
 					visible: !!description
 					Layout.fillWidth: true
