@@ -11,38 +11,18 @@ ConfigModel {
 		&& plasmoid.configuration
 
 	ConfigCategory {
-		name: i18n("General")
-		icon: "clock"
-		source: "config/ConfigGeneral.qml"
-	}
-	// ConfigCategory {
-	// 	name: i18n("Clock")
-	// 	icon: "clock"
-	// 	source: "config/ConfigClock.qml"
-	// }
-	ConfigCategory {
-		name: i18n("Layout")
-		icon: "grid-rectangular"
-		source: "config/ConfigLayout.qml"
-	}
-	ConfigCategory {
-		name: i18n("Timezones")
-		icon: "preferences-system-time"
-		source: "config/ConfigTimezones.qml"
-	}
-	ConfigCategory {
-		name: i18n("Calendar")
+		name: i18n("Views")
 		icon: "view-calendar"
-		source: "config/ConfigCalendar.qml"
+		source: "config/ConfigViews.qml"
 	}
 	ConfigCategory {
-		name: i18n("Agenda")
-		icon: "view-calendar-agenda"
-		source: "config/ConfigAgenda.qml"
+		name: i18n("Clock")
+		icon: "clock"
+		source: "config/ConfigClock.qml"
 	}
 	ConfigCategory {
 		name: i18n("Events")
-		icon: "view-calendar-week"
+		icon: "view-calendar-upcoming-events"
 		source: "config/ConfigEvents.qml"
 	}
 	ConfigCategory {
@@ -60,6 +40,11 @@ ConfigModel {
 		name: i18n("Weather")
 		icon: "weather-clear"
 		source: "config/ConfigWeather.qml"
+	}
+	ConfigCategory {
+		name: i18n("Time Zones")
+		icon: "preferences-system-time"
+		source: "config/ConfigTimezones.qml"
 	}
 	ConfigCategory {
 		name: i18n("Advanced")

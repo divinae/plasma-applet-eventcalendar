@@ -1,165 +1,140 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 
 import ".."
 import "../lib"
 
+// Weather source, units and meteogram look.
 ConfigPage {
 	id: page
 
-	HeaderText {
-		text: i18n("Data")
+	AppletConfig { id: config }
+
+	OpenWeatherMapCityDialog {
+		id: openWeatherMapCityDialog
+		onAccepted: weatherCityId.value = selectedCityId
+	}
+	WeatherCanadaCityDialog {
+		id: weatherCanadaCityDialog
+		onAccepted: weatherCanadaCityId.value = selectedCityId
 	}
 
-	ConfigComboBox {
-		id: weatherService
-		configKey: 'weatherService'
+	Kirigami.FormLayout {
+		Layout.fillWidth: true
 
-		model: [
-			{ value: 'OpenWeatherMap', text: 'OpenWeatherMap' },
-			{ value: 'WeatherCanada', text: 'WeatherCanada' },
-		]
-	}
-
-	ConfigSection {
-		RowLayout {
-			visible: page.configBridge.read("debugging", false) && weatherService.value === 'OpenWeatherMap'
-			Label {
-				text: i18n("API App Id:")
-			}
-			ConfigString {
-				configKey: 'openWeatherMapAppId'
-			}
+		//--- Source
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Source")
 		}
-
+		ConfigComboBox {
+			id: weatherService
+			Kirigami.FormData.label: i18n("Service:")
+			configKey: 'weatherService'
+			model: [
+				{ value: 'OpenWeatherMap', text: 'OpenWeatherMap' },
+				{ value: 'WeatherCanada', text: 'Weather Canada' },
+			]
+		}
 		RowLayout {
 			visible: weatherService.value === 'OpenWeatherMap'
-			Label {
-				text: i18n("City Id:")
-			}
+			Kirigami.FormData.label: i18n("City:")
 			ConfigString {
 				id: weatherCityId
 				configKey: 'openWeatherMapCityId'
-				placeholderText: i18n("Eg: 5983720")
+				placeholderText: i18n("City id, eg: 5983720")
 			}
 			Button {
-				text: i18n("Find City")
+				icon.name: "search"
+				text: i18n("Find City…")
 				onClicked: openWeatherMapCityDialog.open()
 			}
-
-			OpenWeatherMapCityDialog {
-				id: openWeatherMapCityDialog
-				onAccepted: {
-					weatherCityId.value = selectedCityId
-				}
-			}
 		}
-
 		RowLayout {
 			visible: weatherService.value === 'WeatherCanada'
-			Label {
-				text: i18n("City Id:")
-			}
+			Kirigami.FormData.label: i18n("City:")
 			ConfigString {
 				id: weatherCanadaCityId
 				configKey: 'weatherCanadaCityId'
-				placeholderText: i18n("Eg: on-14")
+				placeholderText: i18n("City id, eg: on-14")
 			}
 			Button {
-				text: i18n("Find City")
+				icon.name: "search"
+				text: i18n("Find City…")
 				onClicked: weatherCanadaCityDialog.open()
 			}
-
-			WeatherCanadaCityDialog {
-				id: weatherCanadaCityDialog
-				onAccepted: {
-					weatherCanadaCityId.value = selectedCityId
-				}
-			}
 		}
-	}
-
-	HeaderText {
-		text: i18n("Settings")
-	}
-
-	ConfigSection {
-		ConfigSpinBox {
-			// configKey: 'weatherPollInterval'
-			before: i18n("Update forecast every: ")
-			enabled: false
-			value: 60
-			suffix: i18nc("Polling interval in minutes", "min")
-			minimumValue: 60
-			maximumValue: 90
+		ConfigString {
+			visible: page.configBridge.read("debugging", false) && weatherService.value === 'OpenWeatherMap'
+			Kirigami.FormData.label: i18n("API app id:")
+			configKey: 'openWeatherMapAppId'
 		}
-	}
 
-	HeaderText {
-		text: i18n("Style")
-	}
-
-	ConfigSection {
-		ConfigSpinBox {
-			configKey: 'meteogramHours'
-			before: i18n("Show next ")
-			suffix: i18np(" hour", " hours", value)
-			after: i18n(" in the meteogram.")
-			minimumValue: 9
-			maximumValue: 48
-			stepSize: 3
+		//--- Display
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Display")
 		}
-	}
-
-	ConfigSection {
-		ConfigRadioButtonGroup {
+		ConfigComboBox {
+			Kirigami.FormData.label: i18n("Units:")
 			configKey: 'weatherUnits'
-			label: i18n("Units:")
 			model: [
 				{ value: 'metric', text: i18n("Celsius") },
 				{ value: 'imperial', text: i18n("Fahrenheit") },
 				{ value: 'kelvin', text: i18n("Kelvin") },
 			]
 		}
-	}
+		ConfigSpinBox {
+			Kirigami.FormData.label: i18n("Meteogram shows:")
+			configKey: 'meteogramHours'
+			suffix: i18n(" hours")
+			minimumValue: 9
+			maximumValue: 48
+			stepSize: 3
+		}
 
-	HeaderText {
-		text: i18n("Colors")
-	}
-
-	AppletConfig { id: config }
-	ColorGrid {
+		//--- Colors
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Meteogram Colors")
+		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Text:")
+			label: ""
 			configKey: 'meteogramTextColor'
-			label: i18n("Text")
 			defaultColor: config.meteogramTextColorDefault
 		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Grid:")
+			label: ""
 			configKey: 'meteogramGridColor'
-			label: i18n("Grid")
 			defaultColor: config.meteogramScaleColorDefault
 		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Rain:")
+			label: ""
 			configKey: 'meteogramRainColor'
-			label: i18n("Rain")
 			defaultColor: config.meteogramPrecipitationRawColorDefault
 		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Above zero:")
+			label: ""
 			configKey: 'meteogramPositiveTempColor'
-			label: i18n("Positive Temp")
 			defaultColor: config.meteogramPositiveTempColorDefault
 		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Below zero:")
+			label: ""
 			configKey: 'meteogramNegativeTempColor'
-			label: i18n("Negative Temp")
 			defaultColor: config.meteogramNegativeTempColorDefault
 		}
 		ConfigColor {
+			Kirigami.FormData.label: i18n("Icons:")
+			label: ""
 			configKey: 'meteogramIconColor'
-			label: i18n("Icons")
 			defaultColor: config.meteogramIconColorDefault
 		}
 	}
-
 }

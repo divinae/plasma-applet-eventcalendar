@@ -1,60 +1,18 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 
 import "../lib"
 import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
+// Event sources, clicking events, notifications.
 ConfigPage {
 	id: page
 	property var eventPluginsManager: null
 
-	HeaderText {
-		text: i18n("Event Calendar Plugins")
-	}
-
-	ConfigSection {
-		CheckBox {
-			text: i18n("ICalendar (.ics)")
-			checked: true
-			enabled: false
-			visible: page.configBridge.read("debugging", false)
-		}
-		CheckBox {
-			text: i18n("Google Calendar")
-			checked: true
-			enabled: false
-		}
-	}
-
-
-	HeaderText {
-		text: i18n("Plasma Calendar Plugins")
-	}
-
 	// From digitalclock's configCalendar.qml
 	signal configurationChanged()
-	MessageWidget {
-		visible: !eventPluginsManager
-		messageType: MessageWidget.MessageType.Warning
-		closeButtonVisible: false
-		text: i18n("Plasma calendar plugins are unavailable. Install the Plasma calendar module to manage these plugins.")
-	}
-	ConfigSection {
-		Repeater {
-			id: calendarPluginsRepeater
-			model: eventPluginsManager ? eventPluginsManager.model : null
-			delegate: CheckBox {
-				text: model.display
-				checked: model.checked
-				onClicked: {
-					model.checked = checked // needed for model's setData to be called
-					// page.configurationChanged()
-					page.saveConfig()
-				}
-			}
-		}
-	}
 	function saveConfig() {
 		if (!eventPluginsManager) {
 			return
@@ -74,140 +32,161 @@ ConfigPage {
 		PlasmaCalendarUtils.populateEnabledPluginsByFilename(eventPluginsManager, page.configBridge.read("enabledCalendarPlugins", []))
 	}
 
-	HeaderText {
-		text: i18n("Misc")
-	}
-	ColumnLayout {
+	readonly property bool clickOpensBrowser: page.configBridge.read("eventClickAction", "details") === 'browser'
 
+	Kirigami.FormLayout {
+		Layout.fillWidth: true
+
+		//--- Sources
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Calendars")
+		}
 		ConfigSpinBox {
+			Kirigami.FormData.label: i18n("Refresh every:")
 			configKey: 'eventsPollInterval'
-			before: i18n("Refresh events every: ")
-			suffix: i18nc("Polling interval in minutes", "min")
+			suffix: i18nc("Polling interval in minutes", " min")
 			minimumValue: 5
 			maximumValue: 90
 		}
-	}
+		Label {
+			visible: !page.eventPluginsManager
+			text: i18n("Plasma calendar plugins are unavailable.")
+			opacity: 0.7
+		}
+		Repeater {
+			model: page.eventPluginsManager ? page.eventPluginsManager.model : null
+			delegate: CheckBox {
+				Kirigami.FormData.label: index === 0 ? i18n("Plasma calendars:") : ""
+				text: model.display
+				checked: model.checked
+				onClicked: {
+					model.checked = checked // needed for model's setData to be called
+					page.saveConfig()
+				}
+			}
+		}
 
-	HeaderText {
-		text: i18n("Clicking an Event")
-	}
-	ConfigSection {
-		ConfigRadioButtonGroup {
+		//--- Clicking
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Clicking an Event")
+		}
+		ConfigComboBox {
+			Kirigami.FormData.label: i18n("Opens:")
 			configKey: 'eventClickAction'
 			model: [
-				{ value: 'details', text: i18n("Show event details in the widget") },
-				{ value: 'browser', text: i18n("Open in Google Calendar") },
+				{ value: 'details', text: i18n("Event details in the widget") },
+				{ value: 'browser', text: i18n("Google Calendar in the browser") },
 			]
 		}
-		ConfigCheckBox {
-			configKey: 'monthClickOpensDay'
-			text: i18n("Month view: clicking a day shows its events")
+		ConfigComboBox {
+			visible: page.clickOpensBrowser
+			Kirigami.FormData.label: i18n("Google Calendar page:")
+			configKey: 'googleEventClickAction'
+			model: [
+				{ value: 'WebEventView', text: i18n("Event") },
+				{ value: 'WebMonthView', text: i18n("Month, with the event selected") },
+			]
 		}
-	}
 
-	HeaderText {
-		text: i18n("Notifications")
-	}
-
-	ConfigSection {
-		ConfigNotification {
-			id: eventReminderNotification
-			label: i18n("Event Reminder")
-			notificationEnabledKey: 'eventReminderNotificationEnabled'
+		//--- Reminder
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Reminder Before an Event")
+		}
+		ConfigCheckBox {
+			id: reminderEnabled
+			configKey: 'eventReminderNotificationEnabled'
+			text: i18n("Show a reminder")
+		}
+		ConfigSpinBox {
+			enabled: reminderEnabled.checked
+			Kirigami.FormData.label: i18n("Time before:")
+			configKey: 'eventReminderMinutesBefore'
+			suffix: i18nc("Time in minutes", " min")
+			minimumValue: 1
+		}
+		ConfigCheckBox {
+			enabled: reminderEnabled.checked
+			configKey: 'eventReminderUseGoogle'
+			text: i18n("Use the reminder times set in Google Calendar")
+		}
+		ConfigSound {
+			enabled: reminderEnabled.checked
+			Kirigami.FormData.label: i18n("Sound:")
+			label: ""
+			Layout.fillWidth: true
 			sfxEnabledKey: 'eventReminderSfxEnabled'
 			sfxPathKey: 'eventReminderSfxPath'
 			sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
-
-			RowLayout {
-				spacing: 0
-				Item { implicitWidth: parent.parent.indentWidth } // indent
-				ConfigSpinBox {
-					configKey: 'eventReminderMinutesBefore'
-					suffix: i18nc("Polling interval in minutes", "min")
-					minimumValue: 1
-				}
-			}
-			RowLayout {
-				spacing: 0
-				enabled: eventReminderNotification.notificationEnabled
-				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
-				ConfigCheckBox {
-					configKey: 'eventReminderUseGoogle'
-					text: i18n("Use the reminder times set in Google Calendar (other events use the time above)")
-				}
-			}
-			RowLayout {
-				spacing: 0
-				enabled: eventReminderNotification.notificationEnabled
-				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
-				ConfigSpinBox {
-					configKey: 'eventReminderTimeout'
-					before: i18n("Hide after:")
-					suffix: i18nc("Time in seconds", "s")
-					after: i18n("(0 = keep until dismissed)")
-					minimumValue: 0
-					maximumValue: 600
-				}
-			}
-			RowLayout {
-				spacing: 0
-				enabled: eventReminderNotification.notificationEnabled
-				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
-				ConfigSpinBox {
-					configKey: 'eventReminderSnoozeMinutes'
-					before: i18n("Snooze:")
-					suffix: i18nc("Time in minutes", "min")
-					after: i18n("(0 = no Snooze button)")
-					minimumValue: 0
-					maximumValue: 120
-				}
-			}
 		}
-	}
+		ConfigSpinBox {
+			enabled: reminderEnabled.checked
+			Kirigami.FormData.label: i18n("Hide after:")
+			configKey: 'eventReminderTimeout'
+			suffix: i18nc("Time in seconds", " s")
+			after: i18n("(0 = keep until dismissed)")
+			minimumValue: 0
+			maximumValue: 600
+		}
+		ConfigSpinBox {
+			enabled: reminderEnabled.checked
+			Kirigami.FormData.label: i18n("Snooze:")
+			configKey: 'eventReminderSnoozeMinutes'
+			suffix: i18nc("Time in minutes", " min")
+			after: i18n("(0 = no Snooze button)")
+			minimumValue: 0
+			maximumValue: 120
+		}
 
-	ConfigSection {
-		ConfigNotification {
-			id: eventStartingNotification
-			label: i18n("Event Starting")
-			notificationEnabledKey: 'eventStartingNotificationEnabled'
+		//--- Event starting
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("When an Event Starts")
+		}
+		ConfigCheckBox {
+			id: startingEnabled
+			configKey: 'eventStartingNotificationEnabled'
+			text: i18n("Show a notification")
+		}
+		ConfigSound {
+			enabled: startingEnabled.checked
+			Kirigami.FormData.label: i18n("Sound:")
+			label: ""
+			Layout.fillWidth: true
 			sfxEnabledKey: 'eventStartingSfxEnabled'
 			sfxPathKey: 'eventStartingSfxPath'
 			sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
-
-			RowLayout {
-				spacing: 0
-				enabled: eventStartingNotification.notificationEnabled
-				Item { implicitWidth: eventStartingNotification.indentWidth } // indent
-				ConfigCheckBox {
-					configKey: 'eventStartingPersistent'
-					text: i18n("Keep until dismissed")
-				}
-			}
-			RowLayout {
-				spacing: 0
-				enabled: eventStartingNotification.notificationEnabled
-				Item { implicitWidth: eventStartingNotification.indentWidth } // indent
-				ConfigCheckBox {
-					configKey: 'eventStartingCritical'
-					text: i18n("Critical (shown even in Do Not Disturb)")
-				}
-			}
 		}
-	}
+		ConfigCheckBox {
+			enabled: startingEnabled.checked
+			configKey: 'eventStartingPersistent'
+			text: i18n("Keep until dismissed")
+		}
+		ConfigCheckBox {
+			enabled: startingEnabled.checked
+			configKey: 'eventStartingCritical'
+			text: i18n("Critical (shown even in Do Not Disturb)")
+		}
 
-	ConfigSection {
+		//--- Both
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("All Event Notifications")
+		}
 		ConfigCheckBox {
 			configKey: 'eventNotificationActions'
-			text: i18n("Show \"Join meeting\" and \"Open in Calendar\" buttons")
+			text: i18n("\"Join meeting\" and \"Open in Calendar\" buttons")
 		}
 		ConfigCheckBox {
+			Kirigami.FormData.label: i18n("Skip:")
 			configKey: 'eventNotifySkipAllDay'
-			text: i18n("Don't notify for all-day events")
+			text: i18n("All-day events")
 		}
 		ConfigCheckBox {
 			configKey: 'eventNotifySkipDeclined'
-			text: i18n("Don't notify for events I declined")
+			text: i18n("Events I declined")
 		}
 	}
-
 }

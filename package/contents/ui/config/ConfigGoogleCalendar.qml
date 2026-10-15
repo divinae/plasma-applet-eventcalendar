@@ -333,9 +333,54 @@ ConfigPage {
 			text: i18n("Widget has been updated. Please logout and login to Google Calendar again.")
 		}
 	}
+	RowLayout {
+		Button {
+			icon.name: googleLoginManager.isLoggedIn ? "list-add" : "go-next"
+			text: googleLoginManager.isLoggedIn ? i18n("Add Account…") : i18n("Sign in with Google…")
+			enabled: !autoLoginInProgress
+			onClicked: {
+				authorizationCodeInput.text = ""
+				startAutoLogin("")
+			}
+		}
+		Button {
+			visible: googleLoginManager.isLoggedIn && googleLoginManager.needsRelog
+			icon.name: "view-refresh"
+			text: i18n("Sign In Again")
+			enabled: !autoLoginInProgress
+			onClicked: startAutoLogin(googleLoginManager.activeAccountId)
+		}
+		BusyIndicator {
+			visible: autoLoginInProgress
+			running: visible
+			Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+		}
+	}
+	Label {
+		visible: !googleLoginManager.isLoggedIn
+		Layout.fillWidth: true
+		wrapMode: Text.Wrap
+		opacity: 0.7
+		text: i18n("Your browser opens to sign in. When access is granted the widget picks it up automatically.")
+	}
+
+	// Advanced sign-in (custom OAuth client, manual code): collapsed by default.
+	property bool showAdvancedSignIn: false
+	ToolButton {
+		Layout.topMargin: Kirigami.Units.largeSpacing
+		icon.name: page.showAdvancedSignIn ? "arrow-down" : "arrow-right"
+		text: i18n("Advanced sign-in options")
+		onClicked: page.showAdvancedSignIn = !page.showAdvancedSignIn
+	}
+	ColumnLayout {
+	id: advancedSignIn
+	visible: page.showAdvancedSignIn
+	Layout.fillWidth: true
+	Layout.leftMargin: Kirigami.Units.largeSpacing
 
 	HeaderText {
 		text: i18n("Client Credentials")
+		level: 3
 	}
 	ColumnLayout {
 		Layout.fillWidth: true
@@ -403,7 +448,8 @@ ConfigPage {
 	}
 
 	HeaderText {
-		text: i18n("Redirect Mode")
+		text: i18n("Manual Sign-in")
+		level: 3
 	}
 	Label {
 		Layout.fillWidth: true
@@ -574,6 +620,8 @@ ConfigPage {
 		}
 		
 	}
+
+	} // advancedSignIn
 
 	RowLayout {
 		Layout.fillWidth: true
@@ -789,16 +837,6 @@ ConfigPage {
 	ColumnLayout {
 		Layout.fillWidth: true
 		visible: googleLoginManager.isLoggedIn
-
-		ConfigRadioButtonGroup {
-			id: googleEventClickAction
-			label: i18n("Event Click:")
-			configKey: 'googleEventClickAction'
-			model: [
-				{ value: 'WebEventView', text: i18n("Open Web Event View") },
-				{ value: 'WebMonthView', text: i18n("Open Web Month View") },
-			]
-		}
 
 		ConfigCheckBox {
 			configKey: 'googleHideGoalsDesc'

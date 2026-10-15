@@ -91,98 +91,67 @@ ConfigPage {
 		}
 	}
 
-	ColumnLayout {
+	Kirigami.FormLayout {
 		Layout.fillWidth: true
-		Layout.fillHeight: true
-		spacing: Kirigami.Units.smallSpacing
 
-		Label {
-			Layout.fillWidth: true
-			text: i18n("Enter time zone IDs (for example: Europe/London, America/New_York). The list controls which zones appear in the tooltip.")
-			wrapMode: Text.Wrap
+		Kirigami.Separator {
+			Kirigami.FormData.isSection: true
+			Kirigami.FormData.label: i18n("Extra Time Zones in the Tooltip")
 		}
-
 		RowLayout {
-			Layout.fillWidth: true
+			Kirigami.FormData.label: i18n("Add:")
 			TextField {
 				id: timezoneInput
-				Layout.fillWidth: true
-				placeholderText: i18n("Time zone ID")
+				Layout.preferredWidth: Kirigami.Units.gridUnit * 14
+				placeholderText: i18n("eg: America/New_York")
 				onAccepted: addTimezone(text)
 			}
 			Button {
+				icon.name: "list-add"
 				text: i18n("Add")
 				enabled: timezoneInput.text.trim().length > 0
 				onClicked: addTimezone(timezoneInput.text)
 			}
 		}
-
-		RowLayout {
-			Layout.fillWidth: true
-			Label {
-				text: i18n("Time zones")
-				font.bold: true
-				Layout.preferredWidth: page.timezoneColumnWidth
-			}
-			Label {
-				text: i18n("Identifier")
-				font.bold: true
-				Layout.fillWidth: true
-			}
-			Item { Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium }
-		}
-
-		ListView {
-			id: timeZoneView
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			clip: true
-			model: timezoneListModel
-			delegate: RowLayout {
-				width: timeZoneView.width
-				spacing: Kirigami.Units.smallSpacing
-
-				Label {
-					text: prettyZoneName(model.zoneId)
-					Layout.preferredWidth: page.timezoneColumnWidth
-					elide: Text.ElideRight
-				}
-				Label {
-					text: model.zoneId
-					Layout.fillWidth: true
-					elide: Text.ElideRight
-					opacity: 0.6
-				}
-				ToolButton {
-					icon.name: "edit-delete"
-					enabled: model.zoneId !== "Local"
-					onClicked: removeTimezone(model.zoneId)
-					Accessible.name: i18n("Remove time zone")
+		// A plain list (not a ListView) so it sizes to its rows inside the scrolling page.
+		ColumnLayout {
+			Kirigami.FormData.label: i18n("Shown:")
+			spacing: 0
+			Repeater {
+				model: timezoneListModel
+				RowLayout {
+					spacing: Kirigami.Units.smallSpacing
+					Label {
+						text: prettyZoneName(model.zoneId)
+						Layout.preferredWidth: page.timezoneColumnWidth
+						elide: Text.ElideRight
+					}
+					Label {
+						text: model.zoneId
+						Layout.preferredWidth: page.timezoneColumnWidth
+						elide: Text.ElideRight
+						opacity: 0.6
+					}
+					ToolButton {
+						icon.name: "edit-delete"
+						enabled: model.zoneId !== "Local"
+						onClicked: removeTimezone(model.zoneId)
+						Accessible.name: i18n("Remove time zone")
+					}
 				}
 			}
 		}
-
-		ButtonGroup { id: timezoneDisplayType }
-		RowLayout {
-			Label {
-				text: i18n("Display time zone as:")
-			}
-
-			RadioButton {
-				id: timezoneCityRadio
-				text: i18n("Time zone city")
-				ButtonGroup.group: timezoneDisplayType
-				checked: !page.configBridge.read("displayTimezoneAsCode", true)
-				onClicked: page.configBridge.write("displayTimezoneAsCode", false)
-			}
-
-			RadioButton {
-				id: timezoneCodeRadio
-				text: i18n("Time zone code")
-				ButtonGroup.group: timezoneDisplayType
-				checked: page.configBridge.read("displayTimezoneAsCode", true)
-				onClicked: page.configBridge.write("displayTimezoneAsCode", true)
-			}
+		Label {
+			Layout.maximumWidth: Kirigami.Units.gridUnit * 20
+			wrapMode: Text.Wrap
+			opacity: 0.7
+			text: i18n("Zones with the same time as yours are not shown.")
+		}
+		ComboBox {
+			Kirigami.FormData.label: i18n("Show as:")
+			model: [i18n("City name"), i18n("Abbreviation (eg: CEST)")]
+			currentIndex: page.configBridge.read("displayTimezoneAsCode", true) ? 1 : 0
+			onActivated: function(index) { page.configBridge.write("displayTimezoneAsCode", index === 1) }
 		}
 	}
 }
