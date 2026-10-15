@@ -142,6 +142,10 @@ PinchArea {
 
 	// Implement Calendar.updateData()
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/calendar.cpp#L215
+	// Month the days model was built for. Selecting a day or "today" in the same month changes
+	// displayedDate too; rebuilding then recreated every day cell and its event badges.
+	property string builtMonthKey: ""
+
 	function updateMonthOverview() {
 		var date = calendarBackend.displayedDate
 		var day = date.getDate()
@@ -149,6 +153,12 @@ PinchArea {
 		var year = date.getFullYear()
 		// console.log('displayedDate', date)
 		// console.log(day, month+1, year)
+
+		var monthKey = year + '-' + month + '-' + calendarBackend.firstDayOfWeek + '-' + calendarBackend.days * calendarBackend.weeks
+		if (monthKey === builtMonthKey && daysModel.count > 0) {
+			return
+		}
+		builtMonthKey = monthKey
 
 		daysModel.clear()
 		var totalDays = calendarBackend.days * calendarBackend.weeks

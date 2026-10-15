@@ -169,13 +169,10 @@ MouseArea {
 		if (agendaScrollOnMonthChange) {
 			selectedDate = startOfMonth
 		}
-		// Opening the popup resets monthViewDate to today. Only refetch when the visible month changes.
+		// Opening the popup or picking a day / "today" in the same month keeps the month:
+		// nothing to fetch or rebuild. (A newly created popup fills itself in Component.onCompleted.)
 		if (monthChanged) {
 			logic.updateEvents()
-		} else {
-			// The popup is created on first open, after the startup fetch finished.
-			// Rebuild from already fetched data, no network request.
-			deferredUpdateUI()
 		}
 	}
 
@@ -547,7 +544,7 @@ MouseArea {
 			// Next to the agenda, keep the calendar at its configured size; extra room goes to the agenda.
 			Layout.maximumWidth: popup.twoColumns ? popup.leftColumnWidth : Number.POSITIVE_INFINITY
 			Layout.maximumHeight: popup.twoColumns ? popup.bottomRowHeight : Number.POSITIVE_INFINITY
-			Layout.alignment: Qt.AlignTop
+			Layout.alignment: Qt.AlignCenter
 
 			// Component.onCompleted: {
 			// 	today = new Date()
