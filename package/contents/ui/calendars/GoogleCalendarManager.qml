@@ -404,8 +404,29 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		})
 	}
 
+	// Popup reminder minutes from the event, or the calendar defaults.
+	// [] = the event has no reminders. undefined = unknown (use the widget setting).
+	function parseReminderMinutes(calendar, event) {
+		var reminders = event.reminders
+		if (!reminders) {
+			return undefined
+		}
+		var list = reminders.useDefault ? calendar.defaultReminders : reminders.overrides
+		if (!list) {
+			return reminders.useDefault ? undefined : []
+		}
+		var minutes = []
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].method === 'popup' && typeof list[i].minutes === 'number') {
+				minutes.push(list[i].minutes)
+			}
+		}
+		return minutes
+	}
+
 	function parseEvent(calendar, event) {
 		event.description = event.description || ""
+		event.reminderMinutes = parseReminderMinutes(calendar, event)
 		event.backgroundColor = parseColor(calendar, event)
 		event.canEdit = (calendar.accessRole == 'writer' || calendar.accessRole == 'owner') && !event.recurringEventId // We cannot currently edit repeating events.
 		if (plasmoid.configuration.googleHideGoalsDesc

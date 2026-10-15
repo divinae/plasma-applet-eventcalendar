@@ -114,6 +114,15 @@ ConfigPage {
 				spacing: 0
 				enabled: eventReminderNotification.notificationEnabled
 				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
+				ConfigCheckBox {
+					configKey: 'eventReminderUseGoogle'
+					text: i18n("Use the reminder times set in Google Calendar (other events use the time above)")
+				}
+			}
+			RowLayout {
+				spacing: 0
+				enabled: eventReminderNotification.notificationEnabled
+				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
 				ConfigSpinBox {
 					configKey: 'eventReminderTimeout'
 					before: i18n("Hide after:")

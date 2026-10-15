@@ -206,6 +206,8 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_eventReminderUseGoogle
+	property var cfg_eventReminderUseGoogleDefault
 	property var cfg_clockShowNextEvent
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes

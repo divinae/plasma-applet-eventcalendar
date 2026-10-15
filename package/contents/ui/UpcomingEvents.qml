@@ -44,9 +44,29 @@ CalendarManager {
 		return a2
 	}
 
+	// Google events carry their own reminder times (event or calendar defaults).
+	function reminderMinutesFor(eventItem) {
+		if (plasmoid.configuration.eventReminderUseGoogle && Array.isArray(eventItem.reminderMinutes)) {
+			return eventItem.reminderMinutes
+		}
+		return [minutesBeforeReminding]
+	}
+
+	// Returns the reminder minutes matching this minute, or 0. 0 minute reminders
+	// are covered by the "starting" notification.
+	function dueReminderMinutes(eventItem) {
+		var list = reminderMinutesFor(eventItem)
+		for (var i = 0; i < list.length; i++) {
+			var minutes = list[i]
+			if (minutes > 0 && isSameMinute(getDeltaMinutes(timeModel.currentTime, minutes), eventItem.startDateTime)) {
+				return minutes
+			}
+		}
+		return 0
+	}
+
 	function shouldSendReminder(eventItem) {
-		var reminderDateTime = getDeltaMinutes(timeModel.currentTime, minutesBeforeReminding)
-		return isSameMinute(reminderDateTime, eventItem.startDateTime)
+		return dueReminderMinutes(eventItem) > 0
 	}
 
 	function isEventStarting(eventItem) {
@@ -293,9 +313,10 @@ CalendarManager {
 					if (plasmoid.configuration.eventStartingNotificationEnabled) {
 						sendEventStartingNotification(eventItem)
 					}
-				} else if (shouldSendReminder(eventItem)) {
-					if (plasmoid.configuration.eventReminderNotificationEnabled) {
-						sendEventReminderNotification(eventItem, minutesBeforeReminding)
+				} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
+					var reminderMinutes = dueReminderMinutes(eventItem)
+					if (reminderMinutes > 0) {
+						sendEventReminderNotification(eventItem, reminderMinutes)
 					}
 				}
 			})
