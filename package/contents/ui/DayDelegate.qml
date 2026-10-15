@@ -216,8 +216,8 @@ MouseArea {
 					} else {
 						return Kirigami.Theme.highlightColor
 					}
-				} else { // todayStyle == "theme"
-					return Kirigami.Theme.highlightColor
+				} else { // todayStyle == "theme": bold text color, the frame marks today
+					return Kirigami.Theme.textColor
 				}
 			} else {
 				return Kirigami.Theme.textColor
