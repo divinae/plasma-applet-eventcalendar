@@ -386,9 +386,10 @@ Item {
 		Rectangle {
 			// Cover the grid lines around the cells too, so the tint and the lines line up.
 			x: calendarGrid.x + modelData.first * (daysCalendar.cellWidth + root.borderWidth) - root.borderWidth
-			y: calendarGrid.y
+			// Below the weekday names, like the grid frame.
+			y: gridFrame.y
 			width: modelData.count * (daysCalendar.cellWidth + root.borderWidth) + root.borderWidth
-			height: calendarGrid.height
+			height: gridFrame.height
 			radius: 6
 			color: Kirigami.Theme.textColor
 			opacity: 0.04
