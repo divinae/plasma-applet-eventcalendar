@@ -216,11 +216,11 @@ Item {
 	// Outer frame of the grid (below the weekday names), with rounded corners.
 	Rectangle {
 		id: gridFrame
-		readonly property int top: daysCalendar.headerModel ? root.borderWidth + daysCalendar.headerHeight : 0
+		readonly property int frameTop: daysCalendar.headerModel ? root.borderWidth + daysCalendar.headerHeight : 0
 		x: canvas.x
-		y: canvas.y + top
+		y: canvas.y + frameTop
 		width: canvas.width
-		height: canvas.height - top
+		height: canvas.height - frameTop
 		radius: 6
 		color: "transparent"
 		border.width: root.borderWidth
