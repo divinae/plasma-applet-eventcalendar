@@ -247,11 +247,15 @@ Item {
 			// over the days grid which will be visible on eg. mouse hover
 			var lineBasePoint = Math.floor(root.borderWidth / 2)
 
+			// The weekday names row has no lines around it; the grid starts below it.
+			var hasHeader = !!daysCalendar.headerModel
+			var gridTop = hasHeader ? root.borderWidth + daysCalendar.headerHeight : 0
+
 			// horizontal lines
-			for (var i = 0; i < calendarGrid.rows + 1; i++) {
+			for (var i = hasHeader ? 1 : 0; i < calendarGrid.rows + 1; i++) {
 				var lineY = lineBasePoint + daysCalendar.gridLineY(i)
 
-				if (i === 0 || i === calendarGrid.rows) {
+				if (i === 0 || i === calendarGrid.rows || (hasHeader && i === 1)) {
 					ctx.moveTo(0, lineY)
 				} else {
 					ctx.moveTo(showWeekNumbers ? daysCalendar.cellWidth + root.borderWidth : root.borderWidth, lineY)
@@ -265,11 +269,7 @@ Item {
 
 				// Draw the outer vertical lines in full height so that it closes
 				// the outer rectangle
-				if (i == 0 || i == gridColumns || !daysCalendar.headerModel) {
-					ctx.moveTo(lineX, 0)
-				} else {
-					ctx.moveTo(lineX, root.borderWidth + daysCalendar.headerHeight)
-				}
+				ctx.moveTo(lineX, gridTop)
 				ctx.lineTo(lineX, height)
 			}
 
