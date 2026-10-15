@@ -489,7 +489,17 @@ Item {
 							Rectangle {
 								anchors.fill: parent
 								color: Kirigami.Theme.highlightColor
-								opacity: dayColumn.today ? 0.06 : 0
+								opacity: dayColumn.today ? 0.08 : 0
+							}
+							// Today: highlight-colored frame around the column.
+							Rectangle {
+								visible: dayColumn.today
+								anchors.fill: parent
+								anchors.margins: 1
+								color: "transparent"
+								radius: 6
+								border.width: 2
+								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
 							}
 							Rectangle {
 								visible: appletConfig.showGridLines // Day separators only with grid lines on
