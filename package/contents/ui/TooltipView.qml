@@ -9,8 +9,12 @@ Item {
 	property Item appletItem
 	property int preferredTextWidth: Kirigami.Units.gridUnit * 20
 
-	width: childrenRect.width + Kirigami.Units.gridUnit
-	height: childrenRect.height + Kirigami.Units.gridUnit
+	// childrenRect can still be 0 when Plasma first shows the tooltip (empty tooltip).
+	// The layout's implicit size is computed reliably.
+	implicitWidth: columnLayout.implicitWidth + Kirigami.Units.gridUnit
+	implicitHeight: columnLayout.implicitHeight + Kirigami.Units.gridUnit
+	width: implicitWidth
+	height: implicitHeight
 
 	LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
 	LayoutMirroring.childrenInherit: true
@@ -45,7 +49,7 @@ Item {
 	}
 
 	function nameForZone(zone) {
-		if (plasmoid.configuration.displayTimezoneAsCode) {
+		if (plasmoid.configuration.displayTimezoneAsCode && dataSource.data[zone]) {
 			return dataSource.data[zone]["Timezone Abbreviation"]
 		}
 		if (dataSource.data[zone] && dataSource.data[zone]["Timezone City"]) {
