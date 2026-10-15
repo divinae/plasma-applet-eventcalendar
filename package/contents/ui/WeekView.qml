@@ -492,6 +492,7 @@ Item {
 								opacity: dayColumn.today ? 0.06 : 0
 							}
 							Rectangle {
+								visible: appletConfig.showGridLines // Day separators only with grid lines on
 								width: 1
 								height: parent.height
 								color: weekView.gridLineColor
