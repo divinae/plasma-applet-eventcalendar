@@ -147,8 +147,15 @@ def notify(args):
 			'critical': Notify.Urgency.CRITICAL,
 		}[args.urgency])
 
+	handled = []
+
 	def on_action(notification, action, *user_data):
-		sys.stdout.write(' '.join([action, *user_data]) + '\n')
+		# Report only the first event: clicking an action is followed by "closed".
+		if handled:
+			return
+		handled.append(action)
+		sys.stdout.write(str(action) + '\n')
+		sys.stdout.flush()
 		if sfxProc:
 			sfxProc.terminate()
 		loop.quit()

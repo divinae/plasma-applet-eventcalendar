@@ -83,7 +83,8 @@ QtObject {
 				notifyWithNotifySend(args, callback)
 				return
 			}
-			var actionId = stdout.replace('\n', ' ').trim()
+			// First line only: the script reports one action, but be safe if it prints more.
+			var actionId = String(stdout || '').split('\n')[0].trim()
 			if (typeof callback === 'function') {
 				callback(actionId)
 			}
