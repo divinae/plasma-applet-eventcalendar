@@ -1,5 +1,8 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.core as PlasmaCore
+
+import "../LocaleFuncs.js" as LocaleFuncs
 
 // Google Calendar (Android) style: event titles as colored bars below the day number.
 Item {
@@ -23,6 +26,34 @@ Item {
 
 	function eventAt(i) {
 		return modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
+	}
+
+	function plainText(html) {
+		return String(html || '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim()
+	}
+
+	function eventDetails(eventItem) {
+		if (!eventItem) {
+			return ''
+		}
+		var lines = []
+		lines.push(LocaleFuncs.formatEventDuration(eventItem, {
+			relativeDate: timeModel.currentTime,
+			clock24h: appletConfig.clock24h,
+		}))
+		if (eventItem.location) {
+			lines.push(eventItem.location)
+		}
+		var calendar = eventModel.getCalendar(eventItem.calendarId)
+		if (calendar && calendar.summary) {
+			lines.push(calendar.summary)
+		}
+		var description = plainText(eventItem.description)
+		if (description) {
+			lines.push('')
+			lines.push(description.length > 300 ? description.substr(0, 300) + '…' : description)
+		}
+		return lines.join('\n')
 	}
 
 	// Black or white text, whichever reads better on the event color.
@@ -66,6 +97,13 @@ Item {
 					font: eventTitlesBadge.titleFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap
+				}
+
+				PlasmaCore.ToolTipArea {
+					anchors.fill: parent
+					mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""
+					subText: containsMouse ? eventTitlesBadge.eventDetails(eventBar.eventItem) : ""
+					textFormat: Text.PlainText
 				}
 			}
 		}

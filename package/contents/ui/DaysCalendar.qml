@@ -54,6 +54,7 @@ Item {
 	property string todayStyle: "theme"
 
 	onShowWeekNumbersChanged: canvas.requestPaint()
+	onHeaderHeightChanged: canvas.requestPaint()
 	property color themeTextColor: Kirigami.Theme.textColor
 	onThemeTextColorChanged: canvas.requestPaint()
 
@@ -67,8 +68,25 @@ Item {
 
 	// Take the calendar width, subtract the inner and outer spacings and divide by number of columns (==days in week)
 	readonly property int cellWidth: Math.floor((stack.width - (daysCalendar.columns + 1) * root.borderWidth) / (daysCalendar.columns + (showWeekNumbers ? 1 : 0)))
+	// With event titles, the weekday names get a short row in the small font instead of a full cell row.
+	readonly property bool compactHeader: eventBadgeType === 'eventTitles' && !!headerModel
+	FontMetrics {
+		id: headerFontMetrics
+		font: Kirigami.Theme.smallFont
+	}
+	readonly property int compactHeaderHeight: Math.ceil(headerFontMetrics.height) + 4
 	// Take the calendar height, subtract the inner spacings and divide by number of rows (root.weeks + one row for day names)
-	readonly property int cellHeight:  Math.floor((stack.height - heading.height - calendarGrid.rows * root.borderWidth) / calendarGrid.rows)
+	readonly property int cellHeight: compactHeader
+		? Math.floor((stack.height - heading.height - compactHeaderHeight - calendarGrid.rows * root.borderWidth) / (calendarGrid.rows - 1))
+		: Math.floor((stack.height - heading.height - calendarGrid.rows * root.borderWidth) / calendarGrid.rows)
+	readonly property int headerHeight: !headerModel ? 0 : (compactHeader ? compactHeaderHeight : cellHeight)
+	// Y of the line above grid row i (row 0 is the header row when there is one).
+	function gridLineY(i) {
+		if (!headerModel || i === 0) {
+			return (cellHeight + root.borderWidth) * i
+		}
+		return headerHeight + root.borderWidth + (cellHeight + root.borderWidth) * (i - 1)
+	}
 
 	property real transformScale: 1
 	property point transformOrigin: Qt.point(width / 2, height / 2)
@@ -200,7 +218,7 @@ Item {
 			bottom: parent.bottom
 		}
 		width: (daysCalendar.cellWidth + root.borderWidth) * gridColumns + root.borderWidth
-		height: (daysCalendar.cellHeight + root.borderWidth) * calendarGrid.rows + root.borderWidth
+		height: daysCalendar.gridLineY(calendarGrid.rows) + root.borderWidth
 
 		opacity: root.borderOpacity
 		antialiasing: false
@@ -227,7 +245,7 @@ Item {
 
 			// horizontal lines
 			for (var i = 0; i < calendarGrid.rows + 1; i++) {
-				var lineY = lineBasePoint + (daysCalendar.cellHeight + root.borderWidth) * (i)
+				var lineY = lineBasePoint + daysCalendar.gridLineY(i)
 
 				if (i === 0 || i === calendarGrid.rows) {
 					ctx.moveTo(0, lineY)
@@ -246,7 +264,7 @@ Item {
 				if (i == 0 || i == gridColumns || !daysCalendar.headerModel) {
 					ctx.moveTo(lineX, 0)
 				} else {
-					ctx.moveTo(lineX, root.borderWidth + daysCalendar.cellHeight)
+					ctx.moveTo(lineX, root.borderWidth + daysCalendar.headerHeight)
 				}
 				ctx.lineTo(lineX, height)
 			}
@@ -313,7 +331,7 @@ Item {
 			// The borderWidth needs to be counted twice here because it goes
 			// in fact through two lines - the topmost one (the outer edge)
 			// and then the one below weekday strings
-			topMargin: daysCalendar.cellHeight + root.borderWidth + root.borderWidth
+			topMargin: daysCalendar.headerHeight + root.borderWidth + root.borderWidth
 		}
 		spacing: root.borderWidth
 
@@ -367,9 +385,11 @@ Item {
 
 			PlasmaComponents3.Label {
 				width: daysCalendar.cellWidth
-				height: daysCalendar.cellHeight
+				height: daysCalendar.headerHeight
 				font.pointSize: -1 // Ignore pixelSize warning
-				font.pixelSize: Math.max(Kirigami.Theme.smallFont.pixelSize, Math.min(daysCalendar.cellHeight / 3, daysCalendar.cellWidth * 5/8))
+				font.pixelSize: daysCalendar.compactHeader
+					? Math.round(headerFontMetrics.height * 0.75)
+					: Math.max(Kirigami.Theme.smallFont.pixelSize, Math.min(daysCalendar.cellHeight / 3, daysCalendar.cellWidth * 5/8))
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
 				elide: Text.ElideRight
