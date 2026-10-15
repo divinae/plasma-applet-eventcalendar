@@ -486,8 +486,9 @@ Item {
 							}
 							Rectangle {
 								visible: index > 0
-								x: weekView.gutterWidth
-								width: parent.width - weekView.gutterWidth
+								// Inside the frame, so lines don't darken where they meet it.
+								x: weekView.gutterWidth + 1
+								width: weekView.columnWidth * weekView.dayCount - 2
 								height: 1
 								color: weekView.gridLineColor
 							}

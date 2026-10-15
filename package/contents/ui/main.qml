@@ -173,6 +173,9 @@ PlasmoidItem {
 		property bool isExpanded: root.expanded
 		onIsExpandedChanged: {
 			logger.debug('isExpanded', isExpanded)
+			if (!isExpanded && !plasmoid.configuration.pin) {
+				closeOverlays() // Don't come back to a stale day list or event card.
+			}
 			if (isExpanded) {
 				updateToday()
 				logic.updateWeather()

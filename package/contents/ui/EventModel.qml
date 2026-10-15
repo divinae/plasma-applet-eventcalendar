@@ -24,7 +24,29 @@ CalendarManager {
 		eventModel.eventsByCalendar[calendarId] = data
 		eventModel.calendarFetched(calendarId, data)
 	}
+	// Child managers change their own event lists. Ours holds copies (Qt 6.12+ copies JS objects
+	// passed through var signal arguments), so mirror adds, removes and updates here.
+	function ownEventList(calendarId) {
+		var calendar = eventModel.eventsByCalendar[calendarId]
+		if (!calendar) {
+			calendar = { items: [] }
+			eventModel.eventsByCalendar[calendarId] = calendar
+		}
+		return calendar.items
+	}
+	function indexOfEvent(items, eventId) {
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].id == eventId) {
+				return i
+			}
+		}
+		return -1
+	}
 	function eventAddedListener(calendarId, data) {
+		var items = ownEventList(calendarId)
+		if (indexOfEvent(items, data.id) < 0) {
+			items.push(data)
+		}
 		eventModel.mergeEvents()
 		eventModel.eventAdded(calendarId, data)
 	}
@@ -32,6 +54,11 @@ CalendarManager {
 		eventModel.eventCreated(calendarId, data)
 	}
 	function eventRemovedListener(calendarId, eventId, data) {
+		var items = ownEventList(calendarId)
+		var index = indexOfEvent(items, eventId)
+		if (index >= 0) {
+			items.splice(index, 1)
+		}
 		eventModel.mergeEvents()
 		eventModel.eventRemoved(calendarId, eventId, data)
 	}
@@ -39,6 +66,13 @@ CalendarManager {
 		eventModel.eventDeleted(calendarId, eventId, data)
 	}
 	function eventUpdatedListener(calendarId, eventId, data) {
+		var items = ownEventList(calendarId)
+		var index = indexOfEvent(items, eventId)
+		if (index >= 0) {
+			items[index] = data
+		} else {
+			items.push(data)
+		}
 		eventModel.mergeEvents()
 		eventModel.eventUpdated(calendarId, eventId, data)
 	}
@@ -267,11 +301,12 @@ CalendarManager {
 
 	function mergeEvents() {
 		logger.debug('eventModel.mergeEvents')
-		delete eventModel.eventsData
-		eventModel.eventsData = { items: [] }
+		// Build the list first and assign once: bindings on eventsData must not see it half-filled.
+		var items = []
 		for (var calendarId in eventModel.eventsByCalendar) {
-			eventModel.eventsData.items = eventModel.eventsData.items.concat(eventModel.eventsByCalendar[calendarId].items)
+			items = items.concat(eventModel.eventsByCalendar[calendarId].items)
 		}
+		eventModel.eventsData = { items: items }
 	}
 
 	//--- CalendarManager: Event
@@ -285,6 +320,18 @@ CalendarManager {
 			calendarManager.createEvent(calendarId, date, text)
 		} else {
 			logger.log('Could not createEvent. Could not find calendarManager for calendarId = ', calendarId)
+		}
+	}
+
+	function createEventFromData(calendarId, eventData) {
+		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
+			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
+		}
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.createEventFromData === 'function') {
+			calendarManager.createEventFromData(calendarId, eventData)
+		} else {
+			logger.log('Could not createEventFromData for calendarId = ', calendarId)
 		}
 	}
 

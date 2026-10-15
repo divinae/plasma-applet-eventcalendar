@@ -524,6 +524,38 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return handleError(err, data, xhr)
 	}
 
+	// Create an event from full data: { summary, start, end, location, description }.
+	function createEventFromData(calendarId, eventData) {
+		if (!session.accessToken) {
+			session.transactionError('attempting to "create an event" without an access token set')
+			return
+		}
+		var func = function() {
+			var url = 'https://www.googleapis.com/calendar/v3/calendars/'
+			url += encodeURIComponent(unscopedCalendarId(calendarId))
+			url += '/events'
+			Requests.postJSON({
+				url: url,
+				headers: {
+					"Authorization": "Bearer " + session.accessToken,
+				},
+				data: eventData,
+			}, function(err, data, xhr) {
+				if (!err && data && data.error) {
+					err = data
+				}
+				if (err) {
+					createEvent_err(err, data, xhr)
+				} else {
+					createEvent_done(calendarId, data)
+				}
+			})
+		}
+		withAccessToken(func, function(err) {
+			handleAuthError(err, false)
+		})
+	}
+
 	function createGCalEvent(args, callback) {
 		// https://www.googleapis.com/calendar/v3/calendars/calendarId/events/quickAdd
 		var url = 'https://www.googleapis.com/calendar/v3'

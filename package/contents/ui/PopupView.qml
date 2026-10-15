@@ -318,6 +318,7 @@ MouseArea {
 	}
 	function closeEventDetails() {
 		detailsEvent = null
+		dayEventsOverlay.focusCard() // Esc closes the day list next
 	}
 
 	//--- Day events list (month view: click a day). Event details open on top of it.
@@ -327,6 +328,51 @@ MouseArea {
 	}
 	function closeDayEvents() {
 		dayListDate = null
+	}
+
+	//--- New / edit event form, on top of everything.
+	property bool editorOpen: false
+	property var editorEvent: null // null: new event
+	property date editorDate: new Date()
+	function newEvent(date) {
+		editorEvent = null
+		editorDate = date || selectedDate || new Date()
+		editorOpen = true
+	}
+	function editEvent(eventItem) {
+		editorEvent = eventItem
+		editorOpen = true
+	}
+	function closeEditor() {
+		editorOpen = false
+		editorEvent = null
+		eventDetailsOverlay.focusCard()
+	}
+
+	function closeOverlays() {
+		editorOpen = false
+		editorEvent = null
+		detailsEvent = null
+		dayListDate = null
+	}
+	// Overlays belong to the view they were opened from.
+	Connections {
+		target: plasmoid.configuration
+		function onPopupModeChanged() { popup.closeOverlays() }
+	}
+	// The open event may have been edited (or deleted) meanwhile: show the current version.
+	Connections {
+		target: popup.eventModel
+		function onEventUpdated(calendarId, eventId, data) {
+			if (popup.detailsEvent && popup.detailsEvent.id == eventId) {
+				popup.detailsEvent = popup.eventModel.getEvent(calendarId, eventId) || data
+			}
+		}
+		function onEventRemoved(calendarId, eventId, data) {
+			if (popup.detailsEvent && popup.detailsEvent.id == eventId) {
+				popup.closeEventDetails()
+			}
+		}
 	}
 	Connections {
 		target: monthView
@@ -384,6 +430,12 @@ MouseArea {
 				running: popup.refreshing
 				visible: running
 			}
+		}
+		PlasmaComponents3.ToolButton {
+			icon.name: "list-add"
+			onClicked: popup.newEvent(popup.selectedDate)
+			PlasmaComponents3.ToolTip.text: i18n("New Event")
+			PlasmaComponents3.ToolTip.visible: hovered
 		}
 		Item {
 			implicitWidth: Kirigami.Units.smallSpacing
@@ -456,8 +508,7 @@ MouseArea {
 						display: QQC2.AbstractButton.TextBesideIcon
 						// Not checkable: the style's checked look changes the size and elides the text.
 						onClicked: {
-							popup.closeEventDetails()
-							popup.closeDayEvents()
+							popup.closeOverlays()
 							plasmoid.configuration.popupMode = modelData.mode
 						}
 						Accessible.name: modelData.text
@@ -480,63 +531,64 @@ MouseArea {
 	}
 
 
-	// Day events list: same card style, below the event details.
-	Loader {
-		id: dayEventsLoader
-		active: !!popup.dayListDate
-		visible: active
+	// Overlay cards: day list < event details < event form.
+	OverlayCard {
+		id: dayEventsOverlay
+		visible: !!popup.dayListDate
 		z: 4
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
-		sourceComponent: Item {
-			Rectangle {
-				anchors.fill: parent
-				color: Kirigami.Theme.backgroundColor
-				opacity: 0.6
-			}
-			MouseArea {
-				anchors.fill: parent
-				onClicked: popup.closeDayEvents()
-			}
+		onOutsideClicked: popup.closeDayEvents()
+		cardComponent: visible ? dayEventsCard : null
+		Component {
+			id: dayEventsCard
 			DayEventsView {
-				anchors.centerIn: parent
-				width: Math.min(Kirigami.Units.gridUnit * 30, parent.width - Kirigami.Units.gridUnit * 2)
-				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit * 2)
 				date: popup.dayListDate
 				onCloseRequested: popup.closeDayEvents()
 				onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
+				onAddRequested: popup.newEvent(popup.dayListDate)
 			}
 		}
 	}
 
-	// Event details: a card centered over the dimmed view. Click outside or Esc closes it.
-	Loader {
-		id: eventDetailsLoader
-		active: !!popup.detailsEvent
-		visible: active
-		z: 5 // Over the views; the header stays usable.
+	OverlayCard {
+		id: eventDetailsOverlay
+		visible: !!popup.detailsEvent
+		z: 5
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
-		sourceComponent: Item {
-			Rectangle {
-				anchors.fill: parent
-				color: Kirigami.Theme.backgroundColor
-				opacity: 0.6
-			}
-			MouseArea {
-				anchors.fill: parent
-				onClicked: popup.closeEventDetails()
-			}
+		onOutsideClicked: popup.closeEventDetails()
+		cardComponent: visible ? eventDetailsCard : null
+		Component {
+			id: eventDetailsCard
 			EventDetailsView {
-				anchors.centerIn: parent
-				width: Math.min(Kirigami.Units.gridUnit * 30, parent.width - Kirigami.Units.gridUnit * 2)
-				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit * 2)
 				eventItem: popup.detailsEvent
 				onCloseRequested: popup.closeEventDetails()
+				onEditRequested: popup.editEvent(popup.detailsEvent)
+			}
+		}
+	}
+
+	OverlayCard {
+		id: eventEditorOverlay
+		visible: popup.editorOpen
+		z: 6
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		onOutsideClicked: {} // Don't lose typed input on a stray click.
+		cardComponent: visible ? eventEditorCard : null
+		Component {
+			id: eventEditorCard
+			EventEditView {
+				eventItem: popup.editorEvent
+				initialDate: popup.editorDate
+				onCloseRequested: popup.closeEditor()
 			}
 		}
 	}

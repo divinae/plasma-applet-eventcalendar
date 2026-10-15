@@ -13,6 +13,7 @@ Rectangle {
 	property date date: new Date()
 	signal closeRequested()
 	signal eventClicked(var eventItem)
+	signal addRequested()
 
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
@@ -60,6 +61,11 @@ Rectangle {
 			return i18n("All day")
 		}
 		var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+		// Events spanning several days: show the dates too, eg: "14 Oct 22:00 – 16 Oct 02:00".
+		if (!Shared.isSameDate(e.startDateTime, e.endDateTime)) {
+			var dateFormat = 'd MMM '
+			return Qt.formatDateTime(e.startDateTime, dateFormat + format) + ' – ' + Qt.formatDateTime(e.endDateTime, dateFormat + format)
+		}
 		return Qt.formatTime(e.startDateTime, format) + ' – ' + Qt.formatTime(e.endDateTime, format)
 	}
 
@@ -86,6 +92,11 @@ Rectangle {
 				elide: Text.ElideRight
 				font.capitalization: Font.Capitalize
 				text: Qt.formatDate(dayView.date, Qt.locale().dateFormat(Locale.LongFormat))
+			}
+			PlasmaComponents3.Button {
+				icon.name: "list-add"
+				text: i18n("Add Event")
+				onClicked: dayView.addRequested()
 			}
 		}
 
@@ -128,6 +139,7 @@ Rectangle {
 							spacing: Kirigami.Units.largeSpacing
 							PlasmaComponents3.Label {
 								Layout.preferredWidth: Kirigami.Units.gridUnit * 6
+								wrapMode: Text.Wrap
 								Layout.alignment: Qt.AlignTop
 								text: dayView.timeText(eventRow.eventItem)
 								opacity: 0.7

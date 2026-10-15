@@ -271,22 +271,16 @@ Item {
 			for (var i = hasHeader ? 2 : 1; i < calendarGrid.rows; i++) {
 				var lineY = lineBasePoint + daysCalendar.gridLineY(i)
 
-				if (i === 0 || i === calendarGrid.rows || (hasHeader && i === 1)) {
-					ctx.moveTo(0, lineY)
-				} else {
-					ctx.moveTo(showWeekNumbers ? daysCalendar.cellWidth + root.borderWidth : root.borderWidth, lineY)
-				}
-				ctx.lineTo(width, lineY)
+				// Stop short of the frame so the lines don't darken where they meet it.
+				ctx.moveTo(showWeekNumbers ? daysCalendar.cellWidth + root.borderWidth : root.borderWidth, lineY)
+				ctx.lineTo(width - root.borderWidth, lineY)
 			}
 
 			// vertical lines
 			for (var i = 1; i < gridColumns; i++) {
 				var lineX = lineBasePoint + (daysCalendar.cellWidth + root.borderWidth) * (i)
-
-				// Draw the outer vertical lines in full height so that it closes
-				// the outer rectangle
-				ctx.moveTo(lineX, gridTop)
-				ctx.lineTo(lineX, height)
+				ctx.moveTo(lineX, gridTop + root.borderWidth)
+				ctx.lineTo(lineX, height - root.borderWidth)
 			}
 
 			ctx.closePath()

@@ -14,6 +14,7 @@ Rectangle {
 
 	property var eventItem: null
 	signal closeRequested()
+	signal editRequested()
 
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
@@ -127,6 +128,12 @@ Rectangle {
 				onClicked: details.confirmingDelete = false
 			}
 
+			PlasmaComponents3.ToolButton {
+				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
+				icon.name: "document-edit"
+				text: i18n("Edit")
+				onClicked: details.editRequested()
+			}
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
 				icon.name: "internet-web-browser"
