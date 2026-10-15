@@ -536,6 +536,19 @@ Item {
 								color: weekView.gridLineColor
 							}
 
+							// Click an empty spot: new event at that time (rounded down to 30 min).
+							MouseArea {
+								anchors.fill: parent
+								cursorShape: Qt.CrossCursor
+								onClicked: function(mouse) {
+									var minutes = (weekView.firstHour + mouse.y / weekView.hourHeight) * 60
+									minutes = Math.floor(minutes / 30) * 30
+									var start = new Date(dayColumn.day.date)
+									start.setMinutes(minutes)
+									popup.newEvent(dayColumn.day.date, start)
+								}
+							}
+
 							Repeater {
 								model: dayColumn.day.timed
 								Rectangle {

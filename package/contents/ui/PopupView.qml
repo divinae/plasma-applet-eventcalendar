@@ -334,9 +334,11 @@ MouseArea {
 	property bool editorOpen: false
 	property var editorEvent: null // null: new event
 	property date editorDate: new Date()
-	function newEvent(date) {
+	property var editorStart: null
+	function newEvent(date, startTime) {
 		editorEvent = null
 		editorDate = date || selectedDate || new Date()
+		editorStart = startTime || null
 		editorOpen = true
 	}
 	function editEvent(eventItem) {
@@ -613,6 +615,7 @@ MouseArea {
 			EventEditView {
 				eventItem: popup.editorEvent
 				initialDate: popup.editorDate
+				initialStart: popup.editorStart
 				onCloseRequested: popup.closeEditor()
 			}
 		}

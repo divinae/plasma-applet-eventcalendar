@@ -12,6 +12,7 @@ Rectangle {
 
 	property var eventItem: null
 	property date initialDate: new Date() // New events: day to create on
+	property var initialStart: null // New events: exact start time (eg: clicked week view slot)
 	readonly property bool isNew: !eventItem
 	signal closeRequested()
 
@@ -120,9 +121,11 @@ Rectangle {
 			durationSelector.startDateTime = start
 			durationSelector.endDateTime = end
 		} else {
-			// Next full hour on the chosen day, 1 hour long.
+			// Given start, or the next full hour on the chosen day. 1 hour long.
 			var now = new Date()
-			var s = new Date(initialDate.getFullYear(), initialDate.getMonth(), initialDate.getDate(), now.getHours() + 1, 0)
+			var s = initialStart
+				? new Date(initialStart)
+				: new Date(initialDate.getFullYear(), initialDate.getMonth(), initialDate.getDate(), now.getHours() + 1, 0)
 			durationSelector.startDateTime = s
 			durationSelector.endDateTime = new Date(s.getTime() + 60 * 60 * 1000)
 		}
