@@ -273,6 +273,22 @@ Item {
 	}
 
 	//--- UI
+	// Weekend days: tint the whole column, from the day name down through the hours.
+	Repeater {
+		model: weekView.dayCount
+		Rectangle {
+			readonly property date date: weekView.dayDate(index)
+			visible: Shared.isWeekend(date)
+			x: weekView.gutterWidth + index * weekView.columnWidth
+			y: dayNamesRow.y
+			width: weekView.columnWidth
+			height: weekView.height - y
+			radius: 6
+			color: Kirigami.Theme.textColor
+			opacity: 0.04
+		}
+	}
+
 	ColumnLayout {
 		anchors.fill: parent
 		spacing: Kirigami.Units.smallSpacing
@@ -309,6 +325,7 @@ Item {
 
 		// Day names
 		Row {
+			id: dayNamesRow
 			Layout.fillWidth: true
 			Item {
 				width: weekView.gutterWidth
@@ -480,12 +497,6 @@ Item {
 							width: weekView.columnWidth
 							height: parent.height
 
-							Rectangle {
-								anchors.fill: parent
-								visible: !dayColumn.today && Shared.isWeekend(dayColumn.day.date)
-								color: Kirigami.Theme.textColor
-								opacity: 0.04
-							}
 							Rectangle {
 								anchors.fill: parent
 								color: Kirigami.Theme.highlightColor
