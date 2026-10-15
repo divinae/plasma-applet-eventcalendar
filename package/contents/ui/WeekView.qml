@@ -11,7 +11,18 @@ Item {
 	id: weekView
 
 	property var eventModel
-	property int headerRightMargin: 0 // Room for the popup's view switcher in the header row
+	// false: the popup shows title and navigation in its own header.
+	property bool showHeader: true
+	function goPrevious() {
+		weekStart = dayDate(-7)
+	}
+	function goNext() {
+		weekStart = dayDate(7)
+	}
+	function goToday() {
+		weekStart = startOfWeek(currentTime)
+		scrollToWorkingHours()
+	}
 	readonly property date currentTime: timeModel.currentTime
 	property date weekStart: startOfWeek(currentTime)
 	readonly property int dayCount: 7
@@ -265,7 +276,7 @@ Item {
 
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.rightMargin: weekView.headerRightMargin
+			visible: weekView.showHeader
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
 				onClicked: weekView.weekStart = weekView.dayDate(-7)
@@ -356,7 +367,7 @@ Item {
 					y: bar.lane * (weekView.allDayRowHeight + 1)
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
 					height: weekView.allDayRowHeight
-					radius: 3
+					radius: 5
 					color: barColor
 					PlasmaComponents3.Label {
 						anchors.fill: parent
@@ -499,7 +510,7 @@ Item {
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
 									width: slotWidth - 1
 									height: Math.max(weekView.lineHeight + 2, (visibleEnd - visibleStart) / 3600000 * weekView.hourHeight - 2)
-									radius: 3
+									radius: 6
 									color: barColor
 									border.width: 1
 									border.color: Kirigami.Theme.backgroundColor
@@ -513,6 +524,8 @@ Item {
 											width: parent.width
 											text: eventBlock.eventItem.summary
 											color: Shared.contrastTextColor(eventBlock.barColor)
+											// Event in progress
+											font.bold: eventBlock.eventItem.startDateTime <= weekView.currentTime && weekView.currentTime < eventBlock.eventItem.endDateTime
 											elide: Text.ElideRight
 											wrapMode: Text.WordWrap
 											maximumLineCount: Math.max(1, Math.floor((eventBlock.height - 4) / weekView.lineHeight) - 1)

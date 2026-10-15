@@ -47,7 +47,7 @@ Item {
 				readonly property color barColor: eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : Kirigami.Theme.highlightColor
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
-				radius: 2
+				radius: 4
 				color: barColor
 				border.width: 1
 				border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.25)
@@ -59,7 +59,11 @@ Item {
 					verticalAlignment: Text.AlignVCenter
 					text: eventBar.eventItem ? eventBar.eventItem.summary : ""
 					color: Shared.contrastTextColor(eventBar.barColor)
-					font: eventTitlesBadge.titleFont
+					font.family: eventTitlesBadge.titleFont.family
+					font.pointSize: eventTitlesBadge.titleFont.pointSize
+					// Event in progress
+					font.bold: !!eventBar.eventItem && !(eventBar.eventItem.start && eventBar.eventItem.start.date)
+						&& eventBar.eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < eventBar.eventItem.endDateTime
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap
 				}
