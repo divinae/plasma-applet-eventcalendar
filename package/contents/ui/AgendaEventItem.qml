@@ -189,8 +189,7 @@ LinkRect {
 			logger.logJSON("calendar", calendar)
 			upcomingEvents.sendEventStartingNotification(model)
 		} else {
-			// agenda_event_clicked == "browser_viewevent"
-			Qt.openUrlExternally(model.htmlLink)
+			popup.activateEvent(events.get(eventItemIndex))
 		}
 	}
 

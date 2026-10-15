@@ -206,6 +206,8 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_eventClickAction
+	property var cfg_eventClickActionDefault
 	property var cfg_weekViewStartHour
 	property var cfg_weekViewStartHourDefault
 	property var cfg_weekViewEndHour

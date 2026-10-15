@@ -68,6 +68,12 @@ Item {
 					wrapMode: Text.NoWrap
 				}
 
+				MouseArea {
+					anchors.fill: parent
+					cursorShape: Qt.PointingHandCursor
+					onClicked: popup.activateEvent(eventBar.eventItem)
+				}
+
 				PlasmaCore.ToolTipArea {
 					anchors.fill: parent
 					mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""

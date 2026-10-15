@@ -89,6 +89,19 @@ ConfigPage {
 	}
 
 	HeaderText {
+		text: i18n("Clicking an Event")
+	}
+	ConfigSection {
+		ConfigRadioButtonGroup {
+			configKey: 'eventClickAction'
+			model: [
+				{ value: 'details', text: i18n("Show event details in the widget") },
+				{ value: 'browser', text: i18n("Open in Google Calendar") },
+			]
+		}
+	}
+
+	HeaderText {
 		text: i18n("Notifications")
 	}
 

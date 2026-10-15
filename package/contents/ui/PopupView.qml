@@ -294,6 +294,31 @@ MouseArea {
 
 	//--- View tabs: Month | Week | Agenda (classic layout)
 	property bool refreshing: false // Events are being fetched
+
+	//--- Event details panel
+	property var detailsEvent: null
+	// Click on an event in any view: details in the widget, or the browser (Settings > Events).
+	function activateEvent(eventItem) {
+		if (!eventItem) {
+			return
+		}
+		if (plasmoid.configuration.eventClickAction === 'browser') {
+			if (eventItem.htmlLink) {
+				Qt.openUrlExternally(eventItem.htmlLink)
+			}
+			return
+		}
+		// Month and agenda delegates hand over ListModel copies (nested arrays become models);
+		// show the original event object.
+		var original = null
+		if (eventItem.calendarId && eventItem.id && eventModel.eventsByCalendar[eventItem.calendarId]) {
+			original = eventModel.getEvent(eventItem.calendarId, eventItem.id)
+		}
+		detailsEvent = original || eventItem
+	}
+	function closeEventDetails() {
+		detailsEvent = null
+	}
 	Connections {
 		target: popup.eventModel
 		function onFetchingData() { popup.refreshing = true }
@@ -413,7 +438,10 @@ MouseArea {
 						text: modelData.text
 						display: QQC2.AbstractButton.TextBesideIcon
 						// Not checkable: the style's checked look changes the size and elides the text.
-						onClicked: plasmoid.configuration.popupMode = modelData.mode
+						onClicked: {
+							popup.closeEventDetails()
+							plasmoid.configuration.popupMode = modelData.mode
+						}
 						Accessible.name: modelData.text
 					}
 				}
@@ -433,6 +461,21 @@ MouseArea {
 		}
 	}
 
+
+	Loader {
+		id: eventDetailsLoader
+		active: !!popup.detailsEvent
+		visible: active
+		z: 5 // Over the views, below nothing else: the header stays usable.
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		sourceComponent: EventDetailsView {
+			eventItem: popup.detailsEvent
+			onCloseRequested: popup.closeEventDetails()
+		}
+	}
 
 	Loader {
 		id: weekViewLoader

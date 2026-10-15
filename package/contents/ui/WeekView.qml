@@ -267,9 +267,7 @@ Item {
 	}
 
 	function openEvent(eventItem) {
-		if (eventItem && eventItem.htmlLink) {
-			Qt.openUrlExternally(eventItem.htmlLink)
-		}
+		popup.activateEvent(eventItem)
 	}
 
 	//--- UI
