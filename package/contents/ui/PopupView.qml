@@ -466,6 +466,21 @@ MouseArea {
 			// Stay clear of the side groups; the title elides if needed.
 			width: Math.min(implicitWidth, parent.width - topBar.sideWidth * 2 - Kirigami.Units.largeSpacing * 2)
 			spacing: 0
+			Kirigami.Heading {
+				Layout.fillWidth: true
+				Layout.maximumWidth: implicitWidth
+				Layout.rightMargin: Kirigami.Units.smallSpacing
+				level: 2
+				elide: Text.ElideRight
+				wrapMode: Text.NoWrap
+				font.capitalization: Font.Capitalize
+				text: header.weekView ? header.weekView.title : monthView.currentTitle
+				MouseArea {
+					anchors.fill: parent
+					enabled: !header.weekView
+					onClicked: monthView.titleClicked() // Year / decade view
+				}
+			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
 				onClicked: header.weekView ? header.weekView.goPrevious() : monthView.goPrevious()
@@ -483,21 +498,6 @@ MouseArea {
 				onClicked: header.weekView ? header.weekView.goNext() : monthView.goNext()
 				PlasmaComponents3.ToolTip.text: header.weekView ? i18n("Next Week") : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			Kirigami.Heading {
-				Layout.fillWidth: true
-				Layout.maximumWidth: implicitWidth
-				Layout.leftMargin: Kirigami.Units.smallSpacing
-				level: 2
-				elide: Text.ElideRight
-				wrapMode: Text.NoWrap
-				font.capitalization: Font.Capitalize
-				text: header.weekView ? header.weekView.title : monthView.currentTitle
-				MouseArea {
-					anchors.fill: parent
-					enabled: !header.weekView
-					onClicked: monthView.titleClicked() // Year / decade view
-				}
 			}
 		}
 
