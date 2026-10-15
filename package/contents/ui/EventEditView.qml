@@ -175,6 +175,14 @@ Rectangle {
 				y: Kirigami.Units.largeSpacing
 				spacing: Kirigami.Units.largeSpacing
 
+				PlasmaComponents3.Label {
+					visible: !form.isNew && !!form.eventItem.recurringEventId
+					Layout.fillWidth: true
+					wrapMode: Text.Wrap
+					text: i18n("This is a recurring event. Only this occurrence will be changed.")
+					opacity: 0.7
+				}
+
 				PlasmaComponents3.TextField {
 					id: titleField
 					Layout.fillWidth: true

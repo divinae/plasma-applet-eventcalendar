@@ -172,6 +172,7 @@ CalendarManager {
 		delete data.endDateTime
 		delete data.canEdit
 		delete data._summary
+		delete data.reminderMinutes
 		return data
 	}
 
@@ -428,7 +429,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		event.description = event.description || ""
 		event.reminderMinutes = parseReminderMinutes(calendar, event)
 		event.backgroundColor = parseColor(calendar, event)
-		event.canEdit = (calendar.accessRole == 'writer' || calendar.accessRole == 'owner') && !event.recurringEventId // We cannot currently edit repeating events.
+		// Recurring events: edits and deletes apply to this occurrence only (Google makes it an exception).
+		event.canEdit = (calendar.accessRole == 'writer' || calendar.accessRole == 'owner')
 		if (plasmoid.configuration.googleHideGoalsDesc
 			&& event.organizer.email == "unknownorganizer@calendar.google.com"
 			&& event.organizer.displayName == "Google Calendar"

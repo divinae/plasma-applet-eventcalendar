@@ -121,6 +121,8 @@ Rectangle {
 					eventModel.deleteEvent(details.eventItem.calendarId, details.eventItem.id)
 					details.closeRequested()
 				}
+				PlasmaComponents3.ToolTip.text: details.eventItem && details.eventItem.recurringEventId ? i18n("Deletes only this occurrence.") : ""
+				PlasmaComponents3.ToolTip.visible: hovered && !!details.eventItem && !!details.eventItem.recurringEventId
 			}
 			PlasmaComponents3.ToolButton {
 				visible: details.confirmingDelete
