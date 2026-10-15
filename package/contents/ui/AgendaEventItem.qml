@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 
 LinkRect {
@@ -163,22 +164,14 @@ LinkRect {
 			Loader {
 				id: eventHangoutLinkLoader
 				readonly property bool showProperty: plasmoid.configuration.agendaShowEventHangoutLink && !!externalLink
-				readonly property string externalLink: model.hangoutLink || model.conferenceData && model.conferenceData.entryPoints && model.conferenceData.entryPoints[0].uri || ''
+				readonly property var meetingLink: MeetingLink.find(model)
+				readonly property string externalLink: meetingLink ? meetingLink.url : ''
 				visible: showProperty && !editEventForm.visible
 				active: visible
 
 				sourceComponent: PlasmaComponents3.ToolButton {
 					id: eventHangoutLink
-					text: {
-						if (!!model.conferenceData
-							&& !!model.conferenceData.conferenceSolution
-							&& !!model.conferenceData.conferenceSolution.name
-						) {
-							return model.conferenceData.conferenceSolution.name
-						} else {
-							return i18n("Hangout")
-						}
-					}
+					text: eventHangoutLinkLoader.meetingLink ? eventHangoutLinkLoader.meetingLink.label : i18n("Hangout")
 					icon.source: Qt.resolvedUrl("../icons/hangouts.svg")
 					onClicked: Qt.openUrlExternally(externalLink)
 				}

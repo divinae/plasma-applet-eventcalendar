@@ -140,6 +140,9 @@ def notify(args):
 	# Note: EXPIRES_DEFAULT = -1, EXPIRES_NEVER = 0
 	n.set_timeout(args.timeout)
 
+	if args.timeout == 0:
+		n.set_urgency(2)
+
 	def on_action(notification, action, *user_data):
 		sys.stdout.write(' '.join([action, *user_data]) + '\n')
 		if sfxProc:

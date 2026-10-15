@@ -2,6 +2,7 @@ import QtQuick
 import org.kde.plasma.core as PlasmaCore
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "MeetingLink.js" as MeetingLink
 import "./calendars"
 
 CalendarManager {
@@ -155,43 +156,134 @@ CalendarManager {
 		})
 	}
 
-	function sendEventReminderNotification(eventItem, minutes) {
-		var deltaText = LocaleFuncs.durationShortFormat(minutes * 60)
-		var summaryText = i18nc("%1 = 15 minutes", "Starting in %1", deltaText)
-		var bodyText = ''
-		bodyText += eventItem.summary + '<br />'
-		bodyText += LocaleFuncs.formatEventDuration(eventItem, {
+	// All-day events "start" at midnight and declined events don't need a reminder.
+	function shouldNotify(eventItem) {
+		if (eventItem.start && eventItem.start.date) {
+			return false
+		}
+		var attendees = eventItem.attendees
+		if (attendees) {
+			for (var i = 0; i < attendees.length; i++) {
+				if (attendees[i].self && attendees[i].responseStatus === 'declined') {
+					return false
+				}
+			}
+		}
+		return true
+	}
+
+	property int snoozeMinutes: 5
+	property var snoozedReminders: [] // [{ eventItem, at }]
+
+	function eventNotificationBody(eventItem, meetingLink) {
+		var bodyText = LocaleFuncs.formatEventDuration(eventItem, {
 			relativeDate: timeModel.currentTime,
 			clock24h: appletConfig.clock24h,
 		})
+		if (eventItem.location && !(meetingLink && eventItem.location.trim() === meetingLink.url)) {
+			bodyText += '<br />' + eventItem.location
+		}
+		return bodyText
+	}
+
+	// Sends a notification with Join / Open in Calendar (/ Snooze) actions.
+	function notifyEvent(eventItem, args) {
+		var meetingLink = MeetingLink.find(eventItem)
+		var actions = []
+		if (meetingLink) {
+			actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
+		}
+		if (eventItem.htmlLink) {
+			actions.push('open,' + i18n("Open in Calendar"))
+		}
+		if (args.snooze) {
+			actions.push('snooze,' + i18np("Snooze 1 minute", "Snooze %1 minutes", upcomingEvents.snoozeMinutes))
+		}
+
 		notificationManager.notify({
 			appName: i18n("Event Calendar"),
 			appIcon: "view-calendar-upcoming-events",
+			expireTimeout: args.expireTimeout,
+			summary: args.summary,
+			body: args.body,
+			soundFile: args.soundFile,
+			actions: actions,
+		}, function(actionId) {
+			if (actionId === 'join' || (actionId === 'default' && meetingLink)) {
+				Qt.openUrlExternally(meetingLink.url)
+			} else if ((actionId === 'open' || actionId === 'default') && eventItem.htmlLink) {
+				Qt.openUrlExternally(eventItem.htmlLink)
+			} else if (actionId === 'snooze') {
+				var at = new Date(timeModel.currentTime)
+				at.setMinutes(at.getMinutes() + upcomingEvents.snoozeMinutes)
+				upcomingEvents.snoozedReminders.push({ eventItem: eventItem, at: at })
+			}
+		})
+	}
+
+	function sendEventReminderNotification(eventItem, minutes) {
+		var deltaText = LocaleFuncs.durationShortFormat(minutes * 60)
+		var meetingLink = MeetingLink.find(eventItem)
+		notifyEvent(eventItem, {
 			// expireTimeout: (minutes*60 - 1) * 1000, // timeout resets on hover so may last longer than event starts.
-			summary: summaryText,
-			body: bodyText,
+			expireTimeout: 12000,
+			summary: i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", deltaText, eventItem.summary),
+			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
+			snooze: true,
+		})
+	}
+
+	function sendSnoozedReminderNotification(eventItem) {
+		var meetingLink = MeetingLink.find(eventItem)
+		var minutesLeft = Math.round((eventItem.startDateTime - timeModel.currentTime) / 60000)
+		var summary = minutesLeft > 0
+			? i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", LocaleFuncs.durationShortFormat(minutesLeft * 60), eventItem.summary)
+			: eventItem.summary
+		notifyEvent(eventItem, {
+			expireTimeout: 12000,
+			summary: summary,
+			body: eventNotificationBody(eventItem, meetingLink),
+			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
+			snooze: minutesLeft > upcomingEvents.snoozeMinutes,
 		})
 	}
 
 	function sendEventStartingNotification(eventItem) {
-		notificationManager.notify({
-			appName: i18n("Event Calendar"),
-			appIcon: "view-calendar-upcoming-events",
-			// expireTimeout: 10000,
+		var meetingLink = MeetingLink.find(eventItem)
+		notifyEvent(eventItem, {
+			expireTimeout: 0, // Stays until dismissed so Join is still clickable.
 			summary: eventItem.summary,
-			body: LocaleFuncs.formatEventDuration(eventItem, {
-				relativeDate: timeModel.currentTime,
-				clock24h: appletConfig.clock24h,
-			}),
+			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventStartingSfxEnabled ? plasmoid.configuration.eventStartingSfxPath : '',
+			snooze: false,
 		})
+	}
+
+	function checkSnoozedReminders() {
+		var now = timeModel.currentTime
+		var remaining = []
+		for (var i = 0; i < snoozedReminders.length; i++) {
+			var snoozed = snoozedReminders[i]
+			if (snoozed.at <= now) {
+				if (snoozed.eventItem.startDateTime > now) {
+					sendSnoozedReminderNotification(snoozed.eventItem)
+				}
+				// Else: the event already started, the "starting" notification covers it.
+			} else {
+				remaining.push(snoozed)
+			}
+		}
+		snoozedReminders = remaining
 	}
 
 	function checkForEventsStarting() {
 		for (var calendarId in eventsByCalendar) {
 			var calendar = eventsByCalendar[calendarId]
 			calendar.items.forEach(function(eventItem, index, calendarEventList) {
+				if (!shouldNotify(eventItem)) {
+					return
+				}
 				if (isEventStarting(eventItem)) {
 					if (plasmoid.configuration.eventStartingNotificationEnabled) {
 						sendEventStartingNotification(eventItem)
@@ -203,6 +295,7 @@ CalendarManager {
 				}
 			})
 		}
+		checkSnoozedReminders()
 	}
 
 	function tick() {
