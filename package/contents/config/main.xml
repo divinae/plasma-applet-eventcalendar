@@ -333,6 +333,29 @@
 		<entry name="eventStartingSfxPath" type="string">
 			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
 		</entry>
+		<entry name="eventReminderTimeout" type="int">
+			<!-- Seconds. 0 = keep until dismissed. -->
+			<default>12</default>
+		</entry>
+		<entry name="eventReminderSnoozeMinutes" type="int">
+			<!-- 0 = no Snooze button. -->
+			<default>5</default>
+		</entry>
+		<entry name="eventStartingPersistent" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="eventStartingCritical" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="eventNotificationActions" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="eventNotifySkipAllDay" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="eventNotifySkipDeclined" type="bool">
+			<default>true</default>
+		</entry>
 		<entry name="enabledCalendarPlugins" type="StringList">
 			<!-- Filenames stored in: -->
 			<!-- Ubuntu: /usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/ -->

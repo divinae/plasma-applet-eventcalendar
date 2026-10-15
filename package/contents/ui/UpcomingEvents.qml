@@ -158,11 +158,11 @@ CalendarManager {
 
 	// All-day events "start" at midnight and declined events don't need a reminder.
 	function shouldNotify(eventItem) {
-		if (eventItem.start && eventItem.start.date) {
+		if (plasmoid.configuration.eventNotifySkipAllDay && eventItem.start && eventItem.start.date) {
 			return false
 		}
 		var attendees = eventItem.attendees
-		if (attendees) {
+		if (plasmoid.configuration.eventNotifySkipDeclined && attendees) {
 			for (var i = 0; i < attendees.length; i++) {
 				if (attendees[i].self && attendees[i].responseStatus === 'declined') {
 					return false
@@ -172,7 +172,7 @@ CalendarManager {
 		return true
 	}
 
-	property int snoozeMinutes: 5
+	property int snoozeMinutes: plasmoid.configuration.eventReminderSnoozeMinutes // 0 = no Snooze button
 	property var snoozedReminders: [] // [{ eventItem, at }]
 
 	function eventNotificationBody(eventItem, meetingLink) {
@@ -190,13 +190,15 @@ CalendarManager {
 	function notifyEvent(eventItem, args) {
 		var meetingLink = MeetingLink.find(eventItem)
 		var actions = []
-		if (meetingLink) {
-			actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
+		if (plasmoid.configuration.eventNotificationActions) {
+			if (meetingLink) {
+				actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
+			}
+			if (eventItem.htmlLink) {
+				actions.push('open,' + i18n("Open in Calendar"))
+			}
 		}
-		if (eventItem.htmlLink) {
-			actions.push('open,' + i18n("Open in Calendar"))
-		}
-		if (args.snooze) {
+		if (args.snooze && upcomingEvents.snoozeMinutes > 0) {
 			actions.push('snooze,' + i18np("Snooze 1 minute", "Snooze %1 minutes", upcomingEvents.snoozeMinutes))
 		}
 
@@ -204,6 +206,7 @@ CalendarManager {
 			appName: i18n("Event Calendar"),
 			appIcon: "view-calendar-upcoming-events",
 			expireTimeout: args.expireTimeout,
+			urgency: args.urgency,
 			summary: args.summary,
 			body: args.body,
 			soundFile: args.soundFile,
@@ -226,7 +229,7 @@ CalendarManager {
 		var meetingLink = MeetingLink.find(eventItem)
 		notifyEvent(eventItem, {
 			// expireTimeout: (minutes*60 - 1) * 1000, // timeout resets on hover so may last longer than event starts.
-			expireTimeout: 12000,
+			expireTimeout: plasmoid.configuration.eventReminderTimeout * 1000, // 0 = keep until dismissed
 			summary: i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", deltaText, eventItem.summary),
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
@@ -241,7 +244,7 @@ CalendarManager {
 			? i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", LocaleFuncs.durationShortFormat(minutesLeft * 60), eventItem.summary)
 			: eventItem.summary
 		notifyEvent(eventItem, {
-			expireTimeout: 12000,
+			expireTimeout: plasmoid.configuration.eventReminderTimeout * 1000,
 			summary: summary,
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
@@ -252,7 +255,9 @@ CalendarManager {
 	function sendEventStartingNotification(eventItem) {
 		var meetingLink = MeetingLink.find(eventItem)
 		notifyEvent(eventItem, {
-			expireTimeout: 0, // Stays until dismissed so Join is still clickable.
+			// Keep until dismissed so Join is still clickable. -1 = notification server default.
+			expireTimeout: plasmoid.configuration.eventStartingPersistent ? 0 : -1,
+			urgency: plasmoid.configuration.eventStartingCritical ? 'critical' : 'normal',
 			summary: eventItem.summary,
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventStartingSfxEnabled ? plasmoid.configuration.eventStartingSfxPath : '',

@@ -23,6 +23,9 @@ QtObject {
 		if (typeof args.expireTimeout !== 'undefined') {
 			cmd.push('-t', args.expireTimeout)
 		}
+		if (args.urgency) {
+			cmd.push('-u', args.urgency)
+		}
 		var sanitizedSummary = executable.sanitizeString(args.summary)
 		var sanitizedBody = executable.sanitizeString(args.body)
 		cmd.push(sanitizedSummary)
@@ -59,6 +62,9 @@ QtObject {
 		}
 		if (typeof args.expireTimeout !== 'undefined') {
 			cmd.push('--timeout', args.expireTimeout)
+		}
+		if (args.urgency) {
+			cmd.push('--urgency', args.urgency)
 		}
 		if (args.actions) {
 			for (var i = 0; i < args.actions.length; i++) {

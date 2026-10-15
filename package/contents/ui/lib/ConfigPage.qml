@@ -206,6 +206,20 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_eventReminderTimeout
+	property var cfg_eventReminderTimeoutDefault
+	property var cfg_eventReminderSnoozeMinutes
+	property var cfg_eventReminderSnoozeMinutesDefault
+	property var cfg_eventStartingPersistent
+	property var cfg_eventStartingPersistentDefault
+	property var cfg_eventStartingCritical
+	property var cfg_eventStartingCriticalDefault
+	property var cfg_eventNotificationActions
+	property var cfg_eventNotificationActionsDefault
+	property var cfg_eventNotifySkipAllDay
+	property var cfg_eventNotifySkipAllDayDefault
+	property var cfg_eventNotifySkipDeclined
+	property var cfg_eventNotifySkipDeclinedDefault
 	property var cfg_enabledCalendarPlugins
 	property var cfg_enabledCalendarPluginsDefault
 	property var cfg_googleAccounts

@@ -94,6 +94,7 @@ ConfigPage {
 
 	ConfigSection {
 		ConfigNotification {
+			id: eventReminderNotification
 			label: i18n("Event Reminder")
 			notificationEnabledKey: 'eventReminderNotificationEnabled'
 			sfxEnabledKey: 'eventReminderSfxEnabled'
@@ -109,16 +110,77 @@ ConfigPage {
 					minimumValue: 1
 				}
 			}
+			RowLayout {
+				spacing: 0
+				enabled: eventReminderNotification.notificationEnabled
+				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
+				ConfigSpinBox {
+					configKey: 'eventReminderTimeout'
+					before: i18n("Hide after:")
+					suffix: i18nc("Time in seconds", "s")
+					after: i18n("(0 = keep until dismissed)")
+					minimumValue: 0
+					maximumValue: 600
+				}
+			}
+			RowLayout {
+				spacing: 0
+				enabled: eventReminderNotification.notificationEnabled
+				Item { implicitWidth: eventReminderNotification.indentWidth } // indent
+				ConfigSpinBox {
+					configKey: 'eventReminderSnoozeMinutes'
+					before: i18n("Snooze:")
+					suffix: i18nc("Time in minutes", "min")
+					after: i18n("(0 = no Snooze button)")
+					minimumValue: 0
+					maximumValue: 120
+				}
+			}
 		}
 	}
 
 	ConfigSection {
 		ConfigNotification {
+			id: eventStartingNotification
 			label: i18n("Event Starting")
 			notificationEnabledKey: 'eventStartingNotificationEnabled'
 			sfxEnabledKey: 'eventStartingSfxEnabled'
 			sfxPathKey: 'eventStartingSfxPath'
 			sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
+
+			RowLayout {
+				spacing: 0
+				enabled: eventStartingNotification.notificationEnabled
+				Item { implicitWidth: eventStartingNotification.indentWidth } // indent
+				ConfigCheckBox {
+					configKey: 'eventStartingPersistent'
+					text: i18n("Keep until dismissed")
+				}
+			}
+			RowLayout {
+				spacing: 0
+				enabled: eventStartingNotification.notificationEnabled
+				Item { implicitWidth: eventStartingNotification.indentWidth } // indent
+				ConfigCheckBox {
+					configKey: 'eventStartingCritical'
+					text: i18n("Critical (shown even in Do Not Disturb)")
+				}
+			}
+		}
+	}
+
+	ConfigSection {
+		ConfigCheckBox {
+			configKey: 'eventNotificationActions'
+			text: i18n("Show \"Join meeting\" and \"Open in Calendar\" buttons")
+		}
+		ConfigCheckBox {
+			configKey: 'eventNotifySkipAllDay'
+			text: i18n("Don't notify for all-day events")
+		}
+		ConfigCheckBox {
+			configKey: 'eventNotifySkipDeclined'
+			text: i18n("Don't notify for events I declined")
 		}
 	}
 
