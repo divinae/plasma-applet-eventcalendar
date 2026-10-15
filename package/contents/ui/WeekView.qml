@@ -28,7 +28,13 @@ Item {
 		font: Kirigami.Theme.smallFont
 	}
 	readonly property int lineHeight: Math.ceil(fontMetrics.height)
-	readonly property int hourHeight: Math.max(36, lineHeight * 2 + 8)
+	// Visible hours: the configured range, stretched to fit this week's timed events.
+	property int firstHour: plasmoid.configuration.weekViewStartHour
+	property int lastHour: plasmoid.configuration.weekViewEndHour // Exclusive
+	readonly property int hourCount: Math.max(1, lastHour - firstHour)
+	readonly property int minHourHeight: lineHeight + 6
+	// Fill the view when the range fits, scroll otherwise.
+	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / hourCount)
 	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / dayCount)
 	readonly property int allDayRowHeight: lineHeight + 4
@@ -106,6 +112,19 @@ Item {
 		}
 		days = result
 		maxAllDayRows = maxAllDay
+
+		var first = plasmoid.configuration.weekViewStartHour
+		var last = plasmoid.configuration.weekViewEndHour
+		for (var d = 0; d < result.length; d++) {
+			var timedList = result[d].timed
+			for (var t = 0; t < timedList.length; t++) {
+				var block = timedList[t]
+				first = Math.min(first, Math.floor((block.start - block.dayStart) / 3600000))
+				last = Math.max(last, Math.ceil((Math.max(block.end, block.start + 30 * 60000) - block.dayStart) / 3600000))
+			}
+		}
+		firstHour = Math.max(0, first)
+		lastHour = Math.min(24, Math.max(last, firstHour + 1))
 	}
 
 	// Overlapping events are placed side by side. Greedy columns per cluster of overlapping events.
@@ -158,10 +177,12 @@ Item {
 	}
 
 	function scrollToWorkingHours() {
-		var hour = isToday(weekStart) || (currentTime >= weekStart && currentTime < dayDate(dayCount))
-			? Math.max(0, currentTime.getHours() - 1)
-			: 7
-		flickable.contentY = Math.min(hour * hourHeight, Math.max(0, flickable.contentHeight - flickable.height))
+		var showsNow = currentTime >= weekStart && currentTime < dayDate(dayCount)
+		var hour = showsNow ? Math.max(firstHour, currentTime.getHours() - 1) : firstHour
+		flickable.contentY = Math.min((hour - firstHour) * hourHeight, Math.max(0, flickable.contentHeight - flickable.height))
+	}
+	function hourY(ms, dayStart) {
+		return ((ms - dayStart) / 3600000 - firstHour) * hourHeight
 	}
 
 	function openEvent(eventItem) {
@@ -329,7 +350,7 @@ Item {
 				id: flickable
 				anchors.fill: parent
 				contentWidth: width
-				contentHeight: 24 * weekView.hourHeight
+				contentHeight: weekView.hourCount * weekView.hourHeight
 				boundsBehavior: Flickable.StopAtBounds
 				PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar {}
 
@@ -339,8 +360,9 @@ Item {
 
 					// Hour lines and labels
 					Repeater {
-						model: 24
+						model: weekView.hourCount
 						Item {
+							readonly property int hour: weekView.firstHour + index
 							y: index * weekView.hourHeight
 							width: parent.width
 							height: weekView.hourHeight
@@ -349,7 +371,7 @@ Item {
 								width: weekView.gutterWidth - Kirigami.Units.smallSpacing
 								y: -height / 2
 								horizontalAlignment: Text.AlignRight
-								text: weekView.formatHour(index)
+								text: weekView.formatHour(parent.hour)
 								font: Kirigami.Theme.smallFont
 								opacity: 0.6
 							}
@@ -394,7 +416,7 @@ Item {
 									readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
 									x: 2 + block.column * slotWidth
-									y: (block.start - block.dayStart) / 3600000 * weekView.hourHeight + 1
+									y: weekView.hourY(block.start, block.dayStart) + 1
 									width: slotWidth - 1
 									height: Math.max(weekView.lineHeight + 2, (block.end - block.start) / 3600000 * weekView.hourHeight - 2)
 									radius: 3
@@ -441,8 +463,9 @@ Item {
 
 							// Current time
 							Rectangle {
-								visible: dayColumn.today
-								y: (weekView.currentTime.getHours() * 60 + weekView.currentTime.getMinutes()) / 60 * weekView.hourHeight
+								readonly property real hours: weekView.currentTime.getHours() + weekView.currentTime.getMinutes() / 60
+								visible: dayColumn.today && hours >= weekView.firstHour && hours <= weekView.lastHour
+								y: (hours - weekView.firstHour) * weekView.hourHeight
 								width: parent.width
 								height: 2
 								color: Kirigami.Theme.negativeTextColor

@@ -28,6 +28,26 @@ ConfigPage {
 				{ value: 'classic', text: i18n("Agenda: agenda and calendar (layout below)") },
 			]
 		}
+		RowLayout {
+			ConfigSpinBox {
+				configKey: 'weekViewStartHour'
+				before: i18n("Week view hours:")
+				suffix: ":00"
+				minimumValue: 0
+				maximumValue: 23
+			}
+			Label { text: "–" }
+			ConfigSpinBox {
+				configKey: 'weekViewEndHour'
+				suffix: ":00"
+				minimumValue: 1
+				maximumValue: 24
+			}
+			Label {
+				text: i18n("(extended for events outside this range)")
+				opacity: 0.6
+			}
+		}
 		ConfigCheckBox {
 			configKey: 'showViewTabs'
 			text: i18n("Show Month / Week / Agenda tabs in the popup")

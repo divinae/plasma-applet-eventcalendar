@@ -79,6 +79,12 @@
 		<entry name="showViewTabs" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="weekViewStartHour" type="int">
+			<default>7</default>
+		</entry>
+		<entry name="weekViewEndHour" type="int">
+			<default>20</default>
+		</entry>
 		<entry name="monthModeWidth" type="uint">
 			<default>700</default>
 		</entry>

@@ -298,8 +298,11 @@ MouseArea {
 		visible: popup.showViewTabs
 		anchors.top: parent.top
 		anchors.topMargin: popup.padding
-		anchors.horizontalCenter: parent.horizontalCenter
-		width: Math.min(implicitWidth, parent.width - popup.padding * 2)
+		anchors.left: parent.left
+		anchors.leftMargin: popup.padding
+		anchors.right: parent.right
+		// Leave room for the pin button in the top right corner when there's no padding for it.
+		anchors.rightMargin: popup.padding > 0 ? popup.padding : Math.round(Kirigami.Units.gridUnit * 1.25) + Kirigami.Units.smallSpacing
 		currentIndex: Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
 		onCurrentIndexChanged: {
 			var mode = popup.viewModes[currentIndex]
