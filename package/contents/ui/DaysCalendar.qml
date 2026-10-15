@@ -27,6 +27,7 @@ import org.kde.ksvg as KSvg
 import org.kde.plasma.components as PlasmaComponents3
 
 import "./badges"
+import "Shared.js" as Shared
 
 Item {
 	id: daysCalendar
@@ -354,6 +355,23 @@ Item {
 				opacity: showHighlight ? 0.75 : 0.4
 				text: modelData
 			}
+		}
+	}
+
+	// Weekend columns: one tinted strip per column, from the weekday name to the last week.
+	// Only in the days view (it has weekday names), not the year / decade views.
+	Repeater {
+		model: daysCalendar.headerModel ? daysCalendar.columns : 0
+		Rectangle {
+			readonly property int dayOfWeek: (calendarBackend.firstDayOfWeek + index) % 7
+			visible: Shared.isWeekend(new Date(2024, 0, 7 + dayOfWeek)) // 2024-01-07 is a Sunday
+			x: calendarGrid.x + index * (daysCalendar.cellWidth + root.borderWidth)
+			y: calendarGrid.y
+			width: daysCalendar.cellWidth
+			height: calendarGrid.height
+			radius: 6
+			color: Kirigami.Theme.textColor
+			opacity: 0.04
 		}
 	}
 
