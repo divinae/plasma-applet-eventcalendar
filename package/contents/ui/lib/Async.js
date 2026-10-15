@@ -3,11 +3,13 @@
 
 function _taskCallback(asyncObj, key, err, taskResult) {
 	asyncObj.numCompleted += 1
+	if (asyncObj.err) {
+		// Already reported the first error.
+		return
+	}
 	if (err) {
 		asyncObj.err = err
 		asyncObj.finalCallback(err)
-	} else if (asyncObj.err) {
-		// Skip
 	} else {
 		asyncObj.results[key] = taskResult
 		if (asyncObj.numCompleted >= asyncObj.numTasks) {

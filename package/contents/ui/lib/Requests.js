@@ -6,22 +6,25 @@ function request(opt, callback) {
 		opt = { url: opt }
 	}
 	var req = new XMLHttpRequest()
+	// Qt can fire both onerror and DONE for a failed request. Only call back once.
+	var finished = false
+	function done(err, data) {
+		if (finished) {
+			return
+		}
+		finished = true
+		callback(err, data, req)
+	}
 	req.onerror = function() {
 		// Network Error / No Connection
-		console.log('XMLHttpRequest.onerror', req.status)
-		var msg = "HTTP Error " + req.status
-		callback(msg, null, req)
+		done("HTTP Error " + req.status, null)
 	}
 	req.onreadystatechange = function() {
 		if (req.readyState === XMLHttpRequest.DONE) { // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-done
 			if (200 <= req.status && req.status < 400) {
-				callback(null, req.responseText, req)
+				done(null, req.responseText)
 			} else {
-				if (req.status === 0) {
-					console.log('HTTP 0 Headers: \n' + req.getAllResponseHeaders())
-				}
-				var msg = "HTTP Error " + req.status
-				callback(msg, req.responseText, req)
+				done("HTTP Error " + req.status, req.responseText)
 			}
 		}
 	}
@@ -80,7 +83,12 @@ function getJSON(opt, callback) {
 	opt.headers['Accept'] = 'application/json'
 	request(opt, function(err, data, req) {
 		if (!err && data) {
-			data = JSON.parse(data)
+			try {
+				data = JSON.parse(data)
+			} catch (e) {
+				// eg: Captive portal returning HTML with a 200.
+				return callback("Invalid JSON response: " + e, data, req)
+			}
 		}
 		callback(err, data, req)
 	})

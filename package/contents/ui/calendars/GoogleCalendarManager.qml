@@ -114,7 +114,15 @@ CalendarManager {
 		}
 
 		// https://developers.google.com/calendar/v3/errors
-		if (err.error && err.error.errors && err.error.errors.length >= 1) {
+		// On HTTP errors, err is a string and the JSON error body is in data.
+		if (!(err && err.error) && typeof data === 'string') {
+			try {
+				err = JSON.parse(data)
+			} catch (e) {
+				// Not JSON
+			}
+		}
+		if (err && err.error && err.error.errors && err.error.errors.length >= 1) {
 			httpCode = err.error.code
 			var err0 = err.error.errors[0]
 
@@ -130,6 +138,8 @@ CalendarManager {
 			}
 			return
 		}
+
+		showHttpError(httpCode, String(err), i18n("Will try again soon."), ErrorType.UnknownError)
 	}
 	function handleAuthError(err, markDone) {
 		if (markDone) {
@@ -313,6 +323,7 @@ CalendarManager {
 		url += '?timeMin=' + encodeURIComponent(args.start)
 		url += '&timeMax=' + encodeURIComponent(args.end)
 		url += '&singleEvents=' + encodeURIComponent('true')
+		url += '&maxResults=2500' // API max. Default 250 means more sequential pages.
 		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
 		if (args.pageToken) {
 			url += '&pageToken=' + encodeURIComponent(args.pageToken)

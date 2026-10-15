@@ -105,7 +105,15 @@ CalendarManager {
 		}
 
 		// https://developers.google.com/tasks/reference/rest/errors
-		if (err.error && err.error.errors && err.error.errors.length >= 1) {
+		// On HTTP errors, err is a string and the JSON error body is in data.
+		if (!(err && err.error) && typeof data === 'string') {
+			try {
+				err = JSON.parse(data)
+			} catch (e) {
+				// Not JSON
+			}
+		}
+		if (err && err.error && err.error.errors && err.error.errors.length >= 1) {
 			httpCode = err.error.code
 			var err0 = err.error.errors[0]
 
@@ -121,6 +129,8 @@ CalendarManager {
 			}
 			return
 		}
+
+		showHttpError(httpCode, String(err), i18n("Will try again soon."), ErrorType.UnknownError)
 	}
 	function handleAuthError(err, markDone) {
 		if (markDone) {
@@ -408,6 +418,7 @@ CalendarManager {
 		url += '/tasks'
 		url += '?showCompleted=true'
 		url += '&showHidden=true'
+		url += '&maxResults=100' // API max. Default 20 means many sequential pages.
 		// url += '&dueMin=' + encodeURIComponent(args.start)
 		// url += '&dueMax=' + encodeURIComponent(args.end)
 		if (args.pageToken) {
