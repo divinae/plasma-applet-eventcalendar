@@ -292,58 +292,67 @@ MouseArea {
 		}
 
 
-		MeteogramView {
+		// Created only when shown.
+		Loader {
 			id: meteogramView
 			visible: showMeteogram
+			active: showMeteogram
 			Layout.fillWidth: true
 			Layout.minimumHeight: popup.topRowHeight
 			Layout.preferredWidth: popup.leftColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
-			visibleDuration: plasmoid.configuration.meteogramHours
-			showIconOutline: plasmoid.configuration.showOutlines
-			xAxisScale: 1 / hoursPerDataPoint
-			xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
-			property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
-			rainUnits: WeatherApi.getRainUnits(plasmoid.configuration)
+			onLoaded: popup.updateMeteogram()
 
-				Rectangle {
-					id: meteogramMessageBox
-					anchors.fill: parent
-					anchors.margins: Kirigami.Units.smallSpacing
-					color: "transparent"
-					border.color: Kirigami.Theme.buttonBackgroundColor ? Kirigami.Theme.buttonBackgroundColor : Kirigami.Theme.backgroundColor
-					border.width: 1
+			sourceComponent: MeteogramView {
+				visibleDuration: plasmoid.configuration.meteogramHours
+				showIconOutline: plasmoid.configuration.showOutlines
+				xAxisScale: 1 / hoursPerDataPoint
+				xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
+				property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
+				rainUnits: WeatherApi.getRainUnits(plasmoid.configuration)
 
-				readonly property string message: {
-					if (!WeatherApi.weatherIsSetup(plasmoid.configuration)) {
-						return i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
-					} else if (logic.lastForecastErr) {
-						return i18n("Error fetching weather.") + '\n' + logic.lastForecastErr
-					} else {
-						return ''
+					Rectangle {
+						id: meteogramMessageBox
+						anchors.fill: parent
+						anchors.margins: Kirigami.Units.smallSpacing
+						color: "transparent"
+						border.color: Kirigami.Theme.buttonBackgroundColor ? Kirigami.Theme.buttonBackgroundColor : Kirigami.Theme.backgroundColor
+						border.width: 1
+
+					readonly property string message: {
+						if (!WeatherApi.weatherIsSetup(plasmoid.configuration)) {
+							return i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
+						} else if (logic.lastForecastErr) {
+							return i18n("Error fetching weather.") + '\n' + logic.lastForecastErr
+						} else {
+							return ''
+						}
 					}
-				}
 
-				visible: !!message
+					visible: !!message
 
-				PlasmaComponents3.Label {
-					text: meteogramMessageBox.message
-					anchors.fill: parent
-					fontSizeMode: Text.Fit
-					wrapMode: Text.Wrap
-					horizontalAlignment: Text.AlignHCenter
-					verticalAlignment: Text.AlignVCenter
+					PlasmaComponents3.Label {
+						text: meteogramMessageBox.message
+						anchors.fill: parent
+						fontSizeMode: Text.Fit
+						wrapMode: Text.Wrap
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+					}
 				}
 			}
 		}
 
-		TimerView {
+		Loader {
 			id: timerView
 			visible: showTimer
+			active: showTimer
 			Layout.fillWidth: true
 			Layout.minimumHeight: Math.max(popup.topRowHeight, implicitHeight)
 			Layout.preferredWidth: popup.rightColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
+
+			sourceComponent: TimerView {}
 		}
 
 		MonthView {
@@ -477,7 +486,9 @@ MouseArea {
 	} // GridLayout
 
 	function updateMeteogram() {
-		meteogramView.parseWeatherForecast(logic.currentWeatherData, logic.hourlyWeatherData)
+		if (meteogramView.item) {
+			meteogramView.item.parseWeatherForecast(logic.currentWeatherData, logic.hourlyWeatherData)
+		}
 	}
 
 	function showError(msg) {

@@ -66,6 +66,27 @@ ListModel {
 		}
 	}
 
+	property var rowSignatures: [] // Per model row, see agendaItemSignature()
+
+	function agendaItemSignature(agendaItem) {
+		function time(d) {
+			return d ? d.getTime() : 0
+		}
+		return JSON.stringify([
+			agendaItem.date.getTime(),
+			agendaItem.events.map(function(e) {
+				return [e.id, e.calendarId, e.etag || e.updated || '', e.summary, e.location || '',
+					(e.description || '').length, time(e.startDateTime), time(e.endDateTime), e.backgroundColor || '', !!e.canEdit]
+			}),
+			agendaItem.tasks.map(function(t) {
+				return [t.id, t.calendarId, t.etag || t.updated || '', t.summary, !!t.isCompleted, t.parent || '',
+					(t.notes || '').length, time(t.startDateTime), t.backgroundColor || '']
+			}),
+			agendaItem.showWeather, agendaItem.tempLow, agendaItem.tempHigh, agendaItem.weatherIcon,
+			agendaItem.weatherText, agendaItem.weatherDescription, agendaItem.weatherNotes,
+		])
+	}
+
 	function buildAgendaItem(dateTime) {
 		return {
 			date: new Date(dateTime),
@@ -307,8 +328,13 @@ ListModel {
 			var minCount = Math.min(agendaItemList.length, agendaModel.count)
 			var maxCount = Math.max(agendaItemList.length, agendaModel.count)
 			// console.log('agendaModel', 'replaced items', minCount)
+			// Only rewrite rows whose content changed. Each set() rebuilds the row's
+			// nested event/task models and their delegates.
+			var signatures = agendaItemList.map(agendaItemSignature)
 			for (var i = 0; i < minCount; i++) {
-				agendaModel.set(i, agendaItemList[i]) // Replace the existing values
+				if (agendaModel.rowSignatures[i] !== signatures[i]) {
+					agendaModel.set(i, agendaItemList[i]) // Replace the existing values
+				}
 			}
 			if (agendaItemList.length > agendaModel.count) {
 				// console.log('agendaModel', 'append items', minCount, maxCount, maxCount-minCount)
@@ -325,6 +351,7 @@ ListModel {
 				// console.log('agendaModel', 'skip')
 				// skip
 			}
+			agendaModel.rowSignatures = signatures
 			agendaModel.populating = false
 		}
 
@@ -413,6 +440,7 @@ ListModel {
 			var weatherFields = weatherByDay[dayKey(agendaModel.get(i).date)]
 			if (weatherFields) {
 				agendaModel.set(i, weatherFields) // One change signal per row instead of seven.
+				agendaModel.rowSignatures[i] = null // Row changed outside finalizeAgendaItems.
 				showWeatherColumn = true
 			}
 		}

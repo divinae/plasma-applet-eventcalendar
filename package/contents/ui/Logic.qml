@@ -94,7 +94,7 @@ Item {
 	function deferredUpdateWeather() {
 		logic.updateDailyWeather()
 
-		if (popup.showMeteogram) {
+		if (popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram) { // popup exists after first open
 			logic.updateHourlyWeather()
 		}
 	}
@@ -138,7 +138,7 @@ Item {
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
 			logic.dailyWeatherData = data
-			popup.updateUI()
+			if (popup) popup.updateUI()
 		})
 	}
 
@@ -152,7 +152,7 @@ Item {
 			logic.lastForecastErr = null
 			logic.hourlyWeatherData = data
 			logic.currentWeatherData = data.list[0]
-			popup.updateMeteogram()
+			if (popup) popup.updateMeteogram()
 		})
 	}
 
@@ -189,14 +189,14 @@ Item {
 		}
 
 		//--- UI
-		function onAgendaBreakupMultiDayEventsChanged() { popup.updateUI() }
-		function onMeteogramHoursChanged() { popup.updateMeteogram() }
+		function onAgendaBreakupMultiDayEventsChanged() { if (popup) popup.updateUI() }
+		function onMeteogramHoursChanged() { if (popup) popup.updateMeteogram() }
 	}
 
 	//---
 	Connections {
 		target: appletConfig
-		function onClock24hChanged() { popup.updateUI() }
+		function onClock24hChanged() { if (popup) popup.updateUI() }
 	}
 
 	//---
