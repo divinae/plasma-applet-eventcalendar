@@ -167,14 +167,8 @@ PlasmoidItem {
 			// plasmoid.location == PlasmaCore.Types.Floating when using plasmawindowed and when used as a desktop widget.
 			return plasmoid.location != PlasmaCore.Types.Floating // && plasmoid.configuration.widget_show_pin
 		}
-		padding: {
-			var fullViewMode = plasmoid.configuration.popupMode === 'month' || plasmoid.configuration.popupMode === 'week'
-			if (isPinVisible && (fullViewMode || !(plasmoid.configuration.widgetShowTimer || plasmoid.configuration.widgetShowMeteogram))) {
-				return pinButton.height
-			} else {
-				return 0
-			}
-		}
+		// The pin button lives in the popup's top bar.
+		showPinButton: isPinVisible
 
 		property bool isExpanded: root.expanded
 		onIsExpandedChanged: {
@@ -207,18 +201,6 @@ PlasmoidItem {
 			}
 		}
 
-		// Allows the user to keep the calendar open for reference
-		PlasmaComponents3.ToolButton {
-			id: pinButton
-			visible: isPinVisible
-			anchors.right: parent.right
-			width: Math.round(Kirigami.Units.gridUnit * 1.25)
-			height: width
-			checkable: true
-			icon.name: "window-pin"
-			checked: plasmoid.configuration.pin
-			onCheckedChanged: plasmoid.configuration.pin = checked
-		}
 
 	}
 

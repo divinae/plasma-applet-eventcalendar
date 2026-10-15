@@ -13,7 +13,8 @@ MouseArea {
 
 	onClicked: focus = true
 
-	property int padding: 0 // Assigned in main.qml
+	property int padding: 0
+	property bool showPinButton: false // Assigned in main.qml
 	property int spacing: 10
 
 	property real screenWidth: Screen.width > 0 ? Screen.width : plasmoid.screenGeometry.width
@@ -315,8 +316,7 @@ MouseArea {
 		anchors.top: parent.top
 		anchors.topMargin: popup.padding
 		anchors.right: parent.right
-		// Leave room for the pin button in the top right corner when there's no padding for it.
-		anchors.rightMargin: popup.padding > 0 ? popup.padding : Math.round(Kirigami.Units.gridUnit * 1.25) + Kirigami.Units.smallSpacing
+		anchors.rightMargin: popup.padding
 		spacing: 0
 
 		QQC2.ButtonGroup {
@@ -367,6 +367,17 @@ MouseArea {
 				running: popup.refreshing
 				visible: running
 			}
+		}
+
+		// Keeps the popup open for reference.
+		PlasmaComponents3.ToolButton {
+			visible: popup.showPinButton
+			checkable: true
+			icon.name: "window-pin"
+			checked: plasmoid.configuration.pin
+			onToggled: plasmoid.configuration.pin = checked
+			PlasmaComponents3.ToolTip.text: i18n("Keep Open")
+			PlasmaComponents3.ToolTip.visible: hovered
 		}
 	}
 	readonly property int topBarInlineMargin: topBar.width + Kirigami.Units.smallSpacing

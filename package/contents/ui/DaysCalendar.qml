@@ -121,6 +121,45 @@ Item {
 		}
 		spacing: Kirigami.Units.smallSpacing
 
+		PlasmaComponents3.ToolButton {
+			id: previousButton
+			icon.name: "go-previous"
+			onClicked: daysCalendar.previous()
+			property string tooltip: ''
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
+			Accessible.name: tooltip
+			//SEE QTBUG-58307
+			Layout.preferredHeight: implicitHeight + implicitHeight%2
+		}
+
+		PlasmaComponents3.ToolButton {
+			icon.name: "go-jump-today"
+			onClicked: root.resetToToday()
+			property string tooltip: i18ndc("libplasma5", "Reset calendar to today", "Today")
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
+			Accessible.name: tooltip
+			Accessible.description: i18nd("libplasma5", "Reset calendar to today")
+			//SEE QTBUG-58307
+			Layout.preferredHeight: implicitHeight + implicitHeight%2
+		}
+
+		PlasmaComponents3.ToolButton {
+			id: nextButton
+			icon.name: "go-next"
+			onClicked: daysCalendar.next()
+			property string tooltip: ''
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
+			Accessible.name: tooltip
+			//SEE QTBUG-58307
+			Layout.preferredHeight: implicitHeight + implicitHeight%2
+		}
+
 		Kirigami.Heading {
 			id: heading
 
@@ -168,45 +207,6 @@ Item {
 					previousPixelDelta = 0
 				}
 			}
-		}
-
-		PlasmaComponents3.ToolButton {
-			id: previousButton
-			icon.name: "go-previous"
-			onClicked: daysCalendar.previous()
-			property string tooltip: ''
-			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-			QQC2.ToolTip.text: tooltip
-			QQC2.ToolTip.visible: hovered
-			Accessible.name: tooltip
-			//SEE QTBUG-58307
-			Layout.preferredHeight: implicitHeight + implicitHeight%2
-		}
-
-		PlasmaComponents3.ToolButton {
-			icon.name: "go-jump-today"
-			onClicked: root.resetToToday()
-			property string tooltip: i18ndc("libplasma5", "Reset calendar to today", "Today")
-			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-			QQC2.ToolTip.text: tooltip
-			QQC2.ToolTip.visible: hovered
-			Accessible.name: tooltip
-			Accessible.description: i18nd("libplasma5", "Reset calendar to today")
-			//SEE QTBUG-58307
-			Layout.preferredHeight: implicitHeight + implicitHeight%2
-		}
-
-		PlasmaComponents3.ToolButton {
-			id: nextButton
-			icon.name: "go-next"
-			onClicked: daysCalendar.next()
-			property string tooltip: ''
-			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
-			QQC2.ToolTip.text: tooltip
-			QQC2.ToolTip.visible: hovered
-			Accessible.name: tooltip
-			//SEE QTBUG-58307
-			Layout.preferredHeight: implicitHeight + implicitHeight%2
 		}
 	}
 
