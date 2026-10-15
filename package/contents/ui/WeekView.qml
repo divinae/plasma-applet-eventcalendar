@@ -442,13 +442,6 @@ Item {
 			Layout.fillHeight: true
 			clip: true
 
-			Rectangle {
-				anchors.top: parent.top
-				anchors.left: parent.left
-				anchors.right: parent.right
-				height: 1
-				color: weekView.gridLineColor
-			}
 
 			Flickable {
 				id: flickable

@@ -147,3 +147,12 @@ function runsOf(flags) {
 	}
 	return runs
 }
+
+// Array or array-like list. Event data passed through a `var` signal argument (Qt 6.12+) has
+// array-like sequences for nested arrays, for which Array.isArray() is false.
+function isList(value) {
+	return !!value && typeof value !== 'string' && typeof value.length === 'number'
+}
+function toArray(value) {
+	return isList(value) ? Array.prototype.slice.call(value) : []
+}

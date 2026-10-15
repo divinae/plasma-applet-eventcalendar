@@ -3,6 +3,7 @@ import org.kde.plasma.core as PlasmaCore
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
+import "Shared.js" as Shared
 import "./calendars"
 
 CalendarManager {
@@ -46,8 +47,8 @@ CalendarManager {
 
 	// Google events carry their own reminder times (event or calendar defaults).
 	function reminderMinutesFor(eventItem) {
-		if (plasmoid.configuration.eventReminderUseGoogle && Array.isArray(eventItem.reminderMinutes)) {
-			return eventItem.reminderMinutes
+		if (plasmoid.configuration.eventReminderUseGoogle && Shared.isList(eventItem.reminderMinutes)) {
+			return Shared.toArray(eventItem.reminderMinutes)
 		}
 		return [minutesBeforeReminding]
 	}

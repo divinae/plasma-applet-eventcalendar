@@ -374,9 +374,10 @@ Item {
 			return Shared.runsOf(flags)
 		}
 		Rectangle {
-			x: calendarGrid.x + modelData.first * (daysCalendar.cellWidth + root.borderWidth)
+			// Cover the grid lines around the cells too, so the tint and the lines line up.
+			x: calendarGrid.x + modelData.first * (daysCalendar.cellWidth + root.borderWidth) - root.borderWidth
 			y: calendarGrid.y
-			width: modelData.count * (daysCalendar.cellWidth + root.borderWidth) - root.borderWidth
+			width: modelData.count * (daysCalendar.cellWidth + root.borderWidth) + root.borderWidth
 			height: calendarGrid.height
 			radius: 6
 			color: Kirigami.Theme.textColor

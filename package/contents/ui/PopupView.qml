@@ -462,18 +462,33 @@ MouseArea {
 	}
 
 
+	// Event details: a card centered over the dimmed view. Click outside or Esc closes it.
 	Loader {
 		id: eventDetailsLoader
 		active: !!popup.detailsEvent
 		visible: active
-		z: 5 // Over the views, below nothing else: the header stays usable.
+		z: 5 // Over the views; the header stays usable.
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
-		sourceComponent: EventDetailsView {
-			eventItem: popup.detailsEvent
-			onCloseRequested: popup.closeEventDetails()
+		sourceComponent: Item {
+			Rectangle {
+				anchors.fill: parent
+				color: Kirigami.Theme.backgroundColor
+				opacity: 0.6
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: popup.closeEventDetails()
+			}
+			EventDetailsView {
+				anchors.centerIn: parent
+				width: Math.min(Kirigami.Units.gridUnit * 30, parent.width - Kirigami.Units.gridUnit * 2)
+				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit * 2)
+				eventItem: popup.detailsEvent
+				onCloseRequested: popup.closeEventDetails()
+			}
 		}
 	}
 

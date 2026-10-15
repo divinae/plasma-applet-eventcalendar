@@ -16,12 +16,17 @@ Rectangle {
 	signal closeRequested()
 
 	color: Kirigami.Theme.backgroundColor
+	radius: Kirigami.Units.cornerRadius * 2
+	border.width: 1
+	border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+	// Content height, so the card can be sized to fit (it scrolls when taller than the popup).
+	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + contentColumn.implicitHeight + Kirigami.Units.largeSpacing
 
 	readonly property var meetingLink: eventItem ? MeetingLink.find(eventItem) : null
 	readonly property var calendar: eventItem && typeof eventModel !== "undefined" ? eventModel.getCalendar(eventItem.calendarId) : null
 	readonly property color eventColor: eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : Kirigami.Theme.highlightColor
 	readonly property bool isAllDay: !!(eventItem && eventItem.start && eventItem.start.date)
-	readonly property var attendees: eventItem && Array.isArray(eventItem.attendees) ? eventItem.attendees : []
+	readonly property var attendees: eventItem ? Shared.toArray(eventItem.attendees) : []
 	property bool confirmingDelete: false
 	onEventItemChanged: confirmingDelete = false
 
@@ -57,11 +62,11 @@ Rectangle {
 	}
 
 	function reminderText() {
-		var list = eventItem ? eventItem.reminderMinutes : null
-		if (!Array.isArray(list) || !list.length) {
+		var list = eventItem ? Shared.toArray(eventItem.reminderMinutes) : []
+		if (!list.length) {
 			return ""
 		}
-		var parts = list.slice().sort(function(a, b) { return b - a }).map(function(m) {
+		var parts = list.sort(function(a, b) { return b - a }).map(function(m) {
 			return m > 0 ? LocaleFuncs.durationShortFormat(m * 60) : i18nc("reminder at event start", "at start")
 		})
 		return i18nc("%1 = 10m, 2m", "Reminders: %1 before", parts.join(", "))
@@ -76,6 +81,7 @@ Rectangle {
 
 		// Actions
 		RowLayout {
+			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
 
@@ -130,8 +136,10 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			contentWidth: availableWidth
+			QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 
 			ColumnLayout {
+				id: contentColumn
 				width: scrollView.availableWidth
 				spacing: Kirigami.Units.largeSpacing
 
@@ -232,7 +240,12 @@ Rectangle {
 						visible: !!(details.calendar && details.calendar.summary)
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
-						text: details.calendar ? details.calendar.summary : ""
+						text: {
+							var name = details.calendar ? String(details.calendar.summary) : ""
+							// Primary calendars are named after the account: "a@x.com - a@x.com".
+							var parts = name.split(" - ")
+							return parts.length === 2 && parts[0] === parts[1] ? parts[0] : name
+						}
 					}
 
 					// Reminders
