@@ -511,7 +511,6 @@ Item {
 											width: parent.width
 											text: eventBlock.eventItem.summary
 											color: Shared.contrastTextColor(eventBlock.barColor)
-											font.weight: Font.DemiBold
 											elide: Text.ElideRight
 											wrapMode: Text.WordWrap
 											maximumLineCount: Math.max(1, Math.floor((eventBlock.height - 4) / weekView.lineHeight) - 1)
