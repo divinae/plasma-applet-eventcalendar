@@ -5,8 +5,15 @@ Item {
 	id: dotsBadge
 	property int dotSize: (height / 8) + dotBorderWidth*2
 	property color dotColor: Kirigami.Theme.highlightColor // Fallback when an event has no color.
-	property int dotBorderWidth: plasmoid.configuration.showOutlines ? 1 : 0
-	property color dotBorderColor: Kirigami.Theme.backgroundColor
+	// Always outline the dots so light (eg: white) calendar colors stay visible on a light theme.
+	property int dotBorderWidth: 1
+	property color dotBorderColor: {
+		if (plasmoid.configuration.showOutlines) {
+			return Kirigami.Theme.backgroundColor
+		}
+		var c = Kirigami.Theme.textColor
+		return Qt.rgba(c.r, c.g, c.b, 0.4)
+	}
 
 	// One dot per event (max 3), colored like the event / its calendar.
 	function dotColorAt(i) {
