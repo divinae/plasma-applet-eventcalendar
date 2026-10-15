@@ -22,6 +22,7 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.workspace.calendar as PlasmaCalendar
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 MouseArea {
 	id: dayStyle
@@ -76,6 +77,15 @@ MouseArea {
 		// then root.cellHeight actually changes to whatever it should be, but the Label does not pick
 		// it up after that, so we need to change it explicitly after the cell size changes
 		// label.font.pixelSize = Math.max(Kirigami.Theme.smallFont.pixelSize, Math.floor(daysCalendar.cellHeight / 3))
+	}
+
+	// Weekend days get a light tint so they stand out.
+	Rectangle {
+		anchors.fill: parent
+		visible: Shared.isWeekend(dayStyle.thisDate)
+		color: Kirigami.Theme.textColor
+		opacity: 0.08
+		radius: dayStyle.radius
 	}
 
 	Rectangle {

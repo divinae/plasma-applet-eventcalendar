@@ -398,6 +398,12 @@ Item {
 
 							Rectangle {
 								anchors.fill: parent
+								visible: !dayColumn.today && Shared.isWeekend(dayColumn.day.date)
+								color: Kirigami.Theme.textColor
+								opacity: 0.08
+							}
+							Rectangle {
+								anchors.fill: parent
 								color: Kirigami.Theme.highlightColor
 								opacity: dayColumn.today ? 0.06 : 0
 							}

@@ -122,3 +122,11 @@ function plainText(html) {
 		.replace(/&amp;/g, '&')
 		.trim()
 }
+
+// Non-working day for the current locale. Qt.locale().weekDays uses 1..7 (Monday..Sunday),
+// Date.getDay() uses 0 for Sunday.
+function isWeekend(date) {
+	var workingDays = Qt.locale().weekDays
+	var day = date.getDay()
+	return workingDays.indexOf(day) < 0 && !(day === 0 && workingDays.indexOf(7) >= 0)
+}
