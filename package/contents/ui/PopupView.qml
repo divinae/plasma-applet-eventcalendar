@@ -323,6 +323,33 @@ MouseArea {
 		id: topBar
 		spacing: 0
 
+		Item {
+			Layout.preferredWidth: refreshButton.implicitWidth
+			Layout.preferredHeight: refreshButton.implicitHeight
+			Layout.alignment: Qt.AlignVCenter
+
+			PlasmaComponents3.ToolButton {
+				id: refreshButton
+				anchors.fill: parent
+				icon.name: "view-refresh"
+				enabled: !popup.refreshing
+				opacity: popup.refreshing ? 0 : 1
+				onClicked: logic.update()
+				PlasmaComponents3.ToolTip.text: i18n("Refresh")
+				PlasmaComponents3.ToolTip.visible: hovered
+			}
+			PlasmaComponents3.BusyIndicator {
+				anchors.centerIn: parent
+				width: refreshButton.icon.width || Kirigami.Units.iconSizes.small
+				height: width
+				running: popup.refreshing
+				visible: running
+			}
+		}
+		Item {
+			implicitWidth: Kirigami.Units.smallSpacing
+		}
+
 		PlasmaComponents3.ToolButton {
 			icon.name: "go-previous"
 			onClicked: header.weekView ? header.weekView.goPrevious() : monthView.goPrevious()
@@ -356,92 +383,42 @@ MouseArea {
 			}
 		}
 
-		// View switcher: one framed group of buttons with icon and text, the current view highlighted.
-		Rectangle {
+		// View switcher: flat buttons with icon and text, the current view on a soft rounded tint.
+		RowLayout {
 			visible: popup.showViewTabs
 			Layout.alignment: Qt.AlignVCenter
-			implicitWidth: viewButtonsRow.implicitWidth + 2
-			implicitHeight: viewButtonsRow.implicitHeight + 2
-			radius: Kirigami.Units.cornerRadius || 4
-			color: "transparent"
-			border.width: 1
-			border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.2)
+			Layout.rightMargin: Kirigami.Units.smallSpacing
+			spacing: 2
 
-			RowLayout {
-				id: viewButtonsRow
-				anchors.centerIn: parent
-				spacing: 0
+			Repeater {
+				model: [
+					{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+					{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+					{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
+				]
+				Item {
+					readonly property bool current: plasmoid.configuration.popupMode === modelData.mode
+					implicitWidth: viewButton.implicitWidth
+					implicitHeight: viewButton.implicitHeight
 
-				Repeater {
-					model: [
-						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
-						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
-						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
-					]
-					Item {
-						readonly property bool current: plasmoid.configuration.popupMode === modelData.mode
-						implicitWidth: viewButton.implicitWidth
-						implicitHeight: viewButton.implicitHeight
+					Rectangle {
+						anchors.fill: parent
+						radius: height / 2
+						color: Kirigami.Theme.highlightColor
+						opacity: parent.current ? 0.18 : 0
+					}
 
-						// Current view: tinted segment with a line at the bottom.
-						Rectangle {
-							anchors.fill: parent
-							radius: Kirigami.Units.cornerRadius || 4
-							color: Kirigami.Theme.highlightColor
-							opacity: parent.current ? 0.2 : 0
-						}
-						Rectangle {
-							anchors.left: parent.left
-							anchors.right: parent.right
-							anchors.bottom: parent.bottom
-							anchors.margins: 2
-							height: 2
-							radius: 1
-							color: Kirigami.Theme.highlightColor
-							visible: parent.current
-						}
-
-						PlasmaComponents3.ToolButton {
-							id: viewButton
-							anchors.fill: parent
-							icon.name: modelData.icon
-							text: modelData.text
-							display: QQC2.AbstractButton.TextBesideIcon
-							// Not checkable: the style's checked look changes the size and elides the text.
-							onClicked: plasmoid.configuration.popupMode = modelData.mode
-							Accessible.name: modelData.text
-						}
+					PlasmaComponents3.ToolButton {
+						id: viewButton
+						anchors.fill: parent
+						icon.name: modelData.icon
+						text: modelData.text
+						display: QQC2.AbstractButton.TextBesideIcon
+						// Not checkable: the style's checked look changes the size and elides the text.
+						onClicked: plasmoid.configuration.popupMode = modelData.mode
+						Accessible.name: modelData.text
 					}
 				}
-			}
-		}
-
-		Item {
-			implicitWidth: Kirigami.Units.smallSpacing
-			visible: popup.showViewTabs
-		}
-
-		Item {
-			Layout.preferredWidth: refreshButton.implicitWidth
-			Layout.preferredHeight: refreshButton.implicitHeight
-			Layout.alignment: Qt.AlignVCenter
-
-			PlasmaComponents3.ToolButton {
-				id: refreshButton
-				anchors.fill: parent
-				icon.name: "view-refresh"
-				enabled: !popup.refreshing
-				opacity: popup.refreshing ? 0 : 1
-				onClicked: logic.update()
-				PlasmaComponents3.ToolTip.text: i18n("Refresh")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			PlasmaComponents3.BusyIndicator {
-				anchors.centerIn: parent
-				width: refreshButton.icon.width || Kirigami.Units.iconSizes.small
-				height: width
-				running: popup.refreshing
-				visible: running
 			}
 		}
 
