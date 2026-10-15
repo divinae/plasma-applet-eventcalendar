@@ -47,14 +47,14 @@ Item {
 				readonly property color barColor: eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : Kirigami.Theme.highlightColor
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
-				radius: 4
+				radius: Math.min(7, height / 2)
 				color: barColor
 				border.width: 1
 				border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.25)
 
 				Text {
 					anchors.fill: parent
-					anchors.leftMargin: 2
+					anchors.leftMargin: 4
 					anchors.rightMargin: 1
 					verticalAlignment: Text.AlignVCenter
 					text: eventBar.eventItem ? eventBar.eventItem.summary : ""

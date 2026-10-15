@@ -367,11 +367,11 @@ Item {
 					y: bar.lane * (weekView.allDayRowHeight + 1)
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
 					height: weekView.allDayRowHeight
-					radius: 5
+					radius: Math.min(8, height / 2)
 					color: barColor
 					PlasmaComponents3.Label {
 						anchors.fill: parent
-						anchors.leftMargin: 4
+						anchors.leftMargin: 7
 						anchors.rightMargin: 2
 						verticalAlignment: Text.AlignVCenter
 						text: parent.eventItem.summary
@@ -510,7 +510,7 @@ Item {
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
 									width: slotWidth - 1
 									height: Math.max(weekView.lineHeight + 2, (visibleEnd - visibleStart) / 3600000 * weekView.hourHeight - 2)
-									radius: 6
+									radius: Math.min(10, height / 2)
 									color: barColor
 									border.width: 1
 									border.color: Kirigami.Theme.backgroundColor
@@ -518,7 +518,7 @@ Item {
 									Column {
 										anchors.fill: parent
 										anchors.margins: 2
-										anchors.leftMargin: 3
+										anchors.leftMargin: 6
 										clip: true
 										PlasmaComponents3.Label {
 											width: parent.width
