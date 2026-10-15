@@ -138,6 +138,8 @@ MouseArea {
 		}
 	}
 
+	Component.onCompleted: deferredUpdateUI()
+
 	onMonthViewDateChanged: {
 		logger.debug('onMonthViewDateChanged', monthViewDate)
 		var startOfMonth = new Date(monthViewDate)
@@ -153,6 +155,10 @@ MouseArea {
 		// Opening the popup resets monthViewDate to today. Only refetch when the visible month changes.
 		if (monthChanged) {
 			logic.updateEvents()
+		} else {
+			// The popup is created on first open, after the startup fetch finished.
+			// Rebuild from already fetched data, no network request.
+			deferredUpdateUI()
 		}
 	}
 
