@@ -148,8 +148,14 @@ Item {
 				areas.push(area)
 			}
 			// console.log(JSON.stringify(areas))
+			var signature = JSON.stringify(areas)
+			if (signature === lastGridItemAreasSignature) {
+				return
+			}
+			lastGridItemAreasSignature = signature
 			gridDataAreas.model = areas
 		}
+		property string lastGridItemAreasSignature: 
 
 
 		function gridPoint(x, y) {
@@ -376,8 +382,9 @@ Item {
 					// }
 					
 
-					// Area
-					graph.updateGridItemAreas()
+					// Area. Deferred and skipped when unchanged, so repaints (eg: resizing)
+					// don't recreate every area delegate.
+					Qt.callLater(graph.updateGridItemAreas)
 
 					// console.log('painted')
 				}

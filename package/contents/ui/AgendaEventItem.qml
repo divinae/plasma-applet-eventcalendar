@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
@@ -52,52 +51,6 @@ LinkRect {
 	//---
 
 
-	QQC2.ToolTip {
-		id: eventToolTip
-		x: 0
-		y: agendaEventItem.height + Kirigami.Units.smallSpacing
-		width: agendaEventItem.width
-		delay: 1000
-
-		contentItem: Loader {
-			active: eventToolTip.visible
-			sourceComponent: GridLayout {
-				columns: 2
-
-				EventPropertyIcon {
-					visible: toolTipDescriptionLabel.showProperty
-					source: "x-shape-text"
-					Layout.fillHeight: false
-					Layout.alignment: Qt.AlignTop
-				}
-				Text {
-					id: toolTipDescriptionLabel
-					readonly property bool showProperty: eventDescription.showInTooltip && text
-					visible: showProperty
-					text: Shared.renderText(model.description)
-					color: eventToolTip.palette.text
-					font: eventToolTip.font
-					wrapMode: Text.Wrap
-					Layout.fillWidth: true
-				}
-
-				EventPropertyIcon {
-					source: "view-calendar-day"
-				}
-				Text {
-					text: {
-						var event = events.get(eventItemIndex)
-						var calendar = eventModel.getCalendar(event.calendarId)
-						return calendar.summary
-					}
-					color: eventToolTip.palette.text
-					font: eventToolTip.font
-					wrapMode: Text.Wrap
-					Layout.fillWidth: true
-				}
-			}
-		}
-	}
 
 
 	//---

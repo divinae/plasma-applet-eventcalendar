@@ -81,58 +81,36 @@ ListModel {
 		};
 	}
 
-	function addAgendaItemIfMissing(agendaItemList, day) {
-		// console.log(day);
-
-		// Check if an agendaItem with this date already exists.
-		var index = -1
+	// Agenda items are looked up by day through a { dayKey: agendaItem } index
+	// instead of scanning the list for every event.
+	function dayKey(d) {
+		return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
+	}
+	function indexAgendaItems(agendaItemList) {
+		var byDay = {}
 		for (var i = 0; i < agendaItemList.length; i++) {
-			var agendaItem = agendaItemList[i]
-			if (Shared.isSameDate(day, agendaItem.date)) {
-				index = i
-				break
-			}
+			byDay[dayKey(agendaItemList[i].date)] = agendaItemList[i]
 		}
-		if (index >= 0) {
-			// It does, so skip.
+		return byDay
+	}
+
+	function addAgendaItemIfMissing(agendaItemList, byDay, day) {
+		var key = dayKey(day)
+		if (byDay[key]) {
 			return
 		}
-
-		// It doesn't, so we need to insert an item.
+		// Order doesn't matter here, the list is sorted afterwards.
 		var newAgendaItem = buildAgendaItem(day)
-
-		// Insert before the agendaItem with a higher date.
-		for (var i = 0; i < agendaItemList.length; i++) {
-			var agendaItem = agendaItemList[i]
-			if (Shared.isDateEarlier(day, agendaItem.date)) {
-				index = i
-				break
-			}
-		}
-
-		if (index >= 0) {
-			// Insert at index
-			agendaItemList.splice(i, 0, newAgendaItem)
-		} else {
-			// Append
-			agendaItemList.push(newAgendaItem)
-		}
-		// console.log('uneventfulDay:', day)
+		byDay[key] = newAgendaItem
+		agendaItemList.push(newAgendaItem)
 	}
 
-	function getAgendaItemByDate(agendaItemList, date) {
-		for (var i = 0; i < agendaItemList.length; i++) {
-			var agendaItem = agendaItemList[i]
-			if (Shared.isSameDate(agendaItem.date, date)) {
-				return agendaItem
-			}
-		}
-		return null
-	}
-	function insertEventAtDate(agendaItemList, date, eventItem) {
-		var agendaItem = getAgendaItemByDate(agendaItemList, date);
+	function insertEventAtDate(agendaItemList, byDay, date, eventItem) {
+		var key = dayKey(date)
+		var agendaItem = byDay[key]
 		if (!agendaItem) {
 			agendaItem = buildAgendaItem(date)
+			byDay[key] = agendaItem
 			agendaItemList.push(agendaItem)
 		}
 		if (eventItem.kind === 'tasks#task') {
@@ -257,6 +235,7 @@ ListModel {
 
 
 		var agendaItemList = []
+		var byDay = {}
 		var itemIndex = 0
 
 		function finalizeAgendaItems() {
@@ -272,26 +251,22 @@ ListModel {
 
 			if (clipEventsFromOtherMonths) {
 				// Remove calendar from different months
-				for (var i = 0; i < agendaItemList.length; i++) {
-					var agendaItem = agendaItemList[i]
-					if (agendaItem.date < currentMonthMin || currentMonthMaxExclusive <= agendaItem.date && nextNumDaysEndExclusive < agendaItem.date) {
-						// console.log('removed agendaItem:', agendaItem.date)
-						agendaItemList.splice(i, 1)
-						i--
-					}
-				}
+				agendaItemList = agendaItemList.filter(function(agendaItem) {
+					return !(agendaItem.date < currentMonthMin || currentMonthMaxExclusive <= agendaItem.date && nextNumDaysEndExclusive < agendaItem.date)
+				})
+				byDay = indexAgendaItems(agendaItemList)
 			}
 
 			if (showAllDaysInMonth) {
 				for (var day = new Date(currentMonthMin); day < currentMonthMaxExclusive; day.setDate(day.getDate() + 1)) {
-					addAgendaItemIfMissing(agendaItemList, day)
+					addAgendaItemIfMissing(agendaItemList, byDay, day)
 				}
 			}
 
 			if (currentMonthContainsToday && showNextNumDays > 0) {
 				var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate())
 				for (var day = todayMidnight; day < nextNumDaysEndExclusive; day.setDate(day.getDate() + 1)) {
-					addAgendaItemIfMissing(agendaItemList, day)
+					addAgendaItemIfMissing(agendaItemList, byDay, day)
 				}
 			}
 			
@@ -301,14 +276,9 @@ ListModel {
 				if (!clipPastEventsToday) {
 					minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate())
 				}
-				for (var i = 0; i < agendaItemList.length; i++) {
-					var agendaItem = agendaItemList[i]
-					if (agendaItem.date < minDate) {
-						// console.log('removed agendaItem:', agendaItem.date)
-						agendaItemList.splice(i, 1)
-						i--
-					}
-				}
+				agendaItemList = agendaItemList.filter(function(agendaItem) {
+					return !(agendaItem.date < minDate)
+				})
 			}
 
 			// Make sure the agendaItemList is sorted.
@@ -316,6 +286,22 @@ ListModel {
 			// and agendaBreakupMultiDayEvents is false, the current date agendaItem is
 			// out of order since the agendaItem is inserted earlier.
 			agendaItemList.sort(function(a,b) { return a.date - b.date })
+
+			// Fill in weather before writing to the model so the weather column doesn't flicker.
+			var weatherData = agendaModel.pendingWeatherData || agendaModel.lastWeatherData
+			agendaModel.pendingWeatherData = null
+			var weatherByDay = agendaModel.weatherFieldsByDay(weatherData)
+			var showWeatherColumn = false
+			for (var i = 0; i < agendaItemList.length; i++) {
+				var weatherFields = weatherByDay[dayKey(agendaItemList[i].date)]
+				if (weatherFields) {
+					Object.assign(agendaItemList[i], weatherFields)
+					showWeatherColumn = true
+				}
+			}
+			if (weatherData) {
+				agendaModel.showDailyWeather = showWeatherColumn
+			}
 
 
 			var minCount = Math.min(agendaItemList.length, agendaModel.count)
@@ -340,11 +326,6 @@ ListModel {
 				// skip
 			}
 			agendaModel.populating = false
-			if (agendaModel.pendingWeatherData) {
-				var weatherData = agendaModel.pendingWeatherData
-				agendaModel.pendingWeatherData = null
-				agendaModel.applyWeatherForecast(weatherData)
-			}
 		}
 
 		function processChunk() {
@@ -352,9 +333,10 @@ ListModel {
 				return
 			}
 			var end = Math.min(itemIndex + agendaModel.parseChunkSize, items.length)
+			var breakupMultiDayEvents = plasmoid.configuration.agendaBreakupMultiDayEvents
 			for (; itemIndex < end; itemIndex++) {
 				var eventItem = items[itemIndex]
-				if (plasmoid.configuration.agendaBreakupMultiDayEvents) {
+				if (breakupMultiDayEvents) {
 					// for Max(start, visibleMin) .. Min(end, visibleMax)
 					var lowerLimitDate = (agendaModel.clipEventsOutsideLimits && eventItem.startDateTime < agendaModel.visibleDateMin
 						? agendaModel.visibleDateMin
@@ -374,16 +356,16 @@ ListModel {
 					}
 					// Compare by day so a timed event crossing midnight also lands on its last day.
 					for (var eventItemDate = new Date(lowerLimitDate); !Shared.isDateAfter(eventItemDate, upperLimitDate); eventItemDate.setDate(eventItemDate.getDate() + 1)) {
-						insertEventAtDate(agendaItemList, eventItemDate, eventItem)
+						insertEventAtDate(agendaItemList, byDay, eventItemDate, eventItem)
 					}
 				} else {
 					var now = new Date(timeModel.currentTime)
 					var inProgress = eventItem.startDateTime <= now && now <= eventItem.endDateTime
 					if (inProgress) {
 						var today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-						insertEventAtDate(agendaItemList, today, eventItem)
+						insertEventAtDate(agendaItemList, byDay, today, eventItem)
 					} else {
-						insertEventAtDate(agendaItemList, eventItem.startDateTime, eventItem)
+						insertEventAtDate(agendaItemList, byDay, eventItem.startDateTime, eventItem)
 					}
 				}
 			}
@@ -399,32 +381,39 @@ ListModel {
 		processChunk()
 	}
 
+	function weatherFieldsByDay(data) {
+		var byDay = {}
+		if (!(data && data.list)) {
+			return byDay
+		}
+		for (var j = 0; j < data.list.length; j++) {
+			var forecastItem = data.list[j]
+			var key = dayKey(new Date(forecastItem.dt * 1000))
+			byDay[key] = {
+				tempLow: Math.floor(forecastItem.temp.min),
+				tempHigh: Math.ceil(forecastItem.temp.max),
+				weatherIcon: forecastItem.iconName || 'weather-severe-alert',
+				weatherText: forecastItem.text || '',
+				weatherDescription: forecastItem.description || '',
+				weatherNotes: forecastItem.notes || '',
+				showWeather: true,
+			}
+		}
+		return byDay
+	}
+
 	function applyWeatherForecast(data) {
 		if (!(data && data.list)) {
 			return
 		}
 
+		var weatherByDay = weatherFieldsByDay(data)
 		var showWeatherColumn = false
-		for (var j = 0; j < data.list.length; j++) {
-			var forecastItem = data.list[j]
-			var day = new Date(forecastItem.dt * 1000)
-
-			for (var i = 0; i < agendaModel.count; i++) {
-				var agendaItem = agendaModel.get(i)
-				if (Shared.isSameDate(day, agendaItem.date)) {
-					// logger.debug('parseWeatherForecast', day)
-					agendaItem.tempLow = Math.floor(forecastItem.temp.min)
-					agendaItem.tempHigh = Math.ceil(forecastItem.temp.max)
-					agendaModel.setProperty(i, 'tempLow', Math.floor(forecastItem.temp.min))
-					agendaModel.setProperty(i, 'tempHigh', Math.ceil(forecastItem.temp.max))
-					agendaModel.setProperty(i, 'weatherIcon', forecastItem.iconName || 'weather-severe-alert')
-					agendaModel.setProperty(i, 'weatherText', forecastItem.text || '')
-					agendaModel.setProperty(i, 'weatherDescription', forecastItem.description || '')
-					agendaModel.setProperty(i, 'weatherNotes', forecastItem.notes || '')
-					agendaModel.setProperty(i, 'showWeather', true)
-					showWeatherColumn = true
-					break
-				}
+		for (var i = 0; i < agendaModel.count; i++) {
+			var weatherFields = weatherByDay[dayKey(agendaModel.get(i).date)]
+			if (weatherFields) {
+				agendaModel.set(i, weatherFields) // One change signal per row instead of seven.
+				showWeatherColumn = true
 			}
 		}
 		agendaModel.showDailyWeather = showWeatherColumn

@@ -346,8 +346,6 @@ MouseArea {
 			borderOpacity: plasmoid.configuration.monthShowBorder ? 0.25 : 0
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek
-			property int parseGeneration: 0
-			property int parseChunkSize: 50
 
 			Layout.preferredWidth: popup.leftColumnWidth
 			Layout.preferredHeight: popup.bottomRowHeight
@@ -362,55 +360,47 @@ MouseArea {
 				if (!(data && data.items)) {
 					return
 				}
-				var generation = ++monthView.parseGeneration
-
-				// Clear event data since data contains events from all calendars, and this function
-				// is called every time a calendar is recieved.
-				for (var i = 0; i < monthView.daysModel.count; i++) {
-					var dayData = monthView.daysModel.get(i)
-					monthView.daysModel.setProperty(i, 'showEventBadge', false)
-					dayData.events.clear()
-				}
 
 				// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
+				// Bucket events per visible day in plain JS first, then write each day to the model once.
+				var daysModel = monthView.daysModel
+				var dayCount = daysModel.count
+				var dayTimes = []
+				var dayEvents = []
+				for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
+					var dayData = daysModel.get(dayIndex)
+					dayTimes.push(new Date(dayData.yearNumber, dayData.monthNumber - 1, dayData.dayNumber).getTime())
+					dayEvents.push([])
+				}
+
 				var items = data.items
-				var itemIndex = 0
-
-				function processChunk() {
-					if (generation !== monthView.parseGeneration) {
-						return
+				for (var itemIndex = 0; itemIndex < items.length; itemIndex++) {
+					var eventItem = items[itemIndex]
+					var startTime = new Date(eventItem.startDateTime.getFullYear(), eventItem.startDateTime.getMonth(), eventItem.startDateTime.getDate()).getTime()
+					var eventItemEndDate = new Date(eventItem.endDateTime.getFullYear(), eventItem.endDateTime.getMonth(), eventItem.endDateTime.getDate())
+					if (eventItem.end.date) {
+						// All day events end at midnight which is technically the next day.
+						eventItemEndDate.setDate(eventItemEndDate.getDate() - 1)
 					}
-					var end = Math.min(itemIndex + monthView.parseChunkSize, items.length)
-					for (; itemIndex < end; itemIndex++) {
-						var eventItem = items[itemIndex]
-						var eventItemStartDate = new Date(eventItem.startDateTime.getFullYear(), eventItem.startDateTime.getMonth(), eventItem.startDateTime.getDate())
-						var eventItemEndDate = new Date(eventItem.endDateTime.getFullYear(), eventItem.endDateTime.getMonth(), eventItem.endDateTime.getDate())
-						if (eventItem.end.date) {
-							// All day events end at midnight which is technically the next day.
-							eventItemEndDate.setDate(eventItemEndDate.getDate() - 1)
+					var endTime = eventItemEndDate.getTime()
+					for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
+						if (endTime < dayTimes[dayIndex]) {
+							break
 						}
-						// logger.debug(eventItemStartDate, eventItemEndDate)
-						for (var dayIndex = 0; dayIndex < monthView.daysModel.count; dayIndex++) {
-							var dayData = monthView.daysModel.get(dayIndex)
-							var dayDataDate = new Date(dayData.yearNumber, dayData.monthNumber - 1, dayData.dayNumber)
-							if (eventItemStartDate <= dayDataDate && dayDataDate <= eventItemEndDate) {
-								// logger.debug('\t', dayDataDate)
-								monthView.daysModel.setProperty(dayIndex, 'showEventBadge', true)
-								var events = dayData.events || []
-								events.append(eventItem)
-								monthView.daysModel.setProperty(dayIndex, 'events', events)
-							} else if (eventItemEndDate < dayDataDate) {
-								break
-							}
+						if (startTime <= dayTimes[dayIndex]) {
+							dayEvents[dayIndex].push(eventItem)
 						}
-					}
-
-					if (itemIndex < items.length) {
-						Qt.callLater(processChunk)
 					}
 				}
 
-				processChunk()
+				for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
+					var events = daysModel.get(dayIndex).events
+					events.clear()
+					if (dayEvents[dayIndex].length) {
+						events.append(dayEvents[dayIndex])
+					}
+					daysModel.setProperty(dayIndex, 'showEventBadge', dayEvents[dayIndex].length > 0)
+				}
 			}
 
 			onDayDoubleClicked: function(dayData) {
