@@ -90,7 +90,8 @@ Item {
 					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
 					Layout.maximumWidth: preferredTextWidth
 					elide: Text.ElideRight
-					text: Qt.formatTime(timeModel.currentTime, Qt.locale().timeFormat(Locale.LongFormat))
+					// Long format has seconds, which would be stale when the clock ticks per minute.
+					text: Qt.formatTime(timeModel.currentTime, Qt.locale().timeFormat(timeModel.needsSeconds ? Locale.LongFormat : Locale.ShortFormat))
 				}
 
 				PlasmaComponents3.Label {

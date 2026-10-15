@@ -21,6 +21,16 @@ Item {
 		return timezones
 	}
 
+	// Tick once a minute unless a displayed clock format shows seconds.
+	readonly property bool needsSeconds: {
+		var formats = appletConfig.line1TimeFormat
+		if (plasmoid.configuration.clockShowLine2) {
+			formats += appletConfig.line2TimeFormat
+		}
+		// Drop quoted literals, eg: 'sec'.
+		return /s/.test(formats.replace(/'[^']*'/g, ''))
+	}
+
 	signal secondChanged()
 	signal minuteChanged()
 	signal dateChanged()
@@ -30,8 +40,8 @@ Item {
 		id: dataSource
 		engine: "time"
 		connectedSources: timeModel.allTimezones
-		interval: 1000
-		intervalAlignment: Plasma5Support.Types.NoAlignment
+		interval: timeModel.needsSeconds ? 1000 : 60000
+		intervalAlignment: timeModel.needsSeconds ? Plasma5Support.Types.NoAlignment : Plasma5Support.Types.AlignToMinute
 		onNewData: function(sourceName, data) {
 			if (sourceName === 'Local') {
 				timeModel.tick()
