@@ -155,7 +155,7 @@ Item {
 			lastGridItemAreasSignature = signature
 			gridDataAreas.model = areas
 		}
-		property string lastGridItemAreasSignature: 
+		property string lastGridItemAreasSignature: ""
 
 
 		function gridPoint(x, y) {
