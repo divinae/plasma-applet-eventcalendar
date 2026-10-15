@@ -124,7 +124,7 @@ MouseArea {
 	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !fullViewMode
 	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !weekMode) || monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
-	readonly property int viewTabsHeight: showViewTabs ? viewTabs.implicitHeight + spacing : 0
+	readonly property int viewTabsHeight: topBar.implicitHeight + spacing
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -293,9 +293,22 @@ MouseArea {
 
 	//--- View tabs: Month | Week | Agenda (classic layout)
 	readonly property var viewModes: ['month', 'week', 'classic']
-	PlasmaComponents3.TabBar {
-		id: viewTabs
-		visible: popup.showViewTabs
+	// Top bar: view tabs (optional) and a refresh button, in every view.
+	property bool refreshing: false
+	Connections {
+		target: popup.eventModel
+		function onFetchingData() { popup.refreshing = true }
+		function onAllDataFetched() { popup.refreshing = false }
+	}
+	Timer {
+		// Never leave the spinner stuck if a fetch doesn't report back.
+		running: popup.refreshing
+		interval: 30000
+		onTriggered: popup.refreshing = false
+	}
+
+	RowLayout {
+		id: topBar
 		anchors.top: parent.top
 		anchors.topMargin: popup.padding
 		anchors.left: parent.left
@@ -303,25 +316,61 @@ MouseArea {
 		anchors.right: parent.right
 		// Leave room for the pin button in the top right corner when there's no padding for it.
 		anchors.rightMargin: popup.padding > 0 ? popup.padding : Math.round(Kirigami.Units.gridUnit * 1.25) + Kirigami.Units.smallSpacing
-		currentIndex: Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
-		onCurrentIndexChanged: {
-			var mode = popup.viewModes[currentIndex]
-			if (plasmoid.configuration.popupMode !== mode) {
-				plasmoid.configuration.popupMode = mode
+		spacing: Kirigami.Units.smallSpacing
+
+		PlasmaComponents3.TabBar {
+			id: viewTabs
+			visible: popup.showViewTabs
+			Layout.fillWidth: true
+			currentIndex: Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
+			onCurrentIndexChanged: {
+				var mode = popup.viewModes[currentIndex]
+				if (plasmoid.configuration.popupMode !== mode) {
+					plasmoid.configuration.popupMode = mode
+				}
+			}
+
+			PlasmaComponents3.TabButton {
+				text: i18n("Month")
+				icon.name: "view-calendar-month"
+			}
+			PlasmaComponents3.TabButton {
+				text: i18n("Week")
+				icon.name: "view-calendar-week"
+			}
+			PlasmaComponents3.TabButton {
+				text: i18n("Agenda")
+				icon.name: "view-calendar-agenda"
 			}
 		}
 
-		PlasmaComponents3.TabButton {
-			text: i18n("Month")
-			icon.name: "view-calendar-month"
+		Item {
+			visible: !viewTabs.visible
+			Layout.fillWidth: true
 		}
-		PlasmaComponents3.TabButton {
-			text: i18n("Week")
-			icon.name: "view-calendar-week"
-		}
-		PlasmaComponents3.TabButton {
-			text: i18n("Agenda")
-			icon.name: "view-calendar-agenda"
+
+		Item {
+			Layout.preferredWidth: refreshButton.implicitWidth
+			Layout.preferredHeight: refreshButton.implicitHeight
+			Layout.alignment: Qt.AlignVCenter
+
+			PlasmaComponents3.ToolButton {
+				id: refreshButton
+				anchors.fill: parent
+				icon.name: "view-refresh"
+				enabled: !popup.refreshing
+				opacity: popup.refreshing ? 0 : 1
+				onClicked: logic.update()
+				PlasmaComponents3.ToolTip.text: i18n("Refresh")
+				PlasmaComponents3.ToolTip.visible: hovered
+			}
+			PlasmaComponents3.BusyIndicator {
+				anchors.centerIn: parent
+				width: refreshButton.icon.width || Kirigami.Units.iconSizes.small
+				height: width
+				running: popup.refreshing
+				visible: running
+			}
 		}
 	}
 	Connections {
@@ -541,28 +590,11 @@ MouseArea {
 				id: errorMessageWidget
 				anchors.left: parent.left
 				anchors.bottom: parent.bottom
-				anchors.right: refreshButton.left
+				anchors.right: parent.right
 				anchors.margins: Kirigami.Units.smallSpacing
 				text: logic.currentErrorMessage
 			}
 
-			PlasmaComponents3.Button {
-				id: refreshButton
-				icon.name: 'view-refresh'
-				anchors.bottom: parent.bottom
-				anchors.right: parent.right
-				anchors.rightMargin: agendaView.scrollbarWidth
-				onClicked: {
-					logic.update()
-				}
-
-				// Timer {
-				// 	running: true
-				// 	repeat: true
-				// 	interval: 2000
-				// 	onTriggered: parent.clicked()
-				// }
-			}
 		} // AgendaView
 	} // GridLayout
 
