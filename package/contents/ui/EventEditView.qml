@@ -136,23 +136,34 @@ Rectangle {
 		anchors.fill: parent
 		spacing: 0
 
-		RowLayout {
+		// Cancel on the left, title centered, Save on the right.
+		Item {
 			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
+			implicitHeight: Math.max(cancelButton.implicitHeight, saveButton.implicitHeight, formTitle.implicitHeight)
+
 			PlasmaComponents3.ToolButton {
+				id: cancelButton
+				anchors.left: parent.left
+				anchors.verticalCenter: parent.verticalCenter
 				icon.name: "go-previous"
 				text: i18n("Cancel")
 				onClicked: form.closeRequested()
 			}
 			Kirigami.Heading {
-				Layout.fillWidth: true
-				Layout.leftMargin: Kirigami.Units.smallSpacing
+				id: formTitle
+				anchors.centerIn: parent
+				width: Math.min(implicitWidth, parent.width - Math.max(cancelButton.width, saveButton.width) * 2 - Kirigami.Units.largeSpacing * 2)
+				horizontalAlignment: Text.AlignHCenter
 				level: 3
 				elide: Text.ElideRight
 				text: form.isNew ? i18n("New Event") : i18n("Edit Event")
 			}
 			PlasmaComponents3.Button {
+				id: saveButton
+				anchors.right: parent.right
+				anchors.verticalCenter: parent.verticalCenter
 				icon.name: "document-save"
 				text: i18n("Save")
 				enabled: titleField.text.trim().length > 0 && !!calendarSelector.selectedCalendarId
