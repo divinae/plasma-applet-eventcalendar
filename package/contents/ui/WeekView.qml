@@ -536,16 +536,45 @@ Item {
 								color: weekView.gridLineColor
 							}
 
-							// Click an empty spot: new event at that time (rounded down to 30 min).
+							// Click an empty spot: new event at that time (rounded down to 30 min), 1 hour long.
+							// Hovering previews that slot.
 							MouseArea {
+								id: slotArea
 								anchors.fill: parent
+								hoverEnabled: true
 								cursorShape: Qt.CrossCursor
-								onClicked: function(mouse) {
-									var minutes = (weekView.firstHour + mouse.y / weekView.hourHeight) * 60
-									minutes = Math.floor(minutes / 30) * 30
+								readonly property int slotMinutes: Math.floor((weekView.firstHour + mouseY / weekView.hourHeight) * 60 / 30) * 30
+								function slotStart() {
 									var start = new Date(dayColumn.day.date)
-									start.setMinutes(minutes)
-									popup.newEvent(dayColumn.day.date, start)
+									start.setMinutes(slotMinutes)
+									return start
+								}
+								onClicked: popup.newEvent(dayColumn.day.date, slotStart())
+							}
+							Rectangle {
+								id: slotPreview
+								visible: slotArea.containsMouse
+								x: 2
+								y: (slotArea.slotMinutes / 60 - weekView.firstHour) * weekView.hourHeight + 1
+								width: parent.width - 4
+								height: weekView.hourHeight - 2
+								radius: Math.min(10, height / 2)
+								color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.15)
+								border.width: 1
+								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
+								PlasmaComponents3.Label {
+									anchors.fill: parent
+									anchors.margins: 2
+									anchors.leftMargin: 6
+									text: {
+										var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+										var start = slotArea.slotStart()
+										var end = new Date(start.getTime() + 60 * 60 * 1000)
+										return Qt.formatTime(start, format) + ' – ' + Qt.formatTime(end, format)
+									}
+									font: Kirigami.Theme.smallFont
+									color: Kirigami.Theme.highlightColor
+									elide: Text.ElideRight
 								}
 							}
 
