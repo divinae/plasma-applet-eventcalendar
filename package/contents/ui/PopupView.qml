@@ -403,7 +403,8 @@ MouseArea {
 
 					Rectangle {
 						anchors.fill: parent
-						radius: height / 2
+						// Same corners as the Plasma button hover background drawn on top.
+						radius: Kirigami.Units.cornerRadius
 						color: Kirigami.Theme.highlightColor
 						opacity: parent.current ? 0.18 : 0
 					}
@@ -543,6 +544,10 @@ MouseArea {
 			Layout.preferredHeight: popup.bottomRowHeight
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			// Next to the agenda, keep the calendar at its configured size; extra room goes to the agenda.
+			Layout.maximumWidth: popup.twoColumns ? popup.leftColumnWidth : Number.POSITIVE_INFINITY
+			Layout.maximumHeight: popup.twoColumns ? popup.bottomRowHeight : Number.POSITIVE_INFINITY
+			Layout.alignment: Qt.AlignTop
 
 			// Component.onCompleted: {
 			// 	today = new Date()
