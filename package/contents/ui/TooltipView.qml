@@ -145,9 +145,13 @@ Item {
 					// be one Item with two Labels because that wouldn't work
 					// in a grid then
 					var timezones = []
+					var data = dataSource.data
+					var localOffset = data["Local"] ? data["Local"]["Offset"] : undefined
 					for (var i = 0; i < plasmoid.configuration.selectedTimeZones.length; i++) {
 						var timezone = plasmoid.configuration.selectedTimeZones[i]
-						if (timezone != 'Local') {
+						// Skip zones with the same offset as local time, eg: Europe/Warsaw when local is Warsaw.
+						var sameAsLocal = typeof localOffset !== "undefined" && data[timezone] && data[timezone]["Offset"] === localOffset
+						if (timezone != 'Local' && !sameAsLocal) {
 							timezones.push(timezone)
 							timezones.push(timezone)
 						}
