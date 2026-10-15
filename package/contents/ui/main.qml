@@ -168,8 +168,8 @@ PlasmoidItem {
 			return plasmoid.location != PlasmaCore.Types.Floating // && plasmoid.configuration.widget_show_pin
 		}
 		padding: {
-			var monthMode = plasmoid.configuration.popupMode === 'month'
-			if (isPinVisible && (monthMode || !(plasmoid.configuration.widgetShowTimer || plasmoid.configuration.widgetShowMeteogram))) {
+			var fullViewMode = plasmoid.configuration.popupMode === 'month' || plasmoid.configuration.popupMode === 'week'
+			if (isPinVisible && (fullViewMode || !(plasmoid.configuration.widgetShowTimer || plasmoid.configuration.widgetShowMeteogram))) {
 				return pinButton.height
 			} else {
 				return 0

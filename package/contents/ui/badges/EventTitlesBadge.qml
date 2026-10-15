@@ -2,7 +2,7 @@ import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 
-import "../LocaleFuncs.js" as LocaleFuncs
+import "../Shared.js" as Shared
 
 // Google Calendar (Android) style: event titles as colored bars below the day number.
 Item {
@@ -26,41 +26,6 @@ Item {
 
 	function eventAt(i) {
 		return modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
-	}
-
-	function plainText(html) {
-		return String(html || '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim()
-	}
-
-	function eventDetails(eventItem) {
-		if (!eventItem) {
-			return ''
-		}
-		var lines = []
-		lines.push(LocaleFuncs.formatEventDuration(eventItem, {
-			relativeDate: timeModel.currentTime,
-			clock24h: appletConfig.clock24h,
-		}))
-		if (eventItem.location) {
-			lines.push(eventItem.location)
-		}
-		var calendar = eventModel.getCalendar(eventItem.calendarId)
-		if (calendar && calendar.summary) {
-			lines.push(calendar.summary)
-		}
-		var description = plainText(eventItem.description)
-		if (description) {
-			lines.push('')
-			lines.push(description.length > 300 ? description.substr(0, 300) + '…' : description)
-		}
-		return lines.join('\n')
-	}
-
-	// Black or white text, whichever reads better on the event color.
-	function textColorFor(bg) {
-		var c = Qt.color(bg)
-		var luminance = 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
-		return luminance > 0.6 ? "#202124" : "#ffffff"
 	}
 
 	Column {
@@ -93,7 +58,7 @@ Item {
 					anchors.rightMargin: 1
 					verticalAlignment: Text.AlignVCenter
 					text: eventBar.eventItem ? eventBar.eventItem.summary : ""
-					color: eventTitlesBadge.textColorFor(eventBar.barColor)
+					color: Shared.contrastTextColor(eventBar.barColor)
 					font: eventTitlesBadge.titleFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap
@@ -102,7 +67,7 @@ Item {
 				PlasmaCore.ToolTipArea {
 					anchors.fill: parent
 					mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""
-					subText: containsMouse ? eventTitlesBadge.eventDetails(eventBar.eventItem) : ""
+					subText: containsMouse ? eventModel.eventDetailsText(eventBar.eventItem) : ""
 					textFormat: Text.PlainText
 				}
 			}

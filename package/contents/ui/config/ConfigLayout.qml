@@ -23,15 +23,19 @@ ConfigPage {
 			id: popupModeGroup
 			configKey: 'popupMode'
 			model: [
-				{ value: 'classic', text: i18n("Agenda and calendar (layout below)") },
-				{ value: 'month', text: i18n("Full month view with event titles, like mobile calendar apps") },
+				{ value: 'month', text: i18n("Month: full month view with event titles, like mobile calendar apps") },
+				{ value: 'week', text: i18n("Week: hour grid with events") },
+				{ value: 'classic', text: i18n("Agenda: agenda and calendar (layout below)") },
 			]
 		}
+		ConfigCheckBox {
+			configKey: 'showViewTabs'
+			text: i18n("Show Month / Week / Agenda tabs in the popup")
+		}
 		RowLayout {
-			visible: page.configBridge.read("popupMode", "classic") === 'month'
 			ConfigSpinBox {
 				configKey: 'monthModeWidth'
-				before: i18n("Size:")
+				before: i18n("Month and week view size:")
 				suffix: i18n("px")
 				minimumValue: 300
 				maximumValue: 3000

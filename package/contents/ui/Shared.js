@@ -106,3 +106,19 @@ function removeMissingKeys(objA, objB) {
 		}
 	}
 }
+
+// Black or white text, whichever reads better on the given background color.
+function contrastTextColor(bg) {
+	var c = Qt.color(bg)
+	var luminance = 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
+	return luminance > 0.6 ? "#202124" : "#ffffff"
+}
+
+function plainText(html) {
+	return String(html || '')
+		.replace(/<br\s*\/?>/gi, '\n')
+		.replace(/<[^>]*>/g, '')
+		.replace(/&nbsp;/g, ' ')
+		.replace(/&amp;/g, '&')
+		.trim()
+}

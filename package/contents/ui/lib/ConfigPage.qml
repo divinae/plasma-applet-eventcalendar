@@ -206,6 +206,8 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_showViewTabs
+	property var cfg_showViewTabsDefault
 	property var cfg_popupMode
 	property var cfg_popupModeDefault
 	property var cfg_monthModeWidth

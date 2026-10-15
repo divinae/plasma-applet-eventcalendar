@@ -2,6 +2,8 @@ import QtQuick
 
 import "./calendars"
 import "./lib"
+import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 CalendarManager {
 	id: eventModel
@@ -237,6 +239,31 @@ CalendarManager {
 	}
 
 	onAllDataFetched: mergeEvents()
+
+	// Tooltip text for an event: time, location, calendar, start of the description.
+	function eventDetailsText(eventItem) {
+		if (!eventItem) {
+			return ''
+		}
+		var lines = []
+		lines.push(LocaleFuncs.formatEventDuration(eventItem, {
+			relativeDate: timeModel.currentTime,
+			clock24h: appletConfig.clock24h,
+		}))
+		if (eventItem.location) {
+			lines.push(eventItem.location)
+		}
+		var calendar = getCalendar(eventItem.calendarId)
+		if (calendar && calendar.summary) {
+			lines.push(calendar.summary)
+		}
+		var description = Shared.plainText(eventItem.description)
+		if (description) {
+			lines.push('')
+			lines.push(description.length > 300 ? description.substr(0, 300) + '…' : description)
+		}
+		return lines.join('\n')
+	}
 
 	function mergeEvents() {
 		logger.debug('eventModel.mergeEvents')

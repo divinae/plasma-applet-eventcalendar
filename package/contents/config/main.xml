@@ -73,8 +73,11 @@
 			<default>true</default>
 		</entry>
 		<entry name="popupMode" type="string">
-			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. -->
+			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. week: week view. -->
 			<default>classic</default>
+		</entry>
+		<entry name="showViewTabs" type="bool">
+			<default>true</default>
 		</entry>
 		<entry name="monthModeWidth" type="uint">
 			<default>700</default>

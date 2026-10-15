@@ -21,17 +21,20 @@ MouseArea {
 	property real heightScale: Math.max(1, screenHeight / 1080)
 
 	property int topRowHeight: Math.round(plasmoid.configuration.topRowHeight * heightScale)
-	property int bottomRowHeight: Math.round((monthMode ? plasmoid.configuration.monthModeHeight : plasmoid.configuration.bottomRowHeight) * heightScale)
+	property int bottomRowHeight: Math.round((fullViewMode ? plasmoid.configuration.monthModeHeight : plasmoid.configuration.bottomRowHeight) * heightScale)
 	property int singleColumnMonthViewHeight: Math.round(plasmoid.configuration.monthHeightSingleColumn * heightScale)
 
 	// DigitalClock LeftColumn minWidth: Kirigami.Units.gridUnit * 22
 	// DigitalClock RightColumn minWidth: Kirigami.Units.gridUnit * 14
 	// 14/(22+14) * 400 = 156
 	// rightColumnWidth=156 looks nice but is very thin for listing events + date + weather.
-	property int leftColumnWidth: Math.round((monthMode ? plasmoid.configuration.monthModeWidth : plasmoid.configuration.leftColumnWidth) * widthScale) // Meteogram + MonthView
+	property int leftColumnWidth: Math.round((fullViewMode ? plasmoid.configuration.monthModeWidth : plasmoid.configuration.leftColumnWidth) * widthScale) // Meteogram + MonthView
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
+		if (weekMode) {
+			return leftColumnWidth
+		}
 		if (showAgenda && showCalendar) {
 			return Math.max(leftColumnWidth, rightColumnWidth)
 		} else if (showCalendar) {
@@ -51,6 +54,9 @@ MouseArea {
 	}
 
 	property int singleColumnHeight: {
+		if (weekMode) {
+			return bottomRowHeight + viewTabsHeight
+		}
 		var rows = []
 		if (showMeteogram) {
 			rows.push(topRowHeight)
@@ -61,7 +67,7 @@ MouseArea {
 		if (showCalendar || showAgenda) {
 			rows.push(bottomRowHeight)
 		}
-		var h = 0
+		var h = viewTabsHeight
 		for (var i = 0; i < rows.length; i++) {
 			h += rows[i]
 		}
@@ -97,7 +103,7 @@ MouseArea {
 		} else if (singleColumn) {
 			return singleColumnHeight + padding * 2
 		} else { // twoColumns
-			var h = bottomRowHeight // showAgenda || showCalendar
+			var h = bottomRowHeight + viewTabsHeight // showAgenda || showCalendar
 			if (showMeteogram || showTimer) {
 				h += spacing + topRowHeight
 			}
@@ -109,11 +115,16 @@ MouseArea {
 	property var agendaModel
 
 	// Month mode: only a full month view with event titles, like mobile calendar apps.
+	// Week mode: only the week view. Both use the month/week popup size.
 	readonly property bool monthMode: plasmoid.configuration.popupMode === 'month'
-	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !monthMode
-	property bool showTimer: plasmoid.configuration.widgetShowTimer && !monthMode
-	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !monthMode
-	property bool showCalendar: plasmoid.configuration.widgetShowCalendar || monthMode
+	readonly property bool weekMode: plasmoid.configuration.popupMode === 'week'
+	readonly property bool fullViewMode: monthMode || weekMode
+	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
+	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
+	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !fullViewMode
+	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !weekMode) || monthMode
+	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
+	readonly property int viewTabsHeight: showViewTabs ? viewTabs.implicitHeight + spacing : 0
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -280,10 +291,64 @@ MouseArea {
 		}
 	]
 
+	//--- View tabs: Month | Week | Agenda (classic layout)
+	readonly property var viewModes: ['month', 'week', 'classic']
+	PlasmaComponents3.TabBar {
+		id: viewTabs
+		visible: popup.showViewTabs
+		anchors.top: parent.top
+		anchors.topMargin: popup.padding
+		anchors.horizontalCenter: parent.horizontalCenter
+		width: Math.min(implicitWidth, parent.width - popup.padding * 2)
+		currentIndex: Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
+		onCurrentIndexChanged: {
+			var mode = popup.viewModes[currentIndex]
+			if (plasmoid.configuration.popupMode !== mode) {
+				plasmoid.configuration.popupMode = mode
+			}
+		}
+
+		PlasmaComponents3.TabButton {
+			text: i18n("Month")
+			icon.name: "view-calendar-month"
+		}
+		PlasmaComponents3.TabButton {
+			text: i18n("Week")
+			icon.name: "view-calendar-week"
+		}
+		PlasmaComponents3.TabButton {
+			text: i18n("Agenda")
+			icon.name: "view-calendar-agenda"
+		}
+	}
+	Connections {
+		target: plasmoid.configuration
+		function onPopupModeChanged() {
+			viewTabs.currentIndex = Math.max(0, popup.viewModes.indexOf(plasmoid.configuration.popupMode))
+		}
+	}
+
+	Loader {
+		id: weekViewLoader
+		active: popup.weekMode
+		visible: active
+		anchors.fill: widgetGrid
+		sourceComponent: WeekView {
+			eventModel: popup.eventModel
+			// Make sure the visible week's month is fetched.
+			onWeekStartChanged: {
+				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 3)
+				popup.monthViewDate = middle
+			}
+		}
+	}
+
 	GridLayout {
 		id: widgetGrid
+		visible: !popup.weekMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
+		anchors.topMargin: popup.padding + popup.viewTabsHeight
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
 		onColumnsChanged: {
@@ -532,6 +597,9 @@ MouseArea {
 		agendaModel.parseGCalEvents(eventModel.eventsData)
 		agendaModel.parseWeatherForecast(logic.dailyWeatherData)
 		monthView.parseGCalEvents(eventModel.eventsData)
+		if (weekViewLoader.item) {
+			weekViewLoader.item.rebuild()
+		}
 		scrollToSelection()
 	}
 }

@@ -94,7 +94,7 @@ Item {
 	function deferredUpdateWeather() {
 		logic.updateDailyWeather()
 
-		if (popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode !== 'month') { // popup exists after first open
+		if (popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic') { // popup exists after first open
 			logic.updateHourlyWeather()
 		}
 	}
