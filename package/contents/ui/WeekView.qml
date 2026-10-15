@@ -459,6 +459,14 @@ Item {
 				height: 1
 				color: weekView.gridLineColor
 			}
+			// Right edge after the last day (each day draws only its left line).
+			Rectangle {
+				z: 1
+				x: weekView.gutterWidth + weekView.columnWidth * weekView.dayCount - 1
+				width: 1
+				height: parent.height
+				color: weekView.gridLineColor
+			}
 
 
 			Flickable {
