@@ -442,6 +442,15 @@ Item {
 			Layout.fillHeight: true
 			clip: true
 
+			// Top line of the hour grid: only across the day columns (not the hour labels or past Sunday).
+			Rectangle {
+				z: 1
+				x: weekView.gutterWidth
+				width: weekView.columnWidth * weekView.dayCount
+				height: 1
+				color: weekView.gridLineColor
+			}
+
 
 			Flickable {
 				id: flickable
