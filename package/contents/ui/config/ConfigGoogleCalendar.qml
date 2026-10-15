@@ -729,18 +729,15 @@ ConfigPage {
 		Layout.fillWidth: true
 		visible: googleLoginManager.isLoggedIn
 
+		Image {
+			source: Qt.resolvedUrl("../../icons/google_tasks_96px.png")
+			smooth: true
+			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+			Layout.alignment: Qt.AlignVCenter
+		}
 		HeaderText {
 			text: i18n("Tasks")
-
-			Image {
-				source: Qt.resolvedUrl("../../icons/google_tasks_96px.png")
-				smooth: true
-				anchors.leftMargin: parent.contentWidth + Kirigami.Units.smallSpacing
-				anchors.left: parent.left
-				anchors.verticalCenter: parent.verticalCenter
-				width: Kirigami.Units.iconSizes.smallMedium
-				height: Kirigami.Units.iconSizes.smallMedium
-			}
 		}
 
 		Button {
