@@ -360,14 +360,23 @@ Item {
 
 	// Weekend columns: one tinted strip per column, from the weekday name to the last week.
 	// Only in the days view (it has weekday names), not the year / decade views.
+	// Adjacent weekend days share one strip.
 	Repeater {
-		model: daysCalendar.headerModel ? daysCalendar.columns : 0
+		model: {
+			if (!daysCalendar.headerModel) {
+				return []
+			}
+			var flags = []
+			for (var i = 0; i < daysCalendar.columns; i++) {
+				var dayOfWeek = (calendarBackend.firstDayOfWeek + i) % 7
+				flags.push(Shared.isWeekend(new Date(2024, 0, 7 + dayOfWeek))) // 2024-01-07 is a Sunday
+			}
+			return Shared.runsOf(flags)
+		}
 		Rectangle {
-			readonly property int dayOfWeek: (calendarBackend.firstDayOfWeek + index) % 7
-			visible: Shared.isWeekend(new Date(2024, 0, 7 + dayOfWeek)) // 2024-01-07 is a Sunday
-			x: calendarGrid.x + index * (daysCalendar.cellWidth + root.borderWidth)
+			x: calendarGrid.x + modelData.first * (daysCalendar.cellWidth + root.borderWidth)
 			y: calendarGrid.y
-			width: daysCalendar.cellWidth
+			width: modelData.count * (daysCalendar.cellWidth + root.borderWidth) - root.borderWidth
 			height: calendarGrid.height
 			radius: 6
 			color: Kirigami.Theme.textColor

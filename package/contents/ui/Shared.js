@@ -130,3 +130,20 @@ function isWeekend(date) {
 	var day = date.getDay()
 	return workingDays.indexOf(day) < 0 && !(day === 0 && workingDays.indexOf(7) >= 0)
 }
+
+// Consecutive runs of true values: [true, false, true, true] -> [{ first: 0, count: 1 }, { first: 2, count: 2 }]
+// Used to draw adjacent weekend days as one strip.
+function runsOf(flags) {
+	var runs = []
+	for (var i = 0; i < flags.length; i++) {
+		if (!flags[i]) {
+			continue
+		}
+		if (runs.length && runs[runs.length - 1].first + runs[runs.length - 1].count === i) {
+			runs[runs.length - 1].count++
+		} else {
+			runs.push({ first: i, count: 1 })
+		}
+	}
+	return runs
+}

@@ -274,14 +274,19 @@ Item {
 
 	//--- UI
 	// Weekend days: tint the whole column, from the day name down through the hours.
+	// Adjacent weekend days share one strip.
 	Repeater {
-		model: weekView.dayCount
+		model: {
+			var flags = []
+			for (var i = 0; i < weekView.dayCount; i++) {
+				flags.push(Shared.isWeekend(weekView.dayDate(i)))
+			}
+			return Shared.runsOf(flags)
+		}
 		Rectangle {
-			readonly property date date: weekView.dayDate(index)
-			visible: Shared.isWeekend(date)
-			x: weekView.gutterWidth + index * weekView.columnWidth
+			x: weekView.gutterWidth + modelData.first * weekView.columnWidth
 			y: dayNamesRow.y
-			width: weekView.columnWidth
+			width: modelData.count * weekView.columnWidth
 			height: weekView.height - y
 			radius: 6
 			color: Kirigami.Theme.textColor
