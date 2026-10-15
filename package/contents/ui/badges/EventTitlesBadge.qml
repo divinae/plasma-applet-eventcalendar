@@ -7,7 +7,13 @@ Item {
 
 	readonly property int topOffset: dayStyle.eventTitlesHeaderHeight
 	readonly property int rowSpacing: 1
-	readonly property int rowHeight: Math.max(10, Math.round(Kirigami.Theme.smallFont.pixelSize * 1.25))
+	// Theme fonts are set in points (pixelSize is -1), so size from the font itself.
+	readonly property font titleFont: Kirigami.Theme.defaultFont
+	FontMetrics {
+		id: titleFontMetrics
+		font: eventTitlesBadge.titleFont
+	}
+	readonly property int rowHeight: Math.ceil(titleFontMetrics.height) + 4
 	readonly property int availableHeight: height - topOffset - rowSpacing
 	readonly property int maxRows: Math.max(0, Math.floor((availableHeight + rowSpacing) / (rowHeight + rowSpacing)))
 	readonly property int eventCount: modelEventsCount
@@ -57,7 +63,7 @@ Item {
 					verticalAlignment: Text.AlignVCenter
 					text: eventBar.eventItem ? eventBar.eventItem.summary : ""
 					color: eventTitlesBadge.textColorFor(eventBar.barColor)
-					font.pixelSize: Math.max(8, eventTitlesBadge.rowHeight - 4)
+					font: eventTitlesBadge.titleFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap
 				}
@@ -73,7 +79,7 @@ Item {
 			text: i18nc("more events not shown in a month day cell", "+%1", eventTitlesBadge.hiddenEventCount)
 			color: Kirigami.Theme.textColor
 			opacity: 0.7
-			font.pixelSize: Math.max(8, eventTitlesBadge.rowHeight - 4)
+			font: eventTitlesBadge.titleFont
 		}
 	}
 }

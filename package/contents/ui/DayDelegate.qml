@@ -30,7 +30,12 @@ MouseArea {
 	property string eventBadgeType: "bottomBar"
 	// 'eventTitles': day number at the top, event titles listed below it.
 	readonly property bool showEventTitles: eventBadgeType == 'eventTitles'
-	readonly property int eventTitlesHeaderHeight: Math.round(Kirigami.Theme.smallFont.pixelSize * 1.5)
+	// Theme fonts are set in points (pixelSize is -1), so measure them.
+	FontMetrics {
+		id: dayHeaderFontMetrics
+		font: Kirigami.Theme.defaultFont
+	}
+	readonly property int eventTitlesHeaderHeight: Math.ceil(dayHeaderFontMetrics.height) + 2
 	property string todayStyle: "theme"
 	property real radius: Math.min(width, height) * plasmoid.configuration.monthCellRadius
 
@@ -187,7 +192,7 @@ MouseArea {
 				anchors.margins: 0
 				height: dayStyle.eventTitlesHeaderHeight
 				verticalAlignment: Text.AlignVCenter
-				font.pixelSize: Kirigami.Theme.smallFont.pixelSize
+				font.pixelSize: Math.round(dayHeaderFontMetrics.height * 0.75)
 			}
 		}
 		horizontalAlignment: Text.AlignHCenter
