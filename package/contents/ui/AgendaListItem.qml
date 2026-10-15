@@ -13,7 +13,7 @@ GridLayout {
 	columnSpacing: 0
 	property var agendaItemEvents: model.events
 	property var agendaItemTasks: model.tasks
-	property date agendaItemDate: model.date
+	property var agendaItemDate: model.date // var: model.date is briefly undefined while delegates are removed.
 	property bool agendaItemIsToday: false
 	function checkIfToday() {
 		agendaItemIsToday = timeModel.currentTime && model.date ? Shared.isSameDate(timeModel.currentTime, model.date) : false
@@ -142,7 +142,7 @@ GridLayout {
 
 			PlasmaComponents3.Label {
 				id: itemDate
-				text: Qt.formatDateTime(date, i18nc("agenda date format line 1", "MMM d"))
+				text: Qt.formatDateTime(agendaItemDate, i18nc("agenda date format line 1", "MMM d"))
 				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
 				opacity: agendaItemIsToday ? 1 : 0.75
 				font.pointSize: -1
@@ -154,7 +154,7 @@ GridLayout {
 
 			PlasmaComponents3.Label {
 				id: itemDay
-				text: Qt.formatDateTime(date, i18nc("agenda date format line 2", "ddd"))
+				text: Qt.formatDateTime(agendaItemDate, i18nc("agenda date format line 2", "ddd"))
 				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
 				opacity: agendaItemIsToday ? 1 : 0.5
 				font.pointSize: -1

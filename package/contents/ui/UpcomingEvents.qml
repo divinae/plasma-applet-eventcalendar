@@ -16,9 +16,9 @@ CalendarManager {
 	}
 	onAllDataFetched: {
 		logger.debug('upcomingEvents.onAllDataFetched',
-			upcomingEvents.dateMin.toISOString(),
-			timeModel.currentTime.toISOString(),
-			upcomingEvents.dateMax.toISOString()
+			upcomingEvents.dateMin,
+			timeModel.currentTime,
+			upcomingEvents.dateMax
 		)
 		// sendEventListNotification()
 	}

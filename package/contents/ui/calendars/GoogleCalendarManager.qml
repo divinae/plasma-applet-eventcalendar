@@ -261,7 +261,7 @@ CalendarManager {
 			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
-				logger.logJSON('onErrorFetchingEvents: ', err)
+				logger.debugJSON('onErrorFetchingEvents: ', err)
 				var errObj = {
 					err: err,
 					data: data,
@@ -517,7 +517,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 			},
 			data: "",
 		}, function(err, data, xhr) {
-			console.log('createGCalEvent.response', err, data, xhr.status)
+			logger.debug('createGCalEvent.response', err, data, xhr.status)
 			if (!err && data && data.error) {
 				return callback(data, null, xhr)
 			}
@@ -534,7 +534,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	}
 
 	function setEventProperties(calendarId, eventId, args) {
-		logger.logJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
+		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		updateGoogleCalendarEvent(calendarId, eventId, args)
 
 		// Note: Make sure switching between all day event (event.start.date) and a date+time

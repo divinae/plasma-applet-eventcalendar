@@ -126,7 +126,7 @@ Item {
 					}
 				}
 				onExited: previousPixelDelta = 0
-				onWheel: {
+				onWheel: function(wheel) {
 					var delta = wheel.angleDelta.y || wheel.angleDelta.x
 					var pixelDelta = wheel.pixelDelta.y || wheel.pixelDelta.x
 

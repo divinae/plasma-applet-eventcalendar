@@ -358,7 +358,7 @@ CalendarManager {
 			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
-				logger.logJSON('onErrorFetchingTasks: ', err)
+				logger.debugJSON('onErrorFetchingTasks: ', err)
 				var errObj = {
 					err: err,
 					data: data,
@@ -501,7 +501,7 @@ CalendarManager {
 			},
 			data: taskData,
 		}, function(err, data, xhr) {
-			console.log('createGoogleTask.response', err, data, xhr.status)
+			logger.debug('createGoogleTask.response', err, data, xhr.status)
 			if (!err && data && data.error) {
 				return callback(data, null, xhr)
 			}
@@ -590,7 +590,7 @@ CalendarManager {
 	}
 
 	function setEventProperties(calendarId, eventId, args) {
-		logger.logJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
+		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {

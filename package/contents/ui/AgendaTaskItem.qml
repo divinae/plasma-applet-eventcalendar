@@ -187,7 +187,7 @@ LinkRect {
 		// eventModel.toggleCompleted(event.tasklistId, task.id)
 	}
 
-	onLoadContextMenu: {
+	onLoadContextMenu: function(contextMenu) {
 		var menuItem
 		var task = tasks.get(taskItemIndex)
 

@@ -24,6 +24,10 @@ Item {
 			return ""
 		}
 
+		if (!dataSource.data[zone] || !dataSource.data["Local"]) {
+			return "" // Time engine hasn't delivered data yet.
+		}
+
 		// get the time for the given timezone from the dataengine
 		var now = dataSource.data[zone]["DateTime"]
 		// get current UTC time

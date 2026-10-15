@@ -248,7 +248,7 @@ LinkRect {
 		}
 	}
 
-	onLoadContextMenu: {
+	onLoadContextMenu: function(contextMenu) {
 		var menuItem
 		var event = events.get(eventItemIndex)
 

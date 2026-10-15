@@ -203,7 +203,8 @@ ListModel {
 			return
 		}
 		var generation = ++agendaModel.parseGeneration
-		var items = data.items
+		// Copy: items is shared with the month view and reminders. Don't sort or rewrite it in place.
+		var items = data.items.slice()
 
 		if (plasmoid.configuration.agendaPlaceOverdueTasksOnToday) {
 			for (var i = 0; i < items.length; i++) {
@@ -215,6 +216,7 @@ ListModel {
 					var now = new Date(timeModel.currentTime)
 					var taskIsOverdue = eventItem.dueEndTime < now
 					if (taskIsOverdue) {
+						eventItem = Object.assign({}, eventItem)
 						eventItem.start = {
 							date: Shared.localeDateString(now),
 						}
@@ -223,6 +225,7 @@ ListModel {
 						}
 						eventItem.startDateTime = now
 						eventItem.endDateTime = now
+						items[i] = eventItem
 					}
 				}
 			}
@@ -362,11 +365,15 @@ ListModel {
 						// All Day event "ends" day before.
 						upperLimitDate = new Date(eventItem.endDateTime)
 						upperLimitDate.setDate(upperLimitDate.getDate() - 1)
+					} else if (eventItem.endDateTime > eventItem.startDateTime) {
+						// Timed event ending exactly at midnight doesn't occupy the next day.
+						upperLimitDate = new Date(eventItem.endDateTime.getTime() - 1)
 					}
 					if (agendaModel.clipEventsOutsideLimits && upperLimitDate > agendaModel.visibleDateMax) {
 						upperLimitDate = agendaModel.visibleDateMax
 					}
-					for (var eventItemDate = new Date(lowerLimitDate); eventItemDate <= upperLimitDate; eventItemDate.setDate(eventItemDate.getDate() + 1)) {
+					// Compare by day so a timed event crossing midnight also lands on its last day.
+					for (var eventItemDate = new Date(lowerLimitDate); !Shared.isDateAfter(eventItemDate, upperLimitDate); eventItemDate.setDate(eventItemDate.getDate() + 1)) {
 						insertEventAtDate(agendaItemList, eventItemDate, eventItem)
 					}
 				} else {

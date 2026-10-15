@@ -68,8 +68,8 @@ PinchArea {
 
 	property QtObject calendarBackend: calendarBackend
 
-	onPinchStarted: stack.currentItem.transformOrigin = pinch.center
-	onPinchUpdated: {
+	onPinchStarted: function(pinch) { stack.currentItem.transformOrigin = pinch.center }
+	onPinchUpdated: function(pinch) {
 		var item = stack.currentItem
 		if (stack.depth < 3 && pinch.scale < 1) {
 			item.transformScale = pinch.scale
@@ -79,7 +79,7 @@ PinchArea {
 			item.opacity = (2 - pinch.scale / 2)
 		}
 	}
-	onPinchFinished: {
+	onPinchFinished: function(pinch) {
 		var item = stack.currentItem
 		if (item.transformScale < 0.7) {
 			item.headerClicked()

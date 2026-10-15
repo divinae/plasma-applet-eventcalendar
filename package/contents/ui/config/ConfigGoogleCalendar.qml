@@ -168,8 +168,7 @@ ConfigPage {
 			cmd.push('--code_verifier')
 			cmd.push(authContext.pkceVerifier)
 		}
-		var cmdStr = JSON.stringify(cmd)
-		console.log('google_redirect.py command:', cmdStr)
+		// Don't log cmd or stdout: they contain the client secret, PKCE verifier and tokens.
 		// debugOutput.text = "Running:\n" + cmdStr + "\n\n"
 		callbackListener.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (autoLoginCancelled) {
@@ -183,7 +182,6 @@ ConfigPage {
 				messageWidget.err(i18n("Auto login failed. See logs for details."))
 				return
 			}
-			console.log('google_redirect.py stdout:', stdout)
 			var payload = extractJson(stdout || "")
 			if (!payload) {
 				messageWidget.err(i18n("Auto login failed: no token data received."))

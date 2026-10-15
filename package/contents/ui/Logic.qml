@@ -270,15 +270,15 @@ Item {
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onEventCreated(calendarId, data) {
-			logger.logJSON('onEventCreated', calendarId, data)
+			logger.debugJSON('onEventCreated', calendarId, data)
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onEventUpdated(calendarId, eventId, data) {
-			logger.logJSON('onEventUpdated', calendarId, eventId, data)
+			logger.debugJSON('onEventUpdated', calendarId, eventId, data)
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onEventDeleted(calendarId, eventId, data) {
-			logger.logJSON('onEventDeleted', calendarId, eventId, data)
+			logger.debugJSON('onEventDeleted', calendarId, eventId, data)
 			if (popup) popup.deferredUpdateUI()
 		}
 	}

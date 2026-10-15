@@ -12,7 +12,14 @@ CalendarManager {
 	calendarManagerId: "plasma"
 
 	property var executable: ExecUtil { id: executable }
-	property var calendarModel: Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", plasmaCalendarManager)
+	property var calendarModel: {
+		// kdepim-addons is optional.
+		try {
+			return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", plasmaCalendarManager)
+		} catch (e) {
+			return null
+		}
+	}
 	property var eventPluginsManager: null
 
 	function ensureEventPluginsManager() {
@@ -297,35 +304,16 @@ CalendarManager {
 		// logger.debugJSON(items)
 
 		// We need to filter out the repeated items for multi-day events as Plasma creates a new "event item"
-		// for each day of the event.
-		for (var i = 0; i < items.length; i++) {
-			var itemA = items[i]
-
-			// Check every event before this one.
-			for (var j = 0; j < i; j++) {
-				var itemB = items[j]
-				if (itemA.eventId == itemB.eventId) {
-					// There's a conflict, TODO: generate a better eventIds
-
-					if (itemA.start.date == itemB.start.date
-						&& itemA.start.dateTime == itemB.start.dateTime
-						&& itemA.end.date == itemB.end.date
-						&& itemA.end.dateTime == itemB.end.dateTime
-						&& itemA.summary == itemB.summary
-					) {
-						// Same event.
-
-						// logger.debug('itemA == itemB, removing')
-						// logger.debugJSON('\titemA', itemA)
-						// logger.debugJSON('\titemB', itemB)
-
-						items.splice(i, 1) // remove this event item
-						i -= 1 // start this index again
-						break // exit j/itemB loop
-					}
-				}
+		// for each day of the event. The id already encodes calendar + start + end times.
+		var seen = {}
+		items = items.filter(function(item) {
+			var key = item.id + '\n' + item.summary
+			if (seen[key]) {
+				return false
 			}
-		}
+			seen[key] = true
+			return true
+		})
 
 		return items
 	}
