@@ -89,7 +89,9 @@ Item {
 				}
 				var start = eventItem.startDateTime.getTime()
 				var end = eventItem.endDateTime.getTime()
-				if (eventItem.start && eventItem.start.date) {
+				// All-day, or timed but lasting a day or more (shown in the all-day row like Google Calendar).
+				var isLong = end - start >= 24 * 60 * 60 * 1000
+				if ((eventItem.start && eventItem.start.date) || isLong) {
 					// All-day: end is the exclusive midnight. Tasks can have end == start.
 					if (end <= start) {
 						end = start + 24 * 60 * 60 * 1000
@@ -103,6 +105,9 @@ Item {
 						start: Math.max(start, dayStart),
 						end: Math.min(Math.max(end, start), dayEnd),
 						dayStart: dayStart,
+						// Continues from the previous day / into the next day.
+						continued: start < dayStart,
+						continues: end > dayEnd,
 						column: 0,
 						columns: 1,
 					})
@@ -121,8 +126,14 @@ Item {
 			var timedList = result[d].timed
 			for (var t = 0; t < timedList.length; t++) {
 				var block = timedList[t]
-				first = Math.min(first, Math.floor((block.start - block.dayStart) / 3600000))
-				last = Math.max(last, Math.ceil((Math.max(block.end, block.start + 30 * 60000) - block.dayStart) / 3600000))
+				// A piece continued from the previous day starts at midnight; don't stretch the range for it,
+				// it's cut off at the top instead. Same for pieces continuing into the next day.
+				if (!block.continued) {
+					first = Math.min(first, Math.floor((block.start - block.dayStart) / 3600000))
+				}
+				if (!block.continues) {
+					last = Math.max(last, Math.ceil((Math.max(block.end, block.start + 30 * 60000) - block.dayStart) / 3600000))
+				}
 			}
 		}
 		firstHour = Math.max(0, first)
@@ -455,7 +466,7 @@ Item {
 								anchors.fill: parent
 								visible: !dayColumn.today && Shared.isWeekend(dayColumn.day.date)
 								color: Kirigami.Theme.textColor
-								opacity: 0.08
+								opacity: 0.04
 							}
 							Rectangle {
 								anchors.fill: parent
@@ -476,10 +487,16 @@ Item {
 									readonly property var eventItem: block.eventItem
 									readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
+									// Clip to the visible hour range.
+									readonly property real rangeStart: block.dayStart + weekView.firstHour * 3600000
+									readonly property real rangeEnd: block.dayStart + weekView.lastHour * 3600000
+									readonly property real visibleStart: Math.max(block.start, rangeStart)
+									readonly property real visibleEnd: Math.min(Math.max(block.end, block.start + 15 * 60000), rangeEnd)
+									visible: visibleEnd > visibleStart
 									x: 2 + block.column * slotWidth
-									y: weekView.hourY(block.start, block.dayStart) + 1
+									y: weekView.hourY(visibleStart, block.dayStart) + 1
 									width: slotWidth - 1
-									height: Math.max(weekView.lineHeight + 2, (block.end - block.start) / 3600000 * weekView.hourHeight - 2)
+									height: Math.max(weekView.lineHeight + 2, (visibleEnd - visibleStart) / 3600000 * weekView.hourHeight - 2)
 									radius: 3
 									color: barColor
 									border.width: 1
@@ -502,7 +519,7 @@ Item {
 										PlasmaComponents3.Label {
 											width: parent.width
 											visible: eventBlock.height >= weekView.lineHeight * 2 + 4
-											text: Qt.formatTime(new Date(eventBlock.block.start), appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+											text: Qt.formatTime(eventBlock.eventItem.startDateTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
 											color: Shared.contrastTextColor(eventBlock.barColor)
 											font: Kirigami.Theme.smallFont
 											elide: Text.ElideRight
