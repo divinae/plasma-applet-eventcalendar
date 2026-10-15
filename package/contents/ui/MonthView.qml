@@ -390,7 +390,7 @@ PinchArea {
 			rows: calendarBackend.weeks
 
 			showWeekNumbers: root.showWeekNumbers
-			eventBadgeType: plasmoid.configuration.monthEventBadgeType
+			eventBadgeType: plasmoid.configuration.popupMode === 'month' ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
 			todayStyle: plasmoid.configuration.monthTodayStyle
 
 			headerModel: calendarBackend.days

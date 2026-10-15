@@ -15,6 +15,42 @@ ConfigPage {
 	}
 
 	//---
+	HeaderText {
+		text: i18n("Popup Mode")
+	}
+	ConfigSection {
+		ConfigRadioButtonGroup {
+			id: popupModeGroup
+			configKey: 'popupMode'
+			model: [
+				{ value: 'classic', text: i18n("Agenda and calendar (layout below)") },
+				{ value: 'month', text: i18n("Full month view with event titles, like mobile calendar apps") },
+			]
+		}
+		RowLayout {
+			visible: page.configBridge.read("popupMode", "classic") === 'month'
+			ConfigSpinBox {
+				configKey: 'monthModeWidth'
+				before: i18n("Size:")
+				suffix: i18n("px")
+				minimumValue: 300
+				maximumValue: 3000
+			}
+			Label { text: "×" }
+			ConfigSpinBox {
+				configKey: 'monthModeHeight'
+				suffix: i18n("px")
+				minimumValue: 250
+				maximumValue: 3000
+			}
+		}
+	}
+
+	HeaderText {
+		text: i18n("Agenda and Calendar Layout")
+	}
+
+	//---
 	ButtonGroup { id: layoutGroup }
 	RadioButton {
 		text: i18n("Calendar to the left of the Agenda (Two Columns)")

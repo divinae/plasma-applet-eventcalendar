@@ -206,6 +206,12 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_popupMode
+	property var cfg_popupModeDefault
+	property var cfg_monthModeWidth
+	property var cfg_monthModeWidthDefault
+	property var cfg_monthModeHeight
+	property var cfg_monthModeHeightDefault
 	property var cfg_eventReminderUseGoogle
 	property var cfg_eventReminderUseGoogleDefault
 	property var cfg_clockShowNextEvent

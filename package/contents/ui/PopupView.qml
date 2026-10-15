@@ -21,14 +21,14 @@ MouseArea {
 	property real heightScale: Math.max(1, screenHeight / 1080)
 
 	property int topRowHeight: Math.round(plasmoid.configuration.topRowHeight * heightScale)
-	property int bottomRowHeight: Math.round(plasmoid.configuration.bottomRowHeight * heightScale)
+	property int bottomRowHeight: Math.round((monthMode ? plasmoid.configuration.monthModeHeight : plasmoid.configuration.bottomRowHeight) * heightScale)
 	property int singleColumnMonthViewHeight: Math.round(plasmoid.configuration.monthHeightSingleColumn * heightScale)
 
 	// DigitalClock LeftColumn minWidth: Kirigami.Units.gridUnit * 22
 	// DigitalClock RightColumn minWidth: Kirigami.Units.gridUnit * 14
 	// 14/(22+14) * 400 = 156
 	// rightColumnWidth=156 looks nice but is very thin for listing events + date + weather.
-	property int leftColumnWidth: Math.round(plasmoid.configuration.leftColumnWidth * widthScale) // Meteogram + MonthView
+	property int leftColumnWidth: Math.round((monthMode ? plasmoid.configuration.monthModeWidth : plasmoid.configuration.leftColumnWidth) * widthScale) // Meteogram + MonthView
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
@@ -108,10 +108,12 @@ MouseArea {
 	property var eventModel
 	property var agendaModel
 
-	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram
-	property bool showTimer: plasmoid.configuration.widgetShowTimer
-	property bool showAgenda: plasmoid.configuration.widgetShowAgenda
-	property bool showCalendar: plasmoid.configuration.widgetShowCalendar
+	// Month mode: only a full month view with event titles, like mobile calendar apps.
+	readonly property bool monthMode: plasmoid.configuration.popupMode === 'month'
+	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !monthMode
+	property bool showTimer: plasmoid.configuration.widgetShowTimer && !monthMode
+	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !monthMode
+	property bool showCalendar: plasmoid.configuration.widgetShowCalendar || monthMode
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 

@@ -72,6 +72,16 @@
 		<entry name="showBackground" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="popupMode" type="string">
+			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. -->
+			<default>classic</default>
+		</entry>
+		<entry name="monthModeWidth" type="uint">
+			<default>700</default>
+		</entry>
+		<entry name="monthModeHeight" type="uint">
+			<default>600</default>
+		</entry>
 		<entry name="topRowHeight" type="uint">
 			<default>100</default>
 		</entry>
