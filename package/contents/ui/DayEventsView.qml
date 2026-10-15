@@ -127,47 +127,62 @@ Rectangle {
 
 				Repeater {
 					model: dayView.events
-					PlasmaComponents3.ItemDelegate {
+					// Event tile in the event color, like the week view.
+					Rectangle {
 						id: eventRow
 						readonly property var eventItem: modelData
+						readonly property color tileColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+						readonly property color textColor: Shared.contrastTextColor(tileColor)
 						readonly property bool inProgress: !dayView.isAllDay(eventItem)
 							&& eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < eventItem.endDateTime
 						Layout.fillWidth: true
-						onClicked: dayView.eventClicked(eventItem)
+						Layout.leftMargin: Kirigami.Units.largeSpacing
+						Layout.rightMargin: Kirigami.Units.largeSpacing
+						Layout.topMargin: index === 0 ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
+						implicitHeight: tileColumn.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
+						radius: 8
+						color: tileColor
+						border.width: 1
+						border.color: appletConfig.eventBorderColor
+						opacity: tileMouse.containsMouse ? 0.85 : 1
 
-						contentItem: RowLayout {
-							spacing: Kirigami.Units.largeSpacing
+						ColumnLayout {
+							id: tileColumn
+							anchors.left: parent.left
+							anchors.right: parent.right
+							anchors.verticalCenter: parent.verticalCenter
+							anchors.leftMargin: Kirigami.Units.largeSpacing
+							anchors.rightMargin: Kirigami.Units.largeSpacing
+							spacing: 1
 							PlasmaComponents3.Label {
-								Layout.preferredWidth: Kirigami.Units.gridUnit * 6
-								wrapMode: Text.Wrap
-								Layout.alignment: Qt.AlignTop
-								text: dayView.timeText(eventRow.eventItem)
-								opacity: 0.7
-							}
-							Rectangle {
-								Layout.fillHeight: true
-								Layout.preferredWidth: 4
-								radius: 2
-								color: eventRow.eventItem.backgroundColor || Kirigami.Theme.highlightColor
-							}
-							ColumnLayout {
 								Layout.fillWidth: true
-								spacing: 0
-								PlasmaComponents3.Label {
-									Layout.fillWidth: true
-									wrapMode: Text.Wrap
-									text: eventRow.eventItem.summary
-									font.bold: eventRow.inProgress
-								}
-								PlasmaComponents3.Label {
-									visible: !!eventRow.eventItem.location
-									Layout.fillWidth: true
-									elide: Text.ElideRight
-									text: eventRow.eventItem.location || ""
-									font: Kirigami.Theme.smallFont
-									opacity: 0.7
-								}
+								wrapMode: Text.Wrap
+								text: eventRow.eventItem.summary
+								color: eventRow.textColor
+								font.bold: eventRow.inProgress
 							}
+							PlasmaComponents3.Label {
+								Layout.fillWidth: true
+								elide: Text.ElideRight
+								text: {
+									var parts = [dayView.timeText(eventRow.eventItem)]
+									if (eventRow.eventItem.location) {
+										parts.push(eventRow.eventItem.location)
+									}
+									return parts.join(' · ')
+								}
+								color: eventRow.textColor
+								opacity: 0.85
+								font: Kirigami.Theme.smallFont
+							}
+						}
+
+						MouseArea {
+							id: tileMouse
+							anchors.fill: parent
+							hoverEnabled: true
+							cursorShape: Qt.PointingHandCursor
+							onClicked: dayView.eventClicked(eventRow.eventItem)
 						}
 					}
 				}
