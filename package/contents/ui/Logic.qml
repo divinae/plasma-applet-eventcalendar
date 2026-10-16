@@ -12,6 +12,8 @@ Item {
 	property var currentWeatherData: null
 	property var lastForecastAt: null
 	property var lastForecastErr: null
+	property int weatherRequests: 0 // Running weather requests
+	readonly property bool weatherLoading: weatherRequests > 0
 
 	//--- Main
 	Component.onCompleted: {
@@ -126,7 +128,9 @@ Item {
 
 	function updateDailyWeather() {
 		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
+		logic.weatherRequests++
 		WeatherApi.updateDailyWeather(plasmoid.configuration, function(err, data, xhr) {
+			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
 			logger.debugJSON('updateDailyWeather.response', data)
 
@@ -142,7 +146,9 @@ Item {
 
 	function updateHourlyWeather() {
 		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
+		logic.weatherRequests++
 		WeatherApi.updateHourlyWeather(plasmoid.configuration, function(err, data, xhr) {
+			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
 			logger.debugJSON('updateHourlyWeather.response', data)
 

@@ -17,6 +17,11 @@ ColumnLayout {
 	property bool isSetup: true
 	property string locationName: ""
 	property bool compact: false // One row above the grid when the popup is narrow
+	property bool loading: false // A forecast request is running
+	readonly property bool hasData: !!current || !!today || hourly.length > 0
+	// First load: a loading view instead of the (empty) sections. Refreshes keep the old data.
+	readonly property bool showLoading: isSetup && loading && !hasData
+	readonly property bool showData: isSetup && !showLoading
 
 	spacing: Kirigami.Units.smallSpacing
 
@@ -67,23 +72,55 @@ ColumnLayout {
 		}
 	}
 
-	// Location
-	PlasmaComponents3.Label {
-		visible: panel.isSetup && !panel.compact && !!panel.locationName
+	// Loading (first time): spinner and text, centered; one row in the compact layout.
+	GridLayout {
+		visible: panel.showLoading
 		Layout.fillWidth: true
-		elide: Text.ElideRight
-		text: panel.locationName
-		font.weight: Font.Bold
+		Layout.topMargin: panel.compact ? 0 : Kirigami.Units.gridUnit * 3
+		columns: panel.compact ? 2 : 1
+		columnSpacing: Kirigami.Units.largeSpacing
+		rowSpacing: Kirigami.Units.largeSpacing
+		PlasmaComponents3.BusyIndicator {
+			running: parent.visible
+			Layout.preferredWidth: panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large
+			Layout.preferredHeight: Layout.preferredWidth
+			Layout.alignment: panel.compact ? Qt.AlignVCenter : Qt.AlignHCenter
+		}
+		PlasmaComponents3.Label {
+			Layout.fillWidth: !panel.compact
+			Layout.alignment: Qt.AlignVCenter
+			horizontalAlignment: panel.compact ? Text.AlignLeft : Text.AlignHCenter
+			text: i18n("Loading weather…")
+			opacity: 0.7
+		}
+	}
+
+	// Location, with a small spinner while refreshing.
+	RowLayout {
+		visible: panel.showData && !panel.compact && !!panel.locationName
+		Layout.fillWidth: true
+		PlasmaComponents3.Label {
+			Layout.fillWidth: true
+			elide: Text.ElideRight
+			text: panel.locationName
+			font.weight: Font.Bold
+		}
+		PlasmaComponents3.BusyIndicator {
+			visible: panel.loading
+			running: visible
+			Layout.preferredWidth: Kirigami.Units.iconSizes.small
+			Layout.preferredHeight: Layout.preferredWidth
+		}
 	}
 
 	//--- Now
 	SectionTitle {
-		visible: panel.isSetup && !panel.compact && !!panel.current
+		visible: panel.showData && !panel.compact && !!panel.current
 		showSeparator: false
 		text: i18nc("current weather", "Now")
 	}
 	RowLayout {
-		visible: panel.isSetup && !!panel.current
+		visible: panel.showData && !!panel.current
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.largeSpacing
 		// Colored icon on a soft round backdrop: light icons (clouds) vanish on a light theme otherwise.
@@ -121,7 +158,7 @@ ColumnLayout {
 		}
 	}
 	PlasmaComponents3.Label {
-		visible: panel.isSetup && !panel.compact && !!panel.today
+		visible: panel.showData && !panel.compact && !!panel.today
 		Layout.fillWidth: true
 		wrapMode: Text.Wrap
 		text: {
@@ -137,12 +174,12 @@ ColumnLayout {
 
 	//--- Next hours: temperature line with rain bars, labels every 3 hours
 	SectionTitle {
-		visible: panel.isSetup && !panel.compact && panel.hourly.length > 1
+		visible: panel.showData && !panel.compact && panel.hourly.length > 1
 		text: i18n("Next 12 hours")
 	}
 	Item {
 		id: hourChart
-		visible: panel.isSetup && !panel.compact && points.length > 1
+		visible: panel.showData && !panel.compact && points.length > 1
 		Layout.fillWidth: true
 		Layout.preferredHeight: Kirigami.Units.gridUnit * 7
 
@@ -251,11 +288,11 @@ ColumnLayout {
 
 	//--- Next days: day, icon, high / low
 	SectionTitle {
-		visible: panel.isSetup && !panel.compact && panel.nextDays.length > 0
+		visible: panel.showData && !panel.compact && panel.nextDays.length > 0
 		text: i18n("Next days")
 	}
 	Repeater {
-		model: panel.isSetup && !panel.compact ? panel.nextDays.slice(0, 4) : []
+		model: panel.showData && !panel.compact ? panel.nextDays.slice(0, 4) : []
 		RowLayout {
 			Layout.fillWidth: true
 			spacing: Kirigami.Units.smallSpacing

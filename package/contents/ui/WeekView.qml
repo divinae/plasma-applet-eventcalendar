@@ -36,6 +36,7 @@ Item {
 	property var weatherHourly: []
 	property var weatherCurrent: null
 	property bool weatherIsSetup: false
+	property bool weatherLoading: false
 	readonly property bool showWeather: Object.keys(weatherByDay).length > 0 || weatherIsSetup
 
 	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
@@ -341,6 +342,7 @@ Item {
 		width: weekView.weatherPanelWidth - Kirigami.Units.largeSpacing
 		height: parent.height - y - Kirigami.Units.largeSpacing
 		isSetup: weekView.weatherIsSetup
+		loading: weekView.weatherLoading
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		current: weekView.weatherCurrent
 		today: weekView.dayWeather(weekView.weekStart)
@@ -368,6 +370,7 @@ Item {
 			Layout.fillWidth: true
 			compact: true
 			isSetup: weekView.weatherIsSetup
+			loading: weekView.weatherLoading
 			current: weekView.weatherCurrent
 			today: weekView.dayWeather(weekView.weekStart)
 		}

@@ -494,6 +494,7 @@ MouseArea {
 			weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
 			weatherCurrent: logic.currentWeatherData
 			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
+			weatherLoading: logic.weatherLoading
 			showHeader: false
 			// Make sure the visible week's month is fetched.
 			onWeekStartChanged: {
