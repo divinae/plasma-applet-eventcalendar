@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 12:09+0200\n"
+"POT-Creation-Date: 2026-10-16 12:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -175,14 +175,31 @@ msgid "Other"
 msgstr "その他"
 
 #: ../contents/ui/ClockView.qml
-msgctxt "event in progress"
-msgid "now"
-msgstr "今"
+msgctxt "time left in the current meeting"
+msgid "%1 min left"
+msgid_plural "%1 min left"
+msgstr[0] ""
 
 #: ../contents/ui/ClockView.qml
-msgctxt "%1 = event title, %2 = 5m / now"
+msgctxt "time left in the current meeting, %1 = 1h20m"
+msgid "%1 left"
+msgstr ""
+
+#: ../contents/ui/ClockView.qml
+msgctxt "meeting starts in"
+msgid "in %1 min"
+msgid_plural "in %1 min"
+msgstr[0] ""
+
+#: ../contents/ui/ClockView.qml
+msgctxt "meeting starts in, %1 = 1h20m"
+msgid "in %1"
+msgstr ""
+
+#: ../contents/ui/ClockView.qml
+msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
-msgstr "%1 · %2"
+msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -267,6 +284,14 @@ msgstr "開始までの残り時間"
 #: ../contents/ui/config/ConfigClock.qml
 msgid " min"
 msgstr " 分"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Progress of the current meeting"
+msgstr ""
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "A thin bar under the meeting's name, in its calendar's color."
+msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
@@ -1515,6 +1540,14 @@ msgstr[0] "%1 日"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgctxt "event in progress"
+#~ msgid "now"
+#~ msgstr "今"
+
+#~ msgctxt "%1 = event title, %2 = 5m / now"
+#~ msgid "%1 · %2"
+#~ msgstr "%1 · %2"
 
 #~ msgid "General"
 #~ msgstr "一般"
