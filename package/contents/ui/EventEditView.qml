@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "Guests.js" as Guests
 import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
 import "SeriesEdit.js" as SeriesEdit
@@ -195,13 +196,85 @@ Rectangle {
 			args.conferenceData = null
 		}
 	}
-	// Query params for the request: conferenceDataVersion when conferenceData is sent.
+	// Query params for the request: conferenceDataVersion when conferenceData is sent, and whether
+	// guests get emails (asked before saving, see guestNoticeNeeded).
 	function requestParams(args) {
 		var params = {}
+		if (sendUpdatesChoice) {
+			params.sendUpdates = sendUpdatesChoice
+		}
 		if (typeof args.conferenceData !== 'undefined') {
 			params.conferenceDataVersion = 1
 		}
 		return params
+	}
+
+	//--- Guests (Google): attendee objects, people only (rooms are kept as they are on save).
+	property var initialGuests: []
+	property var guests: []
+	property var knownGuests: [] // Suggestions, from the loaded events
+	property string guestError: ""
+	// Invited by someone else: only the organizer changes the video call, and the guest list unless
+	// guests may.
+	readonly property bool isInvited: !isNew && !!eventModel.selfAttendee(eventItem)
+	readonly property bool canEditGuests: !isInvited || !!eventItem.guestsCanModify
+	readonly property bool guestsChanged: canEditGuests && Guests.emailsDiffer(initialGuests, guests)
+	readonly property var guestSuggestions: Guests.suggest(knownGuests, guestField.text, guests, 5)
+	function addGuest(email) {
+		var result = Guests.addGuest(guests, email)
+		if (result.error === 'invalid') {
+			guestError = i18n("Enter an email address, like name@example.com")
+			return false
+		}
+		guestError = ""
+		guests = result.list
+		guestField.text = ""
+		return true
+	}
+	function addGuestFromField() {
+		var text = guestField.text.trim()
+		if (!text) {
+			return
+		}
+		// A partly typed name or address: the first suggestion.
+		if (!Guests.isValidEmail(text) && guestSuggestions.length) {
+			text = guestSuggestions[0].email
+		}
+		addGuest(text)
+	}
+	function removeGuest(email) {
+		guests = Guests.removeGuest(guests, email)
+	}
+
+	// Whether to ask before saving if guests get emails: 'invite' (new event with guests), 'update'
+	// (guests changed, or the event has guests and its time, place or video call changed) or ''.
+	property string sendUpdatesChoice: "" // 'all' or 'none' once answered
+	property string guestNotice: "" // Shown while asking
+	function guestNoticeNeeded() {
+		if (!supportsRecurrence) {
+			return ''
+		}
+		if (isNew) {
+			return guests.length ? 'invite' : ''
+		}
+		if (guestsChanged) {
+			return 'update'
+		}
+		if (!Guests.hasOtherGuests(eventItem.attendees)) {
+			return ''
+		}
+		var wasAllDay = !!(eventItem.start && eventItem.start.date)
+		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, startObj()) || dateObjChanged(eventItem.end, endObj())
+			|| (canEditRepeat && repeatChanged)
+		var placeChanged = Shared.hasChanged(eventItem.location, locationField.text)
+			|| (conferenceAction === 'add' && !hadConference) || (conferenceAction === 'remove' && hadConference)
+		return timeChanged || placeChanged ? 'update' : ''
+	}
+	onGuestNoticeChanged: guestNoticeMessage.visible = guestNotice !== ""
+	function answerGuestNotice(choice) {
+		sendUpdatesChoice = choice
+		guestNotice = ""
+		save()
 	}
 
 	// The color changed: set its colorId, or undefined (removed from the update) for the calendar color.
@@ -248,6 +321,11 @@ Rectangle {
 			titleField.forceActiveFocus()
 			return
 		}
+		var notice = guestNoticeNeeded()
+		if (notice && !sendUpdatesChoice) {
+			guestNotice = notice
+			return
+		}
 		if (isNew) {
 			var data = {
 				summary: summary,
@@ -265,6 +343,9 @@ Rectangle {
 			}
 			if (supportsRecurrence) {
 				addConferenceArgs(data)
+				if (guests.length) {
+					data.attendees = Guests.newAttendees(guests)
+				}
 			}
 			var newRule = supportsRecurrence ? repeatRule() : ''
 			if (newRule) {
@@ -299,12 +380,25 @@ Rectangle {
 				args.end = end
 			}
 			var rule = repeatRule()
-			if (!isOccurrence && supportsRecurrence && rule && repeatChanged) {
+			var becomesRecurring = !isOccurrence && supportsRecurrence && rule && repeatChanged
+			if (becomesRecurring) {
 				// A single event becomes recurring.
 				args.recurrence = [rule]
 				args.start = withTimeZone(start)
 				args.end = withTimeZone(end)
-				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, function() { return args }, refetch, options)
+			}
+			if (becomesRecurring || guestsChanged) {
+				// Guests: the changes applied to the server's list (the loaded copy may be incomplete,
+				// eg: from the event cache).
+				var initial = initialGuests
+				var edited = guests
+				var guestEdit = guestsChanged
+				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, function(serverEvent) {
+					if (guestEdit) {
+						args.attendees = Guests.applyChanges(serverEvent.attendees, initial, edited)
+					}
+					return args
+				}, refetch, options)
 			} else if (Object.keys(args).length) {
 				eventModel.setEventProperties(eventItem.calendarId, eventItem.id, args, options)
 			}
@@ -337,6 +431,9 @@ Rectangle {
 		var rule = repeatRule()
 		var ruleChanged = repeatChanged
 		var timeZone = calendarTimeZone()
+		var guestEdit = guestsChanged
+		var initial = initialGuests
+		var edited = guests
 
 		eventModel.updateEventFromServer(item.calendarId, item.recurringEventId, function(series) {
 			var seriesArgs = {}
@@ -350,6 +447,9 @@ Rectangle {
 			}
 			if (ruleChanged) {
 				seriesArgs.recurrence = Recurrence.withRule(series.recurrence, rule)
+			}
+			if (guestEdit) {
+				seriesArgs.attendees = Guests.applyChanges(series.attendees, initial, edited)
 			}
 			return seriesArgs
 		}, refetch, options)
@@ -368,6 +468,8 @@ Rectangle {
 			descriptionField.text = eventItem.description || ""
 			initialColorId = eventItem.colorId ? String(eventItem.colorId) : ""
 			colorId = initialColorId
+			initialGuests = Guests.people(eventItem.attendees)
+			guests = initialGuests.slice()
 			var allDay = !!(eventItem.start && eventItem.start.date)
 			allDayCheckBox.checked = allDay
 			var start = new Date(eventItem.startDateTime)
@@ -400,6 +502,7 @@ Rectangle {
 			durationSelector.endDateTime = new Date(s.getTime() + 60 * 60 * 1000)
 			titleField.text = initialTitle
 		}
+		knownGuests = eventModel.knownGuestEmails ? eventModel.knownGuestEmails() : []
 		titleField.forceActiveFocus()
 	}
 
@@ -444,6 +547,35 @@ Rectangle {
 
 		Kirigami.Separator {
 			Layout.fillWidth: true
+		}
+
+		// Asked on Save when guests would get emails.
+		Kirigami.InlineMessage {
+			id: guestNoticeMessage
+			Layout.fillWidth: true
+			Layout.margins: Kirigami.Units.smallSpacing
+			visible: false // Shown by form.guestNotice (the close button hides it)
+			type: Kirigami.MessageType.Information
+			showCloseButton: true
+			text: form.guestNotice === 'invite'
+				? i18n("Send invitation emails to the guests?")
+				: i18n("Send update emails to the guests?")
+			actions: [
+				Kirigami.Action {
+					icon.name: "mail-send"
+					text: form.guestNotice === 'invite' ? i18n("Send invitations") : i18nc("send update emails to guests", "Send")
+					onTriggered: form.answerGuestNotice('all')
+				},
+				Kirigami.Action {
+					text: i18nc("don't send emails to guests", "Don't send")
+					onTriggered: form.answerGuestNotice('none')
+				}
+			]
+			onVisibleChanged: {
+				if (!visible) {
+					form.guestNotice = ""
+				}
+			}
 		}
 
 		PlasmaComponents3.ScrollView {
@@ -751,7 +883,7 @@ Rectangle {
 				// Google Meet: add one, or the event's video call with a remove button.
 				RowLayout {
 					id: conferenceRow
-					visible: form.supportsRecurrence && (form.hadConference || form.hasConference || form.meetAllowed)
+					visible: form.supportsRecurrence && (form.hadConference || (form.meetAllowed && !form.isInvited))
 					Layout.fillWidth: true
 					Kirigami.Icon {
 						source: "camera-web"
@@ -761,7 +893,7 @@ Rectangle {
 					}
 					PlasmaComponents3.Button {
 						id: addMeetButton
-						visible: !form.hadConference && !form.hasConference && form.meetAllowed
+						visible: !form.hadConference && !form.hasConference && form.meetAllowed && !form.isInvited
 						text: i18n("Add Google Meet video conferencing")
 						onClicked: form.conferenceAction = 'add'
 					}
@@ -802,13 +934,109 @@ Rectangle {
 						}
 					}
 					PlasmaComponents3.ToolButton {
-						visible: form.hasConference
+						visible: form.hasConference && !form.isInvited
 						icon.name: "edit-delete-remove"
 						onClicked: form.conferenceAction = form.hadConference ? 'remove' : ''
 						Accessible.name: PlasmaComponents3.ToolTip.text
 						PlasmaComponents3.ToolTip.text: i18n("Remove video conferencing")
 						PlasmaComponents3.ToolTip.visible: hovered
 						PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+					}
+				}
+
+				// Guests: add by email (with suggestions), remove with the chips' close button.
+				ColumnLayout {
+					id: guestsSection
+					visible: form.supportsRecurrence
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+
+					RowLayout {
+						Layout.fillWidth: true
+						Kirigami.Icon {
+							source: "group"
+							Layout.preferredWidth: Kirigami.Units.iconSizes.small
+							Layout.preferredHeight: Layout.preferredWidth
+							opacity: 0.7
+						}
+						PlasmaComponents3.Label {
+							text: i18n("Guests")
+						}
+						PlasmaComponents3.Label {
+							visible: !form.canEditGuests
+							Layout.fillWidth: true
+							elide: Text.ElideRight
+							opacity: 0.7
+							text: i18n("Only the organizer can change the guest list")
+						}
+					}
+
+					RowLayout {
+						visible: form.canEditGuests
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						PlasmaComponents3.TextField {
+							id: guestField
+							Layout.fillWidth: true
+							placeholderText: i18n("Add guests by email")
+							inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase
+							onAccepted: form.addGuestFromField()
+							onTextChanged: form.guestError = ""
+						}
+						PlasmaComponents3.Button {
+							text: i18nc("add a guest", "Add")
+							icon.name: "list-add-user"
+							enabled: guestField.text.trim().length > 0
+							onClicked: form.addGuestFromField()
+						}
+					}
+
+					// Suggestions from the loaded events' guests.
+					ColumnLayout {
+						visible: form.canEditGuests && guestField.activeFocus && form.guestSuggestions.length > 0
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						spacing: 0
+						Repeater {
+							model: form.guestSuggestions
+							PlasmaComponents3.ItemDelegate {
+								Layout.fillWidth: true
+								focusPolicy: Qt.NoFocus // Keep the field focused (and this list shown)
+								icon.name: "user"
+								text: modelData.name ? i18nc("guest suggestion: %1 = name, %2 = email", "%1 <%2>", modelData.name, modelData.email) : modelData.email
+								onClicked: form.addGuest(modelData.email)
+							}
+						}
+					}
+
+					PlasmaComponents3.Label {
+						visible: form.guestError !== ""
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						wrapMode: Text.Wrap
+						color: Kirigami.Theme.negativeTextColor
+						text: form.guestError
+					}
+
+					Flow {
+						visible: form.guests.length > 0
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						spacing: Kirigami.Units.smallSpacing
+						Repeater {
+							model: form.guests
+							Kirigami.Chip {
+								readonly property string name: modelData.displayName || modelData.email
+								text: modelData.self ? name + " (" + i18nc("the current user in a guest list", "you") + ")" : name
+								icon.name: Guests.responseIcon(modelData.responseStatus)
+								checkable: false
+								closable: form.canEditGuests && !modelData.self
+								onRemoved: form.removeGuest(modelData.email)
+								PlasmaComponents3.ToolTip.text: modelData.email
+								PlasmaComponents3.ToolTip.visible: hovered && modelData.email !== text
+								PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
+						}
 					}
 				}
 

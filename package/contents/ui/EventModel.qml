@@ -5,6 +5,7 @@ import "./lib"
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
 import "EventCacheUtil.js" as EventCacheUtil
+import "Guests.js" as Guests
 
 CalendarManager {
 	id: eventModel
@@ -495,6 +496,12 @@ CalendarManager {
 			}
 		}
 		return null
+	}
+
+	// Guests of the loaded events, for suggestions in the editor: [{ email, name }]. Built from
+	// memory each time, never stored (the event cache keeps no guests).
+	function knownGuestEmails() {
+		return Guests.knownGuests(eventModel.eventsData.items)
 	}
 
 	function setEventProperty(calendarId, eventId, key, value) {

@@ -6,6 +6,7 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
+import "Guests.js" as Guests
 import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
 import "code/GooglePalette.js" as GooglePalette
@@ -87,12 +88,7 @@ Rectangle {
 	}
 
 	function attendeeIcon(status) {
-		switch (status) {
-			case 'accepted': return "dialog-ok-apply"
-			case 'declined': return "dialog-cancel"
-			case 'tentative': return "question"
-			default: return "clock"
-		}
+		return Guests.responseIcon(status)
 	}
 
 	function attendeeSummary() {
