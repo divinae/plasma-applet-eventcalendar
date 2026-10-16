@@ -1,5 +1,7 @@
 # Event Calendar for Plasma 6
 
+[![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
+
 A calendar, agenda and weather widget for the KDE Plasma 6 panel that syncs with Google Calendar,
 Plasma (Akonadi / holiday) calendars and iCalendar (.ics) files.
 

@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish the .plasmoid
+    runs-on: ubuntu-latest
+    # Same environment as CI's package job (gettext version matters for ./build).
+    container: archlinux:latest
+    steps:
+      - name: Install build tools
+        run: pacman -Syu --noconfirm --needed git python gettext zip github-cli
+
+      - uses: actions/checkout@v4
+
+      - name: Trust the checkout (container runs as root)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build the .plasmoid
+        run: ./build
+
+      # The "## vX.Y.Z - date" section of Changelog.md, up to the next "## v".
+      - name: Release notes from the changelog
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          awk -v tag="$TAG" '
+            $0 ~ "^## " tag "( |$)" { found = 1; next }
+            found && /^## v/ { exit }
+            found { print }
+          ' Changelog.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "No \"## $TAG\" section in Changelog.md" >&2
+            exit 1
+          fi
+          {
+            echo
+            echo "### Install"
+            echo
+            echo "Download the .plasmoid below, then:"
+            echo
+            echo '```'
+            echo "kpackagetool6 -t Plasma/Applet -i <file>.plasmoid   # new install"
+            echo "kpackagetool6 -t Plasma/Applet -u <file>.plasmoid   # upgrade"
+            echo "systemctl --user restart plasma-plasmashell"
+            echo '```'
+            echo
+            echo "sha256: \`$(sha256sum ./*.plasmoid | awk '{ print $1 }')\`"
+          } >> release-notes.md
+
+      - name: Create the release, or update its file
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" ./*.plasmoid --clobber
+          else
+            gh release create "$TAG" ./*.plasmoid --title "Event Calendar ${TAG#v}" --notes-file release-notes.md --latest
+          fi

@@ -53,9 +53,15 @@ Run the automated checks that cover your change:
 ```bash
 node --test tests/*.test.js
 python3 -m unittest discover -s tests -p '*_test.py' -v
-find package/contents/ui -name '*.qml' -exec qmllint {} +
-shellcheck --severity=warning install update build package/translate/build package/translate/merge
+bash tests/qml_compile.sh   # loads every QML file with the installed Qt / KDE modules
+shellcheck --severity=warning install update uninstall build package/translate/build package/translate/merge tests/qml_compile.sh
+./build                     # also fails when the translation catalogs are stale
 ```
+
+CI (`.github/workflows/ci.yml`) runs the same checks on every push and pull request to `master`;
+the QML compile and `./build` run in an Arch Linux container with current Plasma 6 packages.
+Pushing a `vX.Y.Z` tag runs `.github/workflows/release.yml`, which builds the `.plasmoid` and
+publishes a GitHub release with the matching `## vX.Y.Z` section of `Changelog.md` as notes.
 
 Please also include manual test steps in your PR. At minimum:
 

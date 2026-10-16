@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Tests and shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends shellcheck
+          python -m pip install --upgrade pip
+          python -m pip install "icalendar>=6.1,<8" "recurring-ical-events>=3.8,<4"
+
+      - name: Node tests
+        run: node --test tests/*.test.js
+
+      - name: Python tests
+        run: python -m unittest discover -s tests -p '*_test.py' -v
+
+      - name: Shellcheck
+        run: shellcheck --severity=warning install update uninstall build package/translate/build package/translate/merge tests/qml_compile.sh
+
+  package:
+    # Arch: current Qt 6 / Plasma 6 QML modules, and the same gettext as the catalogs are made
+    # with (an older xgettext wraps them differently, which ./build reports as stale catalogs).
+    name: QML compile and .plasmoid (Arch, Plasma 6)
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install Qt, KDE QML modules and build tools
+        run: |
+          pacman -Syu --noconfirm --needed git findutils python gettext zip \
+            qt6-declarative qt6-5compat \
+            kirigami kirigami-addons qqc2-desktop-style \
+            libplasma plasma-workspace plasma-nm plasma5support \
+            knotifications kcmutils ksvg kitemmodels kcoreaddons kconfig
+
+      - uses: actions/checkout@v4
+
+      - name: Trust the checkout (container runs as root)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Compile every QML file
+        run: bash tests/qml_compile.sh
+
+      # Also fails when the translation catalogs are out of date with the sources.
+      - name: Build the .plasmoid
+        run: ./build
+
+      - name: Upload the .plasmoid
+        uses: actions/upload-artifact@v4
+        with:
+          name: eventcalendar-plasmoid
+          path: "*.plasmoid"
+          if-no-files-found: error
