@@ -70,7 +70,7 @@ ListModel {
 			agendaItem.date.getTime(),
 			agendaItem.events.map(function(e) {
 				return [e.id, e.calendarId, e.etag || e.updated || '', e.summary, e.location || '',
-					(e.description || '').length, time(e.startDateTime), time(e.endDateTime), e.backgroundColor || '', !!e.canEdit]
+					(e.description || '').length, time(e.startDateTime), time(e.endDateTime), e.backgroundColor || '', !!e.canEdit, Shared.myResponse(e)]
 			}),
 			agendaItem.tasks.map(function(t) {
 				return [t.id, t.calendarId, t.etag || t.updated || '', t.summary, !!t.isCompleted, t.parent || '',

@@ -165,6 +165,30 @@ function toArray(value) {
 	return isList(value) ? Array.prototype.slice.call(value) : []
 }
 
+// The signed-in user's answer to an invitation: 'needsAction', 'tentative', 'declined', 'accepted',
+// or '' when not invited (no attendees, or the user organizes it). attendees is an array, or a
+// ListModel once the event has been put in one (agenda).
+function myResponse(eventItem) {
+	var attendees = eventItem ? eventItem.attendees : null
+	if (!attendees) {
+		return ''
+	}
+	var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
+	var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
+	for (var i = 0; i < count; i++) {
+		var attendee = isModel ? attendees.get(i) : attendees[i]
+		if (attendee && attendee.self) {
+			return attendee.organizer ? '' : String(attendee.responseStatus || '')
+		}
+	}
+	return ''
+}
+
+// Not (yet) a yes: shown outlined like Google Calendar, with stripes for maybe.
+function isUnconfirmedResponse(response) {
+	return response === 'needsAction' || response === 'tentative' || response === 'declined'
+}
+
 // Number identifying a calendar day, eg: for weather lookups. Month is 0-based like Date.
 function dayKey(d) {
 	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()

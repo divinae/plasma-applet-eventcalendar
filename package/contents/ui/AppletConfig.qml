@@ -4,6 +4,7 @@ import org.kde.plasma.core as PlasmaCore
 
 import "lib"
 import "lib/ColorUtil.js" as ColorUtil
+import "Shared.js" as Shared
 
 QtObject {
 	id: config
@@ -61,6 +62,20 @@ QtObject {
 		return Qt.hsla(Math.max(0, color.hslHue), color.hslSaturation, lightness, 1)
 	}
 	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
+	// Invitations not answered yes (Shared.myResponse), like Google Calendar: an outline in the event
+	// color on the background instead of a filled tile; maybe adds stripes, declined is struck through.
+	function eventFillColor(color, response) {
+		return Shared.isUnconfirmedResponse(response) ? Kirigami.Theme.backgroundColor : color
+	}
+	function eventTextColor(color, response) {
+		return Shared.isUnconfirmedResponse(response) ? Kirigami.Theme.textColor : Shared.contrastTextColor(color)
+	}
+	function eventOutlineColor(color, response) {
+		if (response === 'declined') {
+			return ColorUtil.setAlpha(color, 0.5)
+		}
+		return Shared.isUnconfirmedResponse(response) ? color : eventBorderColor
+	}
 
 	property color alternateBackgroundColor: {
 		var textColor = Kirigami.Theme.textColor

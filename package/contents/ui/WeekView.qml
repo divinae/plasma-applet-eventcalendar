@@ -660,6 +660,8 @@ Item {
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors.
 					readonly property color stripeColor: appletConfig.eventColor(eventItem.backgroundColor)
+					readonly property string response: Shared.myResponse(eventItem)
+					readonly property bool unconfirmed: Shared.isUnconfirmedResponse(response)
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
@@ -674,10 +676,17 @@ Item {
 					bottomLeftRadius: cutLeft ? 0 : cornerRadius
 					topRightRadius: cutRight ? 0 : cornerRadius
 					bottomRightRadius: cutRight ? 0 : cornerRadius
-					color: ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.3 : 0.22)
+					color: unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: ColorUtil.setAlpha(stripeColor, 0.45)
+					border.color: unconfirmed ? appletConfig.eventOutlineColor(stripeColor, response) : ColorUtil.setAlpha(stripeColor, 0.45)
 					clip: true
+					StripeFill {
+						visible: parent.response === 'tentative'
+						anchors.fill: parent
+						anchors.margins: 1
+						radius: Math.max(0, parent.cornerRadius - 1)
+						stripeColor: parent.stripeColor
+					}
 					// Stripe on the start side (not when the event began before this week), inset so it
 					// stays inside the rounded corners.
 					Rectangle {
@@ -710,6 +719,7 @@ Item {
 							text: eventItem.summary
 							color: Kirigami.Theme.textColor
 							font.weight: Font.DemiBold
+							font.strikeout: response === 'declined'
 							elide: Text.ElideRight
 						}
 						PlasmaComponents3.Label {
@@ -954,6 +964,8 @@ Item {
 									readonly property var block: modelData
 									readonly property var eventItem: block.eventItem
 									readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
+									readonly property string response: Shared.myResponse(eventItem)
+									readonly property color textColor: appletConfig.eventTextColor(barColor, response)
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
 									// Clip to the visible hour range.
 									readonly property real rangeStart: block.dayStart + weekView.firstHour * 3600000
@@ -979,9 +991,17 @@ Item {
 									topRightRadius: cutTop ? 0 : cornerRadius
 									bottomLeftRadius: cutBottom ? 0 : cornerRadius
 									bottomRightRadius: cutBottom ? 0 : cornerRadius
-									color: barColor
+									color: appletConfig.eventFillColor(barColor, response)
 									border.width: 1
-									border.color: appletConfig.eventBorderColor
+									border.color: appletConfig.eventOutlineColor(barColor, response)
+
+									StripeFill {
+										visible: eventBlock.response === 'tentative'
+										anchors.fill: parent
+										anchors.margins: 1
+										radius: Math.max(0, eventBlock.cornerRadius - 1)
+										stripeColor: eventBlock.barColor
+									}
 
 									// Today view: join button for meetings that haven't ended.
 									readonly property var meetingLink: weekView.singleDay && plasmoid.configuration.agendaShowEventHangoutLink && eventItem.endDateTime > weekView.currentTime ? MeetingLink.find(eventItem) : null
@@ -1008,7 +1028,8 @@ Item {
 												}
 												return parts.join(' · ')
 											}
-											color: Shared.contrastTextColor(eventBlock.barColor)
+											color: eventBlock.textColor
+											font.strikeout: eventBlock.response === 'declined'
 											// Event in progress
 											font.bold: eventBlock.eventItem.startDateTime <= weekView.currentTime && weekView.currentTime < eventBlock.eventItem.endDateTime
 											elide: Text.ElideRight
@@ -1029,9 +1050,9 @@ Item {
 												return Qt.formatTime(item.startDateTime, format)
 											}
 											textFormat: Text.StyledText
-											linkColor: Shared.contrastTextColor(eventBlock.barColor)
+											linkColor: eventBlock.textColor
 											onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-											color: Shared.contrastTextColor(eventBlock.barColor)
+											color: eventBlock.textColor
 											font: Kirigami.Theme.smallFont
 											elide: Text.ElideRight
 										}

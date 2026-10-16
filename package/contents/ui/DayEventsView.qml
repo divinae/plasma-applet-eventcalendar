@@ -140,7 +140,8 @@ Rectangle {
 						id: eventRow
 						readonly property var eventItem: modelData
 						readonly property color tileColor: appletConfig.eventColor(eventItem.backgroundColor)
-						readonly property color textColor: Shared.contrastTextColor(tileColor)
+						readonly property string response: Shared.myResponse(eventItem)
+						readonly property color textColor: appletConfig.eventTextColor(tileColor, response)
 						readonly property bool inProgress: !dayView.isAllDay(eventItem)
 							&& eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < eventItem.endDateTime
 						Layout.fillWidth: true
@@ -149,10 +150,18 @@ Rectangle {
 						Layout.topMargin: index === 0 ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
 						implicitHeight: tileColumn.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 						radius: 8
-						color: tileColor
+						color: appletConfig.eventFillColor(tileColor, response)
 						border.width: 1
-						border.color: appletConfig.eventBorderColor
+						border.color: appletConfig.eventOutlineColor(tileColor, response)
 						opacity: tileMouse.containsMouse ? 0.85 : 1
+
+						StripeFill {
+							visible: eventRow.response === 'tentative'
+							anchors.fill: parent
+							anchors.margins: 1
+							radius: eventRow.radius - 1
+							stripeColor: eventRow.tileColor
+						}
 
 						ColumnLayout {
 							id: tileColumn
@@ -168,6 +177,7 @@ Rectangle {
 								wrapMode: Text.Wrap
 								text: eventRow.eventItem.summary
 								color: eventRow.textColor
+								font.strikeout: eventRow.response === 'declined'
 								font.bold: eventRow.inProgress
 							}
 							PlasmaComponents3.Label {

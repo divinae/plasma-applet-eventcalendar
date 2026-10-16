@@ -82,19 +82,29 @@ LinkRect {
 
 	// Tile in the event color, like the day list and the week view.
 	readonly property color tileColor: appletConfig.eventColor(model.backgroundColor)
-	readonly property color tileTextColor: editEventForm.visible ? Kirigami.Theme.textColor : Shared.contrastTextColor(tileColor)
+	readonly property string response: Shared.myResponse(model)
+	readonly property color tileFillColor: appletConfig.eventFillColor(tileColor, response)
+	readonly property color tileTextColor: editEventForm.visible ? Kirigami.Theme.textColor : appletConfig.eventTextColor(tileColor, response)
 	readonly property bool ended: !!model.endDateTime && !!timeModel.currentTime && model.endDateTime <= timeModel.currentTime
 	readonly property var meetingLink: MeetingLink.find(model)
 	radius: 8
 	border.width: 1
-	border.color: appletConfig.eventBorderColor
-	backgroundColor: editEventForm.visible ? Kirigami.Theme.backgroundColor : tileColor
-	backgroundHoverColor: editEventForm.visible ? backgroundColor : Qt.darker(tileColor, 1.08)
+	border.color: editEventForm.visible ? appletConfig.eventBorderColor : appletConfig.eventOutlineColor(tileColor, response)
+	backgroundColor: editEventForm.visible ? Kirigami.Theme.backgroundColor : tileFillColor
+	backgroundHoverColor: editEventForm.visible ? backgroundColor : Shared.isUnconfirmedResponse(response) ? appletConfig.agendaHoverBackground : Qt.darker(tileColor, 1.08)
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
 	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
 	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
+
+	StripeFill {
+		visible: agendaEventItem.response === 'tentative' && !editEventForm.visible
+		anchors.fill: parent
+		anchors.margins: 1
+		radius: agendaEventItem.radius - 1
+		stripeColor: agendaEventItem.tileColor
+	}
 
 	ColumnLayout {
 		id: contents
@@ -127,6 +137,7 @@ LinkRect {
 					font.pointSize: -1
 					font.pixelSize: appletConfig.agendaFontSize
 					font.weight: eventItemInProgress ? Font.Bold : Font.Normal
+					font.strikeout: agendaEventItem.response === 'declined'
 					visible: !editEventForm.visible
 					Layout.fillWidth: true
 					wrapMode: Text.Wrap

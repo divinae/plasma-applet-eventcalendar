@@ -2,6 +2,7 @@ import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 
+import ".."
 import "../Shared.js" as Shared
 
 // Google Calendar (Android) style: event titles as colored bars below the day number.
@@ -45,12 +46,21 @@ Item {
 					return eventTitlesBadge.eventAt(index)
 				}
 				readonly property color barColor: appletConfig.eventColor(eventItem ? eventItem.backgroundColor : null)
+				readonly property string response: Shared.myResponse(eventItem)
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
 				radius: Math.min(7, height / 2)
-				color: barColor
+				color: appletConfig.eventFillColor(barColor, response)
 				border.width: 1
-				border.color: appletConfig.eventBorderColor
+				border.color: appletConfig.eventOutlineColor(barColor, response)
+
+				StripeFill {
+					visible: eventBar.response === 'tentative'
+					anchors.fill: parent
+					anchors.margins: 1
+					radius: Math.max(0, eventBar.radius - 1)
+					stripeColor: eventBar.barColor
+				}
 
 				Text {
 					anchors.fill: parent
@@ -58,7 +68,8 @@ Item {
 					anchors.rightMargin: 1
 					verticalAlignment: Text.AlignVCenter
 					text: eventBar.eventItem ? eventBar.eventItem.summary : ""
-					color: Shared.contrastTextColor(eventBar.barColor)
+					color: appletConfig.eventTextColor(eventBar.barColor, eventBar.response)
+					font.strikeout: eventBar.response === 'declined'
 					font.family: eventTitlesBadge.titleFont.family
 					font.pointSize: eventTitlesBadge.titleFont.pointSize
 					// Event in progress
