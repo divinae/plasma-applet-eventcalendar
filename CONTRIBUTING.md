@@ -2,16 +2,16 @@
 
 Thanks for helping keep Event Calendar alive.
 
-The Plasma 6 work lives on the `master` branch. If you are not sure which
-branch your change should target, open an issue first.
+Everything happens on `master` (Plasma 6 only). For bigger changes, open an
+issue first.
 
 ## Quick start
 
 1. Fork the repo.
-2. Clone the branch you want to work on:
+2. Clone it:
 
 ```bash
-git clone -b master https://github.com/divinae/plasma-applet-eventcalendar.git
+git clone https://github.com/divinae/plasma-applet-eventcalendar.git
 cd plasma-applet-eventcalendar
 ```
 

@@ -89,11 +89,6 @@ Optional:
 3. **Weather**: search for your city (Open-Meteo).
 4. **Views**: choose the default view, the popup size and the hours shown in the week view.
 
-## Branches
-
-- `master`: releases.
-- `plasma-6`: development.
-
 Plasma 5 is not supported; use the original [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar) there.
 
 ## Contributing
