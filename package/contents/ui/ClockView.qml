@@ -79,7 +79,7 @@ Item {
 	// Next meeting chip, right of the clock. Horizontal panels only.
 	readonly property var nextEvent: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEvent : null
 	readonly property bool showNextEventChip: plasmoid.configuration.clockShowNextEvent
-		&& plasmoid.formFactor == PlasmaCore.Types.Horizontal
+		&& plasmoid.formFactor === PlasmaCore.Types.Horizontal
 		&& !!nextEvent
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
 
@@ -196,7 +196,7 @@ Item {
 	states: [
 		State {
 			name: "horizontalPanel"
-			when: plasmoid.formFactor == PlasmaCore.Types.Horizontal
+			when: plasmoid.formFactor === PlasmaCore.Types.Horizontal
 
 			PropertyChanges { target: clock
 				targetHeight: clock.horizontalHeight
@@ -216,7 +216,7 @@ Item {
 
 		State {
 			name: "verticalPanel"
-			when: plasmoid.formFactor == PlasmaCore.Types.Vertical
+			when: plasmoid.formFactor === PlasmaCore.Types.Vertical
 
 			PropertyChanges { target: clock
 				targetHeight: clock.verticalHeight
@@ -243,7 +243,7 @@ Item {
 
 		State {
 			name: "floating"
-			when: plasmoid.formFactor == PlasmaCore.Types.Planar
+			when: plasmoid.formFactor === PlasmaCore.Types.Planar
 
 			PropertyChanges { target: clock
 				targetHeight: clock.verticalFixedLineHeight

@@ -95,7 +95,7 @@ Item {
 				if (i === 0 || y > yDataMax) {
 					yDataMax = y
 				}
-				if (rainUnits == 'mm') {
+				if (rainUnits === 'mm') {
 					if (gridData[i].precipitation > yAxisRainMax) {
 						yAxisRainMax = Math.ceil(gridData[i].precipitation)
 					}
@@ -311,7 +311,7 @@ Item {
 						)) {
 							var labelText = formatPrecipitation(item.precipitation)
 
-							if (labelText == lastLabelText) {
+							if (labelText === lastLabelText) {
 								lastLabelText = labelText
 								lastLabelVisible = false
 								lastLabelStaggered = false
@@ -451,7 +451,7 @@ Item {
 	function formatXAxisLabels(gData) {
 		for (var i = 0; i < gData.length; i++) {
 			var firstOrLast = i === 0 || i === gData.length-1
-			var labelSkipped = i % Math.ceil(meteogramView.xAxisLabelEvery) != 0
+			var labelSkipped = i % Math.ceil(meteogramView.xAxisLabelEvery) !== 0
 			if (!firstOrLast && !labelSkipped) {
 				var date = new Date(gData[i].xTimestamp)
 				var hour = date.getHours()

@@ -146,7 +146,7 @@ CalendarManager {
 		days: 7
 		weeks: 6
 		firstDayOfWeek: {
-			if (plasmoid.configuration.firstDayOfWeek == -1) {
+			if (plasmoid.configuration.firstDayOfWeek === -1) {
 				return Qt.locale().firstDayOfWeek
 			} else {
 				return plasmoid.configuration.firstDayOfWeek
@@ -319,7 +319,7 @@ CalendarManager {
 		var calendars = {}
 		for (var i = 0; i < allEvents.length; i++) {
 			var event = allEvents[i]
-			if (calendarIdList.indexOf(event.calendarId) == -1) {
+			if (calendarIdList.indexOf(event.calendarId) === -1) {
 				calendarIdList.push(event.calendarId)
 				calendars[event.calendarId] = []
 			}
@@ -363,7 +363,7 @@ CalendarManager {
 
 	//--- Create
 	function createEvent(calendarId, date, text) {
-		if (calendarId.indexOf('plasma_Events_') != 0) {
+		if (calendarId.indexOf('plasma_Events_') !== 0) {
 			logger.log('Could not create event with calendarId=', calendarId)
 			return
 		}
@@ -392,7 +392,7 @@ CalendarManager {
 			logger.debug('konsolekalendar.stdout', stdout)
 			logger.debug('konsolekalendar.stderr', stderr)
 
-			if (exitCode == 0) {
+			if (exitCode === 0) {
 				// It takes a few secs for PIM Events to sync with the PlasmaCalendar API.
 				// refresh calls deferredUpdate which is a 200ms delay which seems to work.
 				refresh()

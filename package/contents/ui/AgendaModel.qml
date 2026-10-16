@@ -143,7 +143,7 @@ ListModel {
 						var foundDestination = false
 						for (var k = j+1; k < eventList.length; k++) {
 							var childItem = eventList[k]
-							if (childItem.kind != 'tasks#task'
+							if (childItem.kind !== 'tasks#task'
 								|| childItem.parent != parentItem.id
 								|| childItem.position > eventItem.position
 							) {
@@ -153,7 +153,7 @@ ListModel {
 									// Since we removed an item before k, decrement the index
 									k--
 								}
-								if (i != k) {
+								if (i !== k) {
 									eventList.splice(i, 1) // Remove at index=i
 									eventList.splice(k, 0, eventItem) // Add at index=k
 									i-- // Since eventItem was moved, we need to check index=i again.
@@ -165,7 +165,7 @@ ListModel {
 						if (!foundDestination) {
 							// Move eventItem from index i => end of list
 							var k = eventList.length - 1
-							if (i != k) {
+							if (i !== k) {
 								eventList.splice(i, 1) // Remove at index=i
 								eventList.push(eventItem)
 								i-- // Since eventItem was moved, we need to check index=i again.
@@ -193,7 +193,7 @@ ListModel {
 		if (plasmoid.configuration.agendaPlaceOverdueTasksOnToday) {
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]
-				if (eventItem.kind == 'tasks#task'
+				if (eventItem.kind === 'tasks#task'
 					&& eventItem.due
 					&& !eventItem.isCompleted
 				) {

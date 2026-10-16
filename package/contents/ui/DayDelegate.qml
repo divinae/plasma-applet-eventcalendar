@@ -31,7 +31,7 @@ MouseArea {
 	hoverEnabled: true
 	property string eventBadgeType: "bottomBar"
 	// 'eventTitles': day number at the top, event titles listed below it.
-	readonly property bool showEventTitles: eventBadgeType == 'eventTitles'
+	readonly property bool showEventTitles: eventBadgeType === 'eventTitles'
 	// Theme fonts are set in points (pixelSize is -1), so measure them.
 	FontMetrics {
 		id: dayHeaderFontMetrics

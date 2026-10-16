@@ -124,10 +124,10 @@ CalendarManager {
 			httpCode = err.error.code
 			var err0 = err.error.errors[0]
 
-			if (httpCode === 401 && err0.reason == 'authError') {
+			if (httpCode === 401 && err0.reason === 'authError') {
 				var suggestion = i18n("Widget has been updated. Please logout and login to Google Calendar again.")
 				showHttpError(httpCode, err0.message, suggestion, ErrorType.ClientError)
-			} else if (httpCode === 403 && err0.domain == 'usageLimits') {
+			} else if (httpCode === 403 && err0.domain === 'usageLimits') {
 				var suggestion = i18n("Too many web requests. Will try again soon.")
 				showHttpError(httpCode, err0.message, suggestion, ErrorType.ClientError)
 			} else {
@@ -162,7 +162,7 @@ CalendarManager {
 	function cloneRawEvent(event) {
 		// Clone the event data and clean up the extra stuff we added when parsing the event.
 		var data = JSON.parse(JSON.stringify(event)) // clone
-		if (data.description == "") delete data.description
+		if (data.description === "") delete data.description
 		if (data.calendarManagerId) delete data.calendarManagerId
 		if (data.calendarId) delete data.calendarId
 		delete data.startDateTime
@@ -425,10 +425,10 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		event.reminderMinutes = parseReminderMinutes(calendar, event)
 		event.backgroundColor = parseColor(calendar, event)
 		// Recurring events: edits and deletes apply to this occurrence only (Google makes it an exception).
-		event.canEdit = (calendar.accessRole == 'writer' || calendar.accessRole == 'owner')
+		event.canEdit = (calendar.accessRole === 'writer' || calendar.accessRole === 'owner')
 		if (plasmoid.configuration.googleHideGoalsDesc
-			&& event.organizer.email == "unknownorganizer@calendar.google.com"
-			&& event.organizer.displayName == "Google Calendar"
+			&& event.organizer.email === "unknownorganizer@calendar.google.com"
+			&& event.organizer.displayName === "Google Calendar"
 		) {
 			event.description = ""
 		}
@@ -438,7 +438,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 			// user to click the edit icon after loading the page.
 			// Example htmlLink: "https://www.google.com/calendar/event?eid=...&ctz=Etc/UTC"
 			// Which redirects to: "https://calendar.google.com/calendar/u/0/r/month/2021/12/31?eid=...&sf=true"
-			if (plasmoid.configuration.googleEventClickAction == 'WebEventView') {
+			if (plasmoid.configuration.googleEventClickAction === 'WebEventView') {
 				var eidRegex = /eid=(\w+)(\&|$)/
 				var eidMatch = eidRegex.exec(event.htmlLink)
 				if (eidMatch) {
@@ -447,7 +447,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 						event.htmlLink = 'https://calendar.google.com/calendar/r/eventedit/' + eid
 					}
 				}
-			} else if (plasmoid.configuration.googleEventClickAction == 'WebMonthView') {
+			} else if (plasmoid.configuration.googleEventClickAction === 'WebMonthView') {
 				// Default behavior
 			}
 		}

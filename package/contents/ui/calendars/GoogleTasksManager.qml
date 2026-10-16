@@ -114,10 +114,10 @@ CalendarManager {
 			httpCode = err.error.code
 			var err0 = err.error.errors[0]
 
-			if (httpCode === 401 && err0.reason == 'authError') {
+			if (httpCode === 401 && err0.reason === 'authError') {
 				var suggestion = i18n("Widget has been updated. Please logout and login to Google Calendar again.")
 				showHttpError(httpCode, err0.message, suggestion, ErrorType.ClientError)
-			} else if (httpCode === 403 && err0.domain == 'usageLimits') {
+			} else if (httpCode === 403 && err0.domain === 'usageLimits') {
 				var suggestion = i18n("Too many web requests. Will try again soon.")
 				showHttpError(httpCode, err0.message, suggestion, ErrorType.ClientError)
 			} else {
@@ -296,7 +296,7 @@ CalendarManager {
 		var editTasksUrl = 'https://tasks.google.com/embed/?origin=' + encodeURIComponent('https://calendar.google.com') + '&fullWidth=1'
 		eventData.htmlLink = editTasksUrl
 
-		eventData.isCompleted = taskData.status == "completed"
+		eventData.isCompleted = taskData.status === "completed"
 
 		if (taskData.completed) {
 			var completedAt = new Date(taskData.completed)

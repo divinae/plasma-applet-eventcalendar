@@ -18,13 +18,13 @@ QtObject {
 	// While comparing the i18n messages could be buggy in certain locales, at least we have a simple complete list of states.
 
 	readonly property int connectivity: {
-		if (plasmaNMStatusLoader.status == Loader.Ready && plasmaNMStatusLoader.item) {
+		if (plasmaNMStatusLoader.status === Loader.Ready && plasmaNMStatusLoader.item) {
 			return plasmaNMStatusLoader.item.connectivity
 		}
 		return -1
 	}
 	readonly property bool isConnected: {
-		if (plasmaNMStatusLoader.status == Loader.Error) {
+		if (plasmaNMStatusLoader.status === Loader.Error) {
 			// Failed to load PlasmaNM, so treat it as connected.
 			return true
 		}

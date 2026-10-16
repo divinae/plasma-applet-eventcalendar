@@ -1,7 +1,7 @@
 import QtQuick
-import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.components as PlasmaComponents3
 
-PlasmaComponents.Menu {
+PlasmaComponents3.Menu {
 	id: contextMenu
 
 	signal populate(var contextMenu)
@@ -12,7 +12,7 @@ PlasmaComponents.Menu {
 		MenuItem {}
 	}
 	property var menuSeparatorComponent: Component {
-		PlasmaComponents.MenuSeparator {}
+		PlasmaComponents3.MenuSeparator {}
 	}
 
 	function newSeperator(parentMenu) {

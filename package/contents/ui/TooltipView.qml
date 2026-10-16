@@ -43,7 +43,7 @@ Item {
 
 		var formattedTime = Qt.formatTime(dateTime, timezoneTimeFormat)
 
-		if (dateTime.getDay() != dataSource.data["Local"]["DateTime"].getDay()) {
+		if (dateTime.getDay() !== dataSource.data["Local"]["DateTime"].getDay()) {
 			formattedTime += " (" + Qt.formatDate(dateTime, Locale.ShortFormat) + ")"
 		}
 
@@ -200,7 +200,7 @@ Item {
 						var timezone = plasmoid.configuration.selectedTimeZones[i]
 						// Skip zones with the same offset as local time, eg: Europe/Warsaw when local is Warsaw.
 						var sameAsLocal = typeof localOffset !== "undefined" && data[timezone] && data[timezone]["Offset"] === localOffset
-						if (timezone != 'Local' && !sameAsLocal) {
+						if (timezone !== 'Local' && !sameAsLocal) {
 							timezones.push(timezone)
 							timezones.push(timezone)
 						}
@@ -214,8 +214,8 @@ Item {
 					Layout.alignment: index % 2 === 0 ? Qt.AlignRight : Qt.AlignLeft
 
 					wrapMode: Text.NoWrap
-					text: index % 2 == 0 ? nameForZone(modelData) : timeForZone(modelData)
-					font.weight: index % 2 == 0 ? Font.Bold : Font.Normal
+					text: index % 2 === 0 ? nameForZone(modelData) : timeForZone(modelData)
+					font.weight: index % 2 === 0 ? Font.Bold : Font.Normal
 					elide: Text.ElideNone
 					opacity: 0.6
 				}

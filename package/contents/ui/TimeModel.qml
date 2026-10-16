@@ -57,10 +57,10 @@ Item {
 			loaded()
 		}
 		var currentMinute = currentTime.getMinutes()
-		if (currentMinute != lastMinute) {
+		if (currentMinute !== lastMinute) {
 			minuteChanged()
 			var currentDate = currentTime.getDate()
-			if (currentDate != lastDate) {
+			if (currentDate !== lastDate) {
 				dateChanged()
 				lastDate = currentDate
 			}

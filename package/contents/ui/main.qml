@@ -116,9 +116,9 @@ PlasmoidItem {
 			acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
 			onClicked: function(mouse) {
-				if (mouse.button == Qt.LeftButton) {
+				if (mouse.button === Qt.LeftButton) {
 					root.expanded = !root.expanded
-				} else if (mouse.button == Qt.MiddleButton) {
+				} else if (mouse.button === Qt.MiddleButton) {
 					upcomingEvents.joinNextEvent()
 				}
 			}
@@ -163,7 +163,7 @@ PlasmoidItem {
 		// * the timer widget is enabled since there's room in the top right
 		property bool isPinVisible: {
 			// plasmoid.location == PlasmaCore.Types.Floating when using plasmawindowed and when used as a desktop widget.
-			return plasmoid.location != PlasmaCore.Types.Floating // && plasmoid.configuration.widget_show_pin
+			return plasmoid.location !== PlasmaCore.Types.Floating
 		}
 		// The pin button lives in the popup's top bar.
 		showPinButton: isPinVisible
@@ -205,7 +205,7 @@ PlasmoidItem {
 	Plasmoid.backgroundHints: plasmoid.configuration.showBackground ? PlasmaCore.Types.DefaultBackground : PlasmaCore.Types.NoBackground
 	hideOnWindowDeactivate: !plasmoid.configuration.pin
 
-	property bool isDesktopContainment: plasmoid.location == PlasmaCore.Types.Floating
+	property bool isDesktopContainment: plasmoid.location === PlasmaCore.Types.Floating
 	preferredRepresentation: isDesktopContainment ? fullRepresentation : compactRepresentation
 	compactRepresentation: clockComponent
 	fullRepresentation: popupComponent

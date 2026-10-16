@@ -67,7 +67,7 @@ Item {
 				var currentHour = now.getHours()
 				var lastUpdateHour = new Date(lastForecastAt).getHours()
 				var beenOverAnHour = now.valueOf() - lastForecastAt >= 60 * 60 * 1000
-				if (lastUpdateHour != currentHour || beenOverAnHour) {
+				if (lastUpdateHour !== currentHour || beenOverAnHour) {
 					shouldUpdate = true
 				}
 			} else {
@@ -112,7 +112,7 @@ Item {
 			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
 			errorMessage += '\n' + i18n("Will try again soon.")
 			logic.lastForecastErr = errorMessage
-		} else if (xhr && xhr.status == 429) {
+		} else if (xhr && xhr.status === 429) {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			var msg = i18n("Weather API limit reached")
 			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
@@ -288,7 +288,7 @@ Item {
 		target: networkMonitor
 		function onIsConnectedChanged() {
 			if (networkMonitor.isConnected) {
-				if (logic.currentErrorType == ErrorType.NetworkError) {
+				if (logic.currentErrorType === ErrorType.NetworkError) {
 					logic.clearError()
 				}
 				logic.update()
