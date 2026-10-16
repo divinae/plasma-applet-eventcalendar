@@ -39,7 +39,7 @@ Item {
 	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
 	// Too narrow for both: the panel becomes a compact row above the grid.
 	readonly property real weatherPanelWidth: Kirigami.Units.gridUnit * 13
-	readonly property real weatherGap: Kirigami.Units.largeSpacing * 2 // Each side of the separator
+	readonly property real weatherGap: Kirigami.Units.gridUnit * 1.5 // Each side of the space between day and weather
 	readonly property bool weatherBeside: singleDay && showWeather && width >= Kirigami.Units.gridUnit * 36
 	readonly property real contentWidth: {
 		if (!singleDay) {
@@ -333,21 +333,13 @@ Item {
 		}
 	}
 
-	// Line between the day and its weather.
-	Kirigami.Separator {
-		visible: weekView.weatherBeside
-		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap
-		y: dayNamesRow.y
-		width: 1
-		height: parent.height - y
-	}
 	WeatherPanel {
 		visible: weekView.weatherBeside
 		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
 		// Top aligned with the day header, like the grid, with a little padding.
-		y: dayNamesRow.y + Kirigami.Units.smallSpacing
-		width: weekView.weatherPanelWidth - Kirigami.Units.smallSpacing
-		height: parent.height - y - Kirigami.Units.smallSpacing
+		y: dayNamesRow.y + Kirigami.Units.largeSpacing
+		width: weekView.weatherPanelWidth - Kirigami.Units.largeSpacing
+		height: parent.height - y - Kirigami.Units.largeSpacing
 		isSetup: weekView.weatherIsSetup
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		current: weekView.weatherCurrent
