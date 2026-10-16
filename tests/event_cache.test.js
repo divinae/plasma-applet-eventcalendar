@@ -64,7 +64,7 @@ function testWhitelist() {
 	assert.deepStrictEqual(data.calendars['acc_1::tasks1'], [], 'tasks are not cached')
 	const event = data.calendars['acc_1::work@example.test'][0]
 	assert.deepStrictEqual(Object.keys(event).sort(), [
-		'attendees', 'backgroundColor', 'canEdit', 'colorId', 'conferenceData', 'end', 'hangoutLink',
+		'attendees', 'backgroundColor', 'canEdit', 'colorId', 'conferenceData', 'end', 'fromCache', 'hangoutLink',
 		'htmlLink', 'id', 'location', 'recurringEventId', 'reminderMinutes', 'start', 'status', 'summary',
 	])
 	assert.deepStrictEqual(event.attendees, [{ self: true, responseStatus: 'declined' }])

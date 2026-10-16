@@ -36,7 +36,20 @@ function testUnknownColorsFallBackToColorId() {
 	assert.strictEqual(palette.calendarColor({ backgroundColor: '#123456' }), '#123456')
 }
 
+function testEventPalette() {
+	assert.strictEqual(palette.eventPalette.length, 11)
+	palette.eventPalette.forEach((entry, i) => {
+		assert.strictEqual(entry.id, String(i + 1))
+		assert.strictEqual(entry.color, palette.eventColors[entry.id])
+		assert.strictEqual(palette.eventColor(entry.id), entry.color)
+	})
+	assert.deepStrictEqual({ ...palette.eventPalette[0] }, { id: '1', name: 'Lavender', color: '#7986cb' })
+	assert.deepStrictEqual({ ...palette.eventPalette[10] }, { id: '11', name: 'Tomato', color: '#d50000' })
+	assert.strictEqual(new Set(palette.eventPalette.map((e) => e.name)).size, 11)
+}
+
 testPaletteListsTheCurrentColors()
+testEventPalette()
 testClassicColorsAreMapped()
 testCurrentColorsPassThrough()
 testUnknownColorsFallBackToColorId()

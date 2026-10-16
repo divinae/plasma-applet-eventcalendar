@@ -79,6 +79,8 @@ function pickEvent(event) {
 			}
 		}
 	}
+	// Not the whole event: changing it must start from the server copy (GoogleCalendarManager).
+	picked.fromCache = true
 	return picked
 }
 

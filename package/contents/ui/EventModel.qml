@@ -5,6 +5,7 @@ import "./lib"
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
 import "EventCacheUtil.js" as EventCacheUtil
+import "Guests.js" as Guests
 
 CalendarManager {
 	id: eventModel
@@ -432,13 +433,14 @@ CalendarManager {
 		})
 	}
 
-	function createEventFromData(calendarId, eventData, done) {
+	// params: optional query params (Google), eg: { sendUpdates: 'all', conferenceDataVersion: 1 }.
+	function createEventFromData(calendarId, eventData, done, params) {
 		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
 			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
 		}
 		var calendarManager = getCalendarManager(calendarId)
 		if (calendarManager && typeof calendarManager.createEventFromData === 'function') {
-			calendarManager.createEventFromData(calendarId, eventData, done)
+			calendarManager.createEventFromData(calendarId, eventData, done, params)
 		} else {
 			logger.log('Could not createEventFromData for calendarId = ', calendarId)
 		}
@@ -514,6 +516,12 @@ CalendarManager {
 		return null
 	}
 
+	// Guests of the loaded events, for suggestions in the editor: [{ email, name }]. Built from
+	// memory each time, never stored (the event cache keeps no guests).
+	function knownGuestEmails() {
+		return Guests.knownGuests(eventModel.eventsData.items)
+	}
+
 	function setEventProperty(calendarId, eventId, key, value) {
 		logger.debug('eventModel.setEventProperty', calendarId, eventId, key, value)
 		var calendarManager = getCalendarManager(calendarId)
@@ -524,11 +532,12 @@ CalendarManager {
 		}
 	}
 
-	function setEventProperties(calendarId, eventId, args) {
+	// options: optional { params } with query params for the update (Google).
+	function setEventProperties(calendarId, eventId, args, options) {
 		logger.debugJSON('eventModel.setEventProperties', calendarId, eventId, args)
 		var calendarManager = getCalendarManager(calendarId)
 		if (calendarManager) {
-			calendarManager.setEventProperties(calendarId, eventId, args)
+			calendarManager.setEventProperties(calendarId, eventId, args, options)
 		} else {
 			logger.log('Could not setEventProperties. Could not find calendarManager for calendarId = ', calendarId)
 		}
@@ -551,10 +560,10 @@ CalendarManager {
 	}
 
 	// See GoogleCalendarManager.updateEventFromServer.
-	function updateEventFromServer(calendarId, eventId, buildArgs, done) {
+	function updateEventFromServer(calendarId, eventId, buildArgs, done, options, failed) {
 		var calendarManager = getCalendarManager(calendarId)
 		if (calendarManager && typeof calendarManager.updateEventFromServer === 'function') {
-			calendarManager.updateEventFromServer(calendarId, eventId, buildArgs, done)
+			calendarManager.updateEventFromServer(calendarId, eventId, buildArgs, done, options, failed)
 		} else {
 			logger.log('Could not updateEventFromServer for calendarId = ', calendarId)
 		}
