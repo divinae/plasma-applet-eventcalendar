@@ -101,6 +101,9 @@ CalendarManager {
 		}
 	}
 
+	// Holidays (KHolidays) come without a color: red, like public holidays on paper calendars.
+	readonly property string holidayColor: "#d9534f"
+
 	//--- CalendarManager
 	function getCalendarList() {
 		var calendarList = []
@@ -108,7 +111,7 @@ CalendarManager {
 		// KHolidays
 		calendarList.push({
 			"id": "plasma_Holidays",
-			"backgroundColor": "" + Kirigami.Theme.highlightColor,
+			"backgroundColor": holidayColor,
 			"accessRole": "reader",
 			"isTasklist": false,
 		})
@@ -253,7 +256,8 @@ CalendarManager {
 			var calendarId = parseCalendarId(dayItem)
 			var eventId = calendarId + "_" + startDateTime.getTime() + "_" + endDateTime.getTime()
 
-			var eventColor = dayItem.eventColor || Kirigami.Theme.highlightColor
+			var isHoliday = calendarId === calendarManagerId + "_Holidays"
+			var eventColor = isHoliday ? holidayColor : (dayItem.eventColor || Kirigami.Theme.highlightColor)
 			eventColor = "" + eventColor // Cast to string, as dayItem.eventColor is a QColor which JSON treats as an object
 
 			var event = {
