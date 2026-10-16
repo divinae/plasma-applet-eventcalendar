@@ -91,7 +91,7 @@ Item {
 	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / hourCount)
 	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / dayCount)
-	readonly property int allDayRowHeight: lineHeight + 4
+	readonly property int allDayRowHeight: lineHeight + 8
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
 	readonly property color gridLineColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.faintGridLineOpacity)
@@ -489,8 +489,36 @@ Item {
 			Layout.fillWidth: true
 			readonly property int rows: Math.min(weekView.allDayLaneCount, weekView.maxVisibleAllDayRows)
 			readonly property bool hasHiddenRow: weekView.allDayLaneCount > weekView.maxVisibleAllDayRows
-			Layout.preferredHeight: rows * (weekView.allDayRowHeight + 1)
+			Layout.preferredHeight: rows * (weekView.allDayRowHeight + 2) + 6
 			visible: rows > 0
+
+			// A faint band with a line below, so the all-day row reads as part of the grid.
+			Rectangle {
+				x: weekView.gutterWidth
+				width: parent.width - weekView.gutterWidth
+				height: parent.height
+				radius: 4
+				color: Kirigami.Theme.textColor
+				opacity: 0.04
+			}
+			Rectangle {
+				x: weekView.gutterWidth
+				width: parent.width - weekView.gutterWidth
+				anchors.bottom: parent.bottom
+				height: 1
+				color: weekView.gridLineColor
+			}
+			PlasmaComponents3.Label {
+				width: weekView.gutterWidth - 6
+				height: weekView.allDayRowHeight
+				y: 3
+				horizontalAlignment: Text.AlignRight
+				verticalAlignment: Text.AlignVCenter
+				text: i18nc("all-day events row in the week view", "all day")
+				font: Kirigami.Theme.smallFont
+				opacity: 0.6
+				elide: Text.ElideRight
+			}
 
 			Repeater {
 				model: weekView.allDayBars
@@ -498,10 +526,10 @@ Item {
 					readonly property var bar: modelData
 					readonly property var eventItem: bar.eventItem
 					readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
-					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 1
-					y: bar.lane * (weekView.allDayRowHeight + 1)
+					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
+					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
-					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
+					width: (bar.last - bar.first + 1) * weekView.columnWidth - 4
 					height: weekView.allDayRowHeight
 					// Square ends where the event continues before or after this week.
 					readonly property bool cutLeft: bar.eventItem.startDateTime < weekView.weekStart
@@ -522,6 +550,7 @@ Item {
 						verticalAlignment: Text.AlignVCenter
 						text: parent.eventItem.summary
 						color: Shared.contrastTextColor(parent.barColor)
+						font.weight: Font.DemiBold
 						elide: Text.ElideRight
 					}
 					MouseArea {
@@ -545,7 +574,7 @@ Item {
 					readonly property int hiddenCount: weekView.allDayHiddenPerDay[index] || 0
 					visible: hiddenCount > 0
 					x: weekView.gutterWidth + index * weekView.columnWidth
-					y: (allDayArea.rows - 1) * (weekView.allDayRowHeight + 1)
+					y: 3 + (allDayArea.rows - 1) * (weekView.allDayRowHeight + 2)
 					width: weekView.columnWidth
 					height: weekView.allDayRowHeight
 					horizontalAlignment: Text.AlignHCenter
