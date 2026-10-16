@@ -7,6 +7,8 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Recurrence.js" as Recurrence
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
+import "code/ColorIdMap.js" as ColorIdMap
+import "code/GooglePalette.js" as GooglePalette
 import "lib/ColorUtil.js" as ColorUtil
 
 // Form to create a new event (eventItem == null) or edit an existing one.
@@ -134,6 +136,41 @@ Rectangle {
 		logic.update()
 	}
 
+	//--- Event color (Google): '' = the calendar's color, else a colorId '1'..'11'.
+	property string initialColorId: ""
+	property string colorId: ""
+	readonly property var colorNames: ({
+		'1': i18nc("Google Calendar event color", "Lavender"),
+		'2': i18nc("Google Calendar event color", "Sage"),
+		'3': i18nc("Google Calendar event color", "Grape"),
+		'4': i18nc("Google Calendar event color", "Flamingo"),
+		'5': i18nc("Google Calendar event color", "Banana"),
+		'6': i18nc("Google Calendar event color", "Tangerine"),
+		'7': i18nc("Google Calendar event color", "Peacock"),
+		'8': i18nc("Google Calendar event color", "Graphite"),
+		'9': i18nc("Google Calendar event color", "Blueberry"),
+		'10': i18nc("Google Calendar event color", "Basil"),
+		'11': i18nc("Google Calendar event color", "Tomato"),
+	})
+	// A colorId as events show it (palette setting, dark theme).
+	function swatchColor(id) {
+		if (!id) {
+			var calendar = calendarSelector.selectedCalendar
+			return appletConfig.eventColor(calendar && calendar.backgroundColor || "")
+		}
+		if (plasmoid.configuration.googleColorPalette === 'classic') {
+			var classic = ColorIdMap.colorIdMap.event[id]
+			return appletConfig.eventColor(classic ? classic.background : "")
+		}
+		return appletConfig.eventColor(GooglePalette.eventColor(id))
+	}
+	// The color changed: set its colorId, or undefined (removed from the update) for the calendar color.
+	function addColorArgs(args) {
+		if (supportsRecurrence && colorId !== initialColorId) {
+			args.colorId = colorId || undefined
+		}
+	}
+
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
 	border.width: 1
@@ -183,6 +220,9 @@ Rectangle {
 			if (descriptionField.text) {
 				data.description = descriptionField.text
 			}
+			if (supportsRecurrence && colorId) {
+				data.colorId = colorId
+			}
 			var newRule = supportsRecurrence ? repeatRule() : ''
 			if (newRule) {
 				data.recurrence = [newRule]
@@ -204,6 +244,7 @@ Rectangle {
 			if (Shared.hasChanged(eventItem.description, descriptionField.text)) {
 				args.description = descriptionField.text
 			}
+			addColorArgs(args)
 			var start = startObj()
 			var end = endObj()
 			var wasAllDay = !!(eventItem.start && eventItem.start.date)
@@ -240,6 +281,7 @@ Rectangle {
 		if (Shared.hasChanged(item.description, descriptionField.text)) {
 			args.description = descriptionField.text
 		}
+		addColorArgs(args)
 		var start = startObj()
 		var end = endObj()
 		var wasAllDay = !!(item.start && item.start.date)
@@ -277,6 +319,8 @@ Rectangle {
 			titleField.text = eventItem.summary || ""
 			locationField.text = eventItem.location || ""
 			descriptionField.text = eventItem.description || ""
+			initialColorId = eventItem.colorId ? String(eventItem.colorId) : ""
+			colorId = initialColorId
 			var allDay = !!(eventItem.start && eventItem.start.date)
 			allDayCheckBox.checked = allDay
 			var start = new Date(eventItem.startDateTime)
@@ -395,6 +439,68 @@ Rectangle {
 					id: calendarSelector
 					Layout.fillWidth: true
 					enabled: form.isNew // Moving events between calendars isn't supported yet.
+				}
+
+				// Event color (Google): the calendar's color or one of Google's 11 event colors.
+				Flow {
+					id: colorRow
+					visible: form.supportsRecurrence
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+					readonly property int swatchSize: Math.round(Kirigami.Units.gridUnit * 1.2)
+
+					Repeater {
+						model: [''].concat(GooglePalette.eventPalette.map(function(entry) { return entry.id }))
+						QQC2.AbstractButton {
+							id: swatch
+							readonly property string colorId: modelData
+							readonly property bool selected: form.colorId === colorId
+							readonly property string name: colorId ? (form.colorNames[colorId] || colorId) : i18n("Calendar color")
+							width: colorRow.swatchSize + Kirigami.Units.smallSpacing * 2
+							height: width
+							hoverEnabled: true
+							focusPolicy: Qt.TabFocus
+							Accessible.name: name
+							Accessible.role: Accessible.RadioButton
+							Accessible.checked: selected
+							onClicked: form.colorId = colorId
+							background: null
+							contentItem: Item {
+								// Selection ring
+								Rectangle {
+									anchors.fill: parent
+									radius: width / 2
+									color: "transparent"
+									border.width: 2
+									border.color: Kirigami.Theme.textColor
+									visible: swatch.selected
+								}
+								Rectangle {
+									id: swatchFill
+									anchors.centerIn: parent
+									width: colorRow.swatchSize
+									height: width
+									radius: width / 2
+									color: form.swatchColor(swatch.colorId)
+									border.width: swatch.hovered || swatch.visualFocus ? 2 : 1
+									border.color: swatch.hovered || swatch.visualFocus ? Kirigami.Theme.highlightColor : ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
+								}
+								// The calendar color: marked, so it reads as "no color of its own".
+								Kirigami.Icon {
+									visible: !swatch.colorId
+									anchors.centerIn: parent
+									width: Kirigami.Units.iconSizes.small
+									height: width
+									source: "view-calendar"
+									color: Shared.contrastTextColor(swatchFill.color)
+									isMask: true
+								}
+							}
+							PlasmaComponents3.ToolTip.text: name
+							PlasmaComponents3.ToolTip.visible: hovered
+							PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+						}
+					}
 				}
 
 				PlasmaComponents3.CheckBox {

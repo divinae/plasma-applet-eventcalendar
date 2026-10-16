@@ -47,6 +47,13 @@ var eventColors = {
 	'11': '#d50000', // Tomato
 }
 
+// The event colors with their Google Calendar names, by colorId (for the editor's picker).
+var eventColorNames = ['Lavender', 'Sage', 'Grape', 'Flamingo', 'Banana', 'Tangerine', 'Peacock', 'Graphite', 'Blueberry', 'Basil', 'Tomato']
+var eventPalette = eventColorNames.map(function(name, i) {
+	var id = String(i + 1)
+	return { id: id, name: name, color: eventColors[id] }
+})
+
 // Calendar colorIds 1..24 (same order as the classic list above).
 var calendarColorsById = Object.keys(calendarColors).map(function(k) { return calendarColors[k] })
 
