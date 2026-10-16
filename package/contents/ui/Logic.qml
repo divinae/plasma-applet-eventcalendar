@@ -188,6 +188,7 @@ Item {
 		}
 		function onGoogleActiveAccountIdChanged() { logic.updateEvents() }
 		function onGoogleEventClickActionChanged() { logic.updateEvents() }
+		function onGoogleColorPaletteChanged() { logic.updateEvents() }
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }

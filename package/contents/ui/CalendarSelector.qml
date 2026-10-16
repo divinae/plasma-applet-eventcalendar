@@ -1,4 +1,5 @@
 import QtQuick
+import "code/GooglePalette.js" as GooglePalette
 
 FormComboBox {
 	id: calendarSelector
@@ -31,7 +32,7 @@ FormComboBox {
 				list.push({
 					'calendarId': calendar.id,
 					'text': calendar.summary,
-					'backgroundColor': calendar.backgroundColor,
+					'backgroundColor': plasmoid.configuration.googleColorPalette !== 'classic' ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor,
 					'isTasklist': calendar.isTasklist,
 					'timeZone': calendar.timeZone || '', // Needed for recurring events
 				})

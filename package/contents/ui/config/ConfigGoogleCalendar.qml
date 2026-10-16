@@ -9,6 +9,7 @@ import "../lib"
 import "../lib/Requests.js" as Requests
 import "../lib/ColorUtil.js" as ColorUtil
 import "../Shared.js" as Shared
+import "../code/GooglePalette.js" as GooglePalette
 
 ConfigPage {
 	id: page
@@ -370,7 +371,7 @@ ConfigPage {
 							readonly property var calendar: accountSection.calendars[index]
 							Layout.fillWidth: true
 							name: calendar ? calendar.summary : ""
-							swatchColor: calendar ? calendar.backgroundColor : "transparent"
+							swatchColor: calendar ? (page.configBridge.read("googleColorPalette", "current") !== "classic" ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor) : "transparent"
 							readOnly: calendar ? calendar.accessRole === "reader" : false
 							checked: calendar ? page.isCalendarShown(accountSection.account, calendar) : false
 							onToggled: page.setCalendarShown(accountSection.account, calendar, checked)

@@ -373,6 +373,10 @@
 			<!-- enum: WebEventView, WebMonthView -->
 			<default>WebEventView</default>
 		</entry>
+		<entry name="googleColorPalette" type="string">
+			<!-- current: Google Calendar's current colors; classic: the old palette the API returns -->
+			<default>current</default>
+		</entry>
 		<entry name="googleHideGoalsDesc" type="bool">
 			<label>Remove "This event was added from Goals in Google Calendar" from description</label>
 			<default>true</default>

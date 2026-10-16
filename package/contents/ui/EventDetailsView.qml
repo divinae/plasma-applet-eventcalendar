@@ -8,6 +8,7 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
+import "code/GooglePalette.js" as GooglePalette
 
 // Event details shown inside the popup, like mobile calendar apps.
 Rectangle {
@@ -281,7 +282,9 @@ Rectangle {
 						Layout.preferredHeight: Kirigami.Units.iconSizes.small
 						Layout.alignment: Qt.AlignTop
 						radius: width / 2
-						color: details.calendar && details.calendar.backgroundColor ? details.calendar.backgroundColor : details.eventColor
+						color: details.calendar && details.calendar.backgroundColor
+							? (plasmoid.configuration.googleColorPalette !== 'classic' ? GooglePalette.calendarColor(details.calendar) : details.calendar.backgroundColor)
+							: details.eventColor
 					}
 					PlasmaComponents3.Label {
 						id: calendarLabel

@@ -6,6 +6,7 @@ import "../lib"
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 import "../code/ColorIdMap.js" as ColorIdMap
+import "../code/GooglePalette.js" as GooglePalette
 
 CalendarManager {
 	id: googleCalendarManager
@@ -551,10 +552,16 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return null
 	}
 
+	// "current": the colors Google Calendar shows today; "classic": the old palette the API returns.
+	readonly property bool currentGooglePalette: plasmoid.configuration.googleColorPalette !== 'classic'
 	function parseColor(calendar, event) {
-		var colorId = parseColorId('event', event.colorId)
-		// event.backgroundColor is a hardcoded color (like the debug calendar)
-		return event.backgroundColor || colorId || calendar.backgroundColor
+		if (event.backgroundColor) {
+			return event.backgroundColor // A hardcoded color (like the debug calendar)
+		}
+		if (currentGooglePalette) {
+			return GooglePalette.eventColor(event.colorId) || GooglePalette.calendarColor(calendar)
+		}
+		return parseColorId('event', event.colorId) || calendar.backgroundColor
 	}
 
 	//--- Create / POST

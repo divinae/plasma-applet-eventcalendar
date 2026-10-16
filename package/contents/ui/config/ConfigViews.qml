@@ -101,6 +101,16 @@ ConfigPage {
 				}
 			}
 			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
+				text: i18n("Google event colors")
+				description: i18n("Google's API still returns an older palette; the current colors match Google Calendar.")
+				configKey: 'googleColorPalette'
+				model: [
+					{ value: 'current', text: i18n("As in Google Calendar") },
+					{ value: 'classic', text: i18n("Classic (as returned by Google)") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Week numbers")
 				configKey: 'monthShowWeekNumbers'

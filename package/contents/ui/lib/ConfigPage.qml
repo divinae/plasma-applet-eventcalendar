@@ -236,6 +236,8 @@ KCM.SimpleKCM {
 	property var cfg_tasklistIdListDefault
 	property var cfg_googleEventClickAction
 	property var cfg_googleEventClickActionDefault
+	property var cfg_googleColorPalette
+	property var cfg_googleColorPaletteDefault
 	property var cfg_googleHideGoalsDesc
 	property var cfg_googleHideGoalsDescDefault
 	property var cfg_access_token
