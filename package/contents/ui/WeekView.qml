@@ -401,10 +401,11 @@ Item {
 			}
 		}
 
-		// Day names
+		// Day names. Not in the Today view: the popup header shows the date.
 		Row {
 			id: dayNamesRow
 			Layout.fillWidth: true
+			Layout.preferredHeight: weekView.singleDay ? 0 : implicitHeight
 			Item {
 				width: weekView.gutterWidth
 				height: 1
@@ -416,6 +417,7 @@ Item {
 					readonly property date date: weekView.dayDate(index)
 					readonly property bool today: weekView.isToday(date)
 					readonly property var weather: weekView.dayWeather(date)
+					visible: !weekView.singleDay
 					width: weekView.columnWidth
 					height: dayHeaderColumn.implicitHeight
 					opacity: date < weekView.todayStart ? appletConfig.pastOpacity : 1
