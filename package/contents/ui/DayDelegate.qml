@@ -167,6 +167,9 @@ MouseArea {
 
 			readonly property var modelEvents: model.events
 			readonly property int modelEventsCount: dayStyle.eventsLength(modelEvents)
+			// Month view with multi-day bars: rows at the top taken by bars, bars that don't fit.
+			readonly property int spanRows: model.reservedRows || 0
+			readonly property int spanHiddenCount: model.hiddenSpanCount || 0
 			property alias dayStyle: dayStyle // aka DayDelegate
 		}
 	}

@@ -24,6 +24,8 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.workspace.calendar as PlasmaCalendar
 import org.kde.plasma.core as PlasmaCore
 
+import "EventBuckets.js" as EventBuckets
+
 PinchArea {
 	id: root
 
@@ -71,6 +73,14 @@ PinchArea {
 	}
 
 	property alias cellHeight: mainDaysCalendar.cellHeight
+
+	// Opt-in (the popup): with event titles, multi-day events as bars across the days instead of
+	// their title in every day. The owner fills spanBars and the reservedRows / hiddenSpanCount
+	// roles (EventBuckets.layoutMonth) and fills again when eventRowCapacity changes.
+	property bool spanBarsEnabled: false
+	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
+	property var spanBars: []
+	readonly property int eventRowCapacity: mainDaysCalendar.eventTitleRowCapacity
 	property alias daysModel : daysModel
 
 	signal dateSelected(date selectedDate)
@@ -167,6 +177,8 @@ PinchArea {
 				dayData.yearNumber = previousMonth.getFullYear()
 				dayData.showEventBadge = false
 				dayData.events = []
+				dayData.reservedRows = 0
+				dayData.hiddenSpanCount = 0
 				daysModel.append(dayData)
 			}
 		}
@@ -179,6 +191,8 @@ PinchArea {
 			dayData.yearNumber = year
 			dayData.showEventBadge = false
 			dayData.events = []
+			dayData.reservedRows = 0
+			dayData.hiddenSpanCount = 0
 			daysModel.append(dayData)
 		}
 
@@ -192,10 +206,45 @@ PinchArea {
 				dayData.yearNumber = nextMonth.getFullYear()
 				dayData.showEventBadge = false
 				dayData.events = []
+				dayData.reservedRows = 0
+				dayData.hiddenSpanCount = 0
 				daysModel.append(dayData)
 			}
 		}
+		spanBars = []
 		daysRebuilt()
+	}
+
+	// Fill the day cells with events (plain event items, eg: eventModel.eventsData.items).
+	// Bucket events per visible day in plain JS first, then write each day to the model once.
+	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
+	function setEvents(items) {
+		var dayTimes = []
+		for (var i = 0; i < daysModel.count; i++) {
+			var dayData = daysModel.get(i)
+			dayTimes.push(new Date(dayData.yearNumber, dayData.monthNumber - 1, dayData.dayNumber).getTime())
+		}
+		var layout = spanBarsActive
+			? EventBuckets.layoutMonth(items, dayTimes, calendarBackend.days, eventRowCapacity)
+			: { bars: [], dayEvents: EventBuckets.bucketByDay(items, dayTimes), reservedRows: [], hiddenSpanCount: [] }
+		for (var j = 0; j < layout.dayEvents.length; j++) {
+			var day = daysModel.get(j)
+			var dayEvents = layout.dayEvents[j]
+			day.events.clear()
+			if (dayEvents.length) {
+				day.events.append(dayEvents)
+			}
+			var reservedRows = layout.reservedRows[j] || 0
+			var hiddenSpanCount = layout.hiddenSpanCount[j] || 0
+			if (day.reservedRows !== reservedRows) {
+				daysModel.setProperty(j, 'reservedRows', reservedRows)
+			}
+			if (day.hiddenSpanCount !== hiddenSpanCount) {
+				daysModel.setProperty(j, 'hiddenSpanCount', hiddenSpanCount)
+			}
+			daysModel.setProperty(j, 'showEventBadge', dayEvents.length > 0 || hiddenSpanCount > 0)
+		}
+		spanBars = layout.bars
 	}
 
 	function updateYearOverview() {
@@ -390,6 +439,7 @@ PinchArea {
 			rows: calendarBackend.weeks
 
 			showWeekNumbers: root.showWeekNumbers
+			spanBars: root.spanBarsActive ? root.spanBars : []
 			eventBadgeType: plasmoid.configuration.popupMode === 'month' ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
 
 			headerModel: calendarBackend.days

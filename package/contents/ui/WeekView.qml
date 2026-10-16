@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 
+import "EventBuckets.js" as EventBuckets
 import "MeetingLink.js" as MeetingLink
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
@@ -207,56 +208,12 @@ Item {
 	}
 
 	function layoutAllDay(dayList) {
-		// Collect each event once with its first and last day index in this week.
-		var byEvent = []
-		for (var i = 0; i < dayList.length; i++) {
-			var list = dayList[i].allDay
-			for (var j = 0; j < list.length; j++) {
-				var found = null
-				for (var k = 0; k < byEvent.length; k++) {
-					if (byEvent[k].eventItem === list[j]) {
-						found = byEvent[k]
-						break
-					}
-				}
-				if (found) {
-					found.last = i
-				} else {
-					byEvent.push({ eventItem: list[j], first: i, last: i, lane: 0 })
-				}
-			}
-		}
-		// Earlier first, then longer first, like Google Calendar.
-		byEvent.sort(function(a, b) {
-			return (a.first - b.first) || ((b.last - b.first) - (a.last - a.first))
-		})
-		var laneEnds = [] // Last day index used per lane
-		for (var e = 0; e < byEvent.length; e++) {
-			var bar = byEvent[e]
-			var lane = 0
-			while (lane < laneEnds.length && laneEnds[lane] >= bar.first) {
-				lane++
-			}
-			laneEnds[lane] = bar.last
-			bar.lane = lane
-		}
-		var laneCount = laneEnds.length
-		// Too many lanes: show maxVisibleAllDayRows - 1 lanes and a "+N" row.
-		var shownLanes = laneCount > maxVisibleAllDayRows ? maxVisibleAllDayRows - 1 : laneCount
-		var hidden = []
-		for (var d = 0; d < dayCount; d++) {
-			hidden.push(0)
-		}
-		for (var h = 0; h < byEvent.length; h++) {
-			if (byEvent[h].lane >= shownLanes) {
-				for (var day = byEvent[h].first; day <= byEvent[h].last; day++) {
-					hidden[day]++
-				}
-			}
-		}
-		allDayBars = byEvent.filter(function(bar) { return bar.lane < shownLanes })
-		allDayHiddenPerDay = hidden
-		allDayLaneCount = laneCount
+		// One bar per event from its first to its last day in this week, in lanes; too many lanes:
+		// maxVisibleAllDayRows - 1 lanes and a "+N" row.
+		var layout = EventBuckets.layoutLanes(dayList.map(function(day) { return day.allDay }), maxVisibleAllDayRows)
+		allDayBars = layout.bars
+		allDayHiddenPerDay = layout.hiddenPerDay
+		allDayLaneCount = layout.laneCount
 	}
 
 	// Overlapping events are placed side by side. Greedy columns per cluster of overlapping events.
