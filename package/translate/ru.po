@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:49+0200\n"
+"POT-Creation-Date: 2026-10-16 12:09+0200\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -837,6 +837,32 @@ msgstr "Первый день недели"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
 msgstr "По-умолчанию"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Цвета событий"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"API Google всё ещё возвращает старую палитру; «Как в Google календаре» "
+"показывает текущую. «Следовать системной цветовой схеме» использует "
+"ближайшие цвета вашей цветовой схемы Plasma."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Как в Google календаре"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Классические (как возвращает Google)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Следовать системной цветовой схеме"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

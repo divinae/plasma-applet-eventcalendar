@@ -118,6 +118,8 @@ package_plasmoid() {
 
         local filename="${packageName}-v${packageVersion}${filenameTag}.${packageExt}"
         rm -f -- "${packageName}"-v*."${packageExt}" # Cleanup
+        # Python caches from local runs don't belong in the package.
+        find package -name __pycache__ -type d -prune -exec rm -rf -- {} +
         echoGray "[${packageExt}] Zipping '${filename}'"
         if command -v zip > /dev/null 2>&1; then
                 (cd package \

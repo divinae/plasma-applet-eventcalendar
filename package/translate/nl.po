@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:49+0200\n"
+"POT-Creation-Date: 2026-10-16 12:09+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -833,6 +833,32 @@ msgstr "Eerste dag van de week"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
 msgstr "Standaard"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Afspraakkleuren"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"De Google-API geeft nog een ouder palet terug; \"Zoals in Google Agenda\" "
+"toont het huidige. \"Het kleurenschema van het systeem volgen\" gebruikt de "
+"dichtstbijzijnde kleuren van uw Plasma-kleurenschema."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Zoals in Google Agenda"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Klassiek (zoals door Google geleverd)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Het kleurenschema van het systeem volgen"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

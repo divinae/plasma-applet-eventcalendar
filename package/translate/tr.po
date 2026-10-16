@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:49+0200\n"
+"POT-Creation-Date: 2026-10-16 12:09+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -833,6 +833,32 @@ msgstr "Haftanın ilk günü"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
 msgstr "Varsayılan"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Etkinlik renkleri"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Google API’si hâlâ eski bir palet döndürüyor; “Google Takvim’deki gibi” "
+"güncel olanı gösterir. “Sistem renk şemasını izle” Plasma renk şemanızdaki "
+"en yakın renkleri kullanır."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Google Takvim’deki gibi"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Klasik (Google’ın döndürdüğü gibi)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Sistem renk şemasını izle"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

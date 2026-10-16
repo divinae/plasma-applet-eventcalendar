@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:49+0200\n"
+"POT-Creation-Date: 2026-10-16 12:09+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -811,6 +811,31 @@ msgstr "每周第一天"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
 msgstr "默认"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "事件颜色"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Google 的 API 仍返回旧调色板；“与 Google 日历一致”显示当前颜色。“跟随系统配色"
+"方案”使用 Plasma 配色方案中最接近的颜色。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "与 Google 日历一致"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "经典（Google 返回的颜色）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "跟随系统配色方案"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

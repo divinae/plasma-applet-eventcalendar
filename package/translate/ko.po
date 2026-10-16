@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:49+0200\n"
+"POT-Creation-Date: 2026-10-16 12:09+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -824,6 +824,32 @@ msgstr "한 주의 시작 요일"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
 msgstr "기본"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "이벤트 색상"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Google API는 아직 이전 팔레트를 반환합니다. \"Google 캘린더와 같게\"는 현재 "
+"색상을 표시합니다. \"시스템 색 구성표 따르기\"는 Plasma 색 구성표에서 가장 가"
+"까운 색을 사용합니다."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Google 캘린더와 같게"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "클래식(Google에서 반환한 색상)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "시스템 색 구성표 따르기"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
