@@ -13,7 +13,14 @@ import "./weather/WeatherApi.js" as WeatherApi
 MouseArea {
 	id: popup
 
-	onClicked: focus = true
+	// Right clicks too: otherwise Plasma shows the widget's context menu over the open popup.
+	// Items with their own right-click menu (agenda events) sit on top and still get theirs.
+	acceptedButtons: Qt.LeftButton | Qt.RightButton
+	onClicked: function(mouse) {
+		if (mouse.button === Qt.LeftButton) {
+			focus = true
+		}
+	}
 
 	property int padding: 0
 	property bool showPinButton: false // Assigned in main.qml
