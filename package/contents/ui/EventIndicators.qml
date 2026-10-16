@@ -33,13 +33,20 @@ Row {
 
 	Repeater {
 		model: indicators.shownKeys
-		Kirigami.Icon {
+		Item {
 			width: indicators.iconSize
 			height: indicators.iconSize
 			anchors.verticalCenter: parent ? parent.verticalCenter : undefined
-			source: Shared.EVENT_INDICATOR_ICONS[modelData]
-			isMask: true
-			color: indicators.color
+			Kirigami.Icon {
+				anchors.centerIn: parent
+				// The pin fills its whole box: drawn smaller so it matches the other icons.
+				readonly property real scaleFactor: modelData === 'location' ? 0.8 : 1
+				width: Math.round(indicators.iconSize * scaleFactor)
+				height: width
+				source: Shared.EVENT_INDICATOR_ICONS[modelData]
+				isMask: true
+				color: indicators.color
+			}
 		}
 	}
 }
