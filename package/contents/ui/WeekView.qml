@@ -535,11 +535,12 @@ Item {
 							Rectangle {
 								anchors.fill: parent
 								color: Kirigami.Theme.highlightColor
-								opacity: dayColumn.today ? 0.08 : 0
+								// Only in the week view: in the day view the whole column is "today".
+								opacity: dayColumn.today && !weekView.singleDay ? 0.08 : 0
 							}
-							// Today: highlight-colored frame around the column.
+							// Today: highlight-colored frame around the column (week view only).
 							Rectangle {
-								visible: dayColumn.today
+								visible: dayColumn.today && !weekView.singleDay
 								anchors.fill: parent
 								anchors.margins: 1
 								color: "transparent"
