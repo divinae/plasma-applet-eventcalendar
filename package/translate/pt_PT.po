@@ -176,34 +176,34 @@ msgstr "Outro"
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "falta %1 min"
+msgstr[1] "faltam %1 min"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
-msgstr ""
+msgstr "faltam %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "em %1 min"
+msgstr[1] "em %1 min"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
-msgstr ""
+msgstr "em %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
-msgstr ""
+msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
-msgstr ""
+msgstr "Editar calendário"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
@@ -211,15 +211,15 @@ msgstr "Nome"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Name in my list"
-msgstr ""
+msgstr "Nome na minha lista"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
-msgstr ""
+msgstr "Este nome só é visível para si. Para os outros, o calendário mantém o seu nome."
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
 msgid "Save"
@@ -315,11 +315,11 @@ msgstr " min"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
-msgstr ""
+msgstr "Progresso da reunião atual"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "A thin bar under the meeting's name, in its calendar's color."
-msgstr ""
+msgstr "Uma barra fina por baixo do nome da reunião, na cor do respetivo calendário."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
@@ -957,11 +957,11 @@ msgstr " horas"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
-msgstr ""
+msgstr "Sem sessão iniciada nesta conta Google. Inicie sessão novamente."
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Could not save the calendar: %1"
-msgstr ""
+msgstr "Não foi possível gravar o calendário: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Select city"
@@ -985,7 +985,7 @@ msgstr "Abrir link"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
-msgstr ""
+msgstr "Editar calendário…"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1044,37 +1044,37 @@ msgstr "Adicionar data de vencimento"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
-msgstr ""
+msgstr "Responder"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Yes to All Events"
-msgstr ""
+msgstr "Sim para todos os eventos"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Maybe"
-msgstr ""
+msgstr "Talvez"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Maybe to All Events"
-msgstr ""
+msgstr "Talvez para todos os eventos"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "No to All Events"
-msgstr ""
+msgstr "Não para todos os eventos"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1100,7 +1100,7 @@ msgstr "Remover"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete Only This Occurrence of “%1”"
-msgstr ""
+msgstr "Remover apenas esta ocorrência de “%1”"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -1110,7 +1110,7 @@ msgstr "Remover “%1”"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
-msgstr ""
+msgstr "Remover todos os eventos de “%1”"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
 msgid "This event"
@@ -1158,7 +1158,7 @@ msgstr "Lembretes: %1 antes"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
-msgstr ""
+msgstr "Remover:"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1166,15 +1166,15 @@ msgstr "Remover este evento?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "This Occurrence"
-msgstr ""
+msgstr "Esta ocorrência"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "All Events"
-msgstr ""
+msgstr "Todos os eventos"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
-msgstr ""
+msgstr "Remove todas as ocorrências deste evento recorrente."
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1183,7 +1183,7 @@ msgstr "Repete-se"
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
-msgstr ""
+msgstr "Vai participar?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1255,62 +1255,62 @@ msgstr "A carregar…"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every [2] [weeks]"
 msgid "Every"
-msgstr ""
+msgstr "A cada"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "dia"
+msgstr[1] "dias"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "semana"
+msgstr[1] "semanas"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mês"
+msgstr[1] "meses"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ano"
+msgstr[1] "anos"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends: never / on date / after N times"
 msgid "Ends:"
-msgstr ""
+msgstr "Termina:"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends"
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends on [date]"
 msgid "On"
-msgstr ""
+msgstr "Em"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after [N] times"
 msgid "After"
-msgstr ""
+msgstr "Após"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after N"
 msgid "time"
 msgid_plural "times"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ocorrência"
+msgstr[1] "ocorrências"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1546,59 +1546,59 @@ msgstr "Erro ao obter dados da Meteorologia"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
-msgstr ""
+msgstr "Adição rápida"
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
-msgstr ""
+msgstr "Almoço com a Ana amanhã 13:00"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
-msgstr ""
+msgstr "Escreva o quê, quando e onde. Sem um dia, o evento é adicionado hoje."
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "%1 = date"
 msgid "Type what, when and where. Without a day, the event is added on %1."
-msgstr ""
+msgstr "Escreva o quê, quando e onde. Sem um dia, o evento é adicionado em %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
-msgstr ""
+msgstr "Mais opções…"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
-msgstr ""
+msgstr "%1 · Todo o dia"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
 msgid "%1 · %2 – %3"
-msgstr ""
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
-msgstr ""
+msgstr "Pesquisar eventos…"
 
 #: ../contents/ui/SearchView.qml
 msgid "Type to search event titles, places and descriptions"
-msgstr ""
+msgstr "Escreva para pesquisar nos títulos, locais e descrições dos eventos"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
-msgstr ""
+msgstr "A pesquisar…"
 
 #: ../contents/ui/SearchView.qml
 msgid "No events found"
-msgstr ""
+msgstr "Nenhum evento encontrado"
 
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
-msgstr ""
+msgstr "Não foi possível pesquisar no Calendário Google"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
-msgstr ""
+msgstr "A pesquisar no Calendário Google…"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

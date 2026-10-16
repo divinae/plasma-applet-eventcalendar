@@ -178,32 +178,32 @@ msgstr "その他"
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
-msgstr[0] ""
+msgstr[0] "残り %1 分"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
-msgstr ""
+msgstr "残り %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
-msgstr[0] ""
+msgstr[0] "%1 分後"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
-msgstr ""
+msgstr "%1 後"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
-msgstr ""
+msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
-msgstr ""
+msgstr "カレンダーを編集"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
@@ -211,15 +211,15 @@ msgstr "名前"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Name in my list"
-msgstr ""
+msgstr "自分のリストでの名前"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
-msgstr ""
+msgstr "この名前はあなたにだけ表示されます。他のユーザーには元のカレンダー名が表示されます。"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Color"
-msgstr ""
+msgstr "色"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
 msgid "Save"
@@ -315,11 +315,11 @@ msgstr " 分"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
-msgstr ""
+msgstr "現在の会議の進行状況"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "A thin bar under the meeting's name, in its calendar's color."
-msgstr ""
+msgstr "会議名の下に、カレンダーの色で細いバーを表示します。"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
@@ -957,11 +957,11 @@ msgstr " 時間"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
-msgstr ""
+msgstr "この Google アカウントにサインインしていません。もう一度サインインしてください。"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Could not save the calendar: %1"
-msgstr ""
+msgstr "カレンダーを保存できませんでした: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Select city"
@@ -985,7 +985,7 @@ msgstr "リンクを開く"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
-msgstr ""
+msgstr "カレンダーを編集…"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1044,37 +1044,37 @@ msgstr "期限を追加"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
-msgstr ""
+msgstr "返信"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Yes to All Events"
-msgstr ""
+msgstr "すべてのイベントに「はい」"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Maybe"
-msgstr ""
+msgstr "未定"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Maybe to All Events"
-msgstr ""
+msgstr "すべてのイベントに「未定」"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "No to All Events"
-msgstr ""
+msgstr "すべてのイベントに「いいえ」"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1100,7 +1100,7 @@ msgstr "削除"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete Only This Occurrence of “%1”"
-msgstr ""
+msgstr "「%1」のこの回のみを削除"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -1110,7 +1110,7 @@ msgstr "「%1」を削除"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
-msgstr ""
+msgstr "「%1」のすべてのイベントを削除"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
 msgid "This event"
@@ -1157,7 +1157,7 @@ msgstr "リマインダー: %1 前"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
-msgstr ""
+msgstr "削除対象:"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1165,15 +1165,15 @@ msgstr "このイベントを削除しますか？"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "This Occurrence"
-msgstr ""
+msgstr "この回のみ"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "All Events"
-msgstr ""
+msgstr "すべてのイベント"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
-msgstr ""
+msgstr "この繰り返しイベントのすべての回を削除します。"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1182,7 +1182,7 @@ msgstr "繰り返し"
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
-msgstr ""
+msgstr "参加しますか?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1253,57 +1253,57 @@ msgstr "読み込み中…"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every [2] [weeks]"
 msgid "Every"
-msgstr ""
+msgstr "間隔"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
+msgstr[0] "日"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
+msgstr[0] "週"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
+msgstr[0] "か月"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
+msgstr[0] "年"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends: never / on date / after N times"
 msgid "Ends:"
-msgstr ""
+msgstr "終了:"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends"
 msgid "Never"
-msgstr ""
+msgstr "なし"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends on [date]"
 msgid "On"
-msgstr ""
+msgstr "終了日"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after [N] times"
 msgid "After"
-msgstr ""
+msgstr "回数"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after N"
 msgid "time"
 msgid_plural "times"
-msgstr[0] ""
+msgstr[0] "回"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1537,59 +1537,59 @@ msgstr "エラー天気を取得できませんでした。"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
-msgstr ""
+msgstr "クイック追加"
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
-msgstr ""
+msgstr "明日 13:00 アンナとランチ"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
-msgstr ""
+msgstr "内容、日時、場所を入力します。日付を指定しない場合、イベントは今日に追加されます。"
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "%1 = date"
 msgid "Type what, when and where. Without a day, the event is added on %1."
-msgstr ""
+msgstr "内容、日時、場所を入力します。日付を指定しない場合、イベントは %1 に追加されます。"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
-msgstr ""
+msgstr "その他のオプション…"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
-msgstr ""
+msgstr "%1 · 終日"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
 msgid "%1 · %2 – %3"
-msgstr ""
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
-msgstr ""
+msgstr "イベントを検索…"
 
 #: ../contents/ui/SearchView.qml
 msgid "Type to search event titles, places and descriptions"
-msgstr ""
+msgstr "入力してイベントのタイトル、場所、説明を検索"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
-msgstr ""
+msgstr "検索中…"
 
 #: ../contents/ui/SearchView.qml
 msgid "No events found"
-msgstr ""
+msgstr "イベントが見つかりません"
 
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
-msgstr ""
+msgstr "Google Calendar を検索できませんでした"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
-msgstr ""
+msgstr "Google Calendar を検索中…"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

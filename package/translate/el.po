@@ -193,34 +193,34 @@ msgstr "Άλλο"
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "απομένει %1 λεπ."
+msgstr[1] "απομένουν %1 λεπ."
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
-msgstr ""
+msgstr "απομένουν %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "σε %1 λεπ."
+msgstr[1] "σε %1 λεπ."
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
-msgstr ""
+msgstr "σε %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
-msgstr ""
+msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
-msgstr ""
+msgstr "Επεξεργασία ημερολογίου"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
@@ -230,15 +230,17 @@ msgstr "Όνομα"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Name in my list"
-msgstr ""
+msgstr "Όνομα στη λίστα μου"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
+"Μόνο εσείς βλέπετε αυτό το όνομα. Για τους άλλους το ημερολόγιο διατηρεί το "
+"όνομά του."
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml
@@ -344,11 +346,13 @@ msgstr " λεπ."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
-msgstr ""
+msgstr "Πρόοδος της τρέχουσας σύσκεψης"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "A thin bar under the meeting's name, in its calendar's color."
 msgstr ""
+"Μια λεπτή γραμμή κάτω από το όνομα της σύσκεψης, στο χρώμα του ημερολογίου "
+"της."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
@@ -1072,11 +1076,11 @@ msgstr " ώρες"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
-msgstr ""
+msgstr "Δεν έχετε συνδεθεί σε αυτόν τον λογαριασμό Google. Συνδεθείτε ξανά."
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Could not save the calendar: %1"
-msgstr ""
+msgstr "Αδυναμία αποθήκευσης του ημερολογίου: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
@@ -1105,7 +1109,7 @@ msgstr "Άνοιγμα Συνδέσμου"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
-msgstr ""
+msgstr "Επεξεργασία ημερολογίου…"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1168,37 +1172,37 @@ msgstr "Προσθήκη προθεσμίας"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
-msgstr ""
+msgstr "Απάντηση"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Yes to All Events"
-msgstr ""
+msgstr "Ναι σε όλα τα συμβάντα"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Maybe"
-msgstr ""
+msgstr "Ίσως"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Maybe to All Events"
-msgstr ""
+msgstr "Ίσως σε όλα τα συμβάντα"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "No to All Events"
-msgstr ""
+msgstr "Όχι σε όλα τα συμβάντα"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1225,7 +1229,7 @@ msgstr "Διαγραφή"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete Only This Occurrence of “%1”"
-msgstr ""
+msgstr "Διαγραφή μόνο αυτής της επανάληψης του «%1»"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -1235,7 +1239,7 @@ msgstr "Διαγραφή «%1»"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
-msgstr ""
+msgstr "Διαγραφή όλων των συμβάντων του «%1»"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
@@ -1285,7 +1289,7 @@ msgstr "Υπενθυμίσεις: %1 πριν"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
-msgstr ""
+msgstr "Διαγραφή:"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1293,15 +1297,15 @@ msgstr "Διαγραφή αυτού του συμβάντος;"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "This Occurrence"
-msgstr ""
+msgstr "Αυτή η επανάληψη"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "All Events"
-msgstr ""
+msgstr "Όλα τα συμβάντα"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
-msgstr ""
+msgstr "Διαγράφει όλες τις επαναλήψεις αυτού του επαναλαμβανόμενου συμβάντος."
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1310,7 +1314,7 @@ msgstr "Επαναλαμβάνεται"
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
-msgstr ""
+msgstr "Θα παρευρεθείτε;"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1382,62 +1386,62 @@ msgstr "Φόρτωση…"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every [2] [weeks]"
 msgid "Every"
-msgstr ""
+msgstr "Κάθε"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ημέρα"
+msgstr[1] "ημέρες"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "εβδομάδα"
+msgstr[1] "εβδομάδες"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "μήνα"
+msgstr[1] "μήνες"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "χρόνο"
+msgstr[1] "χρόνια"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends: never / on date / after N times"
 msgid "Ends:"
-msgstr ""
+msgstr "Λήγει:"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends"
 msgid "Never"
-msgstr ""
+msgstr "Ποτέ"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends on [date]"
 msgid "On"
-msgstr ""
+msgstr "Στις"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after [N] times"
 msgid "After"
-msgstr ""
+msgstr "Μετά από"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after N"
 msgid "time"
 msgid_plural "times"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "επανάληψη"
+msgstr[1] "επαναλήψεις"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1681,59 +1685,62 @@ msgstr "Σφάλμα λήψης καιρού."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
-msgstr ""
+msgstr "Γρήγορη προσθήκη"
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
-msgstr ""
+msgstr "Μεσημεριανό με την Άννα αύριο 13:00"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
 msgstr ""
+"Πληκτρολογήστε τι, πότε και πού. Χωρίς ημέρα, το συμβάν προστίθεται σήμερα."
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "%1 = date"
 msgid "Type what, when and where. Without a day, the event is added on %1."
 msgstr ""
+"Πληκτρολογήστε τι, πότε και πού. Χωρίς ημέρα, το συμβάν προστίθεται στις %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
-msgstr ""
+msgstr "Περισσότερες επιλογές…"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
-msgstr ""
+msgstr "%1 · Όλη την ημέρα"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
 msgid "%1 · %2 – %3"
-msgstr ""
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
-msgstr ""
+msgstr "Αναζήτηση συμβάντων…"
 
 #: ../contents/ui/SearchView.qml
 msgid "Type to search event titles, places and descriptions"
 msgstr ""
+"Πληκτρολογήστε για αναζήτηση σε τίτλους, τοποθεσίες και περιγραφές συμβάντων"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
-msgstr ""
+msgstr "Αναζήτηση…"
 
 #: ../contents/ui/SearchView.qml
 msgid "No events found"
-msgstr ""
+msgstr "Δεν βρέθηκαν συμβάντα"
 
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
-msgstr ""
+msgstr "Αδυναμία αναζήτησης στο Ημερολόγιο Google"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
-msgstr ""
+msgstr "Αναζήτηση στο Ημερολόγιο Google…"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

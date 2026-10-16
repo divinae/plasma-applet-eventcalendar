@@ -193,36 +193,36 @@ msgstr "Інше"
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "ще %1 хв"
+msgstr[1] "ще %1 хв"
+msgstr[2] "ще %1 хв"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
-msgstr ""
+msgstr "ще %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "за %1 хв"
+msgstr[1] "за %1 хв"
+msgstr[2] "за %1 хв"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
-msgstr ""
+msgstr "за %1"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
-msgstr ""
+msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
-msgstr ""
+msgstr "Змінити календар"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
@@ -232,15 +232,15 @@ msgstr "Ім'я"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Name in my list"
-msgstr ""
+msgstr "Назва в моєму списку"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
-msgstr ""
+msgstr "Цю назву бачите лише ви. Для інших календар зберігає свою назву."
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Color"
-msgstr ""
+msgstr "Колір"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml
@@ -346,11 +346,11 @@ msgstr " хв"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
-msgstr ""
+msgstr "Поступ поточної зустрічі"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "A thin bar under the meeting's name, in its calendar's color."
-msgstr ""
+msgstr "Тонка смужка під назвою зустрічі, у кольорі її календаря."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
@@ -1066,11 +1066,11 @@ msgstr " год"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
-msgstr ""
+msgstr "Вхід до цього облікового запису Google не виконано. Увійдіть знову."
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Could not save the calendar: %1"
-msgstr ""
+msgstr "Не вдалося зберегти календар: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
@@ -1099,7 +1099,7 @@ msgstr "Відкрити посилання"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
-msgstr ""
+msgstr "Змінити календар…"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1162,37 +1162,37 @@ msgstr "Додати термін"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
-msgstr ""
+msgstr "Відповісти"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Yes"
-msgstr ""
+msgstr "Так"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Yes to All Events"
-msgstr ""
+msgstr "Так для всіх подій"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "Maybe"
-msgstr ""
+msgstr "Можливо"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "Maybe to All Events"
-msgstr ""
+msgstr "Можливо для всіх подій"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP"
 msgid "No"
-msgstr ""
+msgstr "Ні"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP"
 msgid "No to All Events"
-msgstr ""
+msgstr "Ні для всіх подій"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1219,7 +1219,7 @@ msgstr "Вилучити"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete Only This Occurrence of “%1”"
-msgstr ""
+msgstr "Вилучити лише це повторення «%1»"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -1229,7 +1229,7 @@ msgstr "Вилучити «%1»"
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
-msgstr ""
+msgstr "Вилучити всі події «%1»"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
@@ -1280,7 +1280,7 @@ msgstr "Нагадування: за %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
-msgstr ""
+msgstr "Вилучити:"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1288,15 +1288,15 @@ msgstr "Вилучити цю подію?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "This Occurrence"
-msgstr ""
+msgstr "Це повторення"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "All Events"
-msgstr ""
+msgstr "Усі події"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
-msgstr ""
+msgstr "Вилучає всі повторення цієї повторюваної події."
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1305,7 +1305,7 @@ msgstr "Повторюється"
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
-msgstr ""
+msgstr "Підете?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1378,67 +1378,67 @@ msgstr "Завантаження…"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every [2] [weeks]"
 msgid "Every"
-msgstr ""
+msgstr "Кожні"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "день"
+msgstr[1] "дні"
+msgstr[2] "днів"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "тиждень"
+msgstr[1] "тижні"
+msgstr[2] "тижнів"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "місяць"
+msgstr[1] "місяці"
+msgstr[2] "місяців"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat every N"
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "рік"
+msgstr[1] "роки"
+msgstr[2] "років"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends: never / on date / after N times"
 msgid "Ends:"
-msgstr ""
+msgstr "Закінчення:"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends"
 msgid "Never"
-msgstr ""
+msgstr "Ніколи"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends on [date]"
 msgid "On"
-msgstr ""
+msgstr "Дата"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after [N] times"
 msgid "After"
-msgstr ""
+msgstr "Після"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Repeat ends after N"
 msgid "time"
 msgid_plural "times"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "повторення"
+msgstr[1] "повторень"
+msgstr[2] "повторень"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1682,59 +1682,60 @@ msgstr "Помилка отримання погоди."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
-msgstr ""
+msgstr "Швидке додавання"
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
-msgstr ""
+msgstr "Обід з Анною завтра 13:00"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
 msgstr ""
+"Вкажіть, що, коли і де. Якщо день не вказано, подію буде додано на сьогодні."
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "%1 = date"
 msgid "Type what, when and where. Without a day, the event is added on %1."
-msgstr ""
+msgstr "Вкажіть, що, коли і де. Якщо день не вказано, подію буде додано на %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
-msgstr ""
+msgstr "Інші параметри…"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
-msgstr ""
+msgstr "%1 · Весь день"
 
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
 msgid "%1 · %2 – %3"
-msgstr ""
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
-msgstr ""
+msgstr "Шукати події…"
 
 #: ../contents/ui/SearchView.qml
 msgid "Type to search event titles, places and descriptions"
-msgstr ""
+msgstr "Введіть текст для пошуку в назвах, місцях і описах подій"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
-msgstr ""
+msgstr "Пошук…"
 
 #: ../contents/ui/SearchView.qml
 msgid "No events found"
-msgstr ""
+msgstr "Подій не знайдено"
 
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
-msgstr ""
+msgstr "Не вдалося виконати пошук у Календарі Google"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
-msgstr ""
+msgstr "Пошук у Календарі Google…"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
