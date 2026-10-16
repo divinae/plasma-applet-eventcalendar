@@ -11,6 +11,7 @@ LinkRect {
 	id: agendaTaskItem
 	readonly property int taskItemIndex: index
 	Layout.fillWidth: true
+	implicitWidth: contents.implicitWidth // Not childrenRect: the contents follow the width (binding loop)
 	implicitHeight: contents.implicitHeight
 
 	property bool taskIsOverdue: false

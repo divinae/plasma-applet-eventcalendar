@@ -54,6 +54,8 @@ LinkRect {
 	backgroundHoverColor: editEventForm.visible ? backgroundColor : Qt.darker(tileColor, 1.08)
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
+	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
+	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
 	ColumnLayout {
