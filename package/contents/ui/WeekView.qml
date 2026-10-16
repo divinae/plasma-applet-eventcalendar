@@ -525,7 +525,9 @@ Item {
 				Rectangle {
 					readonly property var bar: modelData
 					readonly property var eventItem: bar.eventItem
-					readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
+					// Light tint of the event color with a full-color stripe and theme text: reads better
+					// than a solid bar, also with pastel or (dark theme) darkened colors.
+					readonly property color stripeColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
@@ -540,16 +542,31 @@ Item {
 					bottomLeftRadius: cutLeft ? 0 : cornerRadius
 					topRightRadius: cutRight ? 0 : cornerRadius
 					bottomRightRadius: cutRight ? 0 : cornerRadius
-					color: barColor
+					color: ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: appletConfig.eventBorderColor
+					border.color: ColorUtil.setAlpha(stripeColor, 0.45)
+					clip: true
+					// Stripe on the start side (not when the event began before this week).
+					Rectangle {
+						visible: !parent.cutLeft
+						width: 4
+						height: parent.height
+						radius: parent.cornerRadius
+						color: parent.stripeColor
+						Rectangle { // Square inner edge
+							anchors.right: parent.right
+							width: 2
+							height: parent.height
+							color: parent.color
+						}
+					}
 					PlasmaComponents3.Label {
 						anchors.fill: parent
-						anchors.leftMargin: 7
+						anchors.leftMargin: 9
 						anchors.rightMargin: 2
 						verticalAlignment: Text.AlignVCenter
 						text: parent.eventItem.summary
-						color: Shared.contrastTextColor(parent.barColor)
+						color: Kirigami.Theme.textColor
 						font.weight: Font.DemiBold
 						elide: Text.ElideRight
 					}
