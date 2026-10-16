@@ -17,12 +17,6 @@
 		<entry name="widgetShowTimer" type="bool">
 			<default>true</default>
 		</entry>
-		<entry name="widgetShowAgenda" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="widgetShowCalendar" type="bool">
-			<default>true</default>
-		</entry>
 		<entry name="timerSfxEnabled" type="bool">
 			<default>true</default>
 		</entry>
@@ -66,9 +60,6 @@
 		<entry name="clockMouseWheelDown" type="string">
 			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"</default>
 		</entry>
-		<entry name="showOutlines" type="bool">
-			<default>true</default>
-		</entry>
 		<entry name="showBackground" type="bool">
 			<default>true</default>
 		</entry>
@@ -94,12 +85,6 @@
 		<entry name="topRowHeight" type="uint">
 			<default>100</default>
 		</entry>
-		<entry name="bottomRowHeight" type="uint">
-			<default>400</default>
-		</entry>
-		<entry name="leftColumnWidth" type="uint">
-			<default>400</default>
-		</entry>
 		<entry name="rightColumnWidth" type="uint">
 			<default>400</default>
 		</entry>
@@ -115,12 +100,6 @@
 			<default>true</default>
 		</entry>
 		<entry name="widget_show_timer" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="widget_show_agenda" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="widget_show_calendar" type="bool">
 			<default>true</default>
 		</entry>
 		<entry name="timer_sfx_enabled" type="bool">
@@ -162,24 +141,9 @@
 		<entry name="clock_mousewheel_down" type="string">
 			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"</default>
 		</entry>
-		<entry name="show_outlines" type="bool">
-			<default>true</default>
-		</entry>
 		<!-- Removed in: v71
-		<entry name="clock_mousewheel" type="string">
-			<default>run_commands</default>
-		</entry>
-		<entry name="timer_in_taskbar" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="timer_ends_at" type="uint">
-			<default>0</default>
-		</entry>
 		-->
 		<!-- Removed in: v33
-		<entry name="widget_show_spacer" type="bool">
-			<default>false</default>
-		</entry>
 		-->
 	</group>
 
@@ -195,12 +159,6 @@
 	</group>
 	
 	<group name="Calendar">
-		<entry name="monthCurrentCustomTitleFormat" type="string">
-			<default></default>
-		</entry>
-		<entry name="monthShowBorder" type="bool">
-			<default>false</default>
-		</entry>
 		<entry name="monthShowWeekNumbers" type="bool">
 			<default>false</default>
 		</entry>
@@ -210,55 +168,25 @@
 		<entry name="monthEventBadgeType" type="string">
 			<default>theme</default>
 		</entry>
-		<entry name="monthTodayStyle" type="string">
-			<default>theme</default>
-		</entry>
-		<entry name="monthCellRadius" type="double">
-			<default>0</default>
-		</entry>
 		<entry name="firstDayOfWeek" type="int">
 			<!-- Enum: -1 = Locale default, 0=Sunday, 1=Monday, ..., 6=Saturday -->
 			<default>-1</default>
-		</entry>
-		<entry name="monthHighlightCurrentDayWeek" type="bool">
-			<default>true</default>
 		</entry>
 		<entry name="monthHeightSingleColumn" type="uint">
 			<default>300</default>
 		</entry>
 		<!-- Deprecated in: v71 -->
-		<entry name="month_show_border" type="bool">
-			<default>false</default>
-		</entry>
 		<entry name="month_show_weeknumbers" type="bool">
 			<default>false</default>
 		</entry>
 		<entry name="month_eventbadge_type" type="string">
 			<default>theme</default>
 		</entry>
-		<entry name="month_today_style" type="string">
-			<default>theme</default>
-		</entry>
-		<entry name="month_cell_radius" type="double">
-			<default>0</default>
-		</entry>
 	</group>
 
 	<group name="Agenda">
 		<entry name="twoColumns" type="bool">
 			<default>true</default>
-		</entry>
-		<entry name="agendaWeatherOnRight" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="agendaWeatherShowIcon" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="agendaWeatherIconHeight" type="uint">
-			<default>24</default>
-		</entry>
-		<entry name="agendaWeatherShowText" type="bool">
-			<default>false</default>
 		</entry>
 		<entry name="agendaBreakupMultiDayEvents" type="bool">
 			<default>false</default>
@@ -268,18 +196,6 @@
 		</entry>
 		<entry name="agendaNewEventLastCalendarId" type="string">
 			<default></default>
-		</entry>
-		<entry name="agendaInProgressColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="agendaFontSize" type="uint">
-			<default>0</default>
-		</entry>
-		<entry name="agendaDaySpacing" type="uint">
-			<default>20</default>
-		</entry>
-		<entry name="agendaEventSpacing" type="uint">
-			<default>10</default>
 		</entry>
 		<entry name="agendaMaxDescriptionLines" type="uint">
 			<default>5</default>
@@ -303,23 +219,8 @@
 		<entry name="agenda_newevent_last_calendar_id" type="string">
 			<default></default>
 		</entry>
-		<entry name="agenda_weather_show_icon" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="agenda_weather_icon_height" type="uint">
-			<default>24</default>
-		</entry>
-		<entry name="agenda_weather_show_text" type="bool">
-			<default>false</default>
-		</entry>
 		<entry name="agenda_breakup_multiday_events" type="bool">
 			<default>false</default>
-		</entry>
-		<entry name="agenda_inProgressColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="agenda_fontSize" type="uint">
-			<default>0</default>
 		</entry>
 	</group>
 
@@ -475,38 +376,8 @@
 			<default>20</default>
 		</entry>
 		<!-- Removed in: v71
-		<entry name="access_token_type" type="string">
-			<default></default>
-		</entry>
-		<entry name="access_token_expires_at" type="uint">
-			<default>0</default>
-		</entry>
-		<entry name="refresh_token" type="string">
-			<default></default>
-		</entry>
-		<entry name="calendar_list" type="string" stringType="base64json">
-			<default></default>
-		</entry>
-		<entry name="calendar_id_list" type="string">
-			<default>primary</default>
-		</entry>
 		-->
 		<!-- Removed in: v62
-		<entry name="device_code" type="string">
-			<default></default>
-		</entry>
-		<entry name="user_code" type="string">
-			<default></default>
-		</entry>
-		<entry name="user_code_verification_url" type="string">
-			<default></default>
-		</entry>
-		<entry name="user_code_expires_at" type="uint">
-			<default>0</default>
-		</entry>
-		<entry name="user_code_interval" type="uint">
-			<default>0</default>
-		</entry>
 		-->
 	</group>
 
@@ -545,24 +416,6 @@
 		<entry name="meteogramHours" type="uint">
 			<default>30</default>
 		</entry>
-		<entry name="meteogramTextColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogramGridColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogramRainColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogramPositiveTempColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogramNegativeTempColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogramIconColor" type="string" stringType="color">
-			<default></default>
-		</entry>
 		<!-- Deprecated in: v71 -->
 		<entry name="weather_app_id" type="string">
 			<default>99e575d9aa8a8407bcee7693d5912c6a</default>
@@ -581,24 +434,6 @@
 		</entry>
 		<entry name="meteogram_hours" type="uint">
 			<default>30</default>
-		</entry>
-		<entry name="meteogram_textColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogram_gridColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogram_rainColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogram_positiveTempColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogram_negativeTempColor" type="string" stringType="color">
-			<default></default>
-		</entry>
-		<entry name="meteogram_iconColor" type="string" stringType="color">
-			<default></default>
 		</entry>
 	</group>
 

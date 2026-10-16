@@ -29,8 +29,6 @@ QtObject {
 		if (!plasmoid.configuration.v71Migration) {
 			copy('widget_show_meteogram', 'widgetShowMeteogram')
 			copy('widget_show_timer', 'widgetShowTimer')
-			copy('widget_show_agenda', 'widgetShowAgenda')
-			copy('widget_show_calendar', 'widgetShowCalendar')
 			copy('timer_sfx_enabled', 'timerSfxEnabled')
 			copy('timer_sfx_filepath', 'timerSfxFilepath')
 			copy('timer_repeats', 'timerRepeats')
@@ -44,22 +42,13 @@ QtObject {
 			copy('clock_maxheight', 'clockMaxHeight')
 			copy('clock_mousewheel_up', 'clockMouseWheelUp')
 			copy('clock_mousewheel_down', 'clockMouseWheelDown')
-			copy('show_outlines', 'showOutlines')
 
-			copy('month_show_border', 'monthShowBorder')
 			copy('month_show_weeknumbers', 'monthShowWeekNumbers')
 			copy('month_eventbadge_type', 'monthEventBadgeType')
-			copy('month_today_style', 'monthTodayStyle')
-			copy('month_cell_radius', 'monthCellRadius')
 
 			copy('agenda_newevent_remember_calendar', 'agendaNewEventRememberCalendar')
 			copy('agenda_newevent_last_calendar_id', 'agendaNewEventLastCalendarId')
-			copy('agenda_weather_show_icon', 'agendaWeatherShowIcon')
-			copy('agenda_weather_icon_height', 'agendaWeatherIconHeight')
-			copy('agenda_weather_show_text', 'agendaWeatherShowText')
 			copy('agenda_breakup_multiday_events', 'agendaBreakupMultiDayEvents')
-			copy('agenda_inProgressColor', 'agendaInProgressColor')
-			copy('agenda_fontSize', 'agendaFontSize')
 
 			copy('events_pollinterval', 'eventsPollInterval')
 
@@ -69,12 +58,6 @@ QtObject {
 			copy('weather_service', 'weatherService')
 			copy('weather_units', 'weatherUnits')
 			copy('meteogram_hours', 'meteogramHours')
-			copy('meteogram_textColor', 'meteogramTextColor')
-			copy('meteogram_gridColor', 'meteogramGridColor')
-			copy('meteogram_rainColor', 'meteogramRainColor')
-			copy('meteogram_positiveTempColor', 'meteogramPositiveTempColor')
-			copy('meteogram_negativeTempColor', 'meteogramNegativeTempColor')
-			copy('meteogram_iconColor', 'meteogramIconColor')
 
 			plasmoid.configuration.v71Migration = true
 		}
