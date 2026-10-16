@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 12:26+0200\n"
+"POT-Creation-Date: 2026-10-16 13:41+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -215,6 +215,40 @@ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
 msgstr ""
 
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Edit Calendar"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Name"
+msgstr "이름"
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Name in my list"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Only you see this name. The calendar keeps its name for others."
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Color"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/EventEditView.qml
+msgid "Save"
+msgstr "저장"
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/QuickAddView.qml
+msgid "Cancel"
+msgstr "취소"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "기본값 (%1)"
@@ -231,7 +265,7 @@ msgstr "(12시간제)"
 msgid "(with seconds)"
 msgstr "(초 포함)"
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
 msgid "Custom…"
 msgstr "사용자 정의…"
 
@@ -530,11 +564,6 @@ msgid "Remove"
 msgstr "삭제"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-msgid "Cancel"
-msgstr "취소"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Google access for this account expired or was revoked. Sign in again to "
 "reconnect it (the account and its settings are kept)."
@@ -760,7 +789,7 @@ msgstr "시간대 삭제"
 msgid "Add a time zone, eg: America/New_York"
 msgstr "시간대 추가, 예: Asia/Seoul"
 
-#: ../contents/ui/config/ConfigTimezones.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "추가"
 
@@ -959,6 +988,7 @@ msgstr "도시 이름, 예: Seoul"
 #: ../contents/ui/config/ConfigWeather.qml
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Search"
 msgstr "검색"
 
@@ -1022,6 +1052,14 @@ msgstr "기상 그래프 표시 기간"
 msgid " hours"
 msgstr " 시간"
 
+#: ../contents/ui/config/GoogleLoginManager.qml
+msgid "Not signed in to this Google account. Sign in again."
+msgstr ""
+
+#: ../contents/ui/config/GoogleLoginManager.qml
+msgid "Could not save the calendar: %1"
+msgstr ""
+
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Select city"
@@ -1031,11 +1069,6 @@ msgstr "도시 선택"
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "<a href=\"%1\">%1</a>에서 가져옴"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Name"
-msgstr "이름"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
@@ -1052,7 +1085,11 @@ msgstr "도시 웹페이지"
 msgid "Open Link"
 msgstr "링크 열기"
 
-#: ../contents/ui/DateTimeSelector.qml
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Edit calendar…"
+msgstr ""
+
+#: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "yyyy년 MMM d일"
@@ -1062,12 +1099,14 @@ msgstr "yyyy년 MMM d일"
 msgid "All day"
 msgstr "종일"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/DayEventsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/WeekView.qml
 msgctxt "event span, %1 = start, %2 = end"
 msgid "%1 – %2"
 msgstr "%1 – %2"
 
 #: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "뒤로"
 
@@ -1109,6 +1148,41 @@ msgid "Add due date"
 msgstr "기한 추가"
 
 #: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP to an invitation"
+msgid "Respond"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "자세히 보기"
 
@@ -1126,18 +1200,34 @@ msgstr "Google 캘린더에서 열기"
 msgid "Edit…"
 msgstr "편집…"
 
-#: ../contents/ui/EventContextMenu.qml
-msgid "Delete This Occurrence"
-msgstr "이 항목만 삭제"
-
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Delete"
 msgstr "삭제"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
+msgid "Delete Only This Occurrence of “%1”"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "%1 = event title"
 msgid "Delete “%1”"
 msgstr "“%1” 삭제"
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "%1 = event title"
+msgid "Delete All Events of “%1”"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/WeekView.qml
+msgid "This event"
+msgstr "이 이벤트"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/WeekView.qml
+msgid "All events in the series"
+msgstr "시리즈의 모든 이벤트"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who accepted"
@@ -1175,16 +1265,33 @@ msgid "Reminders: %1 before"
 msgstr "미리 알림: %1 전"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete:"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "이 이벤트를 삭제하시겠습니까?"
 
 #: ../contents/ui/EventDetailsView.qml
-msgid "Deletes only this occurrence."
-msgstr "반복 일정 중 이 항목만 삭제합니다."
+msgid "This Occurrence"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "All Events"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Deletes every occurrence of this repeating event."
+msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
 msgstr "반복"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP to an invitation"
+msgid "Going?"
+msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1210,20 +1317,8 @@ msgid "Edit Event"
 msgstr "이벤트 편집"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Save"
-msgstr "저장"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Change:"
 msgstr "변경 대상:"
-
-#: ../contents/ui/EventEditView.qml
-msgid "This event"
-msgstr "이 이벤트"
-
-#: ../contents/ui/EventEditView.qml
-msgid "All events in the series"
-msgstr "시리즈의 모든 이벤트"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
@@ -1263,6 +1358,61 @@ msgstr "사용자 정의(Google 캘린더에서 설정)"
 #: ../contents/ui/EventEditView.qml
 msgid "Loading…"
 msgstr "불러오는 중…"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every [2] [weeks]"
+msgid "Every"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends: never / on date / after N times"
+msgid "Ends:"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends"
+msgid "Never"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends on [date]"
+msgid "On"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends after [N] times"
+msgid "After"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends after N"
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1499,6 +1649,62 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "날씨 확인에 실패하였습니다."
 
+#: ../contents/ui/QuickAddView.qml
+msgid "Quick Add"
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "quick add example"
+msgid "Lunch with Anna tomorrow 13:00"
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgid "Type what, when and where. Without a day, the event is added today."
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "Type what, when and where. Without a day, the event is added on %1."
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgid "More options…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Search events…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Type to search event titles, places and descriptions"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Searching…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "No events found"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Couldn't search Google Calendar"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Searching Google Calendar…"
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "시작(&S)"
@@ -1646,6 +1852,12 @@ msgstr[0] "%1일"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Delete This Occurrence"
+#~ msgstr "이 항목만 삭제"
+
+#~ msgid "Deletes only this occurrence."
+#~ msgstr "반복 일정 중 이 항목만 삭제합니다."
 
 #~ msgctxt "event in progress"
 #~ msgid "now"

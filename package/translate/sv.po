@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 12:26+0200\n"
+"POT-Creation-Date: 2026-10-16 13:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -203,6 +203,34 @@ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 msgid "%1 · %2"
 msgstr ""
 
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Edit Calendar"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Name"
+msgstr "Namn"
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Name in my list"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Only you see this name. The calendar keeps its name for others."
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml
+msgid "Color"
+msgstr ""
+
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+msgid "Save"
+msgstr "Spara"
+
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgid "Cancel"
+msgstr "Avbryt"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Standard (%1)"
@@ -219,7 +247,7 @@ msgstr "(12-timmars)"
 msgid "(with seconds)"
 msgstr "(med sekunder)"
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
 msgid "Custom…"
 msgstr "Anpassat…"
 
@@ -497,10 +525,6 @@ msgstr "Ta bort konto"
 msgid "Remove"
 msgstr "Ta bort"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-msgid "Cancel"
-msgstr "Avbryt"
-
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept)."
 msgstr "Googleåtkomsten för det här kontot har gått ut eller återkallats. Logga in igen för att återansluta det (kontot och dess inställningar behålls)."
@@ -681,7 +705,7 @@ msgstr "Ta bort tidszon"
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Lägg till en tidszon, t.ex. America/New_York"
 
-#: ../contents/ui/config/ConfigTimezones.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Lägg till"
 
@@ -869,7 +893,7 @@ msgstr "Inte inställd"
 msgid "City name, eg: Warszawa"
 msgstr "Stadsnamn, t.ex. Warszawa"
 
-#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
 msgid "Search"
 msgstr "Sök"
 
@@ -933,6 +957,14 @@ msgstr "Meteogrammet visar"
 msgid " hours"
 msgstr " timmar"
 
+#: ../contents/ui/config/GoogleLoginManager.qml
+msgid "Not signed in to this Google account. Sign in again."
+msgstr ""
+
+#: ../contents/ui/config/GoogleLoginManager.qml
+msgid "Could not save the calendar: %1"
+msgstr ""
+
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Select city"
 msgstr "Välj stad"
@@ -940,10 +972,6 @@ msgstr "Välj stad"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Hämtat från <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Name"
-msgstr "Namn"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Id"
@@ -957,7 +985,11 @@ msgstr "Länk stad"
 msgid "Open Link"
 msgstr "Öppna länk"
 
-#: ../contents/ui/DateTimeSelector.qml
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Edit calendar…"
+msgstr ""
+
+#: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d MMM yyyy"
@@ -966,12 +998,12 @@ msgstr "d MMM yyyy"
 msgid "All day"
 msgstr "Hela dagen"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/DayEventsView.qml ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
 msgctxt "event span, %1 = start, %2 = end"
 msgid "%1 – %2"
 msgstr "%1 – %2"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -1012,6 +1044,41 @@ msgid "Add due date"
 msgstr "Lägg till slutdatum"
 
 #: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP to an invitation"
+msgid "Respond"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "Visa detaljer"
 
@@ -1028,18 +1095,32 @@ msgstr "Öppna i Google Kalender"
 msgid "Edit…"
 msgstr "Redigera…"
 
-#: ../contents/ui/EventContextMenu.qml
-msgid "Delete This Occurrence"
-msgstr "Ta bort denna förekomst"
-
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Delete"
 msgstr "Ta bort"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
+msgid "Delete Only This Occurrence of “%1”"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "%1 = event title"
 msgid "Delete “%1”"
 msgstr "Ta bort ”%1”"
+
+#: ../contents/ui/EventContextMenu.qml
+msgctxt "%1 = event title"
+msgid "Delete All Events of “%1”"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+msgid "This event"
+msgstr "Den här händelsen"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+msgid "All events in the series"
+msgstr "Alla händelser i serien"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who accepted"
@@ -1078,16 +1159,33 @@ msgid "Reminders: %1 before"
 msgstr "Påminnelser: %1 före"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete:"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Ta bort den här händelsen?"
 
 #: ../contents/ui/EventDetailsView.qml
-msgid "Deletes only this occurrence."
-msgstr "Tar bara bort den här förekomsten."
+msgid "This Occurrence"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "All Events"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Deletes every occurrence of this repeating event."
+msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
 msgstr "Upprepas"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "RSVP to an invitation"
+msgid "Going?"
+msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1114,20 +1212,8 @@ msgid "Edit Event"
 msgstr "Redigera händelse"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Save"
-msgstr "Spara"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Change:"
 msgstr "Ändra:"
-
-#: ../contents/ui/EventEditView.qml
-msgid "This event"
-msgstr "Den här händelsen"
-
-#: ../contents/ui/EventEditView.qml
-msgid "All events in the series"
-msgstr "Alla händelser i serien"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
@@ -1167,6 +1253,66 @@ msgstr "Anpassad (enligt inställning i Google Kalender)"
 #: ../contents/ui/EventEditView.qml
 msgid "Loading…"
 msgstr "Läser in…"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every [2] [weeks]"
+msgid "Every"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat every N"
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends: never / on date / after N times"
+msgid "Ends:"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends"
+msgid "Never"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends on [date]"
+msgid "On"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends after [N] times"
+msgid "After"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Repeat ends after N"
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1400,6 +1546,62 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "Det gick inte att hämta väder."
 
+#: ../contents/ui/QuickAddView.qml
+msgid "Quick Add"
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "quick add example"
+msgid "Lunch with Anna tomorrow 13:00"
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgid "Type what, when and where. Without a day, the event is added today."
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "Type what, when and where. Without a day, the event is added on %1."
+msgstr ""
+
+#: ../contents/ui/QuickAddView.qml
+msgid "More options…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Search events…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Type to search event titles, places and descriptions"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Searching…"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "No events found"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Couldn't search Google Calendar"
+msgstr ""
+
+#: ../contents/ui/SearchView.qml
+msgid "Searching Google Calendar…"
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Starta"
@@ -1548,6 +1750,12 @@ msgstr[1] "%1 dagar"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Delete This Occurrence"
+#~ msgstr "Ta bort denna förekomst"
+
+#~ msgid "Deletes only this occurrence."
+#~ msgstr "Tar bara bort den här förekomsten."
 
 #~ msgctxt "event in progress"
 #~ msgid "now"
