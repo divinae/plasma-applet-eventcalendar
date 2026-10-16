@@ -331,7 +331,7 @@ Rectangle {
 					PlasmaComponents3.Label {
 						text: i18n("Change:")
 					}
-					PlasmaComponents3.ComboBox {
+					FormComboBox {
 						id: scopeCombo
 						Layout.fillWidth: true
 						model: [i18n("This event"), i18n("All events in the series")]
@@ -372,7 +372,7 @@ Rectangle {
 						Layout.preferredHeight: Layout.preferredWidth
 						opacity: 0.7
 					}
-					PlasmaComponents3.ComboBox {
+					FormComboBox {
 						id: repeatCombo
 						Layout.fillWidth: true
 						enabled: form.canEditRepeat

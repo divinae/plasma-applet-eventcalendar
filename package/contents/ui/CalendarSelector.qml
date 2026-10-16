@@ -1,7 +1,6 @@
 import QtQuick
-import org.kde.plasma.components as PlasmaComponents3
 
-PlasmaComponents3.ComboBox {
+FormComboBox {
 	id: calendarSelector
 	model: [
 		{ text: i18n("[No Calendars]") }
