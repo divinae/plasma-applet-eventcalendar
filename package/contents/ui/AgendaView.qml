@@ -22,7 +22,17 @@ Item {
 		id: agendaScrollView
 		anchors.fill: parent
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
-		QQC2.ScrollBar.vertical: PlainScrollBar {}
+		// Keep Plasma's own (positioned) scrollbar, just without its separator line: a replacement
+		// scrollbar isn't laid out by the ScrollView and showed as a dot in the corner.
+		Component.onCompleted: {
+			var bar = QQC2.ScrollBar.vertical
+			for (var i = 0; bar && i < bar.children.length; i++) {
+				var child = bar.children[i]
+				if (child !== bar.background && child !== bar.contentItem && child.implicitWidth === 1 && child.implicitHeight === 1) {
+					child.visible = false // The 1 px separator Breeze draws next to the scrollbar
+				}
+			}
+		}
 		readonly property int viewportWidth: contentItem ? contentItem.width : width
 		readonly property int viewportHeight: contentItem ? contentItem.height : height
 		readonly property int scrollY: contentItem ? contentItem.contentY : 0

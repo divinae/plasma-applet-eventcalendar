@@ -101,7 +101,11 @@ Item {
 		if (dayCount < 7) {
 			return day // Day view starts on the day itself.
 		}
-		var diff = (day.getDay() - Qt.locale().firstDayOfWeek + 7) % 7
+		// The "First day of week" setting (0 = Sunday … 6, -1 = locale), like the month view.
+		// Qt.locale().firstDayOfWeek is 1 = Monday … 7 = Sunday.
+		var setting = plasmoid.configuration.firstDayOfWeek
+		var firstDay = setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
+		var diff = (day.getDay() - firstDay + 7) % 7
 		day.setDate(day.getDate() - diff)
 		return day
 	}

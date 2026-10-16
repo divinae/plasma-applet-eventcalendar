@@ -78,10 +78,14 @@ PlasmaExtras.PlasmoidHeading {
 			// Stay clear of the side groups; the title elides if needed.
 			width: Math.min(implicitWidth, parent.width - topBar.sideWidth * 2 - Kirigami.Units.largeSpacing * 2)
 			spacing: 0
+			// Full text width (a Text's implicitWidth ignores eliding), and the gap to the buttons as
+			// its own item: a Layout margin was taken out of that width and cut the title off.
 			Kirigami.Heading {
+				id: titleHeading
+				Layout.preferredWidth: Math.ceil(implicitWidth) // Fractional at 2x scale: rounding down elided it
+				Layout.maximumWidth: Math.ceil(implicitWidth)
+				Layout.minimumWidth: 0
 				Layout.fillWidth: true
-				Layout.maximumWidth: implicitWidth
-				Layout.rightMargin: Kirigami.Units.smallSpacing
 				level: 2
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
@@ -92,6 +96,9 @@ PlasmaExtras.PlasmoidHeading {
 					enabled: !header.weekViewItem
 					onClicked: header.monthViewItem.titleClicked() // Year / decade view
 				}
+			}
+			Item {
+				implicitWidth: Kirigami.Units.smallSpacing
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
