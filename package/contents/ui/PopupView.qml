@@ -8,6 +8,7 @@ import org.kde.plasma.extras as PlasmaExtras
 import "lib"
 import "EventBuckets.js" as EventBuckets
 import "Shared.js" as Shared
+import "Undo.js" as Undo
 import "./weather/WeatherApi.js" as WeatherApi
 
 MouseArea {
@@ -317,6 +318,46 @@ MouseArea {
 		onShowDetails: function(eventItem) { popup.activateEvent(eventItem) }
 		onEditEvent: function(eventItem) { popup.editEvent(eventItem) }
 	}
+	//--- Undo (delete, move)
+	// Show "text" with an Undo button for a while; a newer offer replaces it.
+	function offerUndo(text, undoFn) {
+		undoBanner.undoFn = undoFn
+		undoBanner.text = text
+		undoBanner.visible = true
+		undoTimer.restart()
+	}
+	// Delete an event (or, with wholeSeries, its repeating series), with an undo offer once
+	// it's gone (Google calendars).
+	function deleteWithUndo(eventItem, wholeSeries) {
+		var calendarId = eventItem.calendarId
+		var undoable = eventModel.canRestore(calendarId)
+		var restored = function() { logic.update() }
+		if (wholeSeries) {
+			var seriesId = eventItem.recurringEventId
+			eventModel.deleteSeries(calendarId, seriesId, function(err) {
+				if (!err && undoable) {
+					offerUndo(i18n("Repeating event deleted"), function() {
+						eventModel.restoreEvent(calendarId, seriesId, null, restored)
+					})
+				}
+			})
+			return
+		}
+		var eventId = eventItem.id
+		// A copy to create again if it can't be restored (not for occurrences of a series).
+		var copy = null
+		if (undoable && !eventItem.recurringEventId) {
+			copy = Undo.restoreCopy(eventModel.getEvent(calendarId, eventId) || eventItem)
+		}
+		eventModel.deleteEvent(calendarId, eventId, function(err) {
+			if (!err && undoable) {
+				offerUndo(i18n("Event deleted"), function() {
+					eventModel.restoreEvent(calendarId, eventId, copy, restored)
+				})
+			}
+		})
+	}
+
 	function showEventMenu(eventItem, item, x, y) {
 		eventContextMenu.openFor(eventItem, item, x, y)
 	}
@@ -509,6 +550,52 @@ MouseArea {
 			running: errorBanner.visible && errorBanner.network
 			triggeredOnStart: true
 			onTriggered: errorBanner.updateCountdown()
+		}
+	}
+
+	// Undo the last delete / move: at the bottom, over the views (like Google Calendar), so the
+	// header, the error banner and the day names stay visible.
+	Kirigami.InlineMessage {
+		id: undoBanner
+		z: 20
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottomMargin: Kirigami.Units.smallSpacing
+		anchors.leftMargin: Kirigami.Units.smallSpacing
+		anchors.rightMargin: Kirigami.Units.smallSpacing
+
+		property var undoFn: null
+		visible: false
+		type: Kirigami.MessageType.Information
+		showCloseButton: true
+		actions: [
+			Kirigami.Action {
+				icon.name: "edit-undo"
+				text: i18n("Undo")
+				onTriggered: {
+					var fn = undoBanner.undoFn
+					undoBanner.visible = false
+					if (fn) {
+						fn()
+					}
+				}
+			}
+		]
+		HoverHandler {
+			id: undoHover
+		}
+		Timer {
+			id: undoTimer
+			interval: 8000
+			// Paused while the pointer is on it.
+			running: undoBanner.visible && !undoHover.hovered
+			onTriggered: undoBanner.visible = false
+		}
+		onVisibleChanged: {
+			if (!visible) {
+				undoFn = null
+			}
 		}
 	}
 

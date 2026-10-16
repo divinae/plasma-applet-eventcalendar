@@ -760,7 +760,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// Update an event from its server copy: buildArgs(serverEvent) returns the changed fields.
 	// Used for recurring series (occurrences are separate events here) and recurrence changes.
 	// The occurrences change on the server, so done() should refetch.
-	function updateEventFromServer(calendarId, eventId, buildArgs, done) {
+	// Optional failed(report): called instead of showing the error; report() shows it.
+	function updateEventFromServer(calendarId, eventId, buildArgs, done, failed) {
 		if (!session.accessToken) {
 			session.transactionError('attempting to "update an event" without an access token set')
 			return
@@ -768,7 +769,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		var func = function() {
 			fetchGoogleCalendarEvent_run(calendarId, eventId, function(err, serverEvent, xhr) {
 				if (err || !serverEvent) {
-					updateGoogleCalendarEvent_err(err, serverEvent, xhr)
+					updateFromServer_failed(failed, err, serverEvent, xhr)
 					return
 				}
 				var data = cloneRawEvent(serverEvent)
@@ -780,7 +781,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					data: data,
 				}, function(err2, data2, xhr2) {
 					if (err2) {
-						updateGoogleCalendarEvent_err(err2, data2, xhr2)
+						updateFromServer_failed(failed, err2, data2, xhr2)
 					} else if (done) {
 						done()
 					}
@@ -789,6 +790,33 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		}
 		withAccessToken(func, function(err, isNetworkError) {
 			handleAuthError(err, false, isNetworkError)
+		})
+	}
+
+	function updateFromServer_failed(failed, err, data, xhr) {
+		var report = function() {
+			updateGoogleCalendarEvent_err(err, data, xhr)
+		}
+		if (failed) {
+			failed(report)
+		} else {
+			report()
+		}
+	}
+
+	// Undo a delete: Google keeps a deleted event (or occurrence, or series) as cancelled, so
+	// it's confirmed again. If that fails, copy (Undo.restoreCopy, single events only) is created
+	// as a new event. done() should refetch.
+	function restoreEvent(calendarId, eventId, copy, done) {
+		logger.debug(calendarManagerId, 'restoreEvent', calendarId, eventId)
+		updateEventFromServer(calendarId, eventId, function() {
+			return { status: 'confirmed' }
+		}, done, function(report) {
+			if (copy) {
+				createEventFromData(calendarId, copy, done)
+			} else {
+				report()
+			}
 		})
 	}
 
@@ -879,7 +907,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	}
 
 	//--- Delete Event
-	function deleteEvent(calendarId, eventId) {
+	// Optional done(err) once the server answered.
+	function deleteEvent(calendarId, eventId, done) {
 		logger.debug(calendarManagerId, 'deleteEvent', calendarId, eventId)
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
@@ -893,6 +922,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					deleteEvent_err(err, data, xhr)
 				} else {
 					deleteEvent_done(calendarId, eventId, data)
+				}
+				if (done) {
+					done(err)
 				}
 			})
 			withAccessToken(func, function(err, isNetworkError) {

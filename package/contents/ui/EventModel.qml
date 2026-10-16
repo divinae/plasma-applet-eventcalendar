@@ -444,10 +444,11 @@ CalendarManager {
 		}
 	}
 
-	function deleteEvent(calendarId, eventId) {
+	// done(err): optional, called once the server answered (Google).
+	function deleteEvent(calendarId, eventId, done) {
 		var calendarManager = getCalendarManager(calendarId)
 		if (calendarManager) {
-			calendarManager.deleteEvent(calendarId, eventId)
+			calendarManager.deleteEvent(calendarId, eventId, done)
 		} else {
 			logger.log('Could not deleteEvent. Could not find calendarManager for calendarId = ', calendarId)
 		}
@@ -460,6 +461,23 @@ CalendarManager {
 			calendarManager.deleteSeries(calendarId, seriesId, done)
 		} else {
 			logger.log('Could not deleteSeries for calendarId = ', calendarId)
+		}
+	}
+
+	// Deleted events can be brought back (Google): see restoreEvent.
+	function canRestore(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && typeof calendarManager.restoreEvent === 'function'
+	}
+
+	// Undo a delete. eventId: the event, the occurrence or the series (recurringEventId).
+	// copy: Undo.restoreCopy of a single event, created again if it can't be restored, or null.
+	function restoreEvent(calendarId, eventId, copy, done) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.restoreEvent === 'function') {
+			calendarManager.restoreEvent(calendarId, eventId, copy, done)
+		} else {
+			logger.log('Could not restoreEvent for calendarId = ', calendarId)
 		}
 	}
 

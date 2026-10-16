@@ -153,7 +153,7 @@ Rectangle {
 				icon.name: "edit-delete"
 				text: details.isRecurring ? i18n("This Occurrence") : i18n("Delete")
 				onClicked: {
-					eventModel.deleteEvent(details.eventItem.calendarId, details.eventItem.id)
+					popup.deleteWithUndo(details.eventItem, false)
 					details.closeRequested()
 				}
 			}
@@ -163,7 +163,7 @@ Rectangle {
 				icon.name: "edit-delete"
 				text: i18n("All Events")
 				onClicked: {
-					eventModel.deleteSeries(details.eventItem.calendarId, details.eventItem.recurringEventId)
+					popup.deleteWithUndo(details.eventItem, true)
 					details.closeRequested()
 				}
 				PlasmaComponents3.ToolTip.text: i18n("Deletes every occurrence of this repeating event.")
