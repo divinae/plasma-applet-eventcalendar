@@ -8,6 +8,17 @@ var DEFAULT_PLUGIN_FILENAMES = [
 	'pimevents.so',
 ]
 
+// A missing plugin is reported once per plasmashell run, and not at all for the defaults (eg:
+// pimevents.so is on by default but needs kdepim-addons, which many systems don't have).
+var warnedMissingPlugins = {}
+function warnMissingPlugin(pluginFilename) {
+	if (warnedMissingPlugins[pluginFilename] || DEFAULT_PLUGIN_FILENAMES.indexOf(pluginFilename) >= 0) {
+		return
+	}
+	warnedMissingPlugins[pluginFilename] = true
+	console.log('[eventcalendar] Plasma calendar plugin not installed:', pluginFilename)
+}
+
 function toArray(listLike) {
 	if (!listLike) {
 		return []
@@ -159,7 +170,7 @@ function pluginFilenameToPathList(eventPluginsManager, pluginFilenameList) {
 		}
 		var pluginRuntimeIdentifier = getPluginRuntimeIdentifier(eventPluginsManager, pluginFilename)
 		if (!pluginRuntimeIdentifier) {
-			console.log('[eventcalendar] Tried to load ', pluginFilename, ' however the plasma calendar plugin is not installed.')
+			warnMissingPlugin(pluginFilename)
 			continue
 		}
 		if (pluginPathList.indexOf(pluginRuntimeIdentifier) == -1) {
