@@ -876,15 +876,15 @@ msgstr "Semaine et jour"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
-msgstr ""
+msgstr "Taille du texte des évènements"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
-msgstr ""
+msgstr "Début des heures de travail"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
-msgstr ""
+msgstr "Fin des heures de travail"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."

@@ -869,15 +869,15 @@ msgstr "Тиждень і день"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
-msgstr ""
+msgstr "Розмір тексту подій"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
-msgstr ""
+msgstr "Початок робочого дня"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
-msgstr ""
+msgstr "Кінець робочого дня"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."

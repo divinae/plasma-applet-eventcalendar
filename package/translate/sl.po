@@ -869,15 +869,15 @@ msgstr "Teden in dan"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
-msgstr ""
+msgstr "Velikost besedila dogodkov"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
-msgstr ""
+msgstr "Začetek delovnega časa"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
-msgstr ""
+msgstr "Konec delovnega časa"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
