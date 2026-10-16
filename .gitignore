@@ -8,3 +8,4 @@ docs-self-notes/
 plasma-applet-eventcalendar-plasma-5/
 __pycache__
 *.pyc
+.claude/

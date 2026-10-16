@@ -59,7 +59,7 @@ if [ -z "$plasmoidName" ]; then
 	exit
 fi
 
-if [ -z "$(which msgfmt)" ]; then
+if ! command -v msgfmt >/dev/null 2>&1; then
 	echoRed "[translate/build] Error: msgfmt command not found. Need to install gettext"
 	echoRed "[translate/build] Running ${TC_Bold}'sudo apt install gettext'"
 	sudo apt install gettext

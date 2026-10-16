@@ -60,7 +60,7 @@ if [ -z "$plasmoidName" ]; then
 	exit
 fi
 
-if [ -z "$(which xgettext)" ]; then
+if ! command -v xgettext >/dev/null 2>&1; then
 	echoRed "[translate/merge] Error: xgettext command not found. Need to install gettext"
 	echoRed "[translate/merge] Running ${TC_Bold}'sudo apt install gettext'"
 	sudo apt install gettext
