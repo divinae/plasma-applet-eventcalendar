@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 
+import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
 
@@ -729,10 +730,14 @@ Item {
 									border.width: 1
 									border.color: appletConfig.eventBorderColor
 
+									// Today view: join button for meetings that haven't ended.
+									readonly property var meetingLink: weekView.singleDay && plasmoid.configuration.agendaShowEventHangoutLink && eventItem.endDateTime > weekView.currentTime ? MeetingLink.find(eventItem) : null
+
 									Column {
 										anchors.fill: parent
 										anchors.margins: 2
 										anchors.leftMargin: 6
+										anchors.rightMargin: joinPill.visible ? joinPill.width + Kirigami.Units.smallSpacing * 2 : 2
 										clip: true
 										PlasmaComponents3.Label {
 											width: parent.width
@@ -784,6 +789,20 @@ Item {
 										mainText: eventBlock.eventItem.summary
 										subText: containsMouse ? weekView.eventModel.eventDetailsText(eventBlock.eventItem) : ""
 										textFormat: Text.PlainText
+									}
+									JoinPill {
+										id: joinPill
+										visible: !!eventBlock.meetingLink && eventBlock.width >= Kirigami.Units.gridUnit * 10
+										anchors.right: parent.right
+										anchors.rightMargin: Kirigami.Units.smallSpacing
+										// Short blocks: centered and slimmer; taller ones: next to the title.
+										readonly property bool compact: eventBlock.height < weekView.lineHeight * 2 + 4
+										anchors.verticalCenter: compact ? parent.verticalCenter : undefined
+										anchors.top: compact ? undefined : parent.top
+										anchors.topMargin: Kirigami.Units.smallSpacing
+										verticalPadding: compact ? 0 : Kirigami.Units.smallSpacing / 2
+										meetingLink: eventBlock.meetingLink
+										textColor: Shared.contrastTextColor(eventBlock.barColor)
 									}
 								}
 							}

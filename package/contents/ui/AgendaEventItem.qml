@@ -4,7 +4,6 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
-import "lib/ColorUtil.js" as ColorUtil
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 
@@ -106,49 +105,11 @@ LinkRect {
 				}
 			}
 
-			// Join the meeting: a pill in the tile's text color, so it reads as part of the tile.
-			Rectangle {
-				id: joinButton
+			JoinPill {
 				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!agendaEventItem.meetingLink && !editEventForm.visible && !agendaEventItem.ended
 				Layout.alignment: Qt.AlignVCenter
-				implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 2
-				implicitHeight: joinRow.implicitHeight + Kirigami.Units.smallSpacing * 2
-				radius: height / 2
-				color: ColorUtil.setAlpha(agendaEventItem.tileTextColor, joinMouse.pressed ? 0.35 : joinMouse.containsMouse ? 0.28 : 0.18)
-
-				Row {
-					id: joinRow
-					anchors.centerIn: parent
-					spacing: Kirigami.Units.smallSpacing
-					Kirigami.Icon {
-						anchors.verticalCenter: parent.verticalCenter
-						width: Math.round(Kirigami.Units.iconSizes.small * 0.875)
-						height: width
-						source: "call-start-symbolic"
-						// Symbolic icons follow the theme text color: use the tile's.
-						Kirigami.Theme.inherit: false
-						Kirigami.Theme.textColor: agendaEventItem.tileTextColor
-						isMask: true
-						color: agendaEventItem.tileTextColor
-					}
-					PlasmaComponents3.Label {
-						anchors.verticalCenter: parent.verticalCenter
-						text: i18n("Join")
-						color: agendaEventItem.tileTextColor
-						font: Kirigami.Theme.smallFont
-					}
-				}
-				MouseArea {
-					id: joinMouse
-					anchors.fill: parent
-					hoverEnabled: true
-					cursorShape: Qt.PointingHandCursor
-					onClicked: Qt.openUrlExternally(agendaEventItem.meetingLink.url)
-				}
-				PlasmaComponents3.ToolTip.text: agendaEventItem.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", agendaEventItem.meetingLink.label) : ""
-				PlasmaComponents3.ToolTip.visible: joinMouse.containsMouse
-				Accessible.role: Accessible.Button
-				Accessible.name: i18n("Join")
+				meetingLink: agendaEventItem.meetingLink
+				textColor: agendaEventItem.tileTextColor
 			}
 		}
 
