@@ -6,7 +6,6 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
 
 import "lib"
-import "EventBuckets.js" as EventBuckets
 import "Shared.js" as Shared
 import "./weather/WeatherApi.js" as WeatherApi
 
@@ -723,30 +722,22 @@ MouseArea {
 			Layout.maximumHeight: popup.twoColumns ? popup.bottomRowHeight : Number.POSITIVE_INFINITY
 			Layout.alignment: Qt.AlignCenter
 
+			// Multi-day events as bars across the days (with event titles, ie: the month popup mode).
+			spanBarsEnabled: true
+
 			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
+			// The bar lanes depend on how many event rows fit in a day cell.
+			onEventRowCapacityChanged: if (spanBarsActive) Qt.callLater(reparseGCalEvents)
+			onSpanBarsActiveChanged: Qt.callLater(reparseGCalEvents)
+			function reparseGCalEvents() {
+				parseGCalEvents(popup.eventModel.eventsData)
+			}
 
 			function parseGCalEvents(data) {
 				if (!(data && data.items)) {
 					return
 				}
-
-				// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
-				// Bucket events per visible day in plain JS first, then write each day to the model once.
-				var daysModel = monthView.daysModel
-				var dayTimes = []
-				for (var i = 0; i < daysModel.count; i++) {
-					var dayData = daysModel.get(i)
-					dayTimes.push(new Date(dayData.yearNumber, dayData.monthNumber - 1, dayData.dayNumber).getTime())
-				}
-				var dayEvents = EventBuckets.bucketByDay(data.items, dayTimes)
-				for (var j = 0; j < dayEvents.length; j++) {
-					var events = daysModel.get(j).events
-					events.clear()
-					if (dayEvents[j].length) {
-						events.append(dayEvents[j])
-					}
-					daysModel.setProperty(j, 'showEventBadge', dayEvents[j].length > 0)
-				}
+				monthView.setEvents(data.items)
 			}
 
 			onDayDoubleClicked: function(dayData) {

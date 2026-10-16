@@ -21,9 +21,24 @@ Item {
 	readonly property int availableHeight: height - topOffset - rowSpacing
 	readonly property int maxRows: Math.max(0, Math.floor((availableHeight + rowSpacing) / (rowHeight + rowSpacing)))
 	readonly property int eventCount: modelEventsCount
-	// When not everything fits, the last row becomes "+N". With room for a single row, show the first event.
-	readonly property int visibleEventCount: eventCount <= maxRows ? eventCount : (maxRows <= 1 ? maxRows : maxRows - 1)
-	readonly property int hiddenEventCount: eventCount - visibleEventCount
+	// Multi-day bars (drawn by DaysCalendar) take the first spanRows rows; spanHiddenCount of them don't fit.
+	readonly property int barRows: spanRows
+	readonly property int hiddenBarCount: spanHiddenCount
+	readonly property int freeRows: Math.max(0, maxRows - barRows)
+	// When not everything fits, the last row becomes "+N". With room for a single row (and no bars),
+	// show the first event.
+	readonly property int visibleEventCount: {
+		if (hiddenBarCount === 0 && eventCount <= freeRows) {
+			return eventCount
+		}
+		if (barRows === 0 && hiddenBarCount === 0 && freeRows <= 1) {
+			return freeRows
+		}
+		return Math.min(eventCount, Math.max(0, freeRows - 1))
+	}
+	readonly property int hiddenEventCount: eventCount - visibleEventCount + hiddenBarCount
+	// "+N" only where there is a row left for it, not over the cell below.
+	readonly property bool showHiddenCount: hiddenEventCount > 0 && visibleEventCount < freeRows
 
 	function eventAt(i) {
 		return modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
@@ -31,7 +46,7 @@ Item {
 
 	Column {
 		x: 1
-		y: eventTitlesBadge.topOffset
+		y: eventTitlesBadge.topOffset + eventTitlesBadge.barRows * (eventTitlesBadge.rowHeight + eventTitlesBadge.rowSpacing)
 		width: eventTitlesBadge.width - 2
 		spacing: eventTitlesBadge.rowSpacing
 		clip: true
@@ -102,7 +117,7 @@ Item {
 		}
 
 		Text {
-			visible: eventTitlesBadge.hiddenEventCount > 0
+			visible: eventTitlesBadge.showHiddenCount
 			width: parent.width
 			height: eventTitlesBadge.rowHeight
 			horizontalAlignment: Text.AlignHCenter

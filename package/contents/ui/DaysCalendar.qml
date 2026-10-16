@@ -24,6 +24,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.ksvg as KSvg
 import org.kde.plasma.components as PlasmaComponents3
+import org.kde.plasma.core as PlasmaCore
 
 import "./badges"
 import "Shared.js" as Shared
@@ -88,6 +89,19 @@ Item {
 		}
 		return headerHeight + root.borderWidth + (cellHeight + root.borderWidth) * (i - 1)
 	}
+
+	// Event title rows in a day cell, same sizes as DayDelegate / EventTitlesBadge.
+	FontMetrics {
+		id: eventTitleFontMetrics
+		font: Kirigami.Theme.defaultFont
+	}
+	readonly property int eventTitlesTopOffset: Math.ceil(eventTitleFontMetrics.height) + 2 // DayDelegate.eventTitlesHeaderHeight
+	readonly property int eventTitleRowHeight: Math.ceil(eventTitleFontMetrics.height) + 4
+	readonly property int eventTitleRowSpacing: 1
+	// Event rows (titles, bars, "+N") that fit in a day cell.
+	readonly property int eventTitleRowCapacity: Math.max(0, Math.floor((cellHeight - eventTitlesTopOffset) / (eventTitleRowHeight + eventTitleRowSpacing)))
+	// Multi-day events as bars across the days (EventBuckets.layoutMonth bars), in eventTitles mode.
+	property var spanBars: []
 
 	property real transformScale: 1
 	property point transformOrigin: Qt.point(width / 2, height / 2)
@@ -457,6 +471,90 @@ Item {
 							}
 						}
 				}
+			}
+		}
+	}
+
+	// Multi-day events: one bar per week row across the days, above the cells, in the lanes the
+	// cells keep free at their top (model.reservedRows). Only the bars take the mouse, the rest of
+	// the cells still get clicks.
+	Repeater {
+		model: daysCalendar.eventBadgeType === 'eventTitles' && daysCalendar.headerModel ? daysCalendar.spanBars : []
+
+		Rectangle {
+			id: spanBar
+			readonly property var bar: modelData
+			readonly property var eventItem: bar.eventItem
+			readonly property color barColor: appletConfig.eventColor(eventItem ? eventItem.backgroundColor : null)
+			readonly property string response: Shared.myResponse(eventItem)
+			readonly property int columnStep: daysCalendar.cellWidth + root.borderWidth
+			readonly property bool cutLeft: bar.continuesBefore
+			readonly property bool cutRight: bar.continuesAfter
+			readonly property real cornerRadius: Math.min(7, height / 2)
+
+			x: calendarGrid.x + bar.first * columnStep + 1
+			y: calendarGrid.y + daysCalendar.gridLineY(bar.week + 1) + daysCalendar.eventTitlesTopOffset
+				+ bar.lane * (daysCalendar.eventTitleRowHeight + daysCalendar.eventTitleRowSpacing)
+			width: (bar.last - bar.first + 1) * columnStep - root.borderWidth - 2
+			height: daysCalendar.eventTitleRowHeight
+			// Past days are dimmed like the cells.
+			opacity: typeof timeModel !== "undefined" && Shared.isPastDay(new Date(bar.lastTime), timeModel.currentTime) ? appletConfig.pastOpacity : 1
+
+			// Square ends where the event continues in the previous / next week row.
+			radius: cornerRadius
+			topLeftRadius: cutLeft ? 0 : cornerRadius
+			bottomLeftRadius: cutLeft ? 0 : cornerRadius
+			topRightRadius: cutRight ? 0 : cornerRadius
+			bottomRightRadius: cutRight ? 0 : cornerRadius
+			color: appletConfig.eventFillColor(barColor, response)
+			border.width: 1
+			border.color: appletConfig.eventOutlineColor(barColor, response)
+
+			StripeFill {
+				visible: spanBar.response === 'tentative'
+				anchors.fill: parent
+				anchors.margins: 1
+				radius: spanBar.cutLeft || spanBar.cutRight ? 0 : Math.max(0, spanBar.cornerRadius - 1)
+				stripeColor: spanBar.barColor
+			}
+
+			// Title at the start of the bar, again in each week row.
+			Text {
+				anchors.fill: parent
+				anchors.leftMargin: 4
+				anchors.rightMargin: 1
+				verticalAlignment: Text.AlignVCenter
+				text: spanBar.eventItem ? spanBar.eventItem.summary : ""
+				color: appletConfig.eventTextColor(spanBar.barColor, spanBar.response)
+				font.strikeout: spanBar.response === 'declined'
+				font.family: Kirigami.Theme.defaultFont.family
+				font.pointSize: Kirigami.Theme.defaultFont.pointSize
+				// Event in progress
+				font.bold: !!spanBar.eventItem && !(spanBar.eventItem.start && spanBar.eventItem.start.date)
+					&& typeof timeModel !== "undefined"
+					&& spanBar.eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < spanBar.eventItem.endDateTime
+				elide: Text.ElideRight
+				wrapMode: Text.NoWrap
+			}
+
+			MouseArea {
+				anchors.fill: parent
+				cursorShape: Qt.PointingHandCursor
+				acceptedButtons: Qt.LeftButton | Qt.RightButton
+				onClicked: function(mouse) {
+					if (mouse.button === Qt.RightButton) {
+						popup.showEventMenu(spanBar.eventItem, spanBar, mouse.x, mouse.y)
+					} else {
+						popup.activateEvent(spanBar.eventItem)
+					}
+				}
+			}
+
+			PlasmaCore.ToolTipArea {
+				anchors.fill: parent
+				mainText: spanBar.eventItem ? spanBar.eventItem.summary : ""
+				subText: containsMouse ? eventModel.eventDetailsText(spanBar.eventItem) : ""
+				textFormat: Text.PlainText
 			}
 		}
 	}
