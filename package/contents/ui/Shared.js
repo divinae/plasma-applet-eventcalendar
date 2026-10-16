@@ -195,6 +195,15 @@ var EVENT_INDICATOR_ICONS = {
 	repeat: 'media-playlist-repeat',
 	description: 'view-list-text',
 }
+// Icons that fill their whole box (Breeze's pin) are drawn smaller to match the others.
+var EVENT_INDICATOR_SCALE = {
+	location: 0.75,
+}
+// Pixel size of an indicator icon: even, so a scaled 16 px icon stays crisp (16 -> 12).
+function eventIndicatorIconSize(key, size) {
+	var scale = EVENT_INDICATOR_SCALE[key] || 1
+	return scale === 1 ? size : 2 * Math.round(size * scale / 2)
+}
 function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 	if (!eventItem) {
 		return []

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:45+0200\n"
+"POT-Creation-Date: 2026-10-16 14:55+0200\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -774,12 +774,12 @@ msgid "Week and Day"
 msgstr "Viikko ja päivä"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "First hour shown"
-msgstr "Ensimmäinen näytettävä tunti"
+msgid "Working hours start"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Last hour shown"
-msgstr "Viimeinen näytettävä tunti"
+msgid "Working hours end"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1916,6 +1916,12 @@ msgstr[1] "%1 päivää"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "First hour shown"
+#~ msgstr "Ensimmäinen näytettävä tunti"
+
+#~ msgid "Last hour shown"
+#~ msgstr "Viimeinen näytettävä tunti"
 
 #~ msgid "Week and Today"
 #~ msgstr "Viikko ja Tänään"

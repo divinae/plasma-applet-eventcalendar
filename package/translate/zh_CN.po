@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:45+0200\n"
+"POT-Creation-Date: 2026-10-16 14:55+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -843,12 +843,12 @@ msgid "Week and Day"
 msgstr "周和日"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "First hour shown"
-msgstr "起始小时"
+msgid "Working hours start"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Last hour shown"
-msgstr "结束小时"
+msgid "Working hours end"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1996,6 +1996,12 @@ msgstr[0] "%1 天"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "First hour shown"
+#~ msgstr "起始小时"
+
+#~ msgid "Last hour shown"
+#~ msgstr "结束小时"
 
 #~ msgid "Week and Today"
 #~ msgstr "周和今天"

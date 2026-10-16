@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:45+0200\n"
+"POT-Creation-Date: 2026-10-16 14:55+0200\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -868,12 +868,12 @@ msgid "Week and Day"
 msgstr "Тиждень і день"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "First hour shown"
-msgstr "Перша показана година"
+msgid "Working hours start"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Last hour shown"
-msgstr "Остання показана година"
+msgid "Working hours end"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -2051,6 +2051,12 @@ msgstr[2] "%1 днів"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "First hour shown"
+#~ msgstr "Перша показана година"
+
+#~ msgid "Last hour shown"
+#~ msgstr "Остання показана година"
 
 #~ msgid "Week and Today"
 #~ msgstr "Тиждень і Сьогодні"

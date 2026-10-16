@@ -97,15 +97,21 @@ Item {
 		font: Kirigami.Theme.smallFont
 	}
 	readonly property int lineHeight: Math.ceil(fontMetrics.height)
-	// Visible hours: the configured range, stretched to fit this week's timed events.
-	property int firstHour: plasmoid.configuration.weekViewStartHour
-	property int lastHour: plasmoid.configuration.weekViewEndHour // Exclusive
-	readonly property int hourCount: Math.max(1, lastHour - firstHour)
+	// The grid has the whole day; scroll for the hours outside the working hours.
+	readonly property int firstHour: 0
+	readonly property int lastHour: 24 // Exclusive
+	readonly property int hourCount: lastHour - firstHour
+	// Working hours (settings): they fill the view. Shown first: from the working hours or this
+	// week's earliest timed event, whichever is earlier.
+	readonly property int workStartHour: plasmoid.configuration.weekViewStartHour
+	readonly property int workEndHour: Math.max(workStartHour + 1, plasmoid.configuration.weekViewEndHour)
+	property int rangeFirstHour: workStartHour
 	readonly property int minHourHeight: lineHeight + 6
-	// Fill the view when the range fits, scroll otherwise.
-	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / hourCount)
+	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / (workEndHour - workStartHour))
 	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
-	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / dayCount)
+	// The scroll bar gets its own room right of the grid instead of covering the last day.
+	readonly property real scrollBarSpace: hourScrollBar.visible ? hourScrollBar.width : 0
+	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth - scrollBarSpace) / dayCount)
 	readonly property int allDayRowHeight: Math.round(lineHeight * 2.2) + 6 // Title + date span
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
@@ -199,8 +205,7 @@ Item {
 		days = result
 		layoutAllDay(result)
 
-		var first = plasmoid.configuration.weekViewStartHour
-		var last = plasmoid.configuration.weekViewEndHour
+		var first = workStartHour
 		for (var d = 0; d < result.length; d++) {
 			var timedList = result[d].timed
 			for (var t = 0; t < timedList.length; t++) {
@@ -210,13 +215,9 @@ Item {
 				if (!block.continued) {
 					first = Math.min(first, Math.floor((block.start - block.dayStart) / 3600000))
 				}
-				if (!block.continues) {
-					last = Math.max(last, Math.ceil((Math.max(block.end, block.start + 30 * 60000) - block.dayStart) / 3600000))
-				}
 			}
 		}
-		firstHour = Math.max(0, first)
-		lastHour = Math.min(24, Math.max(last, firstHour + 1))
+		rangeFirstHour = Math.max(0, first)
 	}
 
 	function layoutAllDay(dayList) {
@@ -271,15 +272,18 @@ Item {
 		flush()
 	}
 
-	onWeekStartChanged: rebuild()
-	Component.onCompleted: {
+	onWeekStartChanged: {
 		rebuild()
 		scrollToWorkingHours()
+	}
+	Component.onCompleted: {
+		rebuild()
+		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
 	}
 
 	function scrollToWorkingHours() {
 		var showsNow = currentTime >= weekStart && currentTime < dayDate(dayCount)
-		var hour = showsNow ? Math.max(firstHour, currentTime.getHours() - 1) : firstHour
+		var hour = showsNow ? Math.max(rangeFirstHour, currentTime.getHours() - 1) : rangeFirstHour
 		flickable.contentY = Math.min((hour - firstHour) * hourHeight, Math.max(0, flickable.contentHeight - flickable.height))
 	}
 	function hourY(ms, dayStart) {
@@ -801,7 +805,15 @@ Item {
 				contentWidth: width
 				contentHeight: weekView.hourCount * weekView.hourHeight
 				boundsBehavior: Flickable.StopAtBounds
-				PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar {}
+				PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar { id: hourScrollBar }
+				// Opening: scroll to the working hours once the grid has its size, unless scrolled already.
+				property bool userScrolled: false
+				onMovementStarted: userScrolled = true
+				onHeightChanged: {
+					if (!userScrolled) {
+						weekView.scrollToWorkingHours()
+					}
+				}
 
 				Item {
 					width: flickable.width
@@ -815,6 +827,15 @@ Item {
 							y: index * weekView.hourHeight
 							width: parent.width
 							height: weekView.hourHeight
+							// Outside the working hours: a faint shade.
+							Rectangle {
+								visible: parent.hour < weekView.workStartHour || parent.hour >= weekView.workEndHour
+								x: weekView.gutterWidth + 1
+								width: weekView.columnWidth * weekView.dayCount - 2
+								height: parent.height
+								color: Kirigami.Theme.textColor
+								opacity: 0.025
+							}
 							PlasmaComponents3.Label {
 								visible: index > 0
 								width: weekView.gutterWidth - Kirigami.Units.smallSpacing

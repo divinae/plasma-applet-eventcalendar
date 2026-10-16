@@ -61,7 +61,7 @@ ConfigPage {
 		}
 		FormCard.FormCard {
 			FormConfigSpin {
-				label: i18n("First hour shown")
+				label: i18n("Working hours start")
 				configKey: 'weekViewStartHour'
 				suffix: ":00"
 				from: 0
@@ -69,7 +69,7 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
-				label: i18n("Last hour shown")
+				label: i18n("Working hours end")
 				configKey: 'weekViewEndHour'
 				suffix: ":00"
 				from: 1

@@ -32,3 +32,10 @@ for (const k of ['location', 'meeting', 'guests', 'repeat', 'description']) {
 	assert.ok(S.EVENT_INDICATOR_ICONS[k], 'icon for ' + k)
 }
 console.log('event_indicators: ok')
+
+// Scaled icons get an even pixel size; others keep theirs.
+assert.strictEqual(S.eventIndicatorIconSize('location', 16), 12)
+assert.strictEqual(S.eventIndicatorIconSize('location', 22), 16)
+assert.strictEqual(S.eventIndicatorIconSize('guests', 16), 16)
+assert.strictEqual(S.eventIndicatorIconSize('guests', 13), 13)
+console.log('event_indicators sizes: ok')
