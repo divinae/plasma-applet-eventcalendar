@@ -11,15 +11,20 @@ QtObject {
 	// Shared look for the month and week views.
 	readonly property real faintGridLineOpacity: 0.07 // Day and hour grid lines: always on, very faint
 	readonly property real pastOpacity: 0.45 // Past days / ended events are dimmed in all views
-	// Dark theme: event colors are mixed with the background, like Google Calendar's dark mode.
-	// Bright pastel tiles glare on a dark popup and need dark text, out of place there.
+	// Dark theme: event colors keep their hue and saturation but get darker (like Google Calendar's
+	// dark mode), so bright pastel tiles don't glare and keep light text.
 	readonly property bool darkTheme: {
 		var c = Kirigami.Theme.backgroundColor
 		return 0.299 * c.r + 0.587 * c.g + 0.114 * c.b < 0.5
 	}
 	function eventColor(c) {
-		var color = c || Kirigami.Theme.highlightColor
-		return darkTheme ? ColorUtil.lerp(color, Kirigami.Theme.backgroundColor, 0.62) : color
+		var color = Qt.color(c || Kirigami.Theme.highlightColor)
+		if (!darkTheme) {
+			return color
+		}
+		// Similar lightness for all colors (about 0.36..0.48), a little of the original difference kept.
+		var lightness = 0.42 + (color.hslLightness - 0.5) * 0.15
+		return Qt.hsla(Math.max(0, color.hslHue), color.hslSaturation, lightness, 1)
 	}
 	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
 
