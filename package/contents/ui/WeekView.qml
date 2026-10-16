@@ -415,13 +415,31 @@ Item {
 					readonly property var weather: weekView.dayWeather(date)
 					width: weekView.columnWidth
 					opacity: date < weekView.todayStart ? appletConfig.pastOpacity : 1
-					PlasmaComponents3.Label {
-						width: parent.width
-						horizontalAlignment: Text.AlignHCenter
-						text: Qt.locale().dayName(parent.date.getDay(), Locale.ShortFormat)
-						font: Kirigami.Theme.smallFont
-						color: parent.today ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
-						opacity: parent.today ? 1 : 0.6
+					// Day name, with the weather on the same line (week view): "pt. ☁ 13°".
+					Row {
+						anchors.horizontalCenter: parent.horizontalCenter
+						spacing: 3
+						PlasmaComponents3.Label {
+							anchors.verticalCenter: parent.verticalCenter
+							text: Qt.locale().dayName(parent.parent.date.getDay(), Locale.ShortFormat)
+							font: Kirigami.Theme.smallFont
+							color: parent.parent.today ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
+							opacity: parent.parent.today ? 1 : 0.6
+						}
+						Kirigami.Icon {
+							visible: !weekView.singleDay && !!parent.parent.weather
+							anchors.verticalCenter: parent.verticalCenter
+							width: Kirigami.Units.iconSizes.small
+							height: width
+							source: parent.parent.weather ? parent.parent.weather.iconName : ""
+						}
+						PlasmaComponents3.Label {
+							visible: !weekView.singleDay && !!parent.parent.weather
+							anchors.verticalCenter: parent.verticalCenter
+							text: parent.parent.weather ? Shared.formatTemp(parent.parent.weather.temp.max) : ""
+							font: Kirigami.Theme.smallFont
+							opacity: 0.8
+						}
 					}
 					Item {
 						width: parent.width
@@ -440,24 +458,6 @@ Item {
 							text: parent.parent.date.getDate()
 							font.weight: Font.Bold
 							color: parent.parent.today ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
-						}
-					}
-					// Week view: icon and high / low under the day (the day view has the panel).
-					Row {
-						visible: !weekView.singleDay && !!parent.weather
-						anchors.horizontalCenter: parent.horizontalCenter
-						spacing: 2
-						Kirigami.Icon {
-							anchors.verticalCenter: parent.verticalCenter
-							width: Kirigami.Units.iconSizes.small
-							height: width
-							source: parent.parent.weather ? parent.parent.weather.iconName : ""
-						}
-						PlasmaComponents3.Label {
-							anchors.verticalCenter: parent.verticalCenter
-							text: parent.parent.weather ? Shared.formatTemp(parent.parent.weather.temp.max) + ' / ' + Shared.formatTemp(parent.parent.weather.temp.min) : ""
-							font: Kirigami.Theme.smallFont
-							opacity: 0.8
 						}
 					}
 				}
