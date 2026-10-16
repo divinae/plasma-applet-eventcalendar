@@ -91,10 +91,6 @@ ConfigPage {
 		}
 		ConfigCheckBox {
 			Kirigami.FormData.label: i18n("Show:")
-			configKey: 'monthShowBorder'
-			text: i18n("Grid lines")
-		}
-		ConfigCheckBox {
 			configKey: 'monthShowWeekNumbers'
 			text: i18n("Week numbers")
 		}
