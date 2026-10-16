@@ -188,7 +188,11 @@ Item {
 		}
 		function onGoogleActiveAccountIdChanged() { logic.updateEvents() }
 		function onGoogleEventClickActionChanged() { logic.updateEvents() }
-		function onGoogleColorPaletteChanged() { logic.updateEvents() }
+		function onGoogleColorPaletteChanged() {
+			// Recolor right away (system palette is applied at display time anyway).
+			eventModel.recolorEvents()
+			if (popup) popup.updateUI()
+		}
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }

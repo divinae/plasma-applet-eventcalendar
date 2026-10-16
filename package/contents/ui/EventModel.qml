@@ -303,6 +303,16 @@ CalendarManager {
 		return lines.join('\n')
 	}
 
+	// Event color palette changed: recolor what's loaded (Google), then rebuild the merged list.
+	function recolorEvents() {
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			if (typeof calendarManagerList[i].recolorEvents === 'function') {
+				calendarManagerList[i].recolorEvents()
+			}
+		}
+		mergeEvents()
+	}
+
 	function mergeEvents() {
 		logger.debug('eventModel.mergeEvents')
 		// Build the list first and assign once: bindings on eventsData must not see it half-filled.

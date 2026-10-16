@@ -503,6 +503,21 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return minutes
 	}
 
+	// The event color palette changed: recolor the loaded events now (no refetch needed).
+	function recolorEvents() {
+		for (var calendarId in googleCalendarManager.eventsByCalendar) {
+			var calendar = getCalendar(calendarId)
+			var data = googleCalendarManager.eventsByCalendar[calendarId]
+			if (!calendar || !data || !data.items) {
+				continue
+			}
+			for (var i = 0; i < data.items.length; i++) {
+				data.items[i].backgroundColor = parseColor(calendar, data.items[i])
+			}
+			calendarFetched(calendarId, data) // EventModel keeps its own copy
+		}
+	}
+
 	function parseEvent(calendar, event) {
 		event.description = event.description || ""
 		event.reminderMinutes = parseReminderMinutes(calendar, event)
@@ -555,9 +570,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// "current": the colors Google Calendar shows today; "classic": the old palette the API returns.
 	readonly property bool currentGooglePalette: plasmoid.configuration.googleColorPalette !== 'classic'
 	function parseColor(calendar, event) {
-		if (event.backgroundColor) {
-			return event.backgroundColor // A hardcoded color (like the debug calendar)
-		}
 		if (currentGooglePalette) {
 			return GooglePalette.eventColor(event.colorId) || GooglePalette.calendarColor(calendar)
 		}
