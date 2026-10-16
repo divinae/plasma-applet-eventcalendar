@@ -139,18 +139,29 @@ CalendarManager {
 
 		showHttpError(httpCode, String(err), i18n("Will try again soon."), ErrorType.UnknownError)
 	}
-	function handleAuthError(err, markDone) {
+	function handleAuthError(err, markDone, isNetworkError) {
 		if (markDone) {
 			googleCalendarManager.asyncRequestsDone += 1
+		}
+		if (isNetworkError) {
+			// The token couldn't be refreshed because we're offline.
+			showHttpError(0, i18n("Could not connect"), i18n("Will try again soon."), ErrorType.NetworkError)
+			return
 		}
 		var message = i18n("Google authentication failed: %1", err)
 		googleCalendarManager.error(message, ErrorType.ClientError)
 	}
+	// A whole account failed to fetch: keep showing its previous events.
+	function restorePrevious(idList) {
+		for (var i = 0; i < idList.length; i++) {
+			restorePreviousCalendar(scopedCalendarId(idList[i]))
+		}
+	}
 	function withAccessToken(action, onError) {
-		session.checkAccessToken(function(err) {
+		session.checkAccessToken(function(err, isNetworkError) {
 			if (err) {
 				if (onError) {
-					onError(err)
+					onError(err, isNetworkError)
 				}
 				return
 			}
@@ -183,13 +194,15 @@ CalendarManager {
 				return
 			}
 			if (errObj) {
+				restorePrevious(calendarIdList)
 				fetchGoogleAccountEvents_err(errObj.err, errObj.data, errObj.xhr)
 			} else {
 				fetchGoogleAccountEvents_done(data)
 			}
 		})
-		withAccessToken(func, function(err) {
-			handleAuthError(err, true)
+		withAccessToken(func, function(err, isNetworkError) {
+			restorePrevious(calendarIdList)
+			handleAuthError(err, true, isNetworkError)
 		})
 	}
 	function fetchGoogleAccountEvents_run(calendarIdList, callback) {
@@ -230,6 +243,7 @@ CalendarManager {
 				continue
 			}
 			if (result.error) {
+				restorePreviousCalendar(result.scopedCalendarId || scopedCalendarId(result.calendarId))
 				var errObj = result.error
 				if (errObj && errObj.xhr) {
 					handleError(errObj.err, errObj.data, errObj.xhr)
@@ -344,8 +358,8 @@ CalendarManager {
 		logger.debug('fetchGoogleCalendarEvent', calendarId, eventId)
 		if (session.accessToken) {
 			var func = fetchGoogleCalendarEvent_run.bind(this, calendarId, eventId, callback)
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "fetch an event" without an access token set')
@@ -490,8 +504,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					}
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "create an event" without an access token set')
@@ -551,8 +565,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 				}
 			})
 		}
-		withAccessToken(func, function(err) {
-			handleAuthError(err, false)
+		withAccessToken(func, function(err, isNetworkError) {
+			handleAuthError(err, false, isNetworkError)
 		})
 	}
 
@@ -614,8 +628,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 				})
 			})
 		}
-		withAccessToken(func, function(err) {
-			handleAuthError(err, false)
+		withAccessToken(func, function(err, isNetworkError) {
+			handleAuthError(err, false, isNetworkError)
 		})
 	}
 
@@ -646,8 +660,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					updateGoogleCalendarEvent_done(calendarId, eventId, event, data)
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "set an event property" without an access token set')
@@ -722,8 +736,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					deleteEvent_done(calendarId, eventId, data)
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "delete an event" without an access token set')

@@ -129,18 +129,29 @@ CalendarManager {
 
 		showHttpError(httpCode, String(err), i18n("Will try again soon."), ErrorType.UnknownError)
 	}
-	function handleAuthError(err, markDone) {
+	function handleAuthError(err, markDone, isNetworkError) {
 		if (markDone) {
 			googleTasksManager.asyncRequestsDone += 1
+		}
+		if (isNetworkError) {
+			// The token couldn't be refreshed because we're offline.
+			showHttpError(0, i18n("Could not connect"), i18n("Will try again soon."), ErrorType.NetworkError)
+			return
 		}
 		var message = i18n("Google authentication failed: %1", err)
 		googleTasksManager.error(message, ErrorType.ClientError)
 	}
+	// A whole account failed to fetch: keep showing its previous events.
+	function restorePrevious(idList) {
+		for (var i = 0; i < idList.length; i++) {
+			restorePreviousCalendar(scopedTasklistId(idList[i]))
+		}
+	}
 	function withAccessToken(action, onError) {
-		session.checkAccessToken(function(err) {
+		session.checkAccessToken(function(err, isNetworkError) {
 			if (err) {
 				if (onError) {
-					onError(err)
+					onError(err, isNetworkError)
 				}
 				return
 			}
@@ -204,13 +215,15 @@ CalendarManager {
 				return
 			}
 			if (errObj) {
+				restorePrevious(tasklistIdList)
 				fetchGoogleAccountTasks_err(errObj.err, errObj.data, errObj.xhr)
 			} else {
 				fetchGoogleAccountTasks_done(data)
 			}
 		})
-		withAccessToken(func, function(err) {
-			handleAuthError(err, true)
+		withAccessToken(func, function(err, isNetworkError) {
+			restorePrevious(tasklistIdList)
+			handleAuthError(err, true, isNetworkError)
 		})
 	}
 	function fetchGoogleAccountTasks_run(tasklistIdList, callback) {
@@ -431,8 +444,8 @@ CalendarManager {
 					createEvent_done(calendarId, data)
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "create an event" without an access token set')
@@ -503,8 +516,8 @@ CalendarManager {
 					deleteEvent_done(calendarId, eventId, data)
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "delete an event" without an access token set')
@@ -581,8 +594,8 @@ CalendarManager {
 					setEventProperties_done(calendarId, eventId, event, data)
 				}
 			})
-			withAccessToken(func, function(err) {
-				handleAuthError(err, false)
+			withAccessToken(func, function(err, isNetworkError) {
+				handleAuthError(err, false, isNetworkError)
 			})
 		} else {
 			session.transactionError('attempting to "set an event property" without an access token set')

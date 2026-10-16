@@ -41,11 +41,11 @@ QtObject {
 				return
 			}
 			pendingTokenCallbacks = [callback]
-			updateAccessToken(function(err) {
+			updateAccessToken(function(err, isNetworkError) {
 				var callbacks = pendingTokenCallbacks
 				pendingTokenCallbacks = null
 				for (var i = 0; i < callbacks.length; i++) {
-					callbacks[i](err)
+					callbacks[i](err, isNetworkError)
 				}
 			})
 		} else {
@@ -59,8 +59,9 @@ QtObject {
 			logger.debug('updateAccessToken')
 			fetchNewAccessToken(function(err, data, xhr) {
 				if (err) {
-					logger.log('Error when using refreshToken:', err, data)
-					return callback(err)
+					logger.log('Error when using refreshToken:', err, xhr && xhr.status)
+					// Offline: not an authentication problem, the refresh is retried later.
+					return callback(err, Requests.isNetworkError(xhr))
 				}
 
 				var parsed = null

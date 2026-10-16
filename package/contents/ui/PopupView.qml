@@ -137,6 +137,7 @@ MouseArea {
 	readonly property real agendaMaxWidth: Kirigami.Units.gridUnit * 32
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing
+		+ (errorBanner.visible ? errorBanner.implicitHeight + Kirigami.Units.smallSpacing : 0)
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -419,6 +420,58 @@ MouseArea {
 		onRefreshClicked: logic.update()
 	}
 
+	// Problems fetching data, above every view. Offline: the last loaded events stay visible and
+	// the fetch is retried with a growing delay (Logic.networkFailed).
+	Kirigami.InlineMessage {
+		id: errorBanner
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.topMargin: Kirigami.Units.smallSpacing
+		anchors.leftMargin: Kirigami.Units.smallSpacing
+		anchors.rightMargin: Kirigami.Units.smallSpacing
+
+		property string errorText: logic.currentErrorMessage // Other errors (sign-in, API)
+		readonly property bool network: logic.offline
+		property int secondsLeft: 0
+		function updateCountdown() {
+			secondsLeft = logic.nextRetryAt > 0 ? Math.max(0, Math.ceil((logic.nextRetryAt - Date.now()) / 1000)) : 0
+		}
+
+		visible: network || errorText !== ""
+		type: network ? Kirigami.MessageType.Warning : Kirigami.MessageType.Error
+		text: {
+			if (!network) {
+				return errorText
+			}
+			var retry = secondsLeft <= 0 ? i18n("Retrying…")
+				: secondsLeft < 60 ? i18np("Retrying in %1 second.", "Retrying in %1 seconds.", secondsLeft)
+				: i18np("Retrying in %1 minute.", "Retrying in %1 minutes.", Math.ceil(secondsLeft / 60))
+			return i18n("Can't connect. Showing the last loaded events.") + " " + retry
+		}
+		actions: [
+			Kirigami.Action {
+				visible: errorBanner.network
+				icon.name: "view-refresh"
+				text: i18n("Retry Now")
+				onTriggered: logic.retryNow()
+			},
+			Kirigami.Action {
+				visible: !errorBanner.network
+				icon.name: "dialog-close"
+				text: i18n("Dismiss")
+				onTriggered: errorBanner.errorText = ""
+			}
+		]
+		Timer {
+			interval: 1000
+			repeat: true
+			running: errorBanner.visible && errorBanner.network
+			triggeredOnStart: true
+			onTriggered: errorBanner.updateCountdown()
+		}
+	}
+
 	// Overlay cards: day list < event details < event form.
 	OverlayCard {
 		id: dayEventsOverlay
@@ -664,15 +717,6 @@ MouseArea {
 				eventModel.createEvent(calendarId, date, text)
 			}
 
-			MessageWidget {
-				id: errorMessageWidget
-				anchors.left: parent.left
-				anchors.bottom: parent.bottom
-				anchors.right: parent.right
-				anchors.margins: Kirigami.Units.smallSpacing
-				text: logic.currentErrorMessage
-			}
-
 		} // AgendaView
 	} // GridLayout
 
@@ -683,11 +727,13 @@ MouseArea {
 	}
 
 	function showError(msg) {
-		errorMessageWidget.warn(msg)
+		errorBanner.errorText = msg
 	}
-
+	function showNetworkError() {
+		errorBanner.updateCountdown()
+	}
 	function clearError() {
-		errorMessageWidget.close()
+		errorBanner.errorText = ""
 	}
 
 	Timer {

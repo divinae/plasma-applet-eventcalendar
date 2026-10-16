@@ -19,6 +19,11 @@ function request(opt, callback) {
 		// Network Error / No Connection
 		done("HTTP Error " + req.status, null)
 	}
+	// Hung connections (eg: half-dead wifi) fail after 30 s instead of never. Status stays 0.
+	req.timeout = opt.timeout || 30000
+	req.ontimeout = function() {
+		done("Timeout", null)
+	}
 	req.onreadystatechange = function() {
 		if (req.readyState === XMLHttpRequest.DONE) { // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-done
 			if (200 <= req.status && req.status < 400) {
@@ -35,6 +40,11 @@ function request(opt, callback) {
 		}
 	}
 	req.send(opt.data)
+}
+
+// The request never got an HTTP response: no connection, DNS failure, timeout.
+function isNetworkError(xhr) {
+	return !xhr || xhr.status === 0
 }
 
 function encodeParams(params) {

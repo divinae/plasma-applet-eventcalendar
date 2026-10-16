@@ -1,5 +1,7 @@
 import QtQuick
 
+import "../ErrorType.js" as ErrorType
+
 import "../lib"
 
 CalendarManager {
@@ -49,16 +51,29 @@ CalendarManager {
 				logger.log('ical.stderr', stderr)
 				return callback(stderr)
 			}
-			var data = JSON.parse(stdout)
+			var data = null
+			try {
+				data = JSON.parse(stdout)
+			} catch (e) {
+				return callback('Invalid calendar data')
+			}
 			callback(null, data)
 		})
 	}
 
 	function fetchCalendar(calendarData) {
-		icalManager.asyncRequests += 0
+		icalManager.asyncRequests += 1
 		fetchEvents(calendarData, dateMin, dateMax, function(err, data) {
-			parseEventList(calendarData, data.items)
-			setCalendarData(calendarData.url, data)
+			if (err || !data) {
+				// Keep the previous events; connection problems are retried like Google's.
+				restorePreviousCalendar(calendarData.url)
+				var isNetwork = /URLError|timed out|Name or service|Temporary failure|Connection|Network is unreachable/i.test(String(err))
+				icalManager.error(isNetwork ? i18n("Could not connect") : i18n("Error fetching calendar: %1", calendarData.url),
+					isNetwork ? ErrorType.NetworkError : ErrorType.UnknownError)
+			} else {
+				parseEventList(calendarData, data.items)
+				setCalendarData(calendarData.url, data)
+			}
 			icalManager.asyncRequestsDone += 1
 		})
 	}

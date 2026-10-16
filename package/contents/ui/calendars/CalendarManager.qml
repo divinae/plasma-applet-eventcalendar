@@ -59,6 +59,17 @@ Item {
 		calendarFetched(calendarId, data)
 	}
 
+	// Events of the previous fetch, kept so a calendar that fails to fetch (eg: offline) can keep
+	// showing what it had.
+	property var previousEventsByCalendar: ({})
+	function restorePreviousCalendar(calendarId) {
+		var previous = previousEventsByCalendar[calendarId]
+		if (previous && !eventsByCalendar[calendarId]) {
+			eventsByCalendar[calendarId] = previous // Already parsed
+			calendarFetched(calendarId, previous)
+		}
+	}
+
 	function clear() {
 		logger.debug(calendarManager, 'clear()')
 		calendarManager.clearingData = true
@@ -104,6 +115,7 @@ Item {
 	function fetchAll(dateMin, dateMax) {
 		logger.debug(calendarManager, 'fetchAllEvents', dateMin, dateMax)
 		fetchingData()
+		previousEventsByCalendar = calendarManager.eventsByCalendar
 		clear()
 		calendarManager.fetchGeneration += 1
 		if (typeof dateMin !== "undefined") {

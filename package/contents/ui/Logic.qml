@@ -1,5 +1,6 @@
 import QtQuick
 import "./ErrorType.js" as ErrorType
+import "./lib/Requests.js" as Requests
 import "./weather/WeatherApi.js" as WeatherApi
 import "./lib/Base64Compat.js" as Base64Compat
 
@@ -109,11 +110,10 @@ Item {
 
 	function handleWeatherError(funcName, err, data, xhr) {
 		logger.log(funcName + '.err', err, xhr && xhr.status, data)
-		if (xhr && xhr.status === 0) { // Error making connection
-			var msg = i18n("Could not connect")
-			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
-			errorMessage += '\n' + i18n("Will try again soon.")
-			logic.lastForecastErr = errorMessage
+		if (Requests.isNetworkError(xhr)) { // No connection / timeout: retried with backoff
+			logic.lastForecastErr = i18n("Could not connect.") + '\n' + i18n("Will try again soon.")
+			logic.weatherNetworkFailed = true
+			logic.networkFailed()
 		} else if (xhr && xhr.status === 429) {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			var msg = i18n("Weather API limit reached")
@@ -136,6 +136,8 @@ Item {
 
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
+			logic.weatherNetworkFailed = false
+			logic.networkRecovered()
 			logic.dailyWeatherData = data
 			if (data.current) {
 				logic.currentWeatherData = data.current
@@ -154,6 +156,8 @@ Item {
 
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
+			logic.weatherNetworkFailed = false
+			logic.networkRecovered()
 			logic.hourlyWeatherData = data
 			logic.currentWeatherData = data.current || data.list[0]
 			if (popup) popup.updateMeteogram()
@@ -207,7 +211,7 @@ Item {
 	}
 
 	//---
-	property int currentErrorType: ErrorType.UnknownError
+	property int currentErrorType: ErrorType.NoError
 	property string lastGoogleSelectionSignature: "" // Set once in onCompleted, not a binding.
 	function googleSelectionSignature() {
 		return JSON.stringify(parseGoogleAccounts().map(function(account) {
@@ -257,10 +261,112 @@ Item {
 	}
 	Connections {
 		target: eventModel
-		function onError(errorType, msg) {
+		function onError(msg, errorType) {
+			if (errorType === ErrorType.NetworkError) {
+				// Shown as the offline banner when the fetch round ends (one per round, not per calendar).
+				logic.eventsRoundNetworkError = true
+				return
+			}
 			logic.currentErrorMessage = msg
 			logic.currentErrorType = errorType
 			if (popup) popup.showError(logic.currentErrorMessage)
+		}
+		function onFetchingData() {
+			logic.eventsRoundNetworkError = false
+		}
+		function onAllDataFetched() {
+			if (logic.eventsRoundNetworkError) {
+				logic.eventsNetworkFailed = true
+				logic.networkFailed()
+			} else {
+				logic.eventsNetworkFailed = false
+				if (logic.currentErrorType !== ErrorType.NoError && logic.currentErrorType !== ErrorType.NetworkError) {
+					logic.clearError() // Fetched fine this time
+				}
+				logic.networkRecovered()
+			}
+		}
+	}
+
+	//--- Network failures: keep the last data, retry with backoff, tell the user once.
+	property bool offline: false // The last events or weather fetch couldn't connect
+	property bool eventsRoundNetworkError: false
+	property bool eventsNetworkFailed: false
+	property bool weatherNetworkFailed: false
+	property int networkFailures: 0
+	property double nextRetryAt: 0 // ms since epoch
+	property bool outageNotified: false
+	readonly property var retryDelays: [30, 60, 120, 300] // seconds; capped below the poll interval
+	property int outageNotifyDelay: 3 * 60 * 1000 // Desktop notification only if the outage lasts
+
+	function networkFailed() {
+		if (!offline) {
+			offline = true
+			outageNotified = false
+			outageNotifyTimer.restart()
+		}
+		currentErrorType = ErrorType.NetworkError
+		if (retryTimer.running) {
+			return // A retry is already scheduled (eg: daily and hourly weather both failed)
+		}
+		var delay = retryDelays[Math.min(networkFailures, retryDelays.length - 1)] * 1000
+		networkFailures++
+		nextRetryAt = Date.now() + delay
+		retryTimer.interval = delay
+		retryTimer.restart()
+		if (popup) popup.showNetworkError()
+	}
+	function networkRecovered() {
+		if (!offline || eventsNetworkFailed || weatherNetworkFailed) {
+			return
+		}
+		offline = false
+		networkFailures = 0
+		nextRetryAt = 0
+		retryTimer.stop()
+		outageNotifyTimer.stop()
+		if (currentErrorType === ErrorType.NetworkError) {
+			clearError()
+		}
+		if (outageNotified) {
+			outageNotified = false
+			notificationManager.notify({
+				appName: i18n("Event Calendar"),
+				appIcon: "network-connect",
+				summary: i18n("Calendar is back in sync"),
+				expireTimeout: 4000,
+			})
+		}
+	}
+	function retryNow() {
+		retryTimer.stop()
+		nextRetryAt = 0
+		if (eventsNetworkFailed || !weatherNetworkFailed) {
+			logic.updateEvents()
+		}
+		if (weatherNetworkFailed) {
+			logic.updateWeather(true)
+		}
+	}
+	Timer {
+		id: retryTimer
+		onTriggered: logic.retryNow()
+	}
+	// One desktop notification per outage, only if it lasts.
+	Timer {
+		id: outageNotifyTimer
+		interval: logic.outageNotifyDelay
+		onTriggered: {
+			if (logic.offline && !logic.outageNotified) {
+				logic.outageNotified = true
+				notificationManager.notify({
+					appName: i18n("Event Calendar"),
+					appIcon: "network-disconnect",
+					summary: i18n("Calendar can't sync"),
+					body: i18n("No connection. Showing the last loaded events; retrying automatically."),
+					expireTimeout: 10000,
+				})
+			}
 		}
 	}
 
@@ -294,10 +400,13 @@ Item {
 		target: networkMonitor
 		function onIsConnectedChanged() {
 			if (networkMonitor.isConnected) {
-				if (logic.currentErrorType === ErrorType.NetworkError) {
-					logic.clearError()
+				// Back online: retry right away with a fresh backoff.
+				logic.networkFailures = 0
+				if (logic.offline) {
+					logic.retryNow()
+				} else {
+					logic.update()
 				}
-				logic.update()
 			}
 		}
 	}
