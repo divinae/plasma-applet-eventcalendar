@@ -101,8 +101,8 @@ CalendarManager {
 		}
 	}
 
-	// Holidays (KHolidays) come without a color: red, like public holidays on paper calendars.
-	readonly property string holidayColor: "#d9534f"
+	// Holidays (KHolidays) come without a color: coral red (Google's "Flamingo"), pastel like the other calendars.
+	readonly property string holidayColor: "#e67c73"
 
 	//--- CalendarManager
 	function getCalendarList() {
