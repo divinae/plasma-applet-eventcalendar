@@ -170,6 +170,8 @@ Item {
 		}
 	}
 
+	// OAuth state: the redirect listener only accepts the sign-in this widget started.
+	property string oauthState: ""
 	function resetPkce() {
 		pkceVerifier = Pkce.generateVerifier()
 		pkceChallenge = Pkce.challengeFromVerifier(pkceVerifier)
@@ -186,6 +188,7 @@ Item {
 			redirectUri: redirectUriForMode(mode),
 			pkceVerifier: usePkce ? pkceVerifier : "",
 			pkceChallenge: usePkce ? pkceChallenge : "",
+			state: oauthState,
 		}
 	}
 	function currentAuthContext() {
@@ -199,6 +202,7 @@ Item {
 			error("Hosted mode requires a client secret. Switching to localhost.")
 			mode = "local"
 		}
+		oauthState = Pkce.generateVerifier(43)
 		if (!effectiveClientSecret) {
 			resetPkce()
 		} else {
@@ -241,6 +245,9 @@ Item {
 		if (ctx.pkceChallenge) {
 			url += '&code_challenge=' + encodeURIComponent(ctx.pkceChallenge)
 			url += '&code_challenge_method=S256'
+		}
+		if (ctx.state) {
+			url += '&state=' + encodeURIComponent(ctx.state)
 		}
 		return url
 	}

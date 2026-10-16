@@ -7,26 +7,76 @@ import urllib.parse
 import urllib.request
 import urllib.error
 import argparse
+import signal
 import sys
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 
 import logging
 
-# Configure logging
+# Private runtime dir (not world-readable /tmp): the log and the pid file of a running listener.
+runtime_dir = os.environ.get("XDG_RUNTIME_DIR") or os.path.join(os.path.expanduser("~"), ".cache")
+os.makedirs(runtime_dir, exist_ok=True)
+log_path = os.path.join(runtime_dir, "eventcalendar-google-redirect.log")
+pid_path = os.path.join(runtime_dir, "eventcalendar-google-redirect.pid")
+
 logging.basicConfig(
-    filename='/tmp/google_redirect.log',
-    level=logging.DEBUG,
+    filename=log_path,
+    level=logging.INFO,
     format='%(asctime)s %(levelname)s: %(message)s'
 )
-logging.info("Script started with args: %s", sys.argv)
+try:
+    os.chmod(log_path, 0o600)
+except OSError:
+    pass
 
-client_id = client_secret = listen_port = redirect_uri = code_verifier = None
+# The hosted helper page (redirect mode "hosted") posts the code back from this origin.
+HELPER_ORIGIN = "https://alikestocode.github.io"
+LISTEN_TIMEOUT = 5 * 60  # seconds: give up if the browser never comes back
+
+client_id = client_secret = listen_port = redirect_uri = code_verifier = expected_state = None
 exit_code = 0
 asset_dir = os.path.join(os.path.dirname(__file__), "oauth_assets")
 success_template_path = os.path.join(asset_dir, "success.html")
 style_path = os.path.join(asset_dir, "style.css")
+
+
+def masked_argv(argv):
+    """argv for the log, without the client secret / PKCE verifier / state values."""
+    secret_flags = {"--client_secret", "--code_verifier", "--state"}
+    result = []
+    hide_next = False
+    for arg in argv:
+        result.append("***" if hide_next else arg)
+        hide_next = arg in secret_flags
+    return result
+
+
+def stop_previous_listener():
+    """A listener left over from a cancelled sign-in still holds the port: stop it."""
+    try:
+        with open(pid_path, "r") as handle:
+            pid = int(handle.read().strip())
+    except (OSError, ValueError):
+        return
+    if pid == os.getpid():
+        return
+    try:
+        with open("/proc/{}/cmdline".format(pid), "rb") as handle:
+            if b"google_redirect.py" not in handle.read():
+                return  # The pid was reused by something else
+        os.kill(pid, signal.SIGTERM)
+    except OSError:
+        return
+    for _ in range(20):  # Wait up to 2 s for the port to be released
+        time.sleep(0.1)
+        try:
+            os.kill(pid, 0)
+        except OSError:
+            break
+    logging.info("Stopped previous listener (pid %s)", pid)
 
 
 def mask_value(value, keep_start=6, keep_end=4):
@@ -106,11 +156,19 @@ class OAuthRedirectHandler(BaseHTTPRequestHandler):
     def _send_headers(self, status, content_type):
         self.send_response(status)
         self.send_header("Content-type", content_type)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS, GET")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Access-Control-Allow-Private-Network", "true")
+        # Only the hosted helper page may post the code from a browser (no "*": any web page
+        # could otherwise send its own code and sign the widget into another account).
+        if self.headers.get("Origin") == HELPER_ORIGIN:
+            self.send_header("Access-Control-Allow-Origin", HELPER_ORIGIN)
+            self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self.send_header("Access-Control-Allow-Private-Network", "true")
         self.end_headers()
+
+    def _reject(self, reason):
+        logging.warning("Rejected request: %s", reason)
+        self._send_headers(403, "text/plain")
+        self.wfile.write(b"Rejected.")
 
     def _shutdown(self):
         logging.info("Shutting down server.")
@@ -185,14 +243,34 @@ class OAuthRedirectHandler(BaseHTTPRequestHandler):
         self._send_headers(204, "text/plain")
 
     def do_GET(self):
-        logging.info("GET %s from %s", self.path, self.client_address)
+        logging.info("GET %s from %s", urlparse(self.path).path, self.client_address)
         query = urlparse(self.path).query
         params = parse_qs(query)
+        if "error" in params:
+            # The user denied access: report it and stop listening.
+            print(json.dumps({"error": params["error"][0]}))
+            sys.stdout.flush()
+            self._set_exit_code(1)
+            self._send_headers(200, "text/plain")
+            self.wfile.write(b"Sign-in was cancelled. You can close this tab.")
+            self._shutdown()
+            return
+        # The redirect from Google carries the state we sent: anything else wasn't started by us.
+        if expected_state and params.get("state", [""])[0] != expected_state:
+            if "code" in params:
+                self._reject("state mismatch")
+            else:
+                self._send_headers(404, "text/plain")  # Eg: favicon.ico
+            return
         code = params.get("code", [""])[0]
         self._handle_code(self._extract_code(code), html_response=True)
 
     def do_POST(self):
         logging.info("POST %s from %s", self.path, self.client_address)
+        origin = self.headers.get("Origin")
+        if origin and origin != HELPER_ORIGIN:
+            self._reject("origin {}".format(origin))
+            return
         content_length = int(self.headers.get("Content-Length", 0))
         raw_body = self.rfile.read(content_length).decode("utf-8") if content_length else ""
         content_type = self.headers.get("Content-Type", "")
@@ -216,19 +294,41 @@ if __name__ == "__main__":
     parser.add_argument("--listen_port", required=True, type=int)
     parser.add_argument("--redirect_uri", default="")
     parser.add_argument("--code_verifier", default="")
+    parser.add_argument("--state", default="")
     args = parser.parse_args()
+    logging.info("Script started with args: %s", masked_argv(sys.argv))
     client_id = args.client_id
     client_secret = args.client_secret
     listen_port = args.listen_port
     redirect_uri = args.redirect_uri or "http://127.0.0.1:{}/".format(listen_port)
     code_verifier = args.code_verifier
+    expected_state = args.state
 
-    server_address = ("", listen_port)
+    stop_previous_listener()
+    # Loopback only: the browser on this machine is the only expected client.
+    server_address = ("127.0.0.1", listen_port)
     try:
         httpd = HTTPServer(server_address, OAuthRedirectHandler)
-        logging.info("Server started on port %s", listen_port)
-        httpd.serve_forever()
-    except Exception as e:
+    except Exception:
         logging.exception("Failed to start server")
         sys.exit(1)
+    try:
+        with open(pid_path, "w") as handle:
+            handle.write(str(os.getpid()))
+    except OSError:
+        pass
+    signal.signal(signal.SIGTERM, lambda signum, frame: threading.Thread(target=httpd.shutdown, daemon=True).start())
+    timer = threading.Timer(LISTEN_TIMEOUT, httpd.shutdown)
+    timer.daemon = True
+    timer.start()
+    logging.info("Server started on 127.0.0.1:%s", listen_port)
+    exit_code = 2  # Stays 2 if stopped by the timeout or SIGTERM without a code
+    httpd.serve_forever()
+    timer.cancel()
+    try:
+        with open(pid_path, "r") as handle:
+            if handle.read().strip() == str(os.getpid()):
+                os.remove(pid_path)
+    except OSError:
+        pass
     sys.exit(exit_code)

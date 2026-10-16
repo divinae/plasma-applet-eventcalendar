@@ -103,6 +103,7 @@ ConfigPage {
 
 	property bool autoLoginInProgress: false
 	property bool autoLoginCancelled: false
+	property int loginAttempt: 0 // Callbacks of older (replaced / cancelled) sign-ins are ignored
 	readonly property bool localRedirect: googleLoginManager.redirectMode === "local"
 	readonly property bool showDebug: page.configBridge.read("debugging", false)
 
@@ -149,6 +150,7 @@ ConfigPage {
 		}
 		autoLoginCancelled = false
 		autoLoginInProgress = true
+		var attempt = ++loginAttempt
 		googleLoginManager.prepareAuthorization()
 		googleLoginManager.maybeUseLegacyForLocal()
 		var authContext = googleLoginManager.currentAuthContext()
@@ -169,19 +171,31 @@ ConfigPage {
 			cmd.push('--client_secret')
 			cmd.push(authContext.clientSecret)
 		}
-		debugOutput.text = "Attempting to run:\n" + JSON.stringify(cmd) + "\n\n"
 		if (authContext.pkceVerifier) {
 			cmd.push('--code_verifier')
 			cmd.push(authContext.pkceVerifier)
 		}
+		if (authContext.state) {
+			cmd.push('--state')
+			cmd.push(authContext.state)
+		}
+		debugOutput.text = "Waiting for the browser sign-in…\n"
 		// Don't log cmd or stdout: they contain the client secret, PKCE verifier and tokens.
 		callbackListener.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
+			if (attempt !== loginAttempt) {
+				return // Replaced by a newer sign-in
+			}
 			if (autoLoginCancelled) {
 				autoLoginInProgress = false
 				return
 			}
 			autoLoginInProgress = false
-			debugOutput.text += "Exit: " + exitCode + "\nStdout: " + stdout + "\nStderr: " + stderr + "\n"
+			// Never show stdout: it has the tokens.
+			debugOutput.text += "Exit: " + exitCode + "\nStderr: " + stderr + "\n"
+			if (exitCode === 2) {
+				messageWidget.err(i18n("Sign-in timed out. Try again."))
+				return
+			}
 			if (exitCode !== 0) {
 				console.error('google_redirect.py failed:', exitCode, stderr)
 				messageWidget.err(i18n("Auto login failed. See logs for details."))
@@ -591,6 +605,7 @@ ConfigPage {
 						if (authorizationCodeInput.text) {
 							if (autoLoginInProgress) {
 								autoLoginCancelled = true
+								loginAttempt++ // Its listener callback must not apply an old code
 								autoLoginInProgress = false
 							}
 							var tokenData = parseTokenInput(authorizationCodeInput.text)
@@ -617,6 +632,7 @@ ConfigPage {
 						if (authorizationCodeInput.text) {
 							if (autoLoginInProgress) {
 								autoLoginCancelled = true
+								loginAttempt++ // Its listener callback must not apply an old code
 								autoLoginInProgress = false
 							}
 							var tokenData = parseTokenInput(authorizationCodeInput.text)
@@ -683,31 +699,6 @@ ConfigPage {
 					var cmd = ['python3', '--version']
 					callbackListener.exec(cmd, function(c, code, status, out, err) {
 						debugOutput.text += "Python Version: " + out + " " + err + "\n"
-					})
-				}
-			}
-			Button {
-				text: "Start Listener (Manual)"
-				onClicked: {
-					googleLoginManager.prepareAuthorization()
-					var authContext = googleLoginManager.currentAuthContext()
-					var cmd = [
-						'python3',
-						localFilePath(Qt.resolvedUrl("../../scripts/google_redirect.py")),
-						'--client_id',
-						authContext.clientId,
-						'--listen_port',
-						'53682',
-						'--redirect_uri',
-						authContext.redirectUri,
-					]
-					if (authContext.clientSecret) {
-						cmd.push('--client_secret')
-						cmd.push(authContext.clientSecret)
-					}
-					debugOutput.text = "Manually starting listener...\nCommand: " + JSON.stringify(cmd) + "\n"
-					callbackListener.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
-						debugOutput.text += "Listener Finished.\nExit: " + exitCode + "\nStdout: " + stdout + "\nStderr: " + stderr + "\n"
 					})
 				}
 			}
