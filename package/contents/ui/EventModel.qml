@@ -183,9 +183,6 @@ CalendarManager {
 		calendarList: appletConfig.icalCalendarList.value
 	}
 
-	DebugCalendarManager { id: debugCalendarManager }
-	// DebugGoogleCalendarManager { id: debugGoogleCalendarManager }
-
 	Repeater {
 		id: googleAccountsRepeater
 		model: googleAccountsStore.accounts

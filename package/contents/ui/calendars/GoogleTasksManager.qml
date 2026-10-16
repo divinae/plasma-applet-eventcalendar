@@ -6,7 +6,6 @@ import "../Shared.js" as Shared
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 
-// import "./GoogleCalendarTests.js" as GoogleCalendarTests
 
 
 // Google Tasks API
@@ -377,11 +376,6 @@ CalendarManager {
 
 	function fetchGCalTasks(args, callback) {
 		logger.debug('fetchGCalTasks', args.tasklistId)
-
-		// return GoogleCalendarTests.testInvalidCredentials(callback)
-		// return GoogleCalendarTests.testDailyLimitExceeded(callback)
-		// return GoogleCalendarTests.testBackendError(callback)
-
 		var onResponse = fetchGCalTasksPageResponse.bind(this, args, callback, null)
 		fetchGCalTasksPage(args, onResponse)
 	}

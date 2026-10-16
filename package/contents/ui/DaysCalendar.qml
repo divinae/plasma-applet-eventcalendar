@@ -311,11 +311,6 @@ Item {
 	}
 
 	Component {
-		id: highlightBarBadgeComponent
-		HighlightBarBadge {}
-	}
-
-	Component {
 		id: eventColorsBarBadgeComponent
 		EventColorsBarBadge {}
 	}
@@ -323,11 +318,6 @@ Item {
 	Component {
 		id: dotsBadgeComponent
 		DotsBadge {}
-	}
-
-	Component {
-		id: eventCountBadgeComponent
-		EventCountBadge {}
 	}
 
 	Component {

@@ -153,20 +153,11 @@ MouseArea {
 
 			active: parent.visible
 			property Component badgeComponent: {
-				if (dayStyle.eventBadgeType == 'bottomBar') {
-					return eventColorsBarBadgeComponent
-				} else if (dayStyle.eventBadgeType == 'bottomBarHighlight') {
-					return highlightBarBadgeComponent
-				} else if (dayStyle.eventBadgeType == 'count') {
-					return eventCountBadgeComponent
-				} else if (dayStyle.eventBadgeType == 'dots') {
-					return dotsBadgeComponent
-				} else if (dayStyle.eventBadgeType == 'eventTitles') {
-					return eventTitlesBadgeComponent
-				} else if (dayStyle.eventBadgeType == 'theme') {
-					return themeBadgeComponent
-				} else {
-					return null
+				switch (dayStyle.eventBadgeType) {
+					case 'bottomBar': return eventColorsBarBadgeComponent
+					case 'eventTitles': return eventTitlesBadgeComponent
+					case 'theme': return themeBadgeComponent
+					default: return dotsBadgeComponent // 'dots', and the removed 'count' / 'bottomBarHighlight'
 				}
 			}
 			sourceComponent: badgeComponent

@@ -6,7 +6,6 @@ import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 import "../code/ColorIdMap.js" as ColorIdMap
 
-// import "./GoogleCalendarTests.js" as GoogleCalendarTests
 
 CalendarManager {
 	id: googleCalendarManager
