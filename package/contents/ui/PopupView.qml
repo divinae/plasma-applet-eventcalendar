@@ -132,6 +132,8 @@ MouseArea {
 	property bool showAgenda: !fullViewMode
 	property bool showCalendar: monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
+	// The agenda view (and its meteogram / timer) is a list: cap its width and center it.
+	readonly property real agendaMaxWidth: Kirigami.Units.gridUnit * 32
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing
 	property bool agendaScrollOnSelect: true
@@ -666,6 +668,8 @@ MouseArea {
 			visible: showMeteogram
 			active: showMeteogram
 			Layout.fillWidth: true
+			Layout.maximumWidth: popup.agendaMaxWidth
+			Layout.alignment: Qt.AlignHCenter
 			Layout.minimumHeight: popup.topRowHeight
 			Layout.preferredWidth: popup.leftColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
@@ -716,6 +720,8 @@ MouseArea {
 			visible: showTimer
 			active: showTimer
 			Layout.fillWidth: true
+			Layout.maximumWidth: popup.agendaMaxWidth
+			Layout.alignment: Qt.AlignHCenter
 			Layout.minimumHeight: Math.max(popup.topRowHeight, implicitHeight)
 			Layout.preferredWidth: popup.rightColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
@@ -827,6 +833,8 @@ MouseArea {
 			Layout.preferredHeight: popup.bottomRowHeight
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			Layout.maximumWidth: popup.agendaMaxWidth
+			Layout.alignment: Qt.AlignHCenter
 
 			onNewEventFormOpened: function(agendaItem, calendarSelector) {
 				// logger.debug('onNewEventFormOpened')
