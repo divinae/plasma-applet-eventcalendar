@@ -30,9 +30,15 @@ for (const [, preAttrs, codeAttrs] of commandBlocks) {
 	assert.match(codeAttrs, /class="[^"]*\blanguage-bash\b[^"]*"/, 'command blocks must declare bash syntax highlighting')
 }
 
+// master is the only branch: clones must not point at old development / legacy branches.
 assert.ok(
-	html.includes('git clone -b master') && contributing.includes('git clone -b master'),
-	'website and contributor setup must target the active master branch'
+	html.includes('git clone') && contributing.includes('git clone'),
+	'website and contributor setup must show how to clone'
+)
+assert.doesNotMatch(
+	html + contributing,
+	/git clone -b (?:plasma-6|plasma-5)/,
+	'website and contributor setup must not clone removed branches'
 )
 assert.doesNotMatch(
 	html,
