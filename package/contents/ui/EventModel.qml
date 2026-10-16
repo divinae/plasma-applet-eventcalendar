@@ -4,6 +4,7 @@ import "./calendars"
 import "./lib"
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
+import "EventCacheUtil.js" as EventCacheUtil
 
 CalendarManager {
 	id: eventModel
@@ -276,7 +277,74 @@ CalendarManager {
 		eventModel.clearingData = false
 	}
 
-	onAllDataFetched: mergeEvents()
+	onAllDataFetched: {
+		restoreCachedCalendars()
+		mergeEvents()
+	}
+
+	//--- Event cache (EventCache.qml): shown on start until the first fetch round brings them in.
+	property var cachedEventsByCalendar: ({}) // { calendarId: { items: [...] } }, Google calendars only
+
+	// Events from the disk cache: parsed like fetched ones, shown right away.
+	function showCachedEvents(calendars) {
+		var shown = {}
+		for (var calendarId in calendars) {
+			var items = calendars[calendarId]
+			for (var i = 0; i < items.length; i++) {
+				defaultEventParsing(calendarId, items[i])
+				items[i].calendarManagerId = 'GoogleCalendar'
+				items[i].description = ''
+			}
+			shown[calendarId] = { items: items }
+			eventModel.eventsByCalendar[calendarId] = shown[calendarId]
+		}
+		eventModel.cachedEventsByCalendar = shown
+		mergeEvents()
+	}
+
+	// A fetch round that couldn't load a cached calendar (offline right after boot, keyring still
+	// locked) keeps showing the cached events instead of an empty calendar.
+	function restoreCachedCalendars() {
+		var selected = EventCacheUtil.selectedCalendarIds(googleAccountsStore.accounts)
+		for (var calendarId in eventModel.cachedEventsByCalendar) {
+			if (!eventModel.eventsByCalendar[calendarId] && selected[calendarId]) {
+				eventModel.eventsByCalendar[calendarId] = eventModel.cachedEventsByCalendar[calendarId]
+			}
+		}
+	}
+
+	// After a fetch round without network errors: calendars that were fetched no longer need the
+	// cached copy, nor do ones whose account can't be fetched (signed out). Until the keyring gave
+	// the tokens, nothing Google was fetched yet, so everything stays.
+	function settleCachedCalendars() {
+		if (!googleAccountsStore.secretsLoaded) {
+			return
+		}
+		var fetchable = {}
+		var accounts = googleAccountsStore.fetchableAccounts
+		for (var i = 0; i < accounts.length; i++) {
+			fetchable[accounts[i].id] = true
+		}
+		var remaining = {}
+		var removed = false
+		for (var calendarId in eventModel.cachedEventsByCalendar) {
+			var cached = eventModel.cachedEventsByCalendar[calendarId]
+			var accountId = calendarId.slice(0, calendarId.indexOf('::'))
+			if (eventModel.eventsByCalendar[calendarId] !== cached) {
+				continue // Fetched
+			}
+			if (!fetchable[accountId]) {
+				delete eventModel.eventsByCalendar[calendarId]
+				removed = true
+				continue
+			}
+			remaining[calendarId] = cached
+		}
+		eventModel.cachedEventsByCalendar = remaining
+		if (removed) {
+			mergeEvents()
+		}
+	}
 
 	// Tooltip text for an event: time, location, calendar, start of the description.
 	function eventDetailsText(eventItem) {

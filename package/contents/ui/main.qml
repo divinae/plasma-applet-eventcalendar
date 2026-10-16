@@ -30,6 +30,7 @@ PlasmoidItem {
 	
 	TimeModel { id: timeModel }
 	TimerModel { id: timerModel }
+	EventCache { id: eventCache }
 	EventModel { id: eventModel }
 	UpcomingEvents { id: upcomingEvents }
 	AgendaModel {

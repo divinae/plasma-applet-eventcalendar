@@ -4,6 +4,7 @@ import "./lib/Requests.js" as Requests
 import "./weather/WeatherApi.js" as WeatherApi
 import "./lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "./lib/SafeConfig.js" as SafeConfig
+import "./EventCacheUtil.js" as EventCacheUtil
 
 Item {
 	readonly property Item popup: root.fullRepresentationItem
@@ -20,7 +21,31 @@ Item {
 	//--- Main
 	Component.onCompleted: {
 		lastGoogleSelectionSignature = googleSelectionSignature()
+		showCachedEvents()
 		pollTimer.start()
+	}
+
+	//--- Event cache: the last loaded Google events, shown until the first fetch round finishes.
+	function showCachedEvents() {
+		var selected = EventCacheUtil.selectedCalendarIds(parseGoogleAccounts())
+		var cached = eventCache.load(function(calendarId) { return !!selected[calendarId] })
+		if (!cached) {
+			return
+		}
+		logger.debug('showCachedEvents', Object.keys(cached.calendars).length, 'calendars from', new Date(cached.savedAt))
+		eventModel.showCachedEvents(cached.calendars)
+		if (popup) popup.updateUI()
+	}
+	Connections {
+		target: eventModel
+		function onAllDataFetched() {
+			// A round that hit the network error keeps the cache file as it is.
+			if (logic.eventsRoundNetworkError) {
+				return
+			}
+			eventModel.settleCachedCalendars()
+			eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
+		}
 	}
 
 	//--- Update
