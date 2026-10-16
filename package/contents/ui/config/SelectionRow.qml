@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
@@ -6,7 +7,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 import "../lib/ColorUtil.js" as ColorUtil
 
 // A calendar or task list the user can show in the widget, as a FormCard check row: color swatch
-// (or icon), name, and a lock when it's read-only.
+// (or icon), name, a lock when it's read-only, and an edit button when it's editable.
 FormCard.FormCheckDelegate {
 	id: row
 
@@ -14,6 +15,9 @@ FormCard.FormCheckDelegate {
 	property color swatchColor: "transparent"
 	property url iconSource
 	property bool readOnly: false
+	property bool editable: false
+
+	signal editRequested()
 
 	text: name
 
@@ -35,13 +39,32 @@ FormCard.FormCheckDelegate {
 			smooth: true
 		}
 	}
-	// The delegate manages the trailing item's own visibility, so the lock is a child of it.
+	// The delegate manages the trailing item's own visibility, so the lock and button are children of it.
 	trailing: Item {
-		implicitWidth: Kirigami.Units.iconSizes.small
-		implicitHeight: Kirigami.Units.iconSizes.small
-		LockIcon {
+		implicitWidth: trailingRow.implicitWidth
+		implicitHeight: trailingRow.implicitHeight
+		RowLayout {
+			id: trailingRow
 			anchors.fill: parent
-			visible: row.readOnly
+			spacing: Kirigami.Units.smallSpacing
+			Item {
+				Layout.preferredWidth: Kirigami.Units.iconSizes.small
+				Layout.preferredHeight: Kirigami.Units.iconSizes.small
+				LockIcon {
+					anchors.fill: parent
+					visible: row.readOnly
+				}
+			}
+			ToolButton {
+				visible: row.editable
+				icon.name: "document-edit"
+				display: AbstractButton.IconOnly
+				text: i18n("Edit calendar…")
+				onClicked: row.editRequested()
+				ToolTip.text: text
+				ToolTip.visible: hovered
+				ToolTip.delay: Kirigami.Units.toolTipDelay
+			}
 		}
 	}
 

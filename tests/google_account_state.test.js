@@ -97,12 +97,15 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 	const calendar = {
 		id: 'primary',
 		summary: 'Primary Calendar',
+		summaryOverride: 'Me',
 		description: 'Personal calendar',
+		colorId: '16',
 		backgroundColor: '#2952a3',
 		foregroundColor: '#ffffff',
 		accessRole: 'owner',
 		primary: true,
 		timeZone: 'Etc/UTC',
+		defaultReminders: [{ method: 'popup', minutes: 10 }],
 	}
 	calendar.self = calendar
 
@@ -144,7 +147,9 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 	assert.deepStrictEqual(serialized.calendarList, [{
 		id: 'primary',
 		summary: 'Primary Calendar',
+		summaryOverride: 'Me',
 		description: 'Personal calendar',
+		colorId: '16',
 		backgroundColor: '#2952a3',
 		foregroundColor: '#ffffff',
 		accessRole: 'owner',
