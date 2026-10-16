@@ -180,6 +180,8 @@ KCM.SimpleKCM {
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes
 	property var cfg_clockNextEventMinutesDefault
+	property var cfg_clockShowMeetingProgress
+	property var cfg_clockShowMeetingProgressDefault
 	property var cfg_eventReminderTimeout
 	property var cfg_eventReminderTimeoutDefault
 	property var cfg_eventReminderSnoozeMinutes

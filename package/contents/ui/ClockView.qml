@@ -24,6 +24,7 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
 import "lib/ColorUtil.js" as ColorUtil
+import "LocaleFuncs.js" as LocaleFuncs
 
 Item {
 	id: clock
@@ -147,39 +148,76 @@ Item {
 		}
 	}
 
-	Row {
+	// "Standup · in 5 min", or during the meeting "Standup · 12 min left" with a thin progress bar
+	// under the text in the calendar's color.
+	Item {
 		id: nextEventChip
 		visible: clock.showNextEventChip
 		anchors.left: labels.right
 		anchors.leftMargin: Kirigami.Units.smallSpacing * 2
 		anchors.verticalCenter: parent.verticalCenter
-		spacing: Kirigami.Units.smallSpacing
+		width: chipRow.width
+		height: chipRow.height
 
 		readonly property int fontPixelSize: Math.max(Kirigami.Theme.smallFont.pixelSize, Math.round(clock.height * 0.32))
+		readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+		readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
+		readonly property bool showProgress: inProgress && plasmoid.configuration.clockShowMeetingProgress
 
-		Rectangle {
-			anchors.verticalCenter: parent.verticalCenter
-			width: Math.round(nextEventChip.fontPixelSize * 0.6)
-			height: width
-			radius: width / 2
-			color: clock.nextEvent && clock.nextEvent.backgroundColor ? clock.nextEvent.backgroundColor : Kirigami.Theme.highlightColor
-			border.width: 1
-			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
-		}
-		PlasmaComponents3.Label {
-			id: nextEventLabel
-			anchors.verticalCenter: parent.verticalCenter
-			font.pointSize: -1
-			font.pixelSize: nextEventChip.fontPixelSize
-			text: {
-				if (!clock.nextEvent) {
-					return ""
-				}
-				var time = upcomingEvents.nextEventTime || i18nc("event in progress", "now")
-				return i18nc("%1 = event title, %2 = 5m / now", "%1 · %2", clock.nextEvent.summary, time)
+		function whenText() {
+			if (inProgress) {
+				var left = upcomingEvents.nextEventMinutesLeft
+				return left < 60
+					? i18ncp("time left in the current meeting", "%1 min left", "%1 min left", left)
+					: i18nc("time left in the current meeting, %1 = 1h20m", "%1 left", LocaleFuncs.durationShortFormat(left * 60))
 			}
-			elide: Text.ElideMiddle // Keep the time visible.
-			width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 12)
+			var until = upcomingEvents.nextEventMinutesUntil
+			return until < 60
+				? i18ncp("meeting starts in", "in %1 min", "in %1 min", until)
+				: i18nc("meeting starts in, %1 = 1h20m", "in %1", LocaleFuncs.durationShortFormat(until * 60))
+		}
+
+		Row {
+			id: chipRow
+			spacing: Kirigami.Units.smallSpacing
+
+			Rectangle {
+				anchors.verticalCenter: parent.verticalCenter
+				width: Math.round(nextEventChip.fontPixelSize * 0.6)
+				height: width
+				radius: width / 2
+				color: nextEventChip.eventColor
+				border.width: 1
+				border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
+			}
+			PlasmaComponents3.Label {
+				id: nextEventLabel
+				anchors.verticalCenter: parent.verticalCenter
+				font.pointSize: -1
+				font.pixelSize: nextEventChip.fontPixelSize
+				text: clock.nextEvent
+					? i18nc("%1 = event title, %2 = in 5 min / 12 min left", "%1 · %2", clock.nextEvent.summary, nextEventChip.whenText())
+					: ""
+				elide: Text.ElideMiddle // Keep the time visible.
+				width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 12)
+			}
+		}
+
+		// Progress of the current meeting, under the text.
+		Rectangle {
+			visible: nextEventChip.showProgress
+			x: nextEventLabel.x
+			y: nextEventLabel.y + nextEventLabel.height + 1
+			width: nextEventLabel.width
+			height: Math.max(2, Math.round(nextEventChip.fontPixelSize / 7))
+			radius: height / 2
+			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
+			Rectangle {
+				width: parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0)
+				height: parent.height
+				radius: parent.radius
+				color: nextEventChip.eventColor
+			}
 		}
 	}
 
