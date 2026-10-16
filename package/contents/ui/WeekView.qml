@@ -39,16 +39,17 @@ Item {
 	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
 	// Too narrow for both: the panel becomes a compact row above the grid.
 	readonly property real weatherPanelWidth: Kirigami.Units.gridUnit * 13
+	readonly property real weatherGap: Kirigami.Units.largeSpacing * 2 // Each side of the separator
 	readonly property bool weatherBeside: singleDay && showWeather && width >= Kirigami.Units.gridUnit * 36
 	readonly property real contentWidth: {
 		if (!singleDay) {
 			return width
 		}
-		var room = weatherBeside ? width - weatherPanelWidth - Kirigami.Units.largeSpacing * 2 : width
+		var room = weatherBeside ? width - weatherPanelWidth - weatherGap * 2 : width
 		return Math.min(room, Kirigami.Units.gridUnit * 32)
 	}
 	readonly property real contentX: {
-		var total = contentWidth + (weatherBeside ? weatherPanelWidth + Kirigami.Units.largeSpacing * 2 : 0)
+		var total = contentWidth + (weatherBeside ? weatherPanelWidth + weatherGap * 2 : 0)
 		return Math.round((width - total) / 2)
 	}
 	readonly property date todayStart: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate())
@@ -335,18 +336,18 @@ Item {
 	// Line between the day and its weather.
 	Kirigami.Separator {
 		visible: weekView.weatherBeside
-		x: weekView.contentX + weekView.contentWidth + Kirigami.Units.largeSpacing
+		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap
 		y: dayNamesRow.y
 		width: 1
 		height: parent.height - y
 	}
 	WeatherPanel {
 		visible: weekView.weatherBeside
-		x: weekView.contentX + weekView.contentWidth + Kirigami.Units.largeSpacing * 2
-		// Top aligned with the day header, like the grid.
-		y: dayNamesRow.y
-		width: weekView.weatherPanelWidth
-		height: parent.height - y
+		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
+		// Top aligned with the day header, like the grid, with a little padding.
+		y: dayNamesRow.y + Kirigami.Units.smallSpacing
+		width: weekView.weatherPanelWidth - Kirigami.Units.smallSpacing
+		height: parent.height - y - Kirigami.Units.smallSpacing
 		isSetup: weekView.weatherIsSetup
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		current: weekView.weatherCurrent
