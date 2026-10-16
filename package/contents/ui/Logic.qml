@@ -250,7 +250,11 @@ Item {
 	property string lastGoogleSelectionSignature: "" // Set once in onCompleted, not a binding.
 	function googleSelectionSignature() {
 		return JSON.stringify(parseGoogleAccounts().map(function(account) {
-			return [account.id, !!account.refreshToken, account.calendarIdList, account.tasklistIdList]
+			// Calendar names and colors too: editing a calendar in the settings recolors its events.
+			var calendars = (Array.isArray(account.calendarList) ? account.calendarList : []).map(function(calendar) {
+				return [calendar.id, calendar.summaryOverride || calendar.summary, calendar.backgroundColor, calendar.colorId]
+			})
+			return [account.id, !!account.refreshToken, account.calendarIdList, account.tasklistIdList, calendars]
 		}))
 	}
 	function parseGoogleAccounts() {

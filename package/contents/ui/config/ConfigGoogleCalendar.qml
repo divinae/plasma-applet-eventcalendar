@@ -259,6 +259,13 @@ ConfigPage {
 			messageWidget.err(err)
 		}
 	}
+	CalendarEditDialog {
+		id: calendarEditDialog
+		loginManager: googleLoginManager
+		// The widget refetches its events (new colors) once the settings are applied.
+		onSaved: page.markDirty()
+	}
+
 	// Advanced sign-in (custom OAuth client, manual code): collapsed by default.
 	property bool showAdvancedSignIn: false
 
@@ -290,7 +297,7 @@ ConfigPage {
 					if (!!a.primary !== !!b.primary) {
 						return a.primary ? -1 : 1
 					}
-					return (a.summary || '').toLowerCase().localeCompare((b.summary || '').toLowerCase())
+					return (a.summaryOverride || a.summary || '').toLowerCase().localeCompare((b.summaryOverride || b.summary || '').toLowerCase())
 				}) : []
 				readonly property var tasklists: account ? page.sortArr(Shared.toArray(account.tasklistList), "title") : []
 				readonly property bool needsRelog: googleLoginManager.accountNeedsRelog(account)
@@ -370,11 +377,14 @@ ConfigPage {
 						SelectionRow {
 							readonly property var calendar: accountSection.calendars[index]
 							Layout.fillWidth: true
-							name: calendar ? calendar.summary : ""
+							name: calendar ? (calendar.summaryOverride || calendar.summary) : ""
 							swatchColor: calendar ? (page.configBridge.read("googleColorPalette", "current") !== "classic" ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor) : "transparent"
 							readOnly: calendar ? calendar.accessRole === "reader" : false
 							checked: calendar ? page.isCalendarShown(accountSection.account, calendar) : false
 							onToggled: page.setCalendarShown(accountSection.account, calendar, checked)
+							// Name in the list and color can be set on any calendar; the name itself only by its owner.
+							editable: !!calendar
+							onEditRequested: calendarEditDialog.openFor(accountSection.account.id, calendar)
 						}
 					}
 

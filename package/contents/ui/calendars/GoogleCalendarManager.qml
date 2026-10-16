@@ -70,11 +70,13 @@ CalendarManager {
 		return scopedId
 	}
 
+	// The name in the user's calendar list (summaryOverride) wins over the calendar's own name.
 	function formatCalendarSummary(calendar) {
+		var name = calendar.summaryOverride || calendar.summary
 		if (accountLabel) {
-			return accountLabel + " - " + calendar.summary
+			return accountLabel + " - " + name
 		}
-		return calendar.summary
+		return name
 	}
 
 	function decorateCalendar(calendar) {

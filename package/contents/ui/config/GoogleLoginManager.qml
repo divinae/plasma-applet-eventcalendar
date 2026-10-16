@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../lib"
+import "../calendars"
 import "../lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "../lib/Pkce.js" as Pkce
 import "../lib/ConfigUtils.js" as ConfigUtils
@@ -568,18 +569,34 @@ Item {
 		updateTasklistList(accountId)
 	}
 
-	function updateCalendarList(accountId) {
+	// callback (optional): called once the new list is stored, or on an error.
+	function updateCalendarList(accountId, callback) {
+		var done = typeof callback === "function" ? callback : function() {}
 		var account = accountId ? accountsStore.getAccount(accountId) : activeAccount
 		logger.debug('updateCalendarList', account ? account.id : null)
-		if (!account || !account.accessToken) {
-			return
+		if (!account) {
+			return done()
 		}
+		withAccountToken(account.id, function(tokenErr, accessToken) {
+			if (tokenErr) {
+				handleError(tokenErr, null)
+				return done()
+			}
+			fetchCalendarListInto(account.id, accessToken, done)
+		})
+	}
+
+	function fetchCalendarListInto(accountId, accessToken, done) {
 		fetchGCalCalendars({
-			accessToken: account.accessToken,
+			accessToken: accessToken,
 		}, function(err, data, xhr) {
 			if (err || data.error) {
 				handleError(err, data)
-				return
+				return done()
+			}
+			var account = accountsStore.getAccount(accountId)
+			if (!account) {
+				return done()
 			}
 			var label = deriveLabelFromCalendars(data.items)
 			var patch = { calendarList: data.items }
@@ -596,7 +613,9 @@ Item {
 					patch.calendarSelectionInitialized = true
 				}
 			}
-			accountsStore.updateAccount(account.id, patch)
+			accountsStore.updateAccount(account.id, patch, function() {
+				done()
+			})
 		})
 	}
 
@@ -623,17 +642,23 @@ Item {
 	function updateTasklistList(accountId) {
 		var account = accountId ? accountsStore.getAccount(accountId) : activeAccount
 		logger.debug('updateTasklistList', account ? account.id : null)
-		if (!account || !account.accessToken) {
+		if (!account) {
 			return
 		}
-		fetchGoogleTasklistList({
-			accessToken: account.accessToken,
-		}, function(err, data, xhr) {
-			if (err || data.error) {
-				logger.log('updateTasklistList error', err, data)
+		// A token error is shown by updateCalendarList already.
+		withAccountToken(account.id, function(tokenErr, accessToken) {
+			if (tokenErr) {
 				return
 			}
-			accountsStore.updateAccount(account.id, { tasklistList: data.items })
+			fetchGoogleTasklistList({
+				accessToken: accessToken,
+			}, function(err, data, xhr) {
+				if (err || data.error) {
+					logger.log('updateTasklistList error', err)
+					return
+				}
+				accountsStore.updateAccount(account.id, { tasklistList: data.items })
+			})
 		})
 	}
 
@@ -685,6 +710,156 @@ Item {
 			return list[0].summary || list[0].id || ''
 		}
 		return ''
+	}
+
+	//--- Access tokens aren't saved, so the settings refresh them with the account's refresh token.
+	Component {
+		id: apiSessionComponent
+		GoogleApiSession {}
+	}
+	property var apiSessions: ({})
+	function withAccountToken(accountId, callback) {
+		var apiSession = apiSessions[accountId]
+		if (!apiSession) {
+			apiSession = apiSessionComponent.createObject(session, {
+				accountsStore: accountsStore,
+				accountId: accountId,
+			})
+			apiSessions[accountId] = apiSession
+		}
+		apiSession.checkAccessToken(function(err) {
+			var account = accountsStore.getAccount(accountId)
+			if (!err && !(account && account.accessToken)) {
+				err = i18n("Not signed in to this Google account. Sign in again.")
+			}
+			callback(err || null, err ? '' : account.accessToken)
+		})
+	}
+
+	//--- Editing a calendar: its name and color
+	// The user owns it and it isn't their main calendar (which is named after them).
+	function canRenameCalendar(calendar) {
+		return !!calendar && calendar.accessRole === 'owner' && !calendar.primary
+	}
+
+	// Black or white text, whichever reads better on the color.
+	function foregroundColorFor(hex) {
+		var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex || '')
+		if (!m) {
+			return '#ffffff'
+		}
+		var luma = 0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)
+		return luma > 160 ? '#1d1d1d' : '#ffffff'
+	}
+
+	// Google APIs take PATCH as a POST with an override header (QML's XMLHttpRequest may not
+	// send a PATCH body). Only the given fields change; null clears one.
+	function patchJSON(url, accessToken, data, callback) {
+		Requests.postJSON({
+			url: url,
+			headers: {
+				"Authorization": "Bearer " + accessToken,
+				"X-HTTP-Method-Override": "PATCH",
+			},
+			data: data,
+		}, function(err, responseData, xhr) {
+			if (!err && responseData && responseData.error) {
+				err = 'patch error'
+			}
+			logger.debugJSON('patchJSON.responseSummary', {
+				status: xhr ? xhr.status : 0,
+				err: err ? String(err) : "",
+			})
+			callback(err, responseData, xhr)
+		})
+	}
+
+	// https://developers.google.com/calendar/api/v3/reference/calendarList/patch
+	function patchCalendarListEntry(accessToken, calendarId, fields, callback) {
+		var url = 'https://www.googleapis.com/calendar/v3/users/me/calendarList/'
+		url += encodeURIComponent(calendarId)
+		url += '?colorRgbFormat=true'
+		patchJSON(url, accessToken, fields, callback)
+	}
+
+	// https://developers.google.com/calendar/api/v3/reference/calendars/patch
+	function patchCalendar(accessToken, calendarId, fields, callback) {
+		var url = 'https://www.googleapis.com/calendar/v3/calendars/'
+		url += encodeURIComponent(calendarId)
+		patchJSON(url, accessToken, fields, callback)
+	}
+
+	// The requests needed to save the dialog's { name, color } for a calendar list entry.
+	// Unchanged values send nothing. Returns [{ kind: 'calendar' | 'calendarList', fields }].
+	function calendarChangeRequests(calendar, changes) {
+		var requests = []
+		var listFields = {}
+		var currentName = calendar.summaryOverride || calendar.summary || ''
+		var name = typeof changes.name === 'string' ? changes.name.trim() : currentName
+		if (name && name !== currentName) {
+			if (canRenameCalendar(calendar)) {
+				requests.push({ kind: 'calendar', fields: { summary: name } })
+				if (calendar.summaryOverride) {
+					listFields.summaryOverride = null
+				}
+			} else if (name === calendar.summary) {
+				listFields.summaryOverride = null
+			} else {
+				listFields.summaryOverride = name
+			}
+		} else if (!name && calendar.summaryOverride) {
+			// An emptied field goes back to the calendar's own name.
+			listFields.summaryOverride = null
+		}
+		var color = String(changes.color || '').toLowerCase()
+		if (color && color !== String(calendar.backgroundColor || '').toLowerCase()) {
+			listFields.backgroundColor = color
+			listFields.foregroundColor = foregroundColorFor(color)
+		}
+		if (Object.keys(listFields).length) {
+			requests.push({ kind: 'calendarList', fields: listFields })
+		}
+		return requests
+	}
+
+	// changes: { name, color }. callback(err): err is a message for the user.
+	function saveCalendarChanges(accountId, calendar, changes, callback) {
+		var requests = calendarChangeRequests(calendar, changes)
+		if (!requests.length) {
+			callback(null)
+			return
+		}
+		withAccountToken(accountId, function(tokenErr, accessToken) {
+			if (tokenErr) {
+				callback(String(tokenErr))
+				return
+			}
+			var i = 0
+			function next(err, data) {
+				if (err) {
+					var message = data && data.error && data.error.message
+						? data.error.message + (data.error.code ? ' (' + data.error.code + ')' : '')
+						: String(err)
+					callback(i18n("Could not save the calendar: %1", message))
+					// Some requests may have gone through.
+					updateCalendarList(accountId)
+					return
+				}
+				if (i >= requests.length) {
+					updateCalendarList(accountId, function() {
+						callback(null)
+					})
+					return
+				}
+				var request = requests[i++]
+				if (request.kind === 'calendar') {
+					patchCalendar(accessToken, calendar.id, request.fields, next)
+				} else {
+					patchCalendarListEntry(accessToken, calendar.id, request.fields, next)
+				}
+			}
+			next(null)
+		})
 	}
 
 	// https://developers.google.com/calendar/v3/errors

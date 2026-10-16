@@ -50,12 +50,46 @@ var eventColors = {
 // Calendar colorIds 1..24 (same order as the classic list above).
 var calendarColorsById = Object.keys(calendarColors).map(function(k) { return calendarColors[k] })
 
+// The current calendar colors with their Google Calendar names, in Google's order (for pickers).
+var calendarPalette = [
+	{ name: 'Tomato', color: '#d50000' },
+	{ name: 'Flamingo', color: '#e67c73' },
+	{ name: 'Tangerine', color: '#f4511e' },
+	{ name: 'Banana', color: '#f6bf26' },
+	{ name: 'Sage', color: '#33b679' },
+	{ name: 'Basil', color: '#0b8043' },
+	{ name: 'Peacock', color: '#039be5' },
+	{ name: 'Blueberry', color: '#3f51b5' },
+	{ name: 'Lavender', color: '#7986cb' },
+	{ name: 'Grape', color: '#8e24aa' },
+	{ name: 'Graphite', color: '#616161' },
+	{ name: 'Cherry blossom', color: '#d81b60' },
+	{ name: 'Radicchio', color: '#ad1457' },
+	{ name: 'Pumpkin', color: '#ef6c00' },
+	{ name: 'Mango', color: '#f09300' },
+	{ name: 'Citron', color: '#e4c441' },
+	{ name: 'Avocado', color: '#c0ca33' },
+	{ name: 'Pistachio', color: '#7cb342' },
+	{ name: 'Eucalyptus', color: '#009688' },
+	{ name: 'Cobalt', color: '#4285f4' },
+	{ name: 'Wisteria', color: '#b39ddb' },
+	{ name: 'Amethyst', color: '#9e69af' },
+	{ name: 'Birch', color: '#a79b8e' },
+	{ name: 'Cocoa', color: '#795548' },
+]
+var currentColors = {}
+calendarPalette.forEach(function(entry) { currentColors[entry.color] = true })
+
 // calendarColor(calendar) or calendarColor("#hex"): the color Google Calendar shows for a calendar.
-// By hex first; colors the API returns outside the classic list (eg: "#dadada") by colorId.
+// A current color (eg: set from this widget) as is; a classic one mapped; colors the API returns
+// outside both lists (eg: "#dadada") by colorId.
 function calendarColor(calendarOrColor) {
 	var isObject = calendarOrColor && typeof calendarOrColor === 'object'
 	var color = isObject ? calendarOrColor.backgroundColor : calendarOrColor
 	var key = String(color || '').toLowerCase()
+	if (currentColors[key]) {
+		return color
+	}
 	if (calendarColors[key]) {
 		return calendarColors[key]
 	}

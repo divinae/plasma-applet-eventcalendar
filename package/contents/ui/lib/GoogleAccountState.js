@@ -89,7 +89,9 @@ function serializableCalendar(calendar) {
 	var safe = {}
 	copyStringField(calendar, safe, "id")
 	copyStringField(calendar, safe, "summary")
+	copyStringField(calendar, safe, "summaryOverride") // The name in the user's list
 	copyStringField(calendar, safe, "description")
+	copyStringField(calendar, safe, "colorId")
 	copyStringField(calendar, safe, "backgroundColor")
 	copyStringField(calendar, safe, "foregroundColor")
 	copyStringField(calendar, safe, "accessRole")
