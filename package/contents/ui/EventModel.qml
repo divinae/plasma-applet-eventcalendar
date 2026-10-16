@@ -426,6 +426,49 @@ CalendarManager {
 		}
 	}
 
+	// Whole recurring series (Google): seriesId is an occurrence's recurringEventId.
+	function deleteSeries(calendarId, seriesId, done) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.deleteSeries === 'function') {
+			calendarManager.deleteSeries(calendarId, seriesId, done)
+		} else {
+			logger.log('Could not deleteSeries for calendarId = ', calendarId)
+		}
+	}
+
+	// RSVP (Google): set only the signed-in user's own attendee responseStatus ('accepted',
+	// 'tentative', 'declined'), on the occurrence or, with series, the whole recurring series.
+	function respondToEvent(eventItem, status, series, done) {
+		if (!eventItem || ['accepted', 'tentative', 'declined'].indexOf(status) < 0) {
+			return
+		}
+		var eventId = series && eventItem.recurringEventId ? eventItem.recurringEventId : eventItem.id
+		updateEventFromServer(eventItem.calendarId, eventId, function(serverEvent) {
+			var attendees = Shared.toArray(serverEvent.attendees).map(function(a) {
+				var copy = {}
+				for (var key in a) {
+					copy[key] = a[key]
+				}
+				if (copy.self) {
+					copy.responseStatus = status
+				}
+				return copy
+			})
+			return { attendees: attendees }
+		}, done)
+	}
+
+	// The signed-in user's attendee entry when invited (not when organizing), else null.
+	function selfAttendee(eventItem) {
+		var attendees = eventItem ? Shared.toArray(eventItem.attendees) : []
+		for (var i = 0; i < attendees.length; i++) {
+			if (attendees[i].self) {
+				return attendees[i].organizer ? null : attendees[i]
+			}
+		}
+		return null
+	}
+
 	function setEventProperty(calendarId, eventId, key, value) {
 		logger.debug('eventModel.setEventProperty', calendarId, eventId, key, value)
 		var calendarManager = getCalendarManager(calendarId)
