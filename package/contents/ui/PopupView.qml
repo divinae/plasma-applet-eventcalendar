@@ -362,13 +362,16 @@ MouseArea {
 		quickAddOpen = false
 	}
 
-	//--- Day events list (month view: click a day). Event details open on top of it.
-	property var dayListDate: null
-	function showDayEvents(date) {
-		dayListDate = date
-	}
-	function closeDayEvents() {
-		dayListDate = null
+	//--- Month view: clicking a day opens it in the Today view.
+	property var pendingDayViewDate: null // Picked up when the day view is created
+	function showDayView(date) {
+		var day = Shared.startOfDay(date)
+		if (dayMode && weekViewLoader.item) {
+			weekViewLoader.item.weekStart = day
+			return
+		}
+		pendingDayViewDate = day
+		plasmoid.configuration.popupMode = 'today'
 	}
 
 	//--- New / edit event form, on top of everything.
@@ -398,7 +401,6 @@ MouseArea {
 		editorOpen = false
 		editorEvent = null
 		detailsEvent = null
-		dayListDate = null
 		searchOpen = false
 		quickAddOpen = false
 	}
@@ -425,7 +427,7 @@ MouseArea {
 		target: monthView
 		function onDateClicked(clickedDate) {
 			if (popup.monthMode && plasmoid.configuration.monthClickOpensDay) {
-				popup.showDayEvents(clickedDate)
+				popup.showDayView(clickedDate)
 			}
 		}
 	}
@@ -533,27 +535,6 @@ MouseArea {
 	}
 
 	OverlayCard {
-		id: dayEventsOverlay
-		visible: !!popup.dayListDate
-		z: 4
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		onOutsideClicked: popup.closeDayEvents()
-		cardComponent: visible ? dayEventsCard : null
-		Component {
-			id: dayEventsCard
-			DayEventsView {
-				date: popup.dayListDate
-				onCloseRequested: popup.closeDayEvents()
-				onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
-				onAddRequested: popup.newEvent(popup.dayListDate)
-			}
-		}
-	}
-
-	OverlayCard {
 		id: eventDetailsOverlay
 		visible: !!popup.detailsEvent
 		z: 5
@@ -623,6 +604,12 @@ MouseArea {
 		active: popup.hourGridMode
 		visible: active
 		anchors.fill: widgetGrid
+		onLoaded: {
+			if (popup.pendingDayViewDate) {
+				item.weekStart = popup.pendingDayViewDate
+				popup.pendingDayViewDate = null
+			}
+		}
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
 			dayCount: popup.dayMode ? 1 : 7
@@ -632,9 +619,9 @@ MouseArea {
 			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
 			weatherLoading: logic.weatherLoading
 			showHeader: false
-			// Make sure the visible week's month is fetched.
+			// Make sure the visible week's (or day's) month is fetched.
 			onWeekStartChanged: {
-				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 3)
+				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + Math.floor(dayCount / 2))
 				popup.monthViewDate = middle
 			}
 		}

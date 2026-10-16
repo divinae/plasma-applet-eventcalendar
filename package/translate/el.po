@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 13:41+0200\n"
+"POT-Creation-Date: 2026-10-16 14:39+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -75,7 +75,7 @@ msgstr "Αύριο · %1"
 msgid "New Event"
 msgstr "Νέο συμβάν"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/DayEventsView.qml
+#: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Κανένα συμβάν"
 
@@ -932,8 +932,8 @@ msgid "Week numbers"
 msgstr "Αριθμοί εβδομάδων"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day shows its events"
-msgstr "Το κλικ σε ημέρα εμφανίζει τα συμβάντα της"
+msgid "Clicking a day opens it in the Today view"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1116,26 +1116,6 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d MMM yyyy"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
-msgid "All day"
-msgstr "Όλη την ημέρα"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/SearchView.qml
-msgid "Back"
-msgstr "Πίσω"
-
-#: ../contents/ui/DayEventsView.qml
-msgid "Add Event"
-msgstr "Προσθήκη συμβάντος"
-
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "προς"
@@ -1287,6 +1267,10 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Υπενθυμίσεις: %1 πριν"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+msgid "Back"
+msgstr "Πίσω"
+
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Διαγραφή:"
@@ -1306,6 +1290,11 @@ msgstr "Όλα τα συμβάντα"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Διαγράφει όλες τις επαναλήψεις αυτού του επαναλαμβανόμενου συμβάντος."
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/WeekView.qml
+msgid "All day"
+msgstr "Όλη την ημέρα"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1707,6 +1696,11 @@ msgstr ""
 msgid "More options…"
 msgstr "Περισσότερες επιλογές…"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
@@ -1894,6 +1888,12 @@ msgstr[1] "%1 ημέρες"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Clicking a day shows its events"
+#~ msgstr "Το κλικ σε ημέρα εμφανίζει τα συμβάντα της"
+
+#~ msgid "Add Event"
+#~ msgstr "Προσθήκη συμβάντος"
 
 #~ msgid "Delete This Occurrence"
 #~ msgstr "Διαγραφή αυτής της επανάληψης"

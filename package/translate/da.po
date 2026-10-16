@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 13:41+0200\n"
+"POT-Creation-Date: 2026-10-16 14:39+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -75,7 +75,7 @@ msgstr "I morgen · %1"
 msgid "New Event"
 msgstr "Ny begivenhed"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/DayEventsView.qml
+#: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Ingen begivenheder"
 
@@ -918,8 +918,8 @@ msgid "Week numbers"
 msgstr "Ugenumre"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day shows its events"
-msgstr "Klik på en dag viser dens begivenheder"
+msgid "Clicking a day opens it in the Today view"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1102,26 +1102,6 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d. MMM yyyy"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
-msgid "All day"
-msgstr "Hele dagen"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/SearchView.qml
-msgid "Back"
-msgstr "Tilbage"
-
-#: ../contents/ui/DayEventsView.qml
-msgid "Add Event"
-msgstr "Tilføj begivenhed"
-
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "til"
@@ -1273,6 +1253,10 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Påmindelser: %1 før"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+msgid "Back"
+msgstr "Tilbage"
+
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Slet:"
@@ -1292,6 +1276,11 @@ msgstr "Alle begivenheder"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Sletter alle forekomster af denne gentagne begivenhed."
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/WeekView.qml
+msgid "All day"
+msgstr "Hele dagen"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1689,6 +1678,11 @@ msgstr "Skriv hvad, hvornår og hvor. Uden en dag tilføjes begivenheden den %1.
 msgid "More options…"
 msgstr "Flere indstillinger…"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
@@ -1871,6 +1865,12 @@ msgstr[1] "%1 dage"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Clicking a day shows its events"
+#~ msgstr "Klik på en dag viser dens begivenheder"
+
+#~ msgid "Add Event"
+#~ msgstr "Tilføj begivenhed"
 
 #~ msgid "Delete This Occurrence"
 #~ msgstr "Slet denne forekomst"

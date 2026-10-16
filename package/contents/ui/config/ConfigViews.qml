@@ -118,7 +118,7 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
-				text: i18n("Clicking a day shows its events")
+				text: i18n("Clicking a day opens it in the Today view")
 				description: i18n("Month view")
 				configKey: 'monthClickOpensDay'
 			}

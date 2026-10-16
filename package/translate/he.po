@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 13:41+0200\n"
+"POT-Creation-Date: 2026-10-16 14:39+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -76,7 +76,7 @@ msgstr "מחר · %1"
 msgid "New Event"
 msgstr "אירוע חדש"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/DayEventsView.qml
+#: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "אין אירועים"
 
@@ -912,8 +912,8 @@ msgid "Week numbers"
 msgstr "מספרי שבועות"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day shows its events"
-msgstr "לחיצה על יום מציגה את האירועים שלו"
+msgid "Clicking a day opens it in the Today view"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1096,26 +1096,6 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d ב־MMM, yyyy"
 
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
-msgid "All day"
-msgstr "כל היום"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/SearchView.qml
-msgid "Back"
-msgstr "חזרה"
-
-#: ../contents/ui/DayEventsView.qml
-msgid "Add Event"
-msgstr "הוספת אירוע"
-
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "עד"
@@ -1269,6 +1249,10 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "תזכורות: %1 לפני"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+msgid "Back"
+msgstr "חזרה"
+
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "מחיקה:"
@@ -1288,6 +1272,11 @@ msgstr "כל האירועים"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "מוחק את כל המופעים של האירוע החוזר הזה."
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/WeekView.qml
+msgid "All day"
+msgstr "כל היום"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
@@ -1699,6 +1688,11 @@ msgstr "יש להקליד מה, מתי ואיפה. ללא יום, האירוע �
 msgid "More options…"
 msgstr "אפשרויות נוספות…"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
 #: ../contents/ui/SearchView.qml
 msgctxt "search result, %1 = date"
 msgid "%1 · All day"
@@ -1885,6 +1879,12 @@ msgstr[3] "%1 ימים"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Clicking a day shows its events"
+#~ msgstr "לחיצה על יום מציגה את האירועים שלו"
+
+#~ msgid "Add Event"
+#~ msgstr "הוספת אירוע"
 
 #~ msgid "Delete This Occurrence"
 #~ msgstr "מחיקת המופע הזה"
