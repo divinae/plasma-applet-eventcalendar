@@ -748,7 +748,7 @@ msgstr "Vecka"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgctxt "calendar view showing one day"
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -768,7 +768,7 @@ msgstr "Poppuppfönstrets höjd"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
-msgstr ""
+msgstr "Vecka och dag"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -780,7 +780,7 @@ msgstr "Sista timmen som visas"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
+msgstr "Prognos i dagrubrikerna och en väderpanel i dagvyn."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -820,7 +820,7 @@ msgstr "Veckonummer"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"
-msgstr ""
+msgstr "Klick på en dag öppnar den i dagvyn"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1202,61 +1202,61 @@ msgstr[1] "Visa alla %1"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Lavender"
-msgstr ""
+msgstr "Lavendel"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Sage"
-msgstr ""
+msgstr "Salvia"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Grape"
-msgstr ""
+msgstr "Druva"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Flamingo"
-msgstr ""
+msgstr "Flamingo"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Banana"
-msgstr ""
+msgstr "Banan"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tangerine"
-msgstr ""
+msgstr "Mandarin"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Peacock"
-msgstr ""
+msgstr "Påfågel"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Graphite"
-msgstr ""
+msgstr "Grafit"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Blueberry"
-msgstr ""
+msgstr "Blåbär"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Basil"
-msgstr ""
+msgstr "Basilika"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tomato"
-msgstr ""
+msgstr "Tomat"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Enter an email address, like name@example.com"
-msgstr ""
+msgstr "Ange en e-postadress, t.ex. namn@example.com"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
@@ -1264,25 +1264,25 @@ msgstr "Redigera händelse"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitation emails to the guests?"
-msgstr ""
+msgstr "Skicka inbjudningar via e-post till gästerna?"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send update emails to the guests?"
-msgstr ""
+msgstr "Skicka uppdateringar via e-post till gästerna?"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitations"
-msgstr ""
+msgstr "Skicka inbjudningar"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "send update emails to guests"
 msgid "Send"
-msgstr ""
+msgstr "Skicka"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "don't send emails to guests"
 msgid "Don't send"
-msgstr ""
+msgstr "Skicka inte"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
@@ -1294,7 +1294,7 @@ msgstr "Titel"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
-msgstr ""
+msgstr "Kalenderns färg"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1393,49 +1393,49 @@ msgstr[1] "gånger"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add Google Meet video conferencing"
-msgstr ""
+msgstr "Lägg till videokonferens i Google Meet"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing will be removed when you save"
-msgstr ""
+msgstr "Videokonferensen tas bort när du sparar"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
 msgid "Undo"
-msgstr ""
+msgstr "Ångra"
 
 #: ../contents/ui/EventEditView.qml
 msgid "A Google Meet link will be created when you save"
-msgstr ""
+msgstr "En Google Meet-länk skapas när du sparar"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing"
-msgstr ""
+msgstr "Videokonferens"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
-msgstr ""
+msgstr "Ta bort videokonferens"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"
-msgstr ""
+msgstr "Gäster"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Only the organizer can change the guest list"
-msgstr ""
+msgstr "Endast organisatören kan ändra gästlistan"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add guests by email"
-msgstr ""
+msgstr "Lägg till gäster via e-post"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "add a guest"
 msgid "Add"
-msgstr ""
+msgstr "Lägg till"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
-msgstr ""
+msgstr "%1 <%2>"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1633,11 +1633,11 @@ msgstr "Håll öppen"
 
 #: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
-msgstr ""
+msgstr "Återkommande händelse borttagen"
 
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
-msgstr ""
+msgstr "Händelse borttagen"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1860,7 +1860,7 @@ msgstr "Nu"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
-msgstr ""
+msgstr "Prognos"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -1870,7 +1870,7 @@ msgstr "Högst %1 · Lägst %2"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
-msgstr ""
+msgstr "Regn: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
@@ -1884,7 +1884,7 @@ msgstr "regn %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
-msgstr ""
+msgstr "Ingen prognos för den här dagen."
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
@@ -1893,7 +1893,7 @@ msgstr "Kommande 12 timmar"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
-msgstr ""
+msgstr "Under dagen"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -1901,7 +1901,7 @@ msgstr "Kommande dagar"
 
 #: ../contents/ui/WeekView.qml
 msgid "Event moved"
-msgstr ""
+msgstr "Händelse flyttad"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

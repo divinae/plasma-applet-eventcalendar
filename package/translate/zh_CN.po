@@ -820,7 +820,7 @@ msgstr "周"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgctxt "calendar view showing one day"
 msgid "Day"
-msgstr ""
+msgstr "日"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -840,7 +840,7 @@ msgstr "弹出窗口高度"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
-msgstr ""
+msgstr "周和日"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -852,7 +852,7 @@ msgstr "结束小时"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
+msgstr "在日期标题中显示天气预报，并在日视图中显示天气面板。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -897,7 +897,7 @@ msgstr "周数"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"
-msgstr ""
+msgstr "单击某天时在日视图中打开"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1290,61 +1290,61 @@ msgstr[0] "全部显示（%1）"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Lavender"
-msgstr ""
+msgstr "薰衣草紫"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Sage"
-msgstr ""
+msgstr "鼠尾草绿"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Grape"
-msgstr ""
+msgstr "葡萄紫"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Flamingo"
-msgstr ""
+msgstr "火烈鸟粉"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Banana"
-msgstr ""
+msgstr "香蕉黄"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tangerine"
-msgstr ""
+msgstr "橘橙"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Peacock"
-msgstr ""
+msgstr "孔雀蓝"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Graphite"
-msgstr ""
+msgstr "石墨灰"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Blueberry"
-msgstr ""
+msgstr "蓝莓蓝"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Basil"
-msgstr ""
+msgstr "罗勒绿"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tomato"
-msgstr ""
+msgstr "番茄红"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Enter an email address, like name@example.com"
-msgstr ""
+msgstr "请输入电子邮件地址，例如 name@example.com"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
@@ -1352,25 +1352,25 @@ msgstr "编辑事件"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitation emails to the guests?"
-msgstr ""
+msgstr "是否向参与者发送邀请邮件？"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send update emails to the guests?"
-msgstr ""
+msgstr "是否向参与者发送更新邮件？"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitations"
-msgstr ""
+msgstr "发送邀请"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "send update emails to guests"
 msgid "Send"
-msgstr ""
+msgstr "发送"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "don't send emails to guests"
 msgid "Don't send"
-msgstr ""
+msgstr "不发送"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
@@ -1382,7 +1382,7 @@ msgstr "标题"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
-msgstr ""
+msgstr "日历颜色"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1476,49 +1476,49 @@ msgstr[0] "次"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add Google Meet video conferencing"
-msgstr ""
+msgstr "添加 Google Meet 视频会议"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing will be removed when you save"
-msgstr ""
+msgstr "保存后将移除视频会议"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
 msgid "Undo"
-msgstr ""
+msgstr "撤销"
 
 #: ../contents/ui/EventEditView.qml
 msgid "A Google Meet link will be created when you save"
-msgstr ""
+msgstr "保存后将创建 Google Meet 链接"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing"
-msgstr ""
+msgstr "视频会议"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
-msgstr ""
+msgstr "移除视频会议"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"
-msgstr ""
+msgstr "参与者"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Only the organizer can change the guest list"
-msgstr ""
+msgstr "只有组织者可以更改参与者列表"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add guests by email"
-msgstr ""
+msgstr "通过电子邮件添加参与者"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "add a guest"
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
-msgstr ""
+msgstr "%1 <%2>"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1720,11 +1720,11 @@ msgstr "保持打开"
 
 #: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
-msgstr ""
+msgstr "重复事件已删除"
 
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
-msgstr ""
+msgstr "事件已删除"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1944,7 +1944,7 @@ msgstr "现在"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
-msgstr ""
+msgstr "预报"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -1954,7 +1954,7 @@ msgstr "最高 %1 · 最低 %2"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
-msgstr ""
+msgstr "降雨：%1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
@@ -1968,7 +1968,7 @@ msgstr "降水 %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
-msgstr ""
+msgstr "此日无天气预报。"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
@@ -1977,7 +1977,7 @@ msgstr "未来 12 小时"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
-msgstr ""
+msgstr "当天逐小时"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -1985,7 +1985,7 @@ msgstr "未来几天"
 
 #: ../contents/ui/WeekView.qml
 msgid "Event moved"
-msgstr ""
+msgstr "事件已移动"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

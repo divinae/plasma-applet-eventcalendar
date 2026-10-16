@@ -746,7 +746,7 @@ msgstr "週"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgctxt "calendar view showing one day"
 msgid "Day"
-msgstr ""
+msgstr "日"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -766,7 +766,7 @@ msgstr "ポップアップの高さ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
-msgstr ""
+msgstr "週と日"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -778,7 +778,7 @@ msgstr "表示する最後の時間"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
+msgstr "日の見出しに天気予報を、日ビューに天気パネルを表示します。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -818,7 +818,7 @@ msgstr "週番号"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"
-msgstr ""
+msgstr "日をクリックすると日ビューで開く"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1198,61 +1198,61 @@ msgstr[0] "すべて表示 (%1)"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Lavender"
-msgstr ""
+msgstr "ラベンダー"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Sage"
-msgstr ""
+msgstr "セージ"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Grape"
-msgstr ""
+msgstr "ブドウ"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Flamingo"
-msgstr ""
+msgstr "フラミンゴ"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Banana"
-msgstr ""
+msgstr "バナナ"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tangerine"
-msgstr ""
+msgstr "ミカン"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Peacock"
-msgstr ""
+msgstr "ピーコック"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Graphite"
-msgstr ""
+msgstr "グラファイト"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Blueberry"
-msgstr ""
+msgstr "ブルーベリー"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Basil"
-msgstr ""
+msgstr "バジル"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tomato"
-msgstr ""
+msgstr "トマト"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Enter an email address, like name@example.com"
-msgstr ""
+msgstr "メールアドレスを入力 (例: name@example.com)"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
@@ -1260,25 +1260,25 @@ msgstr "イベントを編集"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitation emails to the guests?"
-msgstr ""
+msgstr "ゲストに招待メールを送信しますか？"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send update emails to the guests?"
-msgstr ""
+msgstr "ゲストに更新メールを送信しますか？"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitations"
-msgstr ""
+msgstr "招待を送信"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "send update emails to guests"
 msgid "Send"
-msgstr ""
+msgstr "送信"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "don't send emails to guests"
 msgid "Don't send"
-msgstr ""
+msgstr "送信しない"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
@@ -1290,7 +1290,7 @@ msgstr "タイトル"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
-msgstr ""
+msgstr "カレンダーの色"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1384,49 +1384,49 @@ msgstr[0] "回"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add Google Meet video conferencing"
-msgstr ""
+msgstr "Google Meet のビデオ会議を追加"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing will be removed when you save"
-msgstr ""
+msgstr "保存するとビデオ会議は削除されます"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
 msgid "Undo"
-msgstr ""
+msgstr "元に戻す"
 
 #: ../contents/ui/EventEditView.qml
 msgid "A Google Meet link will be created when you save"
-msgstr ""
+msgstr "保存すると Google Meet のリンクが作成されます"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing"
-msgstr ""
+msgstr "ビデオ会議"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
-msgstr ""
+msgstr "ビデオ会議を削除"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"
-msgstr ""
+msgstr "ゲスト"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Only the organizer can change the guest list"
-msgstr ""
+msgstr "ゲストリストを変更できるのは主催者のみです"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add guests by email"
-msgstr ""
+msgstr "メールアドレスでゲストを追加"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "add a guest"
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
-msgstr ""
+msgstr "%1 <%2>"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1624,11 +1624,11 @@ msgstr "開いたままにする"
 
 #: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
-msgstr ""
+msgstr "繰り返しイベントを削除しました"
 
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
-msgstr ""
+msgstr "イベントを削除しました"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1848,7 +1848,7 @@ msgstr "現在"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
-msgstr ""
+msgstr "天気予報"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -1858,7 +1858,7 @@ msgstr "最高 %1 · 最低 %2"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
-msgstr ""
+msgstr "降水量: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
@@ -1872,7 +1872,7 @@ msgstr "降水 %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
-msgstr ""
+msgstr "この日の天気予報はありません。"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
@@ -1881,7 +1881,7 @@ msgstr "今後 12 時間"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
-msgstr ""
+msgstr "日中"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -1889,7 +1889,7 @@ msgstr "今後数日"
 
 #: ../contents/ui/WeekView.qml
 msgid "Event moved"
-msgstr ""
+msgstr "イベントを移動しました"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

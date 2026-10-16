@@ -853,7 +853,7 @@ msgstr "Εβδομάδα"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgctxt "calendar view showing one day"
 msgid "Day"
-msgstr ""
+msgstr "Ημέρα"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -873,7 +873,7 @@ msgstr "Ύψος αναδυόμενου"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
-msgstr ""
+msgstr "Εβδομάδα και ημέρα"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -886,6 +886,8 @@ msgstr "Τελευταία εμφανιζόμενη ώρα"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr ""
+"Πρόγνωση στις κεφαλίδες των ημερών και, στην προβολή ημέρας, ένα πλαίσιο "
+"καιρού."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -932,7 +934,7 @@ msgstr "Αριθμοί εβδομάδων"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"
-msgstr ""
+msgstr "Το κλικ σε μια ημέρα την ανοίγει στην προβολή ημέρας"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
@@ -1327,61 +1329,61 @@ msgstr[1] "Εμφάνιση όλων (%1)"
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Lavender"
-msgstr ""
+msgstr "Λεβάντα"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Sage"
-msgstr ""
+msgstr "Φασκόμηλο"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Grape"
-msgstr ""
+msgstr "Σταφύλι"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Flamingo"
-msgstr ""
+msgstr "Φλαμίνγκο"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Banana"
-msgstr ""
+msgstr "Μπανάνα"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tangerine"
-msgstr ""
+msgstr "Μανταρίνι"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Peacock"
-msgstr ""
+msgstr "Παγώνι"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Graphite"
-msgstr ""
+msgstr "Γραφίτης"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Blueberry"
-msgstr ""
+msgstr "Μύρτιλο"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Basil"
-msgstr ""
+msgstr "Βασιλικός"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
 msgid "Tomato"
-msgstr ""
+msgstr "Ντομάτα"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Enter an email address, like name@example.com"
-msgstr ""
+msgstr "Εισαγάγετε μια διεύθυνση email, π.χ. name@example.com"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
@@ -1389,25 +1391,25 @@ msgstr "Επεξεργασία συμβάντος"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitation emails to the guests?"
-msgstr ""
+msgstr "Αποστολή email πρόσκλησης στους προσκεκλημένους;"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send update emails to the guests?"
-msgstr ""
+msgstr "Αποστολή email ενημέρωσης στους προσκεκλημένους;"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Send invitations"
-msgstr ""
+msgstr "Αποστολή προσκλήσεων"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "send update emails to guests"
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "don't send emails to guests"
 msgid "Don't send"
-msgstr ""
+msgstr "Χωρίς αποστολή"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
@@ -1419,7 +1421,7 @@ msgstr "Τίτλος"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
-msgstr ""
+msgstr "Χρώμα ημερολογίου"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1518,49 +1520,49 @@ msgstr[1] "επαναλήψεις"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add Google Meet video conferencing"
-msgstr ""
+msgstr "Προσθήκη βιντεοδιάσκεψης Google Meet"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing will be removed when you save"
-msgstr ""
+msgstr "Η βιντεοδιάσκεψη θα αφαιρεθεί κατά την αποθήκευση"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
 msgid "Undo"
-msgstr ""
+msgstr "Αναίρεση"
 
 #: ../contents/ui/EventEditView.qml
 msgid "A Google Meet link will be created when you save"
-msgstr ""
+msgstr "Θα δημιουργηθεί σύνδεσμος Google Meet κατά την αποθήκευση"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Video conferencing"
-msgstr ""
+msgstr "Βιντεοδιάσκεψη"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
-msgstr ""
+msgstr "Αφαίρεση βιντεοδιάσκεψης"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"
-msgstr ""
+msgstr "Προσκεκλημένοι"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Only the organizer can change the guest list"
-msgstr ""
+msgstr "Μόνο ο διοργανωτής μπορεί να αλλάξει τη λίστα προσκεκλημένων"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Add guests by email"
-msgstr ""
+msgstr "Προσθήκη προσκεκλημένων μέσω email"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "add a guest"
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
-msgstr ""
+msgstr "%1 <%2>"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1764,11 +1766,11 @@ msgstr "Να μένει ανοιχτό"
 
 #: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
-msgstr ""
+msgstr "Το επαναλαμβανόμενο συμβάν διαγράφηκε"
 
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
-msgstr ""
+msgstr "Το συμβάν διαγράφηκε"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -2000,7 +2002,7 @@ msgstr "Τώρα"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
-msgstr ""
+msgstr "Πρόγνωση"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -2010,7 +2012,7 @@ msgstr "Μέγ. %1 · Ελάχ. %2"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
-msgstr ""
+msgstr "Βροχή: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
@@ -2024,7 +2026,7 @@ msgstr "βροχή %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
-msgstr ""
+msgstr "Δεν υπάρχει πρόγνωση για αυτήν την ημέρα."
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
@@ -2033,7 +2035,7 @@ msgstr "Επόμενες 12 ώρες"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
-msgstr ""
+msgstr "Κατά τη διάρκεια της ημέρας"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -2041,7 +2043,7 @@ msgstr "Επόμενες ημέρες"
 
 #: ../contents/ui/WeekView.qml
 msgid "Event moved"
-msgstr ""
+msgstr "Το συμβάν μετακινήθηκε"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"
