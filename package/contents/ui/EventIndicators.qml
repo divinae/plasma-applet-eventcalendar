@@ -14,6 +14,7 @@ Row {
 	property bool showLocation: true
 	property bool showMeeting: true
 	property bool showDescription: true
+	property bool showRepeat: true
 	// Only as many icons as fit in this width.
 	property real maxWidth: Infinity
 
@@ -21,6 +22,7 @@ Row {
 		location: !showLocation,
 		meeting: !showMeeting,
 		description: !showDescription,
+		repeat: !showRepeat,
 	})
 	readonly property var shownKeys: {
 		var fit = Math.floor((maxWidth + spacing) / (iconSize + spacing))

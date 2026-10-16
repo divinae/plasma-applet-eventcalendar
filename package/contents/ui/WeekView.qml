@@ -1077,6 +1077,8 @@ Item {
 												// The day view shows the location as text and has a Join button.
 												showLocation: !weekView.singleDay
 												showMeeting: !joinPill.visible
+												// Week view: repeating events (standups, ...) are everywhere, the icon is noise.
+												showRepeat: weekView.singleDay
 											}
 										}
 									}
