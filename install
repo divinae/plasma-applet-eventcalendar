@@ -39,22 +39,12 @@ detect_plasma_major() {
         return 0
     fi
 
-    if command -v kpackagetool5 >/dev/null 2>&1; then
-        echo "5"
-        return 0
-    fi
-
     return 1
 }
 
 select_target_branch() {
     local plasma_major="$1"
     local default_branch="master"
-
-    if [ "$plasma_major" = "5" ]; then
-        echo "plasma-5"
-        return 0
-    fi
 
     echo "$default_branch"
 }
@@ -126,12 +116,7 @@ sync_oauth_assets() {
 select_kpackage_tool() {
     local plasma_major="$1"
 
-    if [ "$plasma_major" = "6" ]; then
-        echo "kpackagetool6"
-        return 0
-    fi
-
-    echo "kpackagetool5"
+    echo "kpackagetool6"
 }
 
 # Function to check if a command was successful
@@ -258,15 +243,9 @@ install_requirements() {
 
     case "$DISTRO_FAMILY" in
         "debian")
-            if [ "$PLASMA_MAJOR" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kpackagetool6")
-                qdbus_package="qt6-tools-dev-tools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kpackagetool5")
-                qdbus_package="qttools5-dev-tools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kpackagetool6")
+            qdbus_package="qt6-tools-dev-tools"
             core_packages=(
                 "qml6-module-org-kde-notification"
                 "python3"
@@ -283,15 +262,9 @@ install_requirements() {
             )
             ;;
         "arch")
-            if [ "$PLASMA_MAJOR" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kpackage")
-                qdbus_package="qt6-tools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kpackage5")
-                qdbus_package="qt5-tools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kpackage")
+            qdbus_package="qt6-tools"
             core_packages=(
                 "knotifications"
                 "python"
@@ -308,15 +281,9 @@ install_requirements() {
             )
             ;;
         "fedora")
-            if [ "$PLASMA_MAJOR" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kf6-kpackage")
-                qdbus_package="qt6-qttools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kf5-kpackage")
-                qdbus_package="qt5-qttools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kf6-kpackage")
+            qdbus_package="qt6-qttools"
             core_packages=(
                 "kf6-knotifications"
                 "python3"
@@ -381,6 +348,12 @@ if [ -z "$PLASMA_MAJOR" ]; then
     PLASMA_MAJOR="6"
 fi
 
+# Plasma 5 isn't supported by this fork.
+if [ -n "${PLASMA_MAJOR:-}" ] && [ "${PLASMA_MAJOR}" != "6" ]; then
+    log "ERROR: Event Calendar 1.x needs Plasma 6 (found Plasma ${PLASMA_MAJOR}). For Plasma 5 use https://github.com/Zren/plasma-applet-eventcalendar"
+    exit 1
+fi
+
 update_repo_for_plasma "$PLASMA_MAJOR"
 sync_oauth_assets
 
@@ -391,7 +364,7 @@ install_requirements
 install_python_calendar_dependencies
 
 if ! command -v "$KPACKAGE_TOOL" >/dev/null 2>&1; then
-    for candidate in kpackagetool6 kpackagetool5 kpackagetool; do
+    for candidate in kpackagetool6 kpackagetool; do
         if command -v "$candidate" >/dev/null 2>&1; then
             KPACKAGE_TOOL="$candidate"
             break

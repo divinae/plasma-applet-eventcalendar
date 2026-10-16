@@ -66,8 +66,9 @@ dependencies below on Debian/Ubuntu, Arch and Fedora.
 Optional:
 
 - `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play`, for custom notification sounds
-- iCalendar (.ics) files: the Python `icalendar` and `recurring-ical-events` packages (the
-  install script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`)
+- iCalendar (.ics) files: the Python packages `icalendar>=6.1,<8` and
+  `recurring-ical-events>=3.8,<4` (RRULE / RDATE / EXDATE / RECURRENCE-ID expansion). The install
+  script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`.
 - Akonadi / KDE PIM calendars: `akonadi` + `kdepim-addons`; creating local events: `konsolekalendar`
 
 ## Setup
@@ -82,7 +83,8 @@ Optional:
 
 - `master`: releases.
 - `plasma-6`: development.
-- `plasma-5`: legacy Plasma 5 line (not maintained in this fork).
+
+Plasma 5 is not supported; use the original [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar) there.
 
 ## Contributing
 

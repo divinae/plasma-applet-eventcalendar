@@ -45,11 +45,6 @@ detect_plasma_major() {
         return 0
     fi
 
-    if command -v kpackagetool5 >/dev/null 2>&1; then
-        echo "5"
-        return 0
-    fi
-
     return 1
 }
 
@@ -57,11 +52,6 @@ detect_plasma_major() {
 select_target_branch() {
     local plasma_major="$1"
     local default_branch="master"
-
-    if [ "$plasma_major" = "5" ]; then
-        echo "plasma-5"
-        return 0
-    fi
 
     echo "$default_branch"
 }
@@ -175,15 +165,9 @@ install_requirements() {
 
     case "$DISTRO_FAMILY" in
         "debian")
-            if [ "$plasma_major" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kpackagetool6")
-                qdbus_package="qt6-tools-dev-tools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kpackagetool5")
-                qdbus_package="qttools5-dev-tools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kpackagetool6")
+            qdbus_package="qt6-tools-dev-tools"
             core_packages=(
                 "qml6-module-org-kde-notification"
                 "git"
@@ -200,15 +184,9 @@ install_requirements() {
             )
             ;;
         "arch")
-            if [ "$plasma_major" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kpackage")
-                qdbus_package="qt6-tools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kpackage5")
-                qdbus_package="qt5-tools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kpackage")
+            qdbus_package="qt6-tools"
             core_packages=(
                 "knotifications"
                 "git"
@@ -225,15 +203,9 @@ install_requirements() {
             )
             ;;
         "fedora")
-            if [ "$plasma_major" = "6" ]; then
-                required_commands=("kpackagetool6")
-                packages_to_install=("kf6-kpackage")
-                qdbus_package="qt6-qttools"
-            else
-                required_commands=("kpackagetool5")
-                packages_to_install=("kf5-kpackage")
-                qdbus_package="qt5-qttools"
-            fi
+            required_commands=("kpackagetool6")
+            packages_to_install=("kf6-kpackage")
+            qdbus_package="qt6-qttools"
             core_packages=(
                 "kf6-knotifications"
                 "git"
@@ -281,6 +253,12 @@ install_requirements() {
 plasma_major="$(detect_plasma_major || true)"
 if [ -z "$plasma_major" ]; then
     log "WARNING: Unable to detect Plasma version; defaulting to master branch."
+fi
+
+# Plasma 5 isn't supported by this fork.
+if [ -n "${plasma_major:-}" ] && [ "${plasma_major}" != "6" ]; then
+    log "ERROR: Event Calendar 1.x needs Plasma 6 (found Plasma ${plasma_major}). For Plasma 5 use https://github.com/Zren/plasma-applet-eventcalendar"
+    exit 1
 fi
 
 install_requirements
