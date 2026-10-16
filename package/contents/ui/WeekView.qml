@@ -14,10 +14,10 @@ Item {
 	// false: the popup shows title and navigation in its own header.
 	property bool showHeader: true
 	function goPrevious() {
-		weekStart = dayDate(-7)
+		weekStart = dayDate(-dayCount)
 	}
 	function goNext() {
-		weekStart = dayDate(7)
+		weekStart = dayDate(dayCount)
 	}
 	function goToday() {
 		weekStart = startOfWeek(currentTime)
@@ -25,7 +25,14 @@ Item {
 	}
 	readonly property date currentTime: timeModel.currentTime
 	property date weekStart: startOfWeek(currentTime)
-	readonly property int dayCount: 7
+	// 7: week view. 1: today / day view (the same hour grid with one wide column).
+	property int dayCount: 7
+	readonly property bool singleDay: dayCount === 1
+	onDayCountChanged: {
+		weekStart = startOfWeek(currentTime)
+		rebuild()
+		scrollToWorkingHours()
+	}
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []
@@ -62,6 +69,9 @@ Item {
 
 	function startOfWeek(d) {
 		var day = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+		if (dayCount < 7) {
+			return day // Day view starts on the day itself.
+		}
 		var diff = (day.getDay() - Qt.locale().firstDayOfWeek + 7) % 7
 		day.setDate(day.getDate() - diff)
 		return day
@@ -78,6 +88,9 @@ Item {
 	}
 
 	readonly property string title: {
+		if (singleDay) {
+			return Qt.formatDate(weekStart, Qt.locale().dateFormat(Locale.LongFormat))
+		}
 		var first = weekStart
 		var last = dayDate(dayCount - 1)
 		if (first.getFullYear() !== last.getFullYear()) {
@@ -617,7 +630,20 @@ Item {
 										clip: true
 										PlasmaComponents3.Label {
 											width: parent.width
-											text: eventBlock.eventItem.summary
+											// Day view, block too short for a second line: put time and location after the title.
+											readonly property bool inlineDetails: weekView.singleDay && eventBlock.height < weekView.lineHeight * 2 + 4
+											text: {
+												var item = eventBlock.eventItem
+												if (!inlineDetails) {
+													return item.summary
+												}
+												var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+												var parts = [item.summary, Qt.formatTime(item.startDateTime, format) + ' – ' + Qt.formatTime(item.endDateTime, format)]
+												if (item.location) {
+													parts.push(item.location)
+												}
+												return parts.join(' · ')
+											}
 											color: Shared.contrastTextColor(eventBlock.barColor)
 											// Event in progress
 											font.bold: eventBlock.eventItem.startDateTime <= weekView.currentTime && weekView.currentTime < eventBlock.eventItem.endDateTime
@@ -628,7 +654,16 @@ Item {
 										PlasmaComponents3.Label {
 											width: parent.width
 											visible: eventBlock.height >= weekView.lineHeight * 2 + 4
-											text: Qt.formatTime(eventBlock.eventItem.startDateTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+											text: {
+												var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+												var item = eventBlock.eventItem
+												// Day view has room for the end time and location.
+												if (weekView.singleDay) {
+													var text = Qt.formatTime(item.startDateTime, format) + ' – ' + Qt.formatTime(item.endDateTime, format)
+													return item.location ? text + ' · ' + item.location : text
+												}
+												return Qt.formatTime(item.startDateTime, format)
+											}
 											color: Shared.contrastTextColor(eventBlock.barColor)
 											font: Kirigami.Theme.smallFont
 											elide: Text.ElideRight

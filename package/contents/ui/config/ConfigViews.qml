@@ -26,8 +26,9 @@ ConfigPage {
 			Kirigami.FormData.label: i18n("Default view:")
 			configKey: 'popupMode'
 			model: [
-				{ value: 'month', text: i18n("Month") },
+				{ value: 'today', text: i18n("Today") },
 				{ value: 'week', text: i18n("Week") },
+				{ value: 'month', text: i18n("Month") },
 				{ value: 'classic', text: i18n("Agenda") },
 			]
 		}
@@ -36,7 +37,7 @@ ConfigPage {
 			text: i18n("Show view switcher in the header")
 		}
 		RowLayout {
-			Kirigami.FormData.label: i18n("Month and week size:")
+			Kirigami.FormData.label: i18n("Today, week and month size:")
 			ConfigSpinBox {
 				configKey: 'monthModeWidth'
 				suffix: i18n(" px")
@@ -52,7 +53,7 @@ ConfigPage {
 			}
 		}
 		RowLayout {
-			Kirigami.FormData.label: i18n("Week view hours:")
+			Kirigami.FormData.label: i18n("Hours shown (today and week):")
 			ConfigSpinBox {
 				configKey: 'weekViewStartHour'
 				suffix: ":00"

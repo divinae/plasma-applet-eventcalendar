@@ -35,7 +35,7 @@ MouseArea {
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
-		if (weekMode) {
+		if (hourGridMode) {
 			return leftColumnWidth
 		}
 		if (showAgenda && showCalendar) {
@@ -57,7 +57,7 @@ MouseArea {
 	}
 
 	property int singleColumnHeight: {
-		if (weekMode) {
+		if (hourGridMode) {
 			return bottomRowHeight + viewTabsHeight
 		}
 		var rows = []
@@ -121,11 +121,13 @@ MouseArea {
 	// Week mode: only the week view. Both use the month/week popup size.
 	readonly property bool monthMode: plasmoid.configuration.popupMode === 'month'
 	readonly property bool weekMode: plasmoid.configuration.popupMode === 'week'
-	readonly property bool fullViewMode: monthMode || weekMode
+	readonly property bool dayMode: plasmoid.configuration.popupMode === 'today'
+	readonly property bool hourGridMode: weekMode || dayMode // Both use WeekView
+	readonly property bool fullViewMode: monthMode || hourGridMode
 	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
 	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
 	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !fullViewMode
-	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !weekMode) || monthMode
+	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !hourGridMode) || monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing
@@ -425,8 +427,9 @@ MouseArea {
 
 				Repeater {
 					model: [
-						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+						{ mode: 'today', icon: "view-calendar-day", text: i18n("Today") },
 						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
 						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
 					]
 					Item {
@@ -484,7 +487,7 @@ MouseArea {
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
 				onClicked: header.weekView ? header.weekView.goPrevious() : monthView.goPrevious()
-				PlasmaComponents3.ToolTip.text: header.weekView ? i18n("Previous Week") : i18n("Previous Month")
+				PlasmaComponents3.ToolTip.text: header.weekView ? (header.weekView.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
@@ -496,7 +499,7 @@ MouseArea {
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next"
 				onClicked: header.weekView ? header.weekView.goNext() : monthView.goNext()
-				PlasmaComponents3.ToolTip.text: header.weekView ? i18n("Next Week") : i18n("Next Month")
+				PlasmaComponents3.ToolTip.text: header.weekView ? (header.weekView.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 		}
@@ -623,11 +626,12 @@ MouseArea {
 
 	Loader {
 		id: weekViewLoader
-		active: popup.weekMode
+		active: popup.hourGridMode
 		visible: active
 		anchors.fill: widgetGrid
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
+			dayCount: popup.dayMode ? 1 : 7
 			showHeader: false
 			// Make sure the visible week's month is fetched.
 			onWeekStartChanged: {
@@ -639,7 +643,7 @@ MouseArea {
 
 	GridLayout {
 		id: widgetGrid
-		visible: !popup.weekMode
+		visible: !popup.hourGridMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
 		anchors.topMargin: popup.viewTabsHeight
