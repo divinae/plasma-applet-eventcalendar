@@ -44,9 +44,46 @@ Rectangle {
 	readonly property int collapsedGuestCount: 5
 	property bool showAllGuests: false
 	property bool confirmingDelete: false
+	readonly property bool isRecurring: !!(eventItem && eventItem.recurringEventId)
 	onEventItemChanged: {
 		confirmingDelete = false
 		showAllGuests = false
+		pendingResponse = ""
+	}
+
+	//--- RSVP: only the signed-in user's own response, on events they were invited to.
+	readonly property var selfAttendee: eventItem && typeof eventModel !== "undefined" ? eventModel.selfAttendee(eventItem) : null
+	readonly property bool canRespond: !!selfAttendee && !!(eventItem && eventItem.canEdit)
+		&& eventModel.supportsRecurrence(eventItem.calendarId)
+	property string pendingResponse: "" // Shown right away, until the refetch brings the saved one
+	readonly property string currentResponse: pendingResponse || (selfAttendee ? selfAttendee.responseStatus || "" : "")
+	function respond(status) {
+		if (isRecurring) {
+			rsvpScopeMenu.status = status
+			rsvpScopeMenu.popup()
+		} else {
+			saveResponse(status, false)
+		}
+	}
+	function saveResponse(status, series) {
+		pendingResponse = status
+		eventModel.respondToEvent(eventItem, status, series, function() {
+			if (typeof logic !== "undefined") {
+				logic.update() // The response (and, for a series, every occurrence) comes back with the refetch
+			}
+		})
+	}
+	PlasmaComponents3.Menu {
+		id: rsvpScopeMenu
+		property string status
+		PlasmaComponents3.MenuItem {
+			text: i18n("This event")
+			onTriggered: details.saveResponse(rsvpScopeMenu.status, false)
+		}
+		PlasmaComponents3.MenuItem {
+			text: i18n("All events in the series")
+			onTriggered: details.saveResponse(rsvpScopeMenu.status, true)
+		}
 	}
 
 	function attendeeIcon(status) {
@@ -109,18 +146,28 @@ Rectangle {
 
 			PlasmaComponents3.Label {
 				visible: details.confirmingDelete
-				text: i18n("Delete this event?")
+				text: details.isRecurring ? i18n("Delete:") : i18n("Delete this event?")
 			}
 			PlasmaComponents3.Button {
 				visible: details.confirmingDelete
 				icon.name: "edit-delete"
-				text: i18n("Delete")
+				text: details.isRecurring ? i18n("This Occurrence") : i18n("Delete")
 				onClicked: {
 					eventModel.deleteEvent(details.eventItem.calendarId, details.eventItem.id)
 					details.closeRequested()
 				}
-				PlasmaComponents3.ToolTip.text: details.eventItem && details.eventItem.recurringEventId ? i18n("Deletes only this occurrence.") : ""
-				PlasmaComponents3.ToolTip.visible: hovered && !!details.eventItem && !!details.eventItem.recurringEventId
+			}
+			// Repeating events: delete every occurrence (the series).
+			PlasmaComponents3.Button {
+				visible: details.confirmingDelete && details.isRecurring
+				icon.name: "edit-delete"
+				text: i18n("All Events")
+				onClicked: {
+					eventModel.deleteSeries(details.eventItem.calendarId, details.eventItem.recurringEventId)
+					details.closeRequested()
+				}
+				PlasmaComponents3.ToolTip.text: i18n("Deletes every occurrence of this repeating event.")
+				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				visible: details.confirmingDelete
@@ -218,6 +265,38 @@ Rectangle {
 					icon.name: "call-start"
 					text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
 					onClicked: Shared.openExternalUrl(details.meetingLink.url)
+				}
+
+				// RSVP
+				RowLayout {
+					visible: details.canRespond
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Label {
+						text: i18nc("RSVP to an invitation", "Going?")
+						Layout.rightMargin: Kirigami.Units.smallSpacing
+					}
+					Repeater {
+						model: [
+							{ status: 'accepted', text: i18nc("RSVP", "Yes"), icon: "dialog-ok-apply" },
+							{ status: 'tentative', text: i18nc("RSVP", "Maybe"), icon: "question" },
+							{ status: 'declined', text: i18nc("RSVP", "No"), icon: "dialog-cancel" },
+						]
+						PlasmaComponents3.ToolButton {
+							text: modelData.text
+							icon.name: modelData.icon
+							checkable: true
+							checked: details.currentResponse === modelData.status
+							// A click sets the response; the check follows currentResponse.
+							onClicked: {
+								checked = Qt.binding(function() { return details.currentResponse === modelData.status })
+								details.respond(modelData.status)
+							}
+						}
+					}
+					Item { Layout.fillWidth: true }
 				}
 
 				Kirigami.Separator {

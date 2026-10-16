@@ -855,6 +855,41 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return handleError(err, data, xhr)
 	}
 
+	// Delete a whole recurring series by its id (an occurrence's recurringEventId). The loaded
+	// occurrences are removed locally; done(err) is called either way.
+	function deleteSeries(calendarId, seriesId, done) {
+		logger.debug(calendarManagerId, 'deleteSeries', calendarId, seriesId)
+		if (!seriesId) {
+			return
+		}
+		var func = function() {
+			deleteGCalEvent({
+				accessToken: session.accessToken,
+				calendarId: unscopedCalendarId(calendarId),
+				eventId: seriesId,
+			}, function(err, data, xhr) {
+				if (err) {
+					deleteEvent_err(err, data, xhr)
+				} else {
+					var calendar = googleCalendarManager.eventsByCalendar[calendarId]
+					var items = calendar && calendar.items ? calendar.items.slice() : []
+					for (var i = 0; i < items.length; i++) {
+						if (items[i].recurringEventId === seriesId || items[i].id === seriesId) {
+							removeEvent(calendarId, items[i].id)
+							eventDeleted(calendarId, items[i].id, items[i])
+						}
+					}
+				}
+				if (done) {
+					done(err)
+				}
+			})
+		}
+		withAccessToken(func, function(err, isNetworkError) {
+			handleAuthError(err, false, isNetworkError)
+		})
+	}
+
 	function deleteGCalEvent(args, callback) {
 		// DELETE https://www.googleapis.com/calendar/v3/calendars/calendarId/events/eventId
 		// Note: Success means a response of xhr.status == 204 (No Content)
