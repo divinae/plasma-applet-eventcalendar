@@ -122,14 +122,27 @@ CalendarManager {
 			soundFile: args.soundFile,
 			actions: actions,
 		}, function(actionId) {
-			if (actionId === 'join' || (actionId === 'default' && meetingLink)) {
+			if (actionId === 'default') {
+				upcomingEvents.showInWidget(eventItem) // Clicking the notification itself
+			} else if (actionId === 'join' && meetingLink) {
 				Shared.openExternalUrl(meetingLink.url)
-			} else if ((actionId === 'open' || actionId === 'default') && eventItem.htmlLink) {
+			} else if (actionId === 'open' && eventItem.htmlLink) {
 				Shared.openExternalUrl(eventItem.htmlLink)
 			} else if (actionId === 'snooze') {
 				var at = new Date(timeModel.currentTime)
 				at.setMinutes(at.getMinutes() + upcomingEvents.snoozeMinutes)
 				upcomingEvents.snoozedReminders.push({ eventItem: eventItem, at: at })
+			}
+		})
+	}
+
+	// Open the popup with the event's details (the popup is created on first expand).
+	function showInWidget(eventItem) {
+		root.expanded = true
+		Qt.callLater(function() {
+			var popup = root.fullRepresentationItem
+			if (popup && typeof popup.activateEvent === 'function') {
+				popup.activateEvent(eventItem)
 			}
 		})
 	}
