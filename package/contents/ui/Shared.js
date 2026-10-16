@@ -194,9 +194,12 @@ function locationUrl(location) {
 	if (isUrl(text)) {
 		return text
 	}
-	return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(text)
+	// Search path form: no '&' needed, and Maps pins the place it finds.
+	return 'https://www.google.com/maps/search/' + encodeURIComponent(text)
 }
 // Location as a link (for a Text with textFormat: Text.StyledText).
+// StyledText doesn't decode entities in href (&amp; would reach the browser): only quotes are escaped.
 function locationLink(location) {
-	return '<a href="' + escapeHtml(locationUrl(location)) + '">' + escapeHtml(location) + '</a>'
+	var href = locationUrl(location).replace(/"/g, '%22')
+	return '<a href="' + href + '">' + escapeHtml(location) + '</a>'
 }
