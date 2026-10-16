@@ -23,15 +23,7 @@ Item {
 	property var activeAccount: null
 
 	readonly property bool isLoggedIn: accounts && accounts.length > 0
-	readonly property bool needsRelog: {
-		if (!activeAccount) {
-			return false
-		}
-		if (activeAccount.accessToken && activeAccount.sessionClientId != effectiveClientId) {
-			return true
-		}
-		return false
-	}
+	readonly property bool needsRelog: accountNeedsRelog(activeAccount)
 
 	property var calendarList: []
 	property var calendarIdList: []
@@ -267,19 +259,26 @@ Item {
 		accountsStore.setActiveAccountId(accountId)
 	}
 
-	function setCalendarIdList(list) {
-		if (activeAccountId) {
-			accountsStore.updateAccount(activeAccountId, {
+	function setCalendarIdList(list, accountId) {
+		var targetId = accountId || activeAccountId
+		if (targetId) {
+			accountsStore.updateAccount(targetId, {
 				calendarIdList: list,
 				calendarSelectionInitialized: true,
 			})
 		}
 	}
 
-	function setTasklistIdList(list) {
-		if (activeAccountId) {
-			accountsStore.updateAccount(activeAccountId, { tasklistIdList: list })
+	function setTasklistIdList(list, accountId) {
+		var targetId = accountId || activeAccountId
+		if (targetId) {
+			accountsStore.updateAccount(targetId, { tasklistIdList: list })
 		}
+	}
+
+	// Signed in with an older OAuth client: the account must sign in again.
+	function accountNeedsRelog(account) {
+		return !!(account && account.accessToken && account.sessionClientId != effectiveClientId)
 	}
 
 	function removeAccount(accountId) {
@@ -391,30 +390,30 @@ Item {
 
 	onNewAccessToken: updateData()
 
-	function updateData() {
-		updateCalendarList()
-		updateTasklistList()
+	function updateData(accountId) {
+		updateCalendarList(accountId)
+		updateTasklistList(accountId)
 	}
 
-	function updateCalendarList() {
-		logger.debug('updateCalendarList')
-		if (!activeAccount || !activeAccount.accessToken) {
+	function updateCalendarList(accountId) {
+		var account = accountId ? accountsStore.getAccount(accountId) : activeAccount
+		logger.debug('updateCalendarList', account ? account.id : null)
+		if (!account || !account.accessToken) {
 			return
 		}
 		fetchGCalCalendars({
-			accessToken: activeAccount.accessToken,
+			accessToken: account.accessToken,
 		}, function(err, data, xhr) {
-			// Check for errors
 			if (err || data.error) {
 				handleError(err, data)
 				return
 			}
 			var label = deriveLabelFromCalendars(data.items)
 			var patch = { calendarList: data.items }
-			if (label && !activeAccount.label) {
+			if (label && !account.label) {
 				patch.label = label
 			}
-			accountsStore.updateAccount(activeAccountId, patch)
+			accountsStore.updateAccount(account.id, patch)
 		})
 	}
 
@@ -434,20 +433,20 @@ Item {
 		})
 	}
 
-	function updateTasklistList() {
-		logger.debug('updateTasklistList')
-		if (!activeAccount || !activeAccount.accessToken) {
+	function updateTasklistList(accountId) {
+		var account = accountId ? accountsStore.getAccount(accountId) : activeAccount
+		logger.debug('updateTasklistList', account ? account.id : null)
+		if (!account || !account.accessToken) {
 			return
 		}
 		fetchGoogleTasklistList({
-			accessToken: activeAccount.accessToken,
+			accessToken: account.accessToken,
 		}, function(err, data, xhr) {
-			// Check for errors
 			if (err || data.error) {
 				logger.log('updateTasklistList error', err, data)
 				return
 			}
-			accountsStore.updateAccount(activeAccountId, { tasklistList: data.items })
+			accountsStore.updateAccount(account.id, { tasklistList: data.items })
 		})
 	}
 

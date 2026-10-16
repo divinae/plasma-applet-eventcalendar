@@ -7,6 +7,7 @@ import ".."
 import "../lib"
 import "../lib/Requests.js" as Requests
 import "../lib/ColorUtil.js" as ColorUtil
+import "../Shared.js" as Shared
 
 ConfigPage {
 	id: page
@@ -48,52 +49,56 @@ ConfigPage {
 		}
 		return arr.concat().sort(predicate)
 	}
-	function stringListEquals(listA, listB) {
-		if (!Array.isArray(listA) || !Array.isArray(listB)) {
-			return false
-		}
-		if (listA.length !== listB.length) {
-			return false
-		}
-		// Order doesn't matter: the checkbox list is sorted by name, the saved list isn't.
-		var sortedA = listA.slice().sort()
-		var sortedB = listB.slice().sort()
-		for (var i = 0; i < sortedA.length; i++) {
-			if (sortedA[i] !== sortedB[i]) {
-				return false
-			}
-		}
-		return true
-	}
 
-	property int selectedAccountIndex: 0
 	function accountLabel(account, index) {
 		if (!account) {
 			return i18n("Google Account")
 		}
 		return account.label || i18n("Google Account %1", index + 1)
 	}
-	function rebuildAccountsModel() {
-		accountsModel.clear()
-		var accounts = googleLoginManager.accounts || []
-		var nextIndex = 0
-		for (var i = 0; i < accounts.length; i++) {
-			var account = accounts[i]
-			if (account && account.id === googleLoginManager.activeAccountId) {
-				nextIndex = i
+
+	//--- Calendar / task list selection, per account
+	function primaryCalendarId(account) {
+		var list = Shared.toArray(account.calendarList)
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].primary) {
+				return list[i].id
 			}
-			accountsModel.append({
-				accountId: account.id,
-				label: accountLabel(account, i),
-			})
 		}
-		selectedAccountIndex = nextIndex
-		if (typeof accountSelector !== 'undefined') {
-			accountSelector.currentIndex = nextIndex
+		return ''
+	}
+	function isCalendarShown(account, calendar) {
+		var ids = Shared.toArray(account.calendarIdList)
+		return ids.indexOf(calendar.id) >= 0 || (calendar.primary === true && ids.indexOf('primary') >= 0)
+	}
+	function setCalendarShown(account, calendar, shown) {
+		// The saved list may say 'primary' instead of the primary calendar's id.
+		var primaryId = primaryCalendarId(account)
+		var ids = Shared.toArray(account.calendarIdList).map(function(id) {
+			return id === 'primary' && primaryId ? primaryId : id
+		}).filter(function(id) {
+			return id !== calendar.id
+		})
+		if (shown) {
+			ids.push(calendar.id)
 		}
+		googleLoginManager.setCalendarIdList(ids, account.id)
+		markDirty()
+	}
+	function isTasklistShown(account, tasklist) {
+		return Shared.toArray(account.tasklistIdList).indexOf(tasklist.id) >= 0
+	}
+	function setTasklistShown(account, tasklist, shown) {
+		var ids = Shared.toArray(account.tasklistIdList).filter(function(id) {
+			return id !== tasklist.id
+		})
+		if (shown) {
+			ids.push(tasklist.id)
+		}
+		googleLoginManager.setTasklistIdList(ids, account.id)
+		markDirty()
 	}
 
-	ListModel { id: accountsModel }
 	ExecUtil { id: callbackListener }
 
 	property bool autoLoginInProgress: false
@@ -212,123 +217,161 @@ ConfigPage {
 		id: googleLoginManager
 		configBridge: page.configBridge
 		redirectMode: "local"
-		onAccountsChanged: rebuildAccountsModel()
-		onActiveAccountIdChanged: rebuildAccountsModel()
-
-		onCalendarListChanged: {
-			calendarsModel.clear()
-			var sortedList = sortArr(calendarList, "summary")
-			for (var i = 0; i < sortedList.length; i++) {
-				var item = sortedList[i]
-				var isPrimary = item.primary === true
-				var isShown = calendarIdList.indexOf(item.id) >= 0 || (isPrimary && calendarIdList.indexOf('primary') >= 0)
-				calendarsModel.append({
-					calendarId: item.id, 
-					name: item.summary,
-					description: item.description || "",
-					backgroundColor: item.backgroundColor,
-					foregroundColor: item.foregroundColor,
-					show: isShown,
-					isPrimary: isPrimary,
-					isReadOnly: item.accessRole == "reader",
-				})
-			}
-			calendarsModel.calendarsShownChanged()
-		}
-
-		// Selection changed without a new list (eg: account switched to one with the same
-		// calendars): update the checkboxes in place.
-		onCalendarIdListChanged: {
-			for (var i = 0; i < calendarsModel.count; i++) {
-				var item = calendarsModel.get(i)
-				var isShown = calendarIdList.indexOf(item.calendarId) >= 0 || (item.isPrimary && calendarIdList.indexOf('primary') >= 0)
-				if (item.show !== isShown) {
-					calendarsModel.setProperty(i, 'show', isShown)
-				}
-			}
-		}
-		onTasklistIdListChanged: {
-			for (var i = 0; i < tasklistsModel.count; i++) {
-				var item = tasklistsModel.get(i)
-				var isShown = tasklistIdList.indexOf(item.tasklistId) >= 0
-				if (item.show !== isShown) {
-					tasklistsModel.setProperty(i, 'show', isShown)
-				}
-			}
-		}
-
-		onTasklistListChanged: {
-			tasklistsModel.clear()
-			var sortedList = sortArr(tasklistList, "title")
-			for (var i = 0; i < sortedList.length; i++) {
-				var item = sortedList[i]
-				var isShown = tasklistIdList.indexOf(item.id) >= 0
-				tasklistsModel.append({
-					tasklistId: item.id, 
-					name: item.title,
-					description: '',
-					backgroundColor: Kirigami.Theme.highlightColor.toString(),
-					foregroundColor: Kirigami.Theme.highlightedTextColor.toString(),
-					show: isShown,
-					isReadOnly: false,
-				})
-			}
-			tasklistsModel.tasklistsShownChanged()
-		}
 
 		onError: function(err) {
 			messageWidget.err(err)
 		}
 	}
 	HeaderText {
-		text: i18n("Accounts")
+		text: i18n("Google Accounts")
 	}
 	MessageWidget {
 		id: messageWidget
 	}
-	ColumnLayout {
-		visible: googleLoginManager.isLoggedIn
-		RowLayout {
+	Label {
+		visible: !googleLoginManager.isLoggedIn
+		Layout.fillWidth: true
+		wrapMode: Text.Wrap
+		opacity: 0.7
+		text: i18n("Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically.")
+	}
+
+	// One section per account: its calendars and task lists. All accounts sync at the same time.
+	Repeater {
+		model: googleLoginManager.accounts ? googleLoginManager.accounts.length : 0
+
+		ColumnLayout {
+			id: accountSection
+			readonly property var account: googleLoginManager.accounts[index] || null
+			// Primary calendar first, then by name.
+			readonly property var calendars: account ? page.sortArr(Shared.toArray(account.calendarList), function(a, b) {
+				if (!!a.primary !== !!b.primary) {
+					return a.primary ? -1 : 1
+				}
+				return (a.summary || '').toLowerCase().localeCompare((b.summary || '').toLowerCase())
+			}) : []
+			readonly property var tasklists: account ? page.sortArr(Shared.toArray(account.tasklistList), "title") : []
+			readonly property bool needsRelog: googleLoginManager.accountNeedsRelog(account)
+			property bool confirmRemove: false
 			Layout.fillWidth: true
-			Label {
-				text: i18n("Account")
-			}
-			ComboBox {
-				id: accountSelector
+			Layout.topMargin: index > 0 ? Kirigami.Units.largeSpacing : 0
+			spacing: Kirigami.Units.smallSpacing
+
+			Kirigami.Separator {
+				visible: index > 0
 				Layout.fillWidth: true
-				textRole: "label"
-				model: accountsModel
-				onActivated: {
-					var item = accountsModel.get(currentIndex)
-					if (item && item.accountId) {
-						googleLoginManager.setActiveAccountId(item.accountId)
-					}
+				Layout.bottomMargin: Kirigami.Units.smallSpacing
+			}
+
+			// Account: name, refresh, sign in again, remove
+			RowLayout {
+				Layout.fillWidth: true
+				spacing: Kirigami.Units.smallSpacing
+				Kirigami.Icon {
+					source: "user-identity"
+					Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+					Layout.preferredHeight: Layout.preferredWidth
+				}
+				Kirigami.Heading {
+					Layout.fillWidth: true
+					level: 4
+					elide: Text.ElideRight
+					text: page.accountLabel(accountSection.account, index)
+				}
+				Button {
+					visible: accountSection.needsRelog
+					icon.name: "view-refresh"
+					text: i18n("Sign In Again")
+					enabled: !page.autoLoginInProgress
+					onClicked: page.startAutoLogin(accountSection.account.id)
+				}
+				ToolButton {
+					icon.name: "view-refresh"
+					display: AbstractButton.IconOnly
+					text: i18n("Reload calendars and task lists")
+					onClicked: googleLoginManager.updateData(accountSection.account.id)
+					ToolTip.text: text
+					ToolTip.visible: hovered
+				}
+				ToolButton {
+					visible: !accountSection.confirmRemove
+					icon.name: "list-remove-user"
+					display: AbstractButton.IconOnly
+					text: i18n("Remove Account")
+					onClicked: accountSection.confirmRemove = true
+					ToolTip.text: text
+					ToolTip.visible: hovered
+				}
+				Button {
+					visible: accountSection.confirmRemove
+					icon.name: "edit-delete"
+					text: i18n("Remove")
+					onClicked: googleLoginManager.removeAccount(accountSection.account.id)
+				}
+				Button {
+					visible: accountSection.confirmRemove
+					text: i18n("Cancel")
+					onClicked: accountSection.confirmRemove = false
 				}
 			}
-			Button {
-				text: i18n("Remove")
-				enabled: accountsModel.count > 0
-				onClicked: {
-					googleLoginManager.removeAccount(googleLoginManager.activeAccountId)
-					calendarsModel.clear()
-					tasklistsModel.clear()
+			MessageWidget {
+				visible: accountSection.needsRelog
+				closeButtonVisible: false
+				messageType: MessageWidget.MessageType.Warning
+				text: i18n("The widget was updated. Sign in again to keep this account in sync.")
+			}
+
+			// Calendars
+			Label {
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				text: i18n("Calendars")
+				font.weight: Font.DemiBold
+				opacity: 0.7
+			}
+			Label {
+				visible: accountSection.calendars.length === 0
+				text: i18n("No calendars loaded yet. Use the reload button.")
+				opacity: 0.6
+			}
+			Repeater {
+				model: accountSection.calendars.length
+				SelectionRow {
+					readonly property var calendar: accountSection.calendars[index]
+					Layout.fillWidth: true
+					name: calendar ? calendar.summary : ""
+					swatchColor: calendar ? calendar.backgroundColor : "transparent"
+					readOnly: calendar ? calendar.accessRole === "reader" : false
+					checked: calendar ? page.isCalendarShown(accountSection.account, calendar) : false
+					onToggled: page.setCalendarShown(accountSection.account, calendar, checked)
 				}
 			}
-		}
-		Label {
-			Layout.fillWidth: true
-			text: i18n("Currently Synced: %1", accountLabel(googleLoginManager.activeAccount, accountSelector.currentIndex))
-			color: readablePositiveTextColor
-			wrapMode: Text.Wrap
-		}
-		MessageWidget {
-			visible: googleLoginManager.needsRelog
-			text: i18n("Widget has been updated. Please logout and login to Google Calendar again.")
+
+			// Task lists
+			Label {
+				visible: accountSection.tasklists.length > 0
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				text: i18n("Task Lists")
+				font.weight: Font.DemiBold
+				opacity: 0.7
+			}
+			Repeater {
+				model: accountSection.tasklists.length
+				SelectionRow {
+					readonly property var tasklist: accountSection.tasklists[index]
+					Layout.fillWidth: true
+					name: tasklist ? tasklist.title : ""
+					iconSource: Qt.resolvedUrl("../../icons/google_tasks_96px.png")
+					checked: tasklist ? page.isTasklistShown(accountSection.account, tasklist) : false
+					onToggled: page.setTasklistShown(accountSection.account, tasklist, checked)
+				}
+			}
 		}
 	}
+
 	RowLayout {
+		Layout.topMargin: Kirigami.Units.largeSpacing
 		Button {
-			icon.name: googleLoginManager.isLoggedIn ? "list-add" : "go-next"
+			icon.name: googleLoginManager.isLoggedIn ? "list-add-user" : "go-next"
 			text: googleLoginManager.isLoggedIn ? i18n("Add Account…") : i18n("Sign in with Google…")
 			enabled: !autoLoginInProgress
 			onClicked: {
@@ -336,25 +379,11 @@ ConfigPage {
 				startAutoLogin("")
 			}
 		}
-		Button {
-			visible: googleLoginManager.isLoggedIn && googleLoginManager.needsRelog
-			icon.name: "view-refresh"
-			text: i18n("Sign In Again")
-			enabled: !autoLoginInProgress
-			onClicked: startAutoLogin(googleLoginManager.activeAccountId)
-		}
 		BusyIndicator {
 			visible: autoLoginInProgress
 			running: visible
 			Layout.preferredHeight: Kirigami.Units.iconSizes.medium
 		}
-	}
-	Label {
-		visible: !googleLoginManager.isLoggedIn
-		Layout.fillWidth: true
-		wrapMode: Text.Wrap
-		opacity: 0.7
-		text: i18n("Your browser opens to sign in. When access is granted the widget picks it up automatically.")
 	}
 
 	// Advanced sign-in (custom OAuth client, manual code): collapsed by default.
@@ -615,209 +644,6 @@ ConfigPage {
 
 	} // advancedSignIn
 
-	RowLayout {
-		Layout.fillWidth: true
-		visible: googleLoginManager.isLoggedIn
-
-		HeaderText {
-			text: i18n("Calendars")
-		}
-
-		Button {
-			icon.name: "view-refresh"
-			text: i18n("Refresh")
-			onClicked: googleLoginManager.updateCalendarList()
-		}
-	}
-	ColumnLayout {
-		spacing: Kirigami.Units.smallSpacing * 2
-		Layout.fillWidth: true
-		visible: googleLoginManager.isLoggedIn
-
-		ListModel {
-			id: calendarsModel
-
-			signal calendarsShownChanged()
-
-			onCalendarsShownChanged: {
-				var calendarIdList = []
-				var primaryId = ''
-				for (var i = 0; i < calendarsModel.count; i++) {
-					var item = calendarsModel.get(i)
-					if (item.isPrimary) {
-						primaryId = item.calendarId
-					}
-					if (item.show) {
-						calendarIdList.push(item.calendarId)
-					}
-				}
-				// The saved list may say 'primary' instead of the primary calendar's id.
-				var savedList = googleLoginManager.calendarIdList.map(function(id) {
-					return id === 'primary' && primaryId ? primaryId : id
-				})
-				if (!stringListEquals(calendarIdList, savedList)) {
-					googleLoginManager.setCalendarIdList(calendarIdList)
-					markDirty()
-				}
-			}
-		}
-
-		ColumnLayout {
-			Layout.fillWidth: true
-
-			Repeater {
-				model: calendarsModel
-				delegate: CheckDelegate {
-					id: calendarRow
-					width: parent.width
-					implicitHeight: Kirigami.Units.gridUnit * 2.5
-					checkable: true
-					hoverEnabled: true
-					highlighted: hovered
-					padding: Kirigami.Units.smallSpacing
-					checked: model.show
-					onToggled: {
-						calendarsModel.setProperty(index, 'show', checked)
-						calendarsModel.calendarsShownChanged()
-					}
-
-					contentItem: RowLayout {
-						width: calendarRow.availableWidth
-						Layout.fillWidth: true
-						height: calendarRow.availableHeight
-						spacing: Kirigami.Units.smallSpacing
-
-						Rectangle {
-							Layout.alignment: Qt.AlignVCenter
-							implicitWidth: Kirigami.Units.iconSizes.smallMedium
-							implicitHeight: Kirigami.Units.iconSizes.smallMedium
-							radius: 4
-							color: model.backgroundColor
-							border.width: 1
-							border.color: ColorUtil.setAlpha(syspal.text, 0.4)
-						}
-
-						Label {
-							text: model.name
-							Layout.fillWidth: true
-							elide: Text.ElideRight
-						}
-
-						LockIcon {
-							Layout.alignment: Qt.AlignVCenter
-							implicitWidth: Kirigami.Units.iconSizes.smallMedium
-							implicitHeight: Kirigami.Units.iconSizes.smallMedium
-							visible: model.isReadOnly
-						}
-					}
-
-					Accessible.name: model.name
-				}
-			}
-		}
-	}
-
-	RowLayout {
-		Layout.fillWidth: true
-		visible: googleLoginManager.isLoggedIn
-
-		Image {
-			source: Qt.resolvedUrl("../../icons/google_tasks_96px.png")
-			smooth: true
-			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
-			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
-			Layout.alignment: Qt.AlignVCenter
-		}
-		HeaderText {
-			text: i18n("Tasks")
-		}
-
-		Button {
-			icon.name: "view-refresh"
-			text: i18n("Refresh")
-			onClicked: googleLoginManager.updateTasklistList()
-		}
-	}
-	ColumnLayout {
-		spacing: Kirigami.Units.smallSpacing * 2
-		Layout.fillWidth: true
-		visible: googleLoginManager.isLoggedIn
-
-		ListModel {
-			id: tasklistsModel
-
-			signal tasklistsShownChanged()
-
-			onTasklistsShownChanged: {
-				var tasklistIdList = []
-				for (var i = 0; i < tasklistsModel.count; i++) {
-					var item = tasklistsModel.get(i)
-					if (item.show) {
-						tasklistIdList.push(item.tasklistId)
-					}
-				}
-				if (!stringListEquals(tasklistIdList, googleLoginManager.tasklistIdList)) {
-					googleLoginManager.setTasklistIdList(tasklistIdList)
-					markDirty()
-				}
-			}
-		}
-
-		ColumnLayout {
-			Layout.fillWidth: true
-
-			Repeater {
-				model: tasklistsModel
-				delegate: CheckDelegate {
-					id: tasklistRow
-					width: parent.width
-					implicitHeight: Kirigami.Units.gridUnit * 2.5
-					checkable: true
-					hoverEnabled: true
-					highlighted: hovered
-					padding: Kirigami.Units.smallSpacing
-					checked: model.show
-					onToggled: {
-						tasklistsModel.setProperty(index, 'show', checked)
-						tasklistsModel.tasklistsShownChanged()
-					}
-
-					contentItem: RowLayout {
-						width: tasklistRow.availableWidth
-						Layout.fillWidth: true
-						height: tasklistRow.availableHeight
-						spacing: Kirigami.Units.smallSpacing
-
-						Rectangle {
-							Layout.alignment: Qt.AlignVCenter
-							implicitWidth: Kirigami.Units.iconSizes.smallMedium
-							implicitHeight: Kirigami.Units.iconSizes.smallMedium
-							radius: 4
-							color: model.backgroundColor
-							border.width: 1
-							border.color: ColorUtil.setAlpha(syspal.text, 0.4)
-						}
-
-						Label {
-							text: model.name
-							Layout.fillWidth: true
-							elide: Text.ElideRight
-						}
-
-						LockIcon {
-							Layout.alignment: Qt.AlignVCenter
-							implicitWidth: Kirigami.Units.iconSizes.smallMedium
-							implicitHeight: Kirigami.Units.iconSizes.smallMedium
-							visible: model.isReadOnly
-						}
-					}
-
-					Accessible.name: model.name
-				}
-			}
-		}
-	}
-
 	HeaderText {
 		text: i18n("Options")
 		visible: googleLoginManager.isLoggedIn
@@ -905,11 +731,6 @@ ConfigPage {
 	Component.onCompleted: {
 		if (page.cfg_googleRedirectMode !== "local") {
 			page.configBridge.write("googleRedirectMode", "local")
-		}
-		rebuildAccountsModel()
-		if (googleLoginManager.isLoggedIn) {
-			googleLoginManager.calendarListChanged()
-			googleLoginManager.tasklistListChanged()
 		}
 	}
 }
