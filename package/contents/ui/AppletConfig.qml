@@ -10,7 +10,7 @@ QtObject {
 
 	// Shared look for the month and week views.
 	readonly property real faintGridLineOpacity: 0.07 // Day and hour grid lines: always on, very faint
-	readonly property real pastOpacity: 0.45 // Past days / ended events are dimmed in all views
+	readonly property real pastOpacity: 0.6 // Past days / ended events are dimmed in all views
 	// Dark theme: event colors keep their hue and saturation but get darker (like Google Calendar's
 	// dark mode), so bright pastel tiles don't glare and keep light text.
 	readonly property bool darkTheme: {
