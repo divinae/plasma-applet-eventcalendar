@@ -11,7 +11,6 @@ import "../Shared.js" as Shared
 // Panel clock: time / date formats, font, next meeting chip.
 ConfigPage {
 	id: page
-	showAppletVersion: true
 
 	readonly property string localeTimeFormat: Qt.locale().timeFormat(Locale.ShortFormat)
 	readonly property string localeDateFormat: Qt.locale().dateFormat(Locale.ShortFormat)

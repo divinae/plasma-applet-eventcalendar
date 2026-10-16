@@ -361,7 +361,7 @@ KCM.SimpleKCM {
 		}
 		for (var j = 0; j < items.length; j++) {
 			var child = items[j]
-			if (!child || child === content || child === appletVersionLoader) {
+			if (!child || child === content) {
 				continue
 			}
 			clearItemAnchors(child)
@@ -369,13 +369,4 @@ KCM.SimpleKCM {
 		}
 	}
 
-	property alias showAppletVersion: appletVersionLoader.active
-	Loader {
-		id: appletVersionLoader
-		active: false
-		visible: active
-		source: "AppletVersion.qml"
-		anchors.right: parent.right
-		anchors.bottom: parent.top
-	}
 }
