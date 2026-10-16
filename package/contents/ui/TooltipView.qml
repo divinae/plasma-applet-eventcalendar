@@ -3,6 +3,8 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "Shared.js" as Shared
+
 Item {
 	id: tooltipContentItem
 
@@ -100,6 +102,55 @@ Item {
 					Layout.maximumWidth: preferredTextWidth
 					text: Qt.formatDate(timeModel.currentTime, Qt.locale().dateFormat(Locale.LongFormat))
 					opacity: 0.6
+				}
+
+				// Weather: now, and today's high / low.
+				RowLayout {
+					id: tooltipWeather
+					readonly property var current: typeof logic !== "undefined" ? logic.currentWeatherData : null
+					readonly property var today: {
+						var list = typeof logic !== "undefined" && logic.dailyWeatherData ? logic.dailyWeatherData.list : null
+						if (!list) {
+							return null
+						}
+						for (var i = 0; i < list.length; i++) {
+							if (Shared.isSameDate(new Date(list[i].dt * 1000), timeModel.currentTime)) {
+								return list[i]
+							}
+						}
+						return null
+					}
+					visible: !!current || !!today
+					Layout.topMargin: Kirigami.Units.smallSpacing
+					Layout.maximumWidth: preferredTextWidth
+					spacing: Kirigami.Units.smallSpacing
+					Kirigami.Icon {
+						readonly property string iconName: tooltipWeather.current ? tooltipWeather.current.iconName : (tooltipWeather.today ? tooltipWeather.today.iconName : "")
+						source: iconName ? iconName + "-symbolic" : ""
+						fallback: iconName
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+					}
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						elide: Text.ElideRight
+						text: {
+							var parts = []
+							var c = tooltipWeather.current
+							if (c && isFinite(c.temp)) {
+								parts.push(Shared.formatTemp(c.temp) + (c.text ? " " + c.text : ""))
+							}
+							var t = tooltipWeather.today
+							if (t && t.temp) {
+								parts.push(i18nc("high / low temperature", "%1 / %2", Shared.formatTemp(t.temp.max), Shared.formatTemp(t.temp.min)))
+								if (t.precipitation > 0) {
+									var imperial = plasmoid.configuration.weatherUnits === 'imperial'
+									parts.push(imperial ? i18nc("precipitation in inches", "%1 in", Math.round(t.precipitation * 100) / 100) : i18nc("precipitation in mm", "%1 mm", Math.round(t.precipitation * 10) / 10))
+								}
+							}
+							return parts.join(" · ")
+						}
+					}
 				}
 
 				PlasmaComponents3.Label {

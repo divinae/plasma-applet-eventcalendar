@@ -412,56 +412,66 @@ Item {
 			}
 			Repeater {
 				model: weekView.dayCount
-				Column {
+				Item {
+					id: dayHeaderCell
 					readonly property date date: weekView.dayDate(index)
 					readonly property bool today: weekView.isToday(date)
 					readonly property var weather: weekView.dayWeather(date)
 					width: weekView.columnWidth
+					height: dayHeaderColumn.implicitHeight
 					opacity: date < weekView.todayStart ? appletConfig.pastOpacity : 1
-					// Day name, with the weather on the same line (week view): "pt. ☁ 13°".
-					Row {
-						anchors.horizontalCenter: parent.horizontalCenter
-						spacing: 3
+
+					Column {
+						id: dayHeaderColumn
+						width: parent.width
 						PlasmaComponents3.Label {
-							anchors.verticalCenter: parent.verticalCenter
-							text: Qt.locale().dayName(parent.parent.date.getDay(), Locale.ShortFormat)
+							width: parent.width
+							horizontalAlignment: Text.AlignHCenter
+							text: Qt.locale().dayName(dayHeaderCell.date.getDay(), Locale.ShortFormat)
 							font: Kirigami.Theme.smallFont
-							color: parent.parent.today ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
-							opacity: parent.parent.today ? 1 : 0.6
+							color: dayHeaderCell.today ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
+							opacity: dayHeaderCell.today ? 1 : 0.6
 						}
+						Item {
+							width: parent.width
+							height: dayNumberLabel.implicitHeight + 4
+							Rectangle {
+								anchors.centerIn: parent
+								width: Math.max(dayNumberLabel.implicitWidth, dayNumberLabel.implicitHeight) + 6
+								height: width
+								radius: width / 2
+								color: Kirigami.Theme.highlightColor
+								visible: dayHeaderCell.today
+							}
+							PlasmaComponents3.Label {
+								id: dayNumberLabel
+								anchors.centerIn: parent
+								text: dayHeaderCell.date.getDate()
+								font.weight: Font.Bold
+								color: dayHeaderCell.today ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+							}
+						}
+					}
+
+					// Week view: small icon and high temperature in the top right corner of the day header.
+					Row {
+						visible: !weekView.singleDay && !!dayHeaderCell.weather && dayHeaderCell.width >= Kirigami.Units.gridUnit * 5
+						anchors.top: parent.top
+						anchors.right: parent.right
+						anchors.rightMargin: Kirigami.Units.smallSpacing
+						spacing: 1
+						opacity: 0.7
 						Kirigami.Icon {
-							visible: !weekView.singleDay && !!parent.parent.weather
 							anchors.verticalCenter: parent.verticalCenter
 							width: Kirigami.Units.iconSizes.small
 							height: width
-							source: parent.parent.weather ? parent.parent.weather.iconName + "-symbolic" : "" // Monochrome: readable on any background
-							fallback: parent.parent.weather ? parent.parent.weather.iconName : ""
+							source: dayHeaderCell.weather ? dayHeaderCell.weather.iconName + "-symbolic" : "" // Monochrome: readable on any background
+							fallback: dayHeaderCell.weather ? dayHeaderCell.weather.iconName : ""
 						}
 						PlasmaComponents3.Label {
-							visible: !weekView.singleDay && !!parent.parent.weather
 							anchors.verticalCenter: parent.verticalCenter
-							text: parent.parent.weather ? Shared.formatTemp(parent.parent.weather.temp.max) : ""
+							text: dayHeaderCell.weather ? Shared.formatTemp(dayHeaderCell.weather.temp.max) : ""
 							font: Kirigami.Theme.smallFont
-							opacity: 0.8
-						}
-					}
-					Item {
-						width: parent.width
-						height: dayNumberLabel.implicitHeight + 4
-						Rectangle {
-							anchors.centerIn: parent
-							width: Math.max(dayNumberLabel.implicitWidth, dayNumberLabel.implicitHeight) + 6
-							height: width
-							radius: width / 2
-							color: Kirigami.Theme.highlightColor
-							visible: parent.parent.today
-						}
-						PlasmaComponents3.Label {
-							id: dayNumberLabel
-							anchors.centerIn: parent
-							text: parent.parent.date.getDate()
-							font.weight: Font.Bold
-							color: parent.parent.today ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 						}
 					}
 				}
