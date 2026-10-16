@@ -637,6 +637,10 @@ MouseArea {
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
 			dayCount: popup.dayMode ? 1 : 7
+			weatherByDay: popup.weatherInViews ? popup.weatherByDay : ({})
+			weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
+			weatherCurrent: logic.currentWeatherData
+			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
 			showHeader: false
 			// Make sure the visible week's month is fetched.
 			onWeekStartChanged: {
@@ -733,6 +737,7 @@ MouseArea {
 			id: monthView
 			visible: showCalendar
 			showHeader: false
+			weatherByDay: popup.weatherInViews ? popup.weatherByDay : ({})
 			borderOpacity: appletConfig.showGridLines ? appletConfig.gridLineOpacity : appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek
@@ -885,6 +890,18 @@ MouseArea {
 		updateUITimer.restart()
 	}
 
+	//--- Weather for the views
+	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
+	property var weatherByDay: ({}) // Shared.dayKey -> daily forecast item
+	function updateWeatherByDay() {
+		var map = {}
+		var list = logic.dailyWeatherData && logic.dailyWeatherData.list ? logic.dailyWeatherData.list : []
+		for (var i = 0; i < list.length; i++) {
+			map[Shared.dayKey(new Date(list[i].dt * 1000))] = list[i]
+		}
+		weatherByDay = map
+	}
+
 	function updateUI() {
 		// logger.debug('updateUI')
 		var now = new Date()
@@ -895,6 +912,7 @@ MouseArea {
 
 		agendaModel.parseGCalEvents(eventModel.eventsData)
 		agendaModel.parseWeatherForecast(logic.dailyWeatherData)
+		updateWeatherByDay()
 		monthView.parseGCalEvents(eventModel.eventsData)
 		if (weekViewLoader.item) {
 			weekViewLoader.item.rebuild()

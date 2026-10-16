@@ -15,6 +15,8 @@ GridLayout {
 	property var agendaItemTasks: model.tasks
 	property var agendaItemDate: model.date // var: model.date is briefly undefined while delegates are removed.
 	property bool agendaItemIsToday: false
+	// Past days are dimmed (still clickable).
+	opacity: agendaItemDate && timeModel.currentTime && Shared.isPastDay(agendaItemDate, timeModel.currentTime) ? appletConfig.pastOpacity : 1
 	function checkIfToday() {
 		agendaItemIsToday = timeModel.currentTime && model.date ? Shared.isSameDate(timeModel.currentTime, model.date) : false
 		// console.log('checkIfToday()', agendaListItem.agendaItemIsToday, timeModel.currentTime, model.date)

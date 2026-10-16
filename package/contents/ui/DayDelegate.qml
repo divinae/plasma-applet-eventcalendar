@@ -22,6 +22,7 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.workspace.calendar as PlasmaCalendar
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 MouseArea {
 	id: dayStyle
@@ -136,9 +137,14 @@ MouseArea {
 	}
 
 
+	// Past days are dimmed (day number, events, weather).
+	readonly property bool isPast: typeof timeModel !== "undefined" && Shared.isPastDay(thisDate, timeModel.currentTime)
+	readonly property real contentOpacity: isPast ? appletConfig.pastOpacity : 1
+
 	Item {
 		id: eventBadge
 		visible: model.showEventBadge || false
+		opacity: dayStyle.contentOpacity
 		anchors.fill: parent
 
 		Loader {
@@ -171,6 +177,31 @@ MouseArea {
 		}
 	}
 
+	// Weather (month view): small icon and high temperature, top right of the cell.
+	readonly property var weather: showEventTitles && root.weatherByDay ? root.weatherByDay[Shared.dayKey(thisDate)] : null
+	Row {
+		visible: !!dayStyle.weather
+		opacity: dayStyle.contentOpacity
+		anchors.top: parent.top
+		anchors.right: parent.right
+		anchors.rightMargin: 3
+		height: dayStyle.eventTitlesHeaderHeight
+		spacing: 1
+		Kirigami.Icon {
+			anchors.verticalCenter: parent.verticalCenter
+			width: Math.round(dayStyle.eventTitlesHeaderHeight * 0.75)
+			height: width
+			source: dayStyle.weather ? dayStyle.weather.iconName : ""
+		}
+		Text {
+			anchors.verticalCenter: parent.verticalCenter
+			text: dayStyle.weather ? Shared.formatTemp(dayStyle.weather.temp.max) : ""
+			color: Kirigami.Theme.textColor
+			opacity: 0.75
+			font.pixelSize: Math.round(dayHeaderFontMetrics.height * 0.7)
+		}
+	}
+
 	Text {
 		id: label
 		anchors {
@@ -193,7 +224,7 @@ MouseArea {
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 		text: model.label || dayNumber
-		opacity: isCurrent ? 1.0 : 0.5
+		opacity: (isCurrent ? 1.0 : 0.5) * dayStyle.contentOpacity
 		wrapMode: Text.NoWrap
 		elide: Text.ElideRight
 		fontSizeMode: Text.HorizontalFit

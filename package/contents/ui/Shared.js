@@ -156,3 +156,17 @@ function isList(value) {
 function toArray(value) {
 	return isList(value) ? Array.prototype.slice.call(value) : []
 }
+
+// Number identifying a calendar day, eg: for weather lookups. Month is 0-based like Date.
+function dayKey(d) {
+	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
+}
+
+// Before today (midnight).
+function isPastDay(d, now) {
+	return d < new Date(now.getFullYear(), now.getMonth(), now.getDate())
+}
+
+function formatTemp(t) {
+	return isFinite(t) ? Math.round(t) + '°' : ''
+}

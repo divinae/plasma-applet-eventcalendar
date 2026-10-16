@@ -29,8 +29,32 @@ Item {
 	property int dayCount: 7
 	readonly property bool singleDay: dayCount === 1
 	// One day stretched over a wide popup looks wrong: cap its width and center it.
-	readonly property real contentWidth: singleDay ? Math.min(width, Kirigami.Units.gridUnit * 32) : width
-	readonly property real contentX: Math.round((width - contentWidth) / 2)
+	// Weather from the popup (Logic). weatherByDay: Shared.dayKey -> daily item.
+	property var weatherByDay: ({})
+	property var weatherHourly: []
+	property var weatherCurrent: null
+	property bool weatherIsSetup: false
+	readonly property bool showWeather: Object.keys(weatherByDay).length > 0 || weatherIsSetup
+
+	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
+	// Too narrow for both: the panel becomes a compact row above the grid.
+	readonly property real weatherPanelWidth: Kirigami.Units.gridUnit * 13
+	readonly property bool weatherBeside: singleDay && showWeather && width >= Kirigami.Units.gridUnit * 36
+	readonly property real contentWidth: {
+		if (!singleDay) {
+			return width
+		}
+		var room = weatherBeside ? width - weatherPanelWidth - Kirigami.Units.largeSpacing * 2 : width
+		return Math.min(room, Kirigami.Units.gridUnit * 32)
+	}
+	readonly property real contentX: {
+		var total = contentWidth + (weatherBeside ? weatherPanelWidth + Kirigami.Units.largeSpacing * 2 : 0)
+		return Math.round((width - total) / 2)
+	}
+	readonly property date todayStart: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate())
+	function dayWeather(d) {
+		return weatherByDay ? weatherByDay[Shared.dayKey(d)] : null
+	}
 	onDayCountChanged: {
 		weekStart = startOfWeek(currentTime)
 		rebuild()
@@ -308,11 +332,41 @@ Item {
 		}
 	}
 
+	WeatherPanel {
+		visible: weekView.weatherBeside
+		x: weekView.contentX + weekView.contentWidth + Kirigami.Units.largeSpacing * 2
+		width: weekView.weatherPanelWidth
+		height: parent.height
+		isSetup: weekView.weatherIsSetup
+		current: weekView.weatherCurrent
+		today: weekView.dayWeather(weekView.weekStart)
+		hourly: weekView.weatherHourly
+		nextDays: {
+			var list = []
+			for (var i = 1; i <= 4; i++) {
+				var d = weekView.dayWeather(weekView.dayDate(i))
+				if (d) {
+					list.push(d)
+				}
+			}
+			return list
+		}
+	}
+
 	ColumnLayout {
 		x: weekView.contentX
 		width: weekView.contentWidth
 		height: parent.height
 		spacing: Kirigami.Units.smallSpacing
+
+		WeatherPanel {
+			visible: weekView.singleDay && weekView.showWeather && !weekView.weatherBeside && weekView.weatherIsSetup
+			Layout.fillWidth: true
+			compact: true
+			isSetup: weekView.weatherIsSetup
+			current: weekView.weatherCurrent
+			today: weekView.dayWeather(weekView.weekStart)
+		}
 
 		RowLayout {
 			Layout.fillWidth: true
@@ -357,7 +411,9 @@ Item {
 				Column {
 					readonly property date date: weekView.dayDate(index)
 					readonly property bool today: weekView.isToday(date)
+					readonly property var weather: weekView.dayWeather(date)
 					width: weekView.columnWidth
+					opacity: date < weekView.todayStart ? appletConfig.pastOpacity : 1
 					PlasmaComponents3.Label {
 						width: parent.width
 						horizontalAlignment: Text.AlignHCenter
@@ -385,6 +441,24 @@ Item {
 							color: parent.parent.today ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 						}
 					}
+					// Week view: icon and high / low under the day (the day view has the panel).
+					Row {
+						visible: !weekView.singleDay && !!parent.weather
+						anchors.horizontalCenter: parent.horizontalCenter
+						spacing: 2
+						Kirigami.Icon {
+							anchors.verticalCenter: parent.verticalCenter
+							width: Kirigami.Units.iconSizes.small
+							height: width
+							source: parent.parent.weather ? parent.parent.weather.iconName : ""
+						}
+						PlasmaComponents3.Label {
+							anchors.verticalCenter: parent.verticalCenter
+							text: parent.parent.weather ? Shared.formatTemp(parent.parent.weather.temp.max) + ' / ' + Shared.formatTemp(parent.parent.weather.temp.min) : ""
+							font: Kirigami.Theme.smallFont
+							opacity: 0.8
+						}
+					}
 				}
 			}
 		}
@@ -406,6 +480,7 @@ Item {
 					readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 1
 					y: bar.lane * (weekView.allDayRowHeight + 1)
+					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 2
 					height: weekView.allDayRowHeight
 					// Square ends where the event continues before or after this week.
@@ -538,6 +613,15 @@ Item {
 								// Only in the week view: in the day view the whole column is "today".
 								opacity: dayColumn.today && !weekView.singleDay ? 0.08 : 0
 							}
+							// Past part of today (and whole past days): light grey wash.
+							Rectangle {
+								readonly property real nowY: (weekView.currentTime.getHours() + weekView.currentTime.getMinutes() / 60 - weekView.firstHour) * weekView.hourHeight
+								visible: dayColumn.day.date < weekView.todayStart || dayColumn.today
+								width: parent.width
+								height: dayColumn.day.date < weekView.todayStart ? parent.height : Math.max(0, Math.min(parent.height, nowY))
+								color: Kirigami.Theme.textColor
+								opacity: 0.04
+							}
 							// Today: highlight-colored frame around the column (week view only).
 							Rectangle {
 								visible: dayColumn.today && !weekView.singleDay
@@ -610,6 +694,7 @@ Item {
 									readonly property real rangeEnd: block.dayStart + weekView.lastHour * 3600000
 									readonly property real visibleStart: Math.max(block.start, rangeStart)
 									readonly property real visibleEnd: Math.min(Math.max(block.end, block.start + 15 * 60000), rangeEnd)
+									opacity: eventItem.endDateTime <= weekView.currentTime ? appletConfig.pastOpacity : 1
 									visible: visibleEnd > visibleStart
 									x: 2 + block.column * slotWidth
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
