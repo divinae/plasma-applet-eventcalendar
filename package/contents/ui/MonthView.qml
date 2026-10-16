@@ -219,6 +219,11 @@ PinchArea {
 	// Bucket events per visible day in plain JS first, then write each day to the model once.
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
 	function setEvents(items) {
+		// Not laid out yet (eg: just switched to the month view): fill once the cells have a size,
+		// see onEventRowCapacityChanged, so they aren't filled twice in different orders.
+		if (spanBarsActive && eventRowCapacity <= 0) {
+			return
+		}
 		var dayTimes = []
 		for (var i = 0; i < daysModel.count; i++) {
 			var dayData = daysModel.get(i)

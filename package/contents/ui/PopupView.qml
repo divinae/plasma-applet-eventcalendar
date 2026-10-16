@@ -813,9 +813,11 @@ MouseArea {
 			spanBarsEnabled: true
 
 			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
-			// The bar lanes depend on how many event rows fit in a day cell.
-			onEventRowCapacityChanged: if (spanBarsActive) Qt.callLater(reparseGCalEvents)
-			onSpanBarsActiveChanged: Qt.callLater(reparseGCalEvents)
+			// The bar lanes depend on how many event rows fit in a day cell. Refilled right away
+			// (in the same frame as the layout change): a deferred refill showed the cells first
+			// filled the other way, then reordered.
+			onEventRowCapacityChanged: if (spanBarsActive) reparseGCalEvents()
+			onSpanBarsActiveChanged: reparseGCalEvents()
 			function reparseGCalEvents() {
 				parseGCalEvents(popup.eventModel.eventsData)
 			}
