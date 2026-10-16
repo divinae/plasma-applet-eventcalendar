@@ -7,6 +7,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import "EventBuckets.js" as EventBuckets
 import "MeetingLink.js" as MeetingLink
 import "SeriesEdit.js" as SeriesEdit
+import "Undo.js" as Undo
 import "Shared.js" as Shared
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
@@ -367,17 +368,47 @@ Item {
 		var start = { dateTime: Shared.dateTimeString(dragState.start) }
 		var end = { dateTime: Shared.dateTimeString(dragState.end) }
 		dropTimeout.restart()
+		var calendarId = item.calendarId
 		if (!wholeSeries) {
-			eventModel.setEventProperties(item.calendarId, item.id, { start: start, end: end })
+			// Undo puts the old times back, offered once the move is saved (onEventUpdated).
+			moveUndo = eventModel.canRestore(calendarId) ? {
+				calendarId: calendarId,
+				eventId: item.id,
+				times: Undo.savedTimes(item),
+			} : null
+			eventModel.setEventProperties(calendarId, item.id, { start: start, end: end })
 			return
 		}
+		moveUndo = null
+		var seriesId = item.recurringEventId
 		var occurrenceStart = new Date(item.startDateTime)
-		var calendar = eventModel.getCalendarList().filter(function(c) { return c.id === item.calendarId })[0]
+		var calendar = eventModel.getCalendarList().filter(function(c) { return c.id === calendarId })[0]
 		var timeZone = (calendar && calendar.timeZone) || 'UTC'
-		eventModel.updateEventFromServer(item.calendarId, item.recurringEventId, function(series) {
+		var seriesTimes = null // The series' times before the move, for undo.
+		eventModel.updateEventFromServer(calendarId, seriesId, function(series) {
+			seriesTimes = Undo.savedTimes(series)
 			return SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
 		}, function() {
 			logic.update() // The occurrences come from a refetch.
+			popup.offerUndo(i18n("Event moved"), function() {
+				eventModel.updateEventFromServer(calendarId, seriesId, function() {
+					return seriesTimes
+				}, function() {
+					logic.update()
+				})
+			})
+		})
+	}
+	// A saved single move: { calendarId, eventId, times } until its update arrives.
+	property var moveUndo: null
+	function offerMoveUndo(calendarId, eventId) {
+		var u = moveUndo
+		if (!u || u.calendarId !== calendarId || u.eventId !== eventId) {
+			return
+		}
+		moveUndo = null
+		popup.offerUndo(i18n("Event moved"), function() {
+			eventModel.setEventProperties(u.calendarId, u.eventId, u.times)
 		})
 	}
 	// No answer at all (eg: signed out): put the block back.
@@ -389,9 +420,13 @@ Item {
 	Connections {
 		target: weekView.eventModel
 		function onError() {
+			weekView.moveUndo = null
 			if (weekView.dragState && weekView.dragState.pending) {
 				weekView.dragState = null
 			}
+		}
+		function onEventUpdated(calendarId, eventId, data) {
+			weekView.offerMoveUndo(calendarId, eventId)
 		}
 	}
 	PlasmaComponents3.Menu {

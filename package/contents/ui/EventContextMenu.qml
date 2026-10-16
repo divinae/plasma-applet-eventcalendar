@@ -125,7 +125,7 @@ PlasmaComponents3.Menu {
 				: eventMenu.isRecurring ? i18nc("%1 = event title", "Delete Only This Occurrence of “%1”", eventMenu.eventItem.summary)
 				: i18nc("%1 = event title", "Delete “%1”", eventMenu.eventItem.summary)
 			icon.name: "edit-delete"
-			onTriggered: eventModel.deleteEvent(eventMenu.eventItem.calendarId, eventMenu.eventItem.id)
+			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, false)
 		}
 		// Repeating events: the whole series, by its id.
 		PlasmaComponents3.MenuItem {
@@ -133,7 +133,7 @@ PlasmaComponents3.Menu {
 			height: visible ? implicitHeight : 0
 			text: eventMenu.eventItem ? i18nc("%1 = event title", "Delete All Events of “%1”", eventMenu.eventItem.summary) : ""
 			icon.name: "edit-delete"
-			onTriggered: eventModel.deleteSeries(eventMenu.eventItem.calendarId, eventMenu.eventItem.recurringEventId)
+			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, true)
 		}
 	}
 }
