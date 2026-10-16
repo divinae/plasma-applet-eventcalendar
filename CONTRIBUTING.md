@@ -11,7 +11,7 @@ branch your change should target, open an issue first.
 2. Clone the branch you want to work on:
 
 ```bash
-git clone -b master https://github.com/ALikesToCode/plasma-applet-eventcalendar.git
+git clone -b master https://github.com/divinae/plasma-applet-eventcalendar.git
 cd plasma-applet-eventcalendar
 ```
 

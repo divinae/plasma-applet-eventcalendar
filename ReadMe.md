@@ -1,108 +1,94 @@
-# Event Calendar Updated version
-This is an updated version that I modified for my own needs, with fix for Google Calender and quality of life improvements. 
+# Event Calendar for Plasma 6
 
+A calendar, agenda and weather widget for the KDE Plasma 6 panel that syncs with Google Calendar,
+Plasma (Akonadi / holiday) calendars and iCalendar (.ics) files.
 
-Plasmoid for a calendar+agenda with weather that syncs to Google Calendar.
+This is a maintained fork of [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar)
+by Chris Holland (Zren), via [ALikesToCode's Plasma 6 port](https://github.com/ALikesToCode/plasma-applet-eventcalendar).
+It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings.
 
-## Branch guide
+## Features
 
-- Plasma 6 (default): `master`
-- Plasma 5 (legacy): `plasma-5`
-- `plasma-6` is reserved for development/testing.
+- **Views** in the popup, switchable from its header: **Month** (event titles in the days),
+  **Week** (hour grid, all-day events, click an empty slot to add an event), **Today** (one day
+  with a weather panel) and **Agenda** (a list of upcoming days).
+- **Google Calendar**: several accounts at once, choose calendars and task lists per account,
+  create / edit / delete events, **recurring events** (set how an event repeats, edit one
+  occurrence or the whole series). Tokens are kept in the system keyring.
+- **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
+  Today view, the event details, notifications and the panel's right-click menu.
+- **Notifications** through KDE's notification system: reminders before events (with Snooze),
+  when an event starts (optionally critical / persistent), each configurable in System Settings >
+  Notifications > Event Calendar. Clicking one opens the event in the widget.
+- **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
+  OpenWeatherMap / Weather Canada.
+- **Works offline**: the last loaded events stay visible, fetches are retried automatically, and
+  a banner shows when it can't connect.
+- Event locations open in Google Maps, dark theme friendly event colors, right-click menus on
+  events, translated into 20 languages.
+
+## Install
+
+### From a release
+
+Download the `.plasmoid` file from the [latest release](https://github.com/divinae/plasma-applet-eventcalendar/releases),
+then:
+
+```
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.0.0-plasma6.0.plasmoid
+# or, to upgrade an installed Event Calendar:
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.0.0-plasma6.0.plasmoid
+```
+
+Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a
+panel (right click the panel > Add or Manage Widgets), or replace the Digital Clock with it.
+
+### From source
+
+```
+git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
+cd eventcalendar
+sh ./install
+```
+
+`sh ./update` pulls and reinstalls; `sh ./uninstall` removes the widget. The scripts install the
+dependencies below on Debian/Ubuntu, Arch and Fedora.
 
 ## Dependencies
 
-Core runtime:
-- Plasma 6 or Plasma 5 (Qt/QML + KDE Frameworks that ship with Plasma)
+- Plasma 6 (Qt 6 and KDE Frameworks 6)
 - `python3`
-- KNotifications QML module (`org.kde.notification`; Debian/Ubuntu: `qml6-module-org-kde-notification`, Arch: `knotifications`, Fedora: `kf6-knotifications`) for desktop notifications
-- `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play` (optional, for custom notification sounds)
+- KNotifications QML module (`org.kde.notification`; Debian/Ubuntu:
+  `qml6-module-org-kde-notification`, Arch: `knotifications`, Fedora: `kf6-knotifications`)
+- Kirigami Addons (settings pages)
+- `secret-tool` (libsecret) or KWallet, for storing Google tokens in the keyring
 
-Feature-specific (optional):
-- ICalendar (.ics) import:
-  - `icalendar>=6.1,<8`
-  - `recurring-ical-events>=3.8,<4` for RRULE, RDATE, EXDATE, and RECURRENCE-ID expansion
-  - The install/update scripts place these Python packages under
-    `~/.local/share/plasma_org.kde.plasma.eventcalendar/python` when they are not already available.
-- Local PIM/Akonadi calendars: `akonadi` + `kdepim-addons` (provides `PimCalendarsModel`)
-- Create local events: `konsolekalendar` (from kdepim runtime/tools)
+Optional:
 
-Install/update/uninstall scripts:
-- `bash`
-- `git` (clone/update)
-- `kpackagetool6` (Plasma 6) or `kpackagetool5` (Plasma 5)
-- `qdbus` or `qdbus6` (reload/remove widgets)
-- `jq` (read metadata)
-- `python3-pip` / `python-pip` (install user-local iCalendar recurrence support)
+- `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play`, for custom notification sounds
+- iCalendar (.ics) files: the Python `icalendar` and `recurring-ical-events` packages (the
+  install script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`)
+- Akonadi / KDE PIM calendars: `akonadi` + `kdepim-addons`; creating local events: `konsolekalendar`
 
-Note: package names vary by distro. The install script attempts to install `kpackagetool` and `jq` on Debian/Arch/Fedora; on other distros, install manually.
+## Setup
+
+1. Right click the widget > Configure Event Calendar.
+2. **Google Calendar**: Sign in with Google. Your browser opens; after you allow access, the
+   widget picks it up. Then choose the calendars and task lists to show for each account.
+3. **Weather**: search for your city (Open-Meteo).
+4. **Views**: choose the default view, the popup size and the hours shown in the week view.
+
+## Branches
+
+- `master`: releases.
+- `plasma-6`: development.
+- `plasma-5`: legacy Plasma 5 line (not maintained in this fork).
 
 ## Contributing
 
-See `CONTRIBUTING.md` for guidelines and `MAINTENANCE.md` for project status.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Tests: `for t in tests/*.test.js; do node "$t"; done`
+and `python3 tests/*_test.py`. Translations live in `package/translate/` (see its ReadMe).
 
-## Screenshots
+## License
 
-![](https://i.imgur.com/qdJ71sb.jpg)
-![](https://i.imgur.com/Ow8UlFj.jpg)
-
-
-
-
-## A) Install via GitHub
-
-Plasma 6 (default branch):
-
-```
-git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
-cd eventcalendar
-sh ./install
-```
-
-Plasma 5 (legacy branch):
-
-```
-git clone -b plasma-5 https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
-cd eventcalendar
-sh ./install
-```
-
-To update, run the `sh ./update` script. It will auto-detect your Plasma version, switch branches if needed, pull updates, and reinstall the applet.
-
-
-
-## Update to GitHub master (Plasma 6)
-
-If you're asked to test something, you can do so by installing the latest unreleased code.
-
-Beforehand, uninstall the AUR version if you are running Arch (you can reinstall after testing).
-
-Then open the Terminal and run the following commands. The install script can reload the widget when you pass `--restart`.
-
-```
-sudo apt install git
-git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
-cd eventcalendar
-sh ./install --restart
-```
-
-For Plasma 5, use the `plasma-5` branch instead:
-
-```
-git clone -b plasma-5 https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
-cd eventcalendar
-sh ./install --restart
-```
-
-When you've finished testing, you may wish to reinstall the KDE Store or AUR version. First uninstall the widget with the following command, then reinstall your desired version of the widget.
-
-```
-sh ./uninstall
-```
-
-## Configure
-
-1. Right click the Calendar > Event Calendar Settings > Google Calendar
-2. Copy the Code and enter it at the given link. Keep the settings window open.
-3. After the settings window says it's synched, click apply.
-4. Go to the Weather Tab > Enter your city id for OpenWeatherMap. If their search can't find your city, try googling it with [site:openweathermap.org/city](https://www.google.ca/search?q=site%3Aopenweathermap.org%2Fcity+toronto).
+GPL-2.0-or-later, like the original widget.

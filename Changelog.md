@@ -1,3 +1,41 @@
+## v1.0.0 - October 16 2026
+
+First release of this Plasma 6 fork (divinae/plasma-applet-eventcalendar), based on
+ALikesToCode's Plasma 6 port of Zren's Event Calendar v76.
+
+### Views
+* New popup header with a view switcher: Month, Week, Today and Agenda.
+* Week view: hour grid, all-day events as tinted bars with the date span, click an empty slot to add an event, weather in the day headers.
+* Today view: one day with a weather panel (now, next 12 hours chart, next days).
+* Month view: event titles in the days, a day list when clicking a day.
+* Agenda: redesigned as day headers and colored event tiles with Join buttons.
+* Event details, editor and day list as cards inside the popup; right-click menu on events in every view.
+* Dark theme: darker event colors instead of bright pastels; past days and events dimmed.
+
+### Events and Google Calendar
+* Several Google accounts, with calendars and task lists chosen per account.
+* Create, edit and delete events; recurring events (repeat options, edit one occurrence or the whole series).
+* Google tokens stored in the system keyring instead of the widget config.
+* Hardened Google sign-in (loopback only, OAuth state, PKCE).
+* Event locations open in Google Maps; meeting links (Meet, Zoom, Teams…) get Join buttons.
+* Offline: the last loaded events stay visible, retries with backoff, a banner and one notification per outage.
+
+### Notifications
+* KDE notifications (KNotification) instead of a Python script: reminders with Snooze, event start, timer; configurable per kind in System Settings.
+* Clicking a notification opens the event in the widget.
+
+### Weather
+* Open-Meteo provider (free, no API key) with city search.
+* Weather loading state.
+
+### Settings
+* Settings redesigned in the Kirigami Addons FormCard style; obsolete options removed.
+
+### Other
+* Qt 6.12 / Plasma 6.7 fixes, performance work, many bug fixes from code reviews.
+* Translations completed for 20 languages.
+* Upstream (ALikesToCode) fixes merged: iCalendar recurrence, Plasma calendar plugins, installer hardening, tests.
+
 ## v76 - May 3 2022
 
 * Do not show calendar border by default anymore.

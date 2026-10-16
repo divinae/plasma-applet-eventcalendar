@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # User Variables
-qtMinVer="5.12"
-kfMinVer="5.68"
-plasmaMinVer="5.18"
+qtMinVer="6.6"
+kfMinVer="6.0"
+plasmaMinVer="6.0"
 filenameTag="-plasma${plasmaMinVer}"
 packageExt="plasmoid"
 
