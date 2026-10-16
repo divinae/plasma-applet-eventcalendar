@@ -368,5 +368,4 @@ KCM.SimpleKCM {
 			child.parent = content
 		}
 	}
-
 }
