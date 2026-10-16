@@ -422,6 +422,71 @@ CalendarManager {
 		})
 	}
 
+	//--- Search
+	// Events matching query in the selected calendars between timeMin and timeMax (Dates).
+	// callback(err, items): items are parsed like fetched events. Result bodies are never logged.
+	function searchEvents(query, timeMin, timeMax, callback) {
+		var idList = getCalendarIdList()
+		if (!session.accessToken || !idList.length) {
+			callback(null, [])
+			return
+		}
+		withAccessToken(function() {
+			var pending = idList.length
+			var found = []
+			var firstError = null
+			idList.forEach(function(rawId) {
+				searchGCalEvents({
+					accessToken: session.accessToken,
+					calendarId: rawId,
+					query: query,
+					start: timeMin.toISOString(),
+					end: timeMax.toISOString(),
+				}, function(err, data) {
+					if (err) {
+						firstError = firstError || err
+					} else if (data && data.items) {
+						var scopedId = scopedCalendarId(rawId)
+						calendarParsing(scopedId, data)
+						found = found.concat(data.items)
+					}
+					pending -= 1
+					if (pending === 0) {
+						callback(found.length ? null : firstError, found)
+					}
+				})
+			})
+		}, function(err, isNetworkError) {
+			callback(err || 'auth', [])
+		})
+	}
+
+	function searchGCalEvents(args, callback) {
+		var url = 'https://www.googleapis.com/calendar/v3'
+		url += '/calendars/'
+		url += encodeURIComponent(args.calendarId)
+		url += '/events'
+		url += '?q=' + encodeURIComponent(args.query)
+		url += '&timeMin=' + encodeURIComponent(args.start)
+		url += '&timeMax=' + encodeURIComponent(args.end)
+		url += '&singleEvents=' + encodeURIComponent('true')
+		url += '&orderBy=' + encodeURIComponent('startTime')
+		url += '&maxResults=50'
+		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
+		Requests.getJSON({
+			url: url,
+			headers: {
+				"Authorization": "Bearer " + args.accessToken,
+			}
+		}, function(err, data, xhr) {
+			logger.debug('searchGCalEvents.response', xhr.status) // no query or result body: private
+			if (!err && data && data.error) {
+				return callback(data, null)
+			}
+			callback(err, data)
+		})
+	}
+
 	//--- Get Single Event
 	function fetchGoogleCalendarEvent(calendarId, eventId, callback) {
 		logger.debug('fetchGoogleCalendarEvent', calendarId, eventId)
@@ -579,8 +644,12 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	//--- Create / POST
 	function createEvent(calendarId, date, text) {
 		if (session.accessToken) {
-			var dateString = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
-			var eventText = dateString + ' ' + text
+			// No date: Google reads the day from the text (eg: "tomorrow"), relative to today.
+			var eventText = text
+			if (date) {
+				var pad = function(n) { return (n < 10 ? '0' : '') + n }
+				eventText = date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + ' ' + text
+			}
 
 			var func = createEvent_run.bind(this, calendarId, eventText, function(err, data, xhr) {
 				if (err) {

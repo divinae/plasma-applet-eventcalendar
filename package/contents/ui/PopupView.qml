@@ -341,7 +341,25 @@ MouseArea {
 	}
 	function closeEventDetails() {
 		detailsEvent = null
-		dayEventsOverlay.focusCard() // Esc closes the day list next
+		dayEventsOverlay.focusCard() // Esc closes the day list (or search) next
+		searchOverlay.focusCard()
+	}
+
+	//--- Search, and quick add (the header's "+")
+	property bool searchOpen: false
+	function openSearch() {
+		closeOverlays()
+		searchOpen = true
+	}
+	function closeSearch() {
+		searchOpen = false
+	}
+	property bool quickAddOpen: false
+	function openQuickAdd() {
+		quickAddOpen = true
+	}
+	function closeQuickAdd() {
+		quickAddOpen = false
 	}
 
 	//--- Day events list (month view: click a day). Event details open on top of it.
@@ -358,10 +376,12 @@ MouseArea {
 	property var editorEvent: null // null: new event
 	property date editorDate: new Date()
 	property var editorStart: null
-	function newEvent(date, startTime) {
+	property string editorTitle: ""
+	function newEvent(date, startTime, title) {
 		editorEvent = null
 		editorDate = date || selectedDate || new Date()
 		editorStart = startTime || null
+		editorTitle = title || ""
 		editorOpen = true
 	}
 	function editEvent(eventItem) {
@@ -379,6 +399,8 @@ MouseArea {
 		editorEvent = null
 		detailsEvent = null
 		dayListDate = null
+		searchOpen = false
+		quickAddOpen = false
 	}
 	// Overlays belong to the view they were opened from.
 	Connections {
@@ -433,7 +455,8 @@ MouseArea {
 			popup.closeOverlays()
 			plasmoid.configuration.popupMode = mode
 		}
-		onNewEventClicked: popup.newEvent(popup.selectedDate)
+		onNewEventClicked: popup.openQuickAdd()
+		onSearchClicked: popup.openSearch()
 		onRefreshClicked: logic.update()
 	}
 
@@ -489,7 +512,26 @@ MouseArea {
 		}
 	}
 
-	// Overlay cards: day list < event details < event form.
+	// Overlay cards: day list, search < event details < quick add, event form.
+	OverlayCard {
+		id: searchOverlay
+		visible: popup.searchOpen
+		z: 4
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		onOutsideClicked: popup.closeSearch()
+		cardComponent: visible ? searchCard : null
+		Component {
+			id: searchCard
+			SearchView {
+				onCloseRequested: popup.closeSearch()
+				onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
+			}
+		}
+	}
+
 	OverlayCard {
 		id: dayEventsOverlay
 		visible: !!popup.dayListDate
@@ -532,6 +574,29 @@ MouseArea {
 	}
 
 	OverlayCard {
+		id: quickAddOverlay
+		visible: popup.quickAddOpen
+		z: 6
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		onOutsideClicked: popup.closeQuickAdd()
+		cardComponent: visible ? quickAddCard : null
+		Component {
+			id: quickAddCard
+			QuickAddView {
+				date: popup.selectedDate
+				onCloseRequested: popup.closeQuickAdd()
+				onMoreOptionsRequested: function(title) {
+					popup.closeQuickAdd()
+					popup.newEvent(popup.selectedDate, null, title)
+				}
+			}
+		}
+	}
+
+	OverlayCard {
 		id: eventEditorOverlay
 		visible: popup.editorOpen
 		z: 6
@@ -547,6 +612,7 @@ MouseArea {
 				eventItem: popup.editorEvent
 				initialDate: popup.editorDate
 				initialStart: popup.editorStart
+				initialTitle: popup.editorTitle
 				onCloseRequested: popup.closeEditor()
 			}
 		}

@@ -15,6 +15,7 @@ Rectangle {
 	property var eventItem: null
 	property date initialDate: new Date() // New events: day to create on
 	property var initialStart: null // New events: exact start time (eg: clicked week view slot)
+	property string initialTitle: "" // New events: title typed so far (eg: in quick add)
 	readonly property bool isNew: !eventItem
 	signal closeRequested()
 
@@ -263,6 +264,7 @@ Rectangle {
 				: new Date(initialDate.getFullYear(), initialDate.getMonth(), initialDate.getDate(), now.getHours() + 1, 0)
 			durationSelector.startDateTime = s
 			durationSelector.endDateTime = new Date(s.getTime() + 60 * 60 * 1000)
+			titleField.text = initialTitle
 		}
 		titleField.forceActiveFocus()
 	}
