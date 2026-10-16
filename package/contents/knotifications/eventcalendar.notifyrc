@@ -13,11 +13,6 @@ Name=Event starting
 Comment=An event starts now
 Action=Popup
 
-[Event/eventChanged]
-Name=Event created or deleted
-Comment=An event was added or removed from the widget
-Action=Popup
-
 [Event/timer]
 Name=Timer finished
 Comment=The widget's timer has finished

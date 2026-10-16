@@ -17,36 +17,6 @@ Item {
 	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
 
-	Connections {
-		target: eventModel
-		function onEventCreated(calendarId, data) {
-			notificationManager.notify({
-				appName: i18n("Event Calendar"),
-				event: "eventChanged",
-				appIcon: "resource-calendar-insert",
-				summary: data.summary,
-				body: LocaleFuncs.formatEventDuration(data, {
-					relativeDate: timeModel.currentTime,
-					clock24h: appletConfig.clock24h,
-				})
-			})
-		}
-		function onEventDeleted(calendarId, eventId, data) {
-			logger.debugJSON('AgendaView.onEventDeleted', data)
-			notificationManager.notify({
-				appName: i18n("Event Calendar"),
-				event: "eventChanged",
-				appIcon: "user-trash-symbolic",
-				summary: data.summary,
-				body: LocaleFuncs.formatEventDuration(data, {
-					relativeDate: timeModel.currentTime,
-					clock24h: appletConfig.clock24h,
-				})
-			})
-		}
-	}
-
-
 	// No separator line next to the scrollbar (both the desktop style and Breeze draw one).
 	PlasmaComponents3.ScrollView {
 		id: agendaScrollView

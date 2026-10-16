@@ -8,7 +8,7 @@ import "./NotificationState.js" as NotificationState
 // actions handled in QML.
 //
 // notify({ summary, body, appName, appIcon, event, urgency, expireTimeout, soundFile, actions }, callback)
-// - event: notifyrc event id (reminder, eventStarting, eventChanged, timer, syncProblem); each can be
+// - event: notifyrc event id (reminder, eventStarting, timer, syncProblem); each can be
 //   configured in System Settings > Notifications > Event Calendar.
 // - expireTimeout: 0 = keep until dismissed; anything else = Plasma's popup timeout.
 // - urgency: 'low' | 'normal' | 'critical'.
@@ -87,7 +87,7 @@ QtObject {
 		})
 		backend.send({
 			componentName: own ? "eventcalendar" : "plasma_workspace",
-			eventId: own ? (args.event || "eventChanged") : "notification",
+			eventId: own ? (args.event || "reminder") : "notification",
 			title: title,
 			text: args.body || "",
 			iconName: args.appIcon || "view-calendar",
