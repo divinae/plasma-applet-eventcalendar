@@ -737,7 +737,6 @@ MouseArea {
 			id: monthView
 			visible: showCalendar
 			showHeader: false
-			weatherByDay: popup.weatherInViews ? popup.weatherByDay : ({})
 			borderOpacity: appletConfig.showGridLines ? appletConfig.gridLineOpacity : appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek

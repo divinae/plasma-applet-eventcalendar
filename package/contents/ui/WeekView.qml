@@ -338,6 +338,7 @@ Item {
 		width: weekView.weatherPanelWidth
 		height: parent.height
 		isSetup: weekView.weatherIsSetup
+		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		current: weekView.weatherCurrent
 		today: weekView.dayWeather(weekView.weekStart)
 		hourly: weekView.weatherHourly

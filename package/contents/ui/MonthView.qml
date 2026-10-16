@@ -29,7 +29,6 @@ PinchArea {
 
 	// false: the popup shows title and navigation in its own header (see currentTitle, goPrevious, ...).
 	property bool showHeader: true
-	property var weatherByDay: ({}) // Shared.dayKey -> daily forecast (shown in day cells)
 	readonly property string currentTitle: stack.currentItem ? stack.currentItem.title : ""
 	function goPrevious() {
 		if (stack.currentItem) {

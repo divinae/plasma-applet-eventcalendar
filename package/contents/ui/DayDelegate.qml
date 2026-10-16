@@ -177,31 +177,6 @@ MouseArea {
 		}
 	}
 
-	// Weather (month view): small icon and high temperature, top right of the cell.
-	readonly property var weather: showEventTitles && root.weatherByDay ? root.weatherByDay[Shared.dayKey(thisDate)] : null
-	Row {
-		visible: !!dayStyle.weather
-		opacity: dayStyle.contentOpacity
-		anchors.top: parent.top
-		anchors.right: parent.right
-		anchors.rightMargin: 3
-		height: dayStyle.eventTitlesHeaderHeight
-		spacing: 1
-		Kirigami.Icon {
-			anchors.verticalCenter: parent.verticalCenter
-			width: Math.round(dayStyle.eventTitlesHeaderHeight * 0.75)
-			height: width
-			source: dayStyle.weather ? dayStyle.weather.iconName : ""
-		}
-		Text {
-			anchors.verticalCenter: parent.verticalCenter
-			text: dayStyle.weather ? Shared.formatTemp(dayStyle.weather.temp.max) : ""
-			color: Kirigami.Theme.textColor
-			opacity: 0.75
-			font.pixelSize: Math.round(dayHeaderFontMetrics.height * 0.7)
-		}
-	}
-
 	Text {
 		id: label
 		anchors {

@@ -108,7 +108,7 @@ ConfigPage {
 		}
 		ConfigCheckBox {
 			configKey: 'weatherShowInViews'
-			text: i18n("Weather in the month, week and today views")
+			text: i18n("Weather in the week and today views")
 		}
 		ConfigComboBox {
 			Kirigami.FormData.label: i18n("Today:")
