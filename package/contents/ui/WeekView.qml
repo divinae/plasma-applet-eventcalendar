@@ -492,36 +492,6 @@ Item {
 			Layout.preferredHeight: rows * (weekView.allDayRowHeight + 2) + 6
 			visible: rows > 0
 
-			// A faint band with a line below, so the all-day row reads as part of the grid.
-			Rectangle {
-				x: weekView.gutterWidth
-				width: parent.width - weekView.gutterWidth
-				height: parent.height
-				radius: 4
-				color: Kirigami.Theme.textColor
-				opacity: 0.07
-			}
-			Rectangle {
-				x: weekView.gutterWidth
-				width: parent.width - weekView.gutterWidth
-				anchors.bottom: parent.bottom
-				height: 1
-				color: weekView.gridLineColor
-			}
-			PlasmaComponents3.Label {
-				width: weekView.gutterWidth - 6
-				height: weekView.allDayRowHeight
-				y: 3
-				horizontalAlignment: Text.AlignRight
-				verticalAlignment: Text.AlignVCenter
-				text: i18nc("all-day events row in the week view", "all day")
-				font: Kirigami.Theme.smallFont
-				opacity: 0.6
-				wrapMode: Text.WordWrap // The hour column is narrow: "all / day" on two lines
-				maximumLineCount: 2
-				elide: Text.ElideRight
-			}
-
 			Repeater {
 				model: weekView.allDayBars
 				Rectangle {
