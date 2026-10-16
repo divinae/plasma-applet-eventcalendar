@@ -11,11 +11,12 @@ Rectangle {
 	implicitHeight: childrenRect.height
 	property color backgroundColor: "transparent"
 	property color backgroundHoverColor: appletConfig.agendaHoverBackground
-	color: enabled && hovered ? backgroundHoverColor : backgroundColor
+	color: clickable && hovered ? backgroundHoverColor : backgroundColor
 	property string tooltipMainText
 	property string tooltipSubText
 	property alias acceptedButtons: mouseArea.acceptedButtons
-	property bool enabled: true
+	// Not Item.enabled: that would also disable children, eg: an inline edit form.
+	property bool clickable: true
 	readonly property alias hovered: mouseArea.containsMouse
 
 	signal clicked(var mouse)
@@ -34,8 +35,8 @@ Rectangle {
 			anchors.fill: parent
 			hoverEnabled: true
 			acceptedButtons: Qt.LeftButton | Qt.RightButton
-			cursorShape: linkRect.enabled && containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			enabled: linkRect.enabled
+			cursorShape: linkRect.clickable && containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+			enabled: linkRect.clickable
 			onClicked: function(mouse) {
 				mouse.accepted = false
 				linkRect.clicked(mouse)

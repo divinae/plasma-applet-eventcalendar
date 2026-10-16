@@ -36,7 +36,7 @@ LinkRect {
 	}
 
 	property alias isEditing: editTaskForm.active
-	enabled: !isEditing
+	clickable: !isEditing
 
 	readonly property string eventTimestamp: {
 		if (model.due) {

@@ -6,7 +6,6 @@ import org.kde.kirigami as Kirigami
 GridLayout {
 	id: dateTimeSelector
 	property var dateTime: new Date()
-	property bool enabled: true
 	property bool showTime: true
 	property alias dateFormat: dateSelector.dateFormat
 	property alias timeFormat: timeSelector.timeFormat

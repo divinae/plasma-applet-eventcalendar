@@ -32,7 +32,7 @@ LinkRect {
 	Component.onCompleted: agendaEventItem.checkIfInProgress()
 
 	property alias isEditing: editEventForm.active
-	enabled: !isEditing
+	clickable: !isEditing
 
 	readonly property string eventTimestamp: LocaleFuncs.formatEventDuration(model, {
 		relativeDate: agendaItemDate,

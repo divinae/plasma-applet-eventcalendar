@@ -11,7 +11,6 @@ Flow {
 	property alias startDateTime: startTimeSelector.dateTime
 	property alias endDateTime: endTimeSelector.dateTime
 
-	property bool enabled: true
 	property bool showTime: false
 
 	spacing: 0
