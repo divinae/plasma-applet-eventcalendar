@@ -91,7 +91,7 @@ Item {
 	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / hourCount)
 	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / dayCount)
-	readonly property int allDayRowHeight: lineHeight + 8
+	readonly property int allDayRowHeight: Math.round(lineHeight * 2.2) + 6 // Title + date span
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
 	readonly property color gridLineColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.faintGridLineOpacity)
@@ -499,7 +499,7 @@ Item {
 				height: parent.height
 				radius: 4
 				color: Kirigami.Theme.textColor
-				opacity: 0.04
+				opacity: 0.07
 			}
 			Rectangle {
 				x: weekView.gutterWidth
@@ -517,6 +517,8 @@ Item {
 				text: i18nc("all-day events row in the week view", "all day")
 				font: Kirigami.Theme.smallFont
 				opacity: 0.6
+				wrapMode: Text.WordWrap // The hour column is narrow: "all / day" on two lines
+				maximumLineCount: 2
 				elide: Text.ElideRight
 			}
 
@@ -560,15 +562,38 @@ Item {
 							color: parent.color
 						}
 					}
-					PlasmaComponents3.Label {
-						anchors.fill: parent
+					// Title, then the date span ("14 – 16 Oct · 3 days") or "All day".
+					readonly property int dayCount: Math.max(1, Math.round((Shared.startOfDay(eventItem.endDateTime) - Shared.startOfDay(eventItem.startDateTime)) / 86400000))
+					readonly property string spanText: {
+						if (dayCount <= 1) {
+							return i18n("All day")
+						}
+						var lastDay = new Date(eventItem.endDateTime)
+						lastDay.setDate(lastDay.getDate() - 1)
+						return Qt.formatDate(eventItem.startDateTime, "d MMM") + " – " + Qt.formatDate(lastDay, "d MMM")
+							+ " · " + i18np("%1 day", "%1 days", dayCount)
+					}
+					Column {
+						anchors.left: parent.left
+						anchors.right: parent.right
+						anchors.verticalCenter: parent.verticalCenter
 						anchors.leftMargin: 9
-						anchors.rightMargin: 2
-						verticalAlignment: Text.AlignVCenter
-						text: parent.eventItem.summary
-						color: Kirigami.Theme.textColor
-						font.weight: Font.DemiBold
-						elide: Text.ElideRight
+						anchors.rightMargin: 4
+						PlasmaComponents3.Label {
+							width: parent.width
+							text: eventItem.summary
+							color: Kirigami.Theme.textColor
+							font.weight: Font.DemiBold
+							elide: Text.ElideRight
+						}
+						PlasmaComponents3.Label {
+							width: parent.width
+							text: spanText
+							color: Kirigami.Theme.textColor
+							opacity: 0.75
+							font: Kirigami.Theme.smallFont
+							elide: Text.ElideRight
+						}
 					}
 					MouseArea {
 						anchors.fill: parent
