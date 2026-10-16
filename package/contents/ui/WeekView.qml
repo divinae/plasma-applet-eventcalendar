@@ -28,6 +28,9 @@ Item {
 	// 7: week view. 1: today / day view (the same hour grid with one wide column).
 	property int dayCount: 7
 	readonly property bool singleDay: dayCount === 1
+	// One day stretched over a wide popup looks wrong: cap its width and center it.
+	readonly property real contentWidth: singleDay ? Math.min(width, Kirigami.Units.gridUnit * 32) : width
+	readonly property real contentX: Math.round((width - contentWidth) / 2)
 	onDayCountChanged: {
 		weekStart = startOfWeek(currentTime)
 		rebuild()
@@ -295,7 +298,7 @@ Item {
 			return Shared.runsOf(flags)
 		}
 		Rectangle {
-			x: weekView.gutterWidth + modelData.first * weekView.columnWidth
+			x: weekView.contentX + weekView.gutterWidth + modelData.first * weekView.columnWidth
 			y: dayNamesRow.y
 			width: modelData.count * weekView.columnWidth
 			height: weekView.height - y
@@ -306,7 +309,9 @@ Item {
 	}
 
 	ColumnLayout {
-		anchors.fill: parent
+		x: weekView.contentX
+		width: weekView.contentWidth
+		height: parent.height
 		spacing: Kirigami.Units.smallSpacing
 
 		RowLayout {

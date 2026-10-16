@@ -26,9 +26,9 @@ ConfigPage {
 			Kirigami.FormData.label: i18n("Default view:")
 			configKey: 'popupMode'
 			model: [
-				{ value: 'today', text: i18n("Today") },
-				{ value: 'week', text: i18n("Week") },
 				{ value: 'month', text: i18n("Month") },
+				{ value: 'week', text: i18n("Week") },
+				{ value: 'today', text: i18n("Today") },
 				{ value: 'classic', text: i18n("Agenda") },
 			]
 		}

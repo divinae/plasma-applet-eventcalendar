@@ -427,9 +427,9 @@ MouseArea {
 
 				Repeater {
 					model: [
-						{ mode: 'today', icon: "view-calendar-day", text: i18n("Today") },
-						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
 						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+						{ mode: 'today', icon: "view-calendar-day", text: i18n("Today") },
 						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
 					]
 					Item {
