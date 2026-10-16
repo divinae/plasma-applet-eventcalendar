@@ -218,7 +218,6 @@ CalendarManager {
 		var items = []
 		for (var i = 0; i < dayEvents.length; i++) {
 			var dayItem = dayEvents[i]
-			// logger.log(JSON.stringify(dayItem, null, '\t'))
 
 			var start = {}
 			var end = {}
@@ -227,8 +226,6 @@ CalendarManager {
 			// Eg: the "Astronomical Events" plugin
 			var startDateTime = new Date(Shared.isValidDate(dayItem.startDateTime) ? dayItem.startDateTime : day)
 			var endDateTime = new Date(Shared.isValidDate(dayItem.endDateTime) ? dayItem.endDateTime : day)
-			// logger.log('\t startDateTime', dayItem.startDateTime, startDateTime)
-			// logger.log('\t endDateTime', dayItem.endDateTime, endDateTime)
 			
 			if (dayItem.isAllDay) {
 				start.date = Shared.localeDateString(startDateTime) // 2018-01-31
@@ -265,7 +262,6 @@ CalendarManager {
 	}
 
 	function filterEventsIntoCalendars() {
-
 	}
 
 	function getEventsForDate(date) {
@@ -288,8 +284,6 @@ CalendarManager {
 		// 2018-05-24T00:00:00.000Z
 		var dateMinUtcStr = Shared.localeDateString(dateMin) + 'T00:00:00.000Z'
 		var dateMinUtc = new Date(dateMinUtcStr)
-		// logger.debug('getEventsForDuration.dateMinUtcStr', dateMinUtcStr)
-		// logger.debug('getEventsForDuration.dateMinUtc', dateMinUtc)
 
 		for (var day = new Date(dateMinUtc); day < dateMax; day.setDate(day.getDate() + 1)) {
 			var dayEvents = calendarBackend.daysModel.eventsForDate(day)
@@ -301,7 +295,6 @@ CalendarManager {
 			}
 			items = items.concat(parseEventsForDate(day, dayEvents))
 		}
-		// logger.debugJSON(items)
 
 		// We need to filter out the repeated items for multi-day events as Plasma creates a new "event item"
 		// for each day of the event. The id already encodes calendar + start + end times.
@@ -317,8 +310,6 @@ CalendarManager {
 
 		return items
 	}
-
-
 
 	onFetchAllCalendars: {
 		var allEvents = getEventsForDuration(dateMin, dateMax)
@@ -361,7 +352,6 @@ CalendarManager {
 	}
 
 	function parseEvent(calendar, event) {
-		// event.backgroundColor = calendar.backgroundColor
 		event.canEdit = false
 	}
 

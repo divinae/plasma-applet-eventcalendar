@@ -8,8 +8,6 @@ CalendarManager {
 	calendarManagerId: "ical"
 	ExecUtil { id: executable }
 
-	// property var eventsData: { "items": [] }
-
 	property var calendarList: [
 		{
 			url: "/home/chris/Code/icsjson/basic.ics",
@@ -52,8 +50,6 @@ CalendarManager {
 				return callback(stderr)
 			}
 			var data = JSON.parse(stdout)
-			// console.log(cmd)
-			// console.log(str)
 			callback(null, data)
 		})
 	}
@@ -90,15 +86,5 @@ CalendarManager {
 		})
 	}
 
-	// onCalendarFetched: {
-	// 	console.log(calendarId, data)
-	// }
-
 	// Component.onCompleted: {
-	// 	var startTime = new Date(2017, 07-1, 01)
-	// 	var endTime = new Date(2017, 07-1, 31)
-	// 	dateMin = startTime
-	// 	dateMax = endTime
-	// 	fetchAllCalendars()
-	// }
 }

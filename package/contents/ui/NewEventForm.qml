@@ -44,7 +44,6 @@ Loader {
 						placeholderText: i18n("Eg: 9am-5pm Work")
 						onAccepted: {
 							var calendarEntry = calendarSelector.model[calendarSelector.currentIndex]
-							// calendarId = calendarId.calendarId ? calendarId.calendarId : calendarId
 							var calendarId = calendarEntry.calendarId
 							if (calendarId && date && text) {
 								submitNewEventForm(calendarId, date, text)
@@ -55,7 +54,6 @@ Loader {
 					}
 				}
 			}
-
 		}
 	}
 }

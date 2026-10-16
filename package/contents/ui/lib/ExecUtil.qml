@@ -66,7 +66,6 @@ Plasma5Support.DataSource {
 			var listener = execCallback.bind(executable, callback)
 			listeners[cmd] = listener
 		}
-		// console.log('cmd', cmd)
 		connectSource(cmd)
 	}
 

@@ -73,8 +73,6 @@ Item {
 	readonly property int lineHeight2: targetHeight * plasmoid.configuration.clockLine2HeightRatio
 	readonly property int lineHeight1: showLine2 ? targetHeight - lineHeight2 : targetHeight
 
-	// readonly property int paintedWidth: showLine2 ? Math.max(timeLabel.paintedWidth, timeLabel2.paintedWidth) : timeLabel.paintedWidth
-	// onPaintedWidthChanged: console.log('paintedWidth', showLine2, timeFormatSizer1.paintedWidth, timeFormatSizer2.paintedWidth)
 	readonly property real fixedWidth: showLine2 ? Math.max(timeFormatSizer1.minWidth, timeFormatSizer2.minWidth) : timeFormatSizer1.minWidth
 
 	// Next meeting chip, right of the clock. Horizontal panels only.
@@ -83,7 +81,6 @@ Item {
 		&& plasmoid.formFactor == PlasmaCore.Types.Horizontal
 		&& !!nextEvent
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
-	// onFixedWidthChanged: console.log('fixedWidth', showLine2, timeFormatSizer1.minWidth, timeFormatSizer2.minWidth)
 
 	Column {
 		id: labels
@@ -110,9 +107,6 @@ Item {
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
 				smooth: true
-
-				// onWidthChanged: console.log('timeLabel1.width', width)
-				// onPaintedWidthChanged: console.log('timeLabel1.paintedWidth', paintedWidth)
 
 				property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
 				text: Qt.formatDateTime(clock.currentTime, timeFormat)

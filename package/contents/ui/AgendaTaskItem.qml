@@ -61,7 +61,6 @@ LinkRect {
 		}
 	}
 
-
 	//---
 	RowLayout {
 		id: contents
@@ -165,28 +164,11 @@ LinkRect {
 			EditTaskForm {
 				id: editTaskForm
 				Layout.fillWidth: true
-				// active: true
 			}
 
 		} // taskColumn
-
-		// PlasmaComponents3.ToolButton {
-		// 	id: openInBrowserButton
-		// 	Layout.alignment: Qt.AlignTop
-		// 	icon.name: "zoom-in" // Breeze icon looks like "open link iocn"
-		// 	onClicked: Qt.openUrlExternally(model.htmlLink)
-		// }
 	}
 	
-	onLeftClicked: {
-		var task = tasks.get(taskItemIndex)
-		logger.logJSON("task", task)
-		// var tasklist = eventModel.getTasklist(task.tasklistId)
-		// logger.logJSON("tasklist", tasklist)
-
-		// eventModel.toggleCompleted(event.tasklistId, task.id)
-	}
-
 	onLoadContextMenu: function(contextMenu) {
 		var menuItem
 		var task = tasks.get(taskItemIndex)
@@ -212,7 +194,6 @@ LinkRect {
 			logger.debug('eventModel.deleteTask', task.calendarId, task.id)
 			eventModel.deleteEvent(task.calendarId, task.id)
 		})
-		// deleteMenu.enabled = task.canEdit
 		deleteMenu.addMenuItem(menuItem)
 
 		menuItem = contextMenu.newMenuItem()

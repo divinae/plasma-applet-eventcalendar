@@ -25,7 +25,6 @@ Item {
 	signal eventUpdated(string calendarId, string eventId, var data)
 	signal error(string msg, int errorType)
 
-
 	onAsyncRequestsDoneChanged: checkIfDone()
 
 	function checkIfDone() {
@@ -123,7 +122,6 @@ Item {
 	// CalendarManager.defaultEventParsing
 	// SubClass.parseCalendarData
 	function calendarParsing(calendarId, data) {
-		// logger.debug('CalendarManager.calendarParsing(', calendarManager, ')', calendarId)
 		data.items.forEach(function(event) {
 			defaultEventParsing(calendarId, event)
 		})
@@ -137,7 +135,6 @@ Item {
 	// To simplify repeated code amongst implementations,
 	// we'll put the reused code here.
 	function defaultEventParsing(calendarId, event) {
-		// logger.debug('CalendarManager.defaultEventParsing')
 		event.calendarManagerId = calendarManagerId
 		event.calendarId = calendarId
 
@@ -179,5 +176,4 @@ Item {
 	function setEventProperties(calendarId, eventId, args) {
 		logger.log(calendarManager, 'setEventProperties(', calendarId, eventId, args, ') is not implemented')
 	}
-
 }

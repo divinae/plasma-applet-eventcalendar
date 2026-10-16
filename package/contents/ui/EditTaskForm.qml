@@ -31,14 +31,10 @@ Loader {
 				return typeof s === "undefined" || s === null || s === ""
 			}
 			function hasChanged(a, b) {
-				// logger.log('hasChanged', a != b)
-				// logger.log('\t', JSON.stringify(a), typeof a, isEmpty(a))
-				// logger.log('\t', JSON.stringify(b), typeof b, isEmpty(b))
 				return a != b && !(isEmpty(a) && isEmpty(b))
 			}
 			function populateIfChanged(args, propKey, newValue) {
 				var changed = hasChanged(task[propKey], newValue)
-				// logger.log(propKey, changed, task[propKey], newValue)
 				if (changed) {
 					args[propKey] = newValue
 				}
@@ -51,7 +47,7 @@ Loader {
 				return args
 			}
 			function submit() {
-				logger.log('editTaskItem.submit()')
+				logger.debug('editTaskItem.submit()')
 				logger.debugJSON('task', task)
 
 				if (task.calendarId != calendarSelector.selectedCalendarId) {
@@ -115,7 +111,6 @@ Loader {
 					Keys.onEnterPressed: _onEnterPressed(event) // ?
 					Keys.onReturnPressed: _onEnterPressed(event) // What's triggered on a US Keyboard
 					function _onEnterPressed(event) {
-						// console.log('onEnterPressed', event.key, event.modifiers)
 						if ((event.modifiers & Qt.ShiftModifier) || (event.modifiers & Qt.ControlModifier)) {
 							editTaskItem.submit()
 						} else {
@@ -194,7 +189,6 @@ Loader {
 					}
 				}
 			}
-
 		}
 	}
 }

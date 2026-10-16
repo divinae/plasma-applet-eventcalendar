@@ -11,9 +11,7 @@ QtObject {
 	readonly property bool showIconOutline: false
 
 	// Shared look for the month and week views.
-	readonly property real gridLineOpacity: 0.2
 	readonly property real faintGridLineOpacity: 0.07 // Day and hour grid lines: always on, very faint
-	readonly property color gridLineColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, gridLineOpacity)
 	readonly property real pastOpacity: 0.45 // Past days / ended events are dimmed in all views
 	readonly property color eventBorderColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.2)
 
@@ -28,32 +26,22 @@ QtObject {
 		}
 	}
 
-	property color meteogramTextColorDefault: Kirigami.Theme.textColor
-	property color meteogramScaleColorDefault: ColorUtil.lerp(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.9)
-	property color meteogramPrecipitationRawColorDefault: "#acd"
-	property color meteogramPositiveTempColorDefault: "#900"
-	property color meteogramNegativeTempColorDefault: "#369"
-	property color meteogramIconColorDefault: Kirigami.Theme.textColor
-
-	property color meteogramTextColor: meteogramTextColorDefault
-	property color meteogramScaleColor: meteogramScaleColorDefault
-	property color meteogramPrecipitationRawColor: meteogramPrecipitationRawColorDefault
+	// Meteogram
+	readonly property color meteogramTextColor: Kirigami.Theme.textColor
+	readonly property color meteogramScaleColor: ColorUtil.lerp(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.9)
+	readonly property color meteogramPrecipitationRawColor: "#acd"
 	property color meteogramPrecipitationColor: ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.6)
 	property color meteogramPrecipitationTextColor: Qt.tint(meteogramTextColor, ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.3))
 	property color meteogramPrecipitationTextOutlineColor: showIconOutline ? Kirigami.Theme.backgroundColor : "transparent"
-	property color meteogramPositiveTempColor: meteogramPositiveTempColorDefault
-	property color meteogramNegativeTempColor: meteogramNegativeTempColorDefault
-	property color meteogramIconColor: meteogramIconColorDefault
+	readonly property color meteogramPositiveTempColor: "#900"
+	readonly property color meteogramNegativeTempColor: "#369"
+	readonly property color meteogramIconColor: Kirigami.Theme.textColor
 
 	property color agendaHoverBackground: alternateBackgroundColor
-	property color agendaInProgressColorDefault: Kirigami.Theme.highlightColor
-	readonly property color agendaInProgressColor: agendaInProgressColorDefault
+	readonly property color agendaInProgressColor: Kirigami.Theme.highlightColor
 
-	property int agendaColumnSpacing: 10 * Screen.devicePixelRatio
 	readonly property int agendaDaySpacing: 20 * Screen.devicePixelRatio
 	readonly property int agendaEventSpacing: 10 * Screen.devicePixelRatio
-	property int agendaWeatherColumnWidth: 60 * Screen.devicePixelRatio
-	property int agendaDateColumnWidth: 50 * Screen.devicePixelRatio + agendaColumnSpacing * 2
 	property int eventIndicatorWidth: 2 * Screen.devicePixelRatio
 
 	readonly property int agendaFontSize: Kirigami.Theme.defaultFont.pixelSize
@@ -65,10 +53,6 @@ QtObject {
 	property int meteogramColumnWidth: 32 * Screen.devicePixelRatio // weatherIconSize = 32px (height = 24px but most icons are landscape)
 
 	property QtObject icalCalendarList: Base64Json {
-		configKey: 'icalCalendarList'
-	}
-
-	property ListModel icalCalendarListModel: Base64JsonListModel {
 		configKey: 'icalCalendarList'
 	}
 

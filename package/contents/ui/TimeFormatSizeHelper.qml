@@ -28,7 +28,6 @@ Item {
 				maximumWidthNumber = i
 			}
 		}
-		// console.log('getWidestNumber', maximumWidthNumber)
 		return maximumWidthNumber
 	}
 
@@ -54,9 +53,6 @@ Item {
 		} else {
 			formattedSizeHelper.text = timePm
 		}
-		// console.log('updateMinWidth', minWidth)
-		// console.log('\t', 'timeAm', timeAm, advanceWidthAm)
-		// console.log('\t', 'timePm', timePm, advanceWidthPm)
 	}
 
 	PlasmaComponents3.Label {

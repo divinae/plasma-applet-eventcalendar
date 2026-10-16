@@ -47,16 +47,12 @@ PinchArea {
 		}
 	}
 
-	property alias selectedMonth: calendarBackend.monthName
-	property alias selectedYear: calendarBackend.year
 	property alias displayedDate: calendarBackend.displayedDate
 	property bool showTooltips: true
 	property bool showTodaysDate: true
 
 	property QtObject date
 	property date currentDate
-
-	property date showDate: new Date()
 
 	property int borderWidth: 1
 	property real borderOpacity: 0.4
@@ -65,21 +61,16 @@ PinchArea {
 	property int columns: calendarBackend.days
 	property int rows: calendarBackend.weeks
 
-	property Item selectedItem
-	property int week
-	property int firstDay: new Date(showDate.getFullYear(), showDate.getMonth(), 1).getDay()
 	property alias today: calendarBackend.today
 	property bool showWeekNumbers: false
 	property bool highlightCurrentDayWeek: true
 
-	readonly property bool isCurrentMonth: displayedDate.getFullYear() === today.getFullYear() && displayedDate.getMonth() === today.getMonth()
 	readonly property bool currentMonthContainsToday: {
 		return daysModel && daysModel.count > 0
 			&& firstDisplayedDate() <= today && today <= lastDisplayedDate()
 	}
 
 	property alias cellHeight: mainDaysCalendar.cellHeight
-	// property QtObject daysModel: calendarBackend.daysModel
 	property alias daysModel : daysModel
 
 	signal dateSelected(date selectedDate)
@@ -113,19 +104,6 @@ PinchArea {
 		}
 	}
 
-	function isToday(date) {
-		if (date.toDateString() === new Date().toDateString()) {
-			return true
-		}
-
-		return false
-	}
-
-	function eventDate(yearNumber,monthNumber,dayNumber) {
-		var d = new Date(yearNumber, monthNumber-1, dayNumber)
-		return Qt.formatDate(d, "dddd dd MMM yyyy")
-	}
-
 	function setSelectedDate(d) {
 		currentDate = d
 		dateSelected(currentDate)
@@ -153,8 +131,6 @@ PinchArea {
 		var day = date.getDate()
 		var month = date.getMonth() // 0-11
 		var year = date.getFullYear()
-		// console.log('displayedDate', date)
-		// console.log(day, month+1, year)
 
 		var monthKey = year + '-' + month + '-' + calendarBackend.firstDayOfWeek + '-' + calendarBackend.days * calendarBackend.weeks
 		if (monthKey === builtMonthKey && daysModel.count > 0) {
@@ -179,8 +155,6 @@ PinchArea {
 		if (daysThusFar < totalDays) {
 			daysAfterCurrentMonth = totalDays - daysThusFar
 		}
-		// console.log(daysBeforeCurrentMonth, daysInCurrentMonth, daysAfterCurrentMonth)
-		// console.log(totalDays, daysThusFar)
 
 		if (daysBeforeCurrentMonth > 0) {
 			var previousMonth = new Date(year, month-1, 1)
@@ -248,7 +222,6 @@ PinchArea {
 		}
 	}
 
-
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/calendar.cpp
 	PlasmaCalendar.Calendar {
 		id: calendarBackend
@@ -264,11 +237,9 @@ PinchArea {
 		}
 
 		Component.onCompleted: {
-			// daysModel.setPluginsManager(EventPluginsManager);
 
 			// Bind after configuration is loaded to prevent calling updateMonthOverview a 3rd time.
 			calendarBackend.firstDayOfWeekChanged.connect(function(){
-				// logger.debug('onFirstDayOfWeekChanged', calendarBackend.firstDayOfWeek)
 				updateMonthOverview()
 				// TODO: Note, this resets the MonthView event badges, the user needs to manually update.
 			})
@@ -422,7 +393,6 @@ PinchArea {
 			eventBadgeType: plasmoid.configuration.popupMode === 'month' ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
 
 			headerModel: calendarBackend.days
-			// gridModel: calendarBackend.daysModel
 			gridModel: daysModel
 
 			dateMatchingPrecision: PlasmaCalendar.Calendar.MatchYearMonthAndDay
@@ -436,8 +406,6 @@ PinchArea {
 				stack.push(yearOverview)
 			}
 				onActivated: function(index, date, item) {
-					var rowNumber = Math.floor(index / columns)
-					week = 1 + calendarBackend.weeksModel[rowNumber]
 					root.date = date
 					var dt = new Date(date.yearNumber, date.monthNumber - 1, date.dayNumber)
 					root.setSelectedDate(dt)
@@ -509,5 +477,4 @@ PinchArea {
 	Component.onCompleted: {
 		setSelectedDate(calendarBackend.today)
 	}
-
 }

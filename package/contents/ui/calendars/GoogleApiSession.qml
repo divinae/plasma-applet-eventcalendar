@@ -54,9 +54,6 @@ QtObject {
 	}
 
 	function updateAccessToken(callback) {
-		// logger.debug('accessTokenExpiresAt', plasmoid.configuration.accessTokenExpiresAt)
-		// logger.debug('                 now', Date.now())
-		// logger.debug('refreshToken', plasmoid.configuration.refreshToken)
 		var account = getAccount()
 		if (account && account.refreshToken) {
 			logger.debug('updateAccessToken')
@@ -83,7 +80,7 @@ QtObject {
 					return callback('Missing access token.')
 				}
 
-				logger.debug('onAccessToken', parsed)
+				logger.debug('onAccessToken', 'expires_in', parsed.expires_in) // Never log the token
 				googleApiSession.applyAccessToken(parsed)
 
 				callback(null)
@@ -128,7 +125,6 @@ QtObject {
 			data: data,
 		}, callback)
 	}
-
 
 	//---
 	property int errorCount: 0

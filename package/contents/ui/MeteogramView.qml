@@ -12,7 +12,6 @@ Item {
 	property bool clock24h: appletConfig.clock24h
 	property int visibleDuration: 9
 	property bool showIconOutline: false
-	property bool showGridlines: true
 	property alias xAxisScale: graph.xAxisScale
 	property int xAxisLabelEvery: 1
 	property alias rainUnits: graph.rainUnits
@@ -135,7 +134,6 @@ Item {
 				area.areaY = a.y
 				area.areaWidth = b.x - a.x
 				area.areaHeight = graph.gridHeight
-				// console.log(JSON.stringify(area))
 				area.gridItem = gridData[i]
 				if (area.areaWidth <= appletConfig.meteogramColumnWidth) {
 					// Show icon representing 3 hours.
@@ -147,7 +145,6 @@ Item {
 				}
 				areas.push(area)
 			}
-			// console.log(JSON.stringify(areas))
 			var signature = JSON.stringify(areas)
 			if (signature === lastGridItemAreasSignature) {
 				return
@@ -156,7 +153,6 @@ Item {
 			gridDataAreas.model = areas
 		}
 		property string lastGridItemAreasSignature: ""
-
 
 		function gridPoint(x, y) {
 			return {
@@ -167,7 +163,6 @@ Item {
 
 		function update() {
 			gridCanvas.requestPaint()
-			// console.log('updated')
 		}
 
 		Item {
@@ -187,7 +182,6 @@ Item {
 					context.moveTo(p1.x, p1.y)
 					context.lineTo(p2.x, p2.y)
 					context.stroke()
-					// console.log(JSON.stringify(p1), JSON.stringify(p2))
 				}
 
 				// https://stackoverflow.com/questions/7054272/how-to-draw-smooth-curve-through-n-points-using-javascript-html5-canvas
@@ -231,11 +225,9 @@ Item {
 					var gridDataAreaWidth = 0
 					for (var i = 1; i < graph.gridData.length; i++) {
 						var item = graph.gridData[i]
-						// console.log(i, item, item.precipitation, graph.yAxisRainMax)
 						if (item.precipitation) {
 							graph.showYAxisRainMax = true
 							var rainY = Math.min(item.precipitation, graph.yAxisRainMax) / graph.yAxisRainMax
-							// console.log('rainY', i, rainY)
 							var a = graph.gridPoint(i-1, graph.yAxisMin)
 							var b = graph.gridPoint(i, graph.yAxisMin)
 							var h = rainY * graph.gridHeight
@@ -279,9 +271,7 @@ Item {
 						}
 					}
 
-
 					// temp
-					// context.strokeStyle = '#900'
 					context.lineWidth = 3
 					var path = []
 					var pathMinY
@@ -298,9 +288,6 @@ Item {
 					var pMinY = graph.gridPoint(0, pathMaxY).y // y axis gets flipped
 					var height = pMaxY - pMinY
 					var pZeroYRatio = (pZeroY-pMinY) / height
-					// console.log(pMinY, pMaxY)
-					// console.log(height)
-					// console.log(pZeroY, pZeroYRatio)
 					if (pZeroYRatio <= 0) {
 						context.strokeStyle = appletConfig.meteogramNegativeTempColor
 					} else if (pZeroYRatio >= 1) {
@@ -313,14 +300,12 @@ Item {
 					}
 					drawCurve(path)
 
-
 					// yAxis label: precipitation
 					var lastLabelText = ''
 					var lastLabelVisible = false
 					var lastLabelStaggered = false
 					for (var i = 1; i < graph.gridData.length; i++) {
 						var item = graph.gridData[i]
-						// console.log('label', graph.rainUnits, i, item.precipitation)
 						if (item.precipitation && (
 							(graph.rainUnits === 'mm' && item.precipitation > 0.3)
 							|| (graph.rainUnits === '%')
@@ -370,29 +355,14 @@ Item {
 							lastLabelStaggered = false
 						}
 					}
-					// if (graph.showYAxisRainMax) {
-					// 	context.fillStyle = graph.precipitationColor
-					// 	context.font = "12px sans-serif"
-					// 	context.textAlign = 'end'
-					// 	var labelText = graph.yAxisRainMax + 'mm';
-					// 	context.strokeStyle = graph.precipitationTextOulineColor;
-					// 	context.lineWidth = 3;
-					// 	context.strokeText(labelText, graph.gridX2, graph.gridY + 6)
-					// 	context.fillText(labelText, graph.gridX2, graph.gridY + 6)
-					// }
-					
 
 					// Area. Deferred and skipped when unchanged, so repaints (eg: resizing)
 					// don't recreate every area delegate.
 					Qt.callLater(graph.updateGridItemAreas)
-
-					// console.log('painted')
 				}
 
 			}
 
-
- 
 			Repeater {
 				id: gridDataAreas
 				anchors.fill: parent
@@ -403,7 +373,6 @@ Item {
 					y: modelData.areaY-modelData.areaHeight
 					width: modelData.areaWidth
 					height: modelData.areaHeight
-					// color: ["#880", "#008"][index % 2]
 					color: "transparent"
 
 					PlasmaCore.ToolTipArea {
@@ -427,12 +396,9 @@ Item {
 					}
 
 					Component.onCompleted: {
-						// console.log(x, y)
 					}
 				}
-
 			}
-
 
 		}
 	}
@@ -442,11 +408,9 @@ Item {
 	}
 
 	function parseWeatherForecast(currentWeatherData, data) {
-		// console.log(JSON.stringify(data, null, '\t'))
 		var gData = []
 
 		function parseHourlyWeatherItem(item) {
-			// console.log('parseHourlyWeatherItem', JSON.stringify(item))
 			var tooltipSubText = item.description
 			if (item.precipitation) {
 				tooltipSubText += ' (' + formatPrecipitation(item.precipitation) + ')'
@@ -480,8 +444,6 @@ Item {
 			gData.push(parseHourlyWeatherItem(item))
 		}
 
-		// console.log(JSON.stringify(gData, null, '\t'))
-
 		// Only forcast next _ hours
 		gData = gData.slice(0, Math.max(3, Math.ceil(meteogramView.visibleDuration * meteogramView.xAxisScale) + 1))
 
@@ -497,7 +459,6 @@ Item {
 		for (var i = 0; i < gData.length; i++) {
 			var firstOrLast = i === 0 || i === gData.length-1
 			var labelSkipped = i % Math.ceil(meteogramView.xAxisLabelEvery) != 0
-			// if (i != 0 && i != gData.length-1) {
 			if (!firstOrLast && !labelSkipped) {
 				var date = new Date(gData[i].xTimestamp)
 				var hour = date.getHours()

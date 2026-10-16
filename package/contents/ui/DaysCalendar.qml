@@ -23,7 +23,6 @@ import QtQuick.Controls as QQC2
 
 import org.kde.kirigami as Kirigami
 import org.kde.ksvg as KSvg
-// import org.kde.plasma.workspace.calendar as PlasmaCalendar
 import org.kde.plasma.components as PlasmaComponents3
 
 import "./badges"
@@ -52,7 +51,6 @@ Item {
 
 	property bool showWeekNumbers
 	property string eventBadgeType: "theme"
-	property string todayStyle: "theme"
 
 	onShowWeekNumbersChanged: canvas.requestPaint()
 	onHeaderHeightChanged: canvas.requestPaint()
@@ -400,18 +398,6 @@ Item {
 		rows: daysCalendar.rows + (daysCalendar.headerModel ? 1 : 0)
 
 		spacing: root.borderWidth
-		property Item selectedItem
-		property bool containsEventItems: false // FIXME
-		property bool containsTodoItems: false // FIXME
-
-		property QtObject selectedDate: root.date
-		onSelectedDateChanged: {
-			// clear the selection if the root.date is null
-			if (calendarGrid.selectedDate == null) {
-				calendarGrid.selectedItem = null
-			}
-		}
-
 		Repeater {
 			id: days
 
@@ -460,17 +446,6 @@ Item {
 							} else {
 								return 'bottomBar'
 							}
-					}
-				}
-
-				todayStyle: {
-					switch (daysCalendar.todayStyle) {
-						case 'bigNumber':
-							return daysCalendar.todayStyle
-
-						case 'theme':
-						default:
-							return 'theme'
 					}
 				}
 

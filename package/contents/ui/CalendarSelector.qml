@@ -18,8 +18,6 @@ PlasmaComponents3.ComboBox {
 	}
 
 	function populate(calendarList, initialCalendarId) {
-		// logger.debug('CalendarSelector.populate')
-		// logger.debugJSON('calendarList', calendarList)
 		var list = []
 		var selectedIndex = 0
 		calendarList.forEach(function(calendar){

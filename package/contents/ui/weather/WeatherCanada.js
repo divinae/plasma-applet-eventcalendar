@@ -91,7 +91,6 @@ var weatherIconMap = {
 	'48': 'wi-tornado', // Waterspout
 }
 
-
 var weatherIconToTextMap = {}
 /* Don't burden translators with these for now.
 var weatherIconToTextMap = {
@@ -133,40 +132,6 @@ function getInner(html, a, b) {
 	return html.substr(start, end-start)
 }
 
-function loopInner(html, a, b, callback) {
-	var cursor = 0
-	for (var i = 0; i < 1000; i++) { // Hard limit of 1000 iterations
-		var start = html.indexOf(a, cursor)
-		if (start == -1) {
-			break
-		}
-		start += a.length
-		// console.log('loop', i, 'with', start, cursor)
-		var end = html.indexOf(b, start)
-		if (end == -1) {
-			break
-		}
-		var innerHtml = html.substr(start, end-start)
-		// console.log(i, start, end, innerHtml)
-		callback(innerHtml, i)
-		cursor = end + b.length
-		// console.log('cursor', cursor)
-	}
-}
-
-function parseFutureDate(day, month) {
-	// QML doesn't parse: new Date('25 Sep')
-	// So we need to specify the year
-	// Hardcode Jan == next year when in December
-	var date = new Date()
-	if (month == 'Jan' && date.getMonth() == 11) { // == December, getMonth() returns 0-11
-		return new Date(day + ' ' + month + ' ' + (date.getFullYear() + 1))
-	} else {
-		return new Date(day + ' ' + month + ' ' + date.getFullYear())
-	}
-}
-
-
 function parseDailyHtml(html) {
 	var weatherData = {
 		list: []
@@ -178,14 +143,12 @@ function parseDailyHtml(html) {
 	if (!currentHtml) {
 		throw new Error('Error parsing currentHtml')
 	}
-	// console.debug('currentHtml', currentHtml)
 
 	var currentTemp = getInner(currentHtml, '<span class="wxo-metric-hide">', '°<abbr title="Celsius">C</abbr>')
 	if (!currentTemp) {
 		throw new Error('Error parsing currentTemp')
 	}
 	currentTemp = parseInt(currentTemp, 10)
-
 
 	// The forecast "table" can be found using the unique 'details.wxo-fcst' selector.
 	// Note that there is two elements matching this selector. We want the desktop view.
@@ -195,8 +158,6 @@ function parseDailyHtml(html) {
 	if (!forecastHtml) {
 		throw new Error('Error parsing forecastHtml')
 	}
-	// console.debug('forecastHtml', forecastHtml)
-
 
 	// Daily forcast is a 7x4 table using divs + css instead of a table.
 	// <details class="panel panel-default wxo-fcst" open="open">
@@ -239,7 +200,6 @@ function parseDailyHtml(html) {
 	// 	</div>
 	// </div>
 
-
 	// During night, today's daytime cell is blank.
 	//   <div class="div-row div-row1 div-row-head greybkgrd"> </div>
 	//   <div class="div-row div-row2 div-row-data greybkgrd"> </div>
@@ -247,8 +207,6 @@ function parseDailyHtml(html) {
 	//   <div class="div-row div-row3 div-row-head greybkgrd"> </div>
 	//   <div class="div-row div-row4 div-row-data greybkgrd"> </div>
 	var evening = forecastHtml.indexOf('class="div-row div-row1 div-row-head greybkgrd"') >= 0
-	// console.debug('evening', evening)
-
 
 	// Today's date
 	var pageModifiedStr = getInner(html, '<meta name="dcterms.modified" title="W3CDTF" content="', '" />') // 2021-03-12
@@ -260,7 +218,6 @@ function parseDailyHtml(html) {
 	if (isNaN(today)) {
 		throw new Error('Error parsing todays date')
 	}
-	// console.debug('today', today, 'pageModifiedStr', pageModifiedStr)
 
 	var weeklyData = [] // 7 day forecast
 	for (var i = 0; i < 7; i++) {
@@ -282,19 +239,16 @@ function parseDailyHtml(html) {
 	// So we get the start and end of the table first, then split it by <div class="div-column">.
 	var tableHtml = getInner(forecastHtml, '<div class="div-table">', '<section><details open="open" class="wxo-detailedfore">')
 	tableHtml = tableHtml.trim() // Strip \n before first "div-column".
-	// console.debug('tableHtml', tableHtml)
 
 	// Since there's a <div class="div-column"> at the start, we need to remove the leading empty string.
 	var divColumns = tableHtml.split('<div class="div-column">')
 	if (divColumns.length >= 1 && divColumns[0] == '') {
 		divColumns.shift()
 	}
-	// console.debug(JSON.stringify(divColumns, null, '\t'))
 
 	divColumns.forEach(function(innerHtml, dateIndex) {
 		var date = new Date(today)
 		date.setDate(date.getDate() + dateIndex)
-		// console.debug(dateIndex, date)
 
 		var dateData = weeklyData[dateIndex]
 
@@ -315,7 +269,6 @@ function parseDailyHtml(html) {
 			console.log('[eventcalendar] WeatherCanada icon has no description (/weathericons/' + imageId + '.gif)')
 		}
 		dateData.text = weatherIconToTextMap[dateData.iconName] || dateData.description
-
 
 		// Temps
 		var high = getInner(innerHtml, '<span class="high wxo-metric-hide" title="max">', '°<abbr title="Celsius">C</abbr>')
@@ -345,16 +298,12 @@ function parseDailyHtml(html) {
 		if (isNaN(high) && isNaN(low)) {
 			throw new Error('Error parsing daily temp')
 		}
-
-		// console.debug(dateIndex, JSON.stringify(dateData, null, "\t"))
 	})
 
 	weatherData.list = weeklyData
 
 	return weatherData
 }
-
-
 
 function parseHourlyHtml(html) {
 	var tableHtml = getInner(html, '<tbody>', '</tbody>')
@@ -385,7 +334,6 @@ function parseHourlyTbody(html) {
 		if (trHtml.indexOf('<th ') >= 0) {
 			// Date heading
 			dateStr = parseHourlyDate(trHtml)
-			// console.log(dateStr)
 		} else {
 			// Hourly forecast
 			var timeStr = parseHourlyTime(trHtml)
@@ -393,7 +341,6 @@ function parseHourlyTbody(html) {
 			var conditions = parseHourlyConditions(trHtml)
 			var dt = Math.floor(new Date(dateStr + ' ' + timeStr).getTime() / 1000)
 			var precipitation = parseHourlyPrecipitation(trHtml)
-			// console.log(dt, timeStr, conditions.icon, conditions.id, conditions.description, precipitation)
 
 			weatherData.list.push({
 				dt: dt,
@@ -464,8 +411,6 @@ function parseHourlyPrecipitation(trHtml) {
 	}
 }
 
-
-
 function getCityUrl(cityId) {
 	return 'https://weather.gc.ca/city/pages/' + cityId + '_metric_e.html'
 }
@@ -476,12 +421,9 @@ function handleError(funcName, callback, err, data, xhr) {
 }
 
 function updateDailyWeather(config, callback) {
-	// console.debug('WeatherCanada.fetchDailyWeatherForecast')
 	var url = getCityUrl(config.weatherCanadaCityId)
 	Requests.request(url, function(err, data, xhr) {
 		if (err) return handleError('WeatherCanada.fetchDailyWeatherForecast', callback, err, data, xhr)
-		// console.debug('WeatherCanada.fetchDailyWeatherForecast.response')
-		// console.debug('WeatherCanada.fetchDailyWeatherForecast.response', data)
 
 		try {
 			var weatherData = parseDailyHtml(data)
@@ -490,7 +432,6 @@ function updateDailyWeather(config, callback) {
 			return handleError('WeatherCanada.parseDailyHtml', callback, e.message, '', xhr)
 		}
 
-		// console.debug(JSON.stringify(weatherData, null, '\t'))
 		callback(null, weatherData, xhr)
 	})
 }
@@ -500,12 +441,9 @@ function getCityHourlyUrl(cityId) {
 }
 
 function updateHourlyWeather(config, callback) {
-	// console.debug('WeatherCanada.fetchHourlyWeatherForecast')
 	var url = getCityHourlyUrl(config.weatherCanadaCityId)
 	Requests.request(url, function(err, data, xhr) {
 		if (err) return handleError('WeatherCanada.fetchHourlyWeatherForecast', callback, err, data, xhr)
-		// console.debug('WeatherCanada.fetchHourlyWeatherForecast.response')
-		// console.debug('WeatherCanada.fetchHourlyWeatherForecast.response', data)
 
 		try {
 			var weatherData = parseHourlyHtml(data)
@@ -513,11 +451,9 @@ function updateHourlyWeather(config, callback) {
 			// Don't log data as the HTML is longer than the default scrollback.
 			return handleError('WeatherCanada.parseHourlyHtml', callback, e.message, '', xhr)
 		}
-		// console.debug(JSON.stringify(weatherData, null, '\t'))
 		callback(err, weatherData, xhr)
 	})
 }
-
 
 function parseCityList(html) {
 	var lines = html.split('\n')

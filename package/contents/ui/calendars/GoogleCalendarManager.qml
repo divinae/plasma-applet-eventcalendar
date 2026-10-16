@@ -6,7 +6,6 @@ import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 import "../code/ColorIdMap.js" as ColorIdMap
 
-
 CalendarManager {
 	id: googleCalendarManager
 
@@ -159,7 +158,6 @@ CalendarManager {
 		})
 	}
 
-
 	//--- Utils
 	function cloneRawEvent(event) {
 		// Clone the event data and clean up the extra stuff we added when parsing the event.
@@ -174,7 +172,6 @@ CalendarManager {
 		delete data.reminderMinutes
 		return data
 	}
-
 
 	//--- List Events
 	function fetchGoogleAccountEvents(calendarIdList) {
@@ -338,7 +335,6 @@ CalendarManager {
 			if (!err && data && data.error) {
 				return pageCallback(data, null, xhr)
 			}
-			// logger.debugJSON('fetchGCalEventsPage.response', args.calendarId, data)
 			pageCallback(err, data, xhr)
 		})
 	}
@@ -478,7 +474,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return event.backgroundColor || colorId || calendar.backgroundColor
 	}
 
-
 	//--- Create / POST
 	function createEvent(calendarId, date, text) {
 		if (session.accessToken) {
@@ -581,7 +576,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 
 	//--- Update Event
 	function setEventProperty(calendarId, eventId, key, value) {
-		logger.log(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
+		logger.debug(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
 		var args = {}
 		args[key] = value
 		setEventProperties(calendarId, eventId, args)
@@ -590,10 +585,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	function setEventProperties(calendarId, eventId, args) {
 		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		updateGoogleCalendarEvent(calendarId, eventId, args)
-
-		// Note: Make sure switching between all day event (event.start.date) and a date+time
-		// event (event.start.dateTime) works properly before switching to PATCH.
-		// patchGoogleCalendarEvent(calendarId, eventId, args, callback)
 	}
 
 	function updateGoogleCalendarEvent(calendarId, eventId, args) {
@@ -670,58 +661,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		})
 	}
 
-	function patchGoogleCalendarEvent(calendarId, eventId, eventProps, callback) {
-		logger.debugJSON('patchGoogleCalendarEvent.sent', eventProps)
-		
-		patchGCalEvent({
-			accessToken: session.accessToken,
-			calendarId: calendarId,
-			eventId: eventId,
-			data: eventProps,
-		}, function(err, data, xhr) {
-			logger.debugJSON('patchGoogleCalendarEvent.response', err, data)
-			
-			parseSingleEvent(calendarId, data)
-			eventUpdated(calendarId, eventId, data)
-			callback(err, data, xhr)
-		})
-	}
-
-	function patchGCalEvent(args, callback) {
-		// Requires Qt 5.8 (Plasma 5.12 depends on Qt 5.9)
-		// Note: Qt 5.7 and below doesn't support the PATCH method type.
-		// https://bugreports.qt.io/browse/QTBUG-38175
-
-		// Even though Qt 5.10's qmlscene can send a PATCH request with a body,
-		// plasmashell + plasmoidviewer is doing something weird, as while both
-		// send the PATCH request to the server, it does not send the body.
-		// Demo: https://gist.github.com/Zren/3cdee1cd6fce144c234cdca9d3f32fc1
-		throw new Exception("plasmashell with Qt 5.10 still doesn't fully support the PATCH method type")
-
-		// var url = 'https://www.googleapis.com/calendar/v3'
-		// url += '/calendars/'
-		// url += encodeURIComponent(args.calendarId)
-		// url += '/events/'
-		// url += encodeURIComponent(args.eventId)
-		// Requests.postJSON({
-		// 	method: 'PATCH',
-		// 	url: url,
-		// 	headers: {
-		// 		"Authorization": "Bearer " + args.accessToken,
-		// 	},
-		// 	data: args.data,
-		// }, function(err, data, xhr) {
-		// 	logger.debug('patchGCalEvent.response', err, data, xhr.status)
-		// 	if (!err && data && data.error) {
-		// 		return callback(data, null, xhr)
-		// 	}
-		// 	callback(err, data, xhr)
-		// })
-	}
-
 	//--- Delete Event
 	function deleteEvent(calendarId, eventId) {
-		logger.log(calendarManagerId, 'deleteEvent', calendarId, eventId)
+		logger.debug(calendarManagerId, 'deleteEvent', calendarId, eventId)
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {

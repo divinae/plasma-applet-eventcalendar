@@ -19,7 +19,6 @@ LinkRect {
 		} else {
 			eventItemInProgress = false
 		}
-		// console.log('checkIfInProgress()', model.start, timeModel.currentTime, model.end)
 	}
 	Connections {
 		target: timeModel
@@ -34,7 +33,6 @@ LinkRect {
 		agendaEventItem.checkIfInProgress()
 
 		//--- Debugging
-		// editEventForm.active = eventItemInProgress && !model.startDateTime
 	}
 
 	property alias isEditing: editEventForm.active
@@ -47,11 +45,7 @@ LinkRect {
 	readonly property bool isAllDay: eventTimestamp === i18n("All Day") // TODO: Remove string comparison.
 	readonly property bool isCondensed: plasmoid.configuration.agendaCondensedAllDayEvent && isAllDay
 
-
 	//---
-
-
-
 
 	//---
 	// Tile in the event color, like the day list and the week view.
@@ -168,18 +162,7 @@ LinkRect {
 		}
 	}
 
-	onLeftClicked: {
-		// logger.log('agendaItem.event.leftClicked', model.startDateTime, mouse)
-		if (false) {
-			var event = events.get(eventItemIndex)
-			logger.logJSON("event", event)
-			var calendar = eventModel.getCalendar(event.calendarId)
-			logger.logJSON("calendar", calendar)
-			upcomingEvents.sendEventStartingNotification(model)
-		} else {
-			popup.activateEvent(events.get(eventItemIndex))
-		}
-	}
+	onLeftClicked: popup.activateEvent(events.get(eventItemIndex))
 
 	onLoadContextMenu: function(contextMenu) {
 		var menuItem

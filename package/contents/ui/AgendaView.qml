@@ -22,9 +22,6 @@ Item {
 		}
 	}
 
-	property color inProgressColor: appletConfig.agendaInProgressColor
-	property int inProgressFontWeight: Font.Bold
-
 	property color isOverdueColor: Kirigami.Theme.negativeTextColor
 	property int isOverdueFontWeight: Font.Bold
 
@@ -37,7 +34,6 @@ Item {
 			notificationManager.notify({
 				appName: i18n("Event Calendar"),
 				appIcon: "resource-calendar-insert",
-				// expireTimeout: 10000,
 				summary: data.summary,
 				body: LocaleFuncs.formatEventDuration(data, {
 					relativeDate: timeModel.currentTime,
@@ -50,7 +46,6 @@ Item {
 			notificationManager.notify({
 				appName: i18n("Event Calendar"),
 				appIcon: "user-trash-symbolic",
-				// expireTimeout: 10000,
 				summary: data.summary,
 				body: LocaleFuncs.formatEventDuration(data, {
 					relativeDate: timeModel.currentTime,
@@ -67,13 +62,10 @@ Item {
 	QQC2.ScrollView {
 		id: agendaScrollView
 		anchors.fill: parent
-		// clip: true
 		readonly property int viewportWidth: contentItem ? contentItem.width : width
 		readonly property int viewportHeight: contentItem ? contentItem.height : height
 		readonly property int scrollY: contentItem ? contentItem.contentY : 0
 		readonly property int contentHeightValue: contentItem ? contentItem.contentHeight : 0
-
-		// onScrollYChanged: console.log('scrollY', scrollY)
 
 		ColumnLayout {
 			id: agendaColumn
@@ -84,66 +76,30 @@ Item {
 				id: agendaRepeater
 
 				property bool populated: false
-				// onPopulatedChanged: console.log(Date.now(), 'agendaRepeater.populated', populated)
 				model: root.agendaModel
 				delegate: AgendaListItem {
-					// visible: agendaRepeater.populated
 					width: parent.width
-					// onHeightChanged: {
-					// 	if (scrollToIndexTimer.running) {
-					// 		scrollToIndexTimer.updatePosition()
-					// 	}
-					// }
-					
-					// Component.onCompleted: console.log(Date.now(), 'AgendaListItem.onCompleted', index)
-					// Component.onDestruction: console.log(Date.now(), 'AgendaListItem.onDestruction', index)
 				}
 
 				function onItemAdded(index, item) {
-					// console.log(Date.now(), 'agendaRepeater.itemAdded', index)
 					if (index === root.agendaModel.count-1) {
 						populated = true
 					}
 				}
 				function onItemRemoved(index, item) {
-					// console.log(Date.now(), 'agendaRepeater.onItemRemoved', index)
 					populated = false
 				}
 			}
 		}
 
-		function getCurrentAgendaItem() {
-			if (agendaRepeater.count === 0 || scrollY < 0) {
-				return null
-			} else {
-				var offsetY = 0
-				for (var i = 0; i < agendaRepeater.count; i++) {
-					var agendaListItem = agendaRepeater.itemAt(i)
-					offsetY += agendaListItem ? agendaListItem.height : 0
-					// console.log('\t', i, agendaListItem, agendaListItem.height)
-					if (i != agendaRepeater.count-1) {
-						offsetY += agendaColumn.spacing
-					}
-
-					if (offsetY >= scrollY) {
-						return agendaListItem
-					}
-				}
-				return null
-			}
-		}
-
 		function getItemOffsetY(index) {
-			// console.log('getItemOffsetY', index)
 			if (index <= 0) {
 				return 0
 			} else if (index < agendaRepeater.count) {
-				// console.log('\t', index < agendaRepeater.count)
 				var offsetY = 0
 				for (var i = 0; i < Math.min(index, agendaRepeater.count); i++) {
 					var agendaListItem = agendaRepeater.itemAt(i)
 					offsetY += agendaListItem ? agendaListItem.height : 0
-					// console.log('\t', i, agendaListItem, agendaListItem.height)
 					if (i != agendaRepeater.count-1) {
 						offsetY += agendaColumn.spacing
 					}
@@ -207,7 +163,6 @@ Item {
 			restart()
 		}
 		function updatePosition() {
-			// console.log('updatePosition', itemIndex, Date.now())
 			agendaScrollView.positionViewAtIndex(itemIndex)
 		}
 	}
@@ -236,24 +191,5 @@ Item {
 		}
 		// If the date is greater than any item in the agenda, scroll to the bottom.
 		agendaScrollView.positionViewAtEnd()
-	}
-
-	// [Note] This function is untested!
-	function scrollToEvent(date, eventId) {
-		for (var i = 0; i < agendaRepeater.model.count; i++) {
-			var agendaItem = agendaRepeater.model.get(i)
-			if (Shared.isSameDate(date, agendaItem.date)) {
-				var agendaListItem = agendaRepeater.itemAt(i)
-				var eventIndex = agendaListItem.indexOfEvent(eventId)
-				if (eventIndex >= 0) {
-					scrollToIndexTimer.scrollTo(i)
-				}
-				return
-			} else if (Shared.isDateEarlier(date, agendaItem.date)) {
-				// If the date is smaller than the current agendaItem.date, then we've iterated past the target date.
-				return
-			}
-		}
-		// The date was greater than any item in the agenda.
 	}
 }

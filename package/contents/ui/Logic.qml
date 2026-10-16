@@ -13,13 +13,11 @@ Item {
 	property var lastForecastAt: null
 	property var lastForecastErr: null
 
-
 	//--- Main
 	Component.onCompleted: {
 		lastGoogleSelectionSignature = googleSelectionSignature()
 		pollTimer.start()
 	}
-
 
 	//--- Update
 	Timer {
@@ -42,8 +40,6 @@ Item {
 		logic.updateWeather()
 	}
 
-
-
 	//--- Events
 	function updateEvents() {
 		updateEventsTimer.restart()
@@ -55,14 +51,11 @@ Item {
 	}
 	function deferredUpdateEvents() {
 		var range = agendaModel.getDateRange(agendaModel.currentMonth)
-		// console.log('   first', monthView.firstDisplayedDate())
-		// console.log('    last', monthView.lastDisplayedDate())
 
 		agendaModel.visibleDateMin = range.min
 		agendaModel.visibleDateMax = range.max
 		eventModel.fetchAll(range.min, range.max)
 	}
-
 
 	//--- Weather
 	function updateWeather(force) {
@@ -270,7 +263,6 @@ Item {
 		target: eventModel
 		function onCalendarFetched(calendarId, data) {
 			logger.debug('onCalendarFetched', calendarId)
-			// logger.debug('onCalendarFetched', calendarId, JSON.stringify(data, null, '\t'))
 			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
 		}
 		function onAllDataFetched() {

@@ -124,7 +124,6 @@ ConfigPage {
 					id: stringControl
 					TextArea {
 						text: (modelValue === undefined || modelValue === null) ? "" : String(modelValue)
-						// readOnly: true
 						implicitHeight: contentHeight + font.pixelSize
 						wrapMode: TextEdit.Wrap
 						Component.onCompleted: {
@@ -163,7 +162,6 @@ ConfigPage {
 
 				TextField {
 					Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-					// Layout.fillWidth: true
 					text: model.key
 					readOnly: true
 					background: Rectangle {
@@ -208,10 +206,8 @@ ConfigPage {
 								return stringControl
 							}
 						}
-						
 					}
 				}
-				
 		}
 	}
 	// Note: Since KF5 5.78 (released 2021-01-02) (Debian 11 / Ubuntu 21.04),
@@ -305,7 +301,6 @@ ConfigPage {
 		Component.onCompleted: fetch()
 	}
 
-
 	// plasmoid.configuration is a KDeclarative::ConfigPropertyMap which inherits QQmlPropertyMap
 	// https://invent.kde.org/frameworks/kdeclarative/-/blob/master/src/kdeclarative/configpropertymap.h
 	// https://doc.qt.io/qt-5/qqmlpropertymap.html
@@ -331,7 +326,6 @@ ConfigPage {
 			})
 			configTableModel.keys = keys
 
-			// console.log(JSON.stringify(keys, null, '\t'))
 			for (var i = 0; i < keys.length; i++) {
 				var key = keys[i]
 				if (key === 'minimumWidth') {
@@ -391,5 +385,4 @@ ConfigPage {
 			}
 		}
 	}
-
 }

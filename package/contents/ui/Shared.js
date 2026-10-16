@@ -18,7 +18,6 @@ function openGoogleCalendarNewEventUrl(date) {
 }
 
 function isSameDate(a, b) {
-	// console.log('isSameDate', a, b)
 	return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
 }
 function isDateEarlier(a, b) {
@@ -49,12 +48,10 @@ function isValidDate(d) {
 }
 
 function renderText(text) {
-	// console.log('renderText')
 	if (typeof text === 'undefined') {
 		return ''
 	}
 	var out = text
-	// text && console.log('renderText', text)
 	
 	// Render links
 	// Google doesn't auto-convert links to anchor tags when you paste a link in the description.
@@ -67,22 +64,15 @@ function renderText(text) {
 			// Google replaces ampersands with HTML the entity in the url text.
 			var encodedUrl = m.replace(/\&/g, '&amp;')
 
-			// console.log('        m', m)
-			// console.log('      enc', encodedUrl)
-
 			// Add extra space at the end to prevent styling entire text as a link when ending with a link.
 			return '<a href="' + m + '">' + encodedUrl + '</a>' + '&nbsp;'
 		})
 	}
-	// text && console.log('    Links', out)
 
 	// Render new lines
-	// out = out.replace(/\n/g, '<br>')
-	// text && console.log('    Newlines', out)
 
 	// Remove leading new line, as Google sometimes adds them.
 	out = out.replace(/^(\<br\>)+/, '')
-	// text && console.log('    LeadingBR', out)
 
 	return out
 }

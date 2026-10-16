@@ -25,7 +25,6 @@ ColumnLayout {
 	}
 
 	function start() {
-		// console.log('timerInputView.totalSeconds', timerInputView.totalSeconds)
 		timerModel.setDurationAndStart(timerInputView.totalSeconds)
 		timerView.isSetTimerViewVisible = false
 	}

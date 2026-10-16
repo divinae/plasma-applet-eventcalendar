@@ -326,7 +326,7 @@ Item {
 			url: url,
 			data: payload,
 		}, function(err, data, xhr) {
-			logger.debug('/oauth2/v4/token Response', data)
+			logger.debug('/oauth2/v4/token Response', err, xhr && xhr.status) // Never log the body: it has the tokens
 
 			var parsed = null
 			if (data) {
@@ -426,7 +426,6 @@ Item {
 				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
-			// console.log('fetchGCalCalendars.response', err, data, xhr && xhr.status)
 			if (!err && data && data.error) {
 				return callback('fetchGCalCalendars error', data, xhr)
 			}
@@ -460,7 +459,7 @@ Item {
 				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
-			console.log('fetchGoogleTasklistList.response', err, data, xhr && xhr.status)
+			logger.debug('fetchGoogleTasklistList.response', err, xhr && xhr.status)
 			if (!err && data && data.error) {
 				return callback('fetchGoogleTasklistList error', data, xhr)
 			}

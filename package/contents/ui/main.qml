@@ -9,7 +9,6 @@ import org.kde.plasma.plasma5support as Plasma5Support
 import org.kde.config as KConfig
 import org.kde.kcmutils as KCMUtils
 
-
 import "./lib"
 
 PlasmoidItem {
@@ -19,7 +18,6 @@ PlasmoidItem {
 		id: logger
 		name: 'eventcalendar'
 		showDebug: plasmoid.configuration.debugging
-		// showDebug: true
 	}
 
 	ConfigMigration { id: configMigration }
@@ -189,7 +187,6 @@ PlasmoidItem {
 		function setToday(d) {
 			logger.debug('setToday', d)
 			today = d
-			// console.log(root.timezone, dataSource.data[root.timezone]["DateTime"])
 			logger.debug('currentTime', timeModel.currentTime)
 			monthViewDate = today
 			selectedDate = today
@@ -203,8 +200,6 @@ PlasmoidItem {
 				logger.debug('root.onDateChanged', timeModel.currentTime, popup.today)
 			}
 		}
-
-
 	}
 
 	Plasmoid.backgroundHints: plasmoid.configuration.showBackground ? PlasmaCore.Types.DefaultBackground : PlasmaCore.Types.NoBackground
@@ -237,32 +232,15 @@ PlasmoidItem {
 		},
 		PlasmaCore.Action {
 			text: i18nd("plasma_applet_org.kde.plasma.digitalclock", "Adjust Date and Time…")
-			// icon.name: "clock"
 			icon.name: "preferences-system-time"
 			visible: KConfig.KAuthorized.authorize("kcm_clock")
 			onTriggered: KCMUtils.KCMLauncher.openSystemSettings("kcm_clock")
 		},
 		PlasmaCore.Action {
-			// text: i18nd("plasma_applet_org.kde.plasma.digitalclock", "Set Time Format…")
-			// icon.name: "gnumeric-format-thousand-separator"
 			text: i18n("Set Language…")
 			icon.name: "preferences-desktop-locale"
 			visible: KConfig.KAuthorized.authorizeControlModule("kcm_regionandlang")
 			onTriggered: KCMUtils.KCMLauncher.openSystemSettings("kcm_regionandlang")
 		}
 	]
-
-	Component.onCompleted: {
-		// Plasmoid.internalAction("configure").trigger()
-	}
-
-	// Timer {
-	// 	interval: 400
-	// 	running: true
-	// 	onTriggered: {
-	// 		plasmoid.expanded = true
-	// 		root.Plasmoid.fullRepresentationItem.Layout.minimumWidth = 1000
-	// 		root.Plasmoid.fullRepresentationItem.Layout.minimumHeight = 600
-	// 	}
-	// }
 }

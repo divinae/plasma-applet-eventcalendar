@@ -172,7 +172,6 @@ ConfigPage {
 			cmd.push(authContext.pkceVerifier)
 		}
 		// Don't log cmd or stdout: they contain the client secret, PKCE verifier and tokens.
-		// debugOutput.text = "Running:\n" + cmdStr + "\n\n"
 		callbackListener.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (autoLoginCancelled) {
 				autoLoginInProgress = false
@@ -223,7 +222,6 @@ ConfigPage {
 			var sortedList = sortArr(calendarList, "summary")
 			for (var i = 0; i < sortedList.length; i++) {
 				var item = sortedList[i]
-				// console.log(JSON.stringify(item))
 				var isPrimary = item.primary === true
 				var isShown = calendarIdList.indexOf(item.id) >= 0 || (isPrimary && calendarIdList.indexOf('primary') >= 0)
 				calendarsModel.append({
@@ -236,7 +234,6 @@ ConfigPage {
 					isPrimary: isPrimary,
 					isReadOnly: item.accessRole == "reader",
 				})
-				// console.log(item.summary, isShown, item.id)
 			}
 			calendarsModel.calendarsShownChanged()
 		}
@@ -267,7 +264,6 @@ ConfigPage {
 			var sortedList = sortArr(tasklistList, "title")
 			for (var i = 0; i < sortedList.length; i++) {
 				var item = sortedList[i]
-				// console.log(JSON.stringify(item))
 				var isShown = tasklistIdList.indexOf(item.id) >= 0
 				tasklistsModel.append({
 					tasklistId: item.id, 
@@ -278,7 +274,6 @@ ConfigPage {
 					show: isShown,
 					isReadOnly: false,
 				})
-				// console.log(item.summary, isShown, item.id)
 			}
 			tasklistsModel.tasklistsShownChanged()
 		}
@@ -618,7 +613,6 @@ ConfigPage {
 				}
 			}
 		}
-		
 	}
 
 	} // advancedSignIn

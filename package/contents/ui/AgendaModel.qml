@@ -10,7 +10,6 @@ ListModel {
 	dynamicRoles: false
 
 	property bool populating: false
-	// onPopulatingChanged: console.log(Date.now(), 'agendaModel.populating', populating)
 	property int parseGeneration: 0
 	property int parseChunkSize: 50
 
@@ -29,10 +28,7 @@ ListModel {
 	property date currentMonth: new Date()
 
 	function getDateRange(targetDate) {
-		// console.log('getDateRange')
-		// console.log('  target', targetDate)
 		var today = new Date(timeModel.currentTime)
-		// console.log('   today', today)
 
 		// We could calculate how many days are shown before the start of the month,
 		// like monthView.firstDisplayedDate() does, but it's easier to just fetch
@@ -58,8 +54,6 @@ ListModel {
 			dateMax = monthViewDateMax
 		}
 
-		// console.log('     min', dateMin)
-		// console.log('     max', dateMax)
 		return {
 			min: dateMin,
 			max: dateMax,
@@ -145,22 +139,18 @@ ListModel {
 		// Place subtasks below their parent task
 		for (var i = 0; i < eventList.length; i++) {
 			var eventItem = eventList[i]
-			// console.log('i', i, eventItem.summary)
 			if (eventItem.kind === 'tasks#task' && typeof eventItem.parent !== 'undefined') {
 				for (var j = 0; j < eventList.length; j++) {
 					var parentItem = eventList[j]
-					// console.log('  j', j, parentItem.summary)
 					if (parentItem.kind === 'tasks#task' && parentItem.id === eventItem.parent) {
 						var foundDestination = false
 						for (var k = j+1; k < eventList.length; k++) {
 							var childItem = eventList[k]
-							// console.log('    k', k, childItem.summary)
 							if (childItem.kind != 'tasks#task'
 								|| childItem.parent != parentItem.id
 								|| childItem.position > eventItem.position
 							) {
 								// Move eventItem from index i => k
-								// console.log('      move', eventItem.summary, 'from', i, 'to', k)
 								foundDestination = true
 								if (i < k) {
 									// Since we removed an item before k, decrement the index
@@ -178,7 +168,6 @@ ListModel {
 						if (!foundDestination) {
 							// Move eventItem from index i => end of list
 							var k = eventList.length - 1
-							// console.log('      move', eventItem.summary, 'from', i, 'to', k, '(end of list)')
 							if (i != k) {
 								eventList.splice(i, 1) // Remove at index=i
 								eventList.push(eventItem)
@@ -195,7 +184,6 @@ ListModel {
 
 	function parseGCalEvents(data) {
 		agendaModel.populating = true
-		// agendaModel.clear()
 
 		if (!(data && data.items)) {
 			agendaModel.populating = false
@@ -253,7 +241,6 @@ ListModel {
 			}
 		})
 		sortSubTasks(items)
-
 
 		var agendaItemList = []
 		var byDay = {}
@@ -324,10 +311,8 @@ ListModel {
 				agendaModel.showDailyWeather = showWeatherColumn
 			}
 
-
 			var minCount = Math.min(agendaItemList.length, agendaModel.count)
 			var maxCount = Math.max(agendaItemList.length, agendaModel.count)
-			// console.log('agendaModel', 'replaced items', minCount)
 			// Only rewrite rows whose content changed. Each set() rebuilds the row's
 			// nested event/task models and their delegates.
 			var signatures = agendaItemList.map(agendaItemSignature)
@@ -337,18 +322,12 @@ ListModel {
 				}
 			}
 			if (agendaItemList.length > agendaModel.count) {
-				// console.log('agendaModel', 'append items', minCount, maxCount, maxCount-minCount)
 				for (var i = minCount; i < agendaItemList.length; i++) {
 					agendaModel.append(agendaItemList[i]) // Add the missing delegates
 				}
 			} else if (agendaItemList.length < agendaModel.count) {
-				// console.log('agendaModel', 'removed items', minCount, maxCount, maxCount-minCount)
 				agendaModel.remove(minCount, maxCount-minCount) // Remove the extra delegates
-				// for (var i = 0; i < agendaItemList.length; i++) {
-				// 	agendaModel.remove(i, agendaItemList[i]) // Remove the extra delegates
-				// }
 			} else { // agendaItemList.length == agendaModel.count
-				// console.log('agendaModel', 'skip')
 				// skip
 			}
 			agendaModel.rowSignatures = signatures

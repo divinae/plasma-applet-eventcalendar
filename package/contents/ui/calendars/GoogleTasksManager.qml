@@ -6,8 +6,6 @@ import "../Shared.js" as Shared
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 
-
-
 // Google Tasks API
 // https://developers.google.com/tasks/v1/reference/tasks
 
@@ -195,7 +193,6 @@ CalendarManager {
 		return calendarList
 	}
 
-
 	//-------------------------
 	// Tasks
 	function fetchGoogleAccountTasks(tasklistIdList) {
@@ -270,19 +267,13 @@ CalendarManager {
 		})
 
 		//--- Debug
-		// for (var i = 0; i < tasklist.length; i++) {
-		// 	var taskData = tasklist[i]
-		// 	logger.debug('task', i, taskData.position, taskData.title)
-		// }
 	}
 
 	function parseTasklistAsEvents(tasklistData) {
 		var eventList = []
 		for (var i = 0; i < tasklistData.items.length; i++) {
 			var taskData = tasklistData.items[i]
-			// logger.debugJSON('tasklistData', i, taskData)
 			var eventData = parseTaskAsEventData(taskData)
-			// logger.debugJSON('tasklistData', i, eventData)
 			eventList.push(eventData)
 		}
 
@@ -352,8 +343,6 @@ CalendarManager {
 		logger.debug('fetchGoogleTasks', tasklistId)
 		fetchGCalTasks({
 			tasklistId: tasklistId,
-			// start: googleTasksManager.dateMin.toISOString(),
-			// end: googleTasksManager.dateMax.toISOString(),
 			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
@@ -413,8 +402,6 @@ CalendarManager {
 		url += '?showCompleted=true'
 		url += '&showHidden=true'
 		url += '&maxResults=100' // API max. Default 20 means many sequential pages.
-		// url += '&dueMin=' + encodeURIComponent(args.start)
-		// url += '&dueMax=' + encodeURIComponent(args.end)
 		if (args.pageToken) {
 			url += '&pageToken=' + encodeURIComponent(args.pageToken)
 		}
@@ -428,11 +415,9 @@ CalendarManager {
 			if (!err && data && data.error) {
 				return pageCallback(data, null, xhr)
 			}
-			// logger.debugJSON('fetchGCalTasksPage.response', args.tasklistId, data)
 			pageCallback(err, data, xhr)
 		})
 	}
-
 
 	//--- Create / POST
 	function createEvent(calendarId, date, text) {
@@ -485,8 +470,6 @@ CalendarManager {
 		url += '/tasks'
 		var taskData = {
 			title: args.title,
-			// notes: args.notes,
-			// due: args.due,
 		}
 		Requests.postJSON({
 			url: url,
@@ -503,10 +486,9 @@ CalendarManager {
 		})
 	}
 
-
 	//--- Delete Task
 	function deleteEvent(calendarId, eventId) {
-		logger.log(calendarManagerId, 'deleteEvent', calendarId, eventId)
+		logger.debug(calendarManagerId, 'deleteEvent', calendarId, eventId)
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {
@@ -577,7 +559,7 @@ CalendarManager {
 
 	//--- Update Task
 	function setEventProperty(calendarId, eventId, key, value) {
-		logger.log(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
+		logger.debug(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
 		var args = {}
 		args[key] = value
 		setEventProperties(calendarId, eventId, args)

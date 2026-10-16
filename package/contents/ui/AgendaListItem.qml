@@ -30,7 +30,6 @@ ColumnLayout {
 			agendaListItem.checkIfToday()
 		}
 	}
-	property bool agendaItemInProgress: agendaItemIsToday
 	property alias tasksRepeater: tasksRepeater
 	property alias eventsRepeater: eventsRepeater
 
@@ -201,20 +200,6 @@ ColumnLayout {
 	// Space before the next day
 	Item {
 		Layout.preferredHeight: Kirigami.Units.largeSpacing
-	}
-
-	function indexOfEvent(eventId) {
-		for (var i = 0; i < eventCount; i++) {
-			if (agendaItemEvents.get(i).id === eventId) {
-				return i
-			}
-		}
-		for (var j = 0; j < taskCount; j++) {
-			if (agendaItemTasks.get(j).id === eventId) {
-				return eventCount + j
-			}
-		}
-		return -1
 	}
 
 	// Y of the event / task at index, relative to this day item.

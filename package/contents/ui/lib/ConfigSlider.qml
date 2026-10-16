@@ -44,7 +44,6 @@ RowLayout {
 			}
 			return 0
 		}
-		// onValueChanged: plasmoid.configuration[configKey] = value
 		onValueChanged: serializeTimer.start()
 		to: 2147483647
 	}

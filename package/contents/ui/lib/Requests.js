@@ -74,7 +74,6 @@ function post(opt, callback) {
 	request(opt, callback)
 }
 
-
 function getJSON(opt, callback) {
 	if (typeof opt === 'string') {
 		opt = { url: opt }
@@ -93,7 +92,6 @@ function getJSON(opt, callback) {
 		callback(err, data, req)
 	})
 }
-
 
 function postJSON(opt, callback) {
 	if (typeof opt === 'string') {
@@ -126,59 +124,3 @@ function getFile(url, callback) {
 	req.send()
 }
 
-function parseMetadata(data) {
-	var lines = data.split('\n')
-	var d = {}
-	for (var i = 0; i < lines.length; i++) {
-		var line = lines[i]
-		var delimeterIndex = line.indexOf('=')
-		if (delimeterIndex >= 0) {
-			var key = line.substr(0, delimeterIndex)
-			var value = line.substr(delimeterIndex + 1)
-			d[key] = value
-		}
-	}
-	return d
-}
-
-function parseJsonMetadata(data) {
-	try {
-		return JSON.parse(data)
-	} catch (e) {
-		return null
-	}
-}
-
-function getAppletMetadata(callback) {
-	var url = Qt.resolvedUrl('.')
-
-	var s = '/share/plasma/plasmoids/'
-	var index = url.indexOf(s)
-	if (index >= 0) {
-		var a = index + s.length
-		var b = url.indexOf('/', a)
-		// var packageName = url.substr(a, b-a)
-		var metadataUrl = url.substr(0, b) + '/metadata.json'
-		Requests.getFile(metadataUrl, function(err, data) {
-			if (err) {
-				return callback(err)
-			}
-
-			var metadata = parseJsonMetadata(data)
-			if (!metadata) {
-				return callback('Could not parse metadata.json.')
-			}
-			callback(null, metadata)
-		})
-	} else {
-		return callback('Could not parse version.')
-	}
-}
-
-function getAppletVersion(callback) {
-	getAppletMetadata(function(err, metadata) {
-		if (err) return callback(err)
-
-		callback(err, metadata.KPlugin && metadata.KPlugin.Version)
-	})
-}

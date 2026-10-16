@@ -15,7 +15,6 @@ Flow {
 	property bool showTime: false
 
 	spacing: 0
-	// Layout.minimumWidth: startTimeSelector.minimumWidth + seperatorLabel.implicitWidth + endTimeSelector.minimumWidth
 
 	DateTimeSelector {
 		id: startTimeSelector

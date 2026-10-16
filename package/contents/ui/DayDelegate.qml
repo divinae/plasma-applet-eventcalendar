@@ -37,11 +37,8 @@ MouseArea {
 		font: Kirigami.Theme.defaultFont
 	}
 	readonly property int eventTitlesHeaderHeight: Math.ceil(dayHeaderFontMetrics.height) + 2
-	property string todayStyle: "theme"
 	// Relative to the cell size, but capped: large cells (full month view) would get huge corners.
 	property real radius: Math.min(8, Math.min(width, height) * 0.2)
-
-	signal activated()
 
 	readonly property date thisDate: new Date(yearNumber, typeof monthNumber !== "undefined" ? monthNumber - 1 : 0, typeof dayNumber !== "undefined" ? dayNumber : 1)
 	readonly property bool today: {
@@ -73,22 +70,11 @@ MouseArea {
 		return result
 	}
 
-	onHeightChanged: {
-		// this is needed here as the text is first rendered, counting with the default root.cellHeight
-		// then root.cellHeight actually changes to whatever it should be, but the Label does not pick
-		// it up after that, so we need to change it explicitly after the cell size changes
-		// label.font.pixelSize = Math.max(Kirigami.Theme.smallFont.pixelSize, Math.floor(daysCalendar.cellHeight / 3))
-	}
-
 	Rectangle {
 		id: todayRect
 		anchors.fill: parent
-		// anchors.centerIn: parent
-		// width: Math.min(parent.width, parent.height)
-		// height: width
-		// radius: width / 2
 		// Today: light highlight tint with a highlight-colored frame, like the week view.
-		visible: todayStyle == "theme" && today
+		visible: today
 		color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.12)
 		border.width: 2
 		border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
@@ -98,10 +84,6 @@ MouseArea {
 	Rectangle {
 		id: highlightDate
 		anchors.fill: parent
-		// anchors.centerIn: parent
-		// width: Math.min(parent.width, parent.height)
-		// height: width
-		// radius: width / 2
 		// Light tints: strong fills made event titles in the cell hard to read.
 		opacity: {
 			if (selected) {
@@ -112,13 +94,11 @@ MouseArea {
 				return 0
 			}
 		}
-		// visible: !today
 		Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration*2 } }
 		color: Kirigami.Theme.highlightColor
 		radius: dayStyle.radius
 		z: todayRect.z - 1
 	}
-
 
 	property int eventCount: model.events ? model.events.count : 0
 	property var eventColors: []
@@ -135,7 +115,6 @@ MouseArea {
 		}
 		eventColors = Object.keys(set)
 	}
-
 
 	// Past days are dimmed (day number, events, weather).
 	readonly property bool isPast: typeof timeModel !== "undefined" && Shared.isPastDay(thisDate, timeModel.currentTime)
@@ -194,35 +173,12 @@ MouseArea {
 		wrapMode: Text.NoWrap
 		elide: Text.ElideRight
 		fontSizeMode: Text.HorizontalFit
-		font.pixelSize: {
-			if (today && todayStyle == "bigNumber") {
-				return Math.max(Kirigami.Theme.smallFont.pixelSize, Math.min(Math.floor(dayStyle.height / 2), Math.floor(dayStyle.width * 7/8)))
-			} else {
-				return Math.max(Kirigami.Theme.smallFont.pixelSize, Math.min(Math.floor(dayStyle.height / 3), Math.floor(dayStyle.width * 5/8)))
-			}
-		}
+		font.pixelSize: Math.max(Kirigami.Theme.smallFont.pixelSize, Math.min(Math.floor(dayStyle.height / 3), Math.floor(dayStyle.width * 5/8)))
 		// This is to avoid the "Both point size and
 		// pixel size set. Using pixel size" warnings
 		font.pointSize: -1
-		font.bold: today
-		color: {
-			if (today) {
-				if (todayStyle == "bigNumber") {
-					if (dayStyle.containsMouse || dayStyle.selected) {
-						return Kirigami.Theme.textColor
-					} else {
-						return Kirigami.Theme.highlightColor
-					}
-				} else { // todayStyle == "theme": bold text color, the frame marks today
-					return Kirigami.Theme.textColor
-				}
-			} else {
-				return Kirigami.Theme.textColor
-			}
-		}
-		Behavior on color {
-			ColorAnimation { duration: Kirigami.Units.shortDuration * 2 }
-		}
+		font.bold: today // The frame marks today
+		color: Kirigami.Theme.textColor
 	}
 
 	PlasmaCore.ToolTipArea {

@@ -31,14 +31,6 @@ function getRainUnits(config) {
 }
 
 /* Open the city's webpage using Qt.openUrlExternally(url) */
-function openCityUrl(config) {
-	var weatherService = config.weatherService
-	if (weatherService == 'OpenWeatherMap') {
-		OpenWeatherMap.openOpenWeatherMapCityUrl(config.openWeatherMapCityId)
-	} else if (weatherService == 'WeatherCanada') {
-		Qt.openUrlExternally(WeatherCanada.getCityUrl(config.weatherCanadaCityId))
-	}
-}
 
 /* Update the weather shown in the agenda. */
 /* @returns: callback(err, {

@@ -10,10 +10,6 @@ Item {
 	property string source: ""
 	property alias color: iconText.color
 	property bool showOutline: true
-	
-	// FontLoader {
-	// 	source: "../fonts/weathericons-regular-webfont.ttf"
-	// }
 
 	PlasmaComponents3.Label {
 		id: iconText

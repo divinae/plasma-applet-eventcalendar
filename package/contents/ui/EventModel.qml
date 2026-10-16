@@ -367,7 +367,6 @@ CalendarManager {
 		for (var i = 0; i < calendarManagerList.length; i++) {
 			var calendarManager = calendarManagerList[i]
 			var list = calendarManager.getCalendarList()
-			// logger.debugJSON(calendarManager.toString(), list)
 			for (var j = 0; j < list.length; j++) {
 				if (list[j] && list[j].id) {
 					eventModel.calendarPluginMap[list[j].id] = calendarManager

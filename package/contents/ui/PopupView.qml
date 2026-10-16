@@ -146,7 +146,6 @@ MouseArea {
 	Connections {
 		target: monthView
 		function onDateSelected(date) {
-			// logger.debug('onDateSelected', selectedDate)
 			scrollToSelection()
 		}
 	}
@@ -184,7 +183,6 @@ MouseArea {
 	}
 
 	onStateChanged: {
-		// logger.debug(popup.state, widgetGrid.columns, widgetGrid.rows)
 	}
 	states: [
 		State {
@@ -279,7 +277,6 @@ MouseArea {
 				Layout.maximumHeight: popup.singleColumnMonthViewHeight
 			}
 			PropertyChanges { target: agendaView
-				// Layout.minimumHeight: popup.bottomRowHeight
 				Layout.preferredHeight: popup.bottomRowHeight
 			}
 		},
@@ -565,7 +562,6 @@ MouseArea {
 		}
 	}
 
-
 	// Overlay cards: day list < event details < event form.
 	OverlayCard {
 		id: dayEventsOverlay
@@ -659,12 +655,9 @@ MouseArea {
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
 		onColumnsChanged: {
-			// logger.debug(popup.state, widgetGrid.columns, widgetGrid.rows)
 		}
 		onRowsChanged: {
-			// logger.debug(popup.state, widgetGrid.columns, widgetGrid.rows)
 		}
-
 
 		// Created only when shown.
 		Loader {
@@ -751,8 +744,6 @@ MouseArea {
 			Layout.alignment: Qt.AlignCenter
 
 			// Component.onCompleted: {
-			// 	today = new Date()
-			// }
 
 			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
 
@@ -816,7 +807,6 @@ MouseArea {
 
 			onDayDoubleClicked: function(dayData) {
 				var date = new Date(dayData.yearNumber, dayData.monthNumber-1, dayData.dayNumber)
-				// logger.debug('Popup.monthView.onDoubleClicked', date)
 				var doubleClickOption = plasmoid.configuration.monthDayDoubleClick
 
 				switch (doubleClickOption) {
@@ -841,7 +831,6 @@ MouseArea {
 			Layout.alignment: Qt.AlignHCenter
 
 			onNewEventFormOpened: function(agendaItem, calendarSelector) {
-				// logger.debug('onNewEventFormOpened')
 				var selectedCalendarId = ""
 				if (plasmoid.configuration.agendaNewEventRememberCalendar) {
 					selectedCalendarId = plasmoid.configuration.agendaNewEventLastCalendarId
@@ -902,7 +891,6 @@ MouseArea {
 	}
 
 	function updateUI() {
-		// logger.debug('updateUI')
 		var now = new Date()
 
 		if (updateUITimer.running) {

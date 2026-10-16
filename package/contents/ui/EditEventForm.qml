@@ -31,14 +31,10 @@ Loader {
 				return typeof s === "undefined" || s === null || s === ""
 			}
 			function hasChanged(a, b) {
-				// logger.log('hasChanged', a != b)
-				// logger.log('\t', JSON.stringify(a), typeof a, isEmpty(a))
-				// logger.log('\t', JSON.stringify(b), typeof b, isEmpty(b))
 				return a != b && !(isEmpty(a) && isEmpty(b))
 			}
 			function populateIfChanged(args, propKey, newValue) {
 				var changed = hasChanged(event[propKey], newValue)
-				// logger.log(propKey, changed, event[propKey], newValue)
 				if (changed) {
 					args[propKey] = newValue
 				}
@@ -48,8 +44,6 @@ Loader {
 				var changedDateTime = hasChanged(event[propKey]['dateTime'], newValue['dateTime'])
 				var changedTimeZone = hasChanged(event[propKey]['timeZone'], newValue['timeZone'])
 				var changed = changedDate || changedDateTime || changedTimeZone
-				// logger.logJSON('populateIfDateChanged', propKey, changed, event[propKey], newValue)
-				// logger.log('\t', changedDate, changedDateTime, changedTimeZone)
 				if (changed) {
 					args[propKey] = newValue
 				}
@@ -64,7 +58,7 @@ Loader {
 				return args
 			}
 			function submit() {
-				logger.log('editEventItem.submit()')
+				logger.debug('editEventItem.submit()')
 				logger.debugJSON('event', event)
 
 				if (event.calendarId != calendarSelector.selectedCalendarId) {
@@ -82,11 +76,6 @@ Loader {
 			}
 
 			//---- Testing
-			// Connections {
-			// 	target: durationSelector
-			// 	onStartDateTimeChanged: logger.logJSON('onStartDateTimeChanged', editEventItem.getChanges())
-			// 	onEndDateTimeChanged: logger.logJSON('onEndDateTimeChanged', editEventItem.getChanges())
-			// }
 
 			//----
 			GridLayout {
@@ -233,7 +222,6 @@ Loader {
 					Keys.onEnterPressed: _onEnterPressed(event) // ?
 					Keys.onReturnPressed: _onEnterPressed(event) // What's triggered on a US Keyboard
 					function _onEnterPressed(event) {
-						// console.log('onEnterPressed', event.key, event.modifiers)
 						if ((event.modifiers & Qt.ShiftModifier) || (event.modifiers & Qt.ControlModifier)) {
 							editEventItem.submit()
 						} else {
@@ -262,7 +250,6 @@ Loader {
 					}
 				}
 			}
-
 		}
 	}
 }

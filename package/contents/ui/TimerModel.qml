@@ -75,7 +75,6 @@ QtObject {
 	function deltaDuration(multiplier) {
 		var delta = getIncrementFor(duration, multiplier)
 		var newDuration = Math.max(0, timerModel.duration + (delta * multiplier))
-		// console.log(timerModel.duration, multiplier, delta, newDuration)
 		setDuration(newDuration)
 	}
 	function increaseDuration() {
@@ -90,7 +89,6 @@ QtObject {
 	}
 
 	onSecondsLeftChanged: {
-		// console.log('onSecondsLeftChanged', secondsLeft)
 		if (secondsLeft <= 0) {
 			timerFinished()
 		}
@@ -113,7 +111,6 @@ QtObject {
 		var now = new Date()
 		var deltaMillis = finished.valueOf() - now.valueOf()
 		timerModel.secondsLeft = Math.max(0, Math.ceil(deltaMillis / 1000))
-		// console.log('tick', timerModel.secondsLeft, timerModel.duration)
 	}
 
 	function repeatTimer() {
@@ -124,7 +121,6 @@ QtObject {
 	function runTimer() {
 		var now = new Date()
 		timerModel.finished = new Date(now.valueOf() + timerModel.secondsLeft * 1000)
-		// console.log('finished', now.valueOf(), timerModel.secondsLeft * 1000, timerModel.finished)
 		timerTicker.restart()
 	}
 
@@ -147,7 +143,6 @@ QtObject {
 			appIcon: "chronometer",
 			summary: i18n("Timer finished"),
 			body: i18n("%1 has passed", formatTimer(timerModel.duration)),
-			// expireTimeout: 2000,
 		}
 		if (timerModel.timerSfxEnabled) {
 			args.soundFile = timerModel.timerSfxFilepath

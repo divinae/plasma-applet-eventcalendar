@@ -27,10 +27,8 @@ Item {
 		}
 
 		onWidthChanged: {
-			// console.log('timerButtonView.width', width)
 			bottomRow.updatePresetVisibilities()
 		}
-
 
 		RowLayout {
 			id: topRow
@@ -86,7 +84,6 @@ Item {
 					acceptedButtons: Qt.RightButton
 					anchors.fill: parent
 
-					// onClicked: contextMenu.show(mouse.x, mouse.y)
 					onClicked: contextMenu.showBelow(timerLabel)
 				}
 
@@ -153,14 +150,11 @@ Item {
 					}
 				}
 			}
-			
 		}
 
 		RowLayout {
 			id: bottomRow
 			spacing: Math.floor(2 * Screen.devicePixelRatio)
-
-			// onWidthChanged: console.log('row.width', width)
 
 			Repeater {
 				id: defaultTimerRepeater
@@ -187,7 +181,6 @@ Item {
 						item.visible = false
 					}
 					w += itemWidth
-					// console.log('updatePresetVisibilities', i, item.Layout.minimumWidth, item.visible, itemWidth, availableWidth)
 				}
 			}
 		}
@@ -205,7 +198,6 @@ Item {
 		}
 	}
 
-
 	Component.onCompleted: {
 		timerView.forceActiveFocus()
 	}
@@ -216,7 +208,6 @@ Item {
 			timerLabel.text = timerModel.formatTimer(timerModel.secondsLeft)
 		}
 	}
-
 
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/plasmacomponents/qmenu.cpp
 	// Example: https://github.com/KDE/plasma-desktop/blob/master/applets/taskmanager/package/contents/ui/ContextMenu.qml
@@ -275,7 +266,6 @@ Item {
 				menuItem.clicked.connect(timerModel.setDurationAndStart.bind(timerModel, presetItem.seconds))
 				contextMenu.addMenuItem(menuItem)
 			}
-
 		}
 
 		function show(x, y) {

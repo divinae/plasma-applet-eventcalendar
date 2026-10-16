@@ -178,12 +178,10 @@ Item {
 			}
 		}
 
-
 		GridLayout {
 			id: timezoneLayout
 			Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
 			Layout.maximumWidth: preferredTextWidth
-			// Layout.maximumHeight: childrenRect.height // Causes binding loop
 			columns: 2
 			visible: timezoneRepeater.count > 0
 

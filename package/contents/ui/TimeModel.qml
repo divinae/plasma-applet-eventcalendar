@@ -31,7 +31,6 @@ Item {
 		return /s/.test(formats.replace(/'[^']*'/g, ''))
 	}
 
-	signal secondChanged()
 	signal minuteChanged()
 	signal dateChanged()
 	signal loaded()
@@ -57,7 +56,6 @@ Item {
 			ready = true
 			loaded()
 		}
-		secondChanged()
 		var currentMinute = currentTime.getMinutes()
 		if (currentMinute != lastMinute) {
 			minuteChanged()

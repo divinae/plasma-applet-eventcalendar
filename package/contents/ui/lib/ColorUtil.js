@@ -13,11 +13,6 @@ function _safeColor(c, fallback) {
 	return Qt.rgba(0, 0, 0, 1)
 }
 
-function brightness(c) {
-	c = _safeColor(c)
-	return (c.r*299 + c.g*587 + c.b*114) / 1000
-}
-
 // https://www.w3.org/TR/AERT/#color-contrast
 function contrast(c1, c2) {
 	c1 = _safeColor(c1, c2)

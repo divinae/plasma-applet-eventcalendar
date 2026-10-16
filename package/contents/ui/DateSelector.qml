@@ -49,7 +49,6 @@ PlasmaComponents3.TextField {
 
 	onTextEdited: {
 		var dt = Date.fromLocaleDateString(Qt.locale(), text, dateSelector.dateFormat)
-		// console.log('onTextEdited', text, dt)
 		if (!isNaN(dt)) {
 			setDateTime(dt)
 		}
@@ -84,7 +83,6 @@ PlasmaComponents3.TextField {
 			headingFontLevel: 3
 
 			onDateClicked: {
-				// console.log('onDateSelected', currentDate, '(popup.visible: ', popup.visible, ')')
 				dateSelector.dateSelected(clickedDate)
 				popup.close()
 			}
