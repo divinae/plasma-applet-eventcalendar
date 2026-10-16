@@ -5,7 +5,9 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 
 import "MeetingLink.js" as MeetingLink
+import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
+import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
 
 // Week view like Google Calendar: hour grid with event blocks, all-day row on top.
@@ -136,6 +138,9 @@ Item {
 
 	//--- Data
 	function rebuild() {
+		// The blocks are recreated: a drag in progress ends, a dropped one shows its saved times.
+		dragState = null
+		dropTimeout.stop()
 		var items = eventModel && eventModel.eventsData ? eventModel.eventsData.items : []
 		var result = []
 		for (var i = 0; i < dayCount; i++) {
@@ -314,6 +319,157 @@ Item {
 
 	function openEvent(eventItem) {
 		popup.activateEvent(eventItem)
+	}
+
+	//--- Drag & drop: move a timed block (to another time or day) or resize it from its bottom edge.
+	// { eventItem, mode: 'move' | 'resize', block, pressY, start, end, dayIndex, pending }.
+	// pending: dropped and being saved; the preview stays where it was dropped until the views
+	// rebuild with the saved event, or an error puts the block back.
+	property var dragState: null
+	property point dragPointer // Last pointer position, in flickable (viewport) coordinates
+	function timeAtY(y, dayStart) {
+		return WeekDrag.timeAtY(y, dayStart, firstHour, hourHeight)
+	}
+	function dayIndexAtX(x) {
+		return WeekDrag.dayIndexAtX(x, gutterWidth, columnWidth, dayCount)
+	}
+	// Pieces of events continuing into another day and all-day events can't be dragged (yet).
+	function canDrag(block) {
+		return !!block.eventItem.canEdit && !block.continued && !block.continues && !(dragState && dragState.pending)
+	}
+	function dragBegin(block, mode, viewportPoint) {
+		var item = block.eventItem
+		dragState = {
+			eventItem: item,
+			mode: mode,
+			block: block,
+			pressY: viewportPoint.y + flickable.contentY,
+			start: item.startDateTime,
+			end: item.endDateTime,
+			dayIndex: Math.round((block.dayStart - weekStart.getTime()) / 86400000),
+			pending: false,
+		}
+		dragMove(viewportPoint)
+	}
+	function dragMove(viewportPoint) {
+		if (!dragState || dragState.pending) {
+			return
+		}
+		dragPointer = viewportPoint
+		var d = dragState
+		var block = d.block
+		var dy = viewportPoint.y + flickable.contentY - d.pressY
+		var item = d.eventItem
+		var times
+		if (d.mode === 'move') {
+			d.dayIndex = dayIndexAtX(viewportPoint.x)
+			var top = Math.max(0, Math.min(flickable.contentHeight - hourHeight / 4, hourY(block.start, block.dayStart) + dy))
+			times = WeekDrag.moved(item.startDateTime, item.endDateTime, timeAtY(top, dayDate(d.dayIndex).getTime()))
+		} else {
+			var bottom = Math.max(0, Math.min(flickable.contentHeight, hourY(block.end, block.dayStart) + dy))
+			times = WeekDrag.resized(item.startDateTime, item.endDateTime, timeAtY(bottom, block.dayStart))
+		}
+		d.start = times.start
+		d.end = times.end
+		dragState = Object.assign({}, d) // A new object, so the preview updates
+	}
+	function dragDrop() {
+		var d = dragState
+		if (!d || d.pending) {
+			return
+		}
+		if (d.start.getTime() === d.eventItem.startDateTime.getTime() && d.end.getTime() === d.eventItem.endDateTime.getTime()) {
+			dragState = null
+			return
+		}
+		d.pending = true
+		dragState = Object.assign({}, d)
+		if (d.eventItem.recurringEventId) {
+			dropScopeMenu.chosen = false
+			dropScopeMenu.popup(dragPreview, 0, dragPreview.height)
+		} else {
+			saveDrop(false)
+		}
+	}
+	function dragCancel() {
+		dragState = null
+	}
+	function saveDrop(wholeSeries) {
+		var item = dragState.eventItem
+		var start = { dateTime: Shared.dateTimeString(dragState.start) }
+		var end = { dateTime: Shared.dateTimeString(dragState.end) }
+		dropTimeout.restart()
+		if (!wholeSeries) {
+			eventModel.setEventProperties(item.calendarId, item.id, { start: start, end: end })
+			return
+		}
+		var occurrenceStart = new Date(item.startDateTime)
+		var calendar = eventModel.getCalendarList().filter(function(c) { return c.id === item.calendarId })[0]
+		var timeZone = (calendar && calendar.timeZone) || 'UTC'
+		eventModel.updateEventFromServer(item.calendarId, item.recurringEventId, function(series) {
+			return SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
+		}, function() {
+			logic.update() // The occurrences come from a refetch.
+		})
+	}
+	// No answer at all (eg: signed out): put the block back.
+	Timer {
+		id: dropTimeout
+		interval: 20000
+		onTriggered: weekView.dragState = null
+	}
+	Connections {
+		target: weekView.eventModel
+		function onError() {
+			if (weekView.dragState && weekView.dragState.pending) {
+				weekView.dragState = null
+			}
+		}
+	}
+	PlasmaComponents3.Menu {
+		id: dropScopeMenu
+		property bool chosen: false
+		PlasmaComponents3.MenuItem {
+			text: i18n("This event")
+			onTriggered: {
+				dropScopeMenu.chosen = true
+				weekView.saveDrop(false)
+			}
+		}
+		PlasmaComponents3.MenuItem {
+			text: i18n("All events in the series")
+			onTriggered: {
+				dropScopeMenu.chosen = true
+				weekView.saveDrop(true)
+			}
+		}
+		// Closed without a choice: nothing changes. (closed comes before triggered.)
+		onClosed: Qt.callLater(function() {
+			if (!dropScopeMenu.chosen) {
+				weekView.dragCancel()
+			}
+		})
+	}
+	// Dragging near the top / bottom edge scrolls the grid.
+	Timer {
+		interval: 30
+		repeat: true
+		running: !!weekView.dragState && !weekView.dragState.pending
+		onTriggered: {
+			var edge = Math.min(weekView.hourHeight, flickable.height / 4)
+			var step = 0
+			if (weekView.dragPointer.y < edge) {
+				step = -Math.ceil((edge - weekView.dragPointer.y) / 4)
+			} else if (weekView.dragPointer.y > flickable.height - edge) {
+				step = Math.ceil((weekView.dragPointer.y - flickable.height + edge) / 4)
+			}
+			var maxY = Math.max(0, flickable.contentHeight - flickable.height)
+			var y = Math.max(0, Math.min(maxY, flickable.contentY + step))
+			if (y !== flickable.contentY) {
+				flickable.contentY = y
+				weekView.dragMove(weekView.dragPointer)
+			}
+		}
 	}
 
 	//--- UI
@@ -664,6 +820,49 @@ Item {
 						}
 					}
 
+					// Where a dragged block would go, with its new times.
+					Rectangle {
+						id: dragPreview
+						readonly property var info: weekView.dragState
+						readonly property real dayStart: info ? weekView.dayDate(info.dayIndex).getTime() : 0
+						readonly property color barColor: info ? appletConfig.eventColor(info.eventItem.backgroundColor) : "transparent"
+						readonly property real topY: info ? Math.max(0, weekView.hourY(info.start.getTime(), dayStart)) : 0
+						readonly property real bottomY: info ? Math.min(parent.height, weekView.hourY(info.end.getTime(), dayStart)) : 0
+						z: 3
+						visible: !!info
+						x: info ? weekView.gutterWidth + info.dayIndex * weekView.columnWidth + 2 : 0
+						y: topY + 1
+						width: weekView.columnWidth - 4
+						height: Math.max(weekView.lineHeight + 2, bottomY - topY - 2)
+						radius: Math.min(10, height / 2)
+						color: ColorUtil.setAlpha(barColor, info && info.pending ? 1 : 0.9)
+						border.width: 1
+						border.color: Kirigami.Theme.highlightColor
+						Column {
+							anchors.fill: parent
+							anchors.margins: 2
+							anchors.leftMargin: 6
+							clip: true
+							// Too short for two lines: the new times come first, they're what the drag is about.
+							readonly property bool oneLine: dragPreview.height < weekView.lineHeight * 2 + 4
+							readonly property string timeText: dragPreview.info ? Shared.formatTimeRange(dragPreview.info.start, dragPreview.info.end, appletConfig.timeFormat) : ""
+							PlasmaComponents3.Label {
+								width: parent.width
+								text: dragPreview.info ? (parent.oneLine ? parent.timeText + ' · ' : '') + dragPreview.info.eventItem.summary : ""
+								color: Shared.contrastTextColor(dragPreview.barColor)
+								elide: Text.ElideRight
+							}
+							PlasmaComponents3.Label {
+								width: parent.width
+								visible: !parent.oneLine
+								text: parent.timeText
+								color: Shared.contrastTextColor(dragPreview.barColor)
+								font: Kirigami.Theme.smallFont
+								elide: Text.ElideRight
+							}
+						}
+					}
+
 					// Day columns
 					Repeater {
 						model: weekView.days
@@ -761,7 +960,10 @@ Item {
 									readonly property real rangeEnd: block.dayStart + weekView.lastHour * 3600000
 									readonly property real visibleStart: Math.max(block.start, rangeStart)
 									readonly property real visibleEnd: Math.min(Math.max(block.end, block.start + 15 * 60000), rangeEnd)
-									opacity: eventItem.endDateTime <= weekView.currentTime ? appletConfig.pastOpacity : 1
+									// Being dragged: faded where it was; dropped: the preview stands in for it.
+									readonly property bool dragSource: !!weekView.dragState && weekView.dragState.eventItem === eventItem
+									opacity: dragSource ? (weekView.dragState.pending ? 0 : 0.35)
+										: eventItem.endDateTime <= weekView.currentTime ? appletConfig.pastOpacity : 1
 									visible: visibleEnd > visibleStart
 									x: 2 + block.column * slotWidth
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
@@ -834,12 +1036,48 @@ Item {
 											elide: Text.ElideRight
 										}
 									}
+									// Click opens the event, right click its menu, press and drag moves it.
 									MouseArea {
+										id: blockMouse
 										anchors.fill: parent
-										cursorShape: Qt.PointingHandCursor
+										cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
 										acceptedButtons: Qt.LeftButton | Qt.RightButton
+										readonly property bool draggable: weekView.canDrag(eventBlock.block)
+										preventStealing: draggable // The grid doesn't scroll while dragging
+										property point pressPoint
+										property bool dragged: false
+										onPressed: function(mouse) {
+											dragged = false
+											pressPoint = Qt.point(mouse.x, mouse.y)
+										}
+										onPositionChanged: function(mouse) {
+											if (!draggable || !(pressedButtons & Qt.LeftButton)) {
+												return
+											}
+											var viewportPoint = mapToItem(flickable, mouse.x, mouse.y)
+											if (dragged) {
+												weekView.dragMove(viewportPoint)
+											} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
+												dragged = true
+												weekView.dragBegin(eventBlock.block, 'move', mapToItem(flickable, pressPoint.x, pressPoint.y))
+												weekView.dragMove(viewportPoint)
+											}
+										}
+										onReleased: {
+											if (dragged) {
+												weekView.dragDrop()
+											}
+										}
+										onCanceled: {
+											if (dragged) {
+												dragged = false
+												weekView.dragCancel()
+											}
+										}
 										onClicked: function(mouse) {
-											if (mouse.button === Qt.RightButton) {
+											if (dragged) { // The end of a drag, not a click
+												dragged = false
+											} else if (mouse.button === Qt.RightButton) {
 												popup.showEventMenu(eventBlock.eventItem, eventBlock, mouse.x, mouse.y)
 											} else {
 												weekView.openEvent(eventBlock.eventItem)
@@ -865,6 +1103,25 @@ Item {
 										verticalPadding: compact ? 0 : Kirigami.Units.smallSpacing / 2
 										meetingLink: eventBlock.meetingLink
 										textColor: Shared.contrastTextColor(eventBlock.barColor)
+									}
+									// Bottom edge: drag to change the end time.
+									MouseArea {
+										z: 2
+										visible: blockMouse.draggable && !eventBlock.cutBottom && eventBlock.height >= weekView.lineHeight * 1.5
+										anchors.left: parent.left
+										anchors.right: parent.right
+										anchors.bottom: parent.bottom
+										height: Math.min(Kirigami.Units.smallSpacing * 2, eventBlock.height / 4)
+										cursorShape: Qt.SizeVerCursor
+										preventStealing: true
+										onPressed: function(mouse) {
+											weekView.dragBegin(eventBlock.block, 'resize', mapToItem(flickable, mouse.x, mouse.y))
+										}
+										onPositionChanged: function(mouse) {
+											weekView.dragMove(mapToItem(flickable, mouse.x, mouse.y))
+										}
+										onReleased: weekView.dragDrop()
+										onCanceled: weekView.dragCancel()
 									}
 								}
 							}

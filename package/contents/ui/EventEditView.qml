@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Recurrence.js" as Recurrence
+import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
 
@@ -240,21 +241,9 @@ Rectangle {
 		}
 		var start = startObj()
 		var end = endObj()
-		var allDay = allDayCheckBox.checked
 		var wasAllDay = !!(item.start && item.start.date)
-		var timeChanged = wasAllDay !== allDay || dateObjChanged(item.start, start) || dateObjChanged(item.end, end)
-		function instant(obj) {
-			if (obj.dateTime) {
-				return new Date(obj.dateTime).getTime()
-			}
-			var d = obj.date.split('-')
-			return new Date(+d[0], +d[1] - 1, +d[2]).getTime()
-		}
-		// Days the occurrence moved, and its new time of day: applied to the series start in local
-		// time, so a daylight saving change between the two dates doesn't shift the hour.
-		var newStart = new Date(instant(start))
-		var dayShift = Math.round((Shared.startOfDay(newStart) - Shared.startOfDay(new Date(item.startDateTime))) / 86400000)
-		var duration = instant(end) - instant(start)
+		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(item.start, start) || dateObjChanged(item.end, end)
+		var occurrenceStart = new Date(item.startDateTime)
 		var rule = repeatRule()
 		var ruleChanged = repeatChanged
 		var timeZone = calendarTimeZone()
@@ -265,18 +254,9 @@ Rectangle {
 				seriesArgs[key] = args[key]
 			}
 			if (timeChanged) {
-				var seriesStart = new Date(instant(series.start))
-				seriesStart.setDate(seriesStart.getDate() + dayShift)
-				seriesStart.setHours(newStart.getHours(), newStart.getMinutes(), 0, 0)
-				var seriesEnd = new Date(seriesStart.getTime() + duration)
-				var zone = (series.start && series.start.timeZone) || timeZone
-				if (allDay) {
-					seriesArgs.start = { date: Shared.localeDateString(seriesStart) }
-					seriesArgs.end = { date: Shared.localeDateString(seriesEnd) }
-				} else {
-					seriesArgs.start = { dateTime: Shared.dateTimeString(seriesStart), timeZone: zone }
-					seriesArgs.end = { dateTime: Shared.dateTimeString(seriesEnd), timeZone: zone }
-				}
+				var times = SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
+				seriesArgs.start = times.start
+				seriesArgs.end = times.end
 			}
 			if (ruleChanged) {
 				seriesArgs.recurrence = Recurrence.withRule(series.recurrence, rule)
