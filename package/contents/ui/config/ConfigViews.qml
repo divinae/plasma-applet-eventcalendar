@@ -61,6 +61,15 @@ ConfigPage {
 		}
 		FormCard.FormCard {
 			FormConfigSpin {
+				label: i18n("Event text size")
+				configKey: 'eventFontScale'
+				suffix: "%"
+				from: 70
+				to: 160
+				stepSize: 10
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
 				label: i18n("Working hours start")
 				configKey: 'weekViewStartHour'
 				suffix: ":00"

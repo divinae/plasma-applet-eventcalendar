@@ -12,7 +12,7 @@ Item {
 	readonly property int topOffset: dayStyle.eventTitlesHeaderHeight
 	readonly property int rowSpacing: 1
 	// Theme fonts are set in points (pixelSize is -1), so size from the font itself.
-	readonly property font titleFont: Kirigami.Theme.defaultFont
+	readonly property font titleFont: appletConfig.eventFont
 	FontMetrics {
 		id: titleFontMetrics
 		font: eventTitlesBadge.titleFont

@@ -61,6 +61,21 @@ QtObject {
 		var lightness = 0.42 + (color.hslLightness - 0.5) * 0.15
 		return Qt.hsla(Math.max(0, color.hslHue), color.hslSaturation, lightness, 1)
 	}
+	// Event text in the month, week, day and agenda views: the theme font, scaled by a setting.
+	readonly property real eventFontScale: Math.max(50, Math.min(200, plasmoid.configuration.eventFontScale || 100)) / 100
+	readonly property font eventFont: scaledFont(Kirigami.Theme.defaultFont, eventFontScale)
+	// The theme's small font; some setups report one that isn't smaller than the default.
+	readonly property font eventSmallFont: fontPoints(Kirigami.Theme.smallFont) < fontPoints(Kirigami.Theme.defaultFont)
+		? scaledFont(Kirigami.Theme.smallFont, eventFontScale)
+		: scaledFont(Kirigami.Theme.defaultFont, eventFontScale * 0.85)
+	// Always in points (views set font.pointSize from it); a theme font set in pixels has
+	// pointSize -1, so it's converted (96 dpi: 1 px = 0.75 pt).
+	function fontPoints(base) {
+		return base.pointSize > 0 ? base.pointSize : base.pixelSize * 0.75
+	}
+	function scaledFont(base, scale) {
+		return Qt.font({ family: base.family, pointSize: Math.max(1, fontPoints(base) * scale) })
+	}
 	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
 	// Invitations not answered yes (Shared.myResponse), like Google Calendar: an outline in the event
 	// color on the background instead of a filled tile; maybe adds stripes, declined is struck through.

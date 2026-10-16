@@ -134,8 +134,8 @@ LinkRect {
 						return model.summary
 					}
 					color: agendaEventItem.tileTextColor
-					font.pointSize: -1
-					font.pixelSize: appletConfig.agendaFontSize
+					font.family: appletConfig.eventFont.family
+					font.pointSize: appletConfig.eventFont.pointSize
 					font.weight: eventItemInProgress ? Font.Bold : Font.Normal
 					font.strikeout: agendaEventItem.response === 'declined'
 					visible: !editEventForm.visible
@@ -156,7 +156,7 @@ LinkRect {
 						onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 						color: agendaEventItem.tileTextColor
 						opacity: 0.85
-						font: Kirigami.Theme.smallFont
+						font: appletConfig.eventSmallFont
 						Layout.fillWidth: true
 						Layout.maximumWidth: implicitWidth
 						elide: Text.ElideRight
@@ -166,6 +166,7 @@ LinkRect {
 						Layout.alignment: Qt.AlignVCenter
 						eventItem: model
 						color: agendaEventItem.tileTextColor
+						iconSize: Math.min(Kirigami.Units.iconSizes.small * appletConfig.eventFontScale, Math.round(eventDateTime.implicitHeight))
 						opacity: 0.85
 						showLocation: false
 						showMeeting: !(plasmoid.configuration.agendaShowEventHangoutLink && !agendaEventItem.ended)
@@ -191,8 +192,8 @@ LinkRect {
 			text: Shared.renderText(model.description)
 			color: agendaEventItem.tileTextColor
 			opacity: 0.8
-			font.pointSize: -1
-			font.pixelSize: appletConfig.agendaFontSize
+			font.family: appletConfig.eventFont.family
+			font.pointSize: appletConfig.eventFont.pointSize
 			Layout.fillWidth: true
 			wrapMode: Text.Wrap
 			maximumLineCount: plasmoid.configuration.agendaMaxDescriptionLines

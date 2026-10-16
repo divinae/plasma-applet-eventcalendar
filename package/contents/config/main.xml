@@ -70,6 +70,10 @@
 		<entry name="showViewTabs" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="eventFontScale" type="int">
+			<!-- Event text size in the views, percent of the theme font. -->
+			<default>100</default>
+		</entry>
 		<entry name="weekViewStartHour" type="int">
 			<default>7</default>
 		</entry>

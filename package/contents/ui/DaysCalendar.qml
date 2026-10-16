@@ -92,10 +92,14 @@ Item {
 
 	// Event title rows in a day cell, same sizes as DayDelegate / EventTitlesBadge.
 	FontMetrics {
-		id: eventTitleFontMetrics
+		id: dayNumberFontMetrics
 		font: Kirigami.Theme.defaultFont
 	}
-	readonly property int eventTitlesTopOffset: Math.ceil(eventTitleFontMetrics.height) + 2 // DayDelegate.eventTitlesHeaderHeight
+	FontMetrics {
+		id: eventTitleFontMetrics
+		font: appletConfig.eventFont
+	}
+	readonly property int eventTitlesTopOffset: Math.ceil(dayNumberFontMetrics.height) + 2 // DayDelegate.eventTitlesHeaderHeight
 	readonly property int eventTitleRowHeight: Math.ceil(eventTitleFontMetrics.height) + 4
 	readonly property int eventTitleRowSpacing: 1
 	// Event rows (titles, bars, "+N") that fit in a day cell.
@@ -527,8 +531,8 @@ Item {
 				text: spanBar.eventItem ? spanBar.eventItem.summary : ""
 				color: appletConfig.eventTextColor(spanBar.barColor, spanBar.response)
 				font.strikeout: spanBar.response === 'declined'
-				font.family: Kirigami.Theme.defaultFont.family
-				font.pointSize: Kirigami.Theme.defaultFont.pointSize
+				font.family: appletConfig.eventFont.family
+				font.pointSize: appletConfig.eventFont.pointSize
 				// Event in progress
 				font.bold: !!spanBar.eventItem && !(spanBar.eventItem.start && spanBar.eventItem.start.date)
 					&& typeof timeModel !== "undefined"

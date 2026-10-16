@@ -162,6 +162,8 @@ KCM.SimpleKCM {
 	property var cfg_monthClickOpensDayDefault
 	property var cfg_eventClickAction
 	property var cfg_eventClickActionDefault
+	property var cfg_eventFontScale
+	property var cfg_eventFontScaleDefault
 	property var cfg_weekViewStartHour
 	property var cfg_weekViewStartHourDefault
 	property var cfg_weekViewEndHour

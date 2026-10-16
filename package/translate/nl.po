@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:55+0200\n"
+"POT-Creation-Date: 2026-10-16 14:58+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -866,6 +866,10 @@ msgstr "Pop-uphoogte"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "Week en dag"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event text size"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"

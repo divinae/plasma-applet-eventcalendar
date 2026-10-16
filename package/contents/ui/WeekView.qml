@@ -90,7 +90,11 @@ Item {
 
 	FontMetrics {
 		id: fontMetrics
-		font: Kirigami.Theme.defaultFont
+		font: appletConfig.eventFont // Event text: sets the block line height
+	}
+	FontMetrics {
+		id: eventSmallFontMetrics
+		font: appletConfig.eventSmallFont
 	}
 	FontMetrics {
 		id: smallFontMetrics
@@ -727,6 +731,8 @@ Item {
 							width: parent.width
 							text: eventItem.summary
 							color: Kirigami.Theme.textColor
+							font.family: appletConfig.eventFont.family
+							font.pointSize: appletConfig.eventFont.pointSize
 							font.weight: Font.DemiBold
 							font.strikeout: response === 'declined'
 							elide: Text.ElideRight
@@ -736,7 +742,7 @@ Item {
 							text: spanText
 							color: Kirigami.Theme.textColor
 							opacity: 0.75
-							font: Kirigami.Theme.smallFont
+							font: appletConfig.eventSmallFont
 							elide: Text.ElideRight
 						}
 					}
@@ -893,7 +899,7 @@ Item {
 								visible: !parent.oneLine
 								text: parent.timeText
 								color: Shared.contrastTextColor(dragPreview.barColor)
-								font: Kirigami.Theme.smallFont
+								font: appletConfig.eventSmallFont
 								elide: Text.ElideRight
 							}
 						}
@@ -1055,6 +1061,8 @@ Item {
 												return parts.join(' · ')
 											}
 											color: eventBlock.textColor
+											font.family: appletConfig.eventFont.family
+											font.pointSize: appletConfig.eventFont.pointSize
 											font.strikeout: eventBlock.response === 'declined'
 											// Event in progress
 											font.bold: eventBlock.eventItem.startDateTime <= weekView.currentTime && weekView.currentTime < eventBlock.eventItem.endDateTime
@@ -1085,7 +1093,7 @@ Item {
 												linkColor: eventBlock.textColor
 												onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 												color: eventBlock.textColor
-												font: Kirigami.Theme.smallFont
+												font: appletConfig.eventSmallFont
 												elide: Text.ElideRight
 											}
 											EventIndicators {
@@ -1093,7 +1101,7 @@ Item {
 												maxWidth: parent.width - blockTimeLabel.width - parent.spacing
 												eventItem: eventBlock.eventItem
 												color: eventBlock.textColor
-												iconSize: Math.min(Kirigami.Units.iconSizes.small, Math.round(smallFontMetrics.height))
+												iconSize: Math.round(eventSmallFontMetrics.height)
 												opacity: 0.85
 												// The day view shows the location as text and has a Join button.
 												showLocation: !weekView.singleDay

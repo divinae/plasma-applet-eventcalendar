@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:55+0200\n"
+"POT-Creation-Date: 2026-10-16 14:58+0200\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -767,6 +767,10 @@ msgstr "Altura da janela"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "Semana e dia"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event text size"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
