@@ -195,7 +195,14 @@ Rectangle {
 							anchors.fill: parent
 							hoverEnabled: true
 							cursorShape: Qt.PointingHandCursor
-							onClicked: dayView.eventClicked(eventRow.eventItem)
+							acceptedButtons: Qt.LeftButton | Qt.RightButton
+							onClicked: function(mouse) {
+								if (mouse.button === Qt.RightButton) {
+									popup.showEventMenu(eventRow.eventItem, eventRow, mouse.x, mouse.y)
+								} else {
+									dayView.eventClicked(eventRow.eventItem)
+								}
+							}
 						}
 					}
 				}

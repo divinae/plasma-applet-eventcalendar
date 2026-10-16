@@ -311,6 +311,16 @@ MouseArea {
 	//--- Event details panel
 	property var detailsEvent: null
 	// Click on an event in any view: details in the widget, or the browser (Settings > Events).
+	// Right-click menu for events in every view.
+	EventContextMenu {
+		id: eventContextMenu
+		onShowDetails: function(eventItem) { popup.activateEvent(eventItem) }
+		onEditEvent: function(eventItem) { popup.editEvent(eventItem) }
+	}
+	function showEventMenu(eventItem, item, x, y) {
+		eventContextMenu.openFor(eventItem, item, x, y)
+	}
+
 	function activateEvent(eventItem) {
 		if (!eventItem) {
 			return

@@ -198,41 +198,11 @@ LinkRect {
 
 	onLeftClicked: activateEvent()
 
-	onLoadContextMenu: function(contextMenu) {
-		var menuItem
-		var event = events.get(eventItemIndex)
-
-		menuItem = contextMenu.newMenuItem()
-		menuItem.text = i18n("Edit")
-		menuItem.icon.name = "edit-rename"
-		menuItem.enabled = event.canEdit
-		menuItem.clicked.connect(function() {
-			editEventForm.active = !editEventForm.active
-			agendaScrollView.positionViewAtEvent(agendaItemIndex, eventItemIndex)
-		})
-		contextMenu.addMenuItem(menuItem)
-
-		var deleteMenu = contextMenu.newSubMenu()
-		deleteMenu.title = i18n("Delete Event")
-		deleteMenu.icon.name = "delete"
-		menuItem = deleteMenu.newMenuItem()
-		menuItem.text = i18n("Confirm Deletion")
-		menuItem.icon.name = "delete"
-		menuItem.enabled = event.canEdit
-		menuItem.clicked.connect(function() {
-			logger.debug('eventModel.deleteEvent', event.calendarId, event.id)
-			eventModel.deleteEvent(event.calendarId, event.id)
-		})
-		deleteMenu.enabled = event.canEdit
-		deleteMenu.addMenuItem(menuItem)
-
-		menuItem = contextMenu.newMenuItem()
-		menuItem.text = i18n("Edit in browser")
-		menuItem.icon.name = "internet-web-browser"
-		menuItem.enabled = !!event.htmlLink
-		menuItem.clicked.connect(function() {
-			Shared.openExternalUrl(event.htmlLink)
-		})
-		contextMenu.addMenuItem(menuItem)
+	// Right click: the shared event menu (LinkRect's own menu is skipped once the click is accepted).
+	onClicked: function(mouse) {
+		if (mouse.button === Qt.RightButton) {
+			mouse.accepted = true
+			popup.showEventMenu(events.get(eventItemIndex), agendaEventItem, mouse.x, mouse.y)
+		}
 	}
 }

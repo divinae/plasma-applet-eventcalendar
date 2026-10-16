@@ -564,7 +564,14 @@ Item {
 					MouseArea {
 						anchors.fill: parent
 						cursorShape: Qt.PointingHandCursor
-						onClicked: weekView.openEvent(parent.eventItem)
+						acceptedButtons: Qt.LeftButton | Qt.RightButton
+						onClicked: function(mouse) {
+							if (mouse.button === Qt.RightButton) {
+								popup.showEventMenu(parent.eventItem, parent, mouse.x, mouse.y)
+							} else {
+								weekView.openEvent(parent.eventItem)
+							}
+						}
 					}
 					PlasmaCore.ToolTipArea {
 						anchors.fill: parent
@@ -826,7 +833,14 @@ Item {
 									MouseArea {
 										anchors.fill: parent
 										cursorShape: Qt.PointingHandCursor
-										onClicked: weekView.openEvent(eventBlock.eventItem)
+										acceptedButtons: Qt.LeftButton | Qt.RightButton
+										onClicked: function(mouse) {
+											if (mouse.button === Qt.RightButton) {
+												popup.showEventMenu(eventBlock.eventItem, eventBlock, mouse.x, mouse.y)
+											} else {
+												weekView.openEvent(eventBlock.eventItem)
+											}
+										}
 									}
 									PlasmaCore.ToolTipArea {
 										anchors.fill: parent

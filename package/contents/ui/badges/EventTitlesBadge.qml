@@ -71,7 +71,14 @@ Item {
 				MouseArea {
 					anchors.fill: parent
 					cursorShape: Qt.PointingHandCursor
-					onClicked: popup.activateEvent(eventBar.eventItem)
+					acceptedButtons: Qt.LeftButton | Qt.RightButton
+					onClicked: function(mouse) {
+						if (mouse.button === Qt.RightButton) {
+							popup.showEventMenu(eventBar.eventItem, eventBar, mouse.x, mouse.y)
+						} else {
+							popup.activateEvent(eventBar.eventItem)
+						}
+					}
 				}
 
 				PlasmaCore.ToolTipArea {
