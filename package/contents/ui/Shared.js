@@ -180,3 +180,23 @@ function isEmpty(s) {
 function hasChanged(a, b) {
 	return a != b && !(isEmpty(a) && isEmpty(b))
 }
+
+//--- Location links
+function isUrl(text) {
+	return /^https?:\/\/\S+$/i.test(String(text || '').trim())
+}
+function escapeHtml(text) {
+	return String(text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+// A URL location opens as is, anything else as a Google Maps search.
+function locationUrl(location) {
+	var text = String(location || '').trim()
+	if (isUrl(text)) {
+		return text
+	}
+	return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(text)
+}
+// Location as a link (for a Text with textFormat: Text.StyledText).
+function locationLink(location) {
+	return '<a href="' + escapeHtml(locationUrl(location)) + '">' + escapeHtml(location) + '</a>'
+}

@@ -95,7 +95,11 @@ LinkRect {
 
 				PlasmaComponents3.Label {
 					id: eventDateTime
-					text: model.location ? eventTimestamp + " · " + model.location : eventTimestamp
+					// The location opens in Google Maps.
+					text: model.location ? Shared.escapeHtml(eventTimestamp) + " · " + Shared.locationLink(model.location) : Shared.escapeHtml(eventTimestamp)
+					textFormat: Text.StyledText
+					linkColor: agendaEventItem.tileTextColor
+					onLinkActivated: function(link) { Qt.openUrlExternally(link) }
 					color: agendaEventItem.tileTextColor
 					opacity: 0.85
 					font: Kirigami.Theme.smallFont

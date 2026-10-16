@@ -160,6 +160,7 @@ Rectangle {
 
 						ColumnLayout {
 							id: tileColumn
+							z: 1 // Above the tile's mouse area: location links take their clicks
 							anchors.left: parent.left
 							anchors.right: parent.right
 							anchors.verticalCenter: parent.verticalCenter
@@ -176,13 +177,17 @@ Rectangle {
 							PlasmaComponents3.Label {
 								Layout.fillWidth: true
 								elide: Text.ElideRight
+								// The location opens in Google Maps.
 								text: {
-									var parts = [dayView.timeText(eventRow.eventItem)]
+									var parts = [Shared.escapeHtml(dayView.timeText(eventRow.eventItem))]
 									if (eventRow.eventItem.location) {
-										parts.push(eventRow.eventItem.location)
+										parts.push(Shared.locationLink(eventRow.eventItem.location))
 									}
 									return parts.join(' · ')
 								}
+								textFormat: Text.StyledText
+								linkColor: eventRow.textColor
+								onLinkActivated: function(link) { Qt.openUrlExternally(link) }
 								color: eventRow.textColor
 								opacity: 0.85
 								font: Kirigami.Theme.smallFont

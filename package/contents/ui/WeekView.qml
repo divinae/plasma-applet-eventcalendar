@@ -734,6 +734,7 @@ Item {
 									readonly property var meetingLink: weekView.singleDay && plasmoid.configuration.agendaShowEventHangoutLink && eventItem.endDateTime > weekView.currentTime ? MeetingLink.find(eventItem) : null
 
 									Column {
+										z: 1 // Above the block's mouse area: location links take their clicks
 										anchors.fill: parent
 										anchors.margins: 2
 										anchors.leftMargin: 6
@@ -767,13 +768,16 @@ Item {
 											text: {
 												var format = appletConfig.timeFormat
 												var item = eventBlock.eventItem
-												// Day view has room for the end time and location.
+												// Day view has room for the end time and location (opens in Google Maps).
 												if (weekView.singleDay) {
 													var text = Shared.formatTimeRange(item.startDateTime, item.endDateTime, format)
-													return item.location ? text + ' · ' + item.location : text
+													return item.location ? text + ' · ' + Shared.locationLink(item.location) : text
 												}
 												return Qt.formatTime(item.startDateTime, format)
 											}
+											textFormat: Text.StyledText
+											linkColor: Shared.contrastTextColor(eventBlock.barColor)
+											onLinkActivated: function(link) { Qt.openUrlExternally(link) }
 											color: Shared.contrastTextColor(eventBlock.barColor)
 											font: Kirigami.Theme.smallFont
 											elide: Text.ElideRight

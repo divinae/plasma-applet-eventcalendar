@@ -48,10 +48,6 @@ Rectangle {
 		showAllGuests = false
 	}
 
-	function isUrl(text) {
-		return /^https?:\/\/\S+$/i.test(String(text || '').trim())
-	}
-
 	function attendeeIcon(status) {
 		switch (status) {
 			case 'accepted': return "dialog-ok-apply"
@@ -251,7 +247,7 @@ Rectangle {
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
 						textFormat: Text.StyledText
-						text: details.isUrl(location) ? '<a href="' + location + '">' + location + '</a>' : location
+						text: Shared.locationLink(location) // Google Maps, or the URL itself
 						linkColor: Kirigami.Theme.linkColor
 						onLinkActivated: function(link) { Qt.openUrlExternally(link) }
 					}
