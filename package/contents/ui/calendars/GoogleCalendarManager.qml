@@ -254,6 +254,28 @@ CalendarManager {
 		delete data.reminderMinutes
 		return data
 	}
+	// Merge changed fields into an event body. A field set to undefined is removed: updates are a
+	// full PUT, so a key left in the body keeps its old value (eg: colorId back to the calendar color).
+	function mergeArgs(data, args) {
+		Shared.merge(data, args)
+		for (var key in args) {
+			if (typeof args[key] === 'undefined') {
+				delete data[key]
+			}
+		}
+		return data
+	}
+	// Query string for the optional request params: { sendUpdates: 'all' | 'none', conferenceDataVersion: 1 }
+	function queryString(params) {
+		var parts = []
+		for (var key in (params || {})) {
+			var value = params[key]
+			if (typeof value !== 'undefined' && value !== null && value !== '') {
+				parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(value))
+			}
+		}
+		return parts.length ? '?' + parts.join('&') : ''
+	}
 
 	//--- List Events
 	function fetchGoogleAccountEvents(calendarIdList) {
@@ -695,7 +717,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 
 	// Create an event from full data: { summary, start, end, location, description, recurrence }.
 	// done(): called after it's saved (eg: to refetch the occurrences of a recurring event).
-	function createEventFromData(calendarId, eventData, done) {
+	// params: optional query params, eg: { sendUpdates: 'all', conferenceDataVersion: 1 }.
+	function createEventFromData(calendarId, eventData, done, params) {
 		if (!session.accessToken) {
 			session.transactionError('attempting to "create an event" without an access token set')
 			return
@@ -704,6 +727,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 			var url = 'https://www.googleapis.com/calendar/v3/calendars/'
 			url += encodeURIComponent(unscopedCalendarId(calendarId))
 			url += '/events'
+			url += queryString(params)
 			Requests.postJSON({
 				url: url,
 				headers: {
@@ -760,7 +784,8 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// Update an event from its server copy: buildArgs(serverEvent) returns the changed fields.
 	// Used for recurring series (occurrences are separate events here) and recurrence changes.
 	// The occurrences change on the server, so done() should refetch.
-	function updateEventFromServer(calendarId, eventId, buildArgs, done) {
+	// options: optional { params } with query params for the PUT (see createEventFromData).
+	function updateEventFromServer(calendarId, eventId, buildArgs, done, options) {
 		if (!session.accessToken) {
 			session.transactionError('attempting to "update an event" without an access token set')
 			return
@@ -771,13 +796,13 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					updateGoogleCalendarEvent_err(err, serverEvent, xhr)
 					return
 				}
-				var data = cloneRawEvent(serverEvent)
-				Shared.merge(data, buildArgs(serverEvent))
+				var data = mergeArgs(cloneRawEvent(serverEvent), buildArgs(serverEvent))
 				updateGCalEvent({
 					accessToken: session.accessToken,
 					calendarId: unscopedCalendarId(calendarId),
 					eventId: eventId,
 					data: data,
+					params: options && options.params,
 				}, function(err2, data2, xhr2) {
 					if (err2) {
 						updateGoogleCalendarEvent_err(err2, data2, xhr2)
@@ -799,12 +824,13 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		setEventProperties(calendarId, eventId, args)
 	}
 
-	function setEventProperties(calendarId, eventId, args) {
+	// options: optional { params } with query params for the PUT (see createEventFromData).
+	function setEventProperties(calendarId, eventId, args, options) {
 		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
-		updateGoogleCalendarEvent(calendarId, eventId, args)
+		updateGoogleCalendarEvent(calendarId, eventId, args, options)
 	}
 
-	function updateGoogleCalendarEvent(calendarId, eventId, args) {
+	function updateGoogleCalendarEvent(calendarId, eventId, args, options) {
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {
@@ -812,11 +838,11 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 				return
 			}
 
-			var func = updateGoogleCalendarEvent_run.bind(this, calendarId, eventId, event, args, function(err, data, xhr) {
+			var func = updateGoogleCalendarEvent_run.bind(this, calendarId, eventId, event, args, options, function(err, data, xhr) {
 				if (err) {
 					updateGoogleCalendarEvent_err(err, data, xhr)
 				} else {
-					updateGoogleCalendarEvent_done(calendarId, eventId, event, data)
+					updateGoogleCalendarEvent_done(calendarId, eventId, event, data, args)
 				}
 			})
 			withAccessToken(func, function(err, isNetworkError) {
@@ -826,12 +852,11 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 			session.transactionError('attempting to "set an event property" without an access token set')
 		}
 	}
-	function updateGoogleCalendarEvent_run(calendarId, eventId, event, args, callback) {
+	function updateGoogleCalendarEvent_run(calendarId, eventId, event, args, options, callback) {
 		logger.debugJSON('updateGoogleCalendarEvent_run', calendarId, eventId, event, args)
 
 		// Merge assigned values into a cloned object
-		var data = cloneRawEvent(event)
-		Shared.merge(data, args)
+		var data = mergeArgs(cloneRawEvent(event), args)
 		logger.debugJSON('updateGoogleCalendarEvent', 'sent', data)
 
 		updateGCalEvent({
@@ -839,11 +864,22 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 			calendarId: unscopedCalendarId(calendarId),
 			eventId: eventId,
 			data: data,
+			params: options && options.params,
 		}, callback)
 	}
-	function updateGoogleCalendarEvent_done(calendarId, eventId, event, data) {
+	function updateGoogleCalendarEvent_done(calendarId, eventId, event, data, args) {
 		logger.debugJSON('updateGoogleCalendarEvent_done', calendarId, data)
 
+		// Fields removed by the update (eg: colorId, a removed Meet) are missing from the response:
+		// drop them from the event too.
+		for (var key in (args || {})) {
+			if (!(key in data)) {
+				delete event[key]
+				if (key === 'conferenceData') {
+					delete event.hangoutLink
+				}
+			}
+		}
 		// Merge serialized values
 		Shared.merge(event, data)
 
@@ -862,6 +898,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		url += encodeURIComponent(args.calendarId)
 		url += '/events/'
 		url += encodeURIComponent(args.eventId)
+		url += queryString(args.params)
 		Requests.postJSON({
 			method: 'PUT',
 			url: url,
