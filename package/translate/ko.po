@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:43+0200\n"
+"POT-Creation-Date: 2026-10-16 14:45+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1288,7 +1288,7 @@ msgctxt "event organizer"
 msgid "organizer"
 msgstr "주최자"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgctxt "the current user in a guest list"
 msgid "you"
 msgstr "나"
@@ -1303,8 +1303,89 @@ msgid_plural "Show all %1"
 msgstr[0] "모두 표시(%1)"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Lavender"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Sage"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Grape"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Flamingo"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Banana"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Tangerine"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Peacock"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Graphite"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Blueberry"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Basil"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Calendar event color"
+msgid "Tomato"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Enter an email address, like name@example.com"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "이벤트 편집"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Send invitation emails to the guests?"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Send update emails to the guests?"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Send invitations"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "send update emails to guests"
+msgid "Send"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "don't send emails to guests"
+msgid "Don't send"
+msgstr ""
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
@@ -1313,6 +1394,10 @@ msgstr "변경 대상:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "제목"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar color"
+msgstr ""
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1403,6 +1488,52 @@ msgctxt "Repeat ends after N"
 msgid "time"
 msgid_plural "times"
 msgstr[0] "회"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Google Meet video conferencing"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Video conferencing will be removed when you save"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "A Google Meet link will be created when you save"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Video conferencing"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove video conferencing"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Guests"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Only the organizer can change the guest list"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add guests by email"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "add a guest"
+msgid "Add"
+msgstr ""
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "guest suggestion: %1 = name, %2 = email"
+msgid "%1 <%2>"
+msgstr ""
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
@@ -1636,10 +1767,6 @@ msgstr "지금 다시 시도"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "닫기"
-
-#: ../contents/ui/PopupView.qml
-msgid "Undo"
-msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
