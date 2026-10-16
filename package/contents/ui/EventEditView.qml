@@ -27,27 +27,90 @@ Rectangle {
 	property string originalRule: "" // The series' RRULE line
 	property string initialRepeatKey: "none"
 	property string initialRepeatRule: ""
+	// none, a preset key, custom (edited below the combo) or original (a rule the editor can't
+	// show, kept as it is apart from its end).
 	property string repeatKey: "none"
+	property string customFreq: "WEEKLY"
+	property int customInterval: 1
+	property var customDays: [] // BYDAY codes, for WEEKLY
+	property string endType: "never" // never, until, count
+	property var endDate: null // Last day, inclusive
+	property int endCount: 10
+	property string lastStartDay: ""
 	readonly property bool supportsRecurrence: !!calendarSelector.selectedCalendarId
 		&& eventModel.supportsRecurrence(calendarSelector.selectedCalendarId)
 	readonly property bool canEditRepeat: supportsRecurrence && !seriesLoading && (!isOccurrence || editSeries)
 
-	function repeatRule() {
-		if (repeatKey === 'custom') {
-			return originalRule
+	// The rule for the repeat options, for an event starting on `start`.
+	function repeatRuleAt(start) {
+		var allDay = allDayCheckBox.checked
+		var rule
+		if (repeatKey === 'original') {
+			rule = originalRule
+		} else if (repeatKey === 'custom') {
+			rule = Recurrence.buildRule({
+				freq: customFreq,
+				interval: customInterval,
+				byDay: customDays,
+				byMonthDay: customFreq === 'MONTHLY' ? start.getDate() : 0,
+			}, allDay)
+		} else {
+			rule = Recurrence.presetRule(repeatKey, start)
 		}
-		return Recurrence.presetRule(repeatKey, durationSelector.startDateTime)
+		return Recurrence.withEnd(rule, { type: endType, date: endDate, count: endCount }, allDay)
+	}
+	function repeatRule() {
+		return repeatRuleAt(durationSelector.startDateTime)
+	}
+	function setCustom(custom) {
+		customFreq = custom.freq
+		customInterval = custom.interval
+		customDays = custom.byDay
 	}
 	function setInitialRepeat(rule, start) {
 		originalRule = rule
-		var key = Recurrence.matchPreset(rule, start) || 'custom'
+		var key = Recurrence.matchPreset(rule, start)
+		if (!key) {
+			key = Recurrence.parseRule(rule).supported ? 'custom' : 'original'
+		}
+		setCustom(Recurrence.customOf(rule, start))
+		var end = Recurrence.endOf(rule)
+		endType = end.type
+		if (end.date) {
+			endDate = end.date
+		}
+		if (end.count) {
+			endCount = end.count
+		}
 		initialRepeatKey = key
-		// The rule a preset would have at the original date: moving the event to another weekday
-		// (weekly) or day (monthly) changes it, and the series' rule follows.
-		initialRepeatRule = key === 'custom' ? rule : Recurrence.presetRule(key, start)
 		repeatKey = key
+		// The rule as the options give it at the original date: moving the event to another weekday
+		// (weekly) or day (monthly) changes it, and the series' rule follows, keeping its end.
+		initialRepeatRule = repeatRuleAt(start)
 	}
-	readonly property bool repeatChanged: repeatKey !== initialRepeatKey || repeatRule() !== initialRepeatRule
+	readonly property bool repeatChanged: repeatRule() !== initialRepeatRule
+	// A custom weekly repeat on the event's own weekday moves with the event, like the weekly preset.
+	function followStartDay() {
+		var code = Recurrence.dayCodes[durationSelector.startDateTime.getDay()]
+		if (customDays.length === 1 && customDays[0] === lastStartDay) {
+			customDays = [code]
+		}
+		lastStartDay = code
+	}
+	function toggleCustomDay(code) {
+		var days = customDays.slice()
+		var i = days.indexOf(code)
+		if (i < 0) {
+			days.push(code)
+		} else if (days.length > 1) { // At least one day
+			days.splice(i, 1)
+		}
+		customDays = days
+	}
+	Connections {
+		target: durationSelector
+		function onStartDateTimeChanged() { form.followStartDay() }
+	}
 	function calendarTimeZone() {
 		var calendar = calendarSelector.selectedCalendar
 		if (calendar && calendar.timeZone) {
@@ -387,9 +450,10 @@ Rectangle {
 								{ key: 'monthly', text: i18nc("%1 = day of the month", "Monthly on day %1", start.getDate()) },
 								{ key: 'yearly', text: i18nc("%1 = date, eg: 16 October", "Yearly on %1", Qt.formatDate(start, "d MMMM")) },
 							]
-							if (form.initialRepeatKey === 'custom') {
-								list.push({ key: 'custom', text: i18n("Custom (as set in Google Calendar)") })
+							if (form.initialRepeatKey === 'original') {
+								list.push({ key: 'original', text: i18n("Custom (as set in Google Calendar)") })
 							}
+							list.push({ key: 'custom', text: i18n("Custom…") })
 							return list
 						}
 						function syncIndex() {
@@ -405,8 +469,141 @@ Rectangle {
 							target: form
 							function onRepeatKeyChanged() { repeatCombo.syncIndex() }
 						}
-						onActivated: function(index) { form.repeatKey = model[index].key }
+						onActivated: function(index) {
+							var key = model[index].key
+							if (key === 'custom' && form.repeatKey !== 'custom') {
+								// Start from what was picked before, eg: Weekly on Thursday.
+								form.setCustom(Recurrence.customOf(form.repeatRule(), durationSelector.startDateTime))
+							}
+							form.repeatKey = key
+						}
 						displayText: form.seriesLoading ? i18n("Loading…") : currentText
+					}
+				}
+
+				// Custom repeat: every N days / weeks / months / years, and the days of the week.
+				ColumnLayout {
+					visible: form.supportsRecurrence && form.repeatKey === 'custom'
+					enabled: form.canEditRepeat
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+
+					RowLayout {
+						Layout.fillWidth: true
+						PlasmaComponents3.Label {
+							text: i18nc("Repeat every [2] [weeks]", "Every")
+						}
+						PlasmaComponents3.SpinBox {
+							from: 1
+							to: 99
+							value: form.customInterval
+							onValueModified: form.customInterval = value
+						}
+						FormComboBox {
+							id: freqCombo
+							Layout.fillWidth: true
+							textRole: "text"
+							model: [
+								{ key: 'DAILY', text: i18ncp("Repeat every N", "day", "days", form.customInterval) },
+								{ key: 'WEEKLY', text: i18ncp("Repeat every N", "week", "weeks", form.customInterval) },
+								{ key: 'MONTHLY', text: i18ncp("Repeat every N", "month", "months", form.customInterval) },
+								{ key: 'YEARLY', text: i18ncp("Repeat every N", "year", "years", form.customInterval) },
+							]
+							function syncIndex() {
+								currentIndex = ['DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'].indexOf(form.customFreq)
+							}
+							onModelChanged: syncIndex()
+							Connections {
+								target: form
+								function onCustomFreqChanged() { freqCombo.syncIndex() }
+							}
+							onActivated: function(index) { form.customFreq = model[index].key }
+						}
+					}
+
+					// The days in the order of the week view's first day setting.
+					RowLayout {
+						visible: form.customFreq === 'WEEKLY'
+						Layout.fillWidth: true
+						spacing: 0
+						Repeater {
+							model: 7
+							PlasmaComponents3.ToolButton {
+								readonly property int firstDay: {
+									var setting = plasmoid.configuration.firstDayOfWeek
+									return setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
+								}
+								readonly property int dayIndex: (firstDay + index) % 7
+								readonly property string code: Recurrence.dayCodes[dayIndex]
+								Layout.fillWidth: true
+								text: Qt.locale().dayName(dayIndex, Locale.NarrowFormat)
+								checked: form.customDays.indexOf(code) >= 0
+								onClicked: form.toggleCustomDay(code)
+								PlasmaComponents3.ToolTip.text: Qt.locale().dayName(dayIndex)
+								PlasmaComponents3.ToolTip.visible: hovered
+								PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
+						}
+					}
+				}
+
+				// When a repeat ends.
+				RowLayout {
+					visible: form.supportsRecurrence && form.repeatKey !== 'none'
+					enabled: form.canEditRepeat
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					PlasmaComponents3.Label {
+						text: i18nc("Repeat ends: never / on date / after N times", "Ends:")
+					}
+					FormComboBox {
+						id: endCombo
+						Layout.fillWidth: form.endType === 'never'
+						textRole: "text"
+						model: [
+							{ key: 'never', text: i18nc("Repeat ends", "Never") },
+							{ key: 'until', text: i18nc("Repeat ends on [date]", "On") },
+							{ key: 'count', text: i18nc("Repeat ends after [N] times", "After") },
+						]
+						function syncIndex() {
+							currentIndex = ['never', 'until', 'count'].indexOf(form.endType)
+						}
+						onModelChanged: syncIndex()
+						Connections {
+							target: form
+							function onEndTypeChanged() { endCombo.syncIndex() }
+						}
+						onActivated: function(index) {
+							var key = model[index].key
+							if (key === 'until' && !form.endDate) {
+								var d = new Date(durationSelector.startDateTime)
+								d.setMonth(d.getMonth() + 1)
+								form.endDate = d
+							}
+							form.endType = key
+						}
+					}
+					DateSelector {
+						visible: form.endType === 'until'
+						Layout.fillWidth: true
+						dateFormat: i18nc("event editor date format", "d MMM, yyyy")
+						dateTime: form.endDate || durationSelector.startDateTime
+						onDateTimeShifted: function(oldDateTime, deltaDateTime, newDateTime) {
+							form.endDate = newDateTime
+						}
+					}
+					PlasmaComponents3.SpinBox {
+						visible: form.endType === 'count'
+						from: 1
+						to: 999
+						value: form.endCount
+						onValueModified: form.endCount = value
+					}
+					PlasmaComponents3.Label {
+						visible: form.endType === 'count'
+						Layout.fillWidth: true
+						text: i18ncp("Repeat ends after N", "time", "times", form.endCount)
 					}
 				}
 
