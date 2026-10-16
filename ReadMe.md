@@ -20,7 +20,11 @@ Core runtime:
 - `libcanberra` (optional, for notification sounds)
 
 Feature-specific (optional):
-- ICalendar (.ics) import: `python3-icalendar` (Python `icalendar` module)
+- ICalendar (.ics) import:
+  - `icalendar>=6.1,<8`
+  - `recurring-ical-events>=3.8,<4` for RRULE, RDATE, EXDATE, and RECURRENCE-ID expansion
+  - The install/update scripts place these Python packages under
+    `~/.local/share/plasma_org.kde.plasma.eventcalendar/python` when they are not already available.
 - Local PIM/Akonadi calendars: `akonadi` + `kdepim-addons` (provides `PimCalendarsModel`)
 - Create local events: `konsolekalendar` (from kdepim runtime/tools)
 - Mouse wheel volume presets:
@@ -33,6 +37,7 @@ Install/update/uninstall scripts:
 - `kpackagetool6` (Plasma 6) or `kpackagetool5` (Plasma 5)
 - `qdbus` or `qdbus6` (reload/remove widgets)
 - `jq` (read metadata)
+- `python3-pip` / `python-pip` (install user-local iCalendar recurrence support)
 
 Note: package names vary by distro. The install script attempts to install `kpackagetool` and `jq` on Debian/Arch/Fedora; on other distros, install manually.
 
@@ -53,7 +58,7 @@ See `CONTRIBUTING.md` for guidelines and `MAINTENANCE.md` for project status.
 Plasma 6 (default branch):
 
 ```
-git clone https://github.com/ALikesToCode/plasma-applet-eventcalendar.git eventcalendar
+git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
 cd eventcalendar
 sh ./install
 ```
@@ -61,7 +66,7 @@ sh ./install
 Plasma 5 (legacy branch):
 
 ```
-git clone -b plasma-5 https://github.com/ALikesToCode/plasma-applet-eventcalendar.git eventcalendar
+git clone -b plasma-5 https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
 cd eventcalendar
 sh ./install
 ```
@@ -80,7 +85,7 @@ Then open the Terminal and run the following commands. The install script can re
 
 ```
 sudo apt install git
-git clone https://github.com/ALikesToCode/plasma-applet-eventcalendar.git eventcalendar
+git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
 cd eventcalendar
 sh ./install --restart
 ```
@@ -88,7 +93,7 @@ sh ./install --restart
 For Plasma 5, use the `plasma-5` branch instead:
 
 ```
-git clone -b plasma-5 https://github.com/ALikesToCode/plasma-applet-eventcalendar.git eventcalendar
+git clone -b plasma-5 https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
 cd eventcalendar
 sh ./install --restart
 ```

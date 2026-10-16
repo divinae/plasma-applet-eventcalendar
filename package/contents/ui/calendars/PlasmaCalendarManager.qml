@@ -4,6 +4,7 @@ import org.kde.plasma.workspace.calendar as PlasmaCalendar
 
 import "../lib"
 import "../Shared.js" as Shared
+import "../calendars/PlasmaCalendarEventState.js" as PlasmaCalendarEventState
 import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
 CalendarManager {
@@ -37,6 +38,16 @@ CalendarManager {
 			eventPluginsManager = null
 			return false
 		}
+	}
+	function syncEnabledPlugins() {
+		if (!ensureEventPluginsManager()) {
+			return
+		}
+		PlasmaCalendarUtils.setEnabledPluginsByFilename(
+			eventPluginsManager,
+			plasmoid.configuration.enabledCalendarPlugins,
+			plasmoid.configuration.enabledCalendarPluginsAllowEmpty
+		)
 	}
 	function appendPimCalendars(calendarList) {
 		// https://github.com/KDE/kdepim-addons/blob/master/plugins/plasma/pimeventsplugin/PimEventsConfig.qml
@@ -126,16 +137,15 @@ CalendarManager {
 	// to get a list of events for a specific day.
 
 	Component.onCompleted: {
-		if (ensureEventPluginsManager()) {
-			PlasmaCalendarUtils.setEnabledPluginsByFilename(eventPluginsManager, plasmoid.configuration.enabledCalendarPlugins)
-		}
+		syncEnabledPlugins()
 	}
 	Connections {
 		target: plasmoid.configuration
 		function onEnabledCalendarPluginsChanged() {
-			if (ensureEventPluginsManager()) {
-				PlasmaCalendarUtils.setEnabledPluginsByFilename(eventPluginsManager, plasmoid.configuration.enabledCalendarPlugins)
-			}
+			syncEnabledPlugins()
+		}
+		function onEnabledCalendarPluginsAllowEmptyChanged() {
+			syncEnabledPlugins()
 		}
 	}
 
@@ -296,17 +306,8 @@ CalendarManager {
 			items = items.concat(parseEventsForDate(day, dayEvents))
 		}
 
-		// We need to filter out the repeated items for multi-day events as Plasma creates a new "event item"
-		// for each day of the event. The id already encodes calendar + start + end times.
-		var seen = {}
-		items = items.filter(function(item) {
-			var key = item.id + '\n' + item.summary
-			if (seen[key]) {
-				return false
-			}
-			seen[key] = true
-			return true
-		})
+		// Plasma may return the same parsed item more than once for multi-day/plugin events.
+		items = PlasmaCalendarEventState.dedupeParsedEvents(items)
 
 		return items
 	}
@@ -368,7 +369,7 @@ CalendarManager {
 			return
 		}
 		var akonadiCalendarId = calendarId.substr('plasma_Events_'.length)
-		if (isNaN(parseInt(akonadiCalendarId, 10))) {
+		if (!/^[0-9]+$/.test(akonadiCalendarId)) {
 			logger.log('Could not parse a proper akonadiCalendarId=', akonadiCalendarId, ' from calendarId=', calendarId)
 			return
 		}
@@ -385,7 +386,7 @@ CalendarManager {
 			'--summary',
 			text,
 		]
-		executable.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr){
+		executable.execArgv(cmd, function(cmd, exitCode, exitStatus, stdout, stderr){
 			logger.debug('konsolekalendar.cmd', cmd)
 			logger.debug('konsolekalendar.exitCode', exitCode)
 			logger.debug('konsolekalendar.exitStatus', exitStatus)

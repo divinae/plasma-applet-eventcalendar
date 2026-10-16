@@ -45,7 +45,7 @@ RowLayout {
 			return 0
 		}
 		onValueChanged: serializeTimer.start()
-		to: 2147483647
+		to: 100000
 	}
 
 	Label {

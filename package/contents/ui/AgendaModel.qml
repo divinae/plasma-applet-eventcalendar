@@ -132,51 +132,74 @@ ListModel {
 		}
 	}
 
+	// Subtasks right after their parent task. Linear, and safe with missing / cyclic parents.
 	function sortSubTasks(eventList) {
-		// Place subtasks below their parent task
+		var orderedItems = []
+		var orderedTasks = []
+		var taskById = {}
+		var childrenByParent = {}
+		var visitedTasks = {}
+		function taskVisitKey(taskItem) {
+			if (taskItem && taskItem.id) {
+				return taskItem.id
+			}
+			return [
+				taskItem && taskItem.parent || "",
+				taskItem && taskItem.position || "",
+				taskItem && taskItem.title || "",
+			].join("|")
+		}
+
 		for (var i = 0; i < eventList.length; i++) {
 			var eventItem = eventList[i]
-			if (eventItem.kind === 'tasks#task' && typeof eventItem.parent !== 'undefined') {
-				for (var j = 0; j < eventList.length; j++) {
-					var parentItem = eventList[j]
-					if (parentItem.kind === 'tasks#task' && parentItem.id === eventItem.parent) {
-						var foundDestination = false
-						for (var k = j+1; k < eventList.length; k++) {
-							var childItem = eventList[k]
-							if (childItem.kind !== 'tasks#task'
-								|| childItem.parent != parentItem.id
-								|| childItem.position > eventItem.position
-							) {
-								// Move eventItem from index i => k
-								foundDestination = true
-								if (i < k) {
-									// Since we removed an item before k, decrement the index
-									k--
-								}
-								if (i !== k) {
-									eventList.splice(i, 1) // Remove at index=i
-									eventList.splice(k, 0, eventItem) // Add at index=k
-									i-- // Since eventItem was moved, we need to check index=i again.
-								}
-								break
-							}
-						} // end loop k
-
-						if (!foundDestination) {
-							// Move eventItem from index i => end of list
-							var k = eventList.length - 1
-							if (i !== k) {
-								eventList.splice(i, 1) // Remove at index=i
-								eventList.push(eventItem)
-								i-- // Since eventItem was moved, we need to check index=i again.
-							}
-						}
-
-						break
-					}
-				} // end loop j
+			if (eventItem.kind === 'tasks#task') {
+				orderedTasks.push(eventItem)
+				if (eventItem.id) {
+					taskById[eventItem.id] = eventItem
+				}
+			} else {
+				orderedItems.push(eventItem)
 			}
-		} // end loop i
+		}
+
+		for (var j = 0; j < orderedTasks.length; j++) {
+			var taskItem = orderedTasks[j]
+			var parentId = taskItem.parent || ""
+			if (!childrenByParent[parentId]) {
+				childrenByParent[parentId] = []
+			}
+			childrenByParent[parentId].push(taskItem)
+		}
+
+		function appendTask(taskItem) {
+			var visitKey = taskVisitKey(taskItem)
+			if (!taskItem || visitedTasks[visitKey]) {
+				return
+			}
+			visitedTasks[visitKey] = true
+			orderedItems.push(taskItem)
+
+			var children = childrenByParent[taskItem.id] || []
+			for (var childIndex = 0; childIndex < children.length; childIndex++) {
+				appendTask(children[childIndex])
+			}
+		}
+
+		for (var k = 0; k < orderedTasks.length; k++) {
+			var topLevelTask = orderedTasks[k]
+			if (!topLevelTask.parent || !taskById[topLevelTask.parent]) {
+				appendTask(topLevelTask)
+			}
+		}
+
+		for (var remainingIndex = 0; remainingIndex < orderedTasks.length; remainingIndex++) {
+			appendTask(orderedTasks[remainingIndex])
+		}
+
+		eventList.splice(0, eventList.length)
+		for (var orderedIndex = 0; orderedIndex < orderedItems.length; orderedIndex++) {
+			eventList.push(orderedItems[orderedIndex])
+		}
 	}
 
 	function parseGCalEvents(data) {

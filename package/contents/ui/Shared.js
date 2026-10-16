@@ -14,7 +14,7 @@ function openGoogleCalendarNewEventUrl(date) {
 	var startDate = dateString(date.getFullYear(), date.getMonth() + 1, date.getDate())
 	var endDate = dateString(nextDay.getFullYear(), nextDay.getMonth() + 1, nextDay.getDate())
 	url += '&dates=' + startDate + '/' + endDate
-	Qt.openUrlExternally(url)
+	openExternalUrl(url)
 }
 
 // Midnight at the start of the day of d.
@@ -50,31 +50,48 @@ function isValidDate(d) {
 	}
 }
 
+// Event description / task notes as safe StyledText: Google stores descriptions as HTML, which
+// could load remote images (tracking) or carry odd markup. Reduce it to text (keeping link
+// targets), escape it, then link URLs and keep line breaks.
 function renderText(text) {
-	if (typeof text === 'undefined') {
+	if (typeof text === 'undefined' || text === null) {
 		return ''
 	}
-	var out = text
-	
-	// Render links
-	// Google doesn't auto-convert links to anchor tags when you paste a link in the description.
-	// However, we should treat it as a link. This simple regex replacement works when we're not
-	// dealing with HTML. So if we see an HTML anchor tag, skip it and assume the link has been
-	// formatted.
-	if (out.indexOf('<a href') === -1) {
-		var rUrl = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi
-		out = out.replace(rUrl, function(m) {
-			// Google replaces ampersands with HTML the entity in the url text.
-			var encodedUrl = m.replace(/\&/g, '&amp;')
-
-			// Add extra space at the end to prevent styling entire text as a link when ending with a link.
-			return '<a href="' + m + '">' + encodedUrl + '</a>' + '&nbsp;'
-		})
+	var raw = String(text)
+	if (/<[a-z][^>]*>/i.test(raw)) {
+		raw = raw
+			// <a href="X">label</a>: keep the target, it's often the whole point (eg: a meeting link).
+			.replace(/<a\s[^>]*href\s*=\s*"([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, function(m, href, label) {
+				var plainLabel = label.replace(/<[^>]*>/g, '')
+				return plainLabel && plainLabel !== href ? plainLabel + ' (' + href + ')' : href
+			})
+			.replace(/<br\s*\/?>/gi, '\n')
+			.replace(/<\/(p|div|li|h[1-6])>/gi, '\n')
+			.replace(/<[^>]*>/g, '')
+			.replace(/&nbsp;/g, ' ')
+			.replace(/&lt;/g, '<')
+			.replace(/&gt;/g, '>')
+			.replace(/&quot;/g, '"')
+			.replace(/&#39;/g, "'")
+			.replace(/&amp;/g, '&')
 	}
-
-	// Remove leading new line, as Google sometimes adds them.
-	out = out.replace(/^(\<br\>)+/, '')
-
+	var rUrl = /(https?:\/\/[^\s<>"]+)/gi
+	var out = ''
+	var lastIndex = 0
+	var match
+	while ((match = rUrl.exec(raw)) !== null) {
+		var href = match[0].replace(/[).,;:!?]+$/, '') // Not the sentence's punctuation
+		out += escapeHtml(raw.slice(lastIndex, match.index))
+		// href: StyledText doesn't decode entities there (&amp; would reach the browser); the URL
+		// pattern has no quotes or angle brackets, so it's safe as is.
+		out += isSafeExternalUrl(href) ? '<a href="' + href + '">' + escapeHtml(href) + '</a>' : escapeHtml(href)
+		lastIndex = match.index + href.length
+		rUrl.lastIndex = lastIndex
+	}
+	out += escapeHtml(raw.slice(lastIndex))
+	out = out.replace(/\r\n?/g, '\n').replace(/\n/g, '<br>')
+	// Remove leading new lines, as Google sometimes adds them.
+	out = out.replace(/^(<br>)+/, '')
 	return out
 }
 
@@ -186,7 +203,27 @@ function isUrl(text) {
 	return /^https?:\/\/\S+$/i.test(String(text || '').trim())
 }
 function escapeHtml(text) {
-	return String(text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+	if (typeof text === 'undefined' || text === null) {
+		return ''
+	}
+	return String(text)
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+}
+// Only web links are opened from event text (no file:, javascript:, custom schemes).
+function isSafeExternalUrl(url) {
+	return typeof url === 'string' && /^(https?):\/\/[^\s]+$/i.test(url.trim())
+}
+function openExternalUrl(url) {
+	if (!isSafeExternalUrl(url)) {
+		console.warn('[eventcalendar] Refusing to open unsafe URL', url)
+		return false
+	}
+	Qt.openUrlExternally(url.trim())
+	return true
 }
 // A URL location opens as is, anything else as a Google Maps search.
 function locationUrl(location) {

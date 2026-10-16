@@ -115,30 +115,48 @@ ConfigPage {
 		}
 		return ""
 	}
-	function parseTokenInput(text) {
-		if (!text) {
-			return null
+	// Configuration problem with the OAuth client (eg: a Web client without its secret), checked
+	// against what's typed in the Client ID / Secret fields.
+	readonly property string authConfigurationMessage: credentialAuthConfigurationMessage()
+	function credentialAuthConfigurationMessage() {
+		var customId = googleLoginManager.normalizedClientValue(customClientIdInput.text)
+		var customSecret = googleLoginManager.normalizedClientValue(customClientSecretInput.text)
+		var latestId = googleLoginManager.normalizedClientValue(page.configBridge.read("latestClientId", ""))
+		var latestSecret = googleLoginManager.normalizedClientValue(page.configBridge.read("latestClientSecret", ""))
+		var clientId = customId ? customId : (!useDesktopClientToggle.checked && latestId ? latestId : googleLoginManager.defaultClientId)
+		var clientSecret = customId ? customSecret : (!useDesktopClientToggle.checked && latestId ? latestSecret : "")
+		return googleLoginManager.authConfigurationErrorFor(clientId, clientSecret)
+	}
+
+	function syncCredentialInputs() {
+		page.configBridge.write("customClientId", customClientIdInput.text)
+		page.configBridge.write("customClientSecret", customClientSecretInput.text)
+		googleLoginManager.refreshClientCredentials()
+	}
+
+	// Pasted authorization code or redirect URL. accountId: re-authorize that account ("" = new).
+	function submitAuthorization(accountId) {
+		if (!authorizationCodeInput.text) {
+			startAutoLogin(accountId || "")
+			return
 		}
-		var trimmed = text.trim()
-		if (!trimmed || trimmed[0] !== '{') {
-			return null
+		if (autoLoginInProgress) {
+			autoLoginCancelled = true
+			loginAttempt++ // Its listener callback must not apply an old code
+			autoLoginInProgress = false
 		}
-		var parsed = null
-		try {
-			parsed = JSON.parse(trimmed)
-		} catch (e) {
-			return null
-		}
-		if (!parsed || !parsed.access_token) {
-			return null
-		}
-		if (!parsed.expires_in) {
-			parsed.expires_in = 3600
-		}
-		if (!parsed.token_type) {
-			parsed.token_type = "Bearer"
-		}
-		return parsed
+		syncCredentialInputs()
+		googleLoginManager.fetchAccessToken({
+			authorizationCode: authorizationCodeInput.text,
+			accountId: accountId || "",
+		}, function(err) {
+			if (err) {
+				messageWidget.err(i18n("Login failed: %1", err))
+				return
+			}
+			authorizationCodeInput.text = ""
+			messageWidget.success(i18n("Login complete."))
+		})
 	}
 
 	function startAutoLogin(accountId, openBrowser) {
@@ -151,37 +169,30 @@ ConfigPage {
 		autoLoginCancelled = false
 		autoLoginInProgress = true
 		var attempt = ++loginAttempt
-		googleLoginManager.prepareAuthorization()
-		googleLoginManager.maybeUseLegacyForLocal()
+		try {
+			syncCredentialInputs()
+			googleLoginManager.prepareAuthorization()
+		} catch (e) {
+			autoLoginInProgress = false
+			messageWidget.err(i18n("Could not prepare Google login: %1", String(e)))
+			return
+		}
 		var authContext = googleLoginManager.currentAuthContext()
 		messageWidget.info(localRedirect
 			? i18n("Waiting for browser callback...")
 			: i18n("Waiting for the helper page to send the code..."))
+		// Only the port and the one-time state: the client secret and PKCE verifier stay in the
+		// widget (argv is visible to other processes), which exchanges the code itself.
 		var cmd = [
 			'python3',
 			localFilePath(Qt.resolvedUrl("../../scripts/google_redirect.py")),
-			'--client_id',
-			authContext.clientId,
 			'--listen_port',
 			'53682',
-			'--redirect_uri',
-			authContext.redirectUri,
+			'--state',
+			authContext.state,
 		]
-		if (authContext.clientSecret) {
-			cmd.push('--client_secret')
-			cmd.push(authContext.clientSecret)
-		}
-		if (authContext.pkceVerifier) {
-			cmd.push('--code_verifier')
-			cmd.push(authContext.pkceVerifier)
-		}
-		if (authContext.state) {
-			cmd.push('--state')
-			cmd.push(authContext.state)
-		}
 		debugOutput.text = "Waiting for the browser sign-in…\n"
-		// Don't log cmd or stdout: they contain the client secret, PKCE verifier and tokens.
-		callbackListener.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
+		callbackListener.execArgv(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (attempt !== loginAttempt) {
 				return // Replaced by a newer sign-in
 			}
@@ -190,7 +201,7 @@ ConfigPage {
 				return
 			}
 			autoLoginInProgress = false
-			// Never show stdout: it has the tokens.
+			// Never show stdout: it has the authorization code.
 			debugOutput.text += "Exit: " + exitCode + "\nStderr: " + stderr + "\n"
 			if (exitCode === 2) {
 				messageWidget.err(i18n("Sign-in timed out. Try again."))
@@ -202,28 +213,38 @@ ConfigPage {
 				return
 			}
 			var payload = extractJson(stdout || "")
-			if (!payload) {
-				messageWidget.err(i18n("Auto login failed: no token data received."))
-				return
-			}
 			var data = null
 			try {
-				data = JSON.parse(payload)
+				data = payload ? JSON.parse(payload) : null
 			} catch (e) {
-				messageWidget.err(i18n("Auto login failed: invalid token data."))
+				data = null
+			}
+			if (!data) {
+				messageWidget.err(i18n("Auto login failed: invalid callback data."))
 				return
 			}
 			if (data.error) {
 				messageWidget.err(i18n("Auto login failed: %1", data.error))
 				return
 			}
+			if (!data.authorization_code) {
+				messageWidget.err(i18n("Auto login failed: authorization code missing."))
+				return
+			}
 			authorizationCodeInput.text = ""
-			googleLoginManager.updateAccessToken(data, accountId)
-			messageWidget.success(i18n("Login complete."))
-			googleLoginManager.updateCalendarList()
+			googleLoginManager.fetchAccessToken({
+				authorizationCode: data.authorization_code,
+				accountId: accountId,
+			}, function(err) {
+				if (err) {
+					messageWidget.err(i18n("Auto login failed: %1", err))
+					return
+				}
+				messageWidget.success(i18n("Login complete."))
+			})
 		})
-		if (openBrowser) {
-			Qt.openUrlExternally(googleLoginManager.authorizationCodeUrl)
+		if (openBrowser && !Shared.openExternalUrl(googleLoginManager.authorizationCodeUrl)) {
+			messageWidget.err(i18n("The desktop could not open the browser automatically. Use the login link in Advanced sign-in options instead."))
 		}
 	}
 
@@ -329,7 +350,9 @@ ConfigPage {
 				visible: accountSection.needsRelog
 				closeButtonVisible: false
 				messageType: MessageWidget.MessageType.Warning
-				text: i18n("The widget was updated. Sign in again to keep this account in sync.")
+				text: accountSection.account && accountSection.account.reauthRequired
+					? i18n("Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept).")
+					: i18n("The widget was updated. Sign in again to keep this account in sync.")
 			}
 
 			// Calendars
@@ -384,7 +407,7 @@ ConfigPage {
 		Button {
 			icon.name: googleLoginManager.isLoggedIn ? "list-add-user" : "go-next"
 			text: googleLoginManager.isLoggedIn ? i18n("Add Account…") : i18n("Sign in with Google…")
-			enabled: !autoLoginInProgress
+			enabled: !autoLoginInProgress && !authConfigurationMessage
 			onClicked: {
 				authorizationCodeInput.text = ""
 				startAutoLogin("")
@@ -416,6 +439,7 @@ ConfigPage {
 		level: 3
 	}
 	ColumnLayout {
+		id: credentialsSection
 		Layout.fillWidth: true
 		property bool credentialsReady: false
 		Component.onCompleted: credentialsReady = true
@@ -423,13 +447,23 @@ ConfigPage {
 		MessageWidget {
 			messageType: MessageWidget.MessageType.Warning
 			closeButtonVisible: false
-			text: googleLoginManager.normalizedClientValue(page.configBridge.read("customClientId", ""))
+			text: authConfigurationMessage
+				? authConfigurationMessage
+				: googleLoginManager.normalizedClientValue(page.configBridge.read("customClientId", ""))
 				? ""
-				: i18n("The built-in Google OAuth client is often blocked. Provide your own client ID (and secret if required) to enable Google sync.")
+				: page.configBridge.read("latestClientSecret", "")
+					? i18n("Using a previously stored Google OAuth client for compatibility. If login still fails, add your own client ID and client secret.")
+					: ""
 		}
 		Label {
 			Layout.fillWidth: true
-			text: i18n("Leave these empty to use the default credentials. Custom credentials require a Google Cloud OAuth client with the redirect URI set to %1.", googleLoginManager.redirectUri)
+			text: i18n("Leave these empty to use the built-in client. A custom client must be a Google Cloud OAuth Desktop client, or a Web client with its secret and the redirect URI set to %1.", googleLoginManager.redirectUri)
+			color: readableNegativeTextColor
+			wrapMode: Text.Wrap
+		}
+		Label {
+			Layout.fillWidth: true
+			text: i18n("For a custom OAuth client, publish the OAuth consent screen to Production. Google expires refresh tokens for external apps left in Testing after seven days; Workspace session controls can also require reauthorization.")
 			color: readableNegativeTextColor
 			wrapMode: Text.Wrap
 		}
@@ -439,7 +473,7 @@ ConfigPage {
 			visible: !googleLoginManager.normalizedClientValue(page.configBridge.read("customClientId", ""))
 			text: i18n("Try desktop built-in client (no secret)")
 			onCheckedChanged: {
-				if (!credentialsReady) {
+				if (!credentialsSection.credentialsReady) {
 					return
 				}
 				googleLoginManager.refreshClientCredentials()
@@ -451,6 +485,7 @@ ConfigPage {
 				text: i18n("Client ID")
 			}
 			ConfigString {
+				id: customClientIdInput
 				configKey: "customClientId"
 				Layout.fillWidth: true
 				placeholderText: i18n("Optional")
@@ -467,6 +502,7 @@ ConfigPage {
 				text: i18n("Client Secret")
 			}
 			ConfigString {
+				id: customClientSecretInput
 				configKey: "customClientSecret"
 				Layout.fillWidth: true
 				placeholderText: i18n("Optional")
@@ -504,7 +540,7 @@ ConfigPage {
 			Layout.fillWidth: true
 			Button {
 				text: googleLoginManager.isLoggedIn ? i18n("Login (Auto) - Add Account") : i18n("Login (Auto)")
-				enabled: !autoLoginInProgress
+				enabled: !autoLoginInProgress && !authConfigurationMessage
 				onClicked: {
 					authorizationCodeInput.text = ""
 					startAutoLogin("")
@@ -519,14 +555,16 @@ ConfigPage {
 			color: readableNegativeTextColor
 			wrapMode: Text.Wrap
 			onLinkActivated: function(link) {
-				googleLoginManager.prepareAuthorization()
-				googleLoginManager.maybeUseLegacyForLocal()
-				Qt.openUrlExternally(googleLoginManager.authorizationCodeUrl)
+				try {
+					syncCredentialInputs()
+					googleLoginManager.prepareAuthorization()
+					if (!Shared.openExternalUrl(googleLoginManager.authorizationCodeUrl)) {
+						messageWidget.err(i18n("The desktop could not open the browser automatically."))
+					}
+				} catch (e) {
+					messageWidget.err(i18n("Could not prepare Google login: %1", String(e)))
+				}
 			}
-
-			// Tooltip
-			// QQC2.ToolTip.visible: !!hoveredLink
-			// QQC2.ToolTip.text: googleLoginManager.authorizationCodeUrl
 
 			// ContextMenu
 			MouseArea {
@@ -594,63 +632,16 @@ ConfigPage {
 			TextField {
 				id: authorizationCodeInput
 				Layout.fillWidth: true
-
 				placeholderText: i18n("Paste the authorization code or redirect URL here")
+				echoMode: TextInput.Password
+				Accessible.name: i18n("Google authorization code or redirect URL")
+				Accessible.description: i18n("Paste the Google authorization code or the full redirect URL from the browser")
 				text: ""
 			}
-				Button {
-					text: googleLoginManager.isLoggedIn ? i18n("Add Account") : i18n("Submit")
-					enabled: !autoLoginInProgress || !localRedirect || !!authorizationCodeInput.text
-					onClicked: {
-						if (authorizationCodeInput.text) {
-							if (autoLoginInProgress) {
-								autoLoginCancelled = true
-								loginAttempt++ // Its listener callback must not apply an old code
-								autoLoginInProgress = false
-							}
-							var tokenData = parseTokenInput(authorizationCodeInput.text)
-							if (tokenData) {
-								googleLoginManager.updateAccessToken(tokenData)
-								authorizationCodeInput.text = ""
-								messageWidget.success(i18n("Token accepted."))
-								return
-							}
-							googleLoginManager.refreshClientCredentials()
-							googleLoginManager.fetchAccessToken({
-								authorizationCode: authorizationCodeInput.text,
-							})
-					} else {
-						startAutoLogin("")
-					}
-				}
-			}
-				Button {
-					visible: googleLoginManager.isLoggedIn
-					text: i18n("Update Selected")
-					enabled: !autoLoginInProgress || !localRedirect || !!authorizationCodeInput.text
-					onClicked: {
-						if (authorizationCodeInput.text) {
-							if (autoLoginInProgress) {
-								autoLoginCancelled = true
-								loginAttempt++ // Its listener callback must not apply an old code
-								autoLoginInProgress = false
-							}
-							var tokenData = parseTokenInput(authorizationCodeInput.text)
-							if (tokenData) {
-								googleLoginManager.updateAccessToken(tokenData, googleLoginManager.activeAccountId)
-								authorizationCodeInput.text = ""
-								messageWidget.success(i18n("Token accepted."))
-								return
-							}
-							googleLoginManager.refreshClientCredentials()
-							googleLoginManager.fetchAccessToken({
-								authorizationCode: authorizationCodeInput.text,
-								accountId: googleLoginManager.activeAccountId,
-						})
-					} else {
-						startAutoLogin(googleLoginManager.activeAccountId)
-					}
-				}
+			Button {
+				text: googleLoginManager.isLoggedIn ? i18n("Add Account") : i18n("Submit")
+				enabled: !authConfigurationMessage && (!autoLoginInProgress || !localRedirect || !!authorizationCodeInput.text)
+				onClicked: submitAuthorization("")
 			}
 		}
 	}
@@ -686,7 +677,7 @@ ConfigPage {
 				onClicked: {
 					var cmd = ['echo', 'Hello World']
 					debugOutput.text = "Running: echo Hello World\n"
-					callbackListener.exec(cmd, function(c, code, status, out, err) {
+					callbackListener.execArgv(cmd, function(c, code, status, out, err) {
 						debugOutput.text += "Result: " + out + " (Code: " + code + ")\n"
 					})
 				}
@@ -697,7 +688,7 @@ ConfigPage {
 					var path = localFilePath(Qt.resolvedUrl("../../scripts/google_redirect.py"))
 					debugOutput.text = "Script Path: " + path + "\n"
 					var cmd = ['python3', '--version']
-					callbackListener.exec(cmd, function(c, code, status, out, err) {
+					callbackListener.execArgv(cmd, function(c, code, status, out, err) {
 						debugOutput.text += "Python Version: " + out + " " + err + "\n"
 					})
 				}

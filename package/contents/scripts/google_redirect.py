@@ -3,9 +3,6 @@
 import json
 import os
 import html
-import urllib.parse
-import urllib.request
-import urllib.error
 import argparse
 import signal
 import sys
@@ -36,7 +33,7 @@ except OSError:
 HELPER_ORIGIN = "https://alikestocode.github.io"
 LISTEN_TIMEOUT = 5 * 60  # seconds: give up if the browser never comes back
 
-client_id = client_secret = listen_port = redirect_uri = code_verifier = expected_state = None
+listen_port = expected_state = None
 exit_code = 0
 asset_dir = os.path.join(os.path.dirname(__file__), "oauth_assets")
 success_template_path = os.path.join(asset_dir, "success.html")
@@ -45,7 +42,7 @@ style_path = os.path.join(asset_dir, "style.css")
 
 def masked_argv(argv):
     """argv for the log, without the client secret / PKCE verifier / state values."""
-    secret_flags = {"--client_secret", "--code_verifier", "--state"}
+    secret_flags = {"--state"}
     result = []
     hide_next = False
     for arg in argv:
@@ -108,45 +105,14 @@ def load_success_page():
     return template
 
 
-def render_success_page(code, token_data):
+def render_success_page(code):
     template = load_success_page()
     if not template:
         return ""
     safe_code = html.escape(code or "")
-    token_json = ""
-    if token_data is not None:
-        token_json = json.dumps(token_data, sort_keys=True, indent=2)
-    safe_token_json = html.escape(token_json)
     template = template.replace("{{CODE}}", safe_code)
-    template = template.replace("{{TOKEN_JSON}}", safe_token_json)
+    template = template.replace("{{TOKEN_JSON}}", "")
     return template
-
-
-def exchange_code_for_token(code):
-    # Exchange code for token from https://oauth2.googleapis.com/token
-    # using the following POST request:
-    logging.info("Exchanging code for token (code=%s)", mask_value(code))
-    token_params = {
-        "code": code,
-        "client_id": client_id,
-        "redirect_uri": redirect_uri,
-        "grant_type": "authorization_code",
-    }
-    if client_secret:
-        token_params["client_secret"] = client_secret
-    if code_verifier:
-        token_params["code_verifier"] = code_verifier
-    data = urllib.parse.urlencode(token_params).encode("utf-8")
-    req = urllib.request.Request("https://oauth2.googleapis.com/token", data)
-    response = urllib.request.urlopen(req)
-    logging.info("Token endpoint response status: %s", getattr(response, "status", "unknown"))
-    token_data = json.loads(response.read().decode("utf-8"))
-    logging.info(
-        "Token response keys: %s (has_refresh_token=%s)",
-        list(token_data.keys()),
-        "refresh_token" in token_data,
-    )
-    return token_data
 
 
 class OAuthRedirectHandler(BaseHTTPRequestHandler):
@@ -193,42 +159,47 @@ class OAuthRedirectHandler(BaseHTTPRequestHandler):
                 return params["code"][0]
         return text
 
-    def _handle_code(self, code, html_response):
+    def _extract_state(self, value):
+        if not value:
+            return ""
+        text = value.strip()
+        parsed = urlparse(text)
+        if parsed.query:
+            params = parse_qs(parsed.query)
+            if "state" in params:
+                return params["state"][0]
+        if "state=" in text:
+            params = parse_qs(text.split("?", 1)[-1])
+            if "state" in params:
+                return params["state"][0]
+        return text
+
+    def _handle_code(self, code, received_state, html_response):
         logging.info("Handling code (code=%s)", mask_value(code))
         if not code:
             self._send_headers(400, "text/plain")
             self.wfile.write(b"Missing code parameter in redirect.")
             return
-        try:
-            token_data = exchange_code_for_token(code)
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode("utf-8")
-            logging.error("Token exchange HTTPError %s: %s", e.code, err_body)
-            print(err_body)
-            sys.stdout.flush()
-            self._set_exit_code(1)
-            self._send_headers(400, "text/plain")
-            self.wfile.write(b"Handling redirect failed.")
-            self._shutdown()
-            return
-        except urllib.error.URLError as e:
-            logging.error("Token exchange URLError: %s", str(e))
-            print(str(e))
-            sys.stdout.flush()
-            self._set_exit_code(1)
-            self._send_headers(400, "text/plain")
-            self.wfile.write(b"Handling redirect failed.")
-            self._shutdown()
+        # Only the sign-in this widget started: its random state must come back. A mismatch is
+        # rejected without stopping, so a stray request can't end the real sign-in.
+        if not expected_state or received_state != expected_state:
+            self._reject("state mismatch (expected={}, received={})".format(
+                mask_value(expected_state), mask_value(received_state)))
             return
 
-        print(json.dumps(token_data, sort_keys=True))
+        # The widget exchanges the code itself: no client secret or PKCE verifier is passed to
+        # this process (they'd be visible in the process list).
+        print(json.dumps({
+            "authorization_code": code,
+            "state": received_state,
+        }, sort_keys=True))
         sys.stdout.flush()
         self._set_exit_code(0)
         if html_response:
-            html = render_success_page(code, token_data)
+            page = render_success_page(code)
             self._send_headers(200, "text/html")
-            if html:
-                self.wfile.write(html.encode("utf-8"))
+            if page:
+                self.wfile.write(page.encode("utf-8"))
             else:
                 self.wfile.write(
                     b"OAuth redirect handled successfully. You can close this tab now."
@@ -255,15 +226,12 @@ class OAuthRedirectHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"Sign-in was cancelled. You can close this tab.")
             self._shutdown()
             return
-        # The redirect from Google carries the state we sent: anything else wasn't started by us.
-        if expected_state and params.get("state", [""])[0] != expected_state:
-            if "code" in params:
-                self._reject("state mismatch")
-            else:
-                self._send_headers(404, "text/plain")  # Eg: favicon.ico
+        if "code" not in params:
+            self._send_headers(404, "text/plain")  # Eg: favicon.ico
             return
         code = params.get("code", [""])[0]
-        self._handle_code(self._extract_code(code), html_response=True)
+        state = params.get("state", [""])[0]
+        self._handle_code(self._extract_code(code), self._extract_state(state), html_response=True)
 
     def do_POST(self):
         logging.info("POST %s from %s", self.path, self.client_address)
@@ -275,34 +243,34 @@ class OAuthRedirectHandler(BaseHTTPRequestHandler):
         raw_body = self.rfile.read(content_length).decode("utf-8") if content_length else ""
         content_type = self.headers.get("Content-Type", "")
         code = ""
+        state = ""
         if "application/json" in content_type:
             try:
                 payload = json.loads(raw_body) if raw_body else {}
                 code = payload.get("code", "")
+                state = payload.get("state", "")
             except json.JSONDecodeError:
                 code = ""
         else:
             params = parse_qs(raw_body)
             code = params.get("code", [""])[0]
-        self._handle_code(self._extract_code(code), html_response=False)
+            state = params.get("state", [""])[0]
+        self._handle_code(self._extract_code(code), self._extract_state(state), html_response=False)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--client_id", required=True)
-    parser.add_argument("--client_secret", default="")
     parser.add_argument("--listen_port", required=True, type=int)
-    parser.add_argument("--redirect_uri", default="")
-    parser.add_argument("--code_verifier", default="")
     parser.add_argument("--state", default="")
     args = parser.parse_args()
     logging.info("Script started with args: %s", masked_argv(sys.argv))
-    client_id = args.client_id
-    client_secret = args.client_secret
     listen_port = args.listen_port
-    redirect_uri = args.redirect_uri or "http://127.0.0.1:{}/".format(listen_port)
-    code_verifier = args.code_verifier
     expected_state = args.state
+    if not expected_state:
+        # Without a state the callback can't be bound to this sign-in (CSRF).
+        logging.error("Missing --state; refusing to start")
+        print("Missing OAuth state. Please retry the login from the widget.", file=sys.stderr)
+        sys.exit(1)
 
     stop_previous_listener()
     # Loopback only: the browser on this machine is the only expected client.

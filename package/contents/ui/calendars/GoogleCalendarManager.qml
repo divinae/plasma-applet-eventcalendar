@@ -2,6 +2,7 @@ import QtQuick
 
 import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
+import "../lib"
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 import "../code/ColorIdMap.js" as ColorIdMap
@@ -16,6 +17,12 @@ CalendarManager {
 	property string accountId: ""
 	property string accountLabel: ""
 
+	Logger {
+		id: logger
+		name: 'eventcalendar-google-calendar'
+		showDebug: plasmoid.configuration.debugging
+	}
+
 	function getAccount() {
 		if (!accountsStore || !accountId) {
 			return null
@@ -27,6 +34,9 @@ CalendarManager {
 		var account = getAccount()
 		if (!account) {
 			return []
+		}
+		if (accountsStore && accountId && accountsStore.ensureCalendarSelection) {
+			return accountsStore.ensureCalendarSelection(accountId)
 		}
 		var list = account.calendarIdList || []
 		if (account.calendarSelectionInitialized) {
@@ -82,13 +92,71 @@ CalendarManager {
 	}
 
 	function fetchGoogleAccountData() {
-		if (!session.accessToken) {
+		// Tokens may live in the system keyring: an account is enough to start.
+		var account = getAccount()
+		if (!account) {
+			return
+		}
+		if (!account.calendarList || !account.calendarList.length) {
+			fetchGoogleCalendarList()
 			return
 		}
 		var idList = getCalendarIdList()
 		if (idList.length) { // Avoid a token refresh when nothing is selected.
 			fetchGoogleAccountEvents(idList)
 		}
+	}
+
+	function fetchGoogleCalendarList() {
+		googleCalendarManager.asyncRequests += 1
+		withAccessToken(function() {
+			fetchGCalCalendars({
+				accessToken: session.accessToken,
+			}, function(err, data, xhr) {
+				if (err || (data && data.error)) {
+					googleCalendarManager.asyncRequestsDone += 1
+					handleError(err || 'fetchGCalCalendars error', data, xhr)
+					return
+				}
+				var account = getAccount()
+				var patch = {
+					calendarList: data.items,
+				}
+				if (accountsStore && accountId && account
+					&& !account.calendarSelectionInitialized
+					&& (!account.calendarIdList || !account.calendarIdList.length)
+					&& accountsStore.defaultCalendarIdList
+				) {
+					var defaultList = accountsStore.defaultCalendarIdList(data.items)
+					if (defaultList.length) {
+						patch.calendarIdList = defaultList
+						patch.calendarSelectionInitialized = true
+					}
+				}
+				if (accountsStore && accountId) {
+					accountsStore.updateAccount(accountId, patch)
+				}
+				fetchGoogleAccountEvents(getCalendarIdList())
+				googleCalendarManager.asyncRequestsDone += 1
+			})
+		}, function(err, isNetworkError) {
+			handleAuthError(err, true, isNetworkError)
+		})
+	}
+
+	function fetchGCalCalendars(args, callback) {
+		var url = 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
+		Requests.getJSON({
+			url: url,
+			headers: {
+				"Authorization": "Bearer " + args.accessToken,
+			}
+		}, function(err, data, xhr) {
+			if (!err && data && data.error) {
+				return callback('fetchGCalCalendars error', data, xhr)
+			}
+			callback(err, data, xhr)
+		})
 	}
 
 	//-------------------------
@@ -794,7 +862,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	//--- CalendarManager
 	function getCalendarList() {
 		var account = getAccount()
-		if (!session.accessToken || !account || !account.calendarList) {
+		if (!account || !account.calendarList) {
 			return []
 		}
 		var calendarList = account.calendarList

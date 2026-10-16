@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "lib/ColorUtil.js" as ColorUtil
+import "Shared.js" as Shared
 
 // "Join" meeting button drawn on an event tile: a pill in the tile's text color, so it reads as
 // part of the tile. meetingLink: from MeetingLink.find().
@@ -45,7 +46,7 @@ Rectangle {
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: Qt.PointingHandCursor
-		onClicked: Qt.openUrlExternally(joinPill.meetingLink.url)
+		onClicked: Shared.openExternalUrl(joinPill.meetingLink.url)
 	}
 	PlasmaComponents3.ToolTip.text: meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label) : ""
 	PlasmaComponents3.ToolTip.visible: joinMouse.containsMouse

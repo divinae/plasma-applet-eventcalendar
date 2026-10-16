@@ -310,7 +310,7 @@ MouseArea {
 		}
 		if (plasmoid.configuration.eventClickAction === 'browser') {
 			if (eventItem.htmlLink) {
-				Qt.openUrlExternally(eventItem.htmlLink)
+				Shared.openExternalUrl(eventItem.htmlLink)
 			}
 			return
 		}

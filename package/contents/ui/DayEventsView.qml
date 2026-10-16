@@ -187,7 +187,7 @@ Rectangle {
 								}
 								textFormat: Text.StyledText
 								linkColor: eventRow.textColor
-								onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+								onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 								color: eventRow.textColor
 								opacity: 0.85
 								font: Kirigami.Theme.smallFont

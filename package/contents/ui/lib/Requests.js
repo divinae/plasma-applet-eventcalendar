@@ -7,30 +7,45 @@ function request(opt, callback) {
 	}
 	var req = new XMLHttpRequest()
 	// Qt can fire both onerror and DONE for a failed request. Only call back once.
-	var finished = false
-	function done(err, data) {
-		if (finished) {
+	var completed = false
+	function responseText() {
+		try {
+			return req.responseText || null
+		} catch (e) {
+			return null
+		}
+	}
+	function finish(err, data) {
+		if (completed) {
 			return
 		}
-		finished = true
+		completed = true
 		callback(err, data, req)
+	}
+	function finishFromResponse() {
+		if (200 <= req.status && req.status < 400) {
+			finish(null, responseText())
+			return
+		}
+		finish("HTTP Error " + req.status, responseText())
 	}
 	req.onerror = function() {
 		// Network Error / No Connection
-		done("HTTP Error " + req.status, null)
+		if (req.readyState !== XMLHttpRequest.DONE && req.status !== 0) {
+			// Some Qt versions emit error before exposing the HTTP response body.
+			// Let the final ready-state event complete the request in that case.
+			return
+		}
+		finishFromResponse()
 	}
 	// Hung connections (eg: half-dead wifi) fail after 30 s instead of never. Status stays 0.
 	req.timeout = opt.timeout || 30000
 	req.ontimeout = function() {
-		done("Timeout", null)
+		finish("Timeout", null)
 	}
 	req.onreadystatechange = function() {
 		if (req.readyState === XMLHttpRequest.DONE) { // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-done
-			if (200 <= req.status && req.status < 400) {
-				done(null, req.responseText)
-			} else {
-				done("HTTP Error " + req.status, req.responseText)
-			}
+			finishFromResponse()
 		}
 	}
 	req.open(opt.method || "GET", opt.url, true)

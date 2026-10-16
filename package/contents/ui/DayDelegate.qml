@@ -101,7 +101,30 @@ MouseArea {
 		z: todayRect.z - 1
 	}
 
-	property int eventCount: model.events ? model.events.count : 0
+	// model.events is a ListModel, or a plain array (Qt 6.12 sequence) from some calendar sources.
+	function eventsLength(events) {
+		if (!events) {
+			return 0
+		}
+		if (typeof events.count === "number") {
+			return events.count
+		}
+		if (typeof events.length === "number") {
+			return events.length
+		}
+		return 0
+	}
+	function eventAt(events, index) {
+		if (!events) {
+			return null
+		}
+		if (typeof events.get === "function") {
+			return events.get(index)
+		}
+		return events[index]
+	}
+
+	property int eventCount: eventsLength(model.events)
 	property var eventColors: []
 	property bool useHightlightColor: eventColors.length === 0
 
@@ -109,8 +132,8 @@ MouseArea {
 	function updateEventColors() {
 		var set = {}
 		for (var i = 0; i < eventCount; i++) {
-			var eventItem = model.events.get(i)
-			if (eventItem.backgroundColor) {
+			var eventItem = eventAt(model.events, i)
+			if (eventItem && eventItem.backgroundColor) {
 				set[eventItem.backgroundColor] = true
 			}
 		}
@@ -143,7 +166,7 @@ MouseArea {
 			sourceComponent: badgeComponent
 
 			readonly property var modelEvents: model.events
-			readonly property int modelEventsCount: modelEvents ? modelEvents.count : 0
+			readonly property int modelEventsCount: dayStyle.eventsLength(modelEvents)
 			property alias dayStyle: dayStyle // aka DayDelegate
 		}
 	}
@@ -190,19 +213,26 @@ MouseArea {
 		mainText: containsMouse ? Qt.formatDate(thisDate, Qt.locale().dateFormat(Locale.LongFormat)) : ""
 		subText: containsMouse ? tooltipBody() : ""
 		function tooltipBody() {
-			if (!model.events) {
+			var count = eventsLength(model.events)
+			if (!count) {
 				return ''
 			}
 			var lines = []
-			for (var i = 0; i < model.events.count; i++) {
-				var eventItem = model.events.get(i)
+			var now = new Date()
+			for (var i = 0; i < count; i++) {
+				var eventItem = eventAt(model.events, i)
+				if (!eventItem) {
+					continue
+				}
+				// Event text is escaped: the tooltip is rich text.
+				var bullet = eventItem.endDateTime && eventItem.endDateTime < now ? "✓" : "■"
 				var line = ''
-				line += '<font color="' + eventItem.backgroundColor + '">■</font> '
-				line += '<b>' + eventItem.summary + ':</b> '
-				line += LocaleFuncs.formatEventDuration(eventItem, {
+				line += '<font color="' + Shared.escapeHtml(eventItem.backgroundColor) + '">' + bullet + '</font> '
+				line += '<b>' + Shared.escapeHtml(eventItem.summary) + ':</b> '
+				line += Shared.escapeHtml(LocaleFuncs.formatEventDuration(eventItem, {
 					relativeDate: thisDate,
 					clock24h: appletConfig.clock24h,
-				})
+				}))
 				lines.push(line)
 			}
 			return lines.join('<br>')

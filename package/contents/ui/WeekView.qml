@@ -780,7 +780,7 @@ Item {
 											}
 											textFormat: Text.StyledText
 											linkColor: Shared.contrastTextColor(eventBlock.barColor)
-											onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+											onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 											color: Shared.contrastTextColor(eventBlock.barColor)
 											font: Kirigami.Theme.smallFont
 											elide: Text.ElideRight

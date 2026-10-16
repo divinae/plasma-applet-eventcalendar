@@ -3,6 +3,8 @@
 import QtQuick
 import org.kde.plasma.plasma5support as Plasma5Support
 
+import "Base64Compat.js" as Base64Compat
+
 Plasma5Support.DataSource {
 	id: executable
 	engine: "executable"
@@ -14,11 +16,12 @@ Plasma5Support.DataSource {
 		var stdout = data["stdout"]
 		var stderr = data["stderr"]
 		var listener = listeners[cmd]
+		delete listeners[cmd]
+		disconnectSource(sourceName) // clean up the completed run before callbacks can restart it
 		if (listener) {
 			listener(cmd, exitCode, exitStatus, stdout, stderr)
 		}
 		exited(cmd, exitCode, exitStatus, stdout, stderr)
-		disconnectSource(sourceName) // cmd finished
 	}
 
 	signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
@@ -28,6 +31,10 @@ Plasma5Support.DataSource {
 	}
 
 	property var listeners: ({}) // Empty Map
+	property string argvRunnerPath: {
+		var resolved = String(Qt.resolvedUrl("../../scripts/run_argv.py"))
+		return resolved.indexOf("file://") === 0 ? resolved.slice(7) : resolved
+	}
 
 	// Note that this has not gone under a security audit.
 	// You probably shouldn't trust 3rd party input.
@@ -53,24 +60,99 @@ Plasma5Support.DataSource {
 		return str.replace(/[\'\"]/g, '')
 	}
 
-	function exec(cmd, callback) {
-		if (Array.isArray(cmd)) {
-			cmd = cmd.map(wrapToken)
-			cmd = cmd.join(' ')
-		}
-		if (typeof callback === 'function') {
-			if (listeners[cmd]) { // Our implementation only allows 1 callback per command.
-				exited.disconnect(listeners[cmd])
-				delete listeners[cmd]
+	function encodeArgvPayload(argv) {
+		var payload = Base64Compat.base64EncodeString(JSON.stringify(argv))
+		payload = payload.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '')
+		return payload
+	}
+
+	function buildArgvCommand(argv) {
+		return [
+			"python3",
+			argvRunnerPath,
+			encodeArgvPayload(argv),
+		].map(wrapToken).join(" ")
+	}
+
+	function isSensitiveArgFlag(arg) {
+		var lower = ("" + arg).toLowerCase()
+		return [
+			"--access-token",
+			"--access_token",
+			"--refresh-token",
+			"--refresh_token",
+			"--client-secret",
+			"--client_secret",
+			"--password",
+			"--passwd",
+			"--authorization",
+			"--cookie",
+		].indexOf(lower) >= 0
+	}
+
+	function isSensitiveArgValue(arg) {
+		var lower = ("" + arg).toLowerCase()
+		return lower.indexOf("authorization:") === 0
+			|| lower.indexOf("cookie:") === 0
+			|| lower.indexOf("bearer ") === 0
+	}
+
+	function containsSensitiveArgv(argv) {
+		for (var i = 0; i < argv.length; i++) {
+			if (isSensitiveArgFlag(argv[i])) {
+				return true
 			}
+			if (i > 0 && isSensitiveArgFlag(argv[i - 1])) {
+				return true
+			}
+			if (isSensitiveArgValue(argv[i])) {
+				return true
+			}
+		}
+		return false
+	}
+
+	function failImmediately(cmd, callback, message) {
+		console.error(message)
+		if (typeof callback === "function") {
+			callback(Array.isArray(cmd) ? JSON.stringify(cmd) : String(cmd), 1, 1, "", message)
+		}
+	}
+
+	function runCommand(cmd, callback) {
+		// A command may be restarted after a suspended process never completed.
+		// Remove both its stale callback and source before registering the new run.
+		delete listeners[cmd]
+		disconnectSource(cmd)
+		if (typeof callback === 'function') {
 			var listener = execCallback.bind(executable, callback)
 			listeners[cmd] = listener
 		}
+		// console.log('cmd', cmd)
 		connectSource(cmd)
 	}
 
+	function exec(cmd, callback) {
+		if (Array.isArray(cmd)) {
+			failImmediately(cmd, callback, "ExecUtil.exec() only accepts string commands. Use execArgv() for non-secret argv values.")
+			return
+		}
+		runCommand(cmd, callback)
+	}
+
+	function execArgv(argv, callback) {
+		if (!Array.isArray(argv) || !argv.length) {
+			failImmediately(argv, callback, "ExecUtil.execArgv() requires a non-empty argv array.")
+			return
+		}
+		if (containsSensitiveArgv(argv)) {
+			failImmediately(argv, callback, "ExecUtil.execArgv() must not be used with secrets or authorization headers.")
+			return
+		}
+		runCommand(buildArgvCommand(argv), callback)
+	}
+
 	function execCallback(callback, cmd, exitCode, exitStatus, stdout, stderr) {
-		delete listeners[cmd]
 		callback(cmd, exitCode, exitStatus, stdout, stderr)
 	}
 }

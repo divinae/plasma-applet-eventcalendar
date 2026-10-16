@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../lib"
+import "../lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "../lib/Pkce.js" as Pkce
 import "../lib/ConfigUtils.js" as ConfigUtils
 import "../lib/Requests.js" as Requests
@@ -10,6 +11,7 @@ Item {
 
 	Logger {
 		id: logger
+		name: "eventcalendar"
 		showDebug: readConfig("debugging", false)
 	}
 
@@ -39,8 +41,6 @@ Item {
 	readonly property string redirectUri: normalizedRedirectMode(redirectMode) === "hosted"
 		? hostedRedirectUri
 		: localRedirectUri
-	property string legacyClientId: "391436299960-k0s16nm589meovhoblpcquqgbbrena17.apps.googleusercontent.com"
-	property string legacyClientSecret: "Gdr_7lKIQuGBD4Up3MOiw-7i"
 	property string defaultClientId: "352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
 	property var configBridge: null
 	function normalizedClientValue(value) {
@@ -50,6 +50,7 @@ Item {
 	property string effectiveClientSecret: ""
 	property string pkceVerifier: ""
 	property string pkceChallenge: ""
+	property string authState: ""
 	property var pendingAuthContext: null
 
 	Connections {
@@ -65,7 +66,7 @@ Item {
 			}
 		}
 		function onActiveAccountIdChanged() {
-			session.refreshActiveAccount()
+			session.refreshActiveAccount(accountsStore.activeAccountId)
 		}
 	}
 
@@ -106,10 +107,10 @@ Item {
 	}
 
 	function refreshActiveAccount() {
-		activeAccount = accountsStore.getAccount(activeAccountId)
-		// Selections first: the config page builds its checkboxes when the lists change.
+		var targetAccountId = arguments.length > 0 ? arguments[0] : activeAccountId
+		activeAccount = accountsStore.getAccount(targetAccountId)
 		// Only assign when the content changed, so saving a checkbox (or a token refresh)
-		// doesn't rebuild the whole list.
+		// doesn't rebuild lists bound to these properties.
 		function assignIfChanged(key, value) {
 			if (JSON.stringify(session[key]) !== JSON.stringify(value)) {
 				session[key] = value
@@ -121,46 +122,44 @@ Item {
 		assignIfChanged('tasklistList', activeAccount ? activeAccount.tasklistList || [] : [])
 	}
 
+	onActiveAccountIdChanged: refreshActiveAccount(activeAccountId)
+
 	function refreshClientCredentials() {
 		migrateDefaultClientIfNeeded()
 		var useDesktopClient = readConfig("useDesktopClient", false)
 		var customId = normalizedClientValue(readConfig("customClientId", ""))
 		var customSecret = normalizedClientValue(readConfig("customClientSecret", ""))
-		var latestId = readConfig("latestClientId", "")
-		var latestSecret = readConfig("latestClientSecret", "")
-		if (customId || customSecret) {
+		var latestId = normalizedClientValue(readConfig("latestClientId", ""))
+		var latestSecret = normalizedClientValue(readConfig("latestClientSecret", ""))
+		if (customId) {
 			effectiveClientId = customId
 			effectiveClientSecret = customSecret
-		} else if (useDesktopClient) {
-			effectiveClientId = defaultClientId
-			effectiveClientSecret = ""
-		} else {
+		} else if (!useDesktopClient && latestId) {
 			effectiveClientId = latestId
 			effectiveClientSecret = latestSecret
+		} else {
+			effectiveClientId = defaultClientId
+			effectiveClientSecret = ""
 		}
 	}
 
 	function migrateDefaultClientIfNeeded() {
 		var customId = normalizedClientValue(readConfig("customClientId", ""))
-		var customSecret = normalizedClientValue(readConfig("customClientSecret", ""))
-		if (customId || customSecret) {
+		if (customId) {
 			return
 		}
-		var useDesktopClient = readConfig("useDesktopClient", false)
-		var latestId = readConfig("latestClientId", "")
-		var latestSecret = readConfig("latestClientSecret", "")
+		var latestId = normalizedClientValue(readConfig("latestClientId", ""))
+		var latestSecret = normalizedClientValue(readConfig("latestClientSecret", ""))
 		if (!latestId) {
-			writeConfig("latestClientId", legacyClientId)
-			writeConfig("latestClientSecret", legacyClientSecret)
-			return
+			writeConfig("latestClientId", defaultClientId)
+			latestId = defaultClientId
 		}
-		if (!useDesktopClient && latestId === defaultClientId) {
-			writeConfig("latestClientId", legacyClientId)
-			writeConfig("latestClientSecret", legacyClientSecret)
-			return
-		}
-		if (latestId === legacyClientId && !latestSecret) {
-			writeConfig("latestClientSecret", legacyClientSecret)
+		if (latestSecret) {
+			if (readConfig("useDesktopClient", false) !== false) {
+				writeConfig("useDesktopClient", false)
+			}
+		} else if (readConfig("useDesktopClient", false) !== true) {
+			writeConfig("useDesktopClient", true)
 		}
 	}
 
@@ -170,11 +169,20 @@ Item {
 		}
 	}
 
-	// OAuth state: the redirect listener only accepts the sign-in this widget started.
-	property string oauthState: ""
 	function resetPkce() {
 		pkceVerifier = Pkce.generateVerifier()
 		pkceChallenge = Pkce.challengeFromVerifier(pkceVerifier)
+	}
+	function generateAuthState() {
+		return Pkce.generateOpaqueToken(32)
+	}
+	function ensureAuthState() {
+		if (!authState) {
+			authState = generateAuthState()
+		}
+	}
+	function resetAuthState() {
+		authState = generateAuthState()
 	}
 	function redirectUriForMode(mode) {
 		return normalizedRedirectMode(mode) === "hosted" ? hostedRedirectUri : localRedirectUri
@@ -188,7 +196,7 @@ Item {
 			redirectUri: redirectUriForMode(mode),
 			pkceVerifier: usePkce ? pkceVerifier : "",
 			pkceChallenge: usePkce ? pkceChallenge : "",
-			state: oauthState,
+			state: authState,
 		}
 	}
 	function currentAuthContext() {
@@ -196,43 +204,55 @@ Item {
 	}
 	function prepareAuthorization() {
 		refreshClientCredentials()
-		var mode = normalizedRedirectMode(redirectMode)
-		if (mode === "hosted" && !effectiveClientSecret) {
-			writeConfig("googleRedirectMode", "local")
-			error("Hosted mode requires a client secret. Switching to localhost.")
-			mode = "local"
+		var configError = authConfigurationError()
+		if (configError) {
+			error(configError)
+			throw new Error(configError)
 		}
-		oauthState = Pkce.generateVerifier(43)
+		var mode = normalizedRedirectMode(redirectMode)
 		if (!effectiveClientSecret) {
 			resetPkce()
 		} else {
 			pkceVerifier = ""
 			pkceChallenge = ""
 		}
+		resetAuthState()
 		pendingAuthContext = buildAuthContext(mode)
 	}
-	function switchToLegacyClient() {
-		writeConfig("latestClientId", legacyClientId)
-		writeConfig("latestClientSecret", legacyClientSecret)
-		refreshClientCredentials()
-		prepareAuthorization()
-	}
 	function maybeUseLegacyForLocal() {
-		var ctx = currentAuthContext()
-		if (normalizedRedirectMode(redirectMode) !== "local") {
-			return false
-		}
-		if (ctx.clientSecret) {
-			return false
-		}
-		if (ctx.clientId !== defaultClientId) {
-			return false
-		}
-		switchToLegacyClient()
-		return true
+		return false
+	}
+	function authConfigurationError() {
+		return authConfigurationErrorFor(effectiveClientId, effectiveClientSecret)
+	}
+	function authConfigurationErrorFor(clientId, clientSecret) {
+		return GoogleOAuthConfig.authConfigurationError(clientId, clientSecret, defaultClientId)
 	}
 	function clearAuthorizationContext() {
+		authState = ""
 		pendingAuthContext = null
+	}
+	function clientIdSuffix(clientId) {
+		var value = clientId ? String(clientId) : ""
+		return value.length > 12 ? value.slice(-12) : value
+	}
+	function summarizeTokenResponse(parsed, ctx, accountId, existingAccount) {
+		return {
+			accountId: accountId || "",
+			clientIdSuffix: clientIdSuffix(ctx && ctx.clientId),
+			redirectUri: ctx && ctx.redirectUri ? ctx.redirectUri : "",
+			usingPkce: !!(ctx && ctx.pkceVerifier),
+			hasClientSecret: !!(ctx && ctx.clientSecret),
+			existingAccountId: existingAccount && existingAccount.id ? existingAccount.id : "",
+			existingAccountHasRefreshToken: !!(existingAccount && existingAccount.refreshToken),
+			hasAccessToken: !!(parsed && parsed.access_token),
+			hasRefreshToken: !!(parsed && parsed.refresh_token),
+			tokenType: parsed && parsed.token_type ? parsed.token_type : "",
+			expiresIn: parsed && parsed.expires_in ? parsed.expires_in : 0,
+			scope: parsed && parsed.scope ? parsed.scope : "",
+			error: parsed && parsed.error ? parsed.error : "",
+			errorDescription: parsed && parsed.error_description ? parsed.error_description : "",
+		}
 	}
 	function buildAuthorizationUrl(ctx) {
 		var url = 'https://accounts.google.com/o/oauth2/v2/auth'
@@ -242,6 +262,9 @@ Item {
 		url += '&access_type=offline'
 		url += '&prompt=consent'
 		url += '&client_id=' + encodeURIComponent(ctx.clientId)
+		if (ctx.state) {
+			url += '&state=' + encodeURIComponent(ctx.state)
+		}
 		if (ctx.pkceChallenge) {
 			url += '&code_challenge=' + encodeURIComponent(ctx.pkceChallenge)
 			url += '&code_challenge_method=S256'
@@ -283,9 +306,26 @@ Item {
 		}
 	}
 
-	// Signed in with an older OAuth client: the account must sign in again.
+	// The account must sign in again: Google revoked the grant, or it was signed in with another
+	// OAuth client / PKCE setting than the current one. Same rules as Logic.currentErrorMessage:
+	// secret-based accounts refresh with their own stored client secret, so they're fine.
 	function accountNeedsRelog(account) {
-		return !!(account && account.accessToken && account.sessionClientId != effectiveClientId)
+		if (!account) {
+			return false
+		}
+		if (account.reauthRequired) {
+			return true
+		}
+		if (account.sessionUsesPkce === false || (account.sessionUsesPkce === undefined && account.sessionClientSecret)) {
+			return false
+		}
+		if (account.sessionClientId && account.sessionClientId != effectiveClientId) {
+			return true
+		}
+		if (account.sessionUsesPkce === true && !!effectiveClientSecret) {
+			return true
+		}
+		return false
 	}
 
 	function removeAccount(accountId) {
@@ -304,16 +344,47 @@ Item {
 		return trimmed
 	}
 
-	function fetchAccessToken(args) {
+	function describeAuthError(ctx, data, fallbackErr) {
+		var errorDescription = data && data.error_description
+			? String(data.error_description)
+			: ""
+		if (data && data.error === "invalid_request"
+			&& errorDescription.toLowerCase().indexOf("client_secret is missing") !== -1
+		) {
+			if (!ctx.clientSecret && ctx.clientId === defaultClientId) {
+				return "Google rejected the built-in login because this client now requires a client secret. Add your own Google OAuth client ID and client secret, or switch back to a previously stored secret-based client."
+			}
+			return errorDescription
+		}
+		if (errorDescription) {
+			return errorDescription
+		}
+		if (data && data.error && data.error.message) {
+			return String(data.error.message)
+		}
+		if (data && data.error) {
+			return String(data.error)
+		}
+		return fallbackErr || "Google authentication failed."
+	}
+
+	function fetchAccessToken(args, callback) {
 		var ctx = currentAuthContext()
 		var authCode = extractAuthorizationCode(args.authorizationCode)
+		var existingAccount = args.accountId ? accountsStore.getAccount(args.accountId) : null
 		if (!authCode) {
 			handleError('Invalid Google Authorization Code', null)
+			if (typeof callback === "function") {
+				callback('Invalid Google Authorization Code')
+			}
 			return
 		}
 		var url = 'https://oauth2.googleapis.com/token'
 		if (!ctx.pkceVerifier && !ctx.clientSecret) {
 			handleError('Missing PKCE verifier. Start login from the widget and try again.', null)
+			if (typeof callback === "function") {
+				callback('Missing PKCE verifier. Start login from the widget and try again.')
+			}
 			return
 		}
 		var payload = {
@@ -328,12 +399,19 @@ Item {
 		if (ctx.pkceVerifier) {
 			payload.code_verifier = ctx.pkceVerifier
 		}
+		logger.debugJSON("fetchAccessToken.request", {
+			accountId: args.accountId || "",
+			clientIdSuffix: clientIdSuffix(ctx.clientId),
+			redirectUri: ctx.redirectUri,
+			usingPkce: !!ctx.pkceVerifier,
+			hasClientSecret: !!ctx.clientSecret,
+			existingAccountId: existingAccount && existingAccount.id ? existingAccount.id : "",
+			existingAccountHasRefreshToken: !!(existingAccount && existingAccount.refreshToken),
+		})
 		Requests.post({
 			url: url,
 			data: payload,
 		}, function(err, data, xhr) {
-			logger.debug('/oauth2/v4/token Response', err, xhr && xhr.status) // Never log the body: it has the tokens
-
 			var parsed = null
 			if (data) {
 				try {
@@ -342,60 +420,151 @@ Item {
 					parsed = null
 				}
 			}
+			logger.debugJSON("fetchAccessToken.responseSummary", {
+				status: xhr ? xhr.status : 0,
+				err: err || "",
+				summary: summarizeTokenResponse(parsed, ctx, args.accountId, existingAccount),
+			})
 			if (err) {
-				handleError(err, parsed || data)
+				var requestError = describeAuthError(ctx, parsed, err)
+				handleError(requestError, null)
+				if (typeof callback === "function") {
+					callback(requestError)
+				}
 				return
 			}
 			if (!parsed) {
 				handleError('Error parsing /oauth2/v4/token data as JSON', null)
+				if (typeof callback === "function") {
+					callback('Error parsing token response.')
+				}
 				return
 			}
 			if (parsed && parsed.error) {
-				var errorDesc = parsed.error_description || ""
-				var missingSecret = parsed.error === "invalid_request" && errorDesc.indexOf("client_secret") !== -1
-				if (missingSecret
-					&& !ctx.clientSecret
-					&& ctx.clientId === defaultClientId
-					&& normalizedRedirectMode(redirectMode) === "local"
-				) {
-					switchToLegacyClient()
-					error("Google requires a client secret for the built-in client. Switching to a fallback login. Please complete the login again.")
-					Qt.openUrlExternally(authorizationCodeUrl)
-					return
+				var parsedError = describeAuthError(ctx, parsed, err)
+				handleError(parsedError, null)
+				if (typeof callback === "function") {
+					callback(parsedError)
 				}
-				handleError(err, parsed)
+				return
+			}
+			var canReuseRefreshToken = !!(existingAccount
+				&& existingAccount.refreshToken
+				&& !existingAccount.reauthRequired)
+			if (!parsed.refresh_token && !canReuseRefreshToken) {
+				logger.debugJSON("fetchAccessToken.missingRefreshToken", summarizeTokenResponse(parsed, ctx, args.accountId, existingAccount))
+				var refreshTokenError = existingAccount && existingAccount.reauthRequired
+					? "Google login completed, but no replacement refresh token was returned. Revoke the app's Google access and reconnect this account."
+					: "Google login completed, but no refresh token was returned. Revoke the app's Google access and login again."
+				handleError(refreshTokenError, null)
+				if (typeof callback === "function") {
+					callback(refreshTokenError)
+				}
 				return
 			}
 
 			// Ready
-			updateAccessToken(parsed, args.accountId)
+			updateAccessToken(parsed, args.accountId, function(updateErr) {
+				if (typeof callback === "function") {
+					callback(updateErr || null, updateErr ? null : parsed)
+				}
+			})
 		})
 	}
 
-	function updateAccessToken(data, accountId) {
-		var account = accountId ? accountsStore.getAccount(accountId) : null
-		var targetId = accountId
-		if (!account) {
+	function resolveLoginTargetAccount(accountId, callback) {
+		var existingAccount = accountId ? accountsStore.getAccount(accountId) : null
+		if (existingAccount) {
+			callback({
+				account: existingAccount,
+				targetId: existingAccount.id,
+				createdAccount: false,
+				reusedDeadAccount: false,
+			})
+			return
+		}
+		accountsStore.findReusableAccount(function(reusableId) {
+			if (reusableId) {
+				callback({
+					account: accountsStore.getAccount(reusableId),
+					targetId: reusableId,
+					createdAccount: false,
+					reusedDeadAccount: true,
+				})
+				return
+			}
 			var created = accountsStore.addAccount({
 				label: '',
 				skipDefaultCalendarSelection: true,
+				skipSerialize: true,
+				skipSetActive: true,
 			})
-			targetId = created.id
-		}
-		accountsStore.updateAccount(targetId, {
-			sessionClientId: effectiveClientId,
-			sessionClientSecret: effectiveClientSecret,
-			accessToken: data.access_token,
-			accessTokenType: data.token_type,
-			accessTokenExpiresAt: Date.now() + data.expires_in * 1000,
-			refreshToken: data.refresh_token || (account && account.refreshToken) || '',
+			callback({
+				account: created,
+				targetId: created.id,
+				createdAccount: true,
+				reusedDeadAccount: false,
+			})
 		})
-		accountsStore.setActiveAccountId(targetId)
-		newAccessToken()
-		clearAuthorizationContext()
 	}
 
-	onNewAccessToken: updateData()
+	function updateAccessToken(data, accountId, callback) {
+		resolveLoginTargetAccount(accountId, function(target) {
+			var account = target.account
+			var patch = {
+				sessionClientId: effectiveClientId,
+				sessionClientSecret: effectiveClientSecret,
+				sessionUsesPkce: !effectiveClientSecret,
+				reauthRequired: false,
+				reauthReason: '',
+				accessToken: data.access_token,
+				accessTokenType: data.token_type,
+				accessTokenExpiresAt: Date.now() + data.expires_in * 1000,
+				refreshToken: data.refresh_token || (account && account.refreshToken) || '',
+			}
+			if (target.reusedDeadAccount) {
+				patch.label = ''
+				patch.calendarList = []
+				patch.calendarIdList = []
+				patch.calendarSelectionInitialized = false
+				patch.tasklistList = []
+				patch.tasklistIdList = []
+			}
+			logger.debugJSON("updateAccessToken", {
+				requestedAccountId: accountId || "",
+				targetId: target.targetId,
+				createdAccount: target.createdAccount,
+				reusedDeadAccount: target.reusedDeadAccount,
+				clientIdSuffix: clientIdSuffix(effectiveClientId),
+				sessionUsesPkce: !effectiveClientSecret,
+				hasAccessToken: !!data.access_token,
+				hasRefreshToken: !!data.refresh_token,
+				reusedExistingRefreshToken: !data.refresh_token && !!(account && account.refreshToken),
+			})
+			accountsStore.updateAccount(target.targetId, patch, function(updateErr) {
+				if (updateErr) {
+					if (target.createdAccount) {
+						accountsStore.removeAccount(target.targetId)
+					}
+					var saveError = "Could not save Google refresh token. Check that Secret Service or KWallet is available, then login again."
+					handleError(saveError, null)
+					if (typeof callback === "function") {
+						callback(updateErr)
+					}
+					return
+				}
+				accountsStore.setActiveAccountId(target.targetId)
+				accountsStore.pruneReusableAccounts(target.targetId)
+				newAccessToken()
+				clearAuthorizationContext()
+				if (typeof callback === "function") {
+					callback(null, target.targetId)
+				}
+			})
+		})
+	}
+
+	onNewAccessToken: Qt.callLater(updateData)
 
 	function updateData(accountId) {
 		updateCalendarList(accountId)
@@ -420,6 +589,16 @@ Item {
 			if (label && !account.label) {
 				patch.label = label
 			}
+			if (!account.calendarSelectionInitialized
+				&& (!account.calendarIdList || !account.calendarIdList.length)
+				&& accountsStore.defaultCalendarIdList
+			) {
+				var defaultList = accountsStore.defaultCalendarIdList(data.items)
+				if (defaultList.length) {
+					patch.calendarIdList = defaultList
+					patch.calendarSelectionInitialized = true
+				}
+			}
 			accountsStore.updateAccount(account.id, patch)
 		})
 	}
@@ -435,7 +614,11 @@ Item {
 			if (!err && data && data.error) {
 				return callback('fetchGCalCalendars error', data, xhr)
 			}
-			logger.debugJSON('fetchGCalCalendars.response.data', data)
+			logger.debugJSON('fetchGCalCalendars.responseSummary', {
+				status: xhr ? xhr.status : 0,
+				err: err || "",
+				count: data && data.items ? data.items.length : 0,
+			})
 			callback(err, data, xhr)
 		})
 	}
@@ -465,11 +648,14 @@ Item {
 				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
-			logger.debug('fetchGoogleTasklistList.response', err, xhr && xhr.status)
 			if (!err && data && data.error) {
 				return callback('fetchGoogleTasklistList error', data, xhr)
 			}
-			logger.debugJSON('fetchGoogleTasklistList.response.data', data)
+			logger.debugJSON('fetchGoogleTasklistList.responseSummary', {
+				status: xhr ? xhr.status : 0,
+				err: err || "",
+				count: data && data.items ? data.items.length : 0,
+			})
 			callback(err, data, xhr)
 		})
 	}

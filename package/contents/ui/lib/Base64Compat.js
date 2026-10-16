@@ -71,10 +71,36 @@ function bytesToUtf8String(bytes) {
 	return text
 }
 
+function asciiStringToBytes(value) {
+	var stringValue = String(value)
+	var bytes = []
+	for (var i = 0; i < stringValue.length; i++) {
+		bytes.push(stringValue.charCodeAt(i) & 0xFF)
+	}
+	return bytes
+}
+
+function bytesToAsciiString(bytes) {
+	var text = ""
+	for (var i = 0; i < bytes.length; i++) {
+		text += String.fromCharCode(bytes[i])
+	}
+	return text
+}
+
 function arrayLikeToBytes(value) {
+	if (typeof value === "string") {
+		return asciiStringToBytes(value)
+	}
+
+	if (typeof ArrayBuffer !== "undefined" && value instanceof ArrayBuffer) {
+		return arrayLikeToBytes(new Uint8Array(value))
+	}
+
 	if (!value || typeof value.length !== "number") {
 		return []
 	}
+
 	var bytes = []
 	for (var i = 0; i < value.length; i++) {
 		var item = value[i]

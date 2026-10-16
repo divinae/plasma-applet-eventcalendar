@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 
 import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
+import "../lib"
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
 
@@ -22,6 +23,12 @@ CalendarManager {
 	property var accountsStore
 	property string accountId: ""
 	property string accountLabel: ""
+
+	Logger {
+		id: logger
+		name: 'eventcalendar-google-tasks'
+		showDebug: plasmoid.configuration.debugging
+	}
 
 	function getAccount() {
 		if (!accountsStore || !accountId) {
@@ -75,7 +82,9 @@ CalendarManager {
 	}
 
 	function fetchGoogleAccountData() {
-		if (!session.accessToken) {
+		// Tokens may live in the system keyring: an account is enough to start.
+		var account = getAccount()
+		if (!account) {
 			return
 		}
 		var idList = getTasklistIdList()
@@ -193,7 +202,7 @@ CalendarManager {
 	// CalendarManager
 	function getCalendarList() {
 		var account = getAccount()
-		if (!session.accessToken || !account || !account.tasklistList) {
+		if (!account || !account.tasklistList) {
 			return []
 		}
 		var tasklistList = account.tasklistList

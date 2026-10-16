@@ -34,11 +34,50 @@ LinkRect {
 	property alias isEditing: editEventForm.active
 	clickable: !isEditing
 
+	// Keyboard and screen readers: the tile is a button that opens the event details.
+	activeFocusOnTab: clickable
+	Accessible.role: Accessible.Button
+	Accessible.name: model.summary || i18n("Calendar event")
+	Accessible.description: accessibleDescription()
+	Accessible.focusable: activeFocusOnTab
+	Accessible.focused: activeFocus
+	Accessible.onPressAction: activateEvent()
+	Keys.onReturnPressed: function(event) {
+		activateEvent()
+		event.accepted = true
+	}
+	Keys.onEnterPressed: function(event) {
+		activateEvent()
+		event.accepted = true
+	}
+	Keys.onSpacePressed: function(event) {
+		activateEvent()
+		event.accepted = true
+	}
+	function activateEvent() {
+		if (clickable) {
+			popup.activateEvent(events.get(eventItemIndex))
+		}
+	}
+	function accessibleDescription() {
+		var parts = []
+		if (eventTimestamp) {
+			parts.push(eventTimestamp)
+		}
+		if (model.location) {
+			parts.push(model.location)
+		}
+		if (eventItemInProgress) {
+			parts.push(i18n("In progress"))
+		}
+		return parts.join(". ")
+	}
+
 	readonly property string eventTimestamp: LocaleFuncs.formatEventDuration(model, {
 		relativeDate: agendaItemDate,
 		clock24h: appletConfig.clock24h,
 	})
-	readonly property bool isAllDay: eventTimestamp === i18n("All Day") // TODO: Remove string comparison.
+	readonly property bool isAllDay: !!model.start && !!model.start.date && !model.start.dateTime
 	readonly property bool isCondensed: plasmoid.configuration.agendaCondensedAllDayEvent && isAllDay
 
 	// Tile in the event color, like the day list and the week view.
@@ -99,7 +138,7 @@ LinkRect {
 					text: model.location ? Shared.escapeHtml(eventTimestamp) + " · " + Shared.locationLink(model.location) : Shared.escapeHtml(eventTimestamp)
 					textFormat: Text.StyledText
 					linkColor: agendaEventItem.tileTextColor
-					onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 					color: agendaEventItem.tileTextColor
 					opacity: 0.85
 					font: Kirigami.Theme.smallFont
@@ -133,7 +172,7 @@ LinkRect {
 			elide: Text.ElideRight
 			linkColor: agendaEventItem.tileTextColor
 			onLinkActivated: function(link) {
-				Qt.openUrlExternally(link)
+				Shared.openExternalUrl(link)
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -157,7 +196,7 @@ LinkRect {
 		}
 	}
 
-	onLeftClicked: popup.activateEvent(events.get(eventItemIndex))
+	onLeftClicked: activateEvent()
 
 	onLoadContextMenu: function(contextMenu) {
 		var menuItem
@@ -192,7 +231,7 @@ LinkRect {
 		menuItem.icon.name = "internet-web-browser"
 		menuItem.enabled = !!event.htmlLink
 		menuItem.clicked.connect(function() {
-			Qt.openUrlExternally(event.htmlLink)
+			Shared.openExternalUrl(event.htmlLink)
 		})
 		contextMenu.addMenuItem(menuItem)
 	}

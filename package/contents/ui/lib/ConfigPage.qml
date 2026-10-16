@@ -54,6 +54,8 @@ KCM.SimpleKCM {
 	property var cfg_topRowHeightDefault
 	property var cfg_rightColumnWidth
 	property var cfg_rightColumnWidthDefault
+	property var cfg_v73Migration
+	property var cfg_v73MigrationDefault
 	property var cfg_v72Migration
 	property var cfg_v72MigrationDefault
 	property var cfg_v71Migration
@@ -194,6 +196,8 @@ KCM.SimpleKCM {
 	property var cfg_eventNotifySkipDeclinedDefault
 	property var cfg_enabledCalendarPlugins
 	property var cfg_enabledCalendarPluginsDefault
+	property var cfg_enabledCalendarPluginsAllowEmpty
+	property var cfg_enabledCalendarPluginsAllowEmptyDefault
 	property var cfg_googleAccounts
 	property var cfg_googleAccountsDefault
 	property var cfg_googleActiveAccountId
@@ -291,11 +295,25 @@ KCM.SimpleKCM {
 			return fallback
 		}
 
+		function isEqual(a, b) {
+			if (a === b) return true
+			if (typeof a === 'object' && typeof b === 'object') {
+				return JSON.stringify(a) === JSON.stringify(b)
+			}
+			return false
+		}
+
 		function write(key, value) {
 			var prop = "cfg_" + key
 			if (prop in page) {
+				if (isEqual(page[prop], value)) {
+					return
+				}
 				page[prop] = value
 			} else if (typeof plasmoid !== "undefined" && plasmoid.configuration) {
+				if (isEqual(plasmoid.configuration[key], value)) {
+					return
+				}
 				plasmoid.configuration[key] = value
 			}
 			if (typeof kcm !== "undefined") {

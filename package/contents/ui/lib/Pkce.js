@@ -2,19 +2,34 @@
 
 .import "Base64Compat.js" as Base64Compat
 
-function generateVerifier(length) {
-	var size = length || 64
-	if (size < 43) {
-		size = 43
-	} else if (size > 128) {
-		size = 128
+var fallbackCounter = 0
+
+function generateOpaqueToken(length) {
+	var token = ""
+
+	if (typeof Qt.createUuid === "function") {
+		while (token.length < length) {
+			token += String(Qt.createUuid()).replace(/[{}\-]/g, "")
+		}
+		return token.slice(0, length)
 	}
-	var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
-	var result = ""
-	for (var i = 0; i < size; i++) {
-		result += chars.charAt(Math.floor(Math.random() * chars.length))
+
+	while (token.length < length) {
+		fallbackCounter++
+		token += Qt.md5([
+			Date.now(),
+			fallbackCounter,
+			Math.random(),
+			Math.random(),
+			Math.random(),
+			Math.random(),
+		].join(":"))
 	}
-	return result
+	return token.slice(0, length)
+}
+
+function generateVerifier() {
+	return generateOpaqueToken(96)
 }
 
 function base64UrlEncode(bytes) {

@@ -139,9 +139,11 @@ ConfigPage {
 			}
 		}
 		ConfigString {
-			visible: page.configBridge.read("debugging", false) && weatherService.value === 'OpenWeatherMap'
+			visible: weatherService.value === 'OpenWeatherMap'
 			Kirigami.FormData.label: i18n("API app id:")
 			configKey: 'openWeatherMapAppId'
+			echoMode: TextInput.Password
+			placeholderText: i18n("Required for OpenWeatherMap")
 		}
 
 		//--- Display

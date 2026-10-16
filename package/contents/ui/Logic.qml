@@ -2,7 +2,8 @@ import QtQuick
 import "./ErrorType.js" as ErrorType
 import "./lib/Requests.js" as Requests
 import "./weather/WeatherApi.js" as WeatherApi
-import "./lib/Base64Compat.js" as Base64Compat
+import "./lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
+import "./lib/SafeConfig.js" as SafeConfig
 
 Item {
 	readonly property Item popup: root.fullRepresentationItem
@@ -132,7 +133,9 @@ Item {
 		WeatherApi.updateDailyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
-			logger.debugJSON('updateDailyWeather.response', data)
+			logger.debugJSON('updateDailyWeather.responseSummary', {
+				count: data && data.list ? data.list.length : 0,
+			})
 
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
@@ -152,7 +155,9 @@ Item {
 		WeatherApi.updateHourlyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
-			logger.debugJSON('updateHourlyWeather.response', data)
+			logger.debugJSON('updateHourlyWeather.responseSummary', {
+				count: data && data.list ? data.list.length : 0,
+			})
 
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
@@ -226,30 +231,43 @@ Item {
 		if (Array.isArray(raw)) {
 			return raw
 		}
-		var decoded = raw
 		try {
-			decoded = Base64Compat.base64DecodeToString(raw)
-		} catch (e) {
-			decoded = raw
-		}
-		try {
-			var parsed = JSON.parse(decoded)
+			var parsed = SafeConfig.parseBase64Json(raw, [])
 			return Array.isArray(parsed) ? parsed : []
-		} catch (e2) {
+		} catch (e) {
 			return []
 		}
+	}
+	function currentGoogleCredentials() {
+		return GoogleOAuthConfig.effectiveClientCredentials(
+			plasmoid.configuration,
+			"352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
+		)
+	}
+	function currentGoogleClientId() {
+		return currentGoogleCredentials().clientId
+	}
+	function currentGoogleUsesPkce() {
+		return !currentGoogleCredentials().clientSecret
 	}
 	property string currentErrorMessage: {
 		var accounts = parseGoogleAccounts()
 		for (var i = 0; i < accounts.length; i++) {
 			var account = accounts[i]
-			if (account.accessToken && account.sessionClientId && account.sessionClientId != plasmoid.configuration.latestClientId) {
+			if (account.reauthRequired) {
+				return i18n("Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again.")
+			}
+			if (account.sessionUsesPkce === false) {
+				continue
+			}
+			if (account.sessionClientId && account.sessionClientId !== currentGoogleClientId()) {
+				return i18n("Widget has been updated. Please logout and login to Google Calendar again.")
+			}
+			if (account.sessionUsesPkce === true && currentGoogleUsesPkce() === false) {
 				return i18n("Widget has been updated. Please logout and login to Google Calendar again.")
 			}
 		}
-		if (plasmoid.configuration.accessToken && plasmoid.configuration.latestClientId != plasmoid.configuration.sessionClientId) {
-			return i18n("Widget has been updated. Please logout and login to Google Calendar again.")
-		} else if (!plasmoid.configuration.accessToken && plasmoid.configuration.access_token) {
+		if (plasmoid.configuration.access_token) {
 			return i18n("Logged out of Google. Please login again.")
 		} else {
 			return ""

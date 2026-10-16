@@ -30,8 +30,6 @@ function getRainUnits(config) {
 	}
 }
 
-/* Open the city's webpage using Qt.openUrlExternally(url) */
-
 /* Update the weather shown in the agenda. */
 /* @returns: callback(err, {
 	list: [
@@ -118,7 +116,6 @@ var weatherIconBySeverity = [
 	'weather-few-clouds',
 	'weather-clouds-night',
 	'weather-clouds',
-	'weather-overcast',
 	'weather-fog',
 	'weather-overcast',
 	'weather-showers-scattered-night',

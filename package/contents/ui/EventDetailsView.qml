@@ -138,7 +138,7 @@ Rectangle {
 				icon.name: "internet-web-browser"
 				text: i18n("Open in Google Calendar")
 				display: QQC2.AbstractButton.IconOnly
-				onClicked: Qt.openUrlExternally(details.eventItem.htmlLink)
+				onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
 				PlasmaComponents3.ToolTip.text: text
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
@@ -216,7 +216,7 @@ Rectangle {
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					icon.name: "call-start"
 					text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
-					onClicked: Qt.openUrlExternally(details.meetingLink.url)
+					onClicked: Shared.openExternalUrl(details.meetingLink.url)
 				}
 
 				Kirigami.Separator {
@@ -249,7 +249,7 @@ Rectangle {
 						textFormat: Text.StyledText
 						text: Shared.locationLink(location) // Google Maps, or the URL itself
 						linkColor: Kirigami.Theme.linkColor
-						onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+						onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 					}
 
 					// Rooms
@@ -404,7 +404,7 @@ Rectangle {
 						return /<(br|p|div|li)\b/i.test(description) ? html : html.replace(/\n/g, '<br>')
 					}
 					linkColor: Kirigami.Theme.linkColor
-					onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 				}
 			}
 		}

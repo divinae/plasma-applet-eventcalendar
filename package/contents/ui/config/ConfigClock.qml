@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 
 import ".."
 import "../lib"
+import "../Shared.js" as Shared
 
 // Panel clock: time / date formats, font, next meeting chip.
 ConfigPage {
@@ -109,7 +110,7 @@ ConfigPage {
 			wrapMode: Text.Wrap
 			opacity: 0.7
 			text: i18n("Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd d MMM.")
-			onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+			onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 		}
 
 		//--- Second line

@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../lib/Requests.js" as Requests
+import "../lib/GoogleOAuthToken.js" as GoogleOAuthToken
 
 QtObject {
 	id: googleApiSession
@@ -9,6 +10,7 @@ QtObject {
 	property string accountId: ""
 	property int accountRevision: 0
 	property var connectedStore: null
+	property string defaultClientId: "352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
 
 	readonly property string accessToken: {
 		// Ensure refreshes propagate when account data updates.
@@ -25,13 +27,63 @@ QtObject {
 		return accountsStore.getAccount(accountId)
 	}
 
+	function readConfig(key, fallback) {
+		if (typeof plasmoid !== "undefined" && plasmoid.configuration) {
+			var value = plasmoid.configuration[key]
+			return (value === undefined || value === null) ? fallback : value
+		}
+		return fallback
+	}
+
+	function normalizedClientValue(value) {
+		return value ? String(value).trim() : ""
+	}
+
+	function resolveRefreshClientSecret(account) {
+		if (!account || account.sessionUsesPkce === true) {
+			return ""
+		}
+		if (account.sessionClientSecret) {
+			return normalizedClientValue(account.sessionClientSecret)
+		}
+		var customClientId = normalizedClientValue(readConfig("customClientId", ""))
+		var customClientSecret = normalizedClientValue(readConfig("customClientSecret", ""))
+		var latestClientId = normalizedClientValue(readConfig("latestClientId", ""))
+		var latestClientSecret = normalizedClientValue(readConfig("latestClientSecret", ""))
+		if (account.sessionClientId === customClientId) {
+			return customClientSecret
+		}
+		if (account.sessionClientId === latestClientId && latestClientSecret) {
+			return latestClientSecret
+		}
+		if (account.sessionClientId === defaultClientId) {
+			return ""
+		}
+		return ""
+	}
+
 	//--- Refresh Credentials
 	property var pendingTokenCallbacks: null
 	function checkAccessToken(callback) {
 		logger.debug('checkAccessToken')
 		var account = getAccount()
-		if (!account || !account.accessToken) {
-			return callback('No access token.')
+		if (!account) {
+			logger.log('checkAccessToken', 'No Google account', accountId)
+			return callback('No Google account.')
+		}
+		if (account.reauthRequired) {
+			return callback(GoogleOAuthToken.refreshErrorMessage(null, {
+				error: "invalid_grant",
+				error_subtype: account.reauthReason || "",
+			}))
+		}
+		if (!account.accessToken && account.refreshToken) {
+			updateAccessToken(callback)
+			return
+		}
+		if (!account.accessToken) {
+			logger.log('checkAccessToken', 'No refresh token', accountId)
+			return callback('No refresh token. Please login again.')
 		}
 		if (account.accessTokenExpiresAt < Date.now() + 5000) {
 			// Calendar and Tasks managers share this session and ask at the same time.
@@ -55,39 +107,85 @@ QtObject {
 
 	function updateAccessToken(callback) {
 		var account = getAccount()
-		if (account && account.refreshToken) {
-			logger.debug('updateAccessToken')
-			fetchNewAccessToken(function(err, data, xhr) {
-				if (err) {
-					logger.log('Error when using refreshToken:', err, xhr && xhr.status)
-					// Offline: not an authentication problem, the refresh is retried later.
-					return callback(err, Requests.isNetworkError(xhr))
-				}
-
-				var parsed = null
-				try {
-					parsed = JSON.parse(data)
-				} catch (e) {
-					logger.log('Error parsing refresh response:', e, data)
-					return callback('Invalid refresh response.')
-				}
-
-				if (parsed && parsed.error) {
-					logger.log('Error when using refreshToken:', parsed)
-					return callback(parsed.error_description || parsed.error)
-				}
-				if (!parsed || !parsed.access_token) {
-					logger.log('Missing access token in refresh response:', parsed)
-					return callback('Missing access token.')
-				}
-
-				logger.debug('onAccessToken', 'expires_in', parsed.expires_in) // Never log the token
-				googleApiSession.applyAccessToken(parsed)
-
-				callback(null)
-			})
-		} else {
+		if (!(account && account.refreshToken)) {
+			logger.log('updateAccessToken', 'No refresh token', accountId)
 			callback('No refresh token. Cannot update access token.')
+			return
+		}
+		if (refreshInFlight) {
+			refreshCallbacks.push(callback)
+			return
+		}
+		refreshInFlight = true
+		refreshCallbacks = [callback]
+		logger.debug('updateAccessToken')
+		fetchNewAccessToken(function(err, data, xhr) {
+			if (err && xhr && Requests.isNetworkError(xhr)) {
+				// Offline: not an authentication problem, the refresh is retried later.
+				logger.log('Token refresh failed: no connection')
+				finishRefresh(err, true)
+				return
+			}
+			var parsed = GoogleOAuthToken.parseTokenResponse(data)
+			if (err || (parsed && parsed.error)) {
+				var refreshError = GoogleOAuthToken.refreshErrorMessage(err, parsed)
+				var summary = GoogleOAuthToken.errorSummary(parsed)
+				logger.logJSON('Error when using refreshToken:', {
+					status: xhr ? xhr.status : 0,
+					error: summary.error,
+					errorSubtype: summary.errorSubtype,
+					hasDescription: summary.hasDescription,
+				})
+				finishRefresh(refreshError)
+				if (GoogleOAuthToken.requiresReauthorization(parsed)) {
+					markReauthorizationRequired(summary.errorSubtype || summary.error)
+				}
+				return
+			}
+
+			if (!parsed) {
+				logger.log('Error parsing Google token refresh response.')
+				finishRefresh('Invalid refresh response.')
+				return
+			}
+			if (!parsed.access_token) {
+				logger.log('Missing access token in refresh response. Keys:', Object.keys(parsed).join(','))
+				finishRefresh('Missing access token.')
+				return
+			}
+
+			logger.debugJSON('onAccessToken', {
+				tokenType: parsed.token_type || '',
+				expiresIn: parsed.expires_in || 0,
+				hasAccessToken: !!parsed.access_token,
+			})
+			var callbacks = refreshCallbacks.slice(0)
+			refreshCallbacks = []
+			refreshInFlight = false
+			googleApiSession.applyAccessToken(parsed)
+			for (var i = 0; i < callbacks.length; i++) {
+				callbacks[i](null)
+			}
+		})
+	}
+
+	function markReauthorizationRequired(reason) {
+		if (!accountsStore || !accountId) {
+			return
+		}
+		accountsStore.updateAccount(accountId, {
+			reauthRequired: true,
+			reauthReason: reason || "invalid_grant",
+		})
+	}
+
+	// isNetworkError: the refresh failed because we're offline (retried, not an auth problem).
+	function finishRefresh(err, isNetworkError) {
+		var callbacks = refreshCallbacks.slice(0)
+		refreshCallbacks = []
+		refreshInFlight = false
+		for (var i = 0; i < callbacks.length; i++) {
+			callbacks[i](err, !!isNetworkError)
 		}
 	}
 
@@ -95,31 +193,42 @@ QtObject {
 	signal newAccessToken()
 	signal transactionError(string msg)
 
+	property bool refreshInFlight: false
+	property var refreshCallbacks: []
+
 	onTransactionError: logger.log(msg)
 
 	function applyAccessToken(data) {
 		if (!accountsStore || !accountId) {
 			return
 		}
-		accountsStore.updateAccount(accountId, {
+		var patch = {
 			accessToken: data.access_token,
 			accessTokenType: data.token_type,
 			accessTokenExpiresAt: Date.now() + data.expires_in * 1000,
-		})
+		}
+		if (data.refresh_token) {
+			patch.refreshToken = data.refresh_token
+		}
+		accountsStore.updateAccount(accountId, patch)
 		newAccessToken()
 	}
 
 	function fetchNewAccessToken(callback) {
 		logger.debug('fetchNewAccessToken')
 		var account = getAccount()
+		var refreshClientSecret = resolveRefreshClientSecret(account)
+		if (account && account.sessionUsesPkce !== true && !refreshClientSecret) {
+			return callback('Saved Google session requires a configured client secret. Please login again.')
+		}
 		var url = 'https://oauth2.googleapis.com/token'
 		var data = {
 			client_id: account ? account.sessionClientId : "",
 			refresh_token: account ? account.refreshToken : "",
 			grant_type: 'refresh_token',
 		}
-		if (account && account.sessionClientSecret) {
-			data.client_secret = account.sessionClientSecret
+		if (refreshClientSecret) {
+			data.client_secret = refreshClientSecret
 		}
 		Requests.post({
 			url: url,

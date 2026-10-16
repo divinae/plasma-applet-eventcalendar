@@ -37,6 +37,16 @@ LinkRect {
 
 	property alias isEditing: editTaskForm.active
 	clickable: !isEditing
+	function taskAccessibleDescription() {
+		var parts = []
+		if (eventTimestamp) {
+			parts.push(i18n("Due %1", eventTimestamp))
+		}
+		if (taskIsOverdue) {
+			parts.push(i18n("Overdue"))
+		}
+		return parts.join(". ")
+	}
 
 	readonly property string eventTimestamp: {
 		if (model.due) {
@@ -74,6 +84,11 @@ LinkRect {
 			Layout.alignment: Qt.AlignTop
 			visible: !editTaskForm.visible
 			checked: model.isCompleted
+			activeFocusOnTab: visible && enabled
+			Accessible.name: model.title || i18n("Task")
+			Accessible.description: agendaTaskItem.taskAccessibleDescription()
+			Accessible.checkable: true
+			Accessible.checked: checked
 
 			onToggled: {
 				var task = tasks.get(taskItemIndex)
@@ -145,11 +160,9 @@ LinkRect {
 				Layout.fillWidth: true
 				wrapMode: Text.Wrap // See warning at taskTitle.wrapMode
 
-					linkColor: Kirigami.Theme.highlightColor
-					onLinkActivated: function(link) {
-						Qt.openUrlExternally(link)
-					}
-					MouseArea {
+				linkColor: Kirigami.Theme.highlightColor
+				onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+				MouseArea {
 					anchors.fill: parent
 					acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
 					cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -202,7 +215,7 @@ LinkRect {
 		menuItem.icon.name = "internet-web-browser"
 		menuItem.enabled = !!task.htmlLink
 		menuItem.clicked.connect(function() {
-			Qt.openUrlExternally(task.htmlLink)
+			Shared.openExternalUrl(task.htmlLink)
 		})
 		contextMenu.addMenuItem(menuItem)
 	}

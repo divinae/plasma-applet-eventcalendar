@@ -24,26 +24,36 @@ Item {
 	property var dataSource: timeModel.dataSource
 	readonly property string timezoneTimeFormat: Qt.locale().timeFormat(Locale.ShortFormat)
 
+	// Zone ids come from the config: keep them to valid tz database characters.
+	function sanitizeZoneId(zone) {
+		return ("" + zone).replace(/[^A-Za-z0-9_\/+\-]/g, '')
+	}
+	function zoneData(zone) {
+		var data = dataSource && dataSource.data ? dataSource.data[sanitizeZoneId(zone)] : null
+		return data || null
+	}
+
 	function timeForZone(zone) {
 		var compactRepresentationItem = appletItem ? appletItem.compactRepresentationItem : null
 		if (!compactRepresentationItem) {
 			return ""
 		}
-
-		if (!dataSource.data[zone] || !dataSource.data["Local"]) {
+		var zoneInfo = zoneData(zone)
+		var localInfo = zoneData("Local")
+		if (!zoneInfo || !localInfo || !zoneInfo["DateTime"] || typeof zoneInfo["Offset"] === "undefined") {
 			return "" // Time engine hasn't delivered data yet.
 		}
 
 		// get the time for the given timezone from the dataengine
-		var now = dataSource.data[zone]["DateTime"]
+		var now = zoneInfo["DateTime"]
 		// get current UTC time
 		var msUTC = now.getTime() + (now.getTimezoneOffset() * 60000)
 		// add the dataengine TZ offset to it
-		var dateTime = new Date(msUTC + (dataSource.data[zone]["Offset"] * 1000))
+		var dateTime = new Date(msUTC + (zoneInfo["Offset"] * 1000))
 
 		var formattedTime = Qt.formatTime(dateTime, timezoneTimeFormat)
 
-		if (dateTime.getDay() !== dataSource.data["Local"]["DateTime"].getDay()) {
+		if (dateTime.getDay() !== localInfo["DateTime"].getDay()) {
 			formattedTime += " (" + Qt.formatDate(dateTime, Locale.ShortFormat) + ")"
 		}
 
@@ -51,13 +61,14 @@ Item {
 	}
 
 	function nameForZone(zone) {
-		if (plasmoid.configuration.displayTimezoneAsCode && dataSource.data[zone]) {
-			return dataSource.data[zone]["Timezone Abbreviation"]
+		var zoneInfo = zoneData(zone)
+		if (plasmoid.configuration.displayTimezoneAsCode && zoneInfo) {
+			return zoneInfo["Timezone Abbreviation"] || ""
 		}
-		if (dataSource.data[zone] && dataSource.data[zone]["Timezone City"]) {
-			return dataSource.data[zone]["Timezone City"].replace(/_/g, ' ')
+		if (zoneInfo && zoneInfo["Timezone City"]) {
+			return zoneInfo["Timezone City"].replace(/_/g, ' ')
 		}
-		var parts = zone.split('/')
+		var parts = sanitizeZoneId(zone).split('/')
 		return parts[parts.length - 1].replace(/_/g, ' ')
 	}
 

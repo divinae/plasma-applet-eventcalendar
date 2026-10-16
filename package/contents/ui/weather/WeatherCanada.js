@@ -92,6 +92,7 @@ var weatherIconMap = {
 }
 
 var weatherIconToTextMap = {}
+var MAX_WEATHERCANADA_HTML_LENGTH = 1024 * 1024
 /* Don't burden translators with these for now.
 var weatherIconToTextMap = {
 	'weather-clear': i18n("Clear"),
@@ -132,7 +133,18 @@ function getInner(html, a, b) {
 	return html.substr(start, end-start)
 }
 
+// Bound the work on unexpected responses (eg: an error page or a huge document).
+function assertReasonableHtml(html, label) {
+	if (typeof html !== "string" || !html.length) {
+		throw new Error("Error parsing " + label + ": empty html.")
+	}
+	if (html.length > MAX_WEATHERCANADA_HTML_LENGTH) {
+		throw new Error("Error parsing " + label + ": response too large.")
+	}
+}
+
 function parseDailyHtml(html) {
+	assertReasonableHtml(html, "daily weather page")
 	var weatherData = {
 		list: []
 	}
@@ -306,6 +318,7 @@ function parseDailyHtml(html) {
 }
 
 function parseHourlyHtml(html) {
+	assertReasonableHtml(html, "hourly weather page")
 	var tableHtml = getInner(html, '<tbody>', '</tbody>')
 	if (!tableHtml) {
 		throw new Error('Error parsing hourly table')
@@ -313,19 +326,20 @@ function parseHourlyHtml(html) {
 	return parseHourlyTbody(tableHtml)
 }
 function parseHourlyTbody(html) {
+	assertReasonableHtml(html, "hourly weather table")
 	// Iterate all <tr>
 	var cursor = 0
 	var dateStr
 	var weatherData = {
 		list: []
 	}
-	for (var i = 0; i < 1000; i++) { // Hard limit of 1000 iterations
+	while (cursor < html.length) {
 		var start = html.indexOf('<tr>', cursor)
 		if (start == -1) {
 			break
 		}
 		start += '<tr>'.length
-		var end = html.indexOf('</tr>', cursor)
+		var end = html.indexOf('</tr>', start)
 		if (end == -1) {
 			throw new Error('Error parsing hourly row. Closing </tr> not found.')
 		}
@@ -416,7 +430,7 @@ function getCityUrl(cityId) {
 }
 
 function handleError(funcName, callback, err, data, xhr) {
-	console.error('[eventcalendar]', funcName + '.err', err, xhr && xhr.status, data)
+	console.error('[eventcalendar]', funcName + '.err', err, xhr && xhr.status)
 	return callback(err, data, xhr)
 }
 

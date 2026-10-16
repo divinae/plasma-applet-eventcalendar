@@ -122,9 +122,9 @@ CalendarManager {
 			actions: actions,
 		}, function(actionId) {
 			if (actionId === 'join' || (actionId === 'default' && meetingLink)) {
-				Qt.openUrlExternally(meetingLink.url)
+				Shared.openExternalUrl(meetingLink.url)
 			} else if ((actionId === 'open' || actionId === 'default') && eventItem.htmlLink) {
-				Qt.openUrlExternally(eventItem.htmlLink)
+				Shared.openExternalUrl(eventItem.htmlLink)
 			} else if (actionId === 'snooze') {
 				var at = new Date(timeModel.currentTime)
 				at.setMinutes(at.getMinutes() + upcomingEvents.snoozeMinutes)
@@ -315,9 +315,9 @@ CalendarManager {
 
 	function joinNextEvent() {
 		if (nextEventMeetingLink) {
-			Qt.openUrlExternally(nextEventMeetingLink.url)
+			Shared.openExternalUrl(nextEventMeetingLink.url)
 		} else if (nextEvent && nextEvent.htmlLink) {
-			Qt.openUrlExternally(nextEvent.htmlLink)
+			Shared.openExternalUrl(nextEvent.htmlLink)
 		}
 	}
 
