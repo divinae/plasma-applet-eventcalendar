@@ -210,25 +210,56 @@ PlasmoidItem {
 	compactRepresentation: clockComponent
 	fullRepresentation: popupComponent
 
+	// Right-click menu: the next meeting and event actions first, then the widget's data, then
+	// the system settings for date and time (Plasma adds Configure / Remove after these).
+	function openPopupAndNewEvent() {
+		root.expanded = true
+		Qt.callLater(function() {
+			if (root.fullRepresentationItem && typeof root.fullRepresentationItem.newEvent === 'function') {
+				root.fullRepresentationItem.newEvent(timeModel.currentTime)
+			}
+		})
+	}
+	readonly property bool hasGoogleAccounts: logic.parseGoogleAccounts().length > 0
+
 	Plasmoid.contextualActions: [
 		PlasmaCore.Action {
-			id: clipboardAction
-			text: i18n("Copy to Clipboard")
-			icon.name: "edit-copy"
-			onTriggered: copyCurrentDateTime()
-		},
-		PlasmaCore.Action {
-			text: upcomingEvents.nextEventMeetingLink
-				? i18nc("%1 = Google Meet, Zoom, ..., %2 = event title", "Join %1: %2", upcomingEvents.nextEventMeetingLink.label, upcomingEvents.nextEvent.summary)
+			text: upcomingEvents.nextEventMeetingLink && upcomingEvents.nextEvent
+				? i18nc("%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when", "Join %1: %2 (%3)",
+					upcomingEvents.nextEventMeetingLink.label, upcomingEvents.nextEvent.summary,
+					upcomingEvents.formatTooltipStart(upcomingEvents.nextEvent, timeModel.currentTime))
 				: ""
 			icon.name: "call-start"
 			visible: !!upcomingEvents.nextEventMeetingLink
 			onTriggered: upcomingEvents.joinNextEvent()
 		},
 		PlasmaCore.Action {
-			text: i18n("Refresh Events")
+			text: i18n("New Event…")
+			icon.name: "list-add"
+			onTriggered: root.openPopupAndNewEvent()
+		},
+		PlasmaCore.Action {
+			text: i18n("Open Google Calendar")
+			icon.name: "globe"
+			visible: root.hasGoogleAccounts
+			onTriggered: Qt.openUrlExternally("https://calendar.google.com/")
+		},
+		PlasmaCore.Action {
+			isSeparator: true
+		},
+		PlasmaCore.Action {
+			text: i18n("Refresh")
 			icon.name: "view-refresh"
-			onTriggered: logic.updateEvents()
+			onTriggered: logic.update()
+		},
+		PlasmaCore.Action {
+			id: clipboardAction
+			text: i18n("Copy Date and Time")
+			icon.name: "edit-copy"
+			onTriggered: copyCurrentDateTime()
+		},
+		PlasmaCore.Action {
+			isSeparator: true
 		},
 		PlasmaCore.Action {
 			text: i18nd("plasma_applet_org.kde.plasma.digitalclock", "Adjust Date and Time…")
@@ -237,7 +268,7 @@ PlasmoidItem {
 			onTriggered: KCMUtils.KCMLauncher.openSystemSettings("kcm_clock")
 		},
 		PlasmaCore.Action {
-			text: i18n("Set Language…")
+			text: i18n("Date and Time Formats…")
 			icon.name: "preferences-desktop-locale"
 			visible: KConfig.KAuthorized.authorizeControlModule("kcm_regionandlang")
 			onTriggered: KCMUtils.KCMLauncher.openSystemSettings("kcm_regionandlang")
