@@ -441,6 +441,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		// Recurring events: edits and deletes apply to this occurrence only (Google makes it an exception).
 		event.canEdit = (calendar.accessRole === 'writer' || calendar.accessRole === 'owner')
 		if (plasmoid.configuration.googleHideGoalsDesc
+			&& event.organizer // Not every event has one
 			&& event.organizer.email === "unknownorganizer@calendar.google.com"
 			&& event.organizer.displayName === "Google Calendar"
 		) {

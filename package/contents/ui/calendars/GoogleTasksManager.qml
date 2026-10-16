@@ -279,13 +279,13 @@ CalendarManager {
 			}
 		})
 
-		//--- Debug
 	}
 
 	function parseTasklistAsEvents(tasklistData) {
 		var eventList = []
-		for (var i = 0; i < tasklistData.items.length; i++) {
-			var taskData = tasklistData.items[i]
+		var items = (tasklistData && tasklistData.items) || [] // Google leaves items out of empty lists
+		for (var i = 0; i < items.length; i++) {
+			var taskData = items[i]
 			var eventData = parseTaskAsEventData(taskData)
 			eventList.push(eventData)
 		}

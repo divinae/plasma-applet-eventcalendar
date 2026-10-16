@@ -172,8 +172,13 @@ def notify(args):
 	n.show()
 
 	#--- Sound
+	# Optional: a missing sound file must not stop the notification (its actions are reported
+	# from loop.run()).
 	if args.sound:
-		playSound(args)
+		try:
+			playSound(args)
+		except Exception as e:
+			sys.stderr.write('sound failed: {}\n'.format(e))
 
 	loop.run()
 
@@ -191,14 +196,15 @@ def main():
 	parser.add_argument('--metadata')
 
 
+	args = parser.parse_args()
 	try:
-		args = parser.parse_args()
 		notify(args)
 	except KeyboardInterrupt:
 		pass
 	except Exception as e:
+		# Non-zero exit: NotificationManager falls back to notify-send.
 		sys.stderr.write('{}\n'.format(e))
-		parser.print_help()
+		sys.exit(1)
 
 def test():
 	notify(argparse.Namespace(

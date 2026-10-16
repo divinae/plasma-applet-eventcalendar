@@ -372,7 +372,7 @@ CalendarManager {
 			logger.log('Could not parse a proper akonadiCalendarId=', akonadiCalendarId, ' from calendarId=', calendarId)
 			return
 		}
-		var dateString = Shared.dateString(date)
+		var dateString = Shared.localeDateString(date) // Local day: toISOString would be UTC
 
 		// konsolekalendar --add --calendar 12 --summary "Summary" --date 2020-07-27 --time 22:00
 		var cmd = [

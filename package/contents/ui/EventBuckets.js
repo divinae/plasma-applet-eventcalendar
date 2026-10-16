@@ -25,12 +25,11 @@ function bucketByDay(items, dayTimes) {
 	for (var i = 0; i < items.length; i++) {
 		var eventItem = items[i]
 		var startTime = Shared.startOfDay(eventItem.startDateTime).getTime()
-		var endDate = Shared.startOfDay(eventItem.endDateTime)
-		if (eventItem.end.date) {
-			// All day events end at midnight which is technically the next day.
-			endDate.setDate(endDate.getDate() - 1)
-		}
-		var endTime = endDate.getTime()
+		// The end is exclusive: an event (or all-day event) ending at midnight doesn't cover the
+		// next day. Zero-length events stay on their start day.
+		var start = new Date(eventItem.startDateTime).getTime()
+		var lastInstant = Math.max(start, new Date(eventItem.endDateTime).getTime() - 1)
+		var endTime = Shared.startOfDay(new Date(lastInstant)).getTime()
 		for (var d = 0; d < dayTimes.length; d++) {
 			if (endTime < dayTimes[d]) {
 				break

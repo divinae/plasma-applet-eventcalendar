@@ -140,7 +140,7 @@ Loader {
 						if (showTime) {
 							return { dateTime: Shared.dateTimeString(startDateTime), timeZone: event.start.timeZone }
 						} else { // All day
-							return { date: Shared.dateString(startDateTime) }
+							return { date: Shared.localeDateString(startDateTime) }
 						}
 					}
 					function getEndObj() {
@@ -151,7 +151,7 @@ Loader {
 							// See parseEventsForDate() functions for more info.
 							var dt = new Date(endDateTime)
 							dt.setDate(dt.getDate() + 1)
-							return { date: Shared.dateString(dt) }
+							return { date: Shared.localeDateString(dt) }
 						}
 					}
 				}
