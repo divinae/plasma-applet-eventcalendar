@@ -128,12 +128,6 @@ Rectangle {
 			}
 
 			PlasmaComponents3.ToolButton {
-				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
-				icon.name: "document-edit"
-				text: i18n("Edit")
-				onClicked: details.editRequested()
-			}
-			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
 				icon.name: "globe" // Native action icon (internet-web-browser is a colored app icon)
 				text: i18n("Open in Google Calendar")
@@ -141,6 +135,12 @@ Rectangle {
 				onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
 				PlasmaComponents3.ToolTip.text: text
 				PlasmaComponents3.ToolTip.visible: hovered
+			}
+			PlasmaComponents3.ToolButton {
+				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
+				icon.name: "document-edit"
+				text: i18n("Edit")
+				onClicked: details.editRequested()
 			}
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
