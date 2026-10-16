@@ -2,25 +2,13 @@ import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
 import "LocaleFuncs.js" as LocaleFuncs
 
 Item {
 	id: agendaView
-
-	property int scrollbarWidth: 0
-
-	function updateScrollbarWidth() {
-		var bar = agendaScrollView.QQC2.ScrollBar.vertical
-		var width = 0
-		if (bar) {
-			width = bar.width > 0 ? bar.width : (bar.implicitWidth || 0)
-		}
-		if (scrollbarWidth !== width) {
-			scrollbarWidth = width
-		}
-	}
 
 	property color isOverdueColor: Kirigami.Theme.negativeTextColor
 	property int isOverdueFontWeight: Font.Bold
@@ -55,13 +43,12 @@ Item {
 		}
 	}
 
-	Component.onCompleted: updateScrollbarWidth()
-	onWidthChanged: updateScrollbarWidth()
-	onHeightChanged: updateScrollbarWidth()
 
-	QQC2.ScrollView {
+	// Plasma's ScrollView: no separator line next to the scrollbar (the desktop style draws one).
+	PlasmaComponents3.ScrollView {
 		id: agendaScrollView
 		anchors.fill: parent
+		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 		readonly property int viewportWidth: contentItem ? contentItem.width : width
 		readonly property int viewportHeight: contentItem ? contentItem.height : height
 		readonly property int scrollY: contentItem ? contentItem.contentY : 0
@@ -143,13 +130,6 @@ Item {
 		function positionViewAtEnd() {
 			scrollToY(contentHeightValue)
 		}
-	}
-
-	Connections {
-		target: agendaScrollView.QQC2.ScrollBar.vertical
-		function onWidthChanged() { updateScrollbarWidth() }
-		function onImplicitWidthChanged() { updateScrollbarWidth() }
-		function onVisibleChanged() { updateScrollbarWidth() }
 	}
 
 	// TODO: properly detect when all events have completed loading
