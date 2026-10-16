@@ -478,6 +478,7 @@ Item {
 	function formatPrecipitation(value) {
 		var valueText = formatDecimal(value, 1)
 		if (graph.rainUnits === 'mm') {
+			// xgettext:no-c-format
 			return i18n("%1mm", valueText)
 		} else { // rainUnits == '%'
 			return i18n('%1%', valueText) // Not translated as we use ''

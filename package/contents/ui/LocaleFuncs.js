@@ -87,14 +87,17 @@ function durationShortFormat(nSeconds) {
 	var str = ''
 	var hours = Math.floor(getHours(t))
 	if (hours > 0) {
+		// xgettext:no-c-format
 		str += i18nc("short form for %1 hours", "%1h", hours)
 	}
 	var minutes = Math.floor(getMinutes(t))
 	if (minutes > 0) {
+		// xgettext:no-c-format
 		str += i18nc("short form for %1 minutes", "%1m", minutes)
 	}
 	var seconds = Math.floor(getSeconds(t))
 	if (seconds > 0) {
+		// xgettext:no-c-format
 		str += i18nc("short form for %1 seconds", "%1s", seconds)
 	}
 	return str

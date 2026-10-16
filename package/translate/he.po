@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/ALikesToCode/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 11:38+0200\n"
+"POT-Creation-Date: 2026-10-16 11:47+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../contents/config/config.qml
 msgid "Views"
-msgstr ""
+msgstr "תצוגות"
 
 #: ../contents/config/config.qml
 msgid "Clock"
@@ -47,7 +47,7 @@ msgstr "מזג האוויר"
 
 #: ../contents/config/config.qml
 msgid "Time Zones"
-msgstr ""
+msgstr "אזורי זמן"
 
 #: ../contents/config/config.qml
 msgid "Advanced"
@@ -55,38 +55,38 @@ msgstr "מתקדם"
 
 #: ../contents/ui/AgendaEventItem.qml
 msgid "Calendar event"
-msgstr ""
+msgstr "אירוע בלוח השנה"
 
 #: ../contents/ui/AgendaEventItem.qml
 msgid "In progress"
-msgstr ""
+msgstr "מתקיים כעת"
 
 #: ../contents/ui/AgendaListItem.qml
 msgctxt "agenda day header, %1 = Fri, 16 Oct"
 msgid "Today · %1"
-msgstr ""
+msgstr "היום · %1"
 
 #: ../contents/ui/AgendaListItem.qml
 msgctxt "agenda day header, %1 = Sat, 17 Oct"
 msgid "Tomorrow · %1"
-msgstr ""
+msgstr "מחר · %1"
 
 #: ../contents/ui/AgendaListItem.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event"
-msgstr ""
+msgstr "אירוע חדש"
 
 #: ../contents/ui/AgendaListItem.qml ../contents/ui/DayEventsView.qml
 msgid "No events"
-msgstr ""
+msgstr "אין אירועים"
 
 #: ../contents/ui/AgendaTaskItem.qml
 msgid "Due %1"
-msgstr ""
+msgstr "יעד: %1"
 
 #: ../contents/ui/AgendaTaskItem.qml
 msgid "Overdue"
-msgstr ""
+msgstr "באיחור"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
@@ -95,7 +95,7 @@ msgstr "d ב־MMM"
 
 #: ../contents/ui/AgendaTaskItem.qml
 msgid "Task"
-msgstr ""
+msgstr "משימה"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
 msgid "Edit"
@@ -116,7 +116,7 @@ msgstr "עריכה בדפדפן"
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
 msgid "+%1"
-msgstr ""
+msgstr "+%1"
 
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
@@ -157,74 +157,74 @@ msgstr "יותר מדי בקשות. ננסה שוב בקרוב."
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
 msgid "Google authentication failed: %1"
-msgstr ""
+msgstr "האימות מול Google נכשל: %1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Error fetching calendar: %1"
-msgstr ""
+msgstr "שגיאה במשיכת לוח השנה: %1"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
-msgstr ""
+msgstr "iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
-msgstr ""
+msgstr "שגיאה לא ידועה ברכיב העזר של iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
-msgstr ""
+msgstr "לא ניתן לטעון את %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Holidays"
-msgstr ""
+msgstr "חגים"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Todo"
-msgstr ""
+msgstr "מטלות"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
-msgstr ""
+msgstr "אחר"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "event in progress"
 msgid "now"
-msgstr ""
+msgstr "עכשיו"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "%1 = event title, %2 = 5m / now"
 msgid "%1 · %2"
-msgstr ""
+msgstr "%1 · %2"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
-msgstr ""
+msgstr "ברירת מחדל (%1)"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(24-hour)"
-msgstr ""
+msgstr "(24 שעות)"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(12-hour)"
-msgstr ""
+msgstr "(12 שעות)"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
-msgstr ""
+msgstr "(עם שניות)"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Custom…"
-msgstr ""
+msgstr "מותאם אישית…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
-msgstr ""
+msgstr "שעה"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Format"
-msgstr ""
+msgstr "תבנית"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Bold"
@@ -232,19 +232,19 @@ msgstr "מודגש"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Font"
-msgstr ""
+msgstr "גופן"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Maximum height"
-msgstr ""
+msgstr "גובה מרבי"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "0 = fit the panel"
-msgstr ""
+msgstr "0 = התאמה ללוח"
 
 #: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigViews.qml
 msgid " px"
-msgstr ""
+msgstr " px"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid ""
@@ -252,54 +252,57 @@ msgid ""
 "qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd "
 "d MMM."
 msgstr ""
+"תבניות מותאמות אישית משתמשות ב<a href=\"https://doc.qt.io/qt-6/qml-qtqml-"
+"qt.html#formatDateTime-method\">תבנית התאריך והשעה של Qt</a>, למשל: HH:mm, "
+"ddd d MMM."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Second Line"
-msgstr ""
+msgstr "שורה שנייה"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show a second line"
-msgstr ""
+msgstr "הצגת שורה שנייה"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Eg: the date"
-msgstr ""
+msgstr "למשל: התאריך"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Size"
-msgstr ""
+msgstr "גודל"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
-msgstr ""
+msgstr "הפגישה הבאה"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
-msgstr ""
+msgstr "הצגה ליד השעון"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
-msgstr ""
+msgstr "כשהיא מתחילה בתוך"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid " min"
-msgstr ""
+msgstr " דק׳"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
-msgstr ""
+msgstr "לחיצה אמצעית על השעון מצרפת אותך לפגישה הנוכחית או הבאה."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show background"
-msgstr ""
+msgstr "הצגת רקע"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
-msgstr ""
+msgstr "יישומון לשולחן העבודה"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
-msgstr ""
+msgstr "רישום ניפוי שגיאות ועמודי הגדרות נוספים"
 
 #: ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -309,260 +312,270 @@ msgstr "לוחות שנה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
-msgstr ""
+msgstr "רענון כל"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgctxt "Polling interval in minutes"
 msgid " min"
-msgstr ""
+msgstr " דק׳"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Plasma calendar plugins are unavailable."
-msgstr ""
+msgstr "תוספי לוח השנה של Plasma אינם זמינים."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Plasma calendars"
-msgstr ""
+msgstr "לוחות שנה של Plasma"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
-msgstr ""
+msgstr "לחיצה על אירוע פותחת"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Event details in the widget"
-msgstr ""
+msgstr "את פרטי האירוע ביישומון"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Google Calendar in the browser"
-msgstr ""
+msgstr "את Google Calendar בדפדפן"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Reminder Before an Event"
-msgstr ""
+msgstr "תזכורת לפני אירוע"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Show a reminder"
-msgstr ""
+msgstr "הצגת תזכורת"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Time before"
-msgstr ""
+msgstr "זמן מראש"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgctxt "Time in minutes"
 msgid " min"
-msgstr ""
+msgstr " דק׳"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Use the reminder times set in Google Calendar"
-msgstr ""
+msgstr "שימוש בזמני התזכורת שהוגדרו ב־Google Calendar"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
-msgstr ""
+msgstr "להשאיר עד לסגירה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"
-msgstr ""
+msgstr "נודניק"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "0 = no Snooze button"
-msgstr ""
+msgstr "0 = ללא כפתור נודניק"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
-msgstr ""
+msgstr "כשאירוע מתחיל"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Show a notification"
-msgstr ""
+msgstr "הצגת התראה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
-msgstr ""
+msgstr "קריטי"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Shown even in Do Not Disturb"
-msgstr ""
+msgstr "מוצג גם במצב נא לא להפריע"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Sounds"
-msgstr ""
+msgstr "צלילים"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Reminder"
-msgstr ""
+msgstr "תזכורת"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Event starts"
-msgstr ""
+msgstr "תחילת אירוע"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
-msgstr ""
+msgstr "כל התראות האירועים"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr ""
+msgstr "הכפתורים \"הצטרפות לפגישה\" ו\"פתיחה בלוח השנה\""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
-msgstr ""
+msgstr "דילוג על אירועים של יום שלם"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
-msgstr ""
+msgstr "דילוג על אירועים שדחיתי"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
 "Popups and sounds for each kind of notification can also be set in System "
 "Settings > Notifications > Event Calendar."
 msgstr ""
+"ניתן להגדיר חלונות קופצים וצלילים לכל סוג התראה גם בהגדרות המערכת > התראות > "
+"לוח שנה עם אירועים."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google Account"
-msgstr ""
+msgstr "חשבון Google"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google Account %1"
-msgstr ""
+msgstr "חשבון Google‏ %1"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Login failed: %1"
-msgstr ""
+msgstr "הכניסה נכשלה: %1"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Login complete."
-msgstr ""
+msgstr "הכניסה הושלמה."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Could not prepare Google login: %1"
-msgstr ""
+msgstr "לא ניתן להכין את הכניסה ל־Google: %1"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Waiting for browser callback..."
-msgstr ""
+msgstr "בהמתנה לקריאה חוזרת מהדפדפן..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Waiting for the helper page to send the code..."
-msgstr ""
+msgstr "בהמתנה לשליחת הקוד מעמוד העזר..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
-msgstr ""
+msgstr "תם הזמן לכניסה. נא לנסות שוב."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Auto login failed. See logs for details."
-msgstr ""
+msgstr "הכניסה האוטומטית נכשלה. הפרטים מופיעים ביומנים."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Auto login failed: invalid callback data."
-msgstr ""
+msgstr "הכניסה האוטומטית נכשלה: נתוני קריאה חוזרת שגויים."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Auto login failed: %1"
-msgstr ""
+msgstr "הכניסה האוטומטית נכשלה: %1"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Auto login failed: authorization code missing."
-msgstr ""
+msgstr "הכניסה האוטומטית נכשלה: חסר קוד אימות."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "The desktop could not open the browser automatically. Use the login link in "
 "Advanced sign-in options instead."
 msgstr ""
+"שולחן העבודה לא הצליח לפתוח את הדפדפן אוטומטית. יש להשתמש במקום זאת בקישור "
+"הכניסה שבאפשרויות כניסה מתקדמות."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Sign in to show your Google calendars and task lists. Your browser opens to "
 "sign in; when access is granted the widget picks it up automatically."
 msgstr ""
+"יש להיכנס כדי להציג את לוחות השנה ורשימות המשימות שלך מ־Google. הדפדפן ייפתח "
+"לצורך הכניסה; לאחר מתן הגישה היישומון יקלוט זאת אוטומטית."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"
-msgstr ""
+msgstr "כניסה מחדש"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Reload calendars and task lists"
-msgstr ""
+msgstr "טעינה מחדש של לוחות שנה ורשימות משימות"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Remove Account"
-msgstr ""
+msgstr "הסרת חשבון"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Remove"
-msgstr ""
+msgstr "הסרה"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Google access for this account expired or was revoked. Sign in again to "
 "reconnect it (the account and its settings are kept)."
 msgstr ""
+"הגישה ל־Google עבור חשבון זה פגה או נשללה. יש להיכנס שוב כדי לחבר אותו מחדש "
+"(החשבון וההגדרות שלו נשמרים)."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
+msgstr "היישומון עודכן. יש להיכנס שוב כדי להמשיך לסנכרן את החשבון הזה."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "No calendars loaded yet. Use the reload button."
-msgstr ""
+msgstr "עדיין לא נטענו לוחות שנה. יש להשתמש בכפתור הטעינה מחדש."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Task Lists"
-msgstr ""
+msgstr "רשימות משימות"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
-msgstr ""
+msgstr "הוספת חשבון…"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign in with Google…"
-msgstr ""
+msgstr "כניסה עם Google…"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Waiting for the browser sign-in…"
-msgstr ""
+msgstr "בהמתנה לכניסה בדפדפן…"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Advanced sign-in options"
-msgstr ""
+msgstr "אפשרויות כניסה מתקדמות"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr ""
+msgstr "לקוח Google OAuth משלך, או הדבקה ידנית של קוד הכניסה"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Client Credentials"
-msgstr ""
+msgstr "פרטי גישה של הלקוח"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Using a previously stored Google OAuth client for compatibility. If login "
 "still fails, add your own client ID and client secret."
 msgstr ""
+"נעשה שימוש בלקוח Google OAuth שנשמר קודם לכן לצורך תאימות. אם הכניסה עדיין "
+"נכשלת, יש להוסיף מזהה לקוח וסוד לקוח משלך."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Try desktop built-in client (no secret)"
-msgstr ""
+msgstr "ניסיון עם הלקוח המובנה לשולחן העבודה (ללא סוד)"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Client ID"
-msgstr ""
+msgstr "מזהה לקוח"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Optional"
-msgstr ""
+msgstr "רשות"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Client Secret"
-msgstr ""
+msgstr "סוד לקוח"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
@@ -570,6 +583,9 @@ msgid ""
 "Google Cloud OAuth Desktop client, or a Web client with its secret and the "
 "redirect URI set to %1."
 msgstr ""
+"יש להשאיר ריק כדי להשתמש בלקוח המובנה. לקוח מותאם אישית חייב להיות לקוח "
+"OAuth מסוג Desktop של Google Cloud, או לקוח Web עם הסוד שלו וכתובת הפניה "
+"(Redirect URI) שמוגדרת ל־%1."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
@@ -577,18 +593,22 @@ msgid ""
 "Google expires refresh tokens for external apps left in Testing after seven "
 "days; Workspace session controls can also require reauthorization."
 msgstr ""
+"עבור לקוח OAuth מותאם אישית, יש לפרסם את מסך ההסכמה של OAuth למצב "
+"Production. ‏Google מבטלת את תוקפם של אסימוני רענון של יישומים חיצוניים "
+"שנותרו במצב Testing לאחר שבעה ימים; גם בקרות הפעלה של Workspace עשויות לדרוש "
+"אימות מחדש."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Manual Sign-in"
-msgstr ""
+msgstr "כניסה ידנית"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Login (Auto) - Add Account"
-msgstr ""
+msgstr "כניסה (אוטומטית) - הוספת חשבון"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Login (Auto)"
-msgstr ""
+msgstr "כניסה (אוטומטית)"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
@@ -597,6 +617,9 @@ msgid ""
 "ignore the field below; otherwise copy the full URL (or just the code) and "
 "paste it."
 msgstr ""
+"יש ללחוץ על כניסה (אוטומטית) כדי לפתוח את <a href=\"%1\">%2</a>. לאחר מתן "
+"הגישה, הדפדפן יפנה לכתובת localhost. אם הקליטה האוטומטית מצליחה אפשר להתעלם "
+"מהשדה שלהלן; אחרת יש להעתיק את הכתובת המלאה (או רק את הקוד) ולהדביק אותה."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
@@ -604,10 +627,13 @@ msgid ""
 "the browser redirects to the helper page and will try to send the code back "
 "automatically. If it fails, copy the code and paste it below."
 msgstr ""
+"יש ללחוץ על כניסה (אוטומטית) כדי לפתוח את <a href=\"%1\">%2</a>. לאחר מתן "
+"הגישה, הדפדפן יפנה לעמוד העזר וינסה לשלוח את הקוד בחזרה אוטומטית. אם זה "
+"נכשל, יש להעתיק את הקוד ולהדביק אותו להלן."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
-msgstr ""
+msgstr "שולחן העבודה לא הצליח לפתוח את הדפדפן אוטומטית."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Copy Link"
@@ -615,11 +641,11 @@ msgstr "העתקת הקישור"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Helper page (optional): <a href=\"%1\">%1</a>"
-msgstr ""
+msgstr "עמוד עזר (רשות): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr ""
+msgstr "עמוד עזר: <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
@@ -627,28 +653,31 @@ msgid ""
 "the address bar anyway and paste it below. If auto-capture works, you do not "
 "need to paste anything."
 msgstr ""
+"אם הדפדפן מציג שגיאת חיבור, זה צפוי. יש להעתיק בכל זאת את הכתובת משורת "
+"הכתובת ולהדביק אותה להלן. אם הקליטה האוטומטית עובדת, אין צורך להדביק דבר."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If auto-capture fails, copy the code from the helper page and paste it below."
 msgstr ""
+"אם הקליטה האוטומטית נכשלת, יש להעתיק את הקוד מעמוד העזר ולהדביק אותו להלן."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
-msgstr ""
+msgstr "יש להדביק כאן את קוד האימות או את כתובת ההפניה"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google authorization code or redirect URL"
-msgstr ""
+msgstr "קוד אימות של Google או כתובת הפניה"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
+msgstr "יש להדביק את קוד האימות של Google או את כתובת ההפניה המלאה מהדפדפן"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account"
-msgstr ""
+msgstr "הוספת חשבון"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Submit"
@@ -676,7 +705,7 @@ msgstr "תווית לוח שנה"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "https:// URL or local %1/*.ics file"
-msgstr ""
+msgstr "כתובת https://‎ או קובץ %1/*.ics מקומי"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Browse"
@@ -688,65 +717,65 @@ msgstr "iCalendar (.ics)"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
-msgstr ""
+msgstr "מקומי"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Extra Time Zones in the Tooltip"
-msgstr ""
+msgstr "אזורי זמן נוספים בחלונית העצה"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Remove time zone"
-msgstr ""
+msgstr "הסרת אזור זמן"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
-msgstr ""
+msgstr "הוספת אזור זמן, למשל: Asia/Jerusalem"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add"
-msgstr ""
+msgstr "הוספה"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
-msgstr ""
+msgstr "אזורים עם אותה שעה כמו שלך אינם מוצגים."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Display"
-msgstr ""
+msgstr "תצוגה"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Show time zones as"
-msgstr ""
+msgstr "הצגת אזורי זמן בתור"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "City name"
-msgstr ""
+msgstr "שם העיר"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Abbreviation (eg: CEST)"
-msgstr ""
+msgstr "קיצור (למשל: IDT)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup"
-msgstr ""
+msgstr "חלון קופץ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default view"
-msgstr ""
+msgstr "תצוגת ברירת מחדל"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Month"
-msgstr ""
+msgstr "חודש"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Week"
-msgstr ""
+msgstr "שבוע"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 #: ../contents/ui/WeekView.qml
 msgid "Today"
-msgstr ""
+msgstr "היום"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -754,31 +783,31 @@ msgstr "סדר יום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
-msgstr ""
+msgstr "בורר תצוגות בכותרת"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup width"
-msgstr ""
+msgstr "רוחב החלון הקופץ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup height"
-msgstr ""
+msgstr "גובה החלון הקופץ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Today"
-msgstr ""
+msgstr "שבוע והיום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
-msgstr ""
+msgstr "השעה הראשונה המוצגת"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Last hour shown"
-msgstr ""
+msgstr "השעה האחרונה המוצגת"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr ""
+msgstr "תחזית בכותרות הימים, ובתצוגת היום – חלונית מזג אוויר."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -786,7 +815,7 @@ msgstr "לוח שנה"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
-msgstr ""
+msgstr "היום הראשון בשבוע"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Default"
@@ -794,83 +823,83 @@ msgstr "ברירת מחדל"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
-msgstr ""
+msgstr "מספרי שבועות"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day shows its events"
-msgstr ""
+msgstr "לחיצה על יום מציגה את האירועים שלו"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
-msgstr ""
+msgstr "תצוגת חודש"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
-msgstr ""
+msgstr "לחיצה כפולה על יום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "New event in Google Calendar (browser)"
-msgstr ""
+msgstr "אירוע חדש ב־Google Calendar (בדפדפן)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Do nothing"
-msgstr ""
+msgstr "לא לעשות דבר"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
-msgstr ""
+msgstr "תיאורי אירועים"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meeting link button"
-msgstr ""
+msgstr "כפתור קישור לפגישה"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
-msgstr ""
+msgstr "אירועים רב־יומיים בכל יום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meteogram above the agenda"
-msgstr ""
+msgstr "מטאוגרמה מעל סדר היום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Timer above the agenda"
-msgstr ""
+msgstr "טיימר מעל סדר היום"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Timer sound"
-msgstr ""
+msgstr "צליל הטיימר"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meteogram / timer height"
-msgstr ""
+msgstr "גובה המטאוגרמה / הטיימר"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
-msgstr ""
+msgstr "מקור"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Service"
-msgstr ""
+msgstr "שירות"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Open-Meteo (free, no API key)"
-msgstr ""
+msgstr "Open-Meteo (חינמי, ללא מפתח API)"
 
 #: ../contents/ui/config/ConfigWeather.qml ../contents/ui/EventEditView.qml
 msgid "Location"
-msgstr ""
+msgstr "מיקום"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current location"
-msgstr ""
+msgstr "המיקום הנוכחי"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Not set"
-msgstr ""
+msgstr "לא הוגדר"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "City name, eg: Warszawa"
-msgstr ""
+msgstr "שם העיר, למשל: ירושלים"
 
 #: ../contents/ui/config/ConfigWeather.qml
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
@@ -880,43 +909,43 @@ msgstr "חיפוש"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "No places found."
-msgstr ""
+msgstr "לא נמצאו מקומות."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "OpenWeatherMap"
-msgstr ""
+msgstr "OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "City id"
-msgstr ""
+msgstr "מזהה עיר"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "eg: 5983720"
-msgstr ""
+msgstr "למשל: 5983720"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Find City…"
-msgstr ""
+msgstr "חיפוש עיר…"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "API app id"
-msgstr ""
+msgstr "מזהה יישום API"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
-msgstr ""
+msgstr "נדרש עבור OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
-msgstr ""
+msgstr "Weather Canada"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "eg: on-14"
-msgstr ""
+msgstr "למשל: on-14"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Units"
-msgstr ""
+msgstr "יחידות"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Celsius"
@@ -932,11 +961,11 @@ msgstr "קלווין"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
-msgstr ""
+msgstr "המטאוגרמה מציגה"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
-msgstr ""
+msgstr " שעות"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
@@ -976,20 +1005,20 @@ msgstr "d ב־MMM, yyyy"
 #: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
 msgid "All day"
-msgstr ""
+msgstr "כל היום"
 
 #: ../contents/ui/DayEventsView.qml ../contents/ui/WeekView.qml
 msgctxt "event span, %1 = start, %2 = end"
 msgid "%1 – %2"
-msgstr ""
+msgstr "%1 – %2"
 
 #: ../contents/ui/DayEventsView.qml ../contents/ui/EventDetailsView.qml
 msgid "Back"
-msgstr ""
+msgstr "חזרה"
 
 #: ../contents/ui/DayEventsView.qml
 msgid "Add Event"
-msgstr ""
+msgstr "הוספת אירוע"
 
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
@@ -1026,173 +1055,173 @@ msgstr "הוספת תאריך יעד"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
-msgstr ""
+msgstr "הצגת פרטים"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 #: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
-msgstr ""
+msgstr "הצטרפות ל־%1"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Calendar"
-msgstr ""
+msgstr "פתיחה ב־Google Calendar"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
-msgstr ""
+msgstr "עריכה…"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Delete This Occurrence"
-msgstr ""
+msgstr "מחיקת המופע הזה"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
 msgid "Delete “%1”"
-msgstr ""
+msgstr "מחיקת “%1”"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who accepted"
 msgid "%1 yes"
-msgstr ""
+msgstr "%1 כן"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who said maybe"
 msgid "%1 maybe"
-msgstr ""
+msgstr "%1 אולי"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who declined"
 msgid "%1 no"
-msgstr ""
+msgstr "%1 לא"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "guests who haven't responded"
 msgid "%1 awaiting"
-msgstr ""
+msgstr "%1 ממתינים"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "1 guest"
 msgid_plural "%1 guests"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "אורח אחד"
+msgstr[1] "שני אורחים"
+msgstr[2] "%1 אורחים"
+msgstr[3] "%1 אורחים"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "reminder at event start"
 msgid "at start"
-msgstr ""
+msgstr "בהתחלה"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
-msgstr ""
+msgstr "תזכורות: %1 לפני"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
-msgstr ""
+msgstr "למחוק את האירוע הזה?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes only this occurrence."
-msgstr ""
+msgstr "רק המופע הזה יימחק."
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Repeats"
-msgstr ""
+msgstr "חוזר"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
 msgid "organizer"
-msgstr ""
+msgstr "מארגן"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "the current user in a guest list"
 msgid "you"
-msgstr ""
+msgstr "את/ה"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Show less"
-msgstr ""
+msgstr "הצגת פחות"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Show 1 more"
 msgid_plural "Show all %1"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הצגת אחד נוסף"
+msgstr[1] "הצגת כל ה־%1"
+msgstr[2] "הצגת כל ה־%1"
+msgstr[3] "הצגת כל ה־%1"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
-msgstr ""
+msgstr "עריכת אירוע"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Change:"
-msgstr ""
+msgstr "שינוי:"
 
 #: ../contents/ui/EventEditView.qml
 msgid "This event"
-msgstr ""
+msgstr "האירוע הזה"
 
 #: ../contents/ui/EventEditView.qml
 msgid "All events in the series"
-msgstr ""
+msgstr "כל האירועים בסדרה"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
-msgstr ""
+msgstr "כותרת"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
-msgstr ""
+msgstr "ללא חזרה"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Daily"
-msgstr ""
+msgstr "יומי"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Every weekday (Monday to Friday)"
-msgstr ""
+msgstr "כל יום חול (שני עד שישי)"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "%1 = day name"
 msgid "Weekly on %1"
-msgstr ""
+msgstr "שבועי ביום %1"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "%1 = day of the month"
 msgid "Monthly on day %1"
-msgstr ""
+msgstr "חודשי ביום %1"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "%1 = date, eg: 16 October"
 msgid "Yearly on %1"
-msgstr ""
+msgstr "שנתי ב־%1"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
-msgstr ""
+msgstr "מותאם אישית (כפי שהוגדר ב־Google Calendar)"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Loading…"
-msgstr ""
+msgstr "בטעינה…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
-msgstr ""
+msgstr "תיאור"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
-msgstr ""
+msgstr "הצטרפות"
 
 #: ../contents/ui/lib/ConfigFontFamily.qml
 msgctxt "Use default font"
@@ -1201,11 +1230,11 @@ msgstr "ברירת המחדל"
 
 #: ../contents/ui/lib/ConfigFontFamily.qml
 msgid "Choose a Font"
-msgstr ""
+msgstr "בחירת גופן"
 
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "Play"
-msgstr ""
+msgstr "ניגון"
 
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "Choose a sound effect"
@@ -1250,25 +1279,26 @@ msgid "%1 - %2"
 msgstr "%1 - %2"
 
 #: ../contents/ui/LocaleFuncs.js
+#, no-c-format
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr "%1 שע׳"
 
 #: ../contents/ui/LocaleFuncs.js
-#, c-format
+#, no-c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr "%1 דק׳"
 
 #: ../contents/ui/LocaleFuncs.js
-#, c-format
+#, no-c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
 msgstr "%1 שנ׳"
 
 #: ../contents/ui/Logic.qml
 msgid "Could not connect."
-msgstr ""
+msgstr "לא ניתן להתחבר."
 
 #: ../contents/ui/Logic.qml
 msgid "Weather API limit reached"
@@ -1279,6 +1309,8 @@ msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
+"ההרשאה ל־Google פגה או נשללה. יש לפתוח את הגדרות לוח שנה עם אירועים > Google "
+"Calendar ולהיכנס שוב לחשבון הזה."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -1290,28 +1322,28 @@ msgstr "לוח שנה עם אירועים"
 
 #: ../contents/ui/Logic.qml
 msgid "Calendar is back in sync"
-msgstr ""
+msgstr "לוח השנה מסונכרן שוב"
 
 #: ../contents/ui/Logic.qml
 msgid "Calendar can't sync"
-msgstr ""
+msgstr "לא ניתן לסנכרן את לוח השנה"
 
 #: ../contents/ui/Logic.qml
 msgid "No connection. Showing the last loaded events; retrying automatically."
-msgstr ""
+msgstr "אין חיבור. מוצגים האירועים שנטענו לאחרונה; ניסיון חוזר יתבצע אוטומטית."
 
 #: ../contents/ui/main.qml
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 msgid "Join %1: %2 (%3)"
-msgstr ""
+msgstr "הצטרפות ל־%1: %2 (%3)"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
-msgstr ""
+msgstr "אירוע חדש…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
-msgstr ""
+msgstr "פתיחת Google Calendar"
 
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
@@ -1319,14 +1351,14 @@ msgstr "ריענון"
 
 #: ../contents/ui/main.qml
 msgid "Copy Date and Time"
-msgstr ""
+msgstr "העתקת התאריך והשעה"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
-msgstr ""
+msgstr "תבניות תאריך ושעה…"
 
 #: ../contents/ui/MeteogramView.qml
-#, c-format
+#, no-c-format
 msgid "%1mm"
 msgstr "%1 מ״מ"
 
@@ -1351,63 +1383,63 @@ msgstr "למשל: עבודה בשעות 9:00-‏17:00"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
-msgstr ""
+msgstr "היום הקודם"
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Previous Week"
-msgstr ""
+msgstr "השבוע הקודם"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
-msgstr ""
+msgstr "החודש הקודם"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
-msgstr ""
+msgstr "היום הבא"
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Next Week"
-msgstr ""
+msgstr "השבוע הבא"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Month"
-msgstr ""
+msgstr "החודש הבא"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
-msgstr ""
+msgstr "להשאיר פתוח"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
-msgstr ""
+msgstr "בניסיון חוזר…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying in %1 second."
 msgid_plural "Retrying in %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "ניסיון חוזר בעוד שנייה."
+msgstr[1] "ניסיון חוזר בעוד %1 שניות."
+msgstr[2] "ניסיון חוזר בעוד %1 שניות."
+msgstr[3] "ניסיון חוזר בעוד %1 שניות."
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying in %1 minute."
 msgid_plural "Retrying in %1 minutes."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "ניסיון חוזר בעוד דקה."
+msgstr[1] "ניסיון חוזר בעוד %1 דקות."
+msgstr[2] "ניסיון חוזר בעוד %1 דקות."
+msgstr[3] "ניסיון חוזר בעוד %1 דקות."
 
 #: ../contents/ui/PopupView.qml
 msgid "Can't connect. Showing the last loaded events."
-msgstr ""
+msgstr "לא ניתן להתחבר. מוצגים האירועים שנטענו לאחרונה."
 
 #: ../contents/ui/PopupView.qml
 msgid "Retry Now"
-msgstr ""
+msgstr "ניסיון חוזר כעת"
 
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
-msgstr ""
+msgstr "סגירה"
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1445,15 +1477,15 @@ msgstr "חזרה"
 
 #: ../contents/ui/TimerView.qml
 msgid "Timer, %1 remaining. Activate to pause."
-msgstr ""
+msgstr "טיימר, נותרו %1. יש להפעיל כדי להשהות."
 
 #: ../contents/ui/TimerView.qml
 msgid "Timer, %1 remaining. Activate to start."
-msgstr ""
+msgstr "טיימר, נותרו %1. יש להפעיל כדי להתחיל."
 
 #: ../contents/ui/TimerView.qml
 msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr ""
+msgstr "הטיימר מוגדר ל־%1. ניתן להשתמש בפלוס או במינוס כדי לשנות את משך הזמן."
 
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
@@ -1465,7 +1497,7 @@ msgstr "התחלת הטיימר"
 
 #: ../contents/ui/TimerView.qml
 msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr ""
+msgstr "ניתן לגלול או להשתמש במקשי הפלוס והמינוס כדי לכוונן את משך הזמן"
 
 #: ../contents/ui/TimerView.qml
 msgid "Sound"
@@ -1478,103 +1510,103 @@ msgstr "הגדרת טיימר"
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
-msgstr ""
+msgstr "%1 / %2"
 
 #: ../contents/ui/TooltipView.qml
 msgctxt "precipitation in inches"
 msgid "%1 in"
-msgstr ""
+msgstr "%1 אינץ׳"
 
 #: ../contents/ui/TooltipView.qml ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation in mm"
 msgid "%1 mm"
-msgstr ""
+msgstr "%1 מ״מ"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Open in Calendar"
-msgstr ""
+msgstr "פתיחה בלוח השנה"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "נודניק לדקה"
+msgstr[1] "נודניק ל־%1 דקות"
+msgstr[2] "נודניק ל־%1 דקות"
+msgstr[3] "נודניק ל־%1 דקות"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = 15 minutes, %2 = event title"
 msgid "In %1: %2"
-msgstr ""
+msgstr "בעוד %1: %2"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
-msgstr ""
+msgstr "מחר %1"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = 3h20m"
 msgid "(in %1)"
-msgstr ""
+msgstr "(בעוד %1)"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = event title, %2 = end time"
 msgid "Now: %1, until %2"
-msgstr ""
+msgstr "עכשיו: %1, עד %2"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = event title, %2 = when"
 msgid "Next: %1, %2"
-msgstr ""
+msgstr "הבא: %1, %2"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
-msgstr ""
+msgstr "יש להגדיר מיקום בהגדרות > מזג האוויר כדי לראות כאן את התחזית."
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
-msgstr ""
+msgstr "מזג האוויר נטען…"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "current weather"
 msgid "Now"
-msgstr ""
+msgstr "עכשיו"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
 msgid "High %1 · Low %2"
-msgstr ""
+msgstr "מרבית %1 · מזערית %2"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
 msgid "Today: high %1, low %2"
-msgstr ""
+msgstr "היום: מרבית %1, מזערית %2"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation"
 msgid "rain %1"
-msgstr ""
+msgstr "גשם %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
-msgstr ""
+msgstr "12 השעות הבאות"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
-msgstr ""
+msgstr "הימים הבאים"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "יום אחד"
+msgstr[1] "יומיים"
+msgstr[2] "%1 ימים"
+msgstr[3] "%1 ימים"
 
 #: ../contents/ui/WeekView.qml
 msgctxt "more events not shown"
 msgid "+%1"
-msgstr ""
+msgstr "+%1"
 
 #~ msgid "General"
 #~ msgstr "כללי"
