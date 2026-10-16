@@ -491,7 +491,7 @@ Item {
 				Rectangle {
 					readonly property var bar: modelData
 					readonly property var eventItem: bar.eventItem
-					readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+					readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 1
 					y: bar.lane * (weekView.allDayRowHeight + 1)
 					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
@@ -700,7 +700,7 @@ Item {
 									id: eventBlock
 									readonly property var block: modelData
 									readonly property var eventItem: block.eventItem
-									readonly property color barColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+									readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
 									// Clip to the visible hour range.
 									readonly property real rangeStart: block.dayStart + weekView.firstHour * 3600000

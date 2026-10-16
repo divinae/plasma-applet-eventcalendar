@@ -44,7 +44,7 @@ Item {
 					var _ = eventTitlesBadge.eventCount // Re-evaluate when the day's events change.
 					return eventTitlesBadge.eventAt(index)
 				}
-				readonly property color barColor: eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : Kirigami.Theme.highlightColor
+				readonly property color barColor: appletConfig.eventColor(eventItem ? eventItem.backgroundColor : null)
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
 				radius: Math.min(7, height / 2)

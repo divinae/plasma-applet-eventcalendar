@@ -49,22 +49,6 @@ ColumnLayout {
 	readonly property int eventCount: agendaItemEvents ? agendaItemEvents.count : 0
 	readonly property int taskCount: agendaItemTasks ? agendaItemTasks.count : 0
 
-	// Today: index of the first event that hasn't started yet; the "now" line goes before it
-	// (eventCount: after the last event). -1 on other days.
-	readonly property int nowIndex: {
-		if (!agendaItemIsToday || eventCount === 0) {
-			return -1
-		}
-		var now = timeModel.currentTime
-		for (var i = 0; i < eventCount; i++) {
-			var e = agendaItemEvents.get(i)
-			if (e.startDateTime > now) {
-				return i
-			}
-		}
-		return eventCount
-	}
-
 	readonly property string dayTitle: {
 		if (!agendaItemDate) {
 			return ""
@@ -78,26 +62,6 @@ ColumnLayout {
 			return i18nc("agenda day header, %1 = Sat, 17 Oct", "Tomorrow · %1", date)
 		}
 		return date
-	}
-
-	component NowLine: RowLayout {
-		spacing: Kirigami.Units.smallSpacing
-		Rectangle {
-			Layout.preferredWidth: 8
-			Layout.preferredHeight: 8
-			radius: 4
-			color: Kirigami.Theme.negativeTextColor
-		}
-		Rectangle {
-			Layout.fillWidth: true
-			Layout.preferredHeight: 2
-			color: Kirigami.Theme.negativeTextColor
-		}
-		PlasmaComponents3.Label {
-			text: Qt.formatTime(timeModel.currentTime, appletConfig.timeFormat)
-			color: Kirigami.Theme.negativeTextColor
-			font: Kirigami.Theme.smallFont
-		}
 	}
 
 	//--- Header
@@ -163,21 +127,9 @@ ColumnLayout {
 			id: eventsRepeater
 			model: agendaItemEvents
 
-			delegate: ColumnLayout {
+			delegate: AgendaEventItem {
 				Layout.fillWidth: true
-				spacing: eventsLayout.spacing
-				NowLine {
-					visible: index === agendaListItem.nowIndex
-					Layout.fillWidth: true
-				}
-				AgendaEventItem {
-					Layout.fillWidth: true
-				}
 			}
-		}
-		NowLine {
-			visible: agendaListItem.nowIndex === agendaListItem.eventCount && agendaListItem.eventCount > 0
-			Layout.fillWidth: true
 		}
 
 		Repeater {

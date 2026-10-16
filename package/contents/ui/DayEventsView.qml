@@ -143,7 +143,7 @@ Rectangle {
 					Rectangle {
 						id: eventRow
 						readonly property var eventItem: modelData
-						readonly property color tileColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+						readonly property color tileColor: appletConfig.eventColor(eventItem.backgroundColor)
 						readonly property color textColor: Shared.contrastTextColor(tileColor)
 						readonly property bool inProgress: !dayView.isAllDay(eventItem)
 							&& eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < eventItem.endDateTime

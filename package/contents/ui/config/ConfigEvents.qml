@@ -52,15 +52,20 @@ ConfigPage {
 			text: i18n("Plasma calendar plugins are unavailable.")
 			opacity: 0.7
 		}
-		Repeater {
-			model: page.eventPluginsManager ? page.eventPluginsManager.model : null
-			delegate: CheckBox {
-				Kirigami.FormData.label: index === 0 ? i18n("Plasma calendars:") : ""
-				text: model.display
-				checked: model.checked
-				onClicked: {
-					model.checked = checked // needed for model's setData to be called
-					page.saveConfig()
+		// A Repeater directly in a FormLayout breaks the layout's child handling.
+		ColumnLayout {
+			visible: !!page.eventPluginsManager
+			Kirigami.FormData.label: i18n("Plasma calendars:")
+			spacing: 0
+			Repeater {
+				model: page.eventPluginsManager ? page.eventPluginsManager.model : null
+				delegate: CheckBox {
+					text: model.display
+					checked: model.checked
+					onClicked: {
+						model.checked = checked // needed for model's setData to be called
+						page.saveConfig()
+					}
 				}
 			}
 		}
