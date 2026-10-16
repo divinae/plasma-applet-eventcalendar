@@ -123,7 +123,8 @@ ColumnLayout {
 			spacing: 2
 			Kirigami.Icon {
 				visible: plasmoid.configuration.agendaWeatherShowIcon
-				source: weatherIcon
+				source: weatherIcon + "-symbolic" // Monochrome: readable on any background
+				fallback: weatherIcon
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
 			}

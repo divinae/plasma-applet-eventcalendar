@@ -431,7 +431,8 @@ Item {
 							anchors.verticalCenter: parent.verticalCenter
 							width: Kirigami.Units.iconSizes.small
 							height: width
-							source: parent.parent.weather ? parent.parent.weather.iconName : ""
+							source: parent.parent.weather ? parent.parent.weather.iconName + "-symbolic" : "" // Monochrome: readable on any background
+							fallback: parent.parent.weather ? parent.parent.weather.iconName : ""
 						}
 						PlasmaComponents3.Label {
 							visible: !weekView.singleDay && !!parent.parent.weather

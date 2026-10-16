@@ -72,10 +72,18 @@ ColumnLayout {
 		visible: panel.isSetup && !!panel.current
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.largeSpacing
-		Kirigami.Icon {
-			source: panel.current ? panel.current.iconName : ""
-			Layout.preferredWidth: panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large
+		// Colored icon on a soft round backdrop: light icons (clouds) vanish on a light theme otherwise.
+		Rectangle {
+			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
+			radius: width / 2
+			color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.12)
+			Kirigami.Icon {
+				anchors.centerIn: parent
+				width: parent.width - Kirigami.Units.smallSpacing * 2
+				height: width
+				source: panel.current ? panel.current.iconName : ""
+			}
 		}
 		ColumnLayout {
 			Layout.fillWidth: true
@@ -207,7 +215,8 @@ ColumnLayout {
 					y: 0
 					width: Kirigami.Units.iconSizes.small
 					height: width
-					source: parent.point ? parent.point.iconName : ""
+					source: parent.point ? parent.point.iconName + "-symbolic" : ""
+					fallback: parent.point ? parent.point.iconName : ""
 				}
 				PlasmaComponents3.Label {
 					x: -implicitWidth / 2
@@ -243,7 +252,8 @@ ColumnLayout {
 				font.capitalization: Font.Capitalize
 			}
 			Kirigami.Icon {
-				source: modelData.iconName
+				source: modelData.iconName + "-symbolic" // Monochrome: readable on any background
+				fallback: modelData.iconName
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
 			}
