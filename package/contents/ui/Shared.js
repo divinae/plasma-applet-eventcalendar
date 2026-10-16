@@ -240,3 +240,46 @@ function locationLink(location) {
 	var href = locationUrl(location).replace(/"/g, '%22')
 	return '<a href="' + href + '">' + escapeHtml(location) + '</a>'
 }
+
+//--- Event span ("All day", "14 – 16 Oct", "14 Oct 22:00 – 16 Oct 02:00")
+// Days an event covers. All-day events end at midnight the next day (exclusive); a timed event
+// counts every day it touches.
+function eventDayCount(e) {
+	var start = startOfDay(new Date(e.startDateTime))
+	var end = new Date(e.endDateTime)
+	var isAllDay = !!(e.start && e.start.date)
+	var last = startOfDay(new Date(Math.max(start.getTime(), end.getTime() - (isAllDay ? 1 : 0))))
+	if (!isAllDay && end.getTime() === last.getTime() && end > start) {
+		last.setDate(last.getDate() - 1) // Timed event ending exactly at midnight
+	}
+	return Math.round((last - start) / 86400000) + 1
+}
+// Date format for a span: the year only when it isn't the current one (or the span crosses years).
+function spanDateFormat(a, b, now) {
+	var sameYear = a.getFullYear() === b.getFullYear() && a.getFullYear() === now.getFullYear()
+	return sameYear ? 'd MMM' : 'd MMM yyyy'
+}
+// { allDay, multiDay, days, startText, endText } for an event; the caller words it with i18n.
+// timeFormat: Qt time format for timed events (eg: appletConfig.timeFormat).
+function eventSpan(e, timeFormat, now) {
+	var isAllDay = !!(e.start && e.start.date)
+	var days = eventDayCount(e)
+	var start = new Date(e.startDateTime)
+	var end = new Date(e.endDateTime)
+	var result = { allDay: isAllDay, multiDay: days > 1, days: days, startText: '', endText: '' }
+	if (isAllDay) {
+		var last = new Date(end)
+		last.setDate(last.getDate() - 1)
+		var dateFormat = spanDateFormat(start, last, now || new Date())
+		result.startText = Qt.formatDate(start, dateFormat)
+		result.endText = Qt.formatDate(last, dateFormat)
+	} else if (days > 1) {
+		var timedFormat = spanDateFormat(start, end, now || new Date()) + ' ' + timeFormat
+		result.startText = Qt.formatDateTime(start, timedFormat)
+		result.endText = Qt.formatDateTime(end, timedFormat)
+	} else {
+		result.startText = Qt.formatTime(start, timeFormat)
+		result.endText = Qt.formatTime(end, timeFormat)
+	}
+	return result
+}

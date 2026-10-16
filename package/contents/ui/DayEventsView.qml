@@ -57,17 +57,13 @@ Rectangle {
 	function isAllDay(e) {
 		return !!(e.start && e.start.date)
 	}
+	// "All day", "09:45 – 10:00", or with dates for multi-day events.
 	function timeText(e) {
-		if (isAllDay(e)) {
+		var span = Shared.eventSpan(e, appletConfig.timeFormat, timeModel.currentTime)
+		if (span.allDay && !span.multiDay) {
 			return i18n("All day")
 		}
-		var format = appletConfig.timeFormat
-		// Events spanning several days: show the dates too, eg: "14 Oct 22:00 – 16 Oct 02:00".
-		if (!Shared.isSameDate(e.startDateTime, e.endDateTime)) {
-			var dateFormat = 'd MMM '
-			return Qt.formatDateTime(e.startDateTime, dateFormat + format) + ' – ' + Qt.formatDateTime(e.endDateTime, dateFormat + format)
-		}
-		return Shared.formatTimeRange(e.startDateTime, e.endDateTime, format)
+		return i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
 	}
 
 	Keys.onEscapePressed: closeRequested()

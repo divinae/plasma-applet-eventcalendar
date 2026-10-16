@@ -499,7 +499,7 @@ Item {
 					readonly property var eventItem: bar.eventItem
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors.
-					readonly property color stripeColor: eventItem.backgroundColor || Kirigami.Theme.highlightColor
+					readonly property color stripeColor: appletConfig.eventColor(eventItem.backgroundColor)
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
@@ -518,36 +518,32 @@ Item {
 					border.width: 1
 					border.color: ColorUtil.setAlpha(stripeColor, 0.45)
 					clip: true
-					// Stripe on the start side (not when the event began before this week).
+					// Stripe on the start side (not when the event began before this week), inset so it
+					// stays inside the rounded corners.
 					Rectangle {
 						visible: !parent.cutLeft
-						width: 4
-						height: parent.height
-						radius: parent.cornerRadius
+						x: 3
+						y: 3
+						width: 3
+						height: parent.height - 6
+						radius: width / 2
 						color: parent.stripeColor
-						Rectangle { // Square inner edge
-							anchors.right: parent.right
-							width: 2
-							height: parent.height
-							color: parent.color
-						}
 					}
 					// Title, then the date span ("14 – 16 Oct · 3 days") or "All day".
-					readonly property int dayCount: Math.max(1, Math.round((Shared.startOfDay(eventItem.endDateTime) - Shared.startOfDay(eventItem.startDateTime)) / 86400000))
+					// Long timed events (24 h+) are in this row too: Shared.eventSpan handles both.
+					readonly property var span: Shared.eventSpan(eventItem, appletConfig.timeFormat, weekView.currentTime)
 					readonly property string spanText: {
-						if (dayCount <= 1) {
+						if (span.allDay && !span.multiDay) {
 							return i18n("All day")
 						}
-						var lastDay = new Date(eventItem.endDateTime)
-						lastDay.setDate(lastDay.getDate() - 1)
-						return Qt.formatDate(eventItem.startDateTime, "d MMM") + " – " + Qt.formatDate(lastDay, "d MMM")
-							+ " · " + i18np("%1 day", "%1 days", dayCount)
+						var range = i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
+						return span.allDay ? range + " · " + i18np("%1 day", "%1 days", span.days) : range
 					}
 					Column {
 						anchors.left: parent.left
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter
-						anchors.leftMargin: 9
+						anchors.leftMargin: 11
 						anchors.rightMargin: 4
 						PlasmaComponents3.Label {
 							width: parent.width
