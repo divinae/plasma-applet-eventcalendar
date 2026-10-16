@@ -11,7 +11,6 @@ LinkRect {
 	id: agendaEventItem
 	readonly property int eventItemIndex: index
 	Layout.fillWidth: true
-	implicitHeight: contents.implicitHeight
 
 	property bool eventItemInProgress: false
 	function checkIfInProgress() {
@@ -55,131 +54,120 @@ LinkRect {
 
 
 	//---
-	RowLayout {
+	// Tile in the event color, like the day list and the week view.
+	readonly property color tileColor: model.backgroundColor || Kirigami.Theme.highlightColor
+	readonly property color tileTextColor: editEventForm.visible ? Kirigami.Theme.textColor : Shared.contrastTextColor(tileColor)
+	readonly property bool ended: !!model.endDateTime && !!timeModel.currentTime && model.endDateTime <= timeModel.currentTime
+	readonly property var meetingLink: MeetingLink.find(model)
+	radius: 8
+	border.width: 1
+	border.color: appletConfig.eventBorderColor
+	backgroundColor: editEventForm.visible ? Kirigami.Theme.backgroundColor : tileColor
+	backgroundHoverColor: editEventForm.visible ? backgroundColor : Qt.darker(tileColor, 1.08)
+	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
+	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
+	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
+
+	ColumnLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
-		spacing: 4 * Screen.devicePixelRatio
+		anchors.top: parent.top
+		anchors.leftMargin: Kirigami.Units.largeSpacing
+		anchors.rightMargin: Kirigami.Units.smallSpacing
+		anchors.topMargin: Kirigami.Units.smallSpacing + 1
+		spacing: 0
 
-		Rectangle {
-			implicitWidth: appletConfig.eventIndicatorWidth
-			Layout.fillHeight: true
-			color: model.backgroundColor || Kirigami.Theme.textColor
-		}
-
-		ColumnLayout {
-			id: eventColumn
+		RowLayout {
 			Layout.fillWidth: true
-			spacing: 0
+			spacing: Kirigami.Units.smallSpacing
 
-			PlasmaComponents3.Label {
-				id: eventSummary
-				text: {
-					if (isCondensed && model.location) {
-						return model.summary + " | " + model.location
-					} else {
+			ColumnLayout {
+				id: eventColumn
+				Layout.fillWidth: true
+				spacing: 0
+
+				PlasmaComponents3.Label {
+					id: eventSummary
+					text: {
+						if (isCondensed && model.location) {
+							return model.summary + " · " + model.location
+						}
 						return model.summary
 					}
+					color: agendaEventItem.tileTextColor
+					font.pointSize: -1
+					font.pixelSize: appletConfig.agendaFontSize
+					font.weight: eventItemInProgress ? Font.Bold : Font.Normal
+					visible: !editEventForm.visible
+					Layout.fillWidth: true
+					wrapMode: Text.Wrap
 				}
-				color: eventItemInProgress ? inProgressColor : Kirigami.Theme.textColor
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
-				visible: !editEventForm.visible
-				Layout.fillWidth: true
 
-				// The Following doesn't seem to be applicable anymore (left comment just in case).
-				// Wrapping causes reflow, which causes scroll to selection to miss the selected date
-				// since it reflows after updateUI/scrollToDate is done.
-				wrapMode: Text.Wrap
-			}
-
-			PlasmaComponents3.Label {
-				id: eventDateTime
-				text: {
-					if (model.location) {
-						return eventTimestamp + " | " + model.location
-					} else {
-						return eventTimestamp
-					}
-				}
-				color: eventItemInProgress ? inProgressColor : Kirigami.Theme.textColor
-				opacity: eventItemInProgress ? 1 : 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
-				visible: !editEventForm.visible && !isCondensed
-			}
-
-			Item {
-				id: eventDescriptionSpacing
-				visible: eventDescription.visible
-				implicitHeight: 4 * Screen.devicePixelRatio
-			}
-
-			PlasmaComponents3.Label {
-				id: eventDescription
-				readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
-				visible: showProperty && !editEventForm.visible
-				text: Shared.renderText(model.description)
-				color: Kirigami.Theme.textColor
-				opacity: 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				Layout.fillWidth: true
-				wrapMode: Text.Wrap // See warning at eventSummary.wrapMode
-
-				readonly property bool showInTooltip: !showProperty || truncated
-				maximumLineCount: plasmoid.configuration.agendaMaxDescriptionLines
-				elide: Text.ElideRight
-
-					linkColor: Kirigami.Theme.highlightColor
-					onLinkActivated: function(link) {
-						Qt.openUrlExternally(link)
-					}
-					MouseArea {
-					anchors.fill: parent
-					acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
-					cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+				PlasmaComponents3.Label {
+					id: eventDateTime
+					text: model.location ? eventTimestamp + " · " + model.location : eventTimestamp
+					color: agendaEventItem.tileTextColor
+					opacity: 0.85
+					font: Kirigami.Theme.smallFont
+					visible: !editEventForm.visible && !isCondensed
+					Layout.fillWidth: true
+					elide: Text.ElideRight
 				}
 			}
 
-			Item {
-				id: eventEditorSpacing
-				visible: editEventForm.visible
-				implicitHeight: 4 * Screen.devicePixelRatio
+			// Join the meeting
+			PlasmaComponents3.Button {
+				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!agendaEventItem.meetingLink && !editEventForm.visible && !agendaEventItem.ended
+				Layout.alignment: Qt.AlignVCenter
+				icon.name: "call-start"
+				text: i18n("Join")
+				onClicked: Qt.openUrlExternally(agendaEventItem.meetingLink.url)
+				PlasmaComponents3.ToolTip.text: agendaEventItem.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", agendaEventItem.meetingLink.label) : ""
+				PlasmaComponents3.ToolTip.visible: hovered
 			}
+		}
 
-			EditEventForm {
-				id: editEventForm
-				// active: true
+		PlasmaComponents3.Label {
+			id: eventDescription
+			readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
+			visible: showProperty && !editEventForm.visible
+			Layout.topMargin: Kirigami.Units.smallSpacing
+			text: Shared.renderText(model.description)
+			color: agendaEventItem.tileTextColor
+			opacity: 0.8
+			font.pointSize: -1
+			font.pixelSize: appletConfig.agendaFontSize
+			Layout.fillWidth: true
+			wrapMode: Text.Wrap
+			maximumLineCount: plasmoid.configuration.agendaMaxDescriptionLines
+			elide: Text.ElideRight
+			linkColor: agendaEventItem.tileTextColor
+			onLinkActivated: function(link) {
+				Qt.openUrlExternally(link)
 			}
-
-			Item {
-				id: eventEditorSpacingBelow
-				visible: editEventForm.visible
-				implicitHeight: 4 * Screen.devicePixelRatio
+			MouseArea {
+				anchors.fill: parent
+				acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+				cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
 			}
+		}
 
-			Loader {
-				id: eventHangoutLinkLoader
-				readonly property bool showProperty: plasmoid.configuration.agendaShowEventHangoutLink && !!externalLink
-				readonly property var meetingLink: MeetingLink.find(model)
-				readonly property string externalLink: meetingLink ? meetingLink.url : ''
-				visible: showProperty && !editEventForm.visible
-				active: visible
+		Item {
+			visible: editEventForm.visible
+			implicitHeight: 4 * Screen.devicePixelRatio
+		}
 
-				sourceComponent: PlasmaComponents3.ToolButton {
-					id: eventHangoutLink
-					text: eventHangoutLinkLoader.meetingLink ? eventHangoutLinkLoader.meetingLink.label : i18n("Hangout")
-					icon.source: Qt.resolvedUrl("../icons/hangouts.svg")
-					onClicked: Qt.openUrlExternally(externalLink)
-				}
-			}
+		EditEventForm {
+			id: editEventForm
+		}
 
-		} // eventColumn
+		Item {
+			visible: editEventForm.visible
+			implicitHeight: 4 * Screen.devicePixelRatio
+		}
 	}
-	
+
 	onLeftClicked: {
 		// logger.log('agendaItem.event.leftClicked', model.startDateTime, mouse)
 		if (false) {

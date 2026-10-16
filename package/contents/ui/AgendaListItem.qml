@@ -5,12 +5,12 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
-import "./weather/WeatherApi.js" as WeatherApi
 
-GridLayout {
+// One agenda day: a header (Today / Tomorrow / date, weather, add button), then the event tiles.
+ColumnLayout {
 	id: agendaListItem
 	readonly property int agendaItemIndex: index
-	columnSpacing: 0
+	spacing: Kirigami.Units.smallSpacing
 	property var agendaItemEvents: model.events
 	property var agendaItemTasks: model.tasks
 	property var agendaItemDate: model.date // var: model.date is briefly undefined while delegates are removed.
@@ -19,7 +19,6 @@ GridLayout {
 	opacity: agendaItemDate && timeModel.currentTime && Shared.isPastDay(agendaItemDate, timeModel.currentTime) ? appletConfig.pastOpacity : 1
 	function checkIfToday() {
 		agendaItemIsToday = timeModel.currentTime && model.date ? Shared.isSameDate(timeModel.currentTime, model.date) : false
-		// console.log('checkIfToday()', agendaListItem.agendaItemIsToday, timeModel.currentTime, model.date)
 	}
 	Component.onCompleted: agendaListItem.checkIfToday()
 	Connections {
@@ -32,7 +31,6 @@ GridLayout {
 		}
 	}
 	property bool agendaItemInProgress: agendaItemIsToday
-	property bool weatherOnRight: plasmoid.configuration.agendaWeatherOnRight
 	property alias tasksRepeater: tasksRepeater
 	property alias eventsRepeater: eventsRepeater
 
@@ -49,210 +47,188 @@ GridLayout {
 		agendaListItem.checkIfToday()
 	}
 
-	// readonly property int itemOffset: agendaScrollView.getItemOffsetY(index)
-	// readonly property int scrollOffset: agendaScrollView.scrollY - itemOffset
-	// readonly property bool isCurrentItem: 0 <= scrollOffset && scrollOffset < height
-	// onItemOffsetChanged: console.log(index, 'itemOffset', itemOffset)
+	readonly property int eventCount: agendaItemEvents ? agendaItemEvents.count : 0
+	readonly property int taskCount: agendaItemTasks ? agendaItemTasks.count : 0
 
-	LinkRect {
-		visible: agendaModel.showDailyWeather
-		Layout.alignment: Qt.AlignTop
-		Layout.column: weatherOnRight ? 2 : 0
-		Layout.minimumWidth: appletConfig.agendaDateColumnWidth
-		implicitWidth: itemWeatherColumn.implicitWidth
-		onWidthChanged: {
-			if (width > appletConfig.agendaDateColumnWidth) {
-				appletConfig.agendaDateColumnWidth = width
-			}
+	// Today: index of the first event that hasn't started yet; the "now" line goes before it
+	// (eventCount: after the last event). -1 on other days.
+	readonly property int nowIndex: {
+		if (!agendaItemIsToday || eventCount === 0) {
+			return -1
 		}
-		implicitHeight: itemWeatherColumn.implicitHeight
-
-		// readonly property int maxOffset: agendaListItem.height - height
-		// Layout.topMargin: agendaListItem.isCurrentItem ? Math.min(maxOffset, agendaListItem.scrollOffset) : 0
-
-		ColumnLayout {
-			id: itemWeatherColumn
-			Layout.alignment: Qt.AlignTop
-			spacing: 0
-			anchors.horizontalCenter: parent.horizontalCenter
-
-			FontIcon {
-				visible: showWeather && plasmoid.configuration.agendaWeatherShowIcon
-				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
-				source: weatherIcon
-				height: appletConfig.agendaWeatherIconSize
-				showOutline: plasmoid.configuration.showOutlines
-				Layout.fillWidth: true
-			}
-
-			PlasmaComponents3.Label {
-				id: itemWeatherText
-				visible: showWeather && plasmoid.configuration.agendaWeatherShowText
-				text: weatherText
-				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
-				opacity: agendaItemIsToday ? 1 : 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				Layout.alignment: Qt.AlignHCenter
-			}
-
-			PlasmaComponents3.Label {
-				id: itemWeatherTemps
-				visible: showWeather
-				text: {
-					var high = isNaN(model.tempHigh) ? '?' : model.tempHigh + '°'
-					var low = isNaN(model.tempLow) ? '?' : model.tempLow + '°'
-					return high + ' | ' + low
-				}
-				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
-				opacity: agendaItemIsToday ? 1 : 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				Layout.alignment: Qt.AlignHCenter
-			}
-		}
-
-		tooltipMainText: weatherDescription
-		tooltipSubText: weatherNotes
-
-		onLeftClicked: {
-			// console.log('agendaItem.date.clicked', date)
-			if (true) {
-				// agenda_weather_clicked == "browser_viewcityforecast"
-				WeatherApi.openCityUrl(plasmoid.configuration)
-			}
-		}
-	}
-
-	LinkRect {
-		Layout.alignment: Qt.AlignTop
-		Layout.column: weatherOnRight ? 0 : 1
-		implicitWidth: appletConfig.agendaDateColumnWidth
-
-		// readonly property int maxOffset: agendaListItem.height - height
-		// Layout.topMargin: agendaListItem.isCurrentItem ? Math.min(maxOffset, agendaListItem.scrollOffset) : 0
-
-		ColumnLayout {
-			id: itemDateColumn
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.leftMargin: appletConfig.agendaColumnSpacing
-			anchors.rightMargin: appletConfig.agendaColumnSpacing
-			spacing: 0
-
-			PlasmaComponents3.Label {
-				id: itemDate
-				text: Qt.formatDateTime(agendaItemDate, i18nc("agenda date format line 1", "MMM d"))
-				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
-				opacity: agendaItemIsToday ? 1 : 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignRight
-			}
-
-			PlasmaComponents3.Label {
-				id: itemDay
-				text: Qt.formatDateTime(agendaItemDate, i18nc("agenda date format line 2", "ddd"))
-				color: agendaItemIsToday ? inProgressColor : Kirigami.Theme.textColor
-				opacity: agendaItemIsToday ? 1 : 0.5
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
-				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignRight
-			}
-		}
-
-		onLeftClicked: {
-			// console.log('agendaItem.date.leftClicked', date)
-			if (false) {
-				// agenda_date_clicked == "browser_newevent"
-				Shared.openGoogleCalendarNewEventUrl(date)
-			} else if (true) {
-				// agenda_date_clicked == "agenda_newevent"
-				newEventForm.active = !newEventForm.active
-			}
-		}
-	}
-
-	ColumnLayout {
-		Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-		Layout.column: weatherOnRight ? 1 : 2
-		spacing: appletConfig.agendaEventSpacing
-
-		NewEventForm {
-			id: newEventForm
-			Layout.fillWidth: true
-		}
-
-		ColumnLayout {
-			id: eventsLayout
-			spacing: appletConfig.agendaEventSpacing
-			Layout.fillWidth: true
-
-			Repeater {
-				id: eventsRepeater
-				model: agendaItemEvents
-
-				delegate: AgendaEventItem {
-					id: agendaEventItem
-					width: parent.width
-				}
-			}
-
-			Repeater {
-				id: tasksRepeater
-				model: agendaItemTasks
-
-				delegate: AgendaTaskItem {
-					id: agendaTaskItem
-					width: parent.width
-				}
-			}
-		}
-
-	}
-
-	function indexOfEvent(eventId) {
-		for (var i = 0; i < eventsRepeater.model.length; i++) {
-			var event = eventsRepeater.model[i]
-			if (event.id === eventId) {
+		var now = timeModel.currentTime
+		for (var i = 0; i < eventCount; i++) {
+			var e = agendaItemEvents.get(i)
+			if (e.startDateTime > now) {
 				return i
 			}
 		}
-		for (var i = 0; i < tasksRepeater.model.length; i++) {
-			var task = tasksRepeater.model[i]
-			if (task.id === eventId) {
-				return eventsRepeater.model.length + i
+		return eventCount
+	}
+
+	readonly property string dayTitle: {
+		if (!agendaItemDate) {
+			return ""
+		}
+		var date = Qt.formatDate(agendaItemDate, "ddd, d MMM")
+		var now = timeModel.currentTime
+		var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+		if (agendaItemIsToday) {
+			return i18nc("agenda day header, %1 = Fri, 16 Oct", "Today · %1", date)
+		} else if (Shared.isSameDate(agendaItemDate, tomorrow)) {
+			return i18nc("agenda day header, %1 = Sat, 17 Oct", "Tomorrow · %1", date)
+		}
+		return date
+	}
+
+	component NowLine: RowLayout {
+		spacing: Kirigami.Units.smallSpacing
+		Rectangle {
+			Layout.preferredWidth: 8
+			Layout.preferredHeight: 8
+			radius: 4
+			color: Kirigami.Theme.negativeTextColor
+		}
+		Rectangle {
+			Layout.fillWidth: true
+			Layout.preferredHeight: 2
+			color: Kirigami.Theme.negativeTextColor
+		}
+		PlasmaComponents3.Label {
+			text: Qt.formatTime(timeModel.currentTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+			color: Kirigami.Theme.negativeTextColor
+			font: Kirigami.Theme.smallFont
+		}
+	}
+
+	//--- Header
+	RowLayout {
+		id: dayHeader
+		Layout.fillWidth: true
+		spacing: Kirigami.Units.smallSpacing
+
+		Kirigami.Heading {
+			Layout.fillWidth: true
+			level: 4
+			font.capitalization: Font.Capitalize
+			font.weight: agendaListItem.agendaItemIsToday ? Font.Bold : Font.DemiBold
+			color: agendaListItem.agendaItemIsToday ? appletConfig.agendaInProgressColor : Kirigami.Theme.textColor
+			elide: Text.ElideRight
+			text: agendaListItem.dayTitle
+		}
+
+		// Weather
+		RowLayout {
+			visible: showWeather
+			spacing: 2
+			Kirigami.Icon {
+				visible: plasmoid.configuration.agendaWeatherShowIcon
+				source: weatherIcon
+				Layout.preferredWidth: Kirigami.Units.iconSizes.small
+				Layout.preferredHeight: Layout.preferredWidth
+			}
+			PlasmaComponents3.Label {
+				visible: plasmoid.configuration.agendaWeatherShowText && !!weatherText
+				text: weatherText
+				opacity: 0.7
+			}
+			PlasmaComponents3.Label {
+				text: (isNaN(tempHigh) ? '?' : tempHigh + '°') + ' / ' + (isNaN(tempLow) ? '?' : tempLow + '°')
+				opacity: 0.8
+			}
+		}
+
+		PlasmaComponents3.ToolButton {
+			icon.name: "list-add"
+			display: QQC2.AbstractButton.IconOnly
+			text: i18n("New Event")
+			Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+			Layout.preferredWidth: Layout.preferredHeight
+			onClicked: newEventForm.active = !newEventForm.active
+			PlasmaComponents3.ToolTip.text: text
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
+	}
+
+	Kirigami.Separator {
+		Layout.fillWidth: true
+	}
+
+	//--- Content
+	NewEventForm {
+		id: newEventForm
+		Layout.fillWidth: true
+	}
+
+	ColumnLayout {
+		id: eventsLayout
+		spacing: appletConfig.agendaEventSpacing + Kirigami.Units.smallSpacing
+		Layout.fillWidth: true
+
+		Repeater {
+			id: eventsRepeater
+			model: agendaItemEvents
+
+			delegate: ColumnLayout {
+				Layout.fillWidth: true
+				spacing: eventsLayout.spacing
+				NowLine {
+					visible: index === agendaListItem.nowIndex
+					Layout.fillWidth: true
+				}
+				AgendaEventItem {
+					Layout.fillWidth: true
+				}
+			}
+		}
+		NowLine {
+			visible: agendaListItem.nowIndex === agendaListItem.eventCount && agendaListItem.eventCount > 0
+			Layout.fillWidth: true
+		}
+
+		Repeater {
+			id: tasksRepeater
+			model: agendaItemTasks
+
+			delegate: AgendaTaskItem {
+				id: agendaTaskItem
+				width: parent.width
+			}
+		}
+
+		PlasmaComponents3.Label {
+			visible: agendaListItem.eventCount + agendaListItem.taskCount === 0 && !newEventForm.active
+			text: i18n("No events")
+			opacity: 0.6
+		}
+	}
+
+	// Space before the next day
+	Item {
+		Layout.preferredHeight: Kirigami.Units.largeSpacing
+	}
+
+	function indexOfEvent(eventId) {
+		for (var i = 0; i < eventCount; i++) {
+			if (agendaItemEvents.get(i).id === eventId) {
+				return i
+			}
+		}
+		for (var j = 0; j < taskCount; j++) {
+			if (agendaItemTasks.get(j).id === eventId) {
+				return eventCount + j
 			}
 		}
 		return -1
 	}
 
+	// Y of the event / task at index, relative to this day item.
 	function getEventOffset(index) {
-		var yOffset = newEventForm.height
-		for (var i = 0; i < index && i < eventsRepeater.count; i++) {
-			var item = eventsRepeater.itemAt(i)
-			if (i > 0) {
-				yOffset += eventsLayout.spacing
-			}
-			yOffset += item.height
+		if (index < eventCount) {
+			var item = eventsRepeater.itemAt(index)
+			return item ? item.mapToItem(agendaListItem, 0, 0).y : eventsLayout.y
 		}
-		for (var i = 0; i < tasksRepeater.count; i++) {
-			var item = tasksRepeater.itemAt(i)
-			var eventIndex = eventsRepeater.count + i
-			if (eventIndex >= index) {
-				break
-			}
-			if (i > 0 || eventsRepeater.count > 0) {
-				yOffset += eventsLayout.spacing
-			}
-			yOffset += item.height
-		}
-		return yOffset
+		var task = tasksRepeater.itemAt(index - eventCount)
+		return task ? task.mapToItem(agendaListItem, 0, 0).y : eventsLayout.y
 	}
 }

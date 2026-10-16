@@ -265,10 +265,5 @@ ConfigPage {
 			configKey: 'agendaWeatherShowText'
 			text: i18n("Text")
 		}
-		ConfigCheckBox {
-			visible: page.agendaMode
-			configKey: 'agendaWeatherOnRight'
-			text: i18n("On the right side")
-		}
 	}
 }
