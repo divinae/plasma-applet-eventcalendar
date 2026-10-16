@@ -27,6 +27,16 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - Event locations open in Google Maps, dark theme friendly event colors, right-click menus on
   events, translated into 20 languages.
 
+## Screenshots
+
+All shots use mock data.
+
+| | |
+|---|---|
+| ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
+| ![Today view](docs/screenshots/today.png) **Today**: the day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
+| ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts, calendars and task lists |
+
 ## Install
 
 ### From a release
