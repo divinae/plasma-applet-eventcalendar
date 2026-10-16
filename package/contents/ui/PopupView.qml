@@ -24,14 +24,15 @@ MouseArea {
 	property real heightScale: Math.max(1, screenHeight / 1080)
 
 	property int topRowHeight: Math.round(plasmoid.configuration.topRowHeight * heightScale)
-	property int bottomRowHeight: Math.round((fullViewMode ? plasmoid.configuration.monthModeHeight : plasmoid.configuration.bottomRowHeight) * heightScale)
+	// All views share one size (Settings > Views).
+	property int bottomRowHeight: Math.round(plasmoid.configuration.monthModeHeight * heightScale)
 	property int singleColumnMonthViewHeight: Math.round(plasmoid.configuration.monthHeightSingleColumn * heightScale)
 
 	// DigitalClock LeftColumn minWidth: Kirigami.Units.gridUnit * 22
 	// DigitalClock RightColumn minWidth: Kirigami.Units.gridUnit * 14
 	// 14/(22+14) * 400 = 156
 	// rightColumnWidth=156 looks nice but is very thin for listing events + date + weather.
-	property int leftColumnWidth: Math.round((fullViewMode ? plasmoid.configuration.monthModeWidth : plasmoid.configuration.leftColumnWidth) * widthScale) // Meteogram + MonthView
+	property int leftColumnWidth: Math.round(plasmoid.configuration.monthModeWidth * widthScale) // Meteogram + MonthView
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
@@ -43,7 +44,7 @@ MouseArea {
 		} else if (showCalendar) {
 			return leftColumnWidth
 		} else if (showAgenda) {
-			return rightColumnWidth
+			return leftColumnWidth
 		}
 
 		var width = 0
@@ -126,8 +127,10 @@ MouseArea {
 	readonly property bool fullViewMode: monthMode || hourGridMode
 	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
 	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
-	property bool showAgenda: plasmoid.configuration.widgetShowAgenda && !fullViewMode
-	property bool showCalendar: (plasmoid.configuration.widgetShowCalendar && !hourGridMode) || monthMode
+	// The agenda view is the agenda list only (plus optional meteogram / timer); the month view
+	// is the calendar.
+	property bool showAgenda: !fullViewMode
+	property bool showCalendar: monthMode
 	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing

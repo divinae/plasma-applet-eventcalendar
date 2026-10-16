@@ -37,7 +37,7 @@ ConfigPage {
 			text: i18n("Show view switcher in the header")
 		}
 		RowLayout {
-			Kirigami.FormData.label: i18n("Today, week and month size:")
+			Kirigami.FormData.label: i18n("Popup size:")
 			ConfigSpinBox {
 				configKey: 'monthModeWidth'
 				suffix: i18n(" px")
@@ -149,17 +149,7 @@ ConfigPage {
 		}
 		ConfigCheckBox {
 			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Show:")
-			configKey: 'widgetShowCalendar'
-			text: i18n("Calendar")
-		}
-		ConfigCheckBox {
-			visible: page.agendaMode
-			configKey: 'widgetShowAgenda'
-			text: i18n("Agenda")
-		}
-		ConfigCheckBox {
-			visible: page.agendaMode
+			Kirigami.FormData.label: i18n("Above the agenda:")
 			configKey: 'widgetShowMeteogram'
 			text: i18n("Meteogram")
 		}
@@ -179,66 +169,13 @@ ConfigPage {
 			sfxPathKey: 'timerSfxFilepath'
 			sfxPathDefaultValue: '/usr/share/sounds/freedesktop/stereo/complete.oga'
 		}
-		ConfigCheckBox {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Layout:")
-			configKey: 'twoColumns'
-			text: i18n("Calendar next to the agenda (two columns)")
-		}
-		RowLayout {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Column widths (left | right):")
-			ConfigSpinBox {
-				configKey: 'leftColumnWidth'
-				suffix: i18n(" px")
-				minimumValue: 100
-				maximumValue: 3000
-			}
-			Label { text: "|" ; opacity: 0.5 }
-			ConfigSpinBox {
-				configKey: 'rightColumnWidth'
-				suffix: i18n(" px")
-				minimumValue: 100
-				maximumValue: 3000
-			}
-		}
-		RowLayout {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Row heights (top / bottom):")
-			ConfigSpinBox {
-				configKey: 'topRowHeight'
-				suffix: i18n(" px")
-				minimumValue: 50
-				maximumValue: 3000
-			}
-			Label { text: "/" ; opacity: 0.5 }
-			ConfigSpinBox {
-				configKey: 'bottomRowHeight'
-				suffix: i18n(" px")
-				minimumValue: 100
-				maximumValue: 3000
-			}
-		}
 		ConfigSpinBox {
 			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Calendar height (one column):")
-			configKey: 'monthHeightSingleColumn'
+			Kirigami.FormData.label: i18n("Meteogram / timer height:")
+			configKey: 'topRowHeight'
 			suffix: i18n(" px")
-			minimumValue: 100
+			minimumValue: 50
 			maximumValue: 3000
-		}
-		ConfigComboBox {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Event markers:")
-			configKey: 'monthEventBadgeType'
-			model: [
-				{ value: 'theme', text: i18n("Theme") },
-				{ value: 'dots', text: i18n("Dots") },
-				{ value: 'bottomBar', text: i18n("Bar in event colors") },
-				{ value: 'bottomBarHighlight', text: i18n("Bar in highlight color") },
-				{ value: 'count', text: i18n("Count") },
-				{ value: 'eventTitles', text: i18n("Event titles") },
-			]
 		}
 
 		//--- Agenda list
