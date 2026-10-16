@@ -11,23 +11,28 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 
 ## Features
 
-- **Views** in the popup, switchable from its header: **Month** (event titles in the days),
-  **Week** (hour grid, all-day events, click an empty slot to add an event), **Day** (one day
-  with a weather panel) and **Agenda** (a list of upcoming days).
-- **Google Calendar**: several accounts at once, choose calendars and task lists per account,
-  create / edit / delete events, **recurring events** (set how an event repeats, edit one
-  occurrence or the whole series). Tokens are kept in the system keyring.
+- **Views** in the popup, switchable from its header: **Month** (event titles in the days,
+  multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
+  the whole day; drag events to move or resize them; the Day view has a weather panel for the day
+  shown) and **Agenda** (a list of upcoming days).
+- **Google Calendar**: several accounts at once, choose calendars and task lists per account.
+  Create, edit and delete events with color, guests, Google Meet and **recurring events** (ends on
+  a date / after N times, custom repeats; edit one occurrence or the whole series). Quick add
+  ("Lunch with Anna tomorrow 13:00"), search, answer invitations (Yes / Maybe / No), undo after a
+  delete or move, rename and recolor calendars. Tokens are kept in the system keyring.
 - **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
-  Day view, the event details, notifications and the panel's right-click menu.
+  Day view, the event details, notifications and the panel's right-click menu. The panel clock
+  can show the next meeting ("in 5 min" / "12 min left").
 - **Notifications** through KDE's notification system: reminders before events (with Snooze),
   when an event starts (optionally critical / persistent), each configurable in System Settings >
   Notifications > Event Calendar. Clicking one opens the event in the widget.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap / Weather Canada.
-- **Works offline**: the last loaded events stay visible, fetches are retried automatically, and
-  a banner shows when it can't connect.
-- Event locations open in Google Maps, dark theme friendly event colors, right-click menus on
-  events, translated into 20 languages.
+- **Starts instantly and works offline**: the last loaded events are shown right away and stay
+  visible offline, fetches are retried automatically, and a banner shows when it can't connect.
+- Invitations look like in Google Calendar (outlined / striped / struck through), icons for what
+  an event has set, adjustable event text size, event locations open in Google Maps, dark theme
+  friendly event colors, right-click menus on events, translated into 20 languages.
 
 ## Screenshots
 
@@ -36,7 +41,7 @@ All shots use mock data.
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
-| ![Day view](docs/screenshots/today.png) **Day**: the day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
+| ![Day view](docs/screenshots/today.png) **Day**: one day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
 | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts, calendars and task lists |
 
 ## Install
@@ -47,9 +52,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.0.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.1.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.0.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.1.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a

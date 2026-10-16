@@ -1,3 +1,37 @@
+## v1.1.0 - October 16 2026
+
+### Views
+* Month view: events lasting several days are one bar across the days, like Google Calendar; clicking a day opens it in the Day view.
+* "Today" view renamed to **Day**; its weather panel follows the day shown (that day's forecast and hours).
+* Week and Day views: the whole day can be scrolled; the working hours (settings) fill the view and the rest is lightly shaded.
+* Week and Day views: drag an event to move it, drag its bottom edge to change its length (asks "This event / All events" for a repeating event).
+* Invitations look like in Google Calendar: not answered is outlined, "maybe" striped, declined struck through.
+* Small icons after an event's time for a place, a meeting link, guests, repeats and a description.
+* New setting for the event text size in all views.
+
+### Events and Google Calendar
+* Search events (loaded ones right away, then Google a year back and ahead).
+* Quick add: type "Lunch with Anna tomorrow 13:00" and Google reads the date and time.
+* Answer invitations (Yes / Maybe / No) from the event details or the right-click menu.
+* Delete one occurrence or a whole repeating series.
+* Undo after deleting or moving an event.
+* Event editor: event color, add or remove Google Meet, guests (with suggestions, and asks whether to send invitations or updates), when a repeat ends (on a date / after N times) and custom repeats (every N days / weeks / months / years, chosen weekdays).
+* Edit a Google calendar's name and color from the settings.
+* Instant start: the last loaded events are shown from a disk cache (no tokens, descriptions or guests in it) until the first fetch.
+* Changing the event color palette recolors the events right away.
+
+### Panel clock
+* The next meeting shows as "in 5 min" / "12 min left", with an optional progress bar during the meeting.
+
+### Fixes
+* An event shown from the disk cache could lose its guests and description when changed before the first fetch.
+* Moving a weekly event to another weekday kept its end date / count.
+* The Day view loaded the wrong month near the end of a month.
+
+### Other
+* CI on GitHub (tests, QML compile, .plasmoid build) and releases built from tags.
+* All new strings translated into the 20 languages.
+
 ## v1.0.0 - October 16 2026
 
 First release of this Plasma 6 fork (divinae/plasma-applet-eventcalendar), based on
