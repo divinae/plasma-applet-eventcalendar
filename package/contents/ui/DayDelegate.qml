@@ -39,7 +39,7 @@ MouseArea {
 	readonly property int eventTitlesHeaderHeight: Math.ceil(dayHeaderFontMetrics.height) + 2
 	property string todayStyle: "theme"
 	// Relative to the cell size, but capped: large cells (full month view) would get huge corners.
-	property real radius: Math.min(8, Math.min(width, height) * plasmoid.configuration.monthCellRadius)
+	property real radius: Math.min(8, Math.min(width, height) * 0.2)
 
 	signal activated()
 

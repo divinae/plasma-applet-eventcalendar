@@ -401,11 +401,7 @@ PinchArea {
 				var dateFormat, text
 				if (calendarBackend.displayedDate.getFullYear() === today.getFullYear()) {
 					if (showTodaysDate && calendarBackend.displayedDate.getMonth() === today.getMonth()) {
-						if (plasmoid.configuration.monthCurrentCustomTitleFormat) {
-							dateFormat = plasmoid.configuration.monthCurrentCustomTitleFormat
-						} else {
-							dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
-						}
+						dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
 						text = Qt.formatDateTime(today, dateFormat)
 						return text
 					} else {
@@ -424,7 +420,6 @@ PinchArea {
 
 			showWeekNumbers: root.showWeekNumbers
 			eventBadgeType: plasmoid.configuration.popupMode === 'month' ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
-			todayStyle: plasmoid.configuration.monthTodayStyle
 
 			headerModel: calendarBackend.days
 			// gridModel: calendarBackend.daysModel

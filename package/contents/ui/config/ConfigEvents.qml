@@ -32,8 +32,6 @@ ConfigPage {
 		PlasmaCalendarUtils.populateEnabledPluginsByFilename(eventPluginsManager, page.configBridge.read("enabledCalendarPlugins", []))
 	}
 
-	readonly property bool clickOpensBrowser: page.configBridge.read("eventClickAction", "details") === 'browser'
-
 	Kirigami.FormLayout {
 		Layout.fillWidth: true
 
@@ -78,15 +76,6 @@ ConfigPage {
 			model: [
 				{ value: 'details', text: i18n("Event details in the widget") },
 				{ value: 'browser', text: i18n("Google Calendar in the browser") },
-			]
-		}
-		ConfigComboBox {
-			visible: page.clickOpensBrowser
-			Kirigami.FormData.label: i18n("Google Calendar page:")
-			configKey: 'googleEventClickAction'
-			model: [
-				{ value: 'WebEventView', text: i18n("Event") },
-				{ value: 'WebMonthView', text: i18n("Month, with the event selected") },
 			]
 		}
 

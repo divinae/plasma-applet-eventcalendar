@@ -122,16 +122,10 @@ ColumnLayout {
 			visible: showWeather
 			spacing: 2
 			Kirigami.Icon {
-				visible: plasmoid.configuration.agendaWeatherShowIcon
 				source: weatherIcon + "-symbolic" // Monochrome: readable on any background
 				fallback: weatherIcon
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
-			}
-			PlasmaComponents3.Label {
-				visible: plasmoid.configuration.agendaWeatherShowText && !!weatherText
-				text: weatherText
-				opacity: 0.7
 			}
 			PlasmaComponents3.Label {
 				text: (isNaN(tempHigh) ? '?' : tempHigh + '°') + ' / ' + (isNaN(tempLow) ? '?' : tempLow + '°')

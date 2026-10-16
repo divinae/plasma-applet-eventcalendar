@@ -681,7 +681,7 @@ MouseArea {
 
 			sourceComponent: MeteogramView {
 				visibleDuration: plasmoid.configuration.meteogramHours
-				showIconOutline: plasmoid.configuration.showOutlines
+				showIconOutline: appletConfig.showIconOutline
 				xAxisScale: 1 / hoursPerDataPoint
 				xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
 				property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
@@ -739,7 +739,7 @@ MouseArea {
 			showHeader: false
 			borderOpacity: appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
-			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek
+			highlightCurrentDayWeek: true
 
 			Layout.preferredWidth: popup.leftColumnWidth
 			Layout.preferredHeight: popup.bottomRowHeight

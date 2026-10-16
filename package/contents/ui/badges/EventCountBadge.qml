@@ -17,7 +17,7 @@ Item {
 		height: parent.height / 3
 		width: eventBadgeCountText.width
 		color: {
-			if (plasmoid.configuration.showOutlines) {
+			if (appletConfig.showIconOutline) {
 				var c = Qt.darker(Kirigami.Theme.backgroundColor, 1) // Cast to color
 				c.a = 0.6 // 60%
 				return c

@@ -8,7 +8,7 @@ Item {
 	// Always outline the dots so light (eg: white) calendar colors stay visible on a light theme.
 	property int dotBorderWidth: 1
 	property color dotBorderColor: {
-		if (plasmoid.configuration.showOutlines) {
+		if (appletConfig.showIconOutline) {
 			return Kirigami.Theme.backgroundColor
 		}
 		var c = Kirigami.Theme.textColor

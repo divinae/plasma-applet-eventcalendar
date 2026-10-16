@@ -6,7 +6,7 @@ import org.kde.kirigami as Kirigami
 import ".."
 import "../lib"
 
-// Panel clock: time / date formats, font, next meeting chip, mouse wheel.
+// Panel clock: time / date formats, font, next meeting chip.
 ConfigPage {
 	id: page
 	showAppletVersion: true
@@ -30,11 +30,6 @@ ConfigPage {
 		{ format: longDateNoWeekday, text: Qt.formatDate(new Date(), longDateNoWeekday) },
 		{ format: "ddd d MMM", text: Qt.formatDate(new Date(), "ddd d MMM") },
 		{ format: "MMM d", text: Qt.formatDate(new Date(), "MMM d") },
-	]
-
-	readonly property var wheelPresets: [
-		{ id: 'amixer', text: i18n("Volume (amixer)"), up: 'amixer -q sset Master 10%+', down: 'amixer -q sset Master 10%-' },
-		{ id: 'qdbus', text: i18n("Volume with OSD (qdbus)"), up: 'qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume"', down: 'qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"' },
 	]
 
 	// A format combo: presets + "Custom…" that shows the text field.
@@ -173,56 +168,6 @@ ConfigPage {
 			wrapMode: Text.Wrap
 			opacity: 0.7
 			text: i18n("Middle-click the clock to join the current or next meeting.")
-		}
-
-		//--- Mouse wheel
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Mouse Wheel")
-		}
-		ComboBox {
-			id: wheelCombo
-			Kirigami.FormData.label: i18n("Scrolling the clock:")
-			readonly property bool runsCommands: page.configBridge.read("clockMouseWheel", "") === 'RunCommands'
-			readonly property int presetIndex: {
-				var up = page.configBridge.read("clockMouseWheelUp", "")
-				var down = page.configBridge.read("clockMouseWheelDown", "")
-				for (var i = 0; i < page.wheelPresets.length; i++) {
-					if (page.wheelPresets[i].up === up && page.wheelPresets[i].down === down) {
-						return i
-					}
-				}
-				return -1
-			}
-			// 0: nothing, 1..n: presets, last: custom commands
-			model: [i18n("Does nothing")].concat(page.wheelPresets.map(function(p) { return p.text })).concat([i18n("Custom commands")])
-			currentIndex: !runsCommands ? 0 : (presetIndex >= 0 ? presetIndex + 1 : page.wheelPresets.length + 1)
-			onActivated: function(index) {
-				if (index === 0) {
-					page.configBridge.write("clockMouseWheel", "")
-				} else {
-					page.configBridge.write("clockMouseWheel", "RunCommands")
-					if (index <= page.wheelPresets.length) {
-						var preset = page.wheelPresets[index - 1]
-						clockMouseWheelUp.text = preset.up
-						clockMouseWheelDown.text = preset.down
-					}
-				}
-			}
-		}
-		ConfigString {
-			id: clockMouseWheelUp
-			visible: wheelCombo.currentIndex === page.wheelPresets.length + 1
-			Kirigami.FormData.label: i18n("Scroll up runs:")
-			configKey: 'clockMouseWheelUp'
-			Layout.fillWidth: true
-		}
-		ConfigString {
-			id: clockMouseWheelDown
-			visible: clockMouseWheelUp.visible
-			Kirigami.FormData.label: i18n("Scroll down runs:")
-			configKey: 'clockMouseWheelDown'
-			Layout.fillWidth: true
 		}
 
 		//--- Other

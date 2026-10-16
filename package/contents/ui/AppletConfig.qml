@@ -8,7 +8,7 @@ import "lib/ColorUtil.js" as ColorUtil
 QtObject {
 	id: config
 
-	property bool showIconOutline: plasmoid.configuration.showOutlines
+	readonly property bool showIconOutline: false
 
 	// Shared look for the month and week views.
 	readonly property real gridLineOpacity: 0.2
@@ -35,29 +35,28 @@ QtObject {
 	property color meteogramNegativeTempColorDefault: "#369"
 	property color meteogramIconColorDefault: Kirigami.Theme.textColor
 
-	property color meteogramTextColor: plasmoid.configuration.meteogramTextColor || meteogramTextColorDefault
-	property color meteogramScaleColor: plasmoid.configuration.meteogramGridColor || meteogramScaleColorDefault
-	property color meteogramPrecipitationRawColor: plasmoid.configuration.meteogramRainColor || meteogramPrecipitationRawColorDefault
+	property color meteogramTextColor: meteogramTextColorDefault
+	property color meteogramScaleColor: meteogramScaleColorDefault
+	property color meteogramPrecipitationRawColor: meteogramPrecipitationRawColorDefault
 	property color meteogramPrecipitationColor: ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.6)
 	property color meteogramPrecipitationTextColor: Qt.tint(meteogramTextColor, ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.3))
 	property color meteogramPrecipitationTextOutlineColor: showIconOutline ? Kirigami.Theme.backgroundColor : "transparent"
-	property color meteogramPositiveTempColor: plasmoid.configuration.meteogramPositiveTempColor || meteogramPositiveTempColorDefault
-	property color meteogramNegativeTempColor: plasmoid.configuration.meteogramNegativeTempColor || meteogramNegativeTempColorDefault
-	property color meteogramIconColor: plasmoid.configuration.meteogramIconColor || meteogramIconColorDefault
+	property color meteogramPositiveTempColor: meteogramPositiveTempColorDefault
+	property color meteogramNegativeTempColor: meteogramNegativeTempColorDefault
+	property color meteogramIconColor: meteogramIconColorDefault
 
 	property color agendaHoverBackground: alternateBackgroundColor
 	property color agendaInProgressColorDefault: Kirigami.Theme.highlightColor
-	property color agendaInProgressColor: plasmoid.configuration.agendaInProgressColor || agendaInProgressColorDefault
+	readonly property color agendaInProgressColor: agendaInProgressColorDefault
 
 	property int agendaColumnSpacing: 10 * Screen.devicePixelRatio
-	property int agendaDaySpacing: plasmoid.configuration.agendaDaySpacing * Screen.devicePixelRatio
-	property int agendaEventSpacing: plasmoid.configuration.agendaEventSpacing * Screen.devicePixelRatio
+	readonly property int agendaDaySpacing: 20 * Screen.devicePixelRatio
+	readonly property int agendaEventSpacing: 10 * Screen.devicePixelRatio
 	property int agendaWeatherColumnWidth: 60 * Screen.devicePixelRatio
-	property int agendaWeatherIconSize: plasmoid.configuration.agendaWeatherIconHeight * Screen.devicePixelRatio
 	property int agendaDateColumnWidth: 50 * Screen.devicePixelRatio + agendaColumnSpacing * 2
 	property int eventIndicatorWidth: 2 * Screen.devicePixelRatio
 
-	property int agendaFontSize: plasmoid.configuration.agendaFontSize === 0 ? Kirigami.Theme.defaultFont.pixelSize : plasmoid.configuration.agendaFontSize * Screen.devicePixelRatio
+	readonly property int agendaFontSize: Kirigami.Theme.defaultFont.pixelSize
 
 	property int timerClockFontHeight: 40 * Screen.devicePixelRatio
 	property int timerButtonWidth: 48 * Screen.devicePixelRatio

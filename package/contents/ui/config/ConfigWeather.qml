@@ -11,8 +11,6 @@ import "../weather/OpenMeteo.js" as OpenMeteo
 ConfigPage {
 	id: page
 
-	AppletConfig { id: config }
-
 	property var locationResults: []
 	property bool searchingLocations: false
 	property bool locationSearchDone: false
@@ -169,46 +167,5 @@ ConfigPage {
 			stepSize: 3
 		}
 
-		//--- Colors
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Meteogram Colors")
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Text:")
-			label: ""
-			configKey: 'meteogramTextColor'
-			defaultColor: config.meteogramTextColorDefault
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Grid:")
-			label: ""
-			configKey: 'meteogramGridColor'
-			defaultColor: config.meteogramScaleColorDefault
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Rain:")
-			label: ""
-			configKey: 'meteogramRainColor'
-			defaultColor: config.meteogramPrecipitationRawColorDefault
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Above zero:")
-			label: ""
-			configKey: 'meteogramPositiveTempColor'
-			defaultColor: config.meteogramPositiveTempColorDefault
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Below zero:")
-			label: ""
-			configKey: 'meteogramNegativeTempColor'
-			defaultColor: config.meteogramNegativeTempColorDefault
-		}
-		ConfigColor {
-			Kirigami.FormData.label: i18n("Icons:")
-			label: ""
-			configKey: 'meteogramIconColor'
-			defaultColor: config.meteogramIconColorDefault
-		}
 	}
 }

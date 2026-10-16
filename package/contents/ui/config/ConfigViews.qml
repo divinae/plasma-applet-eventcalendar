@@ -12,8 +12,6 @@ ConfigPage {
 
 	readonly property bool agendaMode: page.configBridge.read("popupMode", "classic") === 'classic'
 
-	AppletConfig { id: config }
-
 	Kirigami.FormLayout {
 		Layout.fillWidth: true
 
@@ -95,37 +93,8 @@ ConfigPage {
 			text: i18n("Week numbers")
 		}
 		ConfigCheckBox {
-			configKey: 'monthHighlightCurrentDayWeek'
-			text: i18n("Highlight the current day of the week")
-		}
-		ConfigCheckBox {
-			configKey: 'showOutlines'
-			text: i18n("Outlines around icons and dots")
-		}
-		ConfigCheckBox {
 			configKey: 'weatherShowInViews'
 			text: i18n("Weather in the week and today views")
-		}
-		ConfigComboBox {
-			Kirigami.FormData.label: i18n("Today:")
-			configKey: 'monthTodayStyle'
-			model: [
-				{ value: 'theme', text: i18n("Framed") },
-				{ value: 'bigNumber', text: i18n("Big number") },
-			]
-		}
-		ConfigSlider {
-			Kirigami.FormData.label: i18n("Day corner radius:")
-			configKey: 'monthCellRadius'
-			minimumValue: 0
-			maximumValue: 1
-			Layout.preferredWidth: Kirigami.Units.gridUnit * 10
-		}
-		ConfigString {
-			Kirigami.FormData.label: i18n("Current month title:")
-			configKey: 'monthCurrentCustomTitleFormat'
-			placeholderText: i18nc("calendar title format for current month", "MMMM d, yyyy")
-			Layout.preferredWidth: Kirigami.Units.gridUnit * 10
 		}
 		ConfigCheckBox {
 			Kirigami.FormData.label: i18n("Clicking a day:")
@@ -184,27 +153,6 @@ ConfigPage {
 			Kirigami.FormData.isSection: true
 			Kirigami.FormData.label: i18n("Agenda List")
 		}
-		ConfigSpinBox {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Font size:")
-			configKey: 'agendaFontSize'
-			suffix: i18n(" px")
-			after: i18n("(0 = system font)")
-		}
-		RowLayout {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Spacing:")
-			ConfigSpinBox {
-				configKey: 'agendaDaySpacing'
-				suffix: i18n(" px")
-				after: i18n("between days,")
-			}
-			ConfigSpinBox {
-				configKey: 'agendaEventSpacing'
-				suffix: i18n(" px")
-				after: i18n("between events")
-			}
-		}
 		ConfigCheckBox {
 			visible: page.agendaMode
 			Kirigami.FormData.label: i18n("Events:")
@@ -218,48 +166,8 @@ ConfigPage {
 		}
 		ConfigCheckBox {
 			visible: page.agendaMode
-			configKey: 'agendaCondensedAllDayEvent'
-			text: i18n("Hide \"All day\" text")
-		}
-		ConfigCheckBox {
-			visible: page.agendaMode
 			configKey: 'agendaBreakupMultiDayEvents'
 			text: i18n("Show multi-day events on every day")
-		}
-		ConfigCheckBox {
-			visible: page.agendaMode
-			configKey: 'agendaNewEventRememberCalendar'
-			text: i18n("Remember the calendar of the last new event")
-		}
-		ConfigColor {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("In-progress color:")
-			label: ""
-			configKey: 'agendaInProgressColor'
-			defaultColor: config.agendaInProgressColorDefault
-		}
-		RowLayout {
-			visible: page.agendaMode
-			Kirigami.FormData.label: i18n("Weather:")
-			ConfigCheckBox {
-				id: agendaWeatherShowIcon
-				configKey: 'agendaWeatherShowIcon'
-				text: i18n("Icon")
-			}
-			ConfigSlider {
-				enabled: agendaWeatherShowIcon.checked
-				configKey: 'agendaWeatherIconHeight'
-				minimumValue: 12
-				maximumValue: 48
-				stepSize: 1
-				after: '' + value + i18n(" px")
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 8
-			}
-		}
-		ConfigCheckBox {
-			visible: page.agendaMode
-			configKey: 'agendaWeatherShowText'
-			text: i18n("Text")
 		}
 	}
 }
