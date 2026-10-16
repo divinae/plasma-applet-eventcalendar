@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "lib"
 import "Shared.js" as Shared
 import "LocaleFuncs.js" as LocaleFuncs
 
@@ -44,11 +45,12 @@ Item {
 	}
 
 
-	// Plasma's ScrollView: no separator line next to the scrollbar (the desktop style draws one).
+	// No separator line next to the scrollbar (both the desktop style and Breeze draw one).
 	PlasmaComponents3.ScrollView {
 		id: agendaScrollView
 		anchors.fill: parent
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+		QQC2.ScrollBar.vertical: PlainScrollBar {}
 		readonly property int viewportWidth: contentItem ? contentItem.width : width
 		readonly property int viewportHeight: contentItem ? contentItem.height : height
 		readonly property int scrollY: contentItem ? contentItem.contentY : 0
