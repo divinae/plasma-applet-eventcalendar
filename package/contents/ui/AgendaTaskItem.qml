@@ -109,8 +109,8 @@ LinkRect {
 				id: taskTitle
 				text: model.title
 				color: Kirigami.Theme.textColor
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
+				font.family: appletConfig.eventFont.family
+				font.pointSize: appletConfig.eventFont.pointSize
 				visible: !editTaskForm.visible
 				Layout.fillWidth: true
 
@@ -136,8 +136,8 @@ LinkRect {
 					text: eventTimestamp
 					color: taskIsOverdue ? isOverdueColor : Kirigami.Theme.textColor
 					opacity: taskIsOverdue ? 1 : 0.75
-					font.pointSize: -1
-					font.pixelSize: appletConfig.agendaFontSize
+					font.family: appletConfig.eventFont.family
+					font.pointSize: appletConfig.eventFont.pointSize
 					font.weight: taskIsOverdue ? isOverdueFontWeight : Font.Normal
 				}
 			}
@@ -155,8 +155,8 @@ LinkRect {
 				text: Shared.renderText(model.notes)
 				color: Kirigami.Theme.textColor
 				opacity: 0.75
-				font.pointSize: -1
-				font.pixelSize: appletConfig.agendaFontSize
+				font.family: appletConfig.eventFont.family
+				font.pointSize: appletConfig.eventFont.pointSize
 				Layout.fillWidth: true
 				wrapMode: Text.Wrap // See warning at taskTitle.wrapMode
 

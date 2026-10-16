@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:58+0200\n"
+"POT-Creation-Date: 2026-10-16 15:04+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -864,10 +864,6 @@ msgid "Week and Day"
 msgstr "Uge og dag"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Event text size"
-msgstr "Tekststørrelse for begivenheder"
-
-#: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
 msgstr "Arbejdstid start"
 
@@ -916,6 +912,10 @@ msgstr "Klassiske (som Google returnerer dem)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Følg systemets farveskema"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event text size"
+msgstr "Tekststørrelse for begivenheder"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

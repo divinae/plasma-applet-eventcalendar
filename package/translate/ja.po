@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:58+0200\n"
+"POT-Creation-Date: 2026-10-16 15:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -769,10 +769,6 @@ msgid "Week and Day"
 msgstr "週と日"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Event text size"
-msgstr "予定の文字サイズ"
-
-#: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
 msgstr "勤務時間の開始"
 
@@ -815,6 +811,10 @@ msgstr "クラシック（Google が返す色）"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "システムの配色に従う"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Event text size"
+msgstr "予定の文字サイズ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"

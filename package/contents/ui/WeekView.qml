@@ -25,9 +25,15 @@ Item {
 	function goNext() {
 		weekStart = dayDate(dayCount)
 	}
+	// The week (or day) with today; when it's shown already, still relaid and scrolled once.
 	function goToday() {
-		weekStart = startOfWeek(currentTime)
-		scrollToWorkingHours()
+		var start = startOfWeek(currentTime)
+		if (start.getTime() !== weekStart.getTime()) {
+			weekStart = start // onWeekStartChanged
+		} else {
+			resetScroll()
+			rebuild()
+		}
 	}
 	readonly property date currentTime: timeModel.currentTime
 	property date weekStart: startOfWeek(currentTime)
@@ -74,11 +80,7 @@ Item {
 			return t >= from && t <= to
 		})
 	}
-	onDayCountChanged: {
-		weekStart = startOfWeek(currentTime)
-		rebuild()
-		scrollToWorkingHours()
-	}
+	onDayCountChanged: goToday()
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []
@@ -222,6 +224,9 @@ Item {
 			}
 		}
 		rangeFirstHour = Math.max(0, first)
+		if (!flickable.userScrolled) {
+			scrollToWorkingHours() // Eg: an early event that just loaded
+		}
 	}
 
 	function layoutAllDay(dayList) {
@@ -277,18 +282,31 @@ Item {
 	}
 
 	onWeekStartChanged: {
+		resetScroll()
 		rebuild()
-		scrollToWorkingHours()
 	}
 	Component.onCompleted: {
 		rebuild()
 		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
 	}
 
+	// Until the user scrolls, the view follows the working hours (and early events once they load).
+	function resetScroll() {
+		flickable.userScrolled = false
+	}
 	function scrollToWorkingHours() {
 		var showsNow = currentTime >= weekStart && currentTime < dayDate(dayCount)
 		var hour = showsNow ? Math.max(rangeFirstHour, currentTime.getHours() - 1) : rangeFirstHour
-		flickable.contentY = Math.min((hour - firstHour) * hourHeight, Math.max(0, flickable.contentHeight - flickable.height))
+		// From the grid's height itself: called on height changes, maybe before hourHeight updates.
+		var height = Math.max(minHourHeight, flickable.height / (workEndHour - workStartHour))
+		flickable.contentY = Math.min((hour - firstHour) * height, Math.max(0, hourCount * height - flickable.height))
+	}
+	// After the user scrolled: keep the same hour at the top when the hours get taller or shorter.
+	property real userTopHour: 0
+	onHourHeightChanged: {
+		if (flickable.userScrolled) {
+			flickable.contentY = Math.min(userTopHour * hourHeight, Math.max(0, hourCount * hourHeight - flickable.height))
+		}
 	}
 	function hourY(ms, dayStart) {
 		return ((ms - dayStart) / 3600000 - firstHour) * hourHeight
@@ -559,10 +577,7 @@ Item {
 			}
 			PlasmaComponents3.ToolButton {
 				text: i18n("Today")
-				onClicked: {
-					weekView.weekStart = weekView.startOfWeek(weekView.currentTime)
-					weekView.scrollToWorkingHours()
-				}
+				onClicked: weekView.goToday()
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next"
@@ -811,10 +826,20 @@ Item {
 				contentWidth: width
 				contentHeight: weekView.hourCount * weekView.hourHeight
 				boundsBehavior: Flickable.StopAtBounds
-				PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar { id: hourScrollBar }
+				PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar {
+					id: hourScrollBar
+					onPressedChanged: {
+						if (pressed) {
+							flickable.userScrolled = true
+						} else {
+							weekView.userTopHour = flickable.contentY / weekView.hourHeight
+						}
+					}
+				}
 				// Opening: scroll to the working hours once the grid has its size, unless scrolled already.
 				property bool userScrolled: false
 				onMovementStarted: userScrolled = true
+				onMovementEnded: weekView.userTopHour = contentY / weekView.hourHeight
 				onHeightChanged: {
 					if (!userScrolled) {
 						weekView.scrollToWorkingHours()
@@ -1101,7 +1126,7 @@ Item {
 												maxWidth: parent.width - blockTimeLabel.width - parent.spacing
 												eventItem: eventBlock.eventItem
 												color: eventBlock.textColor
-												iconSize: Math.round(eventSmallFontMetrics.height)
+												iconSize: 2 * Math.round(eventSmallFontMetrics.height / 2)
 												opacity: 0.85
 												// The day view shows the location as text and has a Join button.
 												showLocation: !weekView.singleDay

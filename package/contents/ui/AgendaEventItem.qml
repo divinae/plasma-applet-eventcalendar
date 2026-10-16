@@ -166,7 +166,8 @@ LinkRect {
 						Layout.alignment: Qt.AlignVCenter
 						eventItem: model
 						color: agendaEventItem.tileTextColor
-						iconSize: Math.min(Kirigami.Units.iconSizes.small * appletConfig.eventFontScale, Math.round(eventDateTime.implicitHeight))
+						// Even pixel sizes keep scaled icons crisp.
+						iconSize: 2 * Math.round(Math.min(Kirigami.Units.iconSizes.small * appletConfig.eventFontScale, eventDateTime.implicitHeight) / 2)
 						opacity: 0.85
 						showLocation: false
 						showMeeting: !(plasmoid.configuration.agendaShowEventHangoutLink && !agendaEventItem.ended)

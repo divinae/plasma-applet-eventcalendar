@@ -74,7 +74,15 @@ QtObject {
 		return base.pointSize > 0 ? base.pointSize : base.pixelSize * 0.75
 	}
 	function scaledFont(base, scale) {
-		return Qt.font({ family: base.family, pointSize: Math.max(1, fontPoints(base) * scale) })
+		return Qt.font({
+			family: base.family,
+			styleName: base.styleName,
+			weight: base.weight,
+			italic: base.italic,
+			letterSpacing: base.letterSpacing,
+			wordSpacing: base.wordSpacing,
+			pointSize: Math.max(1, fontPoints(base) * scale),
+		})
 	}
 	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
 	// Invitations not answered yes (Shared.myResponse), like Google Calendar: an outline in the event
