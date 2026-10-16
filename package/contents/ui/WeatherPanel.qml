@@ -113,37 +113,115 @@ ColumnLayout {
 		opacity: 0.8
 	}
 
-	//--- Next hours: time, icon, temperature, precipitation
+	//--- Next hours: temperature line with rain bars, labels every 3 hours
 	SectionTitle {
 		visible: panel.isSetup && !panel.compact && panel.hourly.length > 1
-		text: i18n("Next hours")
+		text: i18n("Next 12 hours")
 	}
-	Repeater {
-		model: panel.isSetup && !panel.compact ? panel.hourly.slice(1, 7) : []
-		RowLayout {
-			Layout.fillWidth: true
-			spacing: Kirigami.Units.smallSpacing
-			PlasmaComponents3.Label {
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 3
-				text: panel.timeText(modelData.dt)
-				opacity: 0.7
+	Item {
+		id: hourChart
+		visible: panel.isSetup && !panel.compact && points.length > 1
+		Layout.fillWidth: true
+		Layout.preferredHeight: Kirigami.Units.gridUnit * 7
+
+		readonly property var points: panel.hourly.slice(0, 13)
+		readonly property real iconRow: Kirigami.Units.iconSizes.small + 2
+		readonly property real labelRow: Math.ceil(chartFontMetrics.height) + 2
+		// Plot area for the line: below the icons and temperature labels, above the hour labels.
+		readonly property real plotTop: iconRow + labelRow
+		readonly property real plotBottom: height - labelRow
+		readonly property real minTemp: Math.min.apply(null, points.map(function(p) { return p.temp }))
+		readonly property real maxTemp: Math.max.apply(null, points.map(function(p) { return p.temp }))
+		readonly property real maxRain: Math.max(1, Math.max.apply(null, points.map(function(p) { return p.precipitation || 0 })))
+		function xAt(i) {
+			return points.length > 1 ? 6 + i * (width - 12) / (points.length - 1) : width / 2
+		}
+		function yAt(temp) {
+			var range = Math.max(2, maxTemp - minTemp)
+			return plotBottom - 4 - (temp - minTemp) / range * (plotBottom - plotTop - 8)
+		}
+		onPointsChanged: chartCanvas.requestPaint()
+		onWidthChanged: chartCanvas.requestPaint()
+		onHeightChanged: chartCanvas.requestPaint()
+
+		FontMetrics {
+			id: chartFontMetrics
+			font: Kirigami.Theme.smallFont
+		}
+
+		Canvas {
+			id: chartCanvas
+			anchors.fill: parent
+			onPaint: {
+				var ctx = getContext("2d")
+				ctx.reset()
+				var pts = hourChart.points
+				if (pts.length < 2) {
+					return
+				}
+				// Rain bars
+				var barWidth = Math.max(2, (width - 12) / (pts.length - 1) * 0.5)
+				ctx.fillStyle = Qt.rgba(0.2, 0.5, 0.9, 0.35)
+				for (var i = 0; i < pts.length; i++) {
+					var rain = pts[i].precipitation || 0
+					if (rain > 0) {
+						var h = rain / hourChart.maxRain * (hourChart.plotBottom - hourChart.plotTop) * 0.6
+						ctx.fillRect(hourChart.xAt(i) - barWidth / 2, hourChart.plotBottom - h, barWidth, h)
+					}
+				}
+				// Temperature line
+				ctx.strokeStyle = Kirigami.Theme.highlightColor
+				ctx.lineWidth = 2
+				ctx.beginPath()
+				for (var j = 0; j < pts.length; j++) {
+					var x = hourChart.xAt(j)
+					var y = hourChart.yAt(pts[j].temp)
+					if (j === 0) {
+						ctx.moveTo(x, y)
+					} else {
+						ctx.lineTo(x, y)
+					}
+				}
+				ctx.stroke()
+				// Points every 3 hours
+				ctx.fillStyle = Kirigami.Theme.highlightColor
+				for (var k = 0; k < pts.length; k += 3) {
+					ctx.beginPath()
+					ctx.arc(hourChart.xAt(k), hourChart.yAt(pts[k].temp), 3, 0, Math.PI * 2)
+					ctx.fill()
+				}
 			}
-			Kirigami.Icon {
-				source: modelData.iconName
-				Layout.preferredWidth: Kirigami.Units.iconSizes.small
-				Layout.preferredHeight: Layout.preferredWidth
-			}
-			PlasmaComponents3.Label {
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 2
-				horizontalAlignment: Text.AlignRight
-				text: Shared.formatTemp(modelData.temp)
-			}
-			PlasmaComponents3.Label {
-				Layout.fillWidth: true
-				horizontalAlignment: Text.AlignRight
-				text: panel.precipitationText(modelData.precipitation)
-				font: Kirigami.Theme.smallFont
-				opacity: 0.7
+		}
+
+		// Every 3 hours: icon on top, temperature above the point, time at the bottom.
+		Repeater {
+			model: hourChart.points.length
+			Item {
+				visible: index % 3 === 0
+				readonly property var point: hourChart.points[index]
+				x: hourChart.xAt(index)
+				width: 0
+				height: hourChart.height
+				Kirigami.Icon {
+					x: -width / 2
+					y: 0
+					width: Kirigami.Units.iconSizes.small
+					height: width
+					source: parent.point ? parent.point.iconName : ""
+				}
+				PlasmaComponents3.Label {
+					x: -implicitWidth / 2
+					y: hourChart.yAt(parent.point ? parent.point.temp : 0) - implicitHeight - 3
+					text: parent.point ? Shared.formatTemp(parent.point.temp) : ""
+					font: Kirigami.Theme.smallFont
+				}
+				PlasmaComponents3.Label {
+					x: Math.max(-parent.x, Math.min(-implicitWidth / 2, hourChart.width - parent.x - implicitWidth))
+					y: hourChart.plotBottom + 1
+					text: parent.point ? panel.timeText(parent.point.dt) : ""
+					font: Kirigami.Theme.smallFont
+					opacity: 0.7
+				}
 			}
 		}
 	}
