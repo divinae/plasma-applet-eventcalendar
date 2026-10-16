@@ -485,6 +485,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					createEvent_err(err, data, xhr)
 				} else {
 					createEvent_done(calendarId, data)
+					if (done) {
+						done()
+					}
 				}
 			})
 			withAccessToken(func, function(err) {
@@ -520,8 +523,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		return handleError(err, data, xhr)
 	}
 
-	// Create an event from full data: { summary, start, end, location, description }.
-	function createEventFromData(calendarId, eventData) {
+	// Create an event from full data: { summary, start, end, location, description, recurrence }.
+	// done(): called after it's saved (eg: to refetch the occurrences of a recurring event).
+	function createEventFromData(calendarId, eventData, done) {
 		if (!session.accessToken) {
 			session.transactionError('attempting to "create an event" without an access token set')
 			return
@@ -575,6 +579,46 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	}
 
 	//--- Update Event
+	// Fetch an event as stored on the server, eg: the series of a recurring event's occurrence.
+	function fetchEvent(calendarId, eventId, callback) {
+		fetchGoogleCalendarEvent(calendarId, eventId, callback)
+	}
+
+	// Update an event from its server copy: buildArgs(serverEvent) returns the changed fields.
+	// Used for recurring series (occurrences are separate events here) and recurrence changes.
+	// The occurrences change on the server, so done() should refetch.
+	function updateEventFromServer(calendarId, eventId, buildArgs, done) {
+		if (!session.accessToken) {
+			session.transactionError('attempting to "update an event" without an access token set')
+			return
+		}
+		var func = function() {
+			fetchGoogleCalendarEvent_run(calendarId, eventId, function(err, serverEvent, xhr) {
+				if (err || !serverEvent) {
+					updateGoogleCalendarEvent_err(err, serverEvent, xhr)
+					return
+				}
+				var data = cloneRawEvent(serverEvent)
+				Shared.merge(data, buildArgs(serverEvent))
+				updateGCalEvent({
+					accessToken: session.accessToken,
+					calendarId: unscopedCalendarId(calendarId),
+					eventId: eventId,
+					data: data,
+				}, function(err2, data2, xhr2) {
+					if (err2) {
+						updateGoogleCalendarEvent_err(err2, data2, xhr2)
+					} else if (done) {
+						done()
+					}
+				})
+			})
+		}
+		withAccessToken(func, function(err) {
+			handleAuthError(err, false)
+		})
+	}
+
 	function setEventProperty(calendarId, eventId, key, value) {
 		logger.debug(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
 		var args = {}

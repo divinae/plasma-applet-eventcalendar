@@ -320,13 +320,13 @@ CalendarManager {
 		}
 	}
 
-	function createEventFromData(calendarId, eventData) {
+	function createEventFromData(calendarId, eventData, done) {
 		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
 			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
 		}
 		var calendarManager = getCalendarManager(calendarId)
 		if (calendarManager && typeof calendarManager.createEventFromData === 'function') {
-			calendarManager.createEventFromData(calendarId, eventData)
+			calendarManager.createEventFromData(calendarId, eventData, done)
 		} else {
 			logger.log('Could not createEventFromData for calendarId = ', calendarId)
 		}
@@ -358,6 +358,32 @@ CalendarManager {
 			calendarManager.setEventProperties(calendarId, eventId, args)
 		} else {
 			logger.log('Could not setEventProperties. Could not find calendarManager for calendarId = ', calendarId)
+		}
+	}
+
+	// Repeat rules can be edited (Google Calendar).
+	function supportsRecurrence(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && typeof calendarManager.updateEventFromServer === 'function'
+	}
+
+	// Server copy of an event, eg: the series of a recurring event. callback(err, event)
+	function fetchEvent(calendarId, eventId, callback) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.fetchEvent === 'function') {
+			calendarManager.fetchEvent(calendarId, eventId, callback)
+		} else {
+			callback('fetchEvent not supported', null)
+		}
+	}
+
+	// See GoogleCalendarManager.updateEventFromServer.
+	function updateEventFromServer(calendarId, eventId, buildArgs, done) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.updateEventFromServer === 'function') {
+			calendarManager.updateEventFromServer(calendarId, eventId, buildArgs, done)
+		} else {
+			logger.log('Could not updateEventFromServer for calendarId = ', calendarId)
 		}
 	}
 

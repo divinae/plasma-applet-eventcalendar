@@ -34,6 +34,7 @@ PlasmaComponents3.ComboBox {
 					'text': calendar.summary,
 					'backgroundColor': calendar.backgroundColor,
 					'isTasklist': calendar.isTasklist,
+					'timeZone': calendar.timeZone || '', // Needed for recurring events
 				})
 			}
 		})
