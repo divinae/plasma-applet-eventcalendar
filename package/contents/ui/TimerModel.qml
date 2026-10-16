@@ -141,6 +141,7 @@ QtObject {
 		var args = {
 			appName: i18n("Timer"),
 			appIcon: "chronometer",
+			event: "timer",
 			summary: i18n("Timer finished"),
 			body: i18n("%1 has passed", formatTimer(timerModel.duration)),
 		}

@@ -114,6 +114,7 @@ CalendarManager {
 		notificationManager.notify({
 			appName: i18n("Event Calendar"),
 			appIcon: "view-calendar-upcoming-events",
+			event: args.event,
 			expireTimeout: args.expireTimeout,
 			urgency: args.urgency,
 			summary: args.summary,
@@ -142,6 +143,7 @@ CalendarManager {
 			summary: i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", deltaText, eventItem.summary),
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
+			event: 'reminder',
 			snooze: true,
 		})
 	}
@@ -157,6 +159,7 @@ CalendarManager {
 			summary: summary,
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
+			event: 'reminder',
 			snooze: minutesLeft > upcomingEvents.snoozeMinutes,
 		})
 	}
@@ -170,6 +173,7 @@ CalendarManager {
 			summary: eventItem.summary,
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventStartingSfxEnabled ? plasmoid.configuration.eventStartingSfxPath : '',
+			event: 'eventStarting',
 			snooze: false,
 		})
 	}

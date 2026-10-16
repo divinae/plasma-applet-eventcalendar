@@ -1,0 +1,29 @@
+[Global]
+IconName=view-calendar
+Name=Event Calendar
+Comment=Event Calendar widget
+
+[Event/reminder]
+Name=Event reminder
+Comment=An event starts soon
+Action=Popup
+
+[Event/eventStarting]
+Name=Event starting
+Comment=An event starts now
+Action=Popup
+
+[Event/eventChanged]
+Name=Event created or deleted
+Comment=An event was added or removed from the widget
+Action=Popup
+
+[Event/timer]
+Name=Timer finished
+Comment=The widget's timer has finished
+Action=Popup
+
+[Event/syncProblem]
+Name=Calendar sync problem
+Comment=The calendar can't sync, or is back in sync
+Action=Popup

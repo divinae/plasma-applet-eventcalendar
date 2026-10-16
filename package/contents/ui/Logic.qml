@@ -349,6 +349,7 @@ Item {
 		if (outageNotified) {
 			outageNotified = false
 			notificationManager.notify({
+				event: "syncProblem",
 				appName: i18n("Event Calendar"),
 				appIcon: "network-connect",
 				summary: i18n("Calendar is back in sync"),
@@ -378,6 +379,7 @@ Item {
 			if (logic.offline && !logic.outageNotified) {
 				logic.outageNotified = true
 				notificationManager.notify({
+					event: "syncProblem",
 					appName: i18n("Event Calendar"),
 					appIcon: "network-disconnect",
 					summary: i18n("Calendar can't sync"),

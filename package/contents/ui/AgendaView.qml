@@ -22,6 +22,7 @@ Item {
 		function onEventCreated(calendarId, data) {
 			notificationManager.notify({
 				appName: i18n("Event Calendar"),
+				event: "eventChanged",
 				appIcon: "resource-calendar-insert",
 				summary: data.summary,
 				body: LocaleFuncs.formatEventDuration(data, {
@@ -34,6 +35,7 @@ Item {
 			logger.debugJSON('AgendaView.onEventDeleted', data)
 			notificationManager.notify({
 				appName: i18n("Event Calendar"),
+				event: "eventChanged",
 				appIcon: "user-trash-symbolic",
 				summary: data.summary,
 				body: LocaleFuncs.formatEventDuration(data, {

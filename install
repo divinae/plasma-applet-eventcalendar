@@ -269,10 +269,7 @@ install_requirements() {
             fi
             core_packages=(
                 "python3"
-                "python3-gi"
                 "libsecret-tools"
-                "gir1.2-notify-0.7"
-                "libnotify-bin"
                 "libcanberra0"
             )
             optional_packages=(
@@ -281,8 +278,6 @@ install_requirements() {
                 "akonadi-server"
                 "kdepim-addons"
                 "konsolekalendar"
-                "alsa-utils"
-                "kmix"
             )
             ;;
         "arch")
@@ -297,9 +292,7 @@ install_requirements() {
             fi
             core_packages=(
                 "python"
-                "python-gobject"
                 "libsecret"
-                "libnotify"
                 "libcanberra"
             )
             optional_packages=(
@@ -308,8 +301,6 @@ install_requirements() {
                 "akonadi"
                 "kdepim-addons"
                 "kdepim-runtime"
-                "alsa-utils"
-                "kmix"
             )
             ;;
         "fedora")
@@ -324,9 +315,7 @@ install_requirements() {
             fi
             core_packages=(
                 "python3"
-                "python3-gobject"
                 "libsecret"
-                "libnotify"
                 "libcanberra"
             )
             optional_packages=(
@@ -335,8 +324,6 @@ install_requirements() {
                 "akonadi-server"
                 "kdepim-addons"
                 "kdepim-runtime"
-                "alsa-utils"
-                "kmix"
             )
             ;;
         *)

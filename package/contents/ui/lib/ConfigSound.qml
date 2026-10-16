@@ -15,10 +15,10 @@ RowLayout {
 	property alias sfxPathValue: sfxPath.value
 	property alias sfxPathDefaultValue: sfxPath.defaultValue
 
-	// Importing QtMultimedia apparently segfaults both OpenSUSE and Kubuntu.
+	// Preview with the same players the notifications use (QtMultimedia crashed plasmashell:
 	// https://github.com/Zren/plasma-applet-eventcalendar/issues/84
-	// https://github.com/Zren/plasma-applet-eventcalendar/issues/167
-	property var sfxTest: null
+	// https://github.com/Zren/plasma-applet-eventcalendar/issues/167).
+	property var soundPlayer: SoundPlayer {}
 
 	function isAllowedSoundPath(path) {
 		if (!path) {
@@ -37,11 +37,10 @@ RowLayout {
 	}
 	Button {
 		icon.name: "media-playback-start-symbolic"
-		enabled: sfxEnabled && !!sfxTest && isAllowedSoundPath(sfxPath.value)
-		onClicked: {
-			sfxTest.source = sfxPath.value
-			sfxTest.play()
-		}
+		enabled: sfxEnabled && isAllowedSoundPath(sfxPath.value)
+		onClicked: configSound.soundPlayer.play(sfxPath.value)
+		ToolTip.text: i18n("Play")
+		ToolTip.visible: hovered
 	}
 	ConfigString {
 		id: sfxPath

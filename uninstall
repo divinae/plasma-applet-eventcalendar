@@ -64,6 +64,13 @@ QDBUS_BIN=$(command -v qdbus || command -v qdbus6) || {
     exit 1
 }
 
+# Notification settings the widget copies on first start (System Settings > Notifications)
+NOTIFYRC="${XDG_DATA_HOME:-$HOME/.local/share}/knotifications6/eventcalendar.notifyrc"
+if [ -f "$NOTIFYRC" ]; then
+    log "Removing notification config: $NOTIFYRC"
+    rm -f -- "$NOTIFYRC"
+fi
+
 # Remove package
 INSTALL_DIR="$HOME/.local/share/plasma/plasmoids/$packageName"
 if [ -d "$INSTALL_DIR" ]; then
