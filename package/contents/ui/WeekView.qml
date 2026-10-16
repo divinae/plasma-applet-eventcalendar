@@ -332,11 +332,21 @@ Item {
 		}
 	}
 
+	// Line between the day and its weather.
+	Kirigami.Separator {
+		visible: weekView.weatherBeside
+		x: weekView.contentX + weekView.contentWidth + Kirigami.Units.largeSpacing
+		y: dayNamesRow.y
+		width: 1
+		height: parent.height - y
+	}
 	WeatherPanel {
 		visible: weekView.weatherBeside
 		x: weekView.contentX + weekView.contentWidth + Kirigami.Units.largeSpacing * 2
+		// Top aligned with the day header, like the grid.
+		y: dayNamesRow.y
 		width: weekView.weatherPanelWidth
-		height: parent.height
+		height: parent.height - y
 		isSetup: weekView.weatherIsSetup
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		current: weekView.weatherCurrent

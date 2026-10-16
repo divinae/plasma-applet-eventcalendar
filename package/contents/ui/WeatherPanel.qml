@@ -26,11 +26,24 @@ ColumnLayout {
 		return mm > 0 ? i18nc("precipitation in mm", "%1 mm", Math.round(mm * 10) / 10) : ""
 	}
 
-	component SectionTitle: PlasmaComponents3.Label {
+	// A line, then the section name.
+	component SectionTitle: ColumnLayout {
+		property alias text: titleLabel.text
+		property bool showSeparator: true
 		Layout.fillWidth: true
-		Layout.topMargin: Kirigami.Units.largeSpacing
-		font.weight: Font.DemiBold
-		opacity: 0.7
+		Layout.topMargin: showSeparator ? Kirigami.Units.smallSpacing : 0
+		spacing: Kirigami.Units.smallSpacing
+		Kirigami.Separator {
+			visible: parent.showSeparator
+			Layout.fillWidth: true
+			Layout.bottomMargin: Kirigami.Units.smallSpacing
+		}
+		PlasmaComponents3.Label {
+			id: titleLabel
+			Layout.fillWidth: true
+			font.weight: Font.DemiBold
+			opacity: 0.7
+		}
 	}
 
 	// Not configured
@@ -65,7 +78,7 @@ ColumnLayout {
 	//--- Now
 	SectionTitle {
 		visible: panel.isSetup && !panel.compact && !!panel.current
-		Layout.topMargin: 0
+		showSeparator: false
 		text: i18nc("current weather", "Now")
 	}
 	RowLayout {
