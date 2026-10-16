@@ -405,6 +405,33 @@ CalendarManager {
 		}
 	}
 
+	// Search the calendars that support it (Google) between timeMin and timeMax.
+	// callback(err, items) once all of them answered.
+	function searchEvents(query, timeMin, timeMax, callback) {
+		var managers = calendarManagerList.filter(function(m) {
+			return typeof m.searchEvents === 'function'
+		})
+		if (!managers.length) {
+			callback(null, [])
+			return
+		}
+		var pending = managers.length
+		var found = []
+		var firstError = null
+		managers.forEach(function(m) {
+			m.searchEvents(query, timeMin, timeMax, function(err, items) {
+				if (err) {
+					firstError = firstError || err
+				}
+				found = found.concat(items || [])
+				pending -= 1
+				if (pending === 0) {
+					callback(found.length ? null : firstError, found)
+				}
+			})
+		})
+	}
+
 	function createEventFromData(calendarId, eventData, done) {
 		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
 			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId

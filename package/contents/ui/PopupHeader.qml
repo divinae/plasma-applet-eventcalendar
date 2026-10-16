@@ -18,9 +18,10 @@ PlasmaExtras.PlasmoidHeading {
 
 	signal viewSelected(string mode)
 	signal newEventClicked()
+	signal searchClicked()
 	signal refreshClicked()
 
-	// Left: view switcher. Center: navigation and title. Right: refresh, new event, pin.
+	// Left: view switcher. Center: navigation and title. Right: search, new event, refresh, pin.
 	contentItem: Item {
 		id: topBar
 		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
@@ -125,6 +126,12 @@ PlasmaExtras.PlasmoidHeading {
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 0
+			PlasmaComponents3.ToolButton {
+				icon.name: "search"
+				onClicked: header.searchClicked()
+				PlasmaComponents3.ToolTip.text: i18n("Search")
+				PlasmaComponents3.ToolTip.visible: hovered
+			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "list-add"
 				onClicked: header.newEventClicked()
