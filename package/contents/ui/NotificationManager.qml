@@ -1,15 +1,16 @@
 import QtQuick
 import QtCore
-import org.kde.notification
 
 import "./lib"
+import "./NotificationState.js" as NotificationState
 
-// Desktop notifications through KNotification: no helper process, actions handled in QML.
+// Desktop notifications through KNotification (KNotificationBackend.qml): no helper process,
+// actions handled in QML.
 //
 // notify({ summary, body, appName, appIcon, event, urgency, expireTimeout, soundFile, actions }, callback)
 // - event: notifyrc event id (reminder, eventStarting, eventChanged, timer, syncProblem); each can be
 //   configured in System Settings > Notifications > Event Calendar.
-// - expireTimeout: ms; 0 = keep until dismissed, > 0 = close after that long, -1 / unset = server default.
+// - expireTimeout: 0 = keep until dismissed; anything else = Plasma's popup timeout.
 // - urgency: 'low' | 'normal' | 'critical'.
 // - actions: ["id,Label", ...].
 // callback(actionId) once: an action id, 'default' (the notification was clicked) or 'closed'.
@@ -17,50 +18,40 @@ QtObject {
 	id: notificationManager
 
 	property var executable: ExecUtil {}
+	property var soundPlayer: SoundPlayer {}
 
-	// Our notifyrc is copied to ~/.local/share/knotifications6 (a plasmoid package can't install it).
-	// KNotification sends nothing for a component it can't resolve, so until it's there the generic
-	// workspace event is used, with the app name in the title.
-	property bool ownComponent: false
-	readonly property string notifyrcSource: localFilePath(Qt.resolvedUrl("../knotifications/eventcalendar.notifyrc"))
-	readonly property string notifyrcTarget: localFilePath(StandardPaths.writableLocation(StandardPaths.GenericDataLocation)) + "/knotifications6/eventcalendar.notifyrc"
-
-	function localFilePath(url) {
-		var path = String(url)
-		return path.indexOf("file://") === 0 ? decodeURIComponent(path.slice(7)) : path
+	property var backend: null
+	Component.onCompleted: {
+		var component = Qt.createComponent("KNotificationBackend.qml")
+		if (component.status === Component.Ready) {
+			backend = component.createObject(notificationManager)
+		} else {
+			console.warn('[eventcalendar] Notifications disabled: the KNotifications QML module (org.kde.notification) is missing.', component.errorString())
+		}
+		installNotifyrc()
 	}
 
-	Component.onCompleted: {
-		executable.execArgv(['install', '-D', '-m', '644', notifyrcSource, notifyrcTarget], function(cmd, exitCode, exitStatus, stdout, stderr) {
+	// Our notifyrc is copied to ~/.local/share/knotifications6 (a plasmoid package can't install it),
+	// once per plasmashell start and only written when it changed. KNotification sends nothing for
+	// a component it can't resolve, so until then the generic workspace event is used, with the app
+	// name in the title.
+	property bool ownComponent: NotificationState.notifyrcInstalled
+	readonly property string notifyrcSource: soundPlayer.localPath(Qt.resolvedUrl("../knotifications/eventcalendar.notifyrc"))
+	readonly property string notifyrcTarget: soundPlayer.localPath(StandardPaths.writableLocation(StandardPaths.GenericDataLocation)) + "/knotifications6/eventcalendar.notifyrc"
+	function installNotifyrc() {
+		if (NotificationState.notifyrcInstalled || NotificationState.notifyrcInstalling) {
+			return
+		}
+		NotificationState.notifyrcInstalling = true
+		executable.execArgv(['install', '-C', '-D', '-m', '644', notifyrcSource, notifyrcTarget], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			NotificationState.notifyrcInstalling = false
 			if (exitCode === 0) {
+				NotificationState.notifyrcInstalled = true
 				notificationManager.ownComponent = true
 			} else {
 				logger.log('Could not install eventcalendar.notifyrc:', exitCode, stderr)
 			}
 		})
-	}
-
-	property Component notificationComponent: Component {
-		Notification {
-			autoDelete: false // Destroyed after "closed", once the callback ran
-		}
-	}
-	property Component actionComponent: Component {
-		NotificationAction {}
-	}
-	property Component closeTimerComponent: Component {
-		Timer {
-			running: true
-		}
-	}
-
-	function urgencyFor(name) {
-		switch (name) {
-			case 'low': return Notification.LowUrgency
-			case 'critical': return Notification.CriticalUrgency
-			case 'normal': return Notification.NormalUrgency
-			default: return Notification.DefaultUrgency
-		}
 	}
 
 	function notify(args, callback) {
@@ -76,56 +67,31 @@ QtObject {
 			}
 		}
 
+		var sound = args.sound || args.soundFile
+		if (sound) {
+			soundPlayer.play(sound)
+		}
+		if (!backend) {
+			return
+		}
+
+		var own = ownComponent || NotificationState.notifyrcInstalled
 		var title = args.summary || ""
-		if (!ownComponent && args.appName) {
+		if (!own && args.appName) {
 			title = args.appName + " · " + title // Shown under "System Notifications" otherwise
 		}
-		var flags = args.expireTimeout === 0 ? Notification.Persistent : Notification.CloseOnTimeout
-		var n = notificationComponent.createObject(notificationManager, {
-			componentName: ownComponent ? "eventcalendar" : "plasma_workspace",
-			eventId: ownComponent ? (args.event || "eventChanged") : "notification",
+		var actionList = (args.actions || []).map(function(entry) {
+			var parts = String(entry).split(',')
+			var id = parts.shift()
+			return { id: id, label: parts.join(',') }
+		})
+		backend.send({
+			componentName: own ? "eventcalendar" : "plasma_workspace",
+			eventId: own ? (args.event || "eventChanged") : "notification",
 			title: title,
 			text: args.body || "",
 			iconName: args.appIcon || "view-calendar",
-			urgency: urgencyFor(args.urgency),
-			flags: flags,
-		})
-
-		var actions = []
-		var list = args.actions || []
-		for (var i = 0; i < list.length; i++) {
-			var parts = String(list[i]).split(',')
-			var actionId = parts.shift()
-			var action = actionComponent.createObject(n, { label: parts.join(',') })
-			action.activated.connect(answer.bind(null, actionId))
-			actions.push(action)
-		}
-		n.actions = actions
-		var defaultAction = actionComponent.createObject(n, { label: "" })
-		defaultAction.activated.connect(answer.bind(null, 'default'))
-		n.defaultAction = defaultAction
-
-		// "closed" also follows an action: answer() only reports the first.
-		n.closed.connect(function() {
-			answer('closed')
-			Qt.callLater(function() { n.destroy() })
-		})
-		if (args.expireTimeout > 0) {
-			var closeTimer = closeTimerComponent.createObject(n, { interval: args.expireTimeout })
-			closeTimer.triggered.connect(function() { n.close() })
-		}
-
-		var sound = args.sound || args.soundFile
-		if (sound) {
-			playSound(sound)
-		}
-		n.sendEvent()
-	}
-
-	// The notification's own sound is set per event in System Settings; this plays the file picked
-	// in the widget's settings.
-	property var soundPlayer: SoundPlayer {}
-	function playSound(file) {
-		soundPlayer.play(file)
+			urgency: args.urgency,
+		}, actionList, args.expireTimeout === 0, answer)
 	}
 }

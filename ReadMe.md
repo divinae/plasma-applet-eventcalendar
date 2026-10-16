@@ -15,9 +15,8 @@ Plasmoid for a calendar+agenda with weather that syncs to Google Calendar.
 Core runtime:
 - Plasma 6 or Plasma 5 (Qt/QML + KDE Frameworks that ship with Plasma)
 - `python3`
-- `python3-gi` + `gir1.2-notify-0.7` (libnotify bindings used by `notification.py`)
-- `notify-send` (`libnotify-bin`/`libnotify`, used as a fallback for notifications)
-- `libcanberra` (optional, for notification sounds)
+- KNotifications QML module (`org.kde.notification`; Debian/Ubuntu: `qml6-module-org-kde-notification`, Arch: `knotifications`, Fedora: `kf6-knotifications`) for desktop notifications
+- `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play` (optional, for custom notification sounds)
 
 Feature-specific (optional):
 - ICalendar (.ics) import:
@@ -27,9 +26,6 @@ Feature-specific (optional):
     `~/.local/share/plasma_org.kde.plasma.eventcalendar/python` when they are not already available.
 - Local PIM/Akonadi calendars: `akonadi` + `kdepim-addons` (provides `PimCalendarsModel`)
 - Create local events: `konsolekalendar` (from kdepim runtime/tools)
-- Mouse wheel volume presets:
-  - `amixer` (alsa-utils) for the no-UI option
-  - `qdbus`/`qdbus6` + `kmix` (kglobalaccel shortcuts) for the UI option
 
 Install/update/uninstall scripts:
 - `bash`

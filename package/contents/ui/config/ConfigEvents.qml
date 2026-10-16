@@ -121,14 +121,14 @@ ConfigPage {
 			sfxPathKey: 'eventReminderSfxPath'
 			sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
 		}
-		ConfigSpinBox {
+		// eventReminderTimeout: 0 = keep until dismissed; anything else = Plasma's popup timeout
+		// (System Settings > Notifications). KDE notifications have no per-notification timeout.
+		CheckBox {
 			enabled: reminderEnabled.checked
-			Kirigami.FormData.label: i18n("Hide after:")
-			configKey: 'eventReminderTimeout'
-			suffix: i18nc("Time in seconds", " s")
-			after: i18n("(0 = keep until dismissed)")
-			minimumValue: 0
-			maximumValue: 600
+			Kirigami.FormData.label: i18n("Popup:")
+			text: i18n("Keep until dismissed")
+			checked: page.configBridge.read("eventReminderTimeout", 12) === 0
+			onToggled: page.configBridge.write("eventReminderTimeout", checked ? 0 : 12)
 		}
 		ConfigSpinBox {
 			enabled: reminderEnabled.checked

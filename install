@@ -268,11 +268,13 @@ install_requirements() {
                 qdbus_package="qttools5-dev-tools"
             fi
             core_packages=(
+                "qml6-module-org-kde-notification"
                 "python3"
                 "libsecret-tools"
                 "libcanberra0"
             )
             optional_packages=(
+                "pipewire-bin"
                 "python3-icalendar"
                 "python3-pip"
                 "akonadi-server"
@@ -291,11 +293,13 @@ install_requirements() {
                 qdbus_package="qt5-tools"
             fi
             core_packages=(
+                "knotifications"
                 "python"
                 "libsecret"
                 "libcanberra"
             )
             optional_packages=(
+                "pipewire"
                 "python-icalendar"
                 "python-pip"
                 "akonadi"
@@ -314,11 +318,13 @@ install_requirements() {
                 qdbus_package="qt5-qttools"
             fi
             core_packages=(
+                "kf6-knotifications"
                 "python3"
                 "libsecret"
                 "libcanberra"
             )
             optional_packages=(
+                "pipewire-utils"
                 "python3-icalendar"
                 "python3-pip"
                 "akonadi-server"

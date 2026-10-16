@@ -21,14 +21,7 @@ RowLayout {
 	property var soundPlayer: SoundPlayer {}
 
 	function isAllowedSoundPath(path) {
-		if (!path) {
-			return false
-		}
-		var normalizedPath = ("" + path).trim()
-		if (normalizedPath.indexOf('file://') === 0) {
-			normalizedPath = normalizedPath.slice('file://'.length)
-		}
-		return normalizedPath.indexOf('/') === 0 && /\.(wav|mp3|oga|ogg)$/i.test(normalizedPath)
+		return soundPlayer.isPlayable(path)
 	}
 
 	spacing: 0
