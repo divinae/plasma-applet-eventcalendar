@@ -201,6 +201,13 @@ ConfigPage {
 				from: 5
 				to: 1440
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				enabled: clockShowNextEvent.checked
+				text: i18n("Progress of the current meeting")
+				description: i18n("A thin bar under the meeting's name, in its calendar's color.")
+				configKey: 'clockShowMeetingProgress'
+			}
 		}
 		FormCard.FormSectionText {
 			text: i18n("Middle-click the clock to join the current or next meeting.")

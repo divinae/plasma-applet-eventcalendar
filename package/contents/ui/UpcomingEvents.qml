@@ -234,6 +234,10 @@ CalendarManager {
 	property var nextEvent: null
 	property var nextEventMeetingLink: null
 	property string nextEventTime: "" // "5m" or "" when in progress
+	property bool nextEventInProgress: false
+	property int nextEventMinutesUntil: 0 // Upcoming: minutes until it starts
+	property int nextEventMinutesLeft: 0 // In progress: minutes until it ends
+	property real nextEventProgress: 0 // In progress: 0..1 of its duration
 
 	function updateNextEvent() {
 		var now = timeModel.currentTime
@@ -267,11 +271,22 @@ CalendarManager {
 		}
 		nextEvent = best
 		nextEventMeetingLink = best ? MeetingLink.find(best) : null
+		nextEventInProgress = !!best && bestInProgress
 		if (best && !bestInProgress) {
 			var minutes = Math.ceil((best.startDateTime - now) / 60000)
+			nextEventMinutesUntil = minutes
 			nextEventTime = LocaleFuncs.durationShortFormat(minutes * 60)
 		} else {
+			nextEventMinutesUntil = 0
 			nextEventTime = ""
+		}
+		if (best && bestInProgress) {
+			var duration = best.endDateTime - best.startDateTime
+			nextEventMinutesLeft = Math.max(0, Math.ceil((best.endDateTime - now) / 60000))
+			nextEventProgress = duration > 0 ? Math.min(1, Math.max(0, (now - best.startDateTime) / duration)) : 0
+		} else {
+			nextEventMinutesLeft = 0
+			nextEventProgress = 0
 		}
 	}
 
