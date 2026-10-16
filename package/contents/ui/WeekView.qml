@@ -1036,25 +1036,43 @@ Item {
 											wrapMode: Text.WordWrap
 											maximumLineCount: Math.max(1, Math.floor((eventBlock.height - 4) / weekView.lineHeight) - 1)
 										}
-										PlasmaComponents3.Label {
+										// Time (day view: and location), then icons for what else is set.
+										Row {
 											width: parent.width
 											visible: eventBlock.height >= weekView.lineHeight * 2 + 4
-											text: {
-												var format = appletConfig.timeFormat
-												var item = eventBlock.eventItem
-												// Day view has room for the end time and location (opens in Google Maps).
-												if (weekView.singleDay) {
-													var text = Shared.formatTimeRange(item.startDateTime, item.endDateTime, format)
-													return item.location ? text + ' · ' + Shared.locationLink(item.location) : text
+											spacing: Kirigami.Units.smallSpacing
+											// The time first; icons only in the room left.
+											PlasmaComponents3.Label {
+												id: blockTimeLabel
+												width: Math.min(implicitWidth, parent.width)
+												text: {
+													var format = appletConfig.timeFormat
+													var item = eventBlock.eventItem
+													// Day view has room for the end time and location (opens in Google Maps).
+													if (weekView.singleDay) {
+														var text = Shared.formatTimeRange(item.startDateTime, item.endDateTime, format)
+														return item.location ? text + ' · ' + Shared.locationLink(item.location) : text
+													}
+													return Qt.formatTime(item.startDateTime, format)
 												}
-												return Qt.formatTime(item.startDateTime, format)
+												textFormat: Text.StyledText
+												linkColor: eventBlock.textColor
+												onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+												color: eventBlock.textColor
+												font: Kirigami.Theme.smallFont
+												elide: Text.ElideRight
 											}
-											textFormat: Text.StyledText
-											linkColor: eventBlock.textColor
-											onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-											color: eventBlock.textColor
-											font: Kirigami.Theme.smallFont
-											elide: Text.ElideRight
+											EventIndicators {
+												anchors.verticalCenter: parent.verticalCenter
+												maxWidth: parent.width - blockTimeLabel.width - parent.spacing
+												eventItem: eventBlock.eventItem
+												color: eventBlock.textColor
+												iconSize: Math.min(Kirigami.Units.iconSizes.small, Math.round(smallFontMetrics.height))
+												opacity: 0.85
+												// The day view shows the location as text and has a Join button.
+												showLocation: !weekView.singleDay
+												showMeeting: !joinPill.visible
+											}
 										}
 									}
 									// Click opens the event, right click its menu, press and drag moves it.

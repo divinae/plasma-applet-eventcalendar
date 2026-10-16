@@ -180,23 +180,36 @@ Rectangle {
 								font.strikeout: eventRow.response === 'declined'
 								font.bold: eventRow.inProgress
 							}
-							PlasmaComponents3.Label {
+							RowLayout {
 								Layout.fillWidth: true
-								elide: Text.ElideRight
-								// The location opens in Google Maps.
-								text: {
-									var parts = [Shared.escapeHtml(dayView.timeText(eventRow.eventItem))]
-									if (eventRow.eventItem.location) {
-										parts.push(Shared.locationLink(eventRow.eventItem.location))
+								spacing: Kirigami.Units.smallSpacing
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									Layout.maximumWidth: implicitWidth
+									elide: Text.ElideRight
+									// The location opens in Google Maps.
+									text: {
+										var parts = [Shared.escapeHtml(dayView.timeText(eventRow.eventItem))]
+										if (eventRow.eventItem.location) {
+											parts.push(Shared.locationLink(eventRow.eventItem.location))
+										}
+										return parts.join(' · ')
 									}
-									return parts.join(' · ')
+									textFormat: Text.StyledText
+									linkColor: eventRow.textColor
+									onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+									color: eventRow.textColor
+									opacity: 0.85
+									font: Kirigami.Theme.smallFont
 								}
-								textFormat: Text.StyledText
-								linkColor: eventRow.textColor
-								onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-								color: eventRow.textColor
-								opacity: 0.85
-								font: Kirigami.Theme.smallFont
+								EventIndicators {
+									Layout.alignment: Qt.AlignVCenter
+									eventItem: eventRow.eventItem
+									color: eventRow.textColor
+									opacity: 0.85
+									showLocation: false // Shown as text
+								}
+								Item { Layout.fillWidth: true }
 							}
 						}
 

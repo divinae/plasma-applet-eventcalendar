@@ -143,19 +143,35 @@ LinkRect {
 					wrapMode: Text.Wrap
 				}
 
-				PlasmaComponents3.Label {
-					id: eventDateTime
-					// The location opens in Google Maps.
-					text: model.location ? Shared.escapeHtml(eventTimestamp) + " · " + Shared.locationLink(model.location) : Shared.escapeHtml(eventTimestamp)
-					textFormat: Text.StyledText
-					linkColor: agendaEventItem.tileTextColor
-					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-					color: agendaEventItem.tileTextColor
-					opacity: 0.85
-					font: Kirigami.Theme.smallFont
-					visible: !editEventForm.visible && !isCondensed
+				RowLayout {
 					Layout.fillWidth: true
-					elide: Text.ElideRight
+					spacing: Kirigami.Units.smallSpacing
+					visible: !editEventForm.visible && !isCondensed
+					PlasmaComponents3.Label {
+						id: eventDateTime
+						// The location opens in Google Maps.
+						text: model.location ? Shared.escapeHtml(eventTimestamp) + " · " + Shared.locationLink(model.location) : Shared.escapeHtml(eventTimestamp)
+						textFormat: Text.StyledText
+						linkColor: agendaEventItem.tileTextColor
+						onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+						color: agendaEventItem.tileTextColor
+						opacity: 0.85
+						font: Kirigami.Theme.smallFont
+						Layout.fillWidth: true
+						Layout.maximumWidth: implicitWidth
+						elide: Text.ElideRight
+					}
+					// What else is set; the location, Join button and description are shown already.
+					EventIndicators {
+						Layout.alignment: Qt.AlignVCenter
+						eventItem: model
+						color: agendaEventItem.tileTextColor
+						opacity: 0.85
+						showLocation: false
+						showMeeting: !(plasmoid.configuration.agendaShowEventHangoutLink && !agendaEventItem.ended)
+						showDescription: !eventDescription.showProperty
+					}
+					Item { Layout.fillWidth: true }
 				}
 			}
 

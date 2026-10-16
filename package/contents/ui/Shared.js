@@ -184,6 +184,48 @@ function myResponse(eventItem) {
 	return ''
 }
 
+// What an event has set, as small icons after its time: 'location', 'meeting' (a join link,
+// found by the caller with MeetingLink.find), 'guests' (anyone besides the user), 'repeat' and
+// 'description'. Keys in hide are left out, eg: when the view already shows the location.
+// attendees may be an array or a ListModel (agenda).
+var EVENT_INDICATOR_ICONS = {
+	location: 'mark-location',
+	meeting: 'call-start',
+	guests: 'group',
+	repeat: 'media-playlist-repeat',
+	description: 'view-list-text',
+}
+function eventIndicatorKeys(eventItem, hasMeeting, hide) {
+	if (!eventItem) {
+		return []
+	}
+	hide = hide || {}
+	var attendees = eventItem.attendees
+	var guestCount = 0
+	if (attendees) {
+		var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
+		var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
+		for (var i = 0; i < count; i++) {
+			var attendee = isModel ? attendees.get(i) : attendees[i]
+			if (attendee && !attendee.self && !attendee.resource) {
+				guestCount++
+			}
+		}
+	}
+	var keys = []
+	function add(key, isSet) {
+		if (isSet && !hide[key]) {
+			keys.push(key)
+		}
+	}
+	add('location', !!eventItem.location)
+	add('meeting', !!hasMeeting)
+	add('guests', guestCount > 0)
+	add('repeat', !!eventItem.recurringEventId || !!(eventItem.recurrence && (eventItem.recurrence.length || eventItem.recurrence.count)))
+	add('description', !!String(eventItem.description || '').trim())
+	return keys
+}
+
 // Not (yet) a yes: shown outlined like Google Calendar, with stripes for maybe.
 function isUnconfirmedResponse(response) {
 	return response === 'needsAction' || response === 'tentative' || response === 'declined'
