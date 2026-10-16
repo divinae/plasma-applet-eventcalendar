@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
@@ -52,6 +53,7 @@ ConfigPage {
 		readonly property bool showCustom: customChosen || presetIndex < 0
 
 		ComboBox {
+			Layout.fillWidth: true
 			model: picker.presets.map(function(p) { return p.text }).concat([i18n("Custom…")])
 			currentIndex: picker.showCustom ? picker.presets.length : picker.presetIndex
 			onActivated: function(index) {
@@ -77,112 +79,149 @@ ConfigPage {
 		}
 	}
 
-	Kirigami.FormLayout {
+	// A labeled custom row inside a card: title above, any control below.
+	component LabeledRow: FormCard.AbstractFormDelegate {
+		id: labeledRow
+		property string title
+		default property alias rowContent: rowColumn.data
 		Layout.fillWidth: true
+		background: null
+		contentItem: ColumnLayout {
+			id: rowColumn
+			spacing: Kirigami.Units.smallSpacing
+			Label {
+				Layout.fillWidth: true
+				text: labeledRow.title
+				elide: Text.ElideRight
+			}
+		}
+	}
+
+	ColumnLayout {
+		Layout.fillWidth: true
+		spacing: 0
 
 		//--- Time
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Time")
+		FormCard.FormHeader {
+			title: i18n("Time")
 		}
-		FormatPicker {
-			Kirigami.FormData.label: i18n("Format:")
-			configKey: 'clockTimeFormat1'
-			presets: page.timePresets
+		FormCard.FormCard {
+			LabeledRow {
+				title: i18n("Format")
+				FormatPicker {
+					Layout.fillWidth: true
+					configKey: 'clockTimeFormat1'
+					presets: page.timePresets
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Bold")
+				configKey: 'clockLineBold1'
+			}
+			FormCard.FormDelegateSeparator {}
+			LabeledRow {
+				title: i18n("Font")
+				ConfigFontFamily {
+					Layout.fillWidth: true
+					configKey: 'clockFontFamily'
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
+				label: i18n("Maximum height")
+				description: i18n("0 = fit the panel")
+				configKey: 'clockMaxHeight'
+				suffix: i18n(" px")
+				from: 0
+				to: 1000
+			}
 		}
-		ConfigCheckBox {
-			configKey: 'clockLineBold1'
-			text: i18n("Bold")
-		}
-		ConfigFontFamily {
-			Kirigami.FormData.label: i18n("Font:")
-			configKey: 'clockFontFamily'
-		}
-		ConfigSpinBox {
-			Kirigami.FormData.label: i18n("Maximum height:")
-			configKey: 'clockMaxHeight'
-			suffix: i18n(" px")
-			after: i18n("(0 = fit the panel)")
-		}
-		Label {
-			Layout.fillWidth: true
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 20
-			wrapMode: Text.Wrap
-			opacity: 0.7
+		FormCard.FormSectionText {
 			text: i18n("Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd d MMM.")
 			onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 		}
 
 		//--- Second line
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Second Line")
+		FormCard.FormHeader {
+			title: i18n("Second Line")
 		}
-		ConfigCheckBox {
-			id: clockShowLine2
-			configKey: 'clockShowLine2'
-			text: i18n("Show a second line (eg: the date)")
-		}
-		FormatPicker {
-			enabled: clockShowLine2.checked
-			Kirigami.FormData.label: i18n("Format:")
-			configKey: 'clockTimeFormat2'
-			presets: page.datePresets
-		}
-		ConfigCheckBox {
-			enabled: clockShowLine2.checked
-			configKey: 'clockLineBold2'
-			text: i18n("Bold")
-		}
-		ConfigSlider {
-			enabled: clockShowLine2.checked
-			Kirigami.FormData.label: i18n("Size:")
-			configKey: 'clockLine2HeightRatio'
-			minimumValue: 0.3
-			maximumValue: 0.7
-			stepSize: 0.05
-			Layout.preferredWidth: Kirigami.Units.gridUnit * 10
+		FormCard.FormCard {
+			FormConfigSwitch {
+				id: clockShowLine2
+				text: i18n("Show a second line")
+				description: i18n("Eg: the date")
+				configKey: 'clockShowLine2'
+			}
+			FormCard.FormDelegateSeparator {}
+			LabeledRow {
+				enabled: clockShowLine2.checked
+				title: i18n("Format")
+				FormatPicker {
+					Layout.fillWidth: true
+					configKey: 'clockTimeFormat2'
+					presets: page.datePresets
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				enabled: clockShowLine2.checked
+				text: i18n("Bold")
+				configKey: 'clockLineBold2'
+			}
+			FormCard.FormDelegateSeparator {}
+			LabeledRow {
+				enabled: clockShowLine2.checked
+				title: i18n("Size")
+				ConfigSlider {
+					Layout.fillWidth: true
+					configKey: 'clockLine2HeightRatio'
+					minimumValue: 0.3
+					maximumValue: 0.7
+					stepSize: 0.05
+				}
+			}
 		}
 
 		//--- Next meeting
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Next Meeting")
+		FormCard.FormHeader {
+			title: i18n("Next Meeting")
 		}
-		RowLayout {
-			ConfigCheckBox {
+		FormCard.FormCard {
+			FormConfigSwitch {
 				id: clockShowNextEvent
+				text: i18n("Show next to the clock")
 				configKey: 'clockShowNextEvent'
-				text: i18n("Show next to the clock when it starts within")
 			}
-			ConfigSpinBox {
+			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
 				enabled: clockShowNextEvent.checked
+				label: i18n("When it starts within")
 				configKey: 'clockNextEventMinutes'
 				suffix: i18n(" min")
-				minimumValue: 5
-				maximumValue: 1440
+				from: 5
+				to: 1440
 			}
 		}
-		Label {
-			Layout.fillWidth: true
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 20
-			wrapMode: Text.Wrap
-			opacity: 0.7
+		FormCard.FormSectionText {
 			text: i18n("Middle-click the clock to join the current or next meeting.")
 		}
 
 		//--- Other
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Other")
+		FormCard.FormHeader {
+			title: i18n("Other")
 		}
-		ConfigCheckBox {
-			configKey: 'showBackground'
-			text: i18n("Show background (desktop widget)")
-		}
-		ConfigCheckBox {
-			configKey: 'debugging'
-			text: i18n("Debug logging and extra settings pages")
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Show background")
+				description: i18n("Desktop widget")
+				configKey: 'showBackground'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Debug logging and extra settings pages")
+				configKey: 'debugging'
+			}
 		}
 	}
 }

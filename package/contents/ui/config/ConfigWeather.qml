@@ -1,7 +1,8 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
@@ -29,74 +30,80 @@ ConfigPage {
 
 	OpenWeatherMapCityDialog {
 		id: openWeatherMapCityDialog
-		onAccepted: weatherCityId.value = selectedCityId
+		onAccepted: page.configBridge.write('openWeatherMapCityId', selectedCityId)
 	}
 	WeatherCanadaCityDialog {
 		id: weatherCanadaCityDialog
-		onAccepted: weatherCanadaCityId.value = selectedCityId
+		onAccepted: page.configBridge.write('weatherCanadaCityId', selectedCityId)
 	}
 
-	Kirigami.FormLayout {
+	readonly property string service: weatherService.currentValue || weatherService.configValue // The combo shows the first service when unset
+
+	ColumnLayout {
 		Layout.fillWidth: true
+		spacing: 0
 
 		//--- Source
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Source")
+		FormCard.FormHeader {
+			title: i18n("Source")
 		}
-		ConfigComboBox {
-			id: weatherService
-			Kirigami.FormData.label: i18n("Service:")
-			configKey: 'weatherService'
-			model: [
-				{ value: 'OpenMeteo', text: i18n("Open-Meteo (free, no API key)") },
-				{ value: 'OpenWeatherMap', text: 'OpenWeatherMap' },
-				{ value: 'WeatherCanada', text: 'Weather Canada' },
-			]
+		FormCard.FormCard {
+			FormConfigCombo {
+				id: weatherService
+				text: i18n("Service")
+				configKey: 'weatherService'
+				model: [
+					{ value: 'OpenMeteo', text: i18n("Open-Meteo (free, no API key)") },
+					{ value: 'OpenWeatherMap', text: 'OpenWeatherMap' },
+					{ value: 'WeatherCanada', text: 'Weather Canada' },
+				]
+			}
 		}
 
-		// Open-Meteo: search a place by name and pick it.
-		Label {
-			visible: weatherService.value === 'OpenMeteo'
-			Kirigami.FormData.label: i18n("Location:")
-			text: page.configBridge.read("openMeteoLocationName", "") || i18n("Not set")
-			font.bold: !!page.configBridge.read("openMeteoLocationName", "")
+		//--- Open-Meteo: search a place by name and pick it.
+		FormCard.FormHeader {
+			visible: page.service === 'OpenMeteo'
+			title: i18n("Location")
 		}
-		RowLayout {
-			visible: weatherService.value === 'OpenMeteo'
-			Kirigami.FormData.label: i18n("Find a place:")
-			TextField {
-				id: locationSearchField
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 12
-				placeholderText: i18n("City name, eg: Warszawa")
-				onAccepted: page.searchLocations()
+		FormCard.FormCard {
+			visible: page.service === 'OpenMeteo'
+			FormCard.FormTextDelegate {
+				text: i18n("Current location")
+				description: page.configBridge.read("openMeteoLocationName", "") || i18n("Not set")
 			}
-			Button {
-				icon.name: "search"
-				text: i18n("Search")
-				enabled: locationSearchField.text.trim().length > 1 && !page.searchingLocations
-				onClicked: page.searchLocations()
+			FormCard.FormDelegateSeparator {}
+			FormCard.AbstractFormDelegate {
+				background: null
+				contentItem: RowLayout {
+					spacing: Kirigami.Units.smallSpacing
+					QQC2.TextField {
+						id: locationSearchField
+						Layout.fillWidth: true
+						placeholderText: i18n("City name, eg: Warszawa")
+						onAccepted: page.searchLocations()
+					}
+					QQC2.Button {
+						icon.name: "search"
+						text: i18n("Search")
+						enabled: locationSearchField.text.trim().length > 1 && !page.searchingLocations
+						onClicked: page.searchLocations()
+					}
+					QQC2.BusyIndicator {
+						visible: page.searchingLocations
+						running: visible
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.preferredWidth: Layout.preferredHeight
+					}
+				}
 			}
-			BusyIndicator {
-				visible: page.searchingLocations
-				running: visible
-				Layout.preferredHeight: Kirigami.Units.iconSizes.small
-				Layout.preferredWidth: Layout.preferredHeight
+			FormCard.FormTextDelegate {
+				visible: page.locationSearchDone && page.locationResults.length === 0
+				text: i18n("No places found.")
 			}
-		}
-		Label {
-			visible: weatherService.value === 'OpenMeteo' && page.locationSearchDone && page.locationResults.length === 0
-			text: i18n("No places found.")
-			opacity: 0.7
-		}
-		ColumnLayout {
-			visible: weatherService.value === 'OpenMeteo' && page.locationResults.length > 0
-			spacing: 0
 			Repeater {
 				model: page.locationResults
-				ToolButton {
-					readonly property string label: [modelData.name, modelData.region, modelData.country].filter(function(s) { return !!s }).join(", ")
-					text: label
+				FormCard.FormButtonDelegate {
+					text: [modelData.name, modelData.region, modelData.country].filter(function(s) { return !!s }).join(", ")
 					icon.name: "mark-location"
 					onClicked: {
 						page.configBridge.write("openMeteoLatitude", modelData.latitude)
@@ -110,64 +117,88 @@ ConfigPage {
 				}
 			}
 		}
-		RowLayout {
-			visible: weatherService.value === 'OpenWeatherMap'
-			Kirigami.FormData.label: i18n("City:")
-			ConfigString {
+
+		//--- OpenWeatherMap
+		FormCard.FormHeader {
+			visible: page.service === 'OpenWeatherMap'
+			title: i18n("OpenWeatherMap")
+		}
+		FormCard.FormCard {
+			visible: page.service === 'OpenWeatherMap'
+			FormConfigText {
 				id: weatherCityId
+				label: i18n("City id")
 				configKey: 'openWeatherMapCityId'
-				placeholderText: i18n("City id, eg: 5983720")
+				placeholderText: i18n("eg: 5983720")
+				// The dialog writes the key: show the new value.
+				Connections {
+					target: page
+					function onCfg_openWeatherMapCityIdChanged() { weatherCityId.text = page.cfg_openWeatherMapCityId || "" }
+				}
 			}
-			Button {
+			FormCard.FormDelegateSeparator {}
+			FormCard.FormButtonDelegate {
 				icon.name: "search"
 				text: i18n("Find City…")
 				onClicked: openWeatherMapCityDialog.open()
 			}
-		}
-		RowLayout {
-			visible: weatherService.value === 'WeatherCanada'
-			Kirigami.FormData.label: i18n("City:")
-			ConfigString {
-				id: weatherCanadaCityId
-				configKey: 'weatherCanadaCityId'
-				placeholderText: i18n("City id, eg: on-14")
+			FormCard.FormDelegateSeparator {}
+			FormConfigText {
+				label: i18n("API app id")
+				configKey: 'openWeatherMapAppId'
+				echoMode: TextInput.Password
+				placeholderText: i18n("Required for OpenWeatherMap")
 			}
-			Button {
+		}
+
+		//--- Weather Canada
+		FormCard.FormHeader {
+			visible: page.service === 'WeatherCanada'
+			title: i18n("Weather Canada")
+		}
+		FormCard.FormCard {
+			visible: page.service === 'WeatherCanada'
+			FormConfigText {
+				id: weatherCanadaCityId
+				label: i18n("City id")
+				configKey: 'weatherCanadaCityId'
+				placeholderText: i18n("eg: on-14")
+				Connections {
+					target: page
+					function onCfg_weatherCanadaCityIdChanged() { weatherCanadaCityId.text = page.cfg_weatherCanadaCityId || "" }
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormCard.FormButtonDelegate {
 				icon.name: "search"
 				text: i18n("Find City…")
 				onClicked: weatherCanadaCityDialog.open()
 			}
 		}
-		ConfigString {
-			visible: weatherService.value === 'OpenWeatherMap'
-			Kirigami.FormData.label: i18n("API app id:")
-			configKey: 'openWeatherMapAppId'
-			echoMode: TextInput.Password
-			placeholderText: i18n("Required for OpenWeatherMap")
-		}
 
 		//--- Display
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Display")
+		FormCard.FormHeader {
+			title: i18n("Display")
 		}
-		ConfigComboBox {
-			Kirigami.FormData.label: i18n("Units:")
-			configKey: 'weatherUnits'
-			model: [
-				{ value: 'metric', text: i18n("Celsius") },
-				{ value: 'imperial', text: i18n("Fahrenheit") },
-				{ value: 'kelvin', text: i18n("Kelvin") },
-			]
+		FormCard.FormCard {
+			FormConfigCombo {
+				text: i18n("Units")
+				configKey: 'weatherUnits'
+				model: [
+					{ value: 'metric', text: i18n("Celsius") },
+					{ value: 'imperial', text: i18n("Fahrenheit") },
+					{ value: 'kelvin', text: i18n("Kelvin") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
+				label: i18n("Meteogram shows")
+				configKey: 'meteogramHours'
+				suffix: i18n(" hours")
+				from: 9
+				to: 48
+				stepSize: 3
+			}
 		}
-		ConfigSpinBox {
-			Kirigami.FormData.label: i18n("Meteogram shows:")
-			configKey: 'meteogramHours'
-			suffix: i18n(" hours")
-			minimumValue: 9
-			maximumValue: 48
-			stepSize: 3
-		}
-
 	}
 }

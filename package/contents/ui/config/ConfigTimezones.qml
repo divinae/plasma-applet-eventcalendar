@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
@@ -91,67 +92,94 @@ ConfigPage {
 		}
 	}
 
-	Kirigami.FormLayout {
+	ColumnLayout {
 		Layout.fillWidth: true
+		spacing: 0
 
-		Kirigami.Separator {
-			Kirigami.FormData.isSection: true
-			Kirigami.FormData.label: i18n("Extra Time Zones in the Tooltip")
+		FormCard.FormHeader {
+			title: i18n("Extra Time Zones in the Tooltip")
 		}
-		RowLayout {
-			Kirigami.FormData.label: i18n("Add:")
-			TextField {
-				id: timezoneInput
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 14
-				placeholderText: i18n("eg: America/New_York")
-				onAccepted: addTimezone(text)
-			}
-			Button {
-				icon.name: "list-add"
-				text: i18n("Add")
-				enabled: timezoneInput.text.trim().length > 0
-				onClicked: addTimezone(timezoneInput.text)
-			}
-		}
-		// A plain list (not a ListView) so it sizes to its rows inside the scrolling page.
-		ColumnLayout {
-			Kirigami.FormData.label: i18n("Shown:")
-			spacing: 0
+		FormCard.FormCard {
+			// A plain list (not a ListView) so it sizes to its rows inside the scrolling page.
 			Repeater {
 				model: timezoneListModel
-				RowLayout {
+				ColumnLayout {
+					Layout.fillWidth: true
+					spacing: 0
+					FormCard.FormDelegateSeparator {
+						visible: index > 0
+					}
+					FormCard.AbstractFormDelegate {
+						Layout.fillWidth: true
+						background: null
+						contentItem: RowLayout {
+							spacing: Kirigami.Units.smallSpacing
+							ColumnLayout {
+								Layout.fillWidth: true
+								spacing: 0
+								Label {
+									Layout.fillWidth: true
+									text: prettyZoneName(model.zoneId)
+									elide: Text.ElideRight
+								}
+								Label {
+									Layout.fillWidth: true
+									visible: model.zoneId !== "Local"
+									text: model.zoneId
+									elide: Text.ElideRight
+									color: Kirigami.Theme.disabledTextColor
+									font: Kirigami.Theme.smallFont
+								}
+							}
+							ToolButton {
+								icon.name: "edit-delete"
+								display: AbstractButton.IconOnly
+								text: i18n("Remove time zone")
+								visible: model.zoneId !== "Local"
+								onClicked: removeTimezone(model.zoneId)
+								ToolTip.text: text
+								ToolTip.visible: hovered
+								ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
+						}
+					}
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormCard.AbstractFormDelegate {
+				Layout.fillWidth: true
+				background: null
+				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing
-					Label {
-						text: prettyZoneName(model.zoneId)
-						Layout.preferredWidth: page.timezoneColumnWidth
-						elide: Text.ElideRight
+					TextField {
+						id: timezoneInput
+						Layout.fillWidth: true
+						placeholderText: i18n("Add a time zone, eg: America/New_York")
+						onAccepted: addTimezone(text)
 					}
-					Label {
-						text: model.zoneId
-						Layout.preferredWidth: page.timezoneColumnWidth
-						elide: Text.ElideRight
-						opacity: 0.6
-					}
-					ToolButton {
-						icon.name: "edit-delete"
-						enabled: model.zoneId !== "Local"
-						onClicked: removeTimezone(model.zoneId)
-						Accessible.name: i18n("Remove time zone")
+					Button {
+						icon.name: "list-add"
+						text: i18n("Add")
+						enabled: timezoneInput.text.trim().length > 0
+						onClicked: addTimezone(timezoneInput.text)
 					}
 				}
 			}
 		}
-		Label {
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 20
-			wrapMode: Text.Wrap
-			opacity: 0.7
+		FormCard.FormSectionText {
 			text: i18n("Zones with the same time as yours are not shown.")
 		}
-		ComboBox {
-			Kirigami.FormData.label: i18n("Show as:")
-			model: [i18n("City name"), i18n("Abbreviation (eg: CEST)")]
-			currentIndex: page.configBridge.read("displayTimezoneAsCode", true) ? 1 : 0
-			onActivated: function(index) { page.configBridge.write("displayTimezoneAsCode", index === 1) }
+
+		FormCard.FormHeader {
+			title: i18n("Display")
+		}
+		FormCard.FormCard {
+			FormCard.FormComboBoxDelegate {
+				text: i18n("Show time zones as")
+				model: [i18n("City name"), i18n("Abbreviation (eg: CEST)")]
+				currentIndex: page.configBridge.read("displayTimezoneAsCode", true) ? 1 : 0
+				onActivated: function(index) { page.configBridge.write("displayTimezoneAsCode", index === 1) }
+			}
 		}
 	}
 }
