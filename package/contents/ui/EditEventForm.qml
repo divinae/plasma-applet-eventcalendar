@@ -27,22 +27,16 @@ Loader {
 				logger.debugJSON('EditEventForm.event', event)
 			}
 
-			function isEmpty(s) {
-				return typeof s === "undefined" || s === null || s === ""
-			}
-			function hasChanged(a, b) {
-				return a != b && !(isEmpty(a) && isEmpty(b))
-			}
 			function populateIfChanged(args, propKey, newValue) {
-				var changed = hasChanged(event[propKey], newValue)
+				var changed = Shared.hasChanged(event[propKey], newValue)
 				if (changed) {
 					args[propKey] = newValue
 				}
 			}
 			function populateIfDateChanged(args, propKey, newValue) {
-				var changedDate = hasChanged(event[propKey]['date'], newValue['date'])
-				var changedDateTime = hasChanged(event[propKey]['dateTime'], newValue['dateTime'])
-				var changedTimeZone = hasChanged(event[propKey]['timeZone'], newValue['timeZone'])
+				var changedDate = Shared.hasChanged(event[propKey]['date'], newValue['date'])
+				var changedDateTime = Shared.hasChanged(event[propKey]['dateTime'], newValue['dateTime'])
+				var changedTimeZone = Shared.hasChanged(event[propKey]['timeZone'], newValue['timeZone'])
 				var changed = changedDate || changedDateTime || changedTimeZone
 				if (changed) {
 					args[propKey] = newValue

@@ -5,6 +5,7 @@ import Qt5Compat.GraphicalEffects as QtGraphicalEffects // TODO Deprecated in Qt
 
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
+import "lib/ColorUtil.js" as ColorUtil
 
 // Based on:
 // https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/plasmacomponents3/ComboBox.qml
@@ -95,7 +96,7 @@ PlasmaComponents3.TextField {
 			}
 			radius: 2
 			color: Kirigami.Theme.viewBackgroundColor
-			border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.3)
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.3)
 			layer.enabled: true
 
 			layer.effect: QtGraphicalEffects.DropShadow {

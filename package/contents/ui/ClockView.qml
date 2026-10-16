@@ -23,6 +23,7 @@ import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
+import "lib/ColorUtil.js" as ColorUtil
 
 Item {
 	id: clock
@@ -163,7 +164,7 @@ Item {
 			radius: width / 2
 			color: clock.nextEvent && clock.nextEvent.backgroundColor ? clock.nextEvent.backgroundColor : Kirigami.Theme.highlightColor
 			border.width: 1
-			border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.4)
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
 		}
 		PlasmaComponents3.Label {
 			id: nextEventLabel

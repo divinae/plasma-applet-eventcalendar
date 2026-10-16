@@ -94,7 +94,7 @@ ColumnLayout {
 			color: Kirigami.Theme.negativeTextColor
 		}
 		PlasmaComponents3.Label {
-			text: Qt.formatTime(timeModel.currentTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+			text: Qt.formatTime(timeModel.currentTime, appletConfig.timeFormat)
 			color: Kirigami.Theme.negativeTextColor
 			font: Kirigami.Theme.smallFont
 		}
@@ -121,13 +121,13 @@ ColumnLayout {
 			visible: showWeather
 			spacing: 2
 			Kirigami.Icon {
-				source: weatherIcon + "-symbolic" // Monochrome: readable on any background
+				source: Shared.symbolicIcon(weatherIcon)
 				fallback: weatherIcon
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
 			}
 			PlasmaComponents3.Label {
-				text: (isNaN(tempHigh) ? '?' : tempHigh + '°') + ' / ' + (isNaN(tempLow) ? '?' : tempLow + '°')
+				text: (Shared.formatTemp(tempHigh) || '?') + ' / ' + (Shared.formatTemp(tempLow) || '?')
 				opacity: 0.8
 			}
 		}

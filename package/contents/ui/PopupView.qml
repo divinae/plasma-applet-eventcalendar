@@ -674,7 +674,6 @@ MouseArea {
 
 			sourceComponent: MeteogramView {
 				visibleDuration: plasmoid.configuration.meteogramHours
-				showIconOutline: appletConfig.showIconOutline
 				xAxisScale: 1 / hoursPerDataPoint
 				xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
 				property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)

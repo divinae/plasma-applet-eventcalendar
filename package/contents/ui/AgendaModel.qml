@@ -98,19 +98,16 @@ ListModel {
 
 	// Agenda items are looked up by day through a { dayKey: agendaItem } index
 	// instead of scanning the list for every event.
-	function dayKey(d) {
-		return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
-	}
 	function indexAgendaItems(agendaItemList) {
 		var byDay = {}
 		for (var i = 0; i < agendaItemList.length; i++) {
-			byDay[dayKey(agendaItemList[i].date)] = agendaItemList[i]
+			byDay[Shared.dayKey(agendaItemList[i].date)] = agendaItemList[i]
 		}
 		return byDay
 	}
 
 	function addAgendaItemIfMissing(agendaItemList, byDay, day) {
-		var key = dayKey(day)
+		var key = Shared.dayKey(day)
 		if (byDay[key]) {
 			return
 		}
@@ -121,7 +118,7 @@ ListModel {
 	}
 
 	function insertEventAtDate(agendaItemList, byDay, date, eventItem) {
-		var key = dayKey(date)
+		var key = Shared.dayKey(date)
 		var agendaItem = byDay[key]
 		if (!agendaItem) {
 			agendaItem = buildAgendaItem(date)
@@ -272,7 +269,7 @@ ListModel {
 			}
 
 			if (currentMonthContainsToday && showNextNumDays > 0) {
-				var todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+				var todayMidnight = Shared.startOfDay(today)
 				for (var day = todayMidnight; day < nextNumDaysEndExclusive; day.setDate(day.getDate() + 1)) {
 					addAgendaItemIfMissing(agendaItemList, byDay, day)
 				}
@@ -282,7 +279,7 @@ ListModel {
 				// Remove calendar events before today.
 				var minDate = today
 				if (!clipPastEventsToday) {
-					minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+					minDate = Shared.startOfDay(today)
 				}
 				agendaItemList = agendaItemList.filter(function(agendaItem) {
 					return !(agendaItem.date < minDate)
@@ -301,7 +298,7 @@ ListModel {
 			var weatherByDay = agendaModel.weatherFieldsByDay(weatherData)
 			var showWeatherColumn = false
 			for (var i = 0; i < agendaItemList.length; i++) {
-				var weatherFields = weatherByDay[dayKey(agendaItemList[i].date)]
+				var weatherFields = weatherByDay[Shared.dayKey(agendaItemList[i].date)]
 				if (weatherFields) {
 					Object.assign(agendaItemList[i], weatherFields)
 					showWeatherColumn = true
@@ -368,7 +365,7 @@ ListModel {
 					var now = new Date(timeModel.currentTime)
 					var inProgress = eventItem.startDateTime <= now && now <= eventItem.endDateTime
 					if (inProgress) {
-						var today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+						var today = Shared.startOfDay(now)
 						insertEventAtDate(agendaItemList, byDay, today, eventItem)
 					} else {
 						insertEventAtDate(agendaItemList, byDay, eventItem.startDateTime, eventItem)
@@ -394,7 +391,7 @@ ListModel {
 		}
 		for (var j = 0; j < data.list.length; j++) {
 			var forecastItem = data.list[j]
-			var key = dayKey(new Date(forecastItem.dt * 1000))
+			var key = Shared.dayKey(new Date(forecastItem.dt * 1000))
 			byDay[key] = {
 				tempLow: Math.floor(forecastItem.temp.min),
 				tempHigh: Math.ceil(forecastItem.temp.max),
@@ -416,7 +413,7 @@ ListModel {
 		var weatherByDay = weatherFieldsByDay(data)
 		var showWeatherColumn = false
 		for (var i = 0; i < agendaModel.count; i++) {
-			var weatherFields = weatherByDay[dayKey(agendaModel.get(i).date)]
+			var weatherFields = weatherByDay[Shared.dayKey(agendaModel.get(i).date)]
 			if (weatherFields) {
 				agendaModel.set(i, weatherFields) // One change signal per row instead of seven.
 				agendaModel.rowSignatures[i] = null // Row changed outside finalizeAgendaItems.

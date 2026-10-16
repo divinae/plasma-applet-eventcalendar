@@ -17,12 +17,15 @@ function openGoogleCalendarNewEventUrl(date) {
 	Qt.openUrlExternally(url)
 }
 
+// Midnight at the start of the day of d.
+function startOfDay(d) {
+	return new Date(d.getFullYear(), d.getMonth(), d.getDate())
+}
 function isSameDate(a, b) {
 	return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
 }
 function isDateEarlier(a, b) {
-	var c = new Date(b.getFullYear(), b.getMonth(), b.getDate()) // midnight of date b
-	return a < c
+	return a < startOfDay(b)
 }
 function isDateAfter(a, b) {
 	var c = new Date(b.getFullYear(), b.getMonth(), b.getDate() + 1) // midnight of next day after b
@@ -68,8 +71,6 @@ function renderText(text) {
 			return '<a href="' + m + '">' + encodedUrl + '</a>' + '&nbsp;'
 		})
 	}
-
-	// Render new lines
 
 	// Remove leading new line, as Google sometimes adds them.
 	out = out.replace(/^(\<br\>)+/, '')
@@ -154,9 +155,28 @@ function dayKey(d) {
 
 // Before today (midnight).
 function isPastDay(d, now) {
-	return d < new Date(now.getFullYear(), now.getMonth(), now.getDate())
+	return d < startOfDay(now)
 }
 
 function formatTemp(t) {
 	return isFinite(t) ? Math.round(t) + '°' : ''
+}
+
+// "09:45 – 10:00", format: a Qt time format, eg: appletConfig.timeFormat
+function formatTimeRange(start, end, format) {
+	return Qt.formatTime(start, format) + ' – ' + Qt.formatTime(end, format)
+}
+
+// Monochrome variant of a (weather) icon: readable on any background. Use with `fallback: name`.
+function symbolicIcon(name) {
+	return name ? name + '-symbolic' : ''
+}
+
+// Unset or empty string.
+function isEmpty(s) {
+	return typeof s === 'undefined' || s === null || s === ''
+}
+// Edit forms: a field changed (unset and empty count as equal). Loose != on purpose: '5' vs 5.
+function hasChanged(a, b) {
+	return a != b && !(isEmpty(a) && isEmpty(b))
 }

@@ -5,6 +5,7 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 // Week view like Google Calendar: hour grid with event blocks, all-day row on top.
 Item {
@@ -52,7 +53,7 @@ Item {
 		var total = contentWidth + (weatherBeside ? weatherPanelWidth + weatherGap * 2 : 0)
 		return Math.round((width - total) / 2)
 	}
-	readonly property date todayStart: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate())
+	readonly property date todayStart: Shared.startOfDay(currentTime)
 	function dayWeather(d) {
 		return weatherByDay ? weatherByDay[Shared.dayKey(d)] : null
 	}
@@ -91,10 +92,10 @@ Item {
 	readonly property int allDayRowHeight: lineHeight + 4
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
-	readonly property color gridLineColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, appletConfig.faintGridLineOpacity)
+	readonly property color gridLineColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.faintGridLineOpacity)
 
 	function startOfWeek(d) {
-		var day = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+		var day = Shared.startOfDay(d)
 		if (dayCount < 7) {
 			return day // Day view starts on the day itself.
 		}
@@ -463,7 +464,7 @@ Item {
 							anchors.verticalCenter: parent.verticalCenter
 							width: Kirigami.Units.iconSizes.small
 							height: width
-							source: dayHeaderCell.weather ? dayHeaderCell.weather.iconName + "-symbolic" : "" // Monochrome: readable on any background
+							source: Shared.symbolicIcon(dayHeaderCell.weather ? dayHeaderCell.weather.iconName : "")
 							fallback: dayHeaderCell.weather ? dayHeaderCell.weather.iconName : ""
 						}
 						PlasmaComponents3.Label {
@@ -643,7 +644,7 @@ Item {
 								color: "transparent"
 								radius: 6
 								border.width: 2
-								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
+								border.color: ColorUtil.setAlpha(Kirigami.Theme.highlightColor, 0.5)
 							}
 							Rectangle {
 								visible: index > 0 // The frame draws the left edge.
@@ -675,18 +676,17 @@ Item {
 								width: parent.width - 4
 								height: weekView.hourHeight - 2
 								radius: Math.min(10, height / 2)
-								color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.15)
+								color: ColorUtil.setAlpha(Kirigami.Theme.highlightColor, 0.15)
 								border.width: 1
-								border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
+								border.color: ColorUtil.setAlpha(Kirigami.Theme.highlightColor, 0.6)
 								PlasmaComponents3.Label {
 									anchors.fill: parent
 									anchors.margins: 2
 									anchors.leftMargin: 6
 									text: {
-										var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
 										var start = slotArea.slotStart()
 										var end = new Date(start.getTime() + 60 * 60 * 1000)
-										return Qt.formatTime(start, format) + ' – ' + Qt.formatTime(end, format)
+										return Shared.formatTimeRange(start, end, appletConfig.timeFormat)
 									}
 									font: Kirigami.Theme.smallFont
 									color: Kirigami.Theme.highlightColor
@@ -741,8 +741,7 @@ Item {
 												if (!inlineDetails) {
 													return item.summary
 												}
-												var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
-												var parts = [item.summary, Qt.formatTime(item.startDateTime, format) + ' – ' + Qt.formatTime(item.endDateTime, format)]
+												var parts = [item.summary, Shared.formatTimeRange(item.startDateTime, item.endDateTime, appletConfig.timeFormat)]
 												if (item.location) {
 													parts.push(item.location)
 												}
@@ -759,11 +758,11 @@ Item {
 											width: parent.width
 											visible: eventBlock.height >= weekView.lineHeight * 2 + 4
 											text: {
-												var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+												var format = appletConfig.timeFormat
 												var item = eventBlock.eventItem
 												// Day view has room for the end time and location.
 												if (weekView.singleDay) {
-													var text = Qt.formatTime(item.startDateTime, format) + ' – ' + Qt.formatTime(item.endDateTime, format)
+													var text = Shared.formatTimeRange(item.startDateTime, item.endDateTime, format)
 													return item.location ? text + ' · ' + item.location : text
 												}
 												return Qt.formatTime(item.startDateTime, format)

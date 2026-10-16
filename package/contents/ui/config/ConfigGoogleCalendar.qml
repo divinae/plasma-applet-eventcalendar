@@ -6,6 +6,7 @@ import org.kde.kirigami as Kirigami
 import ".."
 import "../lib"
 import "../lib/Requests.js" as Requests
+import "../lib/ColorUtil.js" as ColorUtil
 
 ConfigPage {
 	id: page
@@ -24,11 +25,8 @@ ConfigPage {
 		}
 	}
 
-	function alphaColor(c, a) {
-		return Qt.rgba(c.r, c.g, c.b, a)
-	}
-	readonly property color readablePositiveTextColor: Qt.tint(Kirigami.Theme.textColor, alphaColor(Kirigami.Theme.positiveTextColor, 0.5))
-	readonly property color readableNegativeTextColor: Qt.tint(Kirigami.Theme.textColor, alphaColor(Kirigami.Theme.negativeTextColor, 0.5))
+	readonly property color readablePositiveTextColor: Qt.tint(Kirigami.Theme.textColor, ColorUtil.setAlpha(Kirigami.Theme.positiveTextColor, 0.5))
+	readonly property color readableNegativeTextColor: Qt.tint(Kirigami.Theme.textColor, ColorUtil.setAlpha(Kirigami.Theme.negativeTextColor, 0.5))
 
 	function localFilePath(url) {
 		var path = String(url)
@@ -696,7 +694,7 @@ ConfigPage {
 							radius: 4
 							color: model.backgroundColor
 							border.width: 1
-							border.color: Qt.rgba(syspal.text.r, syspal.text.g, syspal.text.b, 0.4)
+							border.color: ColorUtil.setAlpha(syspal.text, 0.4)
 						}
 
 						Label {
@@ -797,7 +795,7 @@ ConfigPage {
 							radius: 4
 							color: model.backgroundColor
 							border.width: 1
-							border.color: Qt.rgba(syspal.text.r, syspal.text.g, syspal.text.b, 0.4)
+							border.color: ColorUtil.setAlpha(syspal.text, 0.4)
 						}
 
 						Label {

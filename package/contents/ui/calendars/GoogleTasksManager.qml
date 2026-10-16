@@ -300,7 +300,7 @@ CalendarManager {
 
 		if (taskData.completed) {
 			var completedAt = new Date(taskData.completed)
-			var startDateTime = new Date(completedAt.getFullYear(), completedAt.getMonth(), completedAt.getDate())
+			var startDateTime = Shared.startOfDay(completedAt)
 		} else if (taskData.due) {
 			// Note: In the Google Tasks API docs:
 			// The due date only records date information; the time portion of the timestamp is discarded when setting the due date.
@@ -321,7 +321,7 @@ CalendarManager {
 			var startDateTime = new Date(eventData.dueDateTime)
 		} else {
 			var today = new Date()
-			var startDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+			var startDateTime = Shared.startOfDay(today)
 		}
 		var endDateTime = new Date(startDateTime)
 		endDateTime.setDate(endDateTime.getDate() + 1)

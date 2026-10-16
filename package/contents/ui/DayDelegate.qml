@@ -23,6 +23,7 @@ import org.kde.plasma.workspace.calendar as PlasmaCalendar
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 MouseArea {
 	id: dayStyle
@@ -75,9 +76,9 @@ MouseArea {
 		anchors.fill: parent
 		// Today: light highlight tint with a highlight-colored frame, like the week view.
 		visible: today
-		color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.12)
+		color: ColorUtil.setAlpha(Kirigami.Theme.highlightColor, 0.12)
 		border.width: 2
-		border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.5)
+		border.color: ColorUtil.setAlpha(Kirigami.Theme.highlightColor, 0.5)
 		radius: dayStyle.radius
 	}
 

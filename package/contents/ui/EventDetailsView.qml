@@ -7,6 +7,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 // Event details shown inside the popup, like mobile calendar apps.
 Rectangle {
@@ -19,7 +20,7 @@ Rectangle {
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
 	border.width: 1
-	border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
 	// Content height, so the card can be sized to fit (it scrolls when taller than the popup).
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + contentColumn.implicitHeight + Kirigami.Units.largeSpacing
 

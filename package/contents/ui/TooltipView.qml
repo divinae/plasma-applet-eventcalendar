@@ -126,7 +126,7 @@ Item {
 					spacing: Kirigami.Units.smallSpacing
 					Kirigami.Icon {
 						readonly property string iconName: tooltipWeather.current ? tooltipWeather.current.iconName : (tooltipWeather.today ? tooltipWeather.today.iconName : "")
-						source: iconName ? iconName + "-symbolic" : ""
+						source: Shared.symbolicIcon(iconName)
 						fallback: iconName
 						Layout.preferredWidth: Kirigami.Units.iconSizes.small
 						Layout.preferredHeight: Layout.preferredWidth

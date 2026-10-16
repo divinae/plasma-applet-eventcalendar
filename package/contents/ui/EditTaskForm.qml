@@ -27,14 +27,8 @@ Loader {
 				logger.debugJSON('EditTaskForm.task', task)
 			}
 
-			function isEmpty(s) {
-				return typeof s === "undefined" || s === null || s === ""
-			}
-			function hasChanged(a, b) {
-				return a != b && !(isEmpty(a) && isEmpty(b))
-			}
 			function populateIfChanged(args, propKey, newValue) {
-				var changed = hasChanged(task[propKey], newValue)
+				var changed = Shared.hasChanged(task[propKey], newValue)
 				if (changed) {
 					args[propKey] = newValue
 				}

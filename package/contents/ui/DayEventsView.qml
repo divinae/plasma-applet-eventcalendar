@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 // A day's events as a list card (month view: click a day).
 Rectangle {
@@ -18,13 +19,13 @@ Rectangle {
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
 	border.width: 1
-	border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + eventsColumn.implicitHeight + Kirigami.Units.largeSpacing
 
 	readonly property var events: {
 		var _ = eventModel.eventsData // Rebuild when events are refetched.
 		var items = eventModel.eventsData ? eventModel.eventsData.items : []
-		var dayStart = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+		var dayStart = Shared.startOfDay(date).getTime()
 		var dayEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime()
 		var list = []
 		for (var i = 0; i < items.length; i++) {
@@ -60,13 +61,13 @@ Rectangle {
 		if (isAllDay(e)) {
 			return i18n("All day")
 		}
-		var format = appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'
+		var format = appletConfig.timeFormat
 		// Events spanning several days: show the dates too, eg: "14 Oct 22:00 – 16 Oct 02:00".
 		if (!Shared.isSameDate(e.startDateTime, e.endDateTime)) {
 			var dateFormat = 'd MMM '
 			return Qt.formatDateTime(e.startDateTime, dateFormat + format) + ' – ' + Qt.formatDateTime(e.endDateTime, dateFormat + format)
 		}
-		return Qt.formatTime(e.startDateTime, format) + ' – ' + Qt.formatTime(e.endDateTime, format)
+		return Shared.formatTimeRange(e.startDateTime, e.endDateTime, format)
 	}
 
 	Keys.onEscapePressed: closeRequested()

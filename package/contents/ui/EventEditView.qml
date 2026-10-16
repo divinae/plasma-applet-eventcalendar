@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 // Form to create a new event (eventItem == null) or edit an existing one.
 Rectangle {
@@ -19,15 +20,9 @@ Rectangle {
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
 	border.width: 1
-	border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + fieldsColumn.implicitHeight + Kirigami.Units.largeSpacing * 2
 
-	function isEmpty(s) {
-		return typeof s === "undefined" || s === null || s === ""
-	}
-	function hasChanged(a, b) {
-		return a != b && !(isEmpty(a) && isEmpty(b))
-	}
 
 	// Google start / end objects. All-day events end at midnight the next day.
 	function startObj() {
@@ -74,13 +69,13 @@ Rectangle {
 			eventModel.createEventFromData(calendarSelector.selectedCalendarId, data)
 		} else {
 			var args = {}
-			if (hasChanged(eventItem.summary, summary)) {
+			if (Shared.hasChanged(eventItem.summary, summary)) {
 				args.summary = summary
 			}
-			if (hasChanged(eventItem.location, locationField.text)) {
+			if (Shared.hasChanged(eventItem.location, locationField.text)) {
 				args.location = locationField.text
 			}
-			if (hasChanged(eventItem.description, descriptionField.text)) {
+			if (Shared.hasChanged(eventItem.description, descriptionField.text)) {
 				args.description = descriptionField.text
 			}
 			var start = startObj()

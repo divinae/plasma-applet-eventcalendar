@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "lib/ColorUtil.js" as ColorUtil
 
 // Weather beside the Today view, in labeled sections: Now, Next hours, Next days.
 ColumnLayout {
@@ -90,7 +91,7 @@ ColumnLayout {
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
 			radius: width / 2
-			color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.12)
+			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.12)
 			Kirigami.Icon {
 				anchors.centerIn: parent
 				width: parent.width - Kirigami.Units.smallSpacing * 2
@@ -228,7 +229,7 @@ ColumnLayout {
 					y: 0
 					width: Kirigami.Units.iconSizes.small
 					height: width
-					source: parent.point ? parent.point.iconName + "-symbolic" : ""
+					source: Shared.symbolicIcon(parent.point ? parent.point.iconName : "")
 					fallback: parent.point ? parent.point.iconName : ""
 				}
 				PlasmaComponents3.Label {
@@ -265,7 +266,7 @@ ColumnLayout {
 				font.capitalization: Font.Capitalize
 			}
 			Kirigami.Icon {
-				source: modelData.iconName + "-symbolic" // Monochrome: readable on any background
+				source: Shared.symbolicIcon(modelData.iconName)
 				fallback: modelData.iconName
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth

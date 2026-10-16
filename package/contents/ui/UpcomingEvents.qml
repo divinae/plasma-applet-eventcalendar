@@ -264,10 +264,10 @@ CalendarManager {
 
 	function formatTooltipStart(eventItem, now) {
 		var start = eventItem.startDateTime
-		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-		var startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate())
+		var today = Shared.startOfDay(now)
+		var startDay = Shared.startOfDay(start)
 		var days = Math.round((startDay - today) / (24 * 60 * 60 * 1000))
-		var time = Qt.formatTime(start, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+		var time = Qt.formatTime(start, appletConfig.timeFormat)
 		var when
 		if (days === 0) {
 			when = time
@@ -308,7 +308,7 @@ CalendarManager {
 		}
 		tooltipNowText = current
 			? i18nc("%1 = event title, %2 = end time", "Now: %1, until %2", current.summary,
-				Qt.formatTime(current.endDateTime, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP'))
+				Qt.formatTime(current.endDateTime, appletConfig.timeFormat))
 			: ""
 		tooltipNextText = next ? i18nc("%1 = event title, %2 = when", "Next: %1, %2", next.summary, formatTooltipStart(next, now)) : ""
 	}

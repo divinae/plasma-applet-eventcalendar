@@ -8,12 +8,10 @@ import "lib/ColorUtil.js" as ColorUtil
 QtObject {
 	id: config
 
-	readonly property bool showIconOutline: false
-
 	// Shared look for the month and week views.
 	readonly property real faintGridLineOpacity: 0.07 // Day and hour grid lines: always on, very faint
 	readonly property real pastOpacity: 0.45 // Past days / ended events are dimmed in all views
-	readonly property color eventBorderColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.2)
+	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
 
 	property color alternateBackgroundColor: {
 		var textColor = Kirigami.Theme.textColor
@@ -32,7 +30,6 @@ QtObject {
 	readonly property color meteogramPrecipitationRawColor: "#acd"
 	property color meteogramPrecipitationColor: ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.6)
 	property color meteogramPrecipitationTextColor: Qt.tint(meteogramTextColor, ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.3))
-	property color meteogramPrecipitationTextOutlineColor: showIconOutline ? Kirigami.Theme.backgroundColor : "transparent"
 	readonly property color meteogramPositiveTempColor: "#900"
 	readonly property color meteogramNegativeTempColor: "#369"
 	readonly property color meteogramIconColor: Kirigami.Theme.textColor
@@ -72,6 +69,7 @@ QtObject {
 			return line1TimeFormat
 		}
 	}
+	readonly property string timeFormat: clock24h ? 'HH:mm' : 'h:mm AP' // Times in the views: 09:45 / 9:45 AM
 	readonly property bool clock24h: {
 		var is12hour = combinedFormat.toLowerCase().indexOf('ap') >= 0
 		return !is12hour

@@ -11,7 +11,6 @@ Item {
 	height: 100
 	property bool clock24h: appletConfig.clock24h
 	property int visibleDuration: 9
-	property bool showIconOutline: false
 	property alias xAxisScale: graph.xAxisScale
 	property int xAxisLabelEvery: 1
 	property alias rainUnits: graph.rainUnits
@@ -321,8 +320,6 @@ Item {
 
 							context.fillStyle = appletConfig.meteogramPrecipitationTextColor
 							context.font = "12px sans-serif"
-							context.strokeStyle = appletConfig.meteogramPrecipitationTextOutlineColor
-							context.lineWidth = 3
 
 							var labelWidth = context.measureText(labelText).width
 							var p
@@ -347,7 +344,6 @@ Item {
 							lastLabelVisible = true
 							lastLabelText = labelText
 
-							context.strokeText(labelText, p.x, pY)
 							context.fillText(labelText, p.x, pY)
 						} else {
 							lastLabelText = ''
@@ -392,10 +388,7 @@ Item {
 						source: modelData.aggregratedIcon
 						height: appletConfig.meteogramIconSize
 						opacity: tooltip.containsMouse ? 0.1 : 1
-						showOutline: meteogramView.showIconOutline
-					}
-
-					Component.onCompleted: {
+						showOutline: false
 					}
 				}
 			}
