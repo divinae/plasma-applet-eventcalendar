@@ -62,6 +62,17 @@ Item {
 	function dayWeather(d) {
 		return weatherByDay ? weatherByDay[Shared.dayKey(d)] : null
 	}
+	// Day view: the weather panel follows the shown day.
+	readonly property bool showingToday: Shared.startOfDay(weekStart).getTime() === todayStart.getTime()
+	// The shown day's daytime hours (7:00 to 19:00) from the hourly forecast.
+	function dayHours(d) {
+		var from = Shared.startOfDay(d).getTime() + 7 * 3600000
+		var to = from + 12 * 3600000
+		return (weatherHourly || []).filter(function(item) {
+			var t = item.dt * 1000
+			return t >= from && t <= to
+		})
+	}
 	onDayCountChanged: {
 		weekStart = startOfWeek(currentTime)
 		rebuild()
@@ -461,9 +472,10 @@ Item {
 		isSetup: weekView.weatherIsSetup
 		loading: weekView.weatherLoading
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
-		current: weekView.weatherCurrent
+		isToday: weekView.showingToday
+		current: weekView.showingToday ? weekView.weatherCurrent : null
 		today: weekView.dayWeather(weekView.weekStart)
-		hourly: weekView.weatherHourly
+		hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
 		nextDays: {
 			var list = []
 			for (var i = 1; i <= 4; i++) {
@@ -488,7 +500,8 @@ Item {
 			compact: true
 			isSetup: weekView.weatherIsSetup
 			loading: weekView.weatherLoading
-			current: weekView.weatherCurrent
+			isToday: weekView.showingToday
+			current: weekView.showingToday ? weekView.weatherCurrent : null
 			today: weekView.dayWeather(weekView.weekStart)
 		}
 

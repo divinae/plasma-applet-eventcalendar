@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 14:39+0200\n"
+"POT-Creation-Date: 2026-10-16 14:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1718,8 +1718,18 @@ msgid "Now"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
+msgctxt "weather of the day shown in the Today view"
+msgid "Forecast"
+msgstr ""
+
+#: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
 msgid "High %1 · Low %2"
+msgstr ""
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the day"
+msgid "Rain: %1"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
@@ -1733,7 +1743,16 @@ msgid "rain %1"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
+msgid "No forecast for this day."
+msgstr ""
+
+#: ../contents/ui/WeatherPanel.qml
 msgid "Next 12 hours"
+msgstr ""
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "weather by hour of the shown day"
+msgid "During the day"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml

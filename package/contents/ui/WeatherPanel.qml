@@ -7,13 +7,15 @@ import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
 
 // Weather beside the Today view, in labeled sections: Now, Next hours, Next days.
+// Another day than today: that day's forecast (no "Now"), its hours and the days after it.
 ColumnLayout {
 	id: panel
 
-	property var current: null // { temp, iconName, text }
-	property var today: null // daily item
-	property var hourly: [] // hourly items, from now
-	property var nextDays: [] // daily items after today
+	property var current: null // { temp, iconName, text }, today only
+	property var today: null // daily item of the shown day
+	property var hourly: [] // hourly items: from now, or the shown day's daytime hours
+	property var nextDays: [] // daily items after the shown day
+	property bool isToday: true // false: the view shows another day
 	property bool isSetup: true
 	property string locationName: ""
 	property bool compact: false // One row above the grid when the popup is narrow
@@ -113,14 +115,15 @@ ColumnLayout {
 		}
 	}
 
-	//--- Now
+	//--- Now (today), or the shown day's forecast
+	readonly property bool showDaySummary: !isToday && !!today
 	SectionTitle {
-		visible: panel.showData && !panel.compact && !!panel.current
+		visible: panel.showData && !panel.compact && (!!panel.current || panel.showDaySummary)
 		showSeparator: false
-		text: i18nc("current weather", "Now")
+		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Today view", "Forecast")
 	}
 	RowLayout {
-		visible: panel.showData && !!panel.current
+		visible: panel.showData && (!!panel.current || panel.showDaySummary)
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.largeSpacing
 		// Colored icon on a soft round backdrop: light icons (clouds) vanish on a light theme otherwise.
@@ -133,7 +136,7 @@ ColumnLayout {
 				anchors.centerIn: parent
 				width: parent.width - Kirigami.Units.smallSpacing * 2
 				height: width
-				source: panel.current ? panel.current.iconName : ""
+				source: panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : ""
 			}
 		}
 		ColumnLayout {
@@ -141,18 +144,19 @@ ColumnLayout {
 			spacing: 0
 			Kirigami.Heading {
 				level: 2
-				text: panel.current ? Shared.formatTemp(panel.current.temp) : ""
+				text: panel.current ? Shared.formatTemp(panel.current.temp)
+					: panel.showDaySummary ? Shared.formatTemp(panel.today.temp.max) + " / " + Shared.formatTemp(panel.today.temp.min) : ""
 			}
 			PlasmaComponents3.Label {
 				Layout.fillWidth: true
 				elide: Text.ElideRight
-				text: panel.current ? panel.current.text : ""
+				text: panel.current ? panel.current.text : panel.showDaySummary ? (panel.today.text || panel.today.description || "") : ""
 				opacity: 0.8
 			}
 		}
 		// Compact: today's range on the same row
 		PlasmaComponents3.Label {
-			visible: panel.compact && !!panel.today
+			visible: panel.compact && !!panel.today && !!panel.current
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			opacity: 0.8
 		}
@@ -165,6 +169,10 @@ ColumnLayout {
 			if (!panel.today) {
 				return ""
 			}
+			if (!panel.isToday) {
+				var dayRain = panel.precipitationText(panel.today.precipitation)
+				return dayRain ? i18nc("precipitation during the day", "Rain: %1", dayRain) : ""
+			}
 			var s = i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
 			var rain = panel.precipitationText(panel.today.precipitation)
 			return rain ? s + ", " + i18nc("precipitation", "rain %1", rain) : s
@@ -172,10 +180,19 @@ ColumnLayout {
 		opacity: 0.8
 	}
 
+	// Past days and days beyond the forecast
+	PlasmaComponents3.Label {
+		visible: panel.showData && !panel.isToday && !panel.today && panel.hourly.length === 0
+		Layout.fillWidth: true
+		wrapMode: Text.Wrap
+		text: i18n("No forecast for this day.")
+		opacity: 0.7
+	}
+
 	//--- Next hours: temperature line with rain bars, labels every 3 hours
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.hourly.length > 1
-		text: i18n("Next 12 hours")
+		text: panel.isToday ? i18n("Next 12 hours") : i18nc("weather by hour of the shown day", "During the day")
 	}
 	Item {
 		id: hourChart

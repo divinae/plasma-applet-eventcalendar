@@ -150,8 +150,8 @@ function updateHourlyWeather(config, callback) {
 			if (dt < nowSeconds - 3600) {
 				continue // From the current hour on
 			}
-			if (list.length >= 72) {
-				break // 3 days is plenty for the meteogram and the Today panel
+			if (list.length >= 7 * 24) {
+				break // A week: the meteogram and the Today panel (also for the next days)
 			}
 			var info = codeInfo(hourly.weather_code[i], hourly.is_day ? hourly.is_day[i] : 1)
 			list.push({
