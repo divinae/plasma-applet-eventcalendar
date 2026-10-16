@@ -12,13 +12,13 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 ## Features
 
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days),
-  **Week** (hour grid, all-day events, click an empty slot to add an event), **Today** (one day
+  **Week** (hour grid, all-day events, click an empty slot to add an event), **Day** (one day
   with a weather panel) and **Agenda** (a list of upcoming days).
 - **Google Calendar**: several accounts at once, choose calendars and task lists per account,
   create / edit / delete events, **recurring events** (set how an event repeats, edit one
   occurrence or the whole series). Tokens are kept in the system keyring.
 - **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
-  Today view, the event details, notifications and the panel's right-click menu.
+  Day view, the event details, notifications and the panel's right-click menu.
 - **Notifications** through KDE's notification system: reminders before events (with Snooze),
   when an event starts (optionally critical / persistent), each configurable in System Settings >
   Notifications > Event Calendar. Clicking one opens the event in the widget.
@@ -36,7 +36,7 @@ All shots use mock data.
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
-| ![Today view](docs/screenshots/today.png) **Today**: the day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
+| ![Day view](docs/screenshots/today.png) **Day**: the day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
 | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts, calendars and task lists |
 
 ## Install

@@ -746,9 +746,10 @@ msgstr "Mes"
 msgid "Week"
 msgstr "Semana"
 
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "Hoy"
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -767,8 +768,8 @@ msgid "Popup height"
 msgstr "Alto de la ventana"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "Semana y Hoy"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -779,8 +780,8 @@ msgid "Last hour shown"
 msgstr "Última hora mostrada"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "Previsión en las cabeceras de los días y, en la vista Hoy, un panel del tiempo."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -819,7 +820,7 @@ msgid "Week numbers"
 msgstr "Números de semana"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1480,6 +1481,10 @@ msgstr "Semana anterior"
 msgid "Previous Month"
 msgstr "Mes anterior"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "Hoy"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "Día siguiente"
@@ -1495,6 +1500,14 @@ msgstr "Mes siguiente"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "Mantener abierto"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1523,6 +1536,10 @@ msgstr "Reintentar ahora"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Descartar"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1715,7 +1732,7 @@ msgid "Now"
 msgstr "Ahora"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1757,6 +1774,10 @@ msgid "Next days"
 msgstr "Próximos días"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 día"
@@ -1766,6 +1787,12 @@ msgstr[1] "%1 días"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "Semana y Hoy"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "Previsión en las cabeceras de los días y, en la vista Hoy, un panel del tiempo."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Al hacer clic en un día se muestran sus eventos"

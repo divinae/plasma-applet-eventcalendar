@@ -842,9 +842,9 @@ msgid "Week"
 msgstr "Hafta"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "Bugün"
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -863,8 +863,8 @@ msgid "Popup height"
 msgstr "Açılır pencere yüksekliği"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "Hafta ve Bugün"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -875,9 +875,8 @@ msgid "Last hour shown"
 msgstr "Gösterilen son saat"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr ""
-"Gün başlıklarında hava tahmini ve Bugün görünümünde bir hava durumu paneli."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -922,7 +921,7 @@ msgid "Week numbers"
 msgstr "Hafta numaraları"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1602,6 +1601,10 @@ msgstr "Önceki Hafta"
 msgid "Previous Month"
 msgstr "Önceki Ay"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "Bugün"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "Sonraki Gün"
@@ -1617,6 +1620,14 @@ msgstr "Sonraki Ay"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "Açık Tut"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1645,6 +1656,10 @@ msgstr "Şimdi Yeniden Dene"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Kapat"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1846,7 +1861,7 @@ msgid "Now"
 msgstr "Şimdi"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1888,6 +1903,10 @@ msgid "Next days"
 msgstr "Sonraki günler"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 gün"
@@ -1897,6 +1916,14 @@ msgstr[1] "%1 gün"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "Hafta ve Bugün"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr ""
+#~ "Gün başlıklarında hava tahmini ve Bugün görünümünde bir hava durumu "
+#~ "paneli."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Bir güne tıklayınca etkinlikleri gösterilir"

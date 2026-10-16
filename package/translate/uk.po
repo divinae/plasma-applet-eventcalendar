@@ -843,9 +843,9 @@ msgid "Week"
 msgstr "Тиждень"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "Сьогодні"
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -864,8 +864,8 @@ msgid "Popup height"
 msgstr "Висота контекстного вікна"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "Тиждень і Сьогодні"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -876,8 +876,8 @@ msgid "Last hour shown"
 msgstr "Остання показана година"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "Прогноз у заголовках днів, а в поданні «Сьогодні» — панель погоди."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -922,7 +922,7 @@ msgid "Week numbers"
 msgstr "Номери тижнів"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1609,6 +1609,10 @@ msgstr "Попередній тиждень"
 msgid "Previous Month"
 msgstr "Попередній місяць"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "Сьогодні"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "Наступний день"
@@ -1624,6 +1628,14 @@ msgstr "Наступний місяць"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "Не закривати"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1654,6 +1666,10 @@ msgstr "Повторити зараз"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Закрити"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1852,7 +1868,7 @@ msgid "Now"
 msgstr "Зараз"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1894,6 +1910,10 @@ msgid "Next days"
 msgstr "Наступні дні"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 день"
@@ -1904,6 +1924,12 @@ msgstr[2] "%1 днів"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "Тиждень і Сьогодні"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "Прогноз у заголовках днів, а в поданні «Сьогодні» — панель погоди."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Клацання на дні показує його події"

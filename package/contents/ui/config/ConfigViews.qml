@@ -28,7 +28,7 @@ ConfigPage {
 				model: [
 					{ value: 'month', text: i18n("Month") },
 					{ value: 'week', text: i18n("Week") },
-					{ value: 'today', text: i18n("Today") },
+					{ value: 'today', text: i18nc("calendar view showing one day", "Day") },
 					{ value: 'classic', text: i18n("Agenda") },
 				]
 			}
@@ -55,9 +55,9 @@ ConfigPage {
 			}
 		}
 
-		//--- Week and Today
+		//--- Week and Day
 		FormCard.FormHeader {
-			title: i18n("Week and Today")
+			title: i18n("Week and Day")
 		}
 		FormCard.FormCard {
 			FormConfigSpin {
@@ -78,7 +78,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Weather")
-				description: i18n("Forecast in the day headers and, in the Today view, a weather panel.")
+				description: i18n("Forecast in the day headers and, in the Day view, a weather panel.")
 				configKey: 'weatherShowInViews'
 			}
 		}
@@ -118,7 +118,7 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
-				text: i18n("Clicking a day opens it in the Today view")
+				text: i18n("Clicking a day opens it in the Day view")
 				description: i18n("Month view")
 				configKey: 'monthClickOpensDay'
 			}

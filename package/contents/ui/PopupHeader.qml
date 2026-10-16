@@ -11,7 +11,7 @@ PlasmaExtras.PlasmoidHeading {
 	id: header
 
 	property Item monthViewItem
-	property Item weekViewItem // Week and Today views, null otherwise
+	property Item weekViewItem // Week and Day views, null otherwise
 	property bool showViewTabs: true
 	property bool showPinButton: true
 	property bool refreshing: false
@@ -42,7 +42,7 @@ PlasmaExtras.PlasmoidHeading {
 					model: [
 						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
 						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
-						{ mode: 'today', icon: "view-calendar-day", text: i18n("Today") },
+						{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
 						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
 					]
 					Item {

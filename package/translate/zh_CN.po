@@ -818,9 +818,9 @@ msgid "Week"
 msgstr "周"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "今天"
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -839,8 +839,8 @@ msgid "Popup height"
 msgstr "弹出窗口高度"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "周和今天"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -851,8 +851,8 @@ msgid "Last hour shown"
 msgstr "结束小时"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "在日期标题中显示天气预报，并在“今天”视图中显示天气面板。"
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -896,7 +896,7 @@ msgid "Week numbers"
 msgstr "周数"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1567,6 +1567,10 @@ msgstr "上一周"
 msgid "Previous Month"
 msgstr "上个月"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "今天"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "后一天"
@@ -1582,6 +1586,14 @@ msgstr "下个月"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "保持打开"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1608,6 +1620,10 @@ msgstr "立即重试"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "关闭"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1799,7 +1815,7 @@ msgid "Now"
 msgstr "现在"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1841,6 +1857,10 @@ msgid "Next days"
 msgstr "未来几天"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 天"
@@ -1849,6 +1869,12 @@ msgstr[0] "%1 天"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "周和今天"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "在日期标题中显示天气预报，并在“今天”视图中显示天气面板。"
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "点击某天显示其事件"

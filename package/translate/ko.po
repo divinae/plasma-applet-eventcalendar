@@ -832,9 +832,9 @@ msgid "Week"
 msgstr "주"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "오늘"
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -853,8 +853,8 @@ msgid "Popup height"
 msgstr "팝업 높이"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "주 및 오늘"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -865,8 +865,8 @@ msgid "Last hour shown"
 msgstr "표시할 마지막 시간"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "날짜 헤더에 일기 예보를, 오늘 보기에 날씨 패널을 표시합니다."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -911,7 +911,7 @@ msgid "Week numbers"
 msgstr "주 번호"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1583,6 +1583,10 @@ msgstr "이전 주"
 msgid "Previous Month"
 msgstr "이전 달"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "오늘"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "다음 날"
@@ -1598,6 +1602,14 @@ msgstr "다음 달"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "열어 두기"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1624,6 +1636,10 @@ msgstr "지금 다시 시도"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "닫기"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1820,7 +1836,7 @@ msgid "Now"
 msgstr "지금"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1862,6 +1878,10 @@ msgid "Next days"
 msgstr "다음 며칠"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1일"
@@ -1870,6 +1890,12 @@ msgstr[0] "%1일"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "주 및 오늘"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "날짜 헤더에 일기 예보를, 오늘 보기에 날씨 패널을 표시합니다."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "날짜를 클릭하면 이벤트 표시"

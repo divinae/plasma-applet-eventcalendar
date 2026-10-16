@@ -6,7 +6,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Shared.js" as Shared
 import "lib/ColorUtil.js" as ColorUtil
 
-// Weather beside the Today view, in labeled sections: Now, Next hours, Next days.
+// Weather beside the Day view, in labeled sections: Now, Next hours, Next days.
 // Another day than today: that day's forecast (no "Now"), its hours and the days after it.
 ColumnLayout {
 	id: panel
@@ -120,7 +120,7 @@ ColumnLayout {
 	SectionTitle {
 		visible: panel.showData && !panel.compact && (!!panel.current || panel.showDaySummary)
 		showSeparator: false
-		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Today view", "Forecast")
+		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Day view", "Forecast")
 	}
 	RowLayout {
 		visible: panel.showData && (!!panel.current || panel.showDaySummary)

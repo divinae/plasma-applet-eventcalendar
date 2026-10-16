@@ -752,8 +752,9 @@ msgstr ""
 msgid "Week"
 msgstr ""
 
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
-msgid "Today"
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing one day"
+msgid "Day"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
@@ -773,7 +774,7 @@ msgid "Popup height"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
+msgid "Week and Day"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -785,7 +786,7 @@ msgid "Last hour shown"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -825,7 +826,7 @@ msgid "Week numbers"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1486,6 +1487,10 @@ msgstr ""
 msgid "Previous Month"
 msgstr ""
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr ""
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr ""
@@ -1500,6 +1505,14 @@ msgstr ""
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
 msgstr ""
 
 #: ../contents/ui/PopupView.qml
@@ -1528,6 +1541,10 @@ msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
 msgstr ""
 
 #: ../contents/ui/PopupView.qml
@@ -1718,7 +1735,7 @@ msgid "Now"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1757,6 +1774,10 @@ msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
+msgid "Event moved"
 msgstr ""
 
 #: ../contents/ui/WeekView.qml

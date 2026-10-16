@@ -843,9 +843,9 @@ msgid "Week"
 msgstr "Teden"
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "Danes"
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -864,8 +864,8 @@ msgid "Popup height"
 msgstr "Višina pojavnega okna"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "Teden in Danes"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -876,8 +876,8 @@ msgid "Last hour shown"
 msgstr "Zadnja prikazana ura"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "Napoved v glavah dni in v pogledu Danes vremenska plošča."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -922,7 +922,7 @@ msgid "Week numbers"
 msgstr "Številke tednov"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1616,6 +1616,10 @@ msgstr "Prejšnji teden"
 msgid "Previous Month"
 msgstr "Prejšnji mesec"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "Danes"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "Naslednji dan"
@@ -1631,6 +1635,14 @@ msgstr "Naslednji mesec"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "Obdrži odprto"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1663,6 +1675,10 @@ msgstr "Poskusi znova zdaj"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Opusti"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1858,7 +1874,7 @@ msgid "Now"
 msgstr "Zdaj"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1900,6 +1916,10 @@ msgid "Next days"
 msgstr "Naslednji dnevi"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 dan"
@@ -1911,6 +1931,12 @@ msgstr[3] "%1 dni"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "Teden in Danes"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "Napoved v glavah dni in v pogledu Danes vremenska plošča."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Klik na dan prikaže njegove dogodke"

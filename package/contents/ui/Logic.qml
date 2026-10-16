@@ -116,7 +116,7 @@ Item {
 	function deferredUpdateWeather() {
 		logic.updateDailyWeather()
 
-		// Hourly data feeds the meteogram (agenda view) and the Today view's weather panel.
+		// Hourly data feeds the meteogram (agenda view) and the Day view's weather panel.
 		var meteogramShown = popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic' // popup exists after first open
 		if (meteogramShown || plasmoid.configuration.popupMode === 'today') {
 			logic.updateHourlyWeather()

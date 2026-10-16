@@ -745,9 +745,10 @@ msgstr "Månad"
 msgid "Week"
 msgstr "Vecka"
 
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
-msgid "Today"
-msgstr "Idag"
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing one day"
+msgid "Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
@@ -766,8 +767,8 @@ msgid "Popup height"
 msgstr "Poppuppfönstrets höjd"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Today"
-msgstr "Vecka och Idag"
+msgid "Week and Day"
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First hour shown"
@@ -778,8 +779,8 @@ msgid "Last hour shown"
 msgstr "Sista timmen som visas"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Today view, a weather panel."
-msgstr "Prognos i dagrubrikerna och, i vyn Idag, en väderpanel."
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Calendar"
@@ -818,7 +819,7 @@ msgid "Week numbers"
 msgstr "Veckonummer"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Clicking a day opens it in the Today view"
+msgid "Clicking a day opens it in the Day view"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1479,6 +1480,10 @@ msgstr "Föregående vecka"
 msgid "Previous Month"
 msgstr "Föregående månad"
 
+#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+msgid "Today"
+msgstr "Idag"
+
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
 msgstr "Nästa dag"
@@ -1494,6 +1499,14 @@ msgstr "Nästa månad"
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
 msgstr "Håll öppen"
+
+#: ../contents/ui/PopupView.qml
+msgid "Repeating event deleted"
+msgstr ""
+
+#: ../contents/ui/PopupView.qml
+msgid "Event deleted"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -1522,6 +1535,10 @@ msgstr "Försök igen nu"
 #: ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Avfärda"
+
+#: ../contents/ui/PopupView.qml
+msgid "Undo"
+msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid ""
@@ -1714,7 +1731,7 @@ msgid "Now"
 msgstr "Nu"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Today view"
+msgctxt "weather of the day shown in the Day view"
 msgid "Forecast"
 msgstr ""
 
@@ -1756,6 +1773,10 @@ msgid "Next days"
 msgstr "Kommande dagar"
 
 #: ../contents/ui/WeekView.qml
+msgid "Event moved"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 dag"
@@ -1765,6 +1786,12 @@ msgstr[1] "%1 dagar"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Week and Today"
+#~ msgstr "Vecka och Idag"
+
+#~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
+#~ msgstr "Prognos i dagrubrikerna och, i vyn Idag, en väderpanel."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Klick på en dag visar dess händelser"
