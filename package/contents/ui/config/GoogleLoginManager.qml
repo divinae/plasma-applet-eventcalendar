@@ -269,9 +269,6 @@ Item {
 			url += '&code_challenge=' + encodeURIComponent(ctx.pkceChallenge)
 			url += '&code_challenge_method=S256'
 		}
-		if (ctx.state) {
-			url += '&state=' + encodeURIComponent(ctx.state)
-		}
 		return url
 	}
 
