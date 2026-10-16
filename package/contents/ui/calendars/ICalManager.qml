@@ -85,6 +85,4 @@ CalendarManager {
 			parseEvent(calendar, event)
 		})
 	}
-
-	// Component.onCompleted: {
 }

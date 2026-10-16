@@ -6,6 +6,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
 
 import "lib"
+import "EventBuckets.js" as EventBuckets
 import "Shared.js" as Shared
 import "./weather/WeatherApi.js" as WeatherApi
 
@@ -400,166 +401,22 @@ MouseArea {
 		onTriggered: popup.refreshing = false
 	}
 
-	// Native Plasma header for all views: navigation, title (month or week), view switcher,
-	// refresh and pin. The month and week views hide their own header rows.
-	PlasmaExtras.PlasmoidHeading {
+	PopupHeader {
 		id: header
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
-
-		readonly property var weekView: weekViewLoader.item
-
-		// Left: view switcher. Center: navigation and title. Right: refresh, new event, pin.
-		contentItem: Item {
-		id: topBar
-		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
-		readonly property real sideWidth: Math.max(leftGroup.implicitWidth, rightGroup.implicitWidth)
-
-		RowLayout {
-			id: leftGroup
-			anchors.left: parent.left
-			anchors.verticalCenter: parent.verticalCenter
-			spacing: 0
-			// View switcher: flat buttons with icon and text, the current view on a soft rounded tint.
-			RowLayout {
-				visible: popup.showViewTabs
-				Layout.alignment: Qt.AlignVCenter
-				spacing: 2
-
-				Repeater {
-					model: [
-						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
-						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
-						{ mode: 'today', icon: "view-calendar-day", text: i18n("Today") },
-						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
-					]
-					Item {
-						readonly property bool current: plasmoid.configuration.popupMode === modelData.mode
-						implicitWidth: viewButton.implicitWidth
-						implicitHeight: viewButton.implicitHeight
-
-						Rectangle {
-							anchors.fill: parent
-							// Same corners as the Plasma button hover background drawn on top.
-							radius: Kirigami.Units.cornerRadius
-							color: Kirigami.Theme.highlightColor
-							opacity: parent.current ? 0.18 : 0
-						}
-
-						PlasmaComponents3.ToolButton {
-							id: viewButton
-							anchors.fill: parent
-							icon.name: modelData.icon
-							text: modelData.text
-							display: QQC2.AbstractButton.TextBesideIcon
-							// Not checkable: the style's checked look changes the size and elides the text.
-							onClicked: {
-								popup.closeOverlays()
-								plasmoid.configuration.popupMode = modelData.mode
-							}
-							Accessible.name: modelData.text
-						}
-					}
-				}
-			}
+		monthViewItem: monthView
+		weekViewItem: weekViewLoader.item
+		showViewTabs: popup.showViewTabs
+		showPinButton: popup.showPinButton
+		refreshing: popup.refreshing
+		onViewSelected: function(mode) {
+			popup.closeOverlays()
+			plasmoid.configuration.popupMode = mode
 		}
-
-		RowLayout {
-			id: centerGroup
-			anchors.centerIn: parent
-			// Stay clear of the side groups; the title elides if needed.
-			width: Math.min(implicitWidth, parent.width - topBar.sideWidth * 2 - Kirigami.Units.largeSpacing * 2)
-			spacing: 0
-			Kirigami.Heading {
-				Layout.fillWidth: true
-				Layout.maximumWidth: implicitWidth
-				Layout.rightMargin: Kirigami.Units.smallSpacing
-				level: 2
-				elide: Text.ElideRight
-				wrapMode: Text.NoWrap
-				font.capitalization: Font.Capitalize
-				text: header.weekView ? header.weekView.title : monthView.currentTitle
-				MouseArea {
-					anchors.fill: parent
-					enabled: !header.weekView
-					onClicked: monthView.titleClicked() // Year / decade view
-				}
-			}
-			PlasmaComponents3.ToolButton {
-				icon.name: "go-previous"
-				onClicked: header.weekView ? header.weekView.goPrevious() : monthView.goPrevious()
-				PlasmaComponents3.ToolTip.text: header.weekView ? (header.weekView.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			PlasmaComponents3.ToolButton {
-				icon.name: "go-jump-today"
-				onClicked: header.weekView ? header.weekView.goToday() : monthView.resetToToday()
-				PlasmaComponents3.ToolTip.text: i18n("Today")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			PlasmaComponents3.ToolButton {
-				icon.name: "go-next"
-				onClicked: header.weekView ? header.weekView.goNext() : monthView.goNext()
-				PlasmaComponents3.ToolTip.text: header.weekView ? (header.weekView.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-		}
-
-		RowLayout {
-			id: rightGroup
-			anchors.right: parent.right
-			anchors.verticalCenter: parent.verticalCenter
-			spacing: 0
-			PlasmaComponents3.ToolButton {
-				icon.name: "list-add"
-				onClicked: popup.newEvent(popup.selectedDate)
-				PlasmaComponents3.ToolTip.text: i18n("New Event")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			Item {
-				Layout.preferredWidth: refreshButton.implicitWidth
-				Layout.preferredHeight: refreshButton.implicitHeight
-				Layout.alignment: Qt.AlignVCenter
-
-				PlasmaComponents3.ToolButton {
-					id: refreshButton
-					anchors.fill: parent
-					icon.name: "view-refresh"
-					enabled: !popup.refreshing
-					opacity: popup.refreshing ? 0 : 1
-					onClicked: logic.update()
-					PlasmaComponents3.ToolTip.text: i18n("Refresh")
-					PlasmaComponents3.ToolTip.visible: hovered
-				}
-				PlasmaComponents3.BusyIndicator {
-					anchors.centerIn: parent
-					width: refreshButton.icon.width || Kirigami.Units.iconSizes.small
-					height: width
-					running: popup.refreshing
-					visible: running
-				}
-			}
-			Kirigami.Separator {
-				visible: popup.showPinButton
-				Layout.fillHeight: true
-				Layout.topMargin: Kirigami.Units.smallSpacing
-				Layout.bottomMargin: Kirigami.Units.smallSpacing
-				Layout.leftMargin: Kirigami.Units.smallSpacing
-				Layout.rightMargin: Kirigami.Units.smallSpacing
-			}
-			// Keeps the popup open for reference.
-			PlasmaComponents3.ToolButton {
-				visible: popup.showPinButton
-				checkable: true
-				icon.name: "window-pin"
-				checked: plasmoid.configuration.pin
-				onToggled: plasmoid.configuration.pin = checked
-				PlasmaComponents3.ToolTip.text: i18n("Keep Open")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-		}
-		}
+		onNewEventClicked: popup.newEvent(popup.selectedDate)
+		onRefreshClicked: logic.update()
 	}
 
 	// Overlay cards: day list < event details < event form.
@@ -742,8 +599,6 @@ MouseArea {
 			Layout.maximumHeight: popup.twoColumns ? popup.bottomRowHeight : Number.POSITIVE_INFINITY
 			Layout.alignment: Qt.AlignCenter
 
-			// Component.onCompleted: {
-
 			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
 
 			function parseGCalEvents(data) {
@@ -754,53 +609,19 @@ MouseArea {
 				// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
 				// Bucket events per visible day in plain JS first, then write each day to the model once.
 				var daysModel = monthView.daysModel
-				var dayCount = daysModel.count
 				var dayTimes = []
-				var dayEvents = []
-				for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
-					var dayData = daysModel.get(dayIndex)
+				for (var i = 0; i < daysModel.count; i++) {
+					var dayData = daysModel.get(i)
 					dayTimes.push(new Date(dayData.yearNumber, dayData.monthNumber - 1, dayData.dayNumber).getTime())
-					dayEvents.push([])
 				}
-
-				var items = data.items
-				for (var itemIndex = 0; itemIndex < items.length; itemIndex++) {
-					var eventItem = items[itemIndex]
-					var startTime = new Date(eventItem.startDateTime.getFullYear(), eventItem.startDateTime.getMonth(), eventItem.startDateTime.getDate()).getTime()
-					var eventItemEndDate = new Date(eventItem.endDateTime.getFullYear(), eventItem.endDateTime.getMonth(), eventItem.endDateTime.getDate())
-					if (eventItem.end.date) {
-						// All day events end at midnight which is technically the next day.
-						eventItemEndDate.setDate(eventItemEndDate.getDate() - 1)
-					}
-					var endTime = eventItemEndDate.getTime()
-					for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
-						if (endTime < dayTimes[dayIndex]) {
-							break
-						}
-						if (startTime <= dayTimes[dayIndex]) {
-							dayEvents[dayIndex].push(eventItem)
-						}
-					}
-				}
-
-				// All-day events first, then by start time. Visible with the event titles badge.
-				function compareEvents(a, b) {
-					var aAllDay = !!(a.start && a.start.date)
-					var bAllDay = !!(b.start && b.start.date)
-					if (aAllDay !== bAllDay) {
-						return aAllDay ? -1 : 1
-					}
-					return a.startDateTime - b.startDateTime
-				}
-
-				for (var dayIndex = 0; dayIndex < dayCount; dayIndex++) {
-					dayEvents[dayIndex].sort(compareEvents)
-					var events = daysModel.get(dayIndex).events
+				var dayEvents = EventBuckets.bucketByDay(data.items, dayTimes)
+				for (var j = 0; j < dayEvents.length; j++) {
+					var events = daysModel.get(j).events
 					events.clear()
-					if (dayEvents[dayIndex].length) {
-						events.append(dayEvents[dayIndex])
+					if (dayEvents[j].length) {
+						events.append(dayEvents[j])
 					}
-					daysModel.setProperty(dayIndex, 'showEventBadge', dayEvents[dayIndex].length > 0)
+					daysModel.setProperty(j, 'showEventBadge', dayEvents[j].length > 0)
 				}
 			}
 

@@ -73,13 +73,4 @@ Plasma5Support.DataSource {
 		delete listeners[cmd]
 		callback(cmd, exitCode, exitStatus, stdout, stderr)
 	}
-
-	//--- Tests
-	function test() {
-		exec(['notify-send', 'test', '$(notify-send escape1)'])
-		exec(['notify-send', 'test', '`notify-send escape2`'])
-		exec(['notify-send', 'test', '\'; notify-send escape3;\''])
-		exec(['notify-send', 'test', '\\\'; notify-send escape4;\\\''])
-	}
-	// Component.onCompleted: test()
 }
