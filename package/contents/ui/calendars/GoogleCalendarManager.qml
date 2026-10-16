@@ -499,9 +499,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					createEvent_err(err, data, xhr)
 				} else {
 					createEvent_done(calendarId, data)
-					if (done) {
-						done()
-					}
 				}
 			})
 			withAccessToken(func, function(err, isNetworkError) {
@@ -562,6 +559,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 					createEvent_err(err, data, xhr)
 				} else {
 					createEvent_done(calendarId, data)
+					if (done) {
+						done()
+					}
 				}
 			})
 		}

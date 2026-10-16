@@ -115,7 +115,18 @@ Item {
 	function fetchAll(dateMin, dateMax) {
 		logger.debug(calendarManager, 'fetchAllEvents', dateMin, dateMax)
 		fetchingData()
-		previousEventsByCalendar = calendarManager.eventsByCalendar
+		// Merge, don't replace: a second fetch before the first finished would otherwise
+		// keep an empty snapshot.
+		var snapshot = {}
+		var previous = calendarManager.previousEventsByCalendar
+		for (var oldId in previous) {
+			snapshot[oldId] = previous[oldId]
+		}
+		var current = calendarManager.eventsByCalendar
+		for (var id in current) {
+			snapshot[id] = current[id]
+		}
+		previousEventsByCalendar = snapshot
 		clear()
 		calendarManager.fetchGeneration += 1
 		if (typeof dateMin !== "undefined") {
