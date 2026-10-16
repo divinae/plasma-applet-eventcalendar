@@ -94,7 +94,9 @@ Item {
 	function deferredUpdateWeather() {
 		logic.updateDailyWeather()
 
-		if (popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic') { // popup exists after first open
+		// Hourly data feeds the meteogram (agenda view) and the Today view's weather panel.
+		var meteogramShown = popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic' // popup exists after first open
+		if (meteogramShown || plasmoid.configuration.popupMode === 'today') {
 			logic.updateHourlyWeather()
 		}
 	}
@@ -138,6 +140,9 @@ Item {
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
 			logic.dailyWeatherData = data
+			if (data.current) {
+				logic.currentWeatherData = data.current
+			}
 			if (popup) popup.updateUI()
 		})
 	}
@@ -151,7 +156,7 @@ Item {
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
 			logic.hourlyWeatherData = data
-			logic.currentWeatherData = data.list[0]
+			logic.currentWeatherData = data.current || data.list[0]
 			if (popup) popup.updateMeteogram()
 		})
 	}
@@ -178,6 +183,9 @@ Item {
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }
+		function onOpenMeteoLatitudeChanged() { logic.resetWeatherAndUpdate() }
+		function onOpenMeteoLongitudeChanged() { logic.resetWeatherAndUpdate() }
+		function onPopupModeChanged() { logic.updateWeather(true) } // Today needs hourly data
 		function onOpenWeatherMapAppIdChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }

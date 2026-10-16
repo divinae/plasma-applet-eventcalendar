@@ -2,12 +2,15 @@
 
 .import "OpenWeatherMap.js" as OpenWeatherMap
 .import "WeatherCanada.js" as WeatherCanada
+.import "OpenMeteo.js" as OpenMeteo
 
 /* How many hours each data point represents */
 function getDataPointDuration(config) {
 	var weatherService = config.weatherService
 	if (weatherService == 'OpenWeatherMap') {
 		return 3
+	} else if (weatherService == 'OpenMeteo') {
+		return 1
 	} else if (weatherService == 'WeatherCanada') {
 		return 1
 	} else {
@@ -18,7 +21,7 @@ function getDataPointDuration(config) {
 /* Precipitation units ('mm' or '%') */
 function getRainUnits(config) {
 	var weatherService = config.weatherService
-	if (weatherService == 'OpenWeatherMap') {
+	if (weatherService == 'OpenWeatherMap' || weatherService == 'OpenMeteo') {
 		return 'mm'
 	} else if (weatherService == 'WeatherCanada') {
 		return '%'
@@ -64,7 +67,9 @@ function updateDailyWeather(config, callback) {
 		return callback('Weather configuration not setup')
 	}
 	var weatherService = config.weatherService
-	if (weatherService == 'OpenWeatherMap') {
+	if (weatherService == 'OpenMeteo') {
+		OpenMeteo.updateDailyWeather(config, callback)
+	} else if (weatherService == 'OpenWeatherMap') {
 		OpenWeatherMap.updateDailyWeather(config, callback)
 	} else if (weatherService == 'WeatherCanada') {
 		WeatherCanada.updateDailyWeather(config, callback)
@@ -90,7 +95,9 @@ function updateHourlyWeather(config, callback) {
 		return callback('Weather configuration not setup')
 	}
 	var weatherService = config.weatherService
-	if (weatherService == 'OpenWeatherMap') {
+	if (weatherService == 'OpenMeteo') {
+		OpenMeteo.updateHourlyWeather(config, callback)
+	} else if (weatherService == 'OpenWeatherMap') {
 		OpenWeatherMap.updateHourlyWeather(config, callback)
 	} else if (weatherService == 'WeatherCanada') {
 		WeatherCanada.updateHourlyWeather(config, callback)
@@ -100,7 +107,9 @@ function updateHourlyWeather(config, callback) {
 /* Return true if all configuration has been setup. */
 function weatherIsSetup(config) {
 	var weatherService = config.weatherService
-	if (weatherService == 'OpenWeatherMap') {
+	if (weatherService == 'OpenMeteo') {
+		return OpenMeteo.weatherIsSetup(config)
+	} else if (weatherService == 'OpenWeatherMap') {
 		return OpenWeatherMap.weatherIsSetup(config)
 	} else if (weatherService == 'WeatherCanada') {
 		return WeatherCanada.weatherIsSetup(config)

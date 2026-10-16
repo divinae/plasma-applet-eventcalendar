@@ -523,8 +523,20 @@
 			<default></default>
 		</entry>
 		<!-- Settings -->
+		<entry name="openMeteoLatitude" type="double">
+			<default>0</default>
+		</entry>
+		<entry name="openMeteoLongitude" type="double">
+			<default>0</default>
+		</entry>
+		<entry name="openMeteoLocationName" type="string">
+			<default></default>
+		</entry>
+		<entry name="weatherShowInViews" type="bool">
+			<default>true</default>
+		</entry>
 		<entry name="weatherService" type="string">
-			<!-- enum: OpenWeatherMap, WeatherCanada -->
+			<!-- enum: OpenMeteo, OpenWeatherMap, WeatherCanada -->
 			<default>OpenWeatherMap</default>
 		</entry>
 		<entry name="weatherUnits" type="string">

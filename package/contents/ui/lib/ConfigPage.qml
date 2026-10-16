@@ -206,6 +206,14 @@ KCM.SimpleKCM {
 	property var cfg_eventStartingSfxEnabledDefault
 	property var cfg_eventStartingSfxPath
 	property var cfg_eventStartingSfxPathDefault
+	property var cfg_openMeteoLatitude
+	property var cfg_openMeteoLatitudeDefault
+	property var cfg_openMeteoLongitude
+	property var cfg_openMeteoLongitudeDefault
+	property var cfg_openMeteoLocationName
+	property var cfg_openMeteoLocationNameDefault
+	property var cfg_weatherShowInViews
+	property var cfg_weatherShowInViewsDefault
 	property var cfg_monthClickOpensDay
 	property var cfg_monthClickOpensDayDefault
 	property var cfg_eventClickAction
