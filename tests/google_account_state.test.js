@@ -106,6 +106,7 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 		primary: true,
 		timeZone: 'Etc/UTC',
 		defaultReminders: [{ method: 'popup', minutes: 10 }],
+		conferenceProperties: { allowedConferenceSolutionTypes: ['hangoutsMeet', { bad: true }], extra: { nested: 1 } },
 	}
 	calendar.self = calendar
 
@@ -155,6 +156,7 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 		accessRole: 'owner',
 		primary: true,
 		timeZone: 'Etc/UTC',
+		conferenceProperties: { allowedConferenceSolutionTypes: ['hangoutsMeet'] },
 	}])
 	assert.deepStrictEqual(serialized.tasklistList, [{
 		id: 'tasks-1',

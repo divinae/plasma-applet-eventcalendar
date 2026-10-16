@@ -35,6 +35,8 @@ FormComboBox {
 					'backgroundColor': plasmoid.configuration.googleColorPalette !== 'classic' ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor,
 					'isTasklist': calendar.isTasklist,
 					'timeZone': calendar.timeZone || '', // Needed for recurring events
+					// Video conferencing the calendar allows, eg: ['hangoutsMeet']; null when unknown.
+					'conferenceTypes': calendar.conferenceProperties && calendar.conferenceProperties.allowedConferenceSolutionTypes || null,
 				})
 			}
 		})

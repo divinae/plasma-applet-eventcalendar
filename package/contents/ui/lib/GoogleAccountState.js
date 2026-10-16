@@ -99,6 +99,13 @@ function serializableCalendar(calendar) {
 	if (calendar && typeof calendar.primary === "boolean") {
 		safe.primary = calendar.primary
 	}
+	// Which video conferencing the calendar allows (eg: hangoutsMeet), for the event editor.
+	var conference = calendar && calendar.conferenceProperties
+	if (conference && Array.isArray(conference.allowedConferenceSolutionTypes)) {
+		safe.conferenceProperties = {
+			allowedConferenceSolutionTypes: primitiveStringList(conference.allowedConferenceSolutionTypes),
+		}
+	}
 	return safe
 }
 

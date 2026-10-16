@@ -4,12 +4,14 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
 import "code/ColorIdMap.js" as ColorIdMap
 import "code/GooglePalette.js" as GooglePalette
 import "lib/ColorUtil.js" as ColorUtil
+import "lib/Pkce.js" as Pkce
 
 // Form to create a new event (eventItem == null) or edit an existing one.
 Rectangle {
@@ -164,6 +166,44 @@ Rectangle {
 		}
 		return appletConfig.eventColor(GooglePalette.eventColor(id))
 	}
+	//--- Video conferencing (Google Meet)
+	readonly property bool hadConference: !isNew && !!(eventItem.hangoutLink || eventItem.conferenceData)
+	property string conferenceAction: "" // '', 'add' or 'remove'
+	readonly property bool hasConference: conferenceAction === 'add' || (hadConference && conferenceAction !== 'remove')
+	readonly property var conferenceLink: hadConference ? MeetingLink.find(eventItem) : null
+	// Unknown (calendar list saved before this was kept): offered, Google says if it can't.
+	readonly property bool meetAllowed: {
+		var calendar = calendarSelector.selectedCalendar
+		var types = calendar && calendar.conferenceTypes
+		return !types || Shared.toArray(types).indexOf('hangoutsMeet') >= 0
+	}
+	onMeetAllowedChanged: {
+		if (!meetAllowed && conferenceAction === 'add') {
+			conferenceAction = '' // Another calendar picked for a new event
+		}
+	}
+	// Changes conferenceData: Google only reads it with conferenceDataVersion=1 (see requestParams).
+	function addConferenceArgs(args) {
+		if (conferenceAction === 'add' && !hadConference) {
+			args.conferenceData = {
+				createRequest: {
+					requestId: Pkce.generateOpaqueToken(32),
+					conferenceSolutionKey: { type: 'hangoutsMeet' },
+				},
+			}
+		} else if (conferenceAction === 'remove' && hadConference) {
+			args.conferenceData = null
+		}
+	}
+	// Query params for the request: conferenceDataVersion when conferenceData is sent.
+	function requestParams(args) {
+		var params = {}
+		if (typeof args.conferenceData !== 'undefined') {
+			params.conferenceDataVersion = 1
+		}
+		return params
+	}
+
 	// The color changed: set its colorId, or undefined (removed from the update) for the calendar color.
 	function addColorArgs(args) {
 		if (supportsRecurrence && colorId !== initialColorId) {
@@ -223,6 +263,9 @@ Rectangle {
 			if (supportsRecurrence && colorId) {
 				data.colorId = colorId
 			}
+			if (supportsRecurrence) {
+				addConferenceArgs(data)
+			}
 			var newRule = supportsRecurrence ? repeatRule() : ''
 			if (newRule) {
 				data.recurrence = [newRule]
@@ -230,7 +273,7 @@ Rectangle {
 				withTimeZone(data.end)
 			}
 			// A new recurring event: its occurrences come from a refetch.
-			eventModel.createEventFromData(calendarSelector.selectedCalendarId, data, newRule ? refetch : null)
+			eventModel.createEventFromData(calendarSelector.selectedCalendarId, data, newRule ? refetch : null, requestParams(data))
 		} else if (editSeries) {
 			saveSeries(summary)
 		} else {
@@ -245,6 +288,8 @@ Rectangle {
 				args.description = descriptionField.text
 			}
 			addColorArgs(args)
+			addConferenceArgs(args)
+			var options = { params: requestParams(args) }
 			var start = startObj()
 			var end = endObj()
 			var wasAllDay = !!(eventItem.start && eventItem.start.date)
@@ -259,9 +304,9 @@ Rectangle {
 				args.recurrence = [rule]
 				args.start = withTimeZone(start)
 				args.end = withTimeZone(end)
-				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, function() { return args }, refetch)
+				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, function() { return args }, refetch, options)
 			} else if (Object.keys(args).length) {
-				eventModel.setEventProperties(eventItem.calendarId, eventItem.id, args)
+				eventModel.setEventProperties(eventItem.calendarId, eventItem.id, args, options)
 			}
 		}
 		closeRequested()
@@ -282,6 +327,8 @@ Rectangle {
 			args.description = descriptionField.text
 		}
 		addColorArgs(args)
+		addConferenceArgs(args)
+		var options = { params: requestParams(args) }
 		var start = startObj()
 		var end = endObj()
 		var wasAllDay = !!(item.start && item.start.date)
@@ -305,7 +352,7 @@ Rectangle {
 				seriesArgs.recurrence = Recurrence.withRule(series.recurrence, rule)
 			}
 			return seriesArgs
-		}, refetch)
+		}, refetch, options)
 	}
 
 	Keys.onEscapePressed: closeRequested()
@@ -699,6 +746,70 @@ Rectangle {
 					id: locationField
 					Layout.fillWidth: true
 					placeholderText: i18n("Location")
+				}
+
+				// Google Meet: add one, or the event's video call with a remove button.
+				RowLayout {
+					id: conferenceRow
+					visible: form.supportsRecurrence && (form.hadConference || form.hasConference || form.meetAllowed)
+					Layout.fillWidth: true
+					Kirigami.Icon {
+						source: "camera-web"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+						opacity: 0.7
+					}
+					PlasmaComponents3.Button {
+						id: addMeetButton
+						visible: !form.hadConference && !form.hasConference && form.meetAllowed
+						text: i18n("Add Google Meet video conferencing")
+						onClicked: form.conferenceAction = 'add'
+					}
+					// Removed, until saved.
+					PlasmaComponents3.Label {
+						visible: form.hadConference && !form.hasConference
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						opacity: 0.7
+						text: i18n("Video conferencing will be removed when you save")
+					}
+					PlasmaComponents3.ToolButton {
+						visible: form.hadConference && !form.hasConference
+						icon.name: "edit-undo"
+						text: i18n("Undo")
+						onClicked: form.conferenceAction = ''
+					}
+					PlasmaComponents3.Label {
+						id: conferenceLabel
+						visible: form.hasConference
+						Layout.fillWidth: true
+						elide: Text.ElideRight
+						textFormat: Text.StyledText
+						text: {
+							if (form.conferenceAction === 'add') {
+								return i18n("A Google Meet link will be created when you save")
+							}
+							var link = form.conferenceLink
+							if (!link) {
+								return i18n("Video conferencing")
+							}
+							var shown = link.url.replace(/^https?:\/\//i, '')
+							return '<a href="' + Shared.escapeHtml(link.url) + '">' + Shared.escapeHtml(link.label + ': ' + shown) + '</a>'
+						}
+						onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+						HoverHandler {
+							cursorShape: conferenceLabel.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+						}
+					}
+					PlasmaComponents3.ToolButton {
+						visible: form.hasConference
+						icon.name: "edit-delete-remove"
+						onClicked: form.conferenceAction = form.hadConference ? 'remove' : ''
+						Accessible.name: PlasmaComponents3.ToolTip.text
+						PlasmaComponents3.ToolTip.text: i18n("Remove video conferencing")
+						PlasmaComponents3.ToolTip.visible: hovered
+						PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+					}
 				}
 
 				PlasmaComponents3.TextArea {
