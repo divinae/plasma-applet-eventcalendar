@@ -106,6 +106,10 @@ ConfigPage {
 			configKey: 'showOutlines'
 			text: i18n("Outlines around icons and dots")
 		}
+		ConfigCheckBox {
+			configKey: 'weatherShowInViews'
+			text: i18n("Weather in the month, week and today views")
+		}
 		ConfigComboBox {
 			Kirigami.FormData.label: i18n("Today:")
 			configKey: 'monthTodayStyle'
