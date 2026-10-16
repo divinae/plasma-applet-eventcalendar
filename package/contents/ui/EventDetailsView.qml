@@ -135,7 +135,7 @@ Rectangle {
 			}
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
-				icon.name: "internet-web-browser"
+				icon.name: "globe" // Native action icon (internet-web-browser is a colored app icon)
 				text: i18n("Open in Google Calendar")
 				display: QQC2.AbstractButton.IconOnly
 				onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
