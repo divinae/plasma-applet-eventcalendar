@@ -222,9 +222,6 @@ ConfigPage {
 			messageWidget.err(err)
 		}
 	}
-	HeaderText {
-		text: i18n("Google Accounts")
-	}
 	MessageWidget {
 		id: messageWidget
 	}
