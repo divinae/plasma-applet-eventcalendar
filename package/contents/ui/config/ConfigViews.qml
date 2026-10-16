@@ -102,12 +102,13 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigCombo {
-				text: i18n("Google event colors")
-				description: i18n("Google's API still returns an older palette; the current colors match Google Calendar.")
+				text: i18n("Event colors")
+				description: i18n("Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme.")
 				configKey: 'googleColorPalette'
 				model: [
 					{ value: 'current', text: i18n("As in Google Calendar") },
 					{ value: 'classic', text: i18n("Classic (as returned by Google)") },
+					{ value: 'system', text: i18n("Follow the system color scheme") },
 				]
 			}
 			FormCard.FormDelegateSeparator {}

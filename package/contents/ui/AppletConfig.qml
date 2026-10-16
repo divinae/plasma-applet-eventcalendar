@@ -17,8 +17,42 @@ QtObject {
 		var c = Kirigami.Theme.backgroundColor
 		return 0.299 * c.r + 0.587 * c.g + 0.114 * c.b < 0.5
 	}
+	// Settings > Views > Google event colors = "Follow the system color scheme": event colors become
+	// the nearest (by hue) accent color of the Plasma color scheme; greys stay grey.
+	readonly property bool systemEventPalette: plasmoid.configuration.googleColorPalette === 'system'
+	readonly property var systemPalette: [
+		Kirigami.Theme.negativeTextColor, // red
+		Kirigami.Theme.neutralTextColor, // orange / yellow
+		Kirigami.Theme.positiveTextColor, // green
+		Kirigami.Theme.linkColor, // blue
+		Kirigami.Theme.highlightColor, // accent
+		Kirigami.Theme.visitedLinkColor, // purple
+	]
+	function systemColorFor(color) {
+		if (color.hslSaturation < 0.15) {
+			return Kirigami.Theme.disabledTextColor // Grey calendars
+		}
+		var best = systemPalette[0]
+		var bestDistance = 2
+		for (var i = 0; i < systemPalette.length; i++) {
+			var candidate = Qt.color(systemPalette[i])
+			if (candidate.hslSaturation < 0.15) {
+				continue
+			}
+			var d = Math.abs(candidate.hslHue - color.hslHue)
+			d = Math.min(d, 1 - d) // Hue is a circle
+			if (d < bestDistance) {
+				bestDistance = d
+				best = candidate
+			}
+		}
+		return best
+	}
 	function eventColor(c) {
 		var color = Qt.color(c || Kirigami.Theme.highlightColor)
+		if (systemEventPalette) {
+			return systemColorFor(color) // Already made for the color scheme: no darkening
+		}
 		if (!darkTheme) {
 			return color
 		}
