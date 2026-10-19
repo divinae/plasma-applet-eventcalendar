@@ -197,13 +197,17 @@ CalendarManager {
 					if (sent[due[i].key]) {
 						continue
 					}
+					// Logged without the title, to tell this widget's notifications apart from others
+					// (eg: Google Calendar's own in a browser).
 					if (due[i].kind === 'start') {
 						if (plasmoid.configuration.eventStartingNotificationEnabled) {
 							sent[due[i].key] = now
+							logger.log('notification: event starting', eventItem.startDateTime)
 							sendEventStartingNotification(eventItem)
 						}
 					} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
 						sent[due[i].key] = now
+						logger.log('notification: reminder', due[i].minutes, 'min before', eventItem.startDateTime)
 						sendEventReminderNotification(eventItem, due[i].minutes)
 					}
 				}
