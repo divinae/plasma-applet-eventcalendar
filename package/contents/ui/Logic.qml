@@ -36,17 +36,6 @@ Item {
 		eventModel.showCachedEvents(cached.calendars)
 		if (popup) popup.updateUI()
 	}
-	Connections {
-		target: eventModel
-		function onAllDataFetched() {
-			// A round that hit the network error keeps the cache file as it is.
-			if (logic.eventsRoundNetworkError) {
-				return
-			}
-			eventModel.settleCachedCalendars()
-			eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
-		}
-	}
 
 	//--- Update
 	Timer {
@@ -233,10 +222,7 @@ Item {
 		target: plasmoid.configuration
 
 		//--- Events
-		function onAccessTokenChanged() { logic.updateEvents() }
-		function onCalendarIdListChanged() { logic.updateEvents() }
 		function onEnabledCalendarPluginsChanged() { logic.updateEvents() }
-		function onTasklistIdListChanged() { logic.updateEvents() }
 		function onGoogleAccountsChanged() {
 			// Token refreshes rewrite googleAccounts too. Only refetch when the selection changes.
 			var signature = logic.googleSelectionSignature()
@@ -365,15 +351,30 @@ Item {
 		}
 		function onAllDataFetched() {
 			if (logic.eventsRoundNetworkError) {
+				// A round that hit the network error keeps the cache file as it is.
 				logic.eventsNetworkFailed = true
 				logic.networkFailed()
 			} else {
+				// Event cache: the last loaded Google events (see showCachedEvents).
+				eventModel.settleCachedCalendars()
+				eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
 				logic.eventsNetworkFailed = false
 				if (logic.currentErrorType !== ErrorType.NoError && logic.currentErrorType !== ErrorType.NetworkError) {
 					logic.clearError() // Fetched fine this time
 				}
 				logic.networkRecovered()
 			}
+			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
+			if (popup) popup.deferredUpdateUI()
+		}
+		function onEventCreated(calendarId, data) {
+			if (popup) popup.deferredUpdateUI()
+		}
+		function onEventUpdated(calendarId, eventId, data) {
+			if (popup) popup.deferredUpdateUI()
+		}
+		function onEventDeleted(calendarId, eventId, data) {
+			if (popup) popup.deferredUpdateUI()
 		}
 	}
 
@@ -458,31 +459,6 @@ Item {
 					expireTimeout: 10000,
 				})
 			}
-		}
-	}
-
-	//---
-	Connections {
-		target: eventModel
-		function onCalendarFetched(calendarId, data) {
-			logger.debug('onCalendarFetched', calendarId)
-			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
-		}
-		function onAllDataFetched() {
-			logger.debug('onAllDataFetched')
-			if (popup) popup.deferredUpdateUI()
-		}
-		function onEventCreated(calendarId, data) {
-			logger.debugJSON('onEventCreated', calendarId, data)
-			if (popup) popup.deferredUpdateUI()
-		}
-		function onEventUpdated(calendarId, eventId, data) {
-			logger.debugJSON('onEventUpdated', calendarId, eventId, data)
-			if (popup) popup.deferredUpdateUI()
-		}
-		function onEventDeleted(calendarId, eventId, data) {
-			logger.debugJSON('onEventDeleted', calendarId, eventId, data)
-			if (popup) popup.deferredUpdateUI()
 		}
 	}
 
