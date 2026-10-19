@@ -4,6 +4,7 @@ import QtQuick
 import org.kde.plasma.plasma5support as Plasma5Support
 
 import "Base64Compat.js" as Base64Compat
+import "../ScriptPath.js" as ScriptPath
 
 Plasma5Support.DataSource {
 	id: executable
@@ -31,10 +32,7 @@ Plasma5Support.DataSource {
 	}
 
 	property var listeners: ({}) // Empty Map
-	property string argvRunnerPath: {
-		var resolved = String(Qt.resolvedUrl("../../scripts/run_argv.py"))
-		return resolved.indexOf("file://") === 0 ? resolved.slice(7) : resolved
-	}
+	property string argvRunnerPath: ScriptPath.scriptPath("run_argv.py")
 
 	// Note that this has not gone under a security audit.
 	// You probably shouldn't trust 3rd party input.

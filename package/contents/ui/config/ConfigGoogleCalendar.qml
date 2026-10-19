@@ -6,6 +6,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
+import "../ScriptPath.js" as ScriptPath
 import "../Shared.js" as Shared
 import "../code/GooglePalette.js" as GooglePalette
 
@@ -16,11 +17,6 @@ ConfigPage {
 		if (typeof kcm !== "undefined") {
 			kcm.needsSave = true
 		}
-	}
-
-	function localFilePath(url) {
-		var path = String(url)
-		return path.indexOf("file://") === 0 ? path.slice(7) : path
 	}
 
 	function sortByKey(key, a, b){
@@ -170,7 +166,7 @@ ConfigPage {
 		// widget (argv is visible to other processes), which exchanges the code itself.
 		var cmd = [
 			'python3',
-			localFilePath(Qt.resolvedUrl("../../scripts/google_redirect.py")),
+			ScriptPath.scriptPath("google_redirect.py"),
 			'--listen_port',
 			'53682',
 			'--state',

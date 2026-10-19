@@ -7,6 +7,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Shared.js" as Shared
 import "IcsImport.js" as IcsImport
 import "Recurrence.js" as Recurrence
+import "ScriptPath.js" as ScriptPath
 import "lib"
 import "lib/ColorUtil.js" as ColorUtil
 
@@ -51,11 +52,6 @@ Rectangle {
 
 	ExecUtil { id: executable }
 
-	function localFilePath(url) {
-		var path = String(url)
-		return path.indexOf("file://") === 0 ? path.slice(7) : path
-	}
-
 	function readFile() {
 		generation += 1
 		var gen = generation
@@ -74,7 +70,7 @@ Rectangle {
 		loading = true
 		var cmd = [
 			'python3',
-			localFilePath(Qt.resolvedUrl("../scripts/icsjson.py")),
+			ScriptPath.scriptPath("icsjson.py"),
 			'events',
 			String(fileUrl),
 		]

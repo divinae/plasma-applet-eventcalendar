@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../ErrorType.js" as ErrorType
+import "../ScriptPath.js" as ScriptPath
 import "../lib"
 
 CalendarManager {
@@ -47,7 +48,7 @@ CalendarManager {
 		var endDate = endTime.getFullYear() + '-' + (endTime.getMonth() + 1) + '-' + endTime.getDate()
 		var cmd = [
 			'python3',
-			localFilePath(Qt.resolvedUrl("../../scripts/icsjson.py")),
+			ScriptPath.scriptPath("icsjson.py"),
 			'--url',
 			calendarData.url,
 			'query',

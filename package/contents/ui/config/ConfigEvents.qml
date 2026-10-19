@@ -6,6 +6,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 
 import "../lib"
 import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
+import "../ScriptPath.js" as ScriptPath
 
 // Event sources, clicking events, notifications.
 ConfigPage {
@@ -17,7 +18,7 @@ ConfigPage {
 	property bool meetAppsLoaded: false // Until then a saved app's command can't be matched
 	ExecUtil { id: meetAppFinder }
 	function findMeetApps() {
-		var script = decodeURIComponent(String(Qt.resolvedUrl("../../scripts/find_meet_apps.py")).replace(/^file:\/\//, ""))
+		var script = ScriptPath.scriptPath("find_meet_apps.py")
 		meetAppFinder.execArgv(["python3", "-I", script], function(cmd, exitCode, exitStatus, stdout, stderr) {
 			var apps = []
 			try {

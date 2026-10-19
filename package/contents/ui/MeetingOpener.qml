@@ -2,6 +2,7 @@ import QtQuick
 
 import "lib"
 import "MeetingLink.js" as MeetingLink
+import "ScriptPath.js" as ScriptPath
 import "Shared.js" as Shared
 
 // Opens meeting links (Join buttons): Google Meet links in the app chosen in the settings (eg: a
@@ -13,7 +14,7 @@ QtObject {
 
 	readonly property string meetCommand: String(plasmoid.configuration.meetLinkCommand || '').trim()
 	readonly property string meetAuthUser: String(plasmoid.configuration.meetLinkAuthUser || '').trim()
-	readonly property string launcherPath: decodeURIComponent(String(Qt.resolvedUrl("../scripts/launch_detached.py")).replace(/^file:\/\//, ''))
+	readonly property string launcherPath: ScriptPath.scriptPath("launch_detached.py")
 
 	function open(url) {
 		if (!url) {

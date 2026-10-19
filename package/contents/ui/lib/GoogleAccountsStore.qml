@@ -5,6 +5,7 @@ import "ConfigUtils.js" as ConfigUtils
 import "GoogleAccountState.js" as GoogleAccountState
 import "Requests.js" as Requests
 import "SafeConfig.js" as SafeConfig
+import "../ScriptPath.js" as ScriptPath
 
 Item {
 	id: store
@@ -15,10 +16,7 @@ Item {
 
 	property var configBridge: null
 	property bool debugEnabled: false
-	property string secretStorePath: {
-		var resolved = String(Qt.resolvedUrl("../../scripts/secret_store.py"))
-		return resolved.indexOf("file://") === 0 ? resolved.slice(7) : resolved
-	}
+	property string secretStorePath: ScriptPath.scriptPath("secret_store.py")
 
 	property var accountsConfigValue: ""
 	property string activeAccountId: ""
