@@ -1,11 +1,12 @@
 import QtQuick
 import org.kde.plasma.components as PlasmaComponents3
 
+import "Guests.js" as Guests
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 
 // Right-click menu for an event, the same in every view: details, join, open in Google Calendar,
-// respond (RSVP, when invited), edit, delete (confirmed in a submenu). One instance lives in
+// respond (RSVP, when invited), email the guests, edit, delete (confirmed in a submenu). One instance lives in
 // PopupView (popup.showEventMenu).
 PlasmaComponents3.Menu {
 	id: eventMenu
@@ -17,6 +18,7 @@ PlasmaComponents3.Menu {
 	readonly property var selfAttendee: eventItem ? eventModel.selfAttendee(eventItem) : null
 	readonly property bool canRespond: !!selfAttendee && canEdit && eventModel.supportsRecurrence(eventItem.calendarId)
 	readonly property string response: selfAttendee ? selfAttendee.responseStatus || "" : ""
+	readonly property string mailtoUrl: Guests.eventMailtoUrl(eventItem)
 
 	signal showDetails(var eventItem)
 	signal editEvent(var eventItem)
@@ -112,6 +114,14 @@ PlasmaComponents3.Menu {
 		text: i18n("Mark as Ended")
 		icon.name: "dialog-ok"
 		onTriggered: upcomingEvents.markEnded(eventMenu.eventItem)
+	}
+	// Everyone invited except you and rooms, in the mail app.
+	PlasmaComponents3.MenuItem {
+		visible: !!eventMenu.mailtoUrl
+		height: visible ? implicitHeight : 0
+		text: i18n("Email Guests…")
+		icon.name: "mail-message-new"
+		onTriggered: Shared.openMailtoUrl(eventMenu.mailtoUrl)
 	}
 	PlasmaComponents3.MenuSeparator {} // Edit, Duplicate, Delete
 	PlasmaComponents3.MenuItem {

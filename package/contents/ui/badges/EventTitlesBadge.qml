@@ -70,11 +70,11 @@ Item {
 				border.color: appletConfig.eventOutlineColor(barColor, response)
 
 				StripeFill {
-					visible: eventBar.response === 'tentative'
+					visible: eventBar.response === 'tentative' || !!(eventBar.eventItem && eventBar.eventItem.eventType === 'outOfOffice')
 					anchors.fill: parent
 					anchors.margins: 1
 					radius: Math.max(0, eventBar.radius - 1)
-					stripeColor: eventBar.barColor
+					stripeColor: eventBar.response === 'tentative' ? eventBar.barColor : appletConfig.eventTextColor(eventBar.barColor, eventBar.response)
 				}
 
 				Text {

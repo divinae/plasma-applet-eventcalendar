@@ -240,11 +240,14 @@ function conflictTitles(eventItem) {
 	return titles
 }
 
-// What an event has set, as small icons after its time: 'conflict' (overlaps another meeting),
+// What an event is or has set, as small icons after its time: 'outOfOffice' / 'focusTime' (Google
+// event types, see EventTypes.js), 'conflict' (overlaps another meeting),
 // 'location', 'meeting' (a join link, found by the caller with MeetingLink.find), 'guests' (anyone
 // besides the user), 'repeat' and 'description'. Keys in hide are left out, eg: when the view
 // already shows the location. attendees may be an array or a ListModel (agenda).
 var EVENT_INDICATOR_ICONS = {
+	outOfOffice: 'im-user-away',
+	focusTime: 'audio-headphones',
 	conflict: 'dialog-warning',
 	location: 'mark-location',
 	meeting: 'call-start',
@@ -284,6 +287,8 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 			keys.push(key)
 		}
 	}
+	add('outOfOffice', eventItem.eventType === 'outOfOffice')
+	add('focusTime', eventItem.eventType === 'focusTime')
 	add('conflict', conflictTitles(eventItem).length > 0)
 	add('location', !!eventItem.location)
 	add('meeting', !!hasMeeting)
@@ -356,6 +361,14 @@ function openExternalUrl(url) {
 		return false
 	}
 	Qt.openUrlExternally(url.trim())
+	return true
+}
+// A mailto: link (eg: Guests.mailtoUrl) in the user's mail app. Nothing else, no spaces.
+function openMailtoUrl(url) {
+	if (typeof url !== 'string' || !/^mailto:[^\s]+$/i.test(url)) {
+		return false
+	}
+	Qt.openUrlExternally(url)
 	return true
 }
 // A URL location opens as is, anything else as a Google Maps search.

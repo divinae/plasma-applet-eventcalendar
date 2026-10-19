@@ -99,11 +99,11 @@ LinkRect {
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
 	StripeFill {
-		visible: agendaEventItem.response === 'tentative' && !editEventForm.visible
+		visible: (agendaEventItem.response === 'tentative' || model.eventType === 'outOfOffice') && !editEventForm.visible
 		anchors.fill: parent
 		anchors.margins: 1
 		radius: agendaEventItem.radius - 1
-		stripeColor: agendaEventItem.tileColor
+		stripeColor: agendaEventItem.response === 'tentative' ? agendaEventItem.tileColor : agendaEventItem.tileTextColor
 	}
 
 	ColumnLayout {

@@ -219,6 +219,17 @@ MouseArea {
 		color: Kirigami.Theme.textColor
 	}
 
+	// Month view with event titles: the Google working location ("Home", "Office", ...) left of
+	// the day number, when the cell is wide enough.
+	WorkingLocationLabel {
+		visible: dayStyle.showEventTitles && !!text && dayStyle.width >= Kirigami.Units.gridUnit * 5
+		x: 3
+		y: Math.round((dayStyle.eventTitlesHeaderHeight - height) / 2)
+		date: dayStyle.thisDate
+		maxWidth: dayStyle.width / 2 - Kirigami.Units.gridUnit
+		opacity: 0.75 * dayStyle.contentOpacity
+	}
+
 	PlasmaCore.ToolTipArea {
 		anchors.fill: parent
 		// With event titles each event bar has its own tooltip.

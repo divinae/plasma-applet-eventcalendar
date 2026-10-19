@@ -37,7 +37,12 @@ assert.deepStrictEqual(keys(overlapping, false, { conflict: true, location: true
 assert.deepStrictEqual(Array.from(S.conflictTitles(overlapping)), ['Standup', '1:1'])
 assert.deepStrictEqual(Array.from(S.conflictTitles({ conflictsWith: model([{ summary: 'Standup' }]) })), ['Standup'])
 assert.deepStrictEqual(Array.from(S.conflictTitles(null)), [])
-for (const k of ['conflict', 'location', 'meeting', 'guests', 'repeat', 'description']) {
+// Google event types: their icon first.
+assert.deepStrictEqual(keys(Object.assign({ eventType: 'outOfOffice' }, overlapping), true), ['outOfOffice', 'conflict', 'location', 'meeting', 'guests', 'repeat', 'description'], 'out of office first')
+assert.deepStrictEqual(keys({ eventType: 'focusTime' }), ['focusTime'])
+assert.deepStrictEqual(keys({ eventType: 'focusTime' }, false, { focusTime: true }), [], 'focus time hidden')
+assert.deepStrictEqual(keys({ eventType: 'default' }), [])
+for (const k of ['outOfOffice', 'focusTime', 'conflict', 'location', 'meeting', 'guests', 'repeat', 'description']) {
 	assert.ok(S.EVENT_INDICATOR_ICONS[k], 'icon for ' + k)
 }
 console.log('event_indicators: ok')

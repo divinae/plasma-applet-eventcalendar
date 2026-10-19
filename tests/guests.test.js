@@ -93,6 +93,32 @@ assert.deepStrictEqual(plain(G.suggest(known, 'example', [{ email: 'Anna@example
 assert.deepStrictEqual(plain(G.suggest(known, 'example', [], 1)).length, 1)
 assert.deepStrictEqual(plain(G.suggest(known, '  ', [])), [])
 
+// Email guests: others only (not the user, not rooms), deduplicated, encoded
+const meetingGuests = [
+	{ email: 'me@example.com', self: true, responseStatus: 'accepted' },
+	{ email: 'boss@example.com', organizer: true },
+	{ email: 'Anna+team@example.com', displayName: 'Anna' },
+	{ email: 'anna+TEAM@example.com' },
+	{ email: 'room-1@resource.calendar.google.com', resource: true },
+	{ email: 'not an email' },
+	{ displayName: 'No email' },
+	null,
+]
+assert.deepStrictEqual(plain(G.otherGuestEmails(meetingGuests)), ['boss@example.com', 'Anna+team@example.com'])
+assert.strictEqual(G.mailtoUrl(meetingGuests, 'Q4 review & plan'),
+	'mailto:boss@example.com,Anna%2Bteam@example.com?subject=Q4%20review%20%26%20plan')
+assert.strictEqual(G.mailtoUrl(meetingGuests, 'x&bcc=evil@example.com\r\nCc: a@b.c'),
+	'mailto:boss@example.com,Anna%2Bteam@example.com?subject=x%26bcc%3Devil%40example.com%0D%0ACc%3A%20a%40b.c')
+assert.strictEqual(G.mailtoUrl(meetingGuests, '  '), 'mailto:boss@example.com,Anna%2Bteam@example.com')
+assert.strictEqual(G.mailtoUrl(meetingGuests), 'mailto:boss@example.com,Anna%2Bteam@example.com')
+assert.strictEqual(G.mailtoUrl([{ email: 'me@example.com', self: true }], 'Solo'), '')
+assert.strictEqual(G.mailtoUrl(undefined, 'None'), '')
+assert.strictEqual(G.mailtoUrl(model([{ email: 'bob@example.com' }]), 'Agenda'), 'mailto:bob@example.com?subject=Agenda')
+
+assert.strictEqual(G.eventMailtoUrl({ summary: '(No title)', _summary: undefined, attendees: [{ email: 'bob@example.com' }] }), 'mailto:bob@example.com')
+assert.strictEqual(G.eventMailtoUrl({ summary: 'Sync', attendees: [{ email: 'bob@example.com' }] }), 'mailto:bob@example.com?subject=Sync')
+assert.strictEqual(G.eventMailtoUrl(null), '')
+
 assert.strictEqual(G.responseIcon('accepted'), 'dialog-ok-apply')
 assert.strictEqual(G.responseIcon(undefined), 'clock')
 

@@ -4,6 +4,8 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "Attachments.js" as Attachments
+import "EventTypes.js" as EventTypes
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Guests.js" as Guests
@@ -43,6 +45,11 @@ Rectangle {
 			return rank(a) - rank(b)
 		})
 	}
+	readonly property var attachments: Attachments.list(eventItem)
+	readonly property bool isOutOfOffice: EventTypes.isOutOfOffice(eventItem)
+	readonly property bool isFocusTime: EventTypes.isFocusTime(eventItem)
+	// "Email Guests…": everyone invited except you and rooms.
+	readonly property string mailtoUrl: Guests.eventMailtoUrl(eventItem)
 	readonly property int collapsedGuestCount: 5
 	property bool showAllGuests: false
 	property bool confirmingDelete: false
@@ -339,6 +346,34 @@ Rectangle {
 					columnSpacing: Kirigami.Units.largeSpacing
 					rowSpacing: Kirigami.Units.largeSpacing
 
+					// Out of office / focus time (Google event types), with their auto-decline.
+					Kirigami.Icon {
+						visible: eventTypeLabel.visible
+						source: details.isOutOfOffice ? Shared.EVENT_INDICATOR_ICONS.outOfOffice : Shared.EVENT_INDICATOR_ICONS.focusTime
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					PlasmaComponents3.Label {
+						id: eventTypeLabel
+						readonly property var decline: EventTypes.autoDecline(details.eventItem)
+						visible: details.isOutOfOffice || details.isFocusTime
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						text: {
+							var lines = [details.isOutOfOffice ? i18n("Out of office") : i18n("Focus time")]
+							if (decline.declines === 'all') {
+								lines.push(i18n("Declines all meetings at this time"))
+							} else if (decline.declines === 'new') {
+								lines.push(i18n("Declines new invitations at this time"))
+							}
+							if (decline.message) {
+								lines.push(i18nc("%1 = message sent when declining", "Message: “%1”", decline.message))
+							}
+							return lines.join("\n")
+						}
+					}
+
 					// Overlapping meetings
 					Kirigami.Icon {
 						visible: conflictLabel.visible
@@ -438,6 +473,50 @@ Rectangle {
 						text: details.reminderText()
 					}
 
+					// File attachments (Google Drive): each opens in the browser.
+					Kirigami.Icon {
+						visible: attachmentList.visible
+						source: "mail-attachment"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					ColumnLayout {
+						id: attachmentList
+						visible: details.attachments.length > 0
+						Layout.fillWidth: true
+						spacing: Kirigami.Units.smallSpacing
+						Repeater {
+							model: details.attachments
+							RowLayout {
+								Layout.fillWidth: true
+								spacing: Kirigami.Units.smallSpacing
+								Kirigami.Icon {
+									source: modelData.icon
+									fallback: "text-x-generic"
+									Layout.preferredWidth: Kirigami.Units.iconSizes.small
+									Layout.preferredHeight: Kirigami.Units.iconSizes.small
+								}
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									elide: Text.ElideMiddle
+									text: modelData.title
+									color: Kirigami.Theme.linkColor
+									font.underline: attachmentMouse.containsMouse
+									MouseArea {
+										id: attachmentMouse
+										anchors.fill: parent
+										hoverEnabled: true
+										cursorShape: Qt.PointingHandCursor
+										onClicked: Shared.openExternalUrl(modelData.url)
+									}
+									Accessible.role: Accessible.Link
+									Accessible.name: modelData.title
+								}
+							}
+						}
+					}
+
 				}
 
 
@@ -468,6 +547,15 @@ Rectangle {
 							wrapMode: Text.Wrap
 							font.weight: Font.DemiBold
 							text: details.attendeeSummary()
+						}
+						PlasmaComponents3.ToolButton {
+							visible: !!details.mailtoUrl
+							icon.name: "mail-message-new"
+							text: i18n("Email Guests…")
+							display: details.width < Kirigami.Units.gridUnit * 22 ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+							onClicked: Shared.openMailtoUrl(details.mailtoUrl)
+							PlasmaComponents3.ToolTip.text: i18n("Write an email to the guests")
+							PlasmaComponents3.ToolTip.visible: hovered
 						}
 					}
 					Repeater {

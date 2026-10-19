@@ -42,6 +42,7 @@ function fullEvent(overrides) {
 		},
 		transparency: 'transparent',
 		visibility: 'private',
+		attachments: [{ title: 'Budget sheet', fileUrl: 'https://drive.google.com/file/d/xyz', mimeType: 'application/pdf', fileId: 'xyz' }],
 		conflictsWith: [{ summary: 'Overlapping meeting' }],
 		accessToken: 'ya29.must-not-leak',
 		extendedProperties: { private: { refreshToken: '1//nope' } },
@@ -59,7 +60,7 @@ function sampleCalendars() {
 
 function testWhitelist() {
 	const text = cache.serialize(sampleCalendars(), new Date(2026, 9, 1), new Date(2026, 10, 1), NOW)
-	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting']) {
+	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting', 'attachments', 'Budget sheet', 'drive.google.com']) {
 		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
 	}
 	const data = JSON.parse(text)
@@ -82,6 +83,24 @@ function testWhitelist() {
 	assert.deepStrictEqual(event.start, { dateTime: '2026-10-16T09:00:00+02:00', timeZone: 'Europe/Oslo' })
 	assert.strictEqual(data.savedAt, NOW.getTime())
 	assert.strictEqual(data.dateMin, new Date(2026, 9, 1).getTime())
+}
+
+function testEventTypes() {
+	const ooo = fullEvent({ eventType: 'outOfOffice', outOfOfficeProperties: { autoDeclineMode: 'declineAllConflictingInvitations', declineMessage: 'Away, ask Ola' } })
+	const wl = fullEvent({
+		id: 'wl', eventType: 'workingLocation',
+		workingLocationProperties: { type: 'officeLocation', officeLocation: { label: 'Oslo HQ', buildingId: 'b-secret', deskId: 'd-7' } },
+	})
+	const text = cache.serialize({ 'a::c': { items: [ooo, wl] } }, 0, 0, NOW)
+	for (const word of ['Away, ask Ola', 'outOfOfficeProperties', 'b-secret', 'd-7', 'buildingId']) {
+		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
+	}
+	const events = JSON.parse(text).calendars['a::c']
+	assert.strictEqual(events[0].eventType, 'outOfOffice')
+	assert.strictEqual(events[1].eventType, 'workingLocation')
+	assert.deepStrictEqual(events[1].workingLocationProperties, { type: 'officeLocation', officeLocation: { label: 'Oslo HQ' } })
+	const home = cache.pickEvent(fullEvent({ eventType: 'workingLocation', workingLocationProperties: { type: 'homeOffice', homeOffice: { x: 1 } } }))
+	assert.deepStrictEqual(home.workingLocationProperties, { type: 'homeOffice', homeOffice: {} })
 }
 
 function testSummaryUsesRawTitle() {
@@ -137,6 +156,7 @@ function testSelectedCalendarIds() {
 
 testWhitelist()
 testSummaryUsesRawTitle()
+testEventTypes()
 testRoundTripAndSelection()
 testRejectsOldBrokenOrForeign()
 testReadIsWhitelistedToo()

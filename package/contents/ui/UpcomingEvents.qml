@@ -6,6 +6,7 @@ import "MeetingLink.js" as MeetingLink
 import "NotifyTiming.js" as NotifyTiming
 import "Invitations.js" as Invitations
 import "DailyAgenda.js" as DailyAgenda
+import "EventTypes.js" as EventTypes
 import "MeetingRules.js" as MeetingRules
 import "Shared.js" as Shared
 import "./calendars"
@@ -44,6 +45,9 @@ CalendarManager {
 
 	// All-day events "start" at midnight and declined events don't need a reminder.
 	function shouldNotify(eventItem) {
+		if (EventTypes.isWorkingLocation(eventItem)) {
+			return false // A day header label, not an event
+		}
 		if (plasmoid.configuration.eventNotifySkipAllDay && eventItem.start && eventItem.start.date) {
 			return false
 		}
@@ -202,7 +206,7 @@ CalendarManager {
 		for (var calendarId in eventsByCalendar) {
 			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
 		}
-		return items
+		return items.filter(function(eventItem) { return !EventTypes.isWorkingLocation(eventItem) })
 	}
 	function checkDailyAgenda() {
 		if (!plasmoid.configuration.dailyAgendaEnabled || !eventsSynced) {
@@ -359,6 +363,9 @@ CalendarManager {
 		for (var calendarId in eventsByCalendar) {
 			var calendar = eventsByCalendar[calendarId]
 			calendar.items.forEach(function(eventItem) {
+				if (EventTypes.isWorkingLocation(eventItem)) {
+					return // No reminder, join or Do Not Disturb for a working location
+				}
 				var notify = shouldNotify(eventItem)
 				var due = NotifyTiming.dueFor(eventItem, notify ? reminderMinutesFor(eventItem) : [], win, now)
 				for (var i = 0; i < due.length; i++) {

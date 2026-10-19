@@ -679,6 +679,13 @@ Item {
 								color: dayHeaderCell.today ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 							}
 						}
+						// Google working location ("Home", "Office", ...)
+						WorkingLocationLabel {
+							anchors.horizontalCenter: parent.horizontalCenter
+							date: dayHeaderCell.date
+							maxWidth: parent.width - 4
+							showIcon: dayHeaderCell.width >= Kirigami.Units.gridUnit * 4
+						}
 					}
 
 					// Week view: small icon and high temperature in the top right corner of the day header.
@@ -704,6 +711,14 @@ Item {
 					}
 				}
 			}
+		}
+
+		// Day view: the day's working location (the week view has it in the day header).
+		WorkingLocationLabel {
+			Layout.leftMargin: weekView.gutterWidth + Kirigami.Units.smallSpacing
+			visible: weekView.singleDay && !!text
+			date: weekView.columnDate(0)
+			maxWidth: weekView.width - weekView.gutterWidth
 		}
 
 		// All-day events
@@ -744,8 +759,9 @@ Item {
 					border.width: 1
 					border.color: unconfirmed ? appletConfig.eventOutlineColor(stripeColor, response) : ColorUtil.setAlpha(stripeColor, 0.45)
 					clip: true
+					// Maybe, or out of office (hatched like Google Calendar)
 					StripeFill {
-						visible: parent.response === 'tentative'
+						visible: parent.response === 'tentative' || parent.eventItem.eventType === 'outOfOffice'
 						anchors.fill: parent
 						anchors.margins: 1
 						radius: Math.max(0, parent.cornerRadius - 1)
@@ -1088,12 +1104,13 @@ Item {
 									border.width: 1
 									border.color: appletConfig.eventOutlineColor(barColor, response)
 
+									// Maybe, or out of office (hatched like Google Calendar)
 									StripeFill {
-										visible: eventBlock.response === 'tentative'
+										visible: eventBlock.response === 'tentative' || eventBlock.eventItem.eventType === 'outOfOffice'
 										anchors.fill: parent
 										anchors.margins: 1
 										radius: Math.max(0, eventBlock.cornerRadius - 1)
-										stripeColor: eventBlock.barColor
+										stripeColor: eventBlock.response === 'tentative' ? eventBlock.barColor : eventBlock.textColor
 									}
 
 									// Today view: join button for meetings that haven't ended.
