@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:04+0200\n"
+"POT-Creation-Date: 2026-10-19 10:58+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -531,6 +531,20 @@ msgstr ""
 "בדפדפן ברירת המחדל. בפקודה, %u מייצג את קישור הפגישה. חשבון Google: המספר "
 "שלו (0, 1, …) או הדוא״ל, כמו בבורר החשבונות של Google; ריק משתמש בברירת "
 "המחדל של היישום."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Invitations"
+msgstr "הזמנות"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "New invitations for today"
+msgstr "הזמנות חדשות להיום"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification for each meeting today you haven't answered yet, with Yes, "
+"Maybe and No."
+msgstr "התראה לכל פגישה היום שעוד לא עניתם עליה, עם כן, אולי ולא."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1202,6 +1216,7 @@ msgid "Respond"
 msgstr "מענה"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Yes"
 msgstr "כן"
@@ -1212,6 +1227,7 @@ msgid "Yes to All Events"
 msgstr "כן לכל האירועים"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Maybe"
 msgstr "אולי"
@@ -1222,6 +1238,7 @@ msgid "Maybe to All Events"
 msgstr "אולי לכל האירועים"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "No"
 msgstr "לא"
@@ -2101,6 +2118,16 @@ msgstr[3] "נודניק ל־%1 דקות"
 msgctxt "%1 = 15 minutes, %2 = event title"
 msgid "In %1: %2"
 msgstr "בעוד %1: %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "invitation, %1 = organizer"
+msgid "From %1"
+msgstr "מאת %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = event title"
+msgid "Invitation: %1"
+msgstr "הזמנה: %1"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

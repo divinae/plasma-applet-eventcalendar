@@ -269,6 +269,14 @@
 			<!-- Google account to join Meet with: index (0, 1, ...) or email. Empty: the app's default. -->
 			<default></default>
 		</entry>
+		<entry name="invitationNotificationEnabled" type="bool">
+			<!-- Notify about unanswered invitations for today, with Yes / Maybe / No. -->
+			<default>true</default>
+		</entry>
+		<entry name="invitationsNotified" type="StringList">
+			<!-- "day|calendar|event|start" of invitations notified today, so they aren't repeated. -->
+			<default></default>
+		</entry>
 		<entry name="clockShowNextEvent" type="bool">
 			<default>true</default>
 		</entry>

@@ -318,6 +318,18 @@ ConfigPage {
 			text: i18n("Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default.")
 		}
 
+		//--- Invitations
+		FormCard.FormHeader {
+			title: i18n("Invitations")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("New invitations for today")
+				description: i18n("A notification for each meeting today you haven't answered yet, with Yes, Maybe and No.")
+				configKey: 'invitationNotificationEnabled'
+			}
+		}
+
 		//--- Both
 		FormCard.FormHeader {
 			title: i18n("All Event Notifications")

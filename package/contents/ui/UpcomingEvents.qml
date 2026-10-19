@@ -4,6 +4,7 @@ import org.kde.plasma.core as PlasmaCore
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "NotifyTiming.js" as NotifyTiming
+import "Invitations.js" as Invitations
 import "Shared.js" as Shared
 import "./calendars"
 
@@ -81,6 +82,11 @@ CalendarManager {
 				actions.push('open,' + i18n("Open in Calendar"))
 			}
 		}
+		if (args.respond) {
+			actions.push('accepted,' + i18nc("RSVP", "Yes"))
+			actions.push('tentative,' + i18nc("RSVP", "Maybe"))
+			actions.push('declined,' + i18nc("RSVP", "No"))
+		}
 		if (args.snooze && upcomingEvents.snoozeMinutes > 0) {
 			actions.push('snooze,' + i18np("Snooze 1 minute", "Snooze %1 minutes", upcomingEvents.snoozeMinutes))
 		}
@@ -102,6 +108,11 @@ CalendarManager {
 				meetingOpener.open(meetingLink.url)
 			} else if (actionId === 'open' && eventItem.htmlLink) {
 				Shared.openExternalUrl(eventItem.htmlLink)
+			} else if (actionId === 'accepted' || actionId === 'tentative' || actionId === 'declined') {
+				// A repeating meeting: answered for the whole series, like the invitation email.
+				eventModel.respondToEvent(eventItem, actionId, !!eventItem.recurringEventId, function() {
+					logic.update()
+				})
 			} else if (actionId === 'snooze') {
 				var at = new Date(timeModel.currentTime)
 				at.setMinutes(at.getMinutes() + upcomingEvents.snoozeMinutes)
@@ -140,6 +151,44 @@ CalendarManager {
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
 			event: 'reminder',
 			snooze: true,
+		})
+	}
+
+	//--- Invitations for today still to answer: notified once each (see Invitations.js).
+	function checkInvitations() {
+		if (!plasmoid.configuration.invitationNotificationEnabled) {
+			return
+		}
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
+		}
+		var now = timeModel.currentTime
+		var notified = Shared.toArray(plasmoid.configuration.invitationsNotified)
+		var pending = Invitations.pendingToday(items, now, notified)
+		if (!pending.length) {
+			return
+		}
+		plasmoid.configuration.invitationsNotified = Invitations.markNotified(notified, pending, now)
+		pending.forEach(function(eventItem) {
+			logger.log('notification: invitation', eventItem.startDateTime) // No title in the log
+			sendInvitationNotification(eventItem)
+		})
+	}
+
+	function sendInvitationNotification(eventItem) {
+		var meetingLink = MeetingLink.find(eventItem)
+		var body = eventNotificationBody(eventItem, meetingLink)
+		var organizer = eventItem.organizer
+		if (organizer && !organizer.self && (organizer.displayName || organizer.email)) {
+			body += '<br />' + i18nc("invitation, %1 = organizer", "From %1", organizer.displayName || organizer.email)
+		}
+		notifyEvent(eventItem, {
+			event: 'invitation',
+			expireTimeout: -1, // Plasma's timeout; it stays in the history to answer later
+			summary: i18nc("%1 = event title", "Invitation: %1", eventItem.summary),
+			body: body,
+			respond: true,
 		})
 	}
 
@@ -403,6 +452,7 @@ CalendarManager {
 				upcomingEvents.dateMax = eventModel.dateMax
 				upcomingEvents.eventsByCalendar = eventModel.eventsByCalendar
 				upcomingEvents.allDataFetched()
+				upcomingEvents.checkInvitations()
 				upcomingEvents.updateNextEvent()
 				upcomingEvents.updateTooltipEvents()
 			}

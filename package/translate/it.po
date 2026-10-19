@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:04+0200\n"
+"POT-Creation-Date: 2026-10-19 10:58+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -485,6 +485,18 @@ msgstr "Predefinito"
 #, c-format
 msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
 msgstr "I pulsanti Partecipa aprono lì i link di Google Meet; gli altri link delle riunioni si aprono nel browser predefinito. In un comando, %u indica il link della riunione. Account Google: il suo numero (0, 1, …) o la sua email, come nel selettore account di Google; vuoto usa il predefinito dell'applicazione."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Invitations"
+msgstr "Inviti"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "New invitations for today"
+msgstr "Nuovi inviti per oggi"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
+msgstr "Una notifica per ogni riunione di oggi a cui non hai ancora risposto, con Sì, Forse e No."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1085,7 +1097,7 @@ msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Rispondi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Yes"
 msgstr "Sì"
@@ -1095,7 +1107,7 @@ msgctxt "RSVP"
 msgid "Yes to All Events"
 msgstr "Sì a tutti gli eventi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Maybe"
 msgstr "Forse"
@@ -1105,7 +1117,7 @@ msgctxt "RSVP"
 msgid "Maybe to All Events"
 msgstr "Forse a tutti gli eventi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "No"
 msgstr "No"
@@ -1949,6 +1961,16 @@ msgstr[1] "Posticipa di %1 minuti"
 msgctxt "%1 = 15 minutes, %2 = event title"
 msgid "In %1: %2"
 msgstr "Tra %1: %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "invitation, %1 = organizer"
+msgid "From %1"
+msgstr "Da %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = event title"
+msgid "Invitation: %1"
+msgstr "Invito: %1"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

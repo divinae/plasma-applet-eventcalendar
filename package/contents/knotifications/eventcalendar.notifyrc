@@ -13,6 +13,11 @@ Name=Event starting
 Comment=An event starts now
 Action=Popup
 
+[Event/invitation]
+Name=New invitation
+Comment=An invitation for today to answer
+Action=Popup
+
 [Event/timer]
 Name=Timer finished
 Comment=The widget's timer has finished

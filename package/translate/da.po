@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:04+0200\n"
+"POT-Creation-Date: 2026-10-19 10:58+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -526,6 +526,22 @@ msgstr ""
 "standardbrowseren. I en kommando står %u for mødelinket. Google-konto: dens "
 "nummer (0, 1, …) eller e-mail som i Googles kontoskifter; tom bruger appens "
 "standard."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Invitations"
+msgstr "Invitationer"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "New invitations for today"
+msgstr "Nye invitationer i dag"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification for each meeting today you haven't answered yet, with Yes, "
+"Maybe and No."
+msgstr ""
+"En underretning for hvert møde i dag, du ikke har svaret på endnu, med Ja, "
+"Måske og Nej."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1207,6 +1223,7 @@ msgid "Respond"
 msgstr "Svar"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Yes"
 msgstr "Ja"
@@ -1217,6 +1234,7 @@ msgid "Yes to All Events"
 msgstr "Ja til alle begivenheder"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "Maybe"
 msgstr "Måske"
@@ -1227,6 +1245,7 @@ msgid "Maybe to All Events"
 msgstr "Måske til alle begivenheder"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "RSVP"
 msgid "No"
 msgstr "Nej"
@@ -2080,6 +2099,16 @@ msgstr[1] "Udsæt %1 minutter"
 msgctxt "%1 = 15 minutes, %2 = event title"
 msgid "In %1: %2"
 msgstr "Om %1: %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "invitation, %1 = organizer"
+msgid "From %1"
+msgstr "Fra %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = event title"
+msgid "Invitation: %1"
+msgstr "Invitation: %1"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
