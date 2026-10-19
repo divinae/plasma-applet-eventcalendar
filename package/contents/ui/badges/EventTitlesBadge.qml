@@ -63,7 +63,7 @@ Item {
 					var _ = eventTitlesBadge.eventCount // Re-evaluate when the day's events change.
 					return eventTitlesBadge.eventAt(index)
 				}
-				detailsModel: typeof eventModel !== "undefined" ? eventModel : null
+				titleFont: eventTitlesBadge.titleFont
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
 				dragSource: !!calendarView && calendarView.isDragSource(eventItem)

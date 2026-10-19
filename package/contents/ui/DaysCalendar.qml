@@ -548,23 +548,22 @@ Item {
 		// Click opens the event, right click its menu, press and drag moves it to other days
 		// (the whole event, by the days dragged; Ctrl: a copy).
 		EventBar {
-			readonly property var bar: modelData
+			readonly property var span: modelData
 			readonly property int columnStep: daysCalendar.cellWidth + root.borderWidth
-			eventItem: bar.eventItem
-			detailsModel: typeof eventModel !== "undefined" ? eventModel : null
+			eventItem: span.eventItem
 
-			x: calendarGrid.x + bar.first * columnStep + 1
-			y: calendarGrid.y + daysCalendar.gridLineY(bar.week + 1) + daysCalendar.eventTitlesTopOffset
-				+ bar.lane * (daysCalendar.eventTitleRowHeight + daysCalendar.eventTitleRowSpacing)
-			width: (bar.last - bar.first + 1) * columnStep - root.borderWidth - 2
+			x: calendarGrid.x + span.first * columnStep + 1
+			y: calendarGrid.y + daysCalendar.gridLineY(span.week + 1) + daysCalendar.eventTitlesTopOffset
+				+ span.lane * (daysCalendar.eventTitleRowHeight + daysCalendar.eventTitleRowSpacing)
+			width: (span.last - span.first + 1) * columnStep - root.borderWidth - 2
 			height: daysCalendar.eventTitleRowHeight
 			// Square ends where the event continues in the previous / next week row.
 			cuttable: true
-			cutLeft: bar.continuesBefore
-			cutRight: bar.continuesAfter
+			cutLeft: span.continuesBefore
+			cutRight: span.continuesAfter
 			stripeRadius: cutLeft || cutRight ? 0 : Math.max(0, cornerRadius - 1)
 			// Past days are dimmed like the cells.
-			dimmed: typeof timeModel !== "undefined" && Shared.isPastDay(new Date(bar.lastTime), timeModel.currentTime)
+			dimmed: typeof timeModel !== "undefined" && Shared.isPastDay(new Date(span.lastTime), timeModel.currentTime)
 			dragSource: daysCalendar.isDragSource(eventItem)
 			dragCopy: !!daysCalendar.eventDrag && daysCalendar.eventDrag.copy
 			dragPending: !!daysCalendar.eventDrag && daysCalendar.eventDrag.pending

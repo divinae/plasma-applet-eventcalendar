@@ -754,8 +754,6 @@ Item {
 					}
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors.
-					readonly property color stripeColor: eventStyle.color
-					readonly property bool unconfirmed: eventStyle.unconfirmed
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
@@ -774,17 +772,18 @@ Item {
 					bottomLeftRadius: cutLeft ? 0 : cornerRadius
 					topRightRadius: cutRight ? 0 : cornerRadius
 					bottomRightRadius: cutRight ? 0 : cornerRadius
-					color: unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.3 : 0.22)
+					color: eventStyle.unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(eventStyle.color, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(stripeColor, 0.45)
+					border.color: eventStyle.unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(eventStyle.color, 0.45)
 					clip: true
-					// Maybe, or out of office (hatched like Google Calendar)
+					// Maybe, or out of office (hatched like Google Calendar). On the light tint, always in
+					// the event color (EventStyle.stripeColor is for filled bars).
 					StripeFill {
 						visible: parent.eventStyle.striped
 						anchors.fill: parent
 						anchors.margins: 1
 						radius: Math.max(0, parent.cornerRadius - 1)
-						stripeColor: parent.stripeColor
+						stripeColor: parent.eventStyle.color
 					}
 					// Stripe on the start side (not when the event began before this week), inset so it
 					// stays inside the rounded corners.
@@ -795,7 +794,7 @@ Item {
 						width: 3
 						height: parent.height - 6
 						radius: width / 2
-						color: parent.stripeColor
+						color: parent.eventStyle.color
 					}
 					// Title, then the date span ("14 – 16 Oct · 3 days") or "All day".
 					// Long timed events (24 h+) are in this row too: Shared.eventSpan handles both.
@@ -1164,8 +1163,6 @@ Item {
 									eventItem: block.eventItem
 									detailsModel: weekView.eventModel
 									showTitle: false
-									readonly property color barColor: eventStyle.color
-									readonly property color textColor: eventStyle.textColor
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
 									// Clip to the visible hour range.
 									readonly property real rangeStart: block.dayStart + weekView.firstHour * 3600000
@@ -1222,7 +1219,7 @@ Item {
 												}
 												return parts.join(' · ')
 											}
-											color: eventBlock.textColor
+											color: eventBlock.eventStyle.textColor
 											font.family: appletConfig.eventFont.family
 											font.pointSize: appletConfig.eventFont.pointSize
 											font.strikeout: eventBlock.eventStyle.declined
@@ -1251,9 +1248,9 @@ Item {
 													return Qt.formatTime(item.startDateTime, format)
 												}
 												textFormat: Text.StyledText
-												linkColor: eventBlock.textColor
+												linkColor: eventBlock.eventStyle.textColor
 												onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-												color: eventBlock.textColor
+												color: eventBlock.eventStyle.textColor
 												font: appletConfig.eventSmallFont
 												elide: Text.ElideRight
 											}
@@ -1261,7 +1258,7 @@ Item {
 												anchors.verticalCenter: parent.verticalCenter
 												maxWidth: parent.width - blockTimeLabel.width - parent.spacing
 												eventItem: eventBlock.eventItem
-												color: eventBlock.textColor
+												color: eventBlock.eventStyle.textColor
 												iconSize: 2 * Math.round(eventSmallFontMetrics.height / 2)
 												opacity: 0.85
 												// The day view shows the location as text and has a Join button.
@@ -1284,7 +1281,7 @@ Item {
 										anchors.topMargin: Kirigami.Units.smallSpacing
 										verticalPadding: compact ? 0 : Kirigami.Units.smallSpacing / 2
 										meetingLink: eventBlock.meetingLink
-										textColor: Shared.contrastTextColor(eventBlock.barColor)
+										textColor: Shared.contrastTextColor(eventBlock.eventStyle.color)
 									}
 									// Bottom edge: drag to change the end time.
 									MouseArea {

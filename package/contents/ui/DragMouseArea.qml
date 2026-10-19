@@ -2,7 +2,8 @@ import QtQuick
 
 // An event's bar / block: click opens it, right click its menu, press and drag (past the start drag
 // distance, left button) moves it (Ctrl: a copy). The click that ends a drag isn't a click.
-// Points are given in mapTo's coordinates. Clicks open eventItem (left) or its menu (right) in the popup.
+// Points are given in mapTo's coordinates. A click opens eventItem (left) or its menu (right) in
+// the popup; without an eventItem, handle eventClicked instead.
 MouseArea {
 	id: dragArea
 
@@ -14,6 +15,8 @@ MouseArea {
 	signal dragMoved(point at, bool copy)
 	signal dropped(bool copy)
 	signal dragCanceled()
+	// A click (not the end of a drag): button, and where in this item.
+	signal eventClicked(int button, real x, real y)
 
 	property point pressPoint
 	property bool dragged: false
@@ -54,6 +57,7 @@ MouseArea {
 		if (dragged) { // The end of a drag, not a click
 			dragged = false
 		} else {
+			eventClicked(mouse.button, mouse.x, mouse.y)
 			if (!eventItem) {
 				return
 			}

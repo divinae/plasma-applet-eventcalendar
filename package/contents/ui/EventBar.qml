@@ -6,14 +6,14 @@ import org.kde.plasma.core as PlasmaCore
 // opens the event, right click its menu, press and drag moves it (Ctrl: a copy): the view handles
 // the drag signals. Children added by the view (eg: a longer title) go on top.
 Rectangle {
-	id: bar
+	id: eventBar
 
 	property var eventItem: null
 	readonly property EventStyle eventStyle: EventStyle {
-		eventItem: bar.eventItem
+		eventItem: eventBar.eventItem
 	}
 	// The EventModel, for the tooltip's details.
-	property var detailsModel: null
+	property var detailsModel: typeof eventModel !== "undefined" ? eventModel : null
 
 	// Square corners where the event continues beyond what's shown. Views that cut corners set
 	// cuttable: the corners are then set one by one (otherwise radius alone, drawn a bit differently).
@@ -35,6 +35,7 @@ Rectangle {
 
 	// The one-line title; off when the view lays out its own text.
 	property bool showTitle: true
+	property font titleFont: appletConfig.eventFont
 	readonly property bool inProgress: !!eventItem && !(eventItem.start && eventItem.start.date)
 		&& typeof timeModel !== "undefined"
 		&& eventItem.startDateTime <= timeModel.currentTime && timeModel.currentTime < eventItem.endDateTime
@@ -58,25 +59,25 @@ Rectangle {
 	border.color: eventStyle.outlineColor
 
 	StripeFill {
-		visible: bar.eventStyle.striped
+		visible: eventBar.eventStyle.striped
 		anchors.fill: parent
 		anchors.margins: 1
-		radius: bar.stripeRadius
-		stripeColor: bar.eventStyle.stripeColor
+		radius: eventBar.stripeRadius
+		stripeColor: eventBar.eventStyle.stripeColor
 	}
 
 	Text {
-		visible: bar.showTitle
+		visible: eventBar.showTitle
 		anchors.fill: parent
 		anchors.leftMargin: 4
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
-		text: bar.showTitle && bar.eventItem ? bar.eventItem.summary : ""
-		color: bar.eventStyle.textColor
-		font.strikeout: bar.eventStyle.declined
-		font.family: appletConfig.eventFont.family
-		font.pointSize: appletConfig.eventFont.pointSize
-		font.bold: bar.inProgress // Event in progress
+		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""
+		color: eventBar.eventStyle.textColor
+		font.strikeout: eventBar.eventStyle.declined
+		font.family: eventBar.titleFont.family
+		font.pointSize: eventBar.titleFont.pointSize
+		font.bold: eventBar.inProgress // Event in progress
 		elide: Text.ElideRight
 		wrapMode: Text.NoWrap
 	}
@@ -84,17 +85,17 @@ Rectangle {
 	DragMouseArea {
 		id: dragArea
 		anchors.fill: parent
-		eventItem: bar.eventItem
-		onDragStarted: function(from, at, copy) { bar.dragStarted(from, at, copy) }
-		onDragMoved: function(at, copy) { bar.dragMoved(at, copy) }
-		onDropped: function(copy) { bar.dropped(copy) }
-		onDragCanceled: bar.dragCanceled()
+		eventItem: eventBar.eventItem
+		onDragStarted: function(from, at, copy) { eventBar.dragStarted(from, at, copy) }
+		onDragMoved: function(at, copy) { eventBar.dragMoved(at, copy) }
+		onDropped: function(copy) { eventBar.dropped(copy) }
+		onDragCanceled: eventBar.dragCanceled()
 	}
 
 	PlasmaCore.ToolTipArea {
 		anchors.fill: parent
-		mainText: bar.eventItem ? bar.eventItem.summary : ""
-		subText: containsMouse && bar.detailsModel ? bar.detailsModel.eventDetailsText(bar.eventItem) : ""
+		mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""
+		subText: containsMouse && eventBar.detailsModel ? eventBar.detailsModel.eventDetailsText(eventBar.eventItem) : ""
 		textFormat: Text.PlainText
 	}
 }
