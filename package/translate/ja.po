@@ -1591,7 +1591,7 @@ msgstr "表示方法"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "カレンダーのデフォルト"
+msgstr "カレンダーの既定"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"

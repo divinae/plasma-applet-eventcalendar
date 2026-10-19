@@ -1727,7 +1727,7 @@ msgstr "표시 방법"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "달력 기본값"
+msgstr "캘린더 기본값"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
