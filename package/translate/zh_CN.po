@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:42+0200\n"
+"POT-Creation-Date: 2026-10-19 09:54+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -421,6 +421,29 @@ msgstr "使用 Google 日历中设置的提醒时间"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
 msgstr "保持显示直到关闭"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Hide after"
+msgstr "隐藏时间"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification shown for"
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 秒"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification timeout"
+msgid "System default"
+msgstr "系统默认"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"System default: as set in System Settings > Notifications. A reminder hidden "
+"after a set time isn't kept in the notification history."
+msgstr ""
+"系统默认：按照“系统设置 > 通知”中的设置。按设定时间隐藏的提醒不会保留在通知历"
+"史中。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"

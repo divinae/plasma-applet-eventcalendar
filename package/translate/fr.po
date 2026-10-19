@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:42+0200\n"
+"POT-Creation-Date: 2026-10-19 09:54+0200\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -428,6 +428,31 @@ msgstr "Utiliser les délais de rappel définis dans Google Calendar"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
 msgstr "Conserver jusqu'à fermeture"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Hide after"
+msgstr "Masquer après"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification shown for"
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 seconde"
+msgstr[1] "%1 secondes"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification timeout"
+msgid "System default"
+msgstr "Valeur du système"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"System default: as set in System Settings > Notifications. A reminder hidden "
+"after a set time isn't kept in the notification history."
+msgstr ""
+"Valeur du système : comme réglé dans Configuration du système > "
+"Notifications. Un rappel masqué après un délai fixe n'est pas conservé dans "
+"l'historique des notifications."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"

@@ -10,7 +10,8 @@ import "./NotificationState.js" as NotificationState
 // notify({ summary, body, appName, appIcon, event, urgency, expireTimeout, soundFile, actions }, callback)
 // - event: notifyrc event id (reminder, eventStarting, timer, syncProblem); each can be
 //   configured in System Settings > Notifications > Event Calendar.
-// - expireTimeout: 0 = keep until dismissed; anything else = Plasma's popup timeout.
+// - expireTimeout: 0 = keep until dismissed; > 0 = closed after that many ms; else (-1) Plasma's
+//   popup timeout.
 // - urgency: 'low' | 'normal' | 'critical'.
 // - actions: ["id,Label", ...].
 // callback(actionId) once: an action id, 'default' (the notification was clicked) or 'closed'.
@@ -92,6 +93,6 @@ QtObject {
 			text: args.body || "",
 			iconName: args.appIcon || "view-calendar",
 			urgency: args.urgency,
-		}, actionList, args.expireTimeout === 0, answer)
+		}, actionList, args.expireTimeout === 0, answer, args.expireTimeout > 0 ? args.expireTimeout : 0)
 	}
 }

@@ -143,13 +143,36 @@ ConfigPage {
 				configKey: 'eventReminderUseGoogle'
 			}
 			FormCard.FormDelegateSeparator {}
-			// eventReminderTimeout: 0 = keep until dismissed; anything else = Plasma's popup timeout
-			// (System Settings > Notifications). KDE notifications have no per-notification timeout.
+			// eventReminderTimeout: 0 = keep until dismissed, N > 0 = hide after N seconds,
+			// -1 = Plasma's popup timeout (System Settings > Notifications).
 			FormCard.FormSwitchDelegate {
+				id: reminderKeep
 				enabled: reminderEnabled.checked
 				text: i18n("Keep until dismissed")
-				checked: page.configBridge.read("eventReminderTimeout", 12) === 0
-				onToggled: page.configBridge.write("eventReminderTimeout", checked ? 0 : 12)
+				checked: page.configBridge.read("eventReminderTimeout", -1) === 0
+				onToggled: page.configBridge.write("eventReminderTimeout", checked ? 0 : (reminderHideAfter.value > 0 ? reminderHideAfter.value : -1))
+			}
+			FormCard.FormDelegateSeparator {}
+			FormCard.FormSpinBoxDelegate {
+				id: reminderHideAfter
+				enabled: reminderEnabled.checked && !reminderKeep.checked
+				label: i18n("Hide after")
+				// 0 shows as the system's timeout.
+				value: Math.max(0, page.configBridge.read("eventReminderTimeout", -1))
+				from: 0
+				to: 3600
+				textFromValue: function(value, locale) {
+					return value > 0 ? i18ncp("notification shown for", "%1 second", "%1 seconds", value) : i18nc("notification timeout", "System default")
+				}
+				valueFromText: function(text, locale) {
+					var n = parseInt(text, 10)
+					return isNaN(n) ? 0 : n
+				}
+				onValueModified: page.configBridge.write("eventReminderTimeout", value > 0 ? value : -1)
+			}
+			FormCard.FormSectionText {
+				visible: reminderHideAfter.enabled
+				text: i18n("System default: as set in System Settings > Notifications. A reminder hidden after a set time isn't kept in the notification history.")
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {

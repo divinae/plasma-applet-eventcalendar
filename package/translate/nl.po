@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:42+0200\n"
+"POT-Creation-Date: 2026-10-19 09:54+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -427,6 +427,31 @@ msgstr "De herinneringstijden uit Google Agenda gebruiken"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
 msgstr "Tonen tot weggeklikt"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Hide after"
+msgstr "Verbergen na"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification shown for"
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1 seconde"
+msgstr[1] "%1 seconden"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification timeout"
+msgid "System default"
+msgstr "Systeemstandaard"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"System default: as set in System Settings > Notifications. A reminder hidden "
+"after a set time isn't kept in the notification history."
+msgstr ""
+"Systeemstandaard: zoals ingesteld in Systeeminstellingen > Meldingen. Een "
+"herinnering die na een vaste tijd wordt verborgen, blijft niet in de "
+"meldingengeschiedenis."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"

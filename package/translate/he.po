@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:42+0200\n"
+"POT-Creation-Date: 2026-10-19 09:54+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -428,6 +428,32 @@ msgstr "שימוש בזמני התזכורת שהוגדרו ב־Google Calendar"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
 msgstr "להשאיר עד לסגירה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Hide after"
+msgstr "הסתרה לאחר"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification shown for"
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "שנייה %1"
+msgstr[1] "%1 שניות"
+msgstr[2] "%1 שניות"
+msgstr[3] "%1 שניות"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification timeout"
+msgid "System default"
+msgstr "ברירת המחדל של המערכת"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"System default: as set in System Settings > Notifications. A reminder hidden "
+"after a set time isn't kept in the notification history."
+msgstr ""
+"ברירת המחדל של המערכת: כפי שמוגדר בהגדרות המערכת > התראות. תזכורת שמוסתרת "
+"לאחר זמן קבוע אינה נשמרת בהיסטוריית ההתראות."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"

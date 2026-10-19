@@ -282,8 +282,9 @@
 			<default>true</default>
 		</entry>
 		<entry name="eventReminderTimeout" type="int">
-			<!-- Seconds. 0 = keep until dismissed. -->
-			<default>12</default>
+			<!-- Reminders: 0 = keep until dismissed, N > 0 = hide after N seconds,
+			     -1 = Plasma's popup timeout (System Settings > Notifications). -->
+			<default>-1</default>
 		</entry>
 		<entry name="eventReminderSnoozeMinutes" type="int">
 			<!-- 0 = no Snooze button. -->

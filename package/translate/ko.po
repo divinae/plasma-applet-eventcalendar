@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:42+0200\n"
+"POT-Creation-Date: 2026-10-19 09:54+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -423,6 +423,29 @@ msgstr "Google 캘린더에 설정된 미리 알림 시간 사용"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
 msgstr "닫을 때까지 유지"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Hide after"
+msgstr "숨기기까지"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification shown for"
+msgid "%1 second"
+msgid_plural "%1 seconds"
+msgstr[0] "%1초"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "notification timeout"
+msgid "System default"
+msgstr "시스템 기본값"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"System default: as set in System Settings > Notifications. A reminder hidden "
+"after a set time isn't kept in the notification history."
+msgstr ""
+"시스템 기본값: 시스템 설정 > 알림의 설정을 따릅니다. 정해진 시간 후 숨긴 알림"
+"은 알림 기록에 남지 않습니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"

@@ -117,12 +117,20 @@ CalendarManager {
 		})
 	}
 
+	// eventReminderTimeout: 0 = keep until dismissed, N > 0 = N seconds, else Plasma's timeout.
+	function reminderExpireTimeout() {
+		var seconds = plasmoid.configuration.eventReminderTimeout
+		if (seconds === 0) {
+			return 0
+		}
+		return seconds > 0 ? seconds * 1000 : -1
+	}
+
 	function sendEventReminderNotification(eventItem, minutes) {
 		var deltaText = LocaleFuncs.durationShortFormat(minutes * 60)
 		var meetingLink = MeetingLink.find(eventItem)
 		notifyEvent(eventItem, {
-			// expireTimeout: (minutes*60 - 1) * 1000, // timeout resets on hover so may last longer than event starts.
-			expireTimeout: plasmoid.configuration.eventReminderTimeout === 0 ? 0 : -1, // 0 = keep until dismissed
+			expireTimeout: upcomingEvents.reminderExpireTimeout(),
 			summary: i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", deltaText, eventItem.summary),
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
@@ -138,7 +146,7 @@ CalendarManager {
 			? i18nc("%1 = 15 minutes, %2 = event title", "In %1: %2", LocaleFuncs.durationShortFormat(minutesLeft * 60), eventItem.summary)
 			: eventItem.summary
 		notifyEvent(eventItem, {
-			expireTimeout: plasmoid.configuration.eventReminderTimeout === 0 ? 0 : -1,
+			expireTimeout: upcomingEvents.reminderExpireTimeout(),
 			summary: summary,
 			body: eventNotificationBody(eventItem, meetingLink),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
