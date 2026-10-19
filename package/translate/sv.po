@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -487,6 +487,30 @@ msgid "Join buttons open Google Meet links there; other meeting links open in th
 msgstr "Anslut-knappar öppnar Google Meet-länkar där; andra möteslänkar öppnas i standardwebbläsaren. I ett kommando står %u för möteslänken. Google-konto: dess nummer (0, 1, …) eller e-post, som i Googles kontoväxlare; tomt använder appens standard."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Möten"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Öppna möteslänken när ett möte börjar"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "För möten som du har accepterat eller organiserar och som inte är markerade som avslutade."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Stör ej under möten"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off."
+msgstr "Plasmas Stör ej från början till slutet av ett möte med gäster eller en möteslänk. Markera som avslutat stänger av det."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Endast möten jag har accepterat"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Inbjudningar"
 
@@ -497,6 +521,22 @@ msgstr "Nya inbjudningar för idag"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "En underrättelse för varje möte idag som du inte har svarat på, med Ja, Kanske och Nej."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Daglig dagordning"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Dagens händelser varje morgon"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "A notification with today's events once a day, also when the computer is turned on later."
+msgstr "En avisering med dagens händelser en gång om dagen, även när datorn startas senare."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Kl."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -892,6 +932,19 @@ msgid "Month view"
 msgstr "Månadsvy"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Avböjda händelser"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Visa (överstruket)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Dölj"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Dubbelklick på en dag"
 
@@ -1255,6 +1308,11 @@ msgstr "Upprepas"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Deltar du?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Överlappar med: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1971,6 +2029,32 @@ msgstr "Från %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Inbjudan: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Hela dagen: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 till"
+msgstr[1] "+%1 till"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Idag: %1 händelse"
+msgstr[1] "Idag: %1 händelser"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Inget planerat idag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Öppna dagordning"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

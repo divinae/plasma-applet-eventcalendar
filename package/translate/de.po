@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -535,6 +535,36 @@ msgstr ""
 "nimmt die Vorgabe der Anwendung."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Besprechungen"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Besprechungslink öffnen, wenn eine Besprechung beginnt"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Für Besprechungen, die Sie angenommen haben oder organisieren und die nicht "
+"als beendet markiert sind."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "„Nicht stören“ während Besprechungen"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Plasmas „Nicht stören“ vom Beginn bis zum Ende einer Besprechung mit Gästen "
+"oder einem Besprechungslink. „Als beendet markieren“ schaltet es aus."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Nur angenommene Besprechungen"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Einladungen"
 
@@ -549,6 +579,26 @@ msgid ""
 msgstr ""
 "Eine Benachrichtigung für jede heutige Besprechung, die Sie noch nicht "
 "beantwortet haben, mit Ja, Vielleicht und Nein."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Tagesübersicht"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Jeden Morgen die heutigen Ereignisse"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Einmal am Tag eine Benachrichtigung mit den heutigen Ereignissen, auch wenn "
+"der Computer erst später eingeschaltet wird."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Um"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1022,6 +1072,19 @@ msgid "Month view"
 msgstr "Monatsansicht"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Abgelehnte Ereignisse"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Anzeigen (durchgestrichen)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Ausblenden"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Doppelklick auf einen Tag"
 
@@ -1401,6 +1464,11 @@ msgstr "Wiederholt sich"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Teilnehmen?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Überschneidet sich mit: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2130,6 +2198,32 @@ msgstr "Von %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Einladung: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Ganztags: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 weiteres"
+msgstr[1] "+%1 weitere"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Heute: %1 Ereignis"
+msgstr[1] "Heute: %1 Ereignisse"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Heute nichts geplant"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Ereignisse öffnen"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -531,6 +531,36 @@ msgstr ""
 "accountwisselaar; leeg gebruikt de standaard van de app."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Vergaderingen"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Vergaderlink openen wanneer een vergadering begint"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Voor vergaderingen die je hebt geaccepteerd of organiseert en die niet als "
+"afgelopen zijn gemarkeerd."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Niet storen tijdens vergaderingen"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"‘Niet storen’ van Plasma vanaf het begin tot het einde van een vergadering "
+"met gasten of een vergaderlink. ‘Markeren als afgelopen’ schakelt het uit."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Alleen vergaderingen die ik heb geaccepteerd"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Uitnodigingen"
 
@@ -545,6 +575,26 @@ msgid ""
 msgstr ""
 "Een melding voor elke vergadering van vandaag die je nog niet hebt "
 "beantwoord, met Ja, Misschien en Nee."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Dagelijkse agenda"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Elke ochtend de afspraken van vandaag"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Eén keer per dag een melding met de afspraken van vandaag, ook als de "
+"computer later wordt aangezet."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Om"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1013,6 +1063,19 @@ msgid "Month view"
 msgstr "Maandweergave"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Afgewezen afspraken"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Tonen (doorgestreept)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Verbergen"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Dubbelklikken op een dag"
 
@@ -1392,6 +1455,11 @@ msgstr "Herhaalt"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Ga je?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Overlapt met: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2116,6 +2184,32 @@ msgstr "Van %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Uitnodiging: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Hele dag: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 meer"
+msgstr[1] "+%1 meer"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Vandaag: %1 afspraak"
+msgstr[1] "Vandaag: %1 afspraken"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Vandaag niets gepland"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Agenda openen"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

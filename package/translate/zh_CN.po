@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -522,6 +522,34 @@ msgstr ""
 "换器一致；留空则使用应用的默认账号。"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "会议"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "会议开始时打开会议链接"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "适用于您已接受或组织的、未标记为已结束的会议。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "会议期间开启勿扰模式"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"从有参与者或会议链接的会议开始到结束期间开启 Plasma 的勿扰模式。“标记为已结"
+"束”会将其关闭。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "仅限我已接受的会议"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "邀请"
 
@@ -534,6 +562,24 @@ msgid ""
 "A notification for each meeting today you haven't answered yet, with Yes, "
 "Maybe and No."
 msgstr "为今天每个尚未答复的会议显示一条通知，可选择“是”、“可能”和“否”。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "每日日程"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "每天早上显示今天的事件"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr "每天一次显示今天事件的通知，电脑较晚开机时也会显示。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "时间"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -981,6 +1027,19 @@ msgid "Month view"
 msgstr "月视图"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "已拒绝的事件"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "显示（加删除线）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "隐藏"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "双击某天时"
 
@@ -1359,6 +1418,11 @@ msgstr "重复"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "参加吗？"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "与以下事件重叠：%1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2066,6 +2130,30 @@ msgstr "来自 %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "邀请：%1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "全天：%1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+另外 %1 个"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "今天：%1 个事件"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "今天没有安排"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "打开日程"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

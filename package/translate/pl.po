@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -489,6 +489,30 @@ msgid "Join buttons open Google Meet links there; other meeting links open in th
 msgstr "Przyciski Dołącz otwierają tam linki Google Meet; inne linki spotkań otwierają się w domyślnej przeglądarce. W poleceniu %u oznacza link do spotkania. Konto Google: jego numer (0, 1, …) albo e-mail, jak w przełączniku kont Google; puste oznacza domyślne konto aplikacji."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Spotkania"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Otwieraj link do spotkania, gdy spotkanie się zaczyna"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "Dotyczy spotkań zaakceptowanych lub organizowanych przez ciebie, nieoznaczonych jako zakończone."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Nie przeszkadzać podczas spotkań"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off."
+msgstr "Tryb „Nie przeszkadzać” Plasmy od początku do końca spotkania z gośćmi lub linkiem do spotkania. „Oznacz jako zakończone” go wyłącza."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Tylko zaakceptowane przeze mnie spotkania"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Zaproszenia"
 
@@ -499,6 +523,22 @@ msgstr "Nowe zaproszenia na dziś"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "Powiadomienie o każdym dzisiejszym spotkaniu, na które jeszcze nie odpowiedziałeś, z opcjami Tak, Może i Nie."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Dzienny harmonogram"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Dzisiejsze wydarzenia każdego ranka"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "A notification with today's events once a day, also when the computer is turned on later."
+msgstr "Powiadomienie z dzisiejszymi wydarzeniami raz dziennie, także gdy komputer zostanie włączony później."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "O"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -894,6 +934,19 @@ msgid "Month view"
 msgstr "Widok miesiąca"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Odrzucone wydarzenia"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Pokaż (przekreślone)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Ukryj"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Dwukrotne kliknięcie dnia"
 
@@ -1258,6 +1311,11 @@ msgstr "Powtarza się"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Weźmiesz udział?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Pokrywa się z: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1987,6 +2045,34 @@ msgstr "Od: %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Zaproszenie: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Cały dzień: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 więcej"
+msgstr[1] "+%1 więcej"
+msgstr[2] "+%1 więcej"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Dzisiaj: %1 wydarzenie"
+msgstr[1] "Dzisiaj: %1 wydarzenia"
+msgstr[2] "Dzisiaj: %1 wydarzeń"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Nic na dzisiaj nie zaplanowano"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Otwórz harmonogram"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

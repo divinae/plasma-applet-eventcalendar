@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -490,6 +490,30 @@ msgid "Join buttons open Google Meet links there; other meeting links open in th
 msgstr "Liity-painikkeet avaavat Google Meet -linkit siinä; muut kokouslinkit avautuvat oletusselaimessa. Komennossa %u tarkoittaa kokouslinkkiä. Google-tili: sen numero (0, 1, …) tai sähköposti kuten Googlen tilinvaihtajassa; tyhjä käyttää sovelluksen oletusta."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Kokoukset"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Avaa kokouslinkki, kun kokous alkaa"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "Kokouksille, jotka olet hyväksynyt tai järjestät ja joita ei ole merkitty päättyneiksi."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Älä häiritse -tila kokousten aikana"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off."
+msgstr "Plasman Älä häiritse -tila kokouksen alusta loppuun, kun kokouksessa on vieraita tai kokouslinkki. \"Merkitse päättyneeksi\" poistaa sen käytöstä."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Vain hyväksymäni kokoukset"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Kutsut"
 
@@ -500,6 +524,22 @@ msgstr "Uudet kutsut tälle päivälle"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "Ilmoitus jokaisesta tämän päivän tapaamisesta, johon et ole vielä vastannut, ja valinnat Kyllä, Ehkä ja Ei."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Päivän agenda"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Päivän tapahtumat joka aamu"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "A notification with today's events once a day, also when the computer is turned on later."
+msgstr "Ilmoitus päivän tapahtumista kerran päivässä, myös jos tietokone käynnistetään vasta myöhemmin."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Klo"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -895,6 +935,19 @@ msgid "Month view"
 msgstr "Kuukausinäkymä"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Hylätyt tapahtumat"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Näytä (yliviivattuna)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Piilota"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Päivän kaksoisnapsautus"
 
@@ -1258,6 +1311,11 @@ msgstr "Toistuu"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Osallistutko?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Päällekkäin: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1974,6 +2032,32 @@ msgstr "Lähettäjä %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Kutsu: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Koko päivän: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 muu"
+msgstr[1] "+%1 muuta"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Tänään: %1 tapahtuma"
+msgstr[1] "Tänään: %1 tapahtumaa"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Ei mitään suunniteltua tänään"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Avaa agenda"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

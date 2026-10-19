@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -533,6 +533,34 @@ msgstr ""
 "המחדל של היישום."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "פגישות"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "פתיחת קישור הפגישה כשהפגישה מתחילה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "לפגישות שאישרת או שארגנת, שלא סומנו כהסתיימו."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "לא להפריע במהלך פגישות"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"מצב „לא להפריע” של Plasma מתחילת פגישה עם אורחים או קישור לפגישה ועד סופה. "
+"„סימון כהסתיים” מכבה אותו."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "רק פגישות שאישרתי"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "הזמנות"
 
@@ -545,6 +573,24 @@ msgid ""
 "A notification for each meeting today you haven't answered yet, with Yes, "
 "Maybe and No."
 msgstr "התראה לכל פגישה היום שעוד לא עניתם עליה, עם כן, אולי ולא."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "סדר היום היומי"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "אירועי היום בכל בוקר"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr "התראה עם אירועי היום פעם ביום, גם כשהמחשב מופעל מאוחר יותר."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "בשעה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1001,6 +1047,19 @@ msgid "Month view"
 msgstr "תצוגת חודש"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "אירועים שנדחו"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "הצגה (עם קו חוצה)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "הסתרה"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "לחיצה כפולה על יום"
 
@@ -1382,6 +1441,11 @@ msgstr "חוזר"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "מגיע/ה?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "חופף ל: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2128,6 +2192,36 @@ msgstr "מאת %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "הזמנה: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "כל היום: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 נוסף"
+msgstr[1] "+%1 נוספים"
+msgstr[2] "+%1 נוספים"
+msgstr[3] "+%1 נוספים"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "היום: %1 אירוע"
+msgstr[1] "היום: %1 אירועים"
+msgstr[2] "היום: %1 אירועים"
+msgstr[3] "היום: %1 אירועים"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "אין תוכניות להיום"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "פתיחת סדר היום"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

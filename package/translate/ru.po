@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -538,6 +538,36 @@ msgstr ""
 "переключателе аккаунтов Google; пусто — по умолчанию приложения."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Встречи"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Открывать ссылку на встречу, когда встреча начинается"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Для встреч, которые вы приняли или организуете и которые не отмечены как "
+"завершённые."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "«Не беспокоить» во время встреч"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Режим «Не беспокоить» Plasma с начала до конца встречи с гостями или ссылкой "
+"на встречу. «Отметить как завершённое» отключает его."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Только принятые мной встречи"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Приглашения"
 
@@ -552,6 +582,26 @@ msgid ""
 msgstr ""
 "Уведомление о каждой сегодняшней встрече, на которую вы ещё не ответили, с "
 "вариантами Да, Возможно и Нет."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Ежедневный обзор дня"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "События на сегодня каждое утро"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Уведомление с событиями на сегодня раз в день, в том числе если компьютер "
+"включён позже."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "В"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1019,6 +1069,19 @@ msgid "Month view"
 msgstr "Вид месяца"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Отклонённые события"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Показывать (зачёркнутыми)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Скрывать"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Двойной щелчок по дню"
 
@@ -1399,6 +1462,11 @@ msgstr "Повторяется"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Пойдете?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Пересекается с: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2141,6 +2209,34 @@ msgstr "От %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Приглашение: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Весь день: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "ещё +%1"
+msgstr[1] "ещё +%1"
+msgstr[2] "ещё +%1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Сегодня: %1 событие"
+msgstr[1] "Сегодня: %1 события"
+msgstr[2] "Сегодня: %1 событий"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "На сегодня ничего не запланировано"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Открыть обзор дня"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

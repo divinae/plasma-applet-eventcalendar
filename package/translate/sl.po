@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -536,6 +536,36 @@ msgstr ""
 "Googlovem preklopniku računov; prazno uporabi privzeto vrednost programa."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Sestanki"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Ob začetku sestanka odpri povezavo do sestanka"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Za sestanke, ki ste jih sprejeli ali jih organizirate in niso označeni kot "
+"končani."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Ne moti med sestanki"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Način Ne moti v Plasmi od začetka do konca sestanka z gosti ali s povezavo "
+"do sestanka. Označi kot končano ga izklopi."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Samo sestanki, ki sem jih sprejel"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Povabila"
 
@@ -550,6 +580,26 @@ msgid ""
 msgstr ""
 "Obvestilo za vsak današnji sestanek, na katerega še niste odgovorili, z "
 "možnostmi Da, Morda in Ne."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Dnevni red za danes"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Današnji dogodki vsako jutro"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Obvestilo z današnjimi dogodki enkrat na dan, tudi če računalnik vklopite "
+"pozneje."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Ob"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1014,6 +1064,19 @@ msgid "Month view"
 msgstr "Mesečni pogled"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Zavrnjeni dogodki"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Prikaži (prečrtano)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Skrij"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Dvoklik na dan"
 
@@ -1395,6 +1458,11 @@ msgstr "Ponavljanje"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Se udeležite?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Prekriva se z: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2144,6 +2212,36 @@ msgstr "Od %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Povabilo: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Ves dan: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+še %1"
+msgstr[1] "+še %1"
+msgstr[2] "+še %1"
+msgstr[3] "+še %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Danes: %1 dogodek"
+msgstr[1] "Danes: %1 dogodka"
+msgstr[2] "Danes: %1 dogodki"
+msgstr[3] "Danes: %1 dogodkov"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Danes ni ničesar načrtovanega"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Odpri dnevni red"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

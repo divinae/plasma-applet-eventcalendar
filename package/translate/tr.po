@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -529,6 +529,36 @@ msgstr ""
 "1, …) veya e-postası; boşsa uygulamanın varsayılanı kullanılır."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Toplantılar"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Toplantı başladığında toplantı bağlantısını aç"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Kabul ettiğiniz veya düzenlediğiniz, bitti olarak işaretlenmemiş toplantılar "
+"için."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Toplantılar sırasında Rahatsız Etmeyin"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Konuklu veya toplantı bağlantılı bir toplantının başından sonuna kadar "
+"Plasma'nın Rahatsız Etmeyin kipi. Bitti olarak işaretle bunu kapatır."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Yalnızca kabul ettiğim toplantılar"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Davetler"
 
@@ -543,6 +573,26 @@ msgid ""
 msgstr ""
 "Henüz yanıtlamadığınız bugünkü her toplantı için Evet, Belki ve Hayır "
 "seçenekli bir bildirim."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Günlük Ajanda"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Her sabah bugünün etkinlikleri"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Günde bir kez bugünün etkinliklerini içeren bir bildirim; bilgisayar daha "
+"sonra açıldığında da."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Saat"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1011,6 +1061,19 @@ msgid "Month view"
 msgstr "Ay görünümü"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Reddedilen etkinlikler"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Göster (üstü çizili)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Gizle"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Bir güne çift tıklayınca"
 
@@ -1390,6 +1453,11 @@ msgstr "Tekrarlanır"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Katılıyor musunuz?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Çakıştığı etkinlikler: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2119,6 +2187,32 @@ msgstr "Gönderen: %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Davet: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Tüm gün: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 tane daha"
+msgstr[1] "+%1 tane daha"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Bugün: %1 etkinlik"
+msgstr[1] "Bugün: %1 etkinlik"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Bugün planlanmış bir şey yok"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Ajandayı Aç"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

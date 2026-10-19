@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -525,6 +525,34 @@ msgstr ""
 "합니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "회의"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "회의가 시작되면 회의 링크 열기"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr "수락했거나 주최하는 회의 중 종료로 표시하지 않은 회의."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "회의 중 방해 금지 모드"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"참석자나 회의 링크가 있는 회의의 시작부터 끝까지 Plasma의 방해 금지 모드를 켭"
+"니다. 종료로 표시하면 꺼집니다."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "수락한 회의만"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "초대"
 
@@ -539,6 +567,26 @@ msgid ""
 msgstr ""
 "아직 답하지 않은 오늘의 회의마다 예, 미정, 아니요를 선택할 수 있는 알림을 표"
 "시합니다."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "오늘의 일정"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "매일 아침 오늘의 이벤트"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"하루에 한 번 오늘의 이벤트를 알림으로 표시합니다. 컴퓨터를 나중에 켠 경우에"
+"도 표시합니다."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "시각"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1000,6 +1048,19 @@ msgid "Month view"
 msgstr "월 보기"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "거절한 이벤트"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "표시(취소선)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "숨기기"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "날짜를 두 번 클릭할 때"
 
@@ -1378,6 +1439,11 @@ msgstr "반복"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "참석하시겠습니까?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "겹치는 일정: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2091,6 +2157,30 @@ msgstr "보낸 사람: %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "초대: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "종일: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "외 %1개"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "오늘: 이벤트 %1개"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "오늘 예정된 일정 없음"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "일정 열기"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -535,6 +535,37 @@ msgstr ""
 "την προεπιλογή της εφαρμογής."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Συσκέψεις"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Άνοιγμα του συνδέσμου σύσκεψης όταν ξεκινά μια σύσκεψη"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Για συσκέψεις που έχετε αποδεχτεί ή οργανώνετε και δεν έχουν σημανθεί ως "
+"ολοκληρωμένες."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "«Μην ενοχλείτε» κατά τις συσκέψεις"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Το «Μην ενοχλείτε» του Plasma από την αρχή έως το τέλος μιας σύσκεψης με "
+"προσκεκλημένους ή σύνδεσμο σύσκεψης. Η «Σήμανση ως ολοκληρωμένης» το "
+"απενεργοποιεί."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Μόνο συσκέψεις που αποδέχτηκα"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Προσκλήσεις"
 
@@ -549,6 +580,26 @@ msgid ""
 msgstr ""
 "Μια ειδοποίηση για κάθε σημερινή σύσκεψη που δεν έχετε απαντήσει ακόμα, με "
 "Ναι, Ίσως και Όχι."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Ημερήσια ατζέντα"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Τα σημερινά συμβάντα κάθε πρωί"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Μια ειδοποίηση με τα σημερινά συμβάντα μία φορά την ημέρα, ακόμα κι αν ο "
+"υπολογιστής ανοίξει αργότερα."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "Στις"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1024,6 +1075,19 @@ msgid "Month view"
 msgstr "Προβολή μήνα"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Απορριφθέντα συμβάντα"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Εμφάνιση (διαγραμμένα)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Απόκρυψη"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Διπλό κλικ σε ημέρα"
 
@@ -1403,6 +1467,11 @@ msgstr "Επαναλαμβάνεται"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Θα παρευρεθείτε;"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Επικαλύπτεται με: %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2133,6 +2202,32 @@ msgstr "Από %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Πρόσκληση: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Όλη την ημέρα: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 ακόμη"
+msgstr[1] "+%1 ακόμη"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Σήμερα: %1 συμβάν"
+msgstr[1] "Σήμερα: %1 συμβάντα"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Τίποτα προγραμματισμένο σήμερα"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Άνοιγμα ατζέντας"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

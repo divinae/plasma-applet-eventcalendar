@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:00+0200\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -533,6 +533,36 @@ msgstr ""
 "valeur par défaut de l'application."
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Meetings"
+msgstr "Réunions"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open the meeting link when a meeting starts"
+msgstr "Ouvrir le lien de la réunion quand elle commence"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For meetings you accepted or organize, not marked as ended."
+msgstr ""
+"Pour les réunions que vous avez acceptées ou que vous organisez, non "
+"marquées comme terminées."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Do Not Disturb during meetings"
+msgstr "Ne pas déranger pendant les réunions"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Plasma's Do Not Disturb from the start until the end of a meeting with "
+"guests or a meeting link. Mark as Ended turns it off."
+msgstr ""
+"Le mode « Ne pas déranger » de Plasma du début à la fin d'une réunion avec "
+"des invités ou un lien de réunion. « Marquer comme terminée » le désactive."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only meetings I accepted"
+msgstr "Seulement les réunions que j'ai acceptées"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Invitations"
 msgstr "Invitations"
 
@@ -547,6 +577,26 @@ msgid ""
 msgstr ""
 "Une notification pour chaque réunion d'aujourd'hui à laquelle vous n'avez "
 "pas encore répondu, avec Oui, Peut-être et Non."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Daily Agenda"
+msgstr "Agenda du jour"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Today's events every morning"
+msgstr "Les événements du jour chaque matin"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"A notification with today's events once a day, also when the computer is "
+"turned on later."
+msgstr ""
+"Une notification avec les événements du jour une fois par jour, même si "
+"l'ordinateur est allumé plus tard."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "At"
+msgstr "À"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
@@ -1022,6 +1072,19 @@ msgid "Month view"
 msgstr "Vue mensuelle"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Declined events"
+msgstr "Événements refusés"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show (struck through)"
+msgstr "Afficher (barrés)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "declined events"
+msgid "Hide"
+msgstr "Masquer"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Double-clic sur un jour"
 
@@ -1401,6 +1464,11 @@ msgstr "Se répète"
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Participer ?"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = titles of other events at the same time"
+msgid "Overlaps with: %1"
+msgstr "Chevauche : %1"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -2128,6 +2196,32 @@ msgstr "De %1"
 msgctxt "%1 = event title"
 msgid "Invitation: %1"
 msgstr "Invitation : %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, %1 = event title"
+msgid "All day: %1"
+msgstr "Toute la journée : %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "daily agenda, more events"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 autre"
+msgstr[1] "+%1 autres"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Today: %1 event"
+msgid_plural "Today: %1 events"
+msgstr[0] "Aujourd'hui : %1 événement"
+msgstr[1] "Aujourd'hui : %1 événements"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Nothing planned today"
+msgstr "Rien de prévu aujourd'hui"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Open Agenda"
+msgstr "Ouvrir l'agenda"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
