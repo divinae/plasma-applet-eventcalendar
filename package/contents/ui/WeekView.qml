@@ -9,6 +9,7 @@ import "MeetingLink.js" as MeetingLink
 import "SeriesEdit.js" as SeriesEdit
 import "Undo.js" as Undo
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
 
@@ -131,7 +132,16 @@ Item {
 	property int rangeFirstHour: workStartHour
 	readonly property int minHourHeight: lineHeight + 6
 	readonly property real hourHeight: Math.max(minHourHeight, flickable.height / (workEndHour - workStartHour))
-	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
+	// Hour labels: the local ones next to the grid, a second time zone's (settings) left of them.
+	readonly property string secondZone: {
+		var zone = String(plasmoid.configuration.weekViewSecondTimeZone || "")
+		return TimeZone.knows(zone) ? zone : ""
+	}
+	readonly property int localGutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
+	readonly property int secondGutterWidth: secondZone ? Math.ceil(Math.max(
+		smallFontMetrics.advanceWidth(formatZoneTime(23, 45)), smallFontMetrics.advanceWidth(formatZoneTime(12, 45)),
+		smallFontMetrics.advanceWidth(zoneAbbreviation(secondZone)))) + Kirigami.Units.smallSpacing : 0
+	readonly property int gutterWidth: localGutterWidth + secondGutterWidth
 	// The scroll bar gets its own room right of the grid instead of covering the last day.
 	readonly property real scrollBarSpace: hourScrollBar.visible ? hourScrollBar.width : 0
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth - scrollBarSpace) / columnCount)
@@ -172,6 +182,25 @@ Item {
 	function formatHour(hour) {
 		var d = new Date(2000, 0, 1, hour)
 		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : 'h AP')
+	}
+	function formatZoneTime(hours, minutes) {
+		var d = new Date(2000, 0, 1, hours, minutes)
+		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : (minutes ? 'h:mm AP' : 'h AP'))
+	}
+	// The second zone's clock at a local hour of the first shown day.
+	function secondZoneLabel(hour) {
+		var day = columnDate(0)
+		var instant = new Date(day.getFullYear(), day.getMonth(), day.getDate(), hour).getTime()
+		var wall = TimeZone.wallClock(secondZone, instant)
+		return wall ? formatZoneTime(wall.hours, wall.minutes) : ""
+	}
+	// Short zone names for the hour column header: the local one from Qt, the other from tz rules.
+	function zoneAbbreviation(zone) {
+		var noon = columnDate(0).getTime() + 12 * 3600000
+		if (!zone) {
+			return Qt.formatDateTime(new Date(noon), "t")
+		}
+		return TimeZone.abbreviation(zone, noon)
 	}
 	function isToday(d) {
 		return Shared.isSameDate(d, currentTime)
@@ -632,10 +661,36 @@ Item {
 		Row {
 			id: dayNamesRow
 			Layout.fillWidth: true
-			Layout.preferredHeight: weekView.singleDay ? 0 : implicitHeight
+			// The Day view: only the time zone names (second time zone).
+			Layout.preferredHeight: weekView.singleDay && !weekView.secondZone ? 0 : implicitHeight
 			Item {
 				width: weekView.gutterWidth
-				height: 1
+				height: weekView.secondZone ? zoneNamesRow.implicitHeight : 1
+				// Time zone names above the hour labels (second time zone).
+				Row {
+					id: zoneNamesRow
+					visible: !!weekView.secondZone
+					anchors.bottom: parent.bottom
+					PlasmaComponents3.Label {
+						width: weekView.secondGutterWidth
+						horizontalAlignment: Text.AlignRight
+						text: weekView.secondZone ? weekView.zoneAbbreviation(weekView.secondZone) : ""
+						font: Kirigami.Theme.smallFont
+						opacity: 0.6
+						PlasmaComponents3.ToolTip.text: weekView.secondZone.replace(/_/g, ' ')
+						PlasmaComponents3.ToolTip.visible: secondZoneHover.hovered
+						HoverHandler {
+							id: secondZoneHover
+						}
+					}
+					PlasmaComponents3.Label {
+						width: weekView.localGutterWidth - Kirigami.Units.smallSpacing
+						horizontalAlignment: Text.AlignRight
+						text: weekView.secondZone ? weekView.zoneAbbreviation("") : ""
+						font: Kirigami.Theme.smallFont
+						opacity: 0.6
+					}
+				}
 			}
 			Repeater {
 				model: weekView.columnCount
@@ -904,8 +959,18 @@ Item {
 								opacity: 0.025
 							}
 							PlasmaComponents3.Label {
+								visible: index > 0 && !!weekView.secondZone
+								width: weekView.secondGutterWidth
+								y: -height / 2
+								horizontalAlignment: Text.AlignRight
+								text: weekView.secondZone ? weekView.secondZoneLabel(parent.hour) : ""
+								font: Kirigami.Theme.smallFont
+								opacity: 0.45
+							}
+							PlasmaComponents3.Label {
 								visible: index > 0
-								width: weekView.gutterWidth - Kirigami.Units.smallSpacing
+								x: weekView.secondGutterWidth
+								width: weekView.localGutterWidth - Kirigami.Units.smallSpacing
 								y: -height / 2
 								horizontalAlignment: Text.AlignRight
 								text: weekView.formatHour(parent.hour)

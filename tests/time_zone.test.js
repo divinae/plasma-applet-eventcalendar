@@ -147,6 +147,10 @@ assert.strictEqual(T.cityName('America/Argentina/Buenos_Aires'), 'Buenos Aires')
 assert.strictEqual(T.offsetText(330), '+05:30')
 assert.strictEqual(T.offsetText(-570), '-09:30')
 assert.deepStrictEqual(plain(T.search('new york', 10)), ['America/New_York'])
+assert.strictEqual(T.search('tok', 10)[0], 'Asia/Tokyo') // Before Antarctica/Vostok
+assert.strictEqual(T.search('york', 10)[0], 'America/New_York') // A word of the city
+assert.strictEqual(T.search('war', 10)[0], 'Europe/Warsaw')
+assert.deepStrictEqual(plain(T.search('a+(b', 10)), []) // No regexp errors
 assert.ok(T.search('', 1000).length >= 300)
 assert.ok(T.search('america', 1000).every(z => /america/i.test(z)))
 assert.deepStrictEqual(plain(T.search('calcutta', 10, 'Asia/Calcutta')), ['Asia/Calcutta']) // An alias, when it's the event's

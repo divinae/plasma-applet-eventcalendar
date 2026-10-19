@@ -308,15 +308,17 @@ function offsetText(offset) {
 	return sign + (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m
 }
 
-// Zones whose id (or city) contains every word of `query`, picker zones first; at most `limit`.
+// Zones whose id contains every word of `query`, at most `limit`: cities starting with the first
+// word first (tok: Asia/Tokyo before Antarctica/Vostok), then words starting with it, then the rest.
+// `extra` (eg: the event's own zone, maybe an alias) is listed too.
 function search(query, limit, extra) {
 	var words = String(query || '').toLowerCase().replace(/_/g, ' ').split(/[\s\/]+/).filter(function(w) { return w })
 	var zones = TimeZoneData.pickerZones.slice()
 	if (extra && zones.indexOf(extra) < 0 && knows(extra)) {
 		zones.unshift(extra)
 	}
-	var out = []
-	for (var i = 0; i < zones.length && out.length < (limit || 50); i++) {
+	var ranked = [[], [], []]
+	for (var i = 0; i < zones.length; i++) {
 		var text = zones[i].toLowerCase().replace(/_/g, ' ')
 		var ok = true
 		for (var j = 0; j < words.length; j++) {
@@ -325,9 +327,16 @@ function search(query, limit, extra) {
 				break
 			}
 		}
-		if (ok) {
-			out.push(zones[i])
+		if (!ok) {
+			continue
 		}
+		var rank = 2
+		if (!words.length || cityName(zones[i]).toLowerCase().indexOf(words[0]) === 0) {
+			rank = 0
+		} else if (new RegExp('(^|[ /])' + words[0].replace(/[^a-z0-9]/g, '\\$&')).test(text)) {
+			rank = 1
+		}
+		ranked[rank].push(zones[i])
 	}
-	return out
+	return ranked[0].concat(ranked[1], ranked[2]).slice(0, limit || 50)
 }
