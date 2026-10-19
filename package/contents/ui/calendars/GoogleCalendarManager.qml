@@ -625,6 +625,7 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		data.items.forEach(function(event){
 			parseEvent(calendar, event)
 		})
+		EventTypes.splitWorkingLocations(data)
 	}
 
 	// Popup reminder minutes from the event, or the calendar defaults.

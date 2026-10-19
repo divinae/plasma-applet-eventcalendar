@@ -301,7 +301,7 @@ CalendarManager {
 				items[i].calendarManagerId = 'GoogleCalendar'
 				items[i].description = ''
 			}
-			shown[calendarId] = { items: items }
+			shown[calendarId] = EventTypes.splitWorkingLocations({ items: items })
 			eventModel.eventsByCalendar[calendarId] = shown[calendarId]
 		}
 		eventModel.cachedEventsByCalendar = shown
@@ -398,18 +398,20 @@ CalendarManager {
 		var inHiddenCalendar = [] // Per item of all
 		var workingLocationItems = []
 		for (var calendarId in eventModel.eventsByCalendar) {
-			var calendarItems = eventModel.eventsByCalendar[calendarId].items
+			var calendarData = eventModel.eventsByCalendar[calendarId]
+			var calendarItems = calendarData.items
 			var calendarHidden = Shared.isHiddenCalendar(calendarId, hiddenCalendarIds)
 			for (var j = 0; j < calendarItems.length; j++) {
-				// Working locations: a label in the day headers, not an event (nor a conflict).
-				if (EventTypes.isWorkingLocation(calendarItems[j])) {
-					if (!calendarHidden && calendarItems[j].canEdit) {
-						workingLocationItems.push(calendarItems[j])
-					}
-					continue
-				}
 				all.push(calendarItems[j])
 				inHiddenCalendar.push(calendarHidden)
+			}
+			// Working locations (kept apart when parsed, see EventTypes.splitWorkingLocations): a
+			// label in the day headers, your own only.
+			var locations = calendarHidden ? [] : Shared.toArray(calendarData.workingLocations)
+			for (var k = 0; k < locations.length; k++) {
+				if (locations[k].canEdit) {
+					workingLocationItems.push(locations[k])
+				}
 			}
 		}
 		// Overlapping meetings, as { summary } objects (see Shared.conflictTitles). Not cached on
@@ -470,10 +472,7 @@ CalendarManager {
 				if (err) {
 					firstError = firstError || err
 				}
-				// Working locations aren't events to show (see mergeEvents).
-				found = found.concat((items || []).filter(function(eventItem) {
-					return !EventTypes.isWorkingLocation(eventItem)
-				}))
+				found = found.concat(items || [])
 				pending -= 1
 				if (pending === 0) {
 					callback(found.length ? null : firstError, found)

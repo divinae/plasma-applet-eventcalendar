@@ -80,6 +80,21 @@ function coveredDayKeys(event) {
 	return keys
 }
 
+// Moves the working locations out of a calendar's events (data.items) into data.workingLocations:
+// they're a label in the day headers, not events to show, notify or search. Done once when a
+// calendar is parsed (GoogleCalendarManager, the disk cache). Changes data, returns it.
+function splitWorkingLocations(data) {
+	var items = []
+	var locations = (data.workingLocations || []).slice() // Split before: kept
+	var list = data.items || []
+	for (var i = 0; i < list.length; i++) {
+		(isWorkingLocation(list[i]) ? locations : items).push(list[i])
+	}
+	data.items = items
+	data.workingLocations = locations
+	return data
+}
+
 // { dayKey: text } of the working locations in events (other events are ignored). Several on one
 // day (eg: home in the morning, office after lunch) are joined in start order with " / ". Like
 // Google Calendar, a single (non-recurring) entry for a day replaces the recurring ones.

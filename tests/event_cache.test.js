@@ -91,7 +91,8 @@ function testEventTypes() {
 		id: 'wl', eventType: 'workingLocation',
 		workingLocationProperties: { type: 'officeLocation', officeLocation: { label: 'Oslo HQ', buildingId: 'b-secret', deskId: 'd-7' } },
 	})
-	const text = cache.serialize({ 'a::c': { items: [ooo, wl] } }, 0, 0, NOW)
+	// Working locations are kept apart from the events (EventTypes.splitWorkingLocations): stored too.
+	const text = cache.serialize({ 'a::c': { items: [ooo], workingLocations: [wl] } }, 0, 0, NOW)
 	for (const word of ['Away, ask Ola', 'outOfOfficeProperties', 'b-secret', 'd-7', 'buildingId']) {
 		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
 	}

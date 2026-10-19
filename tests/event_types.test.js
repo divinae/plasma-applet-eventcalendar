@@ -43,6 +43,19 @@ assert.strictEqual(T.workingLocationText(noProps, words), 'Somewhere', 'falls ba
 const at = (d, h) => new Date(2026, 9, d, h)
 const ev = (base, start, end, extra) => Object.assign({}, base, { startDateTime: start, endDateTime: end }, extra || {})
 const key = (d) => 2026 * 10000 + 9 * 100 + d
+// splitWorkingLocations: working locations apart from the events, once at parse time.
+{
+	const data = { items: [{ id: 'a' }, { id: 'w', eventType: 'workingLocation' }, { id: 'o', eventType: 'outOfOffice' }] }
+	assert.strictEqual(T.splitWorkingLocations(data), data)
+	assert.deepStrictEqual(plain(data.items.map(e => e.id)), ['a', 'o'])
+	assert.deepStrictEqual(plain(data.workingLocations.map(e => e.id)), ['w'])
+	assert.deepStrictEqual(plain(T.splitWorkingLocations({ items: [] })), { items: [], workingLocations: [] })
+	// Split again: the ones found before are kept.
+	T.splitWorkingLocations(data)
+	assert.deepStrictEqual(plain(data.items.map(e => e.id)), ['a', 'o'])
+	assert.deepStrictEqual(plain(data.workingLocations.map(e => e.id)), ['w'])
+}
+
 let map = T.workingLocationMap([
 	ev(home, at(19, 0), at(20, 0), { start: { date: '2026-10-19' }, recurringEventId: 'r1' }), // all-day, recurring
 	ev(home, at(20, 0), at(21, 0), { recurringEventId: 'r1' }),

@@ -120,7 +120,10 @@ function serialize(eventsByCalendar, dateMin, dateMax, now) {
 			continue
 		}
 		var data = eventsByCalendar[calendarId]
-		calendars[calendarId] = toList(data && data.items).filter(isCacheableEvent).map(pickEvent)
+		// Working locations (kept apart, see EventTypes.splitWorkingLocations) are stored with the
+		// events and split again when read (EventModel.showCachedEvents).
+		var events = toList(data && data.items).concat(toList(data && data.workingLocations))
+		calendars[calendarId] = events.filter(isCacheableEvent).map(pickEvent)
 	}
 	return JSON.stringify({
 		version: VERSION,
