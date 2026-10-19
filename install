@@ -42,16 +42,8 @@ detect_plasma_major() {
     return 1
 }
 
-select_target_branch() {
-    local plasma_major="$1"
-    local default_branch="master"
-
-    echo "$default_branch"
-}
-
-update_repo_for_plasma() {
-    local plasma_major="$1"
-    local target_branch=""
+update_repo() {
+    local target_branch="master"
     local current_branch=""
 
     if ! command -v git >/dev/null 2>&1; then
@@ -66,8 +58,6 @@ update_repo_for_plasma() {
         log "WARNING: Uncommitted changes detected. Skipping branch update."
         return 0
     fi
-
-    target_branch="$(select_target_branch "$plasma_major")"
 
     log "Fetching updates from origin..."
     if ! git fetch --prune origin; then
@@ -113,12 +103,6 @@ sync_oauth_assets() {
     cp "$css_src" "$dest_dir/style.css"
 }
 
-select_kpackage_tool() {
-    local plasma_major="$1"
-
-    echo "kpackagetool6"
-}
-
 # Function to check if a command was successful
 check_command_success() {
     if [ "$1" != "0" ]; then
@@ -131,7 +115,7 @@ DISTRO=""
 DISTRO_LIKE=""
 DISTRO_FAMILY=""
 PLASMA_MAJOR=""
-KPACKAGE_TOOL=""
+KPACKAGE_TOOL="kpackagetool6"
 PACKAGES_UPDATED=false
 PYTHON_PACKAGE_DIR="$HOME/.local/share/plasma_org.kde.plasma.eventcalendar/python"
 
@@ -328,20 +312,6 @@ install_requirements() {
     fi
 }
 
-read_metadata_desktop_value() {
-    local file="$1"
-    local key="$2"
-
-    if command -v kreadconfig5 >/dev/null 2>&1; then
-        kreadconfig5 --file="$file" --group="Desktop Entry" --key="$key"
-        return 0
-    fi
-
-    local raw
-    raw=$(grep -m1 "^${key}=" "$file" | cut -d= -f2-)
-    echo "${raw:-}"
-}
-
 PLASMA_MAJOR="$(detect_plasma_major || true)"
 if [ -z "$PLASMA_MAJOR" ]; then
     log "WARNING: Unable to detect Plasma version; defaulting to Plasma 6."
@@ -354,26 +324,15 @@ if [ -n "${PLASMA_MAJOR:-}" ] && [ "${PLASMA_MAJOR}" != "6" ]; then
     exit 1
 fi
 
-update_repo_for_plasma "$PLASMA_MAJOR"
+update_repo
 sync_oauth_assets
-
-KPACKAGE_TOOL="$(select_kpackage_tool "$PLASMA_MAJOR")"
 
 # Install script requirements
 install_requirements
 install_python_calendar_dependencies
 
 if ! command -v "$KPACKAGE_TOOL" >/dev/null 2>&1; then
-    for candidate in kpackagetool6 kpackagetool; do
-        if command -v "$candidate" >/dev/null 2>&1; then
-            KPACKAGE_TOOL="$candidate"
-            break
-        fi
-    done
-fi
-
-if ! command -v "$KPACKAGE_TOOL" >/dev/null 2>&1; then
-    log "ERROR: kpackagetool not found"
+    log "ERROR: $KPACKAGE_TOOL not found"
     exit 1
 fi
 
@@ -387,31 +346,19 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-METADATA_DESKTOP="$PWD/package/metadata.desktop"
 METADATA_JSON="$PWD/package/metadata.json"
 
 # Read package information
-packageNamespace=""
-packageServiceType="Plasma/Applet"
-
-if [ -f "$METADATA_JSON" ]; then
-    if ! command -v jq &> /dev/null; then
-        log "Installing jq..."
-        install_packages "jq"
-        check_command_success "$?" "Failed to install jq"
-    fi
-
-    packageNamespace=$(jq -r '.KPlugin.Id' "$METADATA_JSON")
-elif [ -f "$METADATA_DESKTOP" ]; then
-    packageNamespace=$(read_metadata_desktop_value "$METADATA_DESKTOP" "X-KDE-PluginInfo-Name")
-    packageServiceType=$(read_metadata_desktop_value "$METADATA_DESKTOP" "X-KDE-ServiceTypes")
-    if [ -z "$packageServiceType" ]; then
-        packageServiceType="Plasma/Applet"
-    fi
-else
-    log "ERROR: No compatible metadata file found in the package directory."
+if [ ! -f "$METADATA_JSON" ]; then
+    log "ERROR: metadata.json not found in the package directory."
     exit 1
 fi
+if ! command -v jq &> /dev/null; then
+    log "Installing jq..."
+    install_packages "jq"
+    check_command_success "$?" "Failed to install jq"
+fi
+packageNamespace=$(jq -r '.KPlugin.Id' "$METADATA_JSON")
 
 if [ -z "$packageNamespace" ] || [ "$packageNamespace" = "null" ]; then
     log "ERROR: Failed to read package information from metadata."
