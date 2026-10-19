@@ -265,7 +265,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="clockNextEventMinutes" type="int">
-			<default>60</default>
+			<default>15</default>
 		</entry>
 		<entry name="clockShowMeetingProgress" type="bool">
 			<!-- A progress bar under the next meeting chip while the meeting is on -->
