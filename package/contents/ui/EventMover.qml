@@ -14,18 +14,33 @@ Item {
 	property var eventModel
 	// Nothing is saved: the occurrence menu was closed without a choice. The view puts the event back.
 	signal canceled()
+	// The drop is being saved (at once, or once "This event" / "All events" was chosen): the view
+	// waits for the update from here on.
+	signal saving()
 
 	// start / end: Google start / end objects. menuParent, menuX, menuY: where the occurrence menu opens.
 	function drop(eventItem, start, end, copy, menuParent, menuX, menuY) {
 		if (copy) {
+			saving()
 			saveCopy(eventItem, start, end)
 		} else if (eventItem.recurringEventId) {
 			pendingDrop = { eventItem: eventItem, start: start, end: end }
 			scopeMenu.chosen = false
 			scopeMenu.popup(menuParent, menuX, menuY)
 		} else {
+			saving()
 			saveMove(eventItem, start, end, false)
 		}
+	}
+	// The view dropped the drag (eg: its events were refreshed): a menu still open goes away
+	// without saving.
+	function abandon() {
+		if (!pendingDrop) {
+			return
+		}
+		pendingDrop = null
+		scopeMenu.chosen = true // Not a cancel: the view already reset
+		scopeMenu.close()
 	}
 
 	function saveCopy(eventItem, start, end) {
@@ -98,6 +113,7 @@ Item {
 			var d = eventMover.pendingDrop
 			eventMover.pendingDrop = null
 			if (d) {
+				eventMover.saving()
 				eventMover.saveMove(d.eventItem, d.start, d.end, wholeSeries)
 			}
 		}

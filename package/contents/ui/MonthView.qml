@@ -155,7 +155,6 @@ PinchArea {
 		}
 		d.pending = true
 		eventDragState = Object.assign({}, d)
-		eventDropTimeout.restart()
 		var times = WeekDrag.movedByDays(d.eventItem, d.days)
 		var target = mainDaysCalendar.eventDragTarget
 		eventMover.drop(d.eventItem, times.start, times.end, d.copy, target, 0, target.height)
@@ -167,6 +166,13 @@ PinchArea {
 		id: eventMover
 		eventModel: root.eventDragModel
 		onCanceled: root.eventDragCancel()
+		onSaving: eventDropTimeout.restart()
+	}
+	// The drag was reset (eg: the days were filled again) while the occurrence menu is open: no save.
+	onEventDragStateChanged: {
+		if (!eventDragState) {
+			eventMover.abandon()
+		}
 	}
 	// No answer at all (eg: signed out): put the event back.
 	Timer {

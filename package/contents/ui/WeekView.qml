@@ -476,7 +476,6 @@ Item {
 		}
 		d.pending = true
 		dragState = Object.assign({}, d)
-		dropTimeout.restart()
 		var menuParent = d.mode === 'days' ? allDayDragPreview : dragPreview
 		eventMover.drop(d.eventItem, times.start, times.end, d.copy, menuParent, 0, menuParent.height)
 	}
@@ -523,6 +522,13 @@ Item {
 		id: eventMover
 		eventModel: weekView.eventModel
 		onCanceled: weekView.dragCancel()
+		onSaving: dropTimeout.restart()
+	}
+	// The drag was reset (eg: the blocks were rebuilt) while the occurrence menu is open: no save.
+	onDragStateChanged: {
+		if (!dragState) {
+			eventMover.abandon()
+		}
 	}
 	// No answer at all (eg: signed out): put the block back.
 	Timer {
