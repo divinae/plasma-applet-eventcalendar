@@ -40,6 +40,21 @@ Item {
 	// 7: week view. 1: today / day view (the same hour grid with one wide column).
 	property int dayCount: 7
 	readonly property bool singleDay: dayCount === 1
+	// Week view without the weekend (the locale's working days). Still whole weeks: navigation and
+	// weekStart (the first day of week setting) stay the same, only the columns change.
+	property bool workWeek: false
+	// The shown days, as offsets from weekStart, one per column in week order.
+	readonly property var columnDays: {
+		if (workWeek && !singleDay) {
+			return Shared.workDayOffsets(weekStart.getDay(), Qt.locale().weekDays)
+		}
+		var all = []
+		for (var i = 0; i < dayCount; i++) {
+			all.push(i)
+		}
+		return all
+	}
+	readonly property int columnCount: columnDays.length
 	// One day stretched over a wide popup looks wrong: cap its width and center it.
 	// Weather from the popup (Logic). weatherByDay: Shared.dayKey -> daily item.
 	property var weatherByDay: ({})
@@ -119,7 +134,7 @@ Item {
 	readonly property int gutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
 	// The scroll bar gets its own room right of the grid instead of covering the last day.
 	readonly property real scrollBarSpace: hourScrollBar.visible ? hourScrollBar.width : 0
-	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth - scrollBarSpace) / dayCount)
+	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth - scrollBarSpace) / columnCount)
 	readonly property int allDayRowHeight: Math.round(lineHeight * 2.2) + 6 // Title + date span
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
@@ -141,6 +156,19 @@ Item {
 	function dayDate(i) {
 		return new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + i)
 	}
+	// The day shown in column `column`.
+	function columnDate(column) {
+		return dayDate(columnDays[column])
+	}
+	// The column showing the day starting at `dayStart` (ms), -1 when it isn't shown.
+	function columnOfDay(dayStart) {
+		for (var i = 0; i < columnCount; i++) {
+			if (columnDate(i).getTime() === dayStart) {
+				return i
+			}
+		}
+		return -1
+	}
 	function formatHour(hour) {
 		var d = new Date(2000, 0, 1, hour)
 		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : 'h AP')
@@ -153,8 +181,8 @@ Item {
 		if (singleDay) {
 			return Qt.formatDate(weekStart, Qt.locale().dateFormat(Locale.LongFormat))
 		}
-		var first = weekStart
-		var last = dayDate(dayCount - 1)
+		var first = columnDate(0)
+		var last = columnDate(columnCount - 1)
 		if (first.getFullYear() !== last.getFullYear()) {
 			return Qt.formatDate(first, 'd MMM yyyy') + ' – ' + Qt.formatDate(last, 'd MMM yyyy')
 		} else if (first.getMonth() !== last.getMonth()) {
@@ -170,9 +198,9 @@ Item {
 		dropTimeout.stop()
 		var items = eventModel && eventModel.eventsData ? eventModel.eventsData.items : []
 		var result = []
-		for (var i = 0; i < dayCount; i++) {
-			var dayStart = dayDate(i).getTime()
-			var dayEnd = dayDate(i + 1).getTime()
+		for (var i = 0; i < columnCount; i++) {
+			var dayStart = columnDate(i).getTime()
+			var dayEnd = dayDate(columnDays[i] + 1).getTime()
 			var allDay = []
 			var timed = []
 			for (var j = 0; j < items.length; j++) {
@@ -287,6 +315,7 @@ Item {
 		resetScroll()
 		rebuild()
 	}
+	onWorkWeekChanged: rebuild()
 	Component.onCompleted: {
 		rebuild()
 		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
@@ -328,7 +357,7 @@ Item {
 		return WeekDrag.timeAtY(y, dayStart, firstHour, hourHeight)
 	}
 	function dayIndexAtX(x) {
-		return WeekDrag.dayIndexAtX(x, gutterWidth, columnWidth, dayCount)
+		return WeekDrag.dayIndexAtX(x, gutterWidth, columnWidth, columnCount)
 	}
 	// Pieces of events continuing into another day and all-day events can't be dragged (yet).
 	function canDrag(block) {
@@ -343,7 +372,7 @@ Item {
 			pressY: viewportPoint.y + flickable.contentY,
 			start: item.startDateTime,
 			end: item.endDateTime,
-			dayIndex: Math.round((block.dayStart - weekStart.getTime()) / 86400000),
+			dayIndex: Math.max(0, columnOfDay(block.dayStart)), // Column
 			pending: false,
 		}
 		dragMove(viewportPoint)
@@ -361,7 +390,7 @@ Item {
 		if (d.mode === 'move') {
 			d.dayIndex = dayIndexAtX(viewportPoint.x)
 			var top = Math.max(0, Math.min(flickable.contentHeight - hourHeight / 4, hourY(block.start, block.dayStart) + dy))
-			times = WeekDrag.moved(item.startDateTime, item.endDateTime, timeAtY(top, dayDate(d.dayIndex).getTime()))
+			times = WeekDrag.moved(item.startDateTime, item.endDateTime, timeAtY(top, columnDate(d.dayIndex).getTime()))
 		} else {
 			var bottom = Math.max(0, Math.min(flickable.contentHeight, hourY(block.end, block.dayStart) + dy))
 			times = WeekDrag.resized(item.startDateTime, item.endDateTime, timeAtY(bottom, block.dayStart))
@@ -509,8 +538,8 @@ Item {
 	Repeater {
 		model: {
 			var flags = []
-			for (var i = 0; i < weekView.dayCount; i++) {
-				flags.push(Shared.isWeekend(weekView.dayDate(i)))
+			for (var i = 0; i < weekView.columnCount; i++) {
+				flags.push(Shared.isWeekend(weekView.columnDate(i)))
 			}
 			return Shared.runsOf(flags)
 		}
@@ -609,10 +638,10 @@ Item {
 				height: 1
 			}
 			Repeater {
-				model: weekView.dayCount
+				model: weekView.columnCount
 				Item {
 					id: dayHeaderCell
-					readonly property date date: weekView.dayDate(index)
+					readonly property date date: weekView.columnDate(index)
 					readonly property bool today: weekView.isToday(date)
 					readonly property var weather: weekView.dayWeather(date)
 					visible: !weekView.singleDay
@@ -702,8 +731,9 @@ Item {
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 4
 					height: weekView.allDayRowHeight
 					// Square ends where the event continues before or after this week.
-					readonly property bool cutLeft: bar.eventItem.startDateTime < weekView.weekStart
-					readonly property bool cutRight: bar.eventItem.endDateTime > weekView.dayDate(weekView.dayCount)
+					// Before the first or after the last shown day (work week: the weekend too).
+					readonly property bool cutLeft: bar.eventItem.startDateTime < weekView.columnDate(bar.first)
+					readonly property bool cutRight: bar.eventItem.endDateTime > weekView.dayDate(weekView.columnDays[bar.last] + 1)
 					readonly property real cornerRadius: Math.min(8, height / 2)
 					radius: cornerRadius
 					topLeftRadius: cutLeft ? 0 : cornerRadius
@@ -790,7 +820,7 @@ Item {
 
 			// "+N" per day for events in lanes that don't fit.
 			Repeater {
-				model: allDayArea.hasHiddenRow ? weekView.dayCount : 0
+				model: allDayArea.hasHiddenRow ? weekView.columnCount : 0
 				PlasmaComponents3.Label {
 					readonly property int hiddenCount: weekView.allDayHiddenPerDay[index] || 0
 					visible: hiddenCount > 0
@@ -817,7 +847,7 @@ Item {
 			Rectangle {
 				z: 1
 				x: weekView.gutterWidth
-				width: weekView.columnWidth * weekView.dayCount
+				width: weekView.columnWidth * weekView.columnCount
 				height: parent.height
 				radius: 6
 				color: "transparent"
@@ -868,7 +898,7 @@ Item {
 							Rectangle {
 								visible: parent.hour < weekView.workStartHour || parent.hour >= weekView.workEndHour
 								x: weekView.gutterWidth + 1
-								width: weekView.columnWidth * weekView.dayCount - 2
+								width: weekView.columnWidth * weekView.columnCount - 2
 								height: parent.height
 								color: Kirigami.Theme.textColor
 								opacity: 0.025
@@ -886,7 +916,7 @@ Item {
 								visible: index > 0
 								// Inside the frame, so lines don't darken where they meet it.
 								x: weekView.gutterWidth + 1
-								width: weekView.columnWidth * weekView.dayCount - 2
+								width: weekView.columnWidth * weekView.columnCount - 2
 								height: 1
 								color: weekView.gridLineColor
 							}
@@ -897,7 +927,7 @@ Item {
 					Rectangle {
 						id: dragPreview
 						readonly property var info: weekView.dragState
-						readonly property real dayStart: info ? weekView.dayDate(info.dayIndex).getTime() : 0
+						readonly property real dayStart: info ? weekView.columnDate(info.dayIndex).getTime() : 0
 						readonly property color barColor: info ? appletConfig.eventColor(info.eventItem.backgroundColor) : "transparent"
 						readonly property real topY: info ? Math.max(0, weekView.hourY(info.start.getTime(), dayStart)) : 0
 						readonly property real bottomY: info ? Math.min(parent.height, weekView.hourY(info.end.getTime(), dayStart)) : 0

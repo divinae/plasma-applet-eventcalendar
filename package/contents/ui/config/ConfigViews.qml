@@ -60,6 +60,15 @@ ConfigPage {
 			title: i18n("Week and Day")
 		}
 		FormCard.FormCard {
+			FormConfigCombo {
+				text: i18nc("week view setting", "Days shown")
+				configKey: 'weekViewWorkWeek'
+				model: [
+					{ value: false, text: i18n("7 days") },
+					{ value: true, text: i18n("Work week (without the weekend)") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Working hours start")
 				configKey: 'weekViewStartHour'

@@ -714,6 +714,7 @@ MouseArea {
 		sourceComponent: WeekView {
 			eventModel: popup.eventModel
 			dayCount: popup.dayMode ? 1 : 7
+			workWeek: plasmoid.configuration.weekViewWorkWeek // Week view only
 			weatherByDay: popup.weatherInViews ? popup.weatherByDay : ({})
 			weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
 			weatherCurrent: logic.currentWeatherData

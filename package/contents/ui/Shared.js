@@ -139,6 +139,24 @@ function isWeekend(date) {
 	return workingDays.indexOf(day) < 0 && !(day === 0 && workingDays.indexOf(7) >= 0)
 }
 
+// Work week columns: the offsets (0..6) from a week's first day of its working days, in week
+// order. firstWeekday: Date.getDay() of the week's first day (0 = Sunday). workingDays:
+// Qt.locale().weekDays (1..7, Monday..Sunday); none given: Monday to Friday.
+function workDayOffsets(firstWeekday, workingDays) {
+	var days = workingDays && workingDays.length ? workingDays : [1, 2, 3, 4, 5]
+	var working = {}
+	for (var i = 0; i < days.length; i++) {
+		working[Number(days[i]) % 7] = true // 7 (Sunday) -> 0, like getDay()
+	}
+	var offsets = []
+	for (var offset = 0; offset < 7; offset++) {
+		if (working[(firstWeekday + offset) % 7]) {
+			offsets.push(offset)
+		}
+	}
+	return offsets.length ? offsets : [0, 1, 2, 3, 4, 5, 6]
+}
+
 // Consecutive runs of true values: [true, false, true, true] -> [{ first: 0, count: 1 }, { first: 2, count: 2 }]
 // Used to draw adjacent weekend days as one strip.
 function runsOf(flags) {
