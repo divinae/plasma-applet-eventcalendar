@@ -238,6 +238,29 @@ Item {
 		return []
 	}
 
+	// A calendar list fetched from Google: stored, and the account's first one picks the default
+	// selection (see defaultCalendarIdList). patch: other changes to save with it (eg: a label).
+	// callback: see updateAccount. Does nothing for an unknown account.
+	function applyCalendarList(accountId, calendarList, patch, callback) {
+		var account = getAccount(accountId)
+		if (!account) {
+			return
+		}
+		var next = {}
+		for (var key in (patch || {})) {
+			next[key] = patch[key]
+		}
+		next.calendarList = calendarList
+		if (!account.calendarSelectionInitialized && !ensureStringArray(account.calendarIdList).length) {
+			var defaultList = defaultCalendarIdList(calendarList)
+			if (defaultList.length) {
+				next.calendarIdList = defaultList
+				next.calendarSelectionInitialized = true
+			}
+		}
+		updateAccount(accountId, next, callback)
+	}
+
 	function accountCanFetch(account) {
 		return !!(account && (account.refreshToken || account.accessToken))
 	}

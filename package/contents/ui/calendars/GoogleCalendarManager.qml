@@ -104,24 +104,7 @@ CalendarManager {
 				handleError(err, data, xhr)
 				return
 			}
-			var account = getAccount()
-			var patch = {
-				calendarList: data.items,
-			}
-			if (accountsStore && accountId && account
-				&& !account.calendarSelectionInitialized
-				&& (!account.calendarIdList || !account.calendarIdList.length)
-				&& accountsStore.defaultCalendarIdList
-			) {
-				var defaultList = accountsStore.defaultCalendarIdList(data.items)
-				if (defaultList.length) {
-					patch.calendarIdList = defaultList
-					patch.calendarSelectionInitialized = true
-				}
-			}
-			if (accountsStore && accountId) {
-				accountsStore.updateAccount(accountId, patch)
-			}
+			accountsStore.applyCalendarList(accountId, data.items)
 			fetchGoogleAccountEvents(getCalendarIdList())
 			googleCalendarManager.asyncRequestsDone += 1
 		})

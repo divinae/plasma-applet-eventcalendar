@@ -595,22 +595,8 @@ Item {
 			if (!account) {
 				return done()
 			}
-			var label = deriveLabelFromCalendars(data.items)
-			var patch = { calendarList: data.items }
-			if (label && !account.label) {
-				patch.label = label
-			}
-			if (!account.calendarSelectionInitialized
-				&& (!account.calendarIdList || !account.calendarIdList.length)
-				&& accountsStore.defaultCalendarIdList
-			) {
-				var defaultList = accountsStore.defaultCalendarIdList(data.items)
-				if (defaultList.length) {
-					patch.calendarIdList = defaultList
-					patch.calendarSelectionInitialized = true
-				}
-			}
-			accountsStore.updateAccount(account.id, patch, function() {
+			var label = accountsStore.deriveLabelFromCalendars(data.items)
+			accountsStore.applyCalendarList(account.id, data.items, label && !account.label ? { label: label } : null, function() {
 				done()
 			})
 		})
@@ -691,22 +677,6 @@ Item {
 			writeConfig("agendaNewEventLastCalendarId", "")
 		}
 		sessionReset()
-	}
-
-	function deriveLabelFromCalendars(list) {
-		if (!Array.isArray(list)) {
-			return ''
-		}
-		for (var i = 0; i < list.length; i++) {
-			var item = list[i]
-			if (item && item.primary) {
-				return item.id || item.summary || ''
-			}
-		}
-		if (list.length > 0) {
-			return list[0].summary || list[0].id || ''
-		}
-		return ''
 	}
 
 	//--- Access tokens aren't saved, so the settings refresh them with the account's refresh token.
