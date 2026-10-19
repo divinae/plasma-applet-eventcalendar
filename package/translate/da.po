@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -615,8 +615,8 @@ msgid "All Event Notifications"
 msgstr "Alle bekendtgørelser om begivenheder"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Knapperne \"Deltag i møde\" og \"Åbn i kalender\""
+msgid "\"Join meeting\" button"
+msgstr "Knappen \"Deltag i møde\""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2605,10 +2605,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Åbn i kalender"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "Udsæt 1 minut"
@@ -2755,6 +2751,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Knapperne \"Deltag i møde\" og \"Åbn i kalender\""
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Åbn i kalender"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

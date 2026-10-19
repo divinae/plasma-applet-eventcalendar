@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -559,8 +559,8 @@ msgid "All Event Notifications"
 msgstr "Alla händelseunderrättelser"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Knapparna \"Anslut till möte\" och \"Öppna i kalender\""
+msgid "\"Join meeting\" button"
+msgstr "Knappen \"Anslut till möte\""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2444,10 +2444,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Öppna i kalender"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "Slumra 1 minut"
@@ -2593,6 +2589,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Knapparna \"Anslut till möte\" och \"Öppna i kalender\""
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Öppna i kalender"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

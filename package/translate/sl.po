@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -623,8 +623,8 @@ msgid "All Event Notifications"
 msgstr "Vsa obvestila o dogodkih"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Gumba »Pridruži se sestanku« in »Odpri v koledarju«"
+msgid "\"Join meeting\" button"
+msgstr "Gumb »Pridruži se sestanku«"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2657,10 +2657,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Odpri v koledarju"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "Dremež %1 minuto"
@@ -2815,6 +2811,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Gumba »Pridruži se sestanku« in »Odpri v koledarju«"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Odpri v koledarju"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

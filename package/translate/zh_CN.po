@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -603,8 +603,8 @@ msgid "All Event Notifications"
 msgstr "所有事件通知"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "“加入会议”和“在日历中打开”按钮"
+msgid "\"Join meeting\" button"
+msgstr "“加入会议”按钮"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2545,10 +2545,6 @@ msgid "%1 mm"
 msgstr "%1 毫米"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "在日历中打开"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "%1 分钟后再提醒"
@@ -2691,6 +2687,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "“加入会议”和“在日历中打开”按钮"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "在日历中打开"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

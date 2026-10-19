@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -559,8 +559,8 @@ msgid "All Event Notifications"
 msgstr "Tutte le notifiche degli eventi"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Pulsanti «Partecipa alla riunione» e «Apri nel calendario»"
+msgid "\"Join meeting\" button"
+msgstr "Pulsante «Partecipa alla riunione»"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2444,10 +2444,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Apri nel calendario"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "Posticipa di 1 minuto"
@@ -2593,6 +2589,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Pulsanti «Partecipa alla riunione» e «Apri nel calendario»"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Apri nel calendario"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

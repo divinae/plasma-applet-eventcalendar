@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -618,8 +618,8 @@ msgid "All Event Notifications"
 msgstr "Alle afspraakmeldingen"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Knoppen ‘Deelnemen aan vergadering’ en ‘Openen in agenda’"
+msgid "\"Join meeting\" button"
+msgstr "Knop ‘Deelnemen aan vergadering’"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2617,10 +2617,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Openen in agenda"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "1 minuut sluimeren"
@@ -2769,6 +2765,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Knoppen ‘Deelnemen aan vergadering’ en ‘Openen in agenda’"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Openen in agenda"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

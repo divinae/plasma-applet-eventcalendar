@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -616,8 +616,8 @@ msgid "All Event Notifications"
 msgstr "Tüm Etkinlik Bildirimleri"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "\"Toplantıya katıl\" ve \"Takvimde aç\" düğmeleri"
+msgid "\"Join meeting\" button"
+msgstr "\"Toplantıya katıl\" düğmesi"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2617,10 +2617,6 @@ msgid "%1 mm"
 msgstr "%1 mm"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Takvimde Aç"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "1 dakika ertele"
@@ -2769,6 +2765,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "\"Toplantıya katıl\" ve \"Takvimde aç\" düğmeleri"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Takvimde Aç"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

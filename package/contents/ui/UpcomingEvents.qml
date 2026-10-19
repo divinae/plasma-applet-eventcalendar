@@ -72,16 +72,13 @@ CalendarManager {
 		return bodyText
 	}
 
-	// Sends a notification with Join / Open in Calendar (/ Snooze) actions.
+	// Sends a notification with Join (/ RSVP / Snooze) actions.
 	function notifyEvent(eventItem, args) {
 		var meetingLink = MeetingLink.find(eventItem)
 		var actions = []
 		if (plasmoid.configuration.eventNotificationActions) {
 			if (meetingLink) {
 				actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
-			}
-			if (eventItem.htmlLink) {
-				actions.push('open,' + i18n("Open in Calendar"))
 			}
 		}
 		if (args.respond) {
@@ -108,8 +105,6 @@ CalendarManager {
 				upcomingEvents.showInWidget(eventItem) // Clicking the notification itself
 			} else if (actionId === 'join' && meetingLink) {
 				meetingOpener.open(meetingLink.url)
-			} else if (actionId === 'open' && eventItem.htmlLink) {
-				Shared.openExternalUrl(eventItem.htmlLink)
 			} else if (actionId === 'accepted' || actionId === 'tentative' || actionId === 'declined') {
 				// A repeating meeting: answered for the whole series, like the invitation email.
 				eventModel.respondToEvent(eventItem, actionId, !!eventItem.recurringEventId, function() {

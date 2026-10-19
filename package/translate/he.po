@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -614,8 +614,8 @@ msgid "All Event Notifications"
 msgstr "כל התראות האירועים"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "הכפתורים \"הצטרפות לפגישה\" ו\"פתיחה בלוח השנה\""
+msgid "\"Join meeting\" button"
+msgstr "הכפתור \"הצטרפות לפגישה\""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2635,10 +2635,6 @@ msgid "%1 mm"
 msgstr "%1 מ״מ"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "פתיחה בלוח השנה"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "נודניק לדקה"
@@ -2793,6 +2789,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "הכפתורים \"הצטרפות לפגישה\" ו\"פתיחה בלוח השנה\""
+
+#~ msgid "Open in Calendar"
+#~ msgstr "פתיחה בלוח השנה"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

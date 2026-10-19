@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 14:21+0200\n"
+"POT-Creation-Date: 2026-10-19 15:03+0200\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -621,8 +621,8 @@ msgid "All Event Notifications"
 msgstr "Усі сповіщення про події"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
-msgstr "Кнопки «Приєднатися до зустрічі» і «Відкрити в календарі»"
+msgid "\"Join meeting\" button"
+msgstr "Кнопка «Приєднатися до зустрічі»"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -2637,10 +2637,6 @@ msgid "%1 mm"
 msgstr "%1 мм"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open in Calendar"
-msgstr "Відкрити в календарі"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgid "Snooze 1 minute"
 msgid_plural "Snooze %1 minutes"
 msgstr[0] "Відкласти на %1 хвилину"
@@ -2791,6 +2787,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
+#~ msgstr "Кнопки «Приєднатися до зустрічі» і «Відкрити в календарі»"
+
+#~ msgid "Open in Calendar"
+#~ msgstr "Відкрити в календарі"
 
 #~ msgctxt "calendar view showing a year"
 #~ msgid "Year"

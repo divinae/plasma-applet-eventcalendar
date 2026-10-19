@@ -402,7 +402,7 @@ ConfigPage {
 		}
 		FormCard.FormCard {
 			FormConfigSwitch {
-				text: i18n("\"Join meeting\" and \"Open in Calendar\" buttons")
+				text: i18n("\"Join meeting\" button")
 				configKey: 'eventNotificationActions'
 			}
 			FormCard.FormDelegateSeparator {}
