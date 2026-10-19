@@ -21,8 +21,8 @@ assert.deepStrictEqual(act(Key.PageDown, 0, 'month'), { type: 'next' })
 assert.deepStrictEqual(act(Key.Return, 0, 'month'), { type: 'open' })
 assert.deepStrictEqual(act(Key.Enter, Modifier.Keypad, 'month'), { type: 'open' })
 
-// Week, Day, Year: left / right go to the previous / next period; up / down are left alone.
-for (const mode of ['week', 'today', 'year']) {
+// Week, Day: left / right go to the previous / next period; up / down are left alone.
+for (const mode of ['week', 'today']) {
 	assert.deepStrictEqual(act(Key.Left, 0, mode), { type: 'previous' }, mode)
 	assert.deepStrictEqual(act(Key.Right, 0, mode), { type: 'next' }, mode)
 	assert.strictEqual(K.actionFor(Key.Up, 0, mode), null, mode)
@@ -38,7 +38,7 @@ assert.strictEqual(K.actionFor(Key.Down, 0, 'classic'), null)
 assert.strictEqual(K.actionFor(Key.Return, 0, 'classic'), null)
 
 // Everywhere: new, search, today, views.
-for (const mode of ['month', 'week', 'today', 'classic', 'year']) {
+for (const mode of ['month', 'week', 'today', 'classic']) {
 	assert.deepStrictEqual(act(Key.N, 0, mode), { type: 'new' })
 	assert.deepStrictEqual(act(Key.Slash, 0, mode), { type: 'search' })
 	assert.deepStrictEqual(act(Key.Slash, Modifier.Shift, mode), { type: 'search' }) // Shift+7 on German layouts
@@ -46,10 +46,10 @@ for (const mode of ['month', 'week', 'today', 'classic', 'year']) {
 	assert.deepStrictEqual(act(Key.T, 0, mode), { type: 'today' })
 	assert.deepStrictEqual(act(Key.Home, 0, mode), { type: 'today' })
 }
-assert.deepStrictEqual(['1', '2', '3', '4', '5'].map(c => act(c.charCodeAt(0), 0, 'month').mode),
-	['month', 'week', 'today', 'classic', 'year'])
-assert.deepStrictEqual(act(0x35, Modifier.Keypad, 'week'), { type: 'view', mode: 'year' }) // Keypad 5
-assert.strictEqual(K.actionFor(0x36, 0, 'month'), null) // 6: no view
+assert.deepStrictEqual(['1', '2', '3', '4'].map(c => act(c.charCodeAt(0), 0, 'month').mode),
+	['month', 'week', 'today', 'classic'])
+assert.deepStrictEqual(act(0x34, Modifier.Keypad, 'week'), { type: 'view', mode: 'classic' }) // Keypad 4
+assert.strictEqual(K.actionFor(0x35, 0, 'month'), null) // 5: no view
 
 // Modifiers: not ours (Ctrl+N, Alt+Left, Shift+T, Meta+1, Ctrl+Shift+F).
 assert.strictEqual(K.actionFor(Key.N, Modifier.Control, 'month'), null)

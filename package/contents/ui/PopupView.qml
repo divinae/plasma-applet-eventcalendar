@@ -45,7 +45,7 @@ MouseArea {
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
-		if (hourGridMode || yearMode) {
+		if (hourGridMode) {
 			return leftColumnWidth
 		}
 		if (showAgenda && showCalendar) {
@@ -67,7 +67,7 @@ MouseArea {
 	}
 
 	property int singleColumnHeight: {
-		if (hourGridMode || yearMode) {
+		if (hourGridMode) {
 			return bottomRowHeight + viewTabsHeight
 		}
 		var rows = []
@@ -133,10 +133,7 @@ MouseArea {
 	readonly property bool weekMode: plasmoid.configuration.popupMode === 'week'
 	readonly property bool dayMode: plasmoid.configuration.popupMode === 'today'
 	readonly property bool hourGridMode: weekMode || dayMode // Both use WeekView
-	readonly property bool yearMode: plasmoid.configuration.popupMode === 'year'
-	readonly property bool fullViewMode: monthMode || hourGridMode || yearMode
-	// The year view fetches the whole year (Logic.deferredUpdateEvents), the other views a month.
-	onYearModeChanged: logic.updateEvents()
+	readonly property bool fullViewMode: monthMode || hourGridMode
 	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
 	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
 	// The agenda view is the agenda list only (plus optional meteogram / timer); the month view
@@ -523,7 +520,6 @@ MouseArea {
 		anchors.right: parent.right
 		monthViewItem: monthView
 		weekViewItem: weekViewLoader.item
-		yearViewItem: yearViewLoader.item
 		showViewTabs: popup.showViewTabs
 		showPinButton: popup.showPinButton
 		refreshing: popup.refreshing
@@ -772,32 +768,9 @@ MouseArea {
 		}
 	}
 
-	Loader {
-		id: yearViewLoader
-		active: popup.yearMode
-		visible: active
-		anchors.fill: widgetGrid
-		sourceComponent: YearView {
-			eventModel: popup.eventModel
-			year: popup.monthViewDate.getFullYear()
-			today: popup.today
-			onYearRequested: function(year) {
-				popup.monthViewDate = new Date(year, popup.monthViewDate.getMonth(), 1)
-			}
-			onDayClicked: function(date) {
-				popup.selectedDate = date
-				popup.showDayView(date)
-			}
-			onMonthClicked: function(date) {
-				popup.monthViewDate = date
-				plasmoid.configuration.popupMode = 'month'
-			}
-		}
-	}
-
 	GridLayout {
 		id: widgetGrid
-		visible: !popup.hourGridMode && !popup.yearMode
+		visible: !popup.hourGridMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
 		anchors.topMargin: popup.viewTabsHeight
@@ -1006,16 +979,13 @@ MouseArea {
 		if (weekViewLoader.item) {
 			weekViewLoader.item.rebuild()
 		}
-		if (yearViewLoader.item) {
-			yearViewLoader.item.rebuild()
-		}
 		scrollToSelection()
 	}
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup).
 	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen
-	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : yearMode ? 'year' : 'classic'
+	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : 'classic'
 	// Take the keys when the popup opens and when the last card closes (its focus is gone).
 	function focusForKeys() {
 		if (!anyOverlayOpen) {
@@ -1043,7 +1013,7 @@ MouseArea {
 	}
 
 	function runKeyAction(action) {
-		var nav = weekViewLoader.item || yearViewLoader.item
+		var nav = weekViewLoader.item
 		switch (action.type) {
 			case 'previous':
 				if (nav) nav.goPrevious(); else monthView.goPrevious()

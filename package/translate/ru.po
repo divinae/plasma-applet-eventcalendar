@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -1006,11 +1006,6 @@ msgstr "День"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
 msgstr "Обзор дня"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
-msgstr "Год"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
@@ -2043,6 +2038,33 @@ msgid "Event moved"
 msgstr "Событие перемещено"
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "Предлагаемое время:"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "В рабочие часы этого дня нет времени, свободного для всех."
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr "Недоступно"
@@ -2064,14 +2086,6 @@ msgstr "ddd, d MMM"
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
 msgstr "Следующий день"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr "Предлагаемое время:"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
-msgstr "В рабочие часы этого дня нет времени, свободного для всех."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2427,10 +2441,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr "Например: 9am-5pm работа"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr "Предыдущий год"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "Предыдущий день"
 
@@ -2445,10 +2455,6 @@ msgstr "Предыдущий месяц"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "Сегодня"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
-msgstr "Следующий год"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2770,6 +2776,14 @@ msgid "Next days"
 msgstr "Ближайшие дни"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of "
+"%2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 день"
@@ -2786,12 +2800,21 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Место работы: %1"
 
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 событие"
-msgstr[1] "%1 события"
-msgstr[2] "%1 событий"
+#~ msgctxt "calendar view showing a year"
+#~ msgid "Year"
+#~ msgstr "Год"
+
+#~ msgid "Previous Year"
+#~ msgstr "Предыдущий год"
+
+#~ msgid "Next Year"
+#~ msgstr "Следующий год"
+
+#~ msgid "1 event"
+#~ msgid_plural "%1 events"
+#~ msgstr[0] "%1 событие"
+#~ msgstr[1] "%1 события"
+#~ msgstr[2] "%1 событий"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "Вертикальная панель"

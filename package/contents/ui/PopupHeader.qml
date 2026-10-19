@@ -12,9 +12,8 @@ PlasmaExtras.PlasmoidHeading {
 
 	property Item monthViewItem
 	property Item weekViewItem // Week and Day views, null otherwise
-	property Item yearViewItem // Year view, null otherwise
 	// The view with its own title and navigation (goPrevious, goNext, goToday), null: the month view.
-	readonly property Item navViewItem: weekViewItem || yearViewItem
+	readonly property Item navViewItem: weekViewItem
 	property bool showViewTabs: true
 	property bool showPinButton: true
 	property bool refreshing: false
@@ -38,7 +37,6 @@ PlasmaExtras.PlasmoidHeading {
 			{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
 			{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
 			{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
-			{ mode: 'year', icon: "view-calendar", text: i18nc("calendar view showing a year", "Year") },
 		]
 		// The view switcher's width with names, measured off screen.
 		Row {
@@ -129,7 +127,7 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
 				onClicked: header.navViewItem ? header.navViewItem.goPrevious() : header.monthViewItem.goPrevious()
-				PlasmaComponents3.ToolTip.text: header.yearViewItem ? i18n("Previous Year") : header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
+				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
@@ -141,7 +139,7 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next"
 				onClicked: header.navViewItem ? header.navViewItem.goNext() : header.monthViewItem.goNext()
-				PlasmaComponents3.ToolTip.text: header.yearViewItem ? i18n("Next Year") : header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
+				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 		}

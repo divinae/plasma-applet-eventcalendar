@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -871,11 +871,6 @@ msgstr "日"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
 msgstr "予定"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
-msgstr "年"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
@@ -1863,6 +1858,33 @@ msgid "Event moved"
 msgstr "イベントを移動しました"
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "候補の時間:"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "この日の勤務時間内に全員が空いている時間はありません。"
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr "利用できません"
@@ -1884,14 +1906,6 @@ msgstr "M月 d日 (ddd)"
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
 msgstr "次の日"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr "候補の時間:"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
-msgstr "この日の勤務時間内に全員が空いている時間はありません。"
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2212,10 +2226,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr "例：9am-5pm 仕事"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr "前の年"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "前の日"
 
@@ -2230,10 +2240,6 @@ msgstr "前の月"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "今日"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
-msgstr "次の年"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2536,6 +2542,13 @@ msgid "Next days"
 msgstr "今後数日"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of %2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 日"
@@ -2550,10 +2563,19 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
 
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 件のイベント"
+#~ msgctxt "calendar view showing a year"
+#~ msgid "Year"
+#~ msgstr "年"
+
+#~ msgid "Previous Year"
+#~ msgstr "前の年"
+
+#~ msgid "Next Year"
+#~ msgstr "次の年"
+
+#~ msgid "1 event"
+#~ msgid_plural "%1 events"
+#~ msgstr[0] "%1 件のイベント"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "縦向きのパネル"

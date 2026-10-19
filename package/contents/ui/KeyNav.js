@@ -30,11 +30,11 @@ var Modifier = {
 	Keypad: 0x20000000,
 }
 
-// The view tabs in header order: the number keys 1-5 pick them.
-var VIEW_MODES = ['month', 'week', 'today', 'classic', 'year']
+// The view tabs in header order: the number keys 1-4 pick them.
+var VIEW_MODES = ['month', 'week', 'today', 'classic']
 
 // Actions:
-//   { type: 'previous' } / { type: 'next' }: the previous / next month, week, day or year
+//   { type: 'previous' } / { type: 'next' }: the previous / next month, week or day
 //   { type: 'move', days: n }: move the selected day by n days
 //   { type: 'open' }: open the selected day (Day view)
 //   { type: 'new' }: new event on the selected day

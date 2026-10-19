@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1001,11 +1001,6 @@ msgstr "Dan"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
 msgstr "Dnevni red"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
-msgstr "Leto"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
@@ -2050,6 +2045,33 @@ msgid "Event moved"
 msgstr "Dogodek premaknjen"
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "Predlagani termini:"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "Ta dan v delovnem času ni prostega termina za vse."
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr "Ni na voljo"
@@ -2071,14 +2093,6 @@ msgstr "ddd, d. MMM"
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
 msgstr "Naslednji dan"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr "Predlagani termini:"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
-msgstr "Ta dan v delovnem času ni prostega termina za vse."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2443,10 +2457,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr "npr.: 9.00-17.00 služba"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr "Prejšnje leto"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "Prejšnji dan"
 
@@ -2461,10 +2471,6 @@ msgstr "Prejšnji mesec"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "Danes"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
-msgstr "Naslednje leto"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2783,6 +2789,14 @@ msgid "Next days"
 msgstr "Naslednji dnevi"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of "
+"%2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 dan"
@@ -2800,13 +2814,22 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
 
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 dogodek"
-msgstr[1] "%1 dogodka"
-msgstr[2] "%1 dogodki"
-msgstr[3] "%1 dogodkov"
+#~ msgctxt "calendar view showing a year"
+#~ msgid "Year"
+#~ msgstr "Leto"
+
+#~ msgid "Previous Year"
+#~ msgstr "Prejšnje leto"
+
+#~ msgid "Next Year"
+#~ msgstr "Naslednje leto"
+
+#~ msgid "1 event"
+#~ msgid_plural "%1 events"
+#~ msgstr[0] "%1 dogodek"
+#~ msgstr[1] "%1 dogodka"
+#~ msgstr[2] "%1 dogodki"
+#~ msgstr[3] "%1 dogodkov"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "Navpična plošča"

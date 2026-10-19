@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -997,11 +997,6 @@ msgstr "Gün"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
 msgstr "Ajanda"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
-msgstr "Yıl"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
@@ -2025,6 +2020,33 @@ msgid "Event moved"
 msgstr "Etkinlik taşındı"
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "Önerilen zamanlar:"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "Bu günün mesai saatlerinde herkesin müsait olduğu bir zaman yok."
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr "Uygun değil"
@@ -2046,14 +2068,6 @@ msgstr "d MMM ddd"
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
 msgstr "Sonraki gün"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr "Önerilen zamanlar:"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
-msgstr "Bu günün mesai saatlerinde herkesin müsait olduğu bir zaman yok."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2401,10 +2415,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr "Örn: 9-5 arası iş"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr "Önceki Yıl"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "Önceki Gün"
 
@@ -2419,10 +2429,6 @@ msgstr "Önceki Ay"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "Bugün"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
-msgstr "Sonraki Yıl"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2739,6 +2745,14 @@ msgid "Next days"
 msgstr "Sonraki günler"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of "
+"%2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 gün"
@@ -2754,11 +2768,20 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
 
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] "1 etkinlik"
-msgstr[1] "%1 etkinlik"
+#~ msgctxt "calendar view showing a year"
+#~ msgid "Year"
+#~ msgstr "Yıl"
+
+#~ msgid "Previous Year"
+#~ msgstr "Önceki Yıl"
+
+#~ msgid "Next Year"
+#~ msgstr "Sonraki Yıl"
+
+#~ msgid "1 event"
+#~ msgid_plural "%1 events"
+#~ msgstr[0] "1 etkinlik"
+#~ msgstr[1] "%1 etkinlik"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "Dikey panel"

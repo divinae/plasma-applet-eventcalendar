@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -984,11 +984,6 @@ msgstr "יום"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
 msgstr "סדר יום"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
-msgstr "שנה"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
@@ -2032,6 +2027,33 @@ msgid "Event moved"
 msgstr "האירוע הועבר"
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "זמנים מוצעים:"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "אין זמן פנוי לכולם בשעות העבודה של יום זה."
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr "לא זמין"
@@ -2053,14 +2075,6 @@ msgstr "ddd, d ב־MMM"
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
 msgstr "היום הבא"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr "זמנים מוצעים:"
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
-msgstr "אין זמן פנוי לכולם בשעות העבודה של יום זה."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2422,10 +2436,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr "למשל: עבודה בשעות 9:00-‏17:00"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr "השנה הקודמת"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "היום הקודם"
 
@@ -2440,10 +2450,6 @@ msgstr "החודש הקודם"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "היום"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
-msgstr "השנה הבאה"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2761,6 +2767,14 @@ msgid "Next days"
 msgstr "הימים הבאים"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of "
+"%2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "יום אחד"
@@ -2778,13 +2792,22 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
 
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] "אירוע אחד"
-msgstr[1] "%1 אירועים"
-msgstr[2] "%1 אירועים"
-msgstr[3] "%1 אירועים"
+#~ msgctxt "calendar view showing a year"
+#~ msgid "Year"
+#~ msgstr "שנה"
+
+#~ msgid "Previous Year"
+#~ msgstr "השנה הקודמת"
+
+#~ msgid "Next Year"
+#~ msgstr "השנה הבאה"
+
+#~ msgid "1 event"
+#~ msgid_plural "%1 events"
+#~ msgstr[0] "אירוע אחד"
+#~ msgstr[1] "%1 אירועים"
+#~ msgstr[2] "%1 אירועים"
+#~ msgstr[3] "%1 אירועים"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "לוח אנכי"

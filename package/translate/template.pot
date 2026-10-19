@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 13:56+0200\n"
+"POT-Creation-Date: 2026-10-19 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -883,11 +883,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Agenda"
-msgstr ""
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
-msgctxt "calendar view showing a year"
-msgid "Year"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
@@ -1887,6 +1882,33 @@ msgid "Event moved"
 msgstr ""
 
 #: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No suggestions: the guests' busy times aren't available."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "Suggested times (not counting %1):"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "%1 = names of people"
+msgid "No time free in the working hours of this day (not counting %1)."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr ""
+
+#: ../contents/ui/FindTimeView.qml
 msgctxt "someone's calendar in Find a time"
 msgid "Not available"
 msgstr ""
@@ -1907,14 +1929,6 @@ msgstr ""
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Next day"
-msgstr ""
-
-#: ../contents/ui/FindTimeView.qml
-msgid "Suggested times:"
-msgstr ""
-
-#: ../contents/ui/FindTimeView.qml
-msgid "No time free for everyone in the working hours of this day."
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
@@ -2245,10 +2259,6 @@ msgid "Eg: 9am-5pm Work"
 msgstr ""
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Year"
-msgstr ""
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr ""
 
@@ -2262,10 +2272,6 @@ msgstr ""
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
-msgstr ""
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Year"
 msgstr ""
 
 #: ../contents/ui/PopupHeader.qml
@@ -2571,6 +2577,13 @@ msgid "Next days"
 msgstr ""
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = time zone, %2 = a date"
+msgid ""
+"%1\n"
+"The time difference changes during these days: the hours shown are those of %2."
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] ""
@@ -2585,9 +2598,3 @@ msgstr ""
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr ""
-
-#: ../contents/ui/YearView.qml
-msgid "1 event"
-msgid_plural "%1 events"
-msgstr[0] ""
-msgstr[1] ""

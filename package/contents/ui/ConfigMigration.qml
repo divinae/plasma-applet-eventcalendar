@@ -24,6 +24,12 @@ QtObject {
 
 	Component.onCompleted: migrate()
 	onMigrate: {
+		// The Year view (briefly on master before 1.3) was removed: back to the month view.
+		if (plasmoid.configuration.popupMode === 'year') {
+			plasmoid.configuration.popupMode = 'month'
+			logMigration('popupMode year => month')
+		}
+
 		// Modified in: v72
 		if (!plasmoid.configuration.v72Migration) {
 			var oldValue = plasmoid.configuration.enabledCalendarPlugins
