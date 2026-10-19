@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:11+0200\n"
+"POT-Creation-Date: 2026-10-19 13:56+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -165,6 +165,10 @@ msgstr "获取日历出错：%1"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Not logged in to Google Calendar"
 msgstr "未登录 Google 日历"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Could not get the free / busy times"
+msgstr "无法获取忙碌 / 空闲时间"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
@@ -962,6 +966,11 @@ msgstr "日"
 msgid "Agenda"
 msgstr "日程"
 
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing a year"
+msgid "Year"
+msgstr "年"
+
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
 msgstr "标题栏中的视图切换器"
@@ -998,6 +1007,27 @@ msgstr "工作时间开始"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
 msgstr "工作时间结束"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "第二时区"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "无"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "无第二时区"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "其时间会在周视图和日视图中显示在本地时间旁边。"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "搜索时区"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1331,6 +1361,10 @@ msgstr "在 Google 日历中打开"
 msgid "Mark as Ended"
 msgstr "标记为已结束"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Email Guests…"
+msgstr "给参与者发送电子邮件…"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "编辑…"
@@ -1359,12 +1393,12 @@ msgid "Delete All Events of “%1”"
 msgstr "删除“%1”的所有事件"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "此事件"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "系列中的所有事件"
 
@@ -1403,7 +1437,8 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "提醒：提前 %1"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
+#: ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "返回"
 
@@ -1445,14 +1480,44 @@ msgid "Repeats"
 msgstr "重复"
 
 #: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
+msgid "%1 %2 time (%3)"
+msgstr "%2时间 %1（%3）"
+
+#: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "参加吗？"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Out of office"
+msgstr "不在办公室"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Focus time"
+msgstr "专注时间"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines all meetings at this time"
+msgstr "拒绝此时间段的所有会议"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines new invitations at this time"
+msgstr "拒绝此时间段的新邀请"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = message sent when declining"
+msgid "Message: “%1”"
+msgstr "消息：“%1”"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = titles of other events at the same time"
 msgid "Overlaps with: %1"
 msgstr "与以下事件重叠：%1"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Write an email to the guests"
+msgstr "给参与者写电子邮件"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1472,6 +1537,11 @@ msgstr "收起"
 msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "全部显示（%1）"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = start and end time in the local time zone"
+msgid "%1 your time"
+msgstr "您的时间 %1"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
@@ -1533,6 +1603,11 @@ msgid "Enter an email address, like name@example.com"
 msgstr "请输入电子邮件地址，例如 name@example.com"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "you, in Find a time"
+msgid "You"
+msgstr "您"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "编辑事件"
 
@@ -1567,8 +1642,79 @@ msgid "Title"
 msgstr "标题"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Event"
+msgstr "事件"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Out of office"
+msgstr "不在办公室"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Focus time"
+msgstr "专注时间"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Event type"
+msgstr "事件类型"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Don't decline invitations"
+msgstr "不拒绝邀请"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new invitations in this time"
+msgstr "拒绝此时间段的新邀请"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new and existing invitations in this time"
+msgstr "拒绝此时间段的新邀请和现有邀请"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Automatically decline"
+msgstr "自动拒绝"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Message for declined invitations"
+msgstr "拒绝邀请时的消息"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Do not disturb"
+msgstr "勿扰"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Available"
+msgstr "有空"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Do not disturb or Available"
+msgid "Chat status: %1"
+msgstr "聊天状态：%1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Chat status"
+msgstr "聊天状态"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
 msgstr "日历颜色"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Local time"
+msgstr "本地时间"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = time zone id, eg: Europe/Warsaw"
+msgid "Time zone: %1"
+msgstr "时区：%1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Time zone"
+msgstr "时区"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1797,13 +1943,71 @@ msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
 msgstr "%1 <%2>"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
+msgid "Find a Time"
+msgstr "查找时间"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "描述"
 
 #: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Home"
+msgstr "在家"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Office"
+msgstr "办公室"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Elsewhere"
+msgstr "其他地点"
+
+#: ../contents/ui/EventModel.qml
 msgid "This calendar can't import events"
 msgstr "此日历无法导入事件"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't show free / busy times"
+msgstr "此日历无法显示忙碌 / 空闲时间"
+
+#: ../contents/ui/EventMover.qml
+msgid "Event moved"
+msgstr "事件已移动"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time"
+msgid "Not available"
+msgstr "不可用"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time: %1 = Google's reason"
+msgid "Not available (%1)"
+msgstr "不可用（%1）"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Previous day"
+msgstr "前一天"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "Find a time: the day shown"
+msgid "ddd, d MMM"
+msgstr "M月d日 ddd"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Next day"
+msgstr "后一天"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "建议时间："
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "这一天的工作时间内没有所有人都有空的时间。"
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2134,6 +2338,10 @@ msgid "Eg: 9am-5pm Work"
 msgstr "例如：9am-5pm 工作"
 
 #: ../contents/ui/PopupHeader.qml
+msgid "Previous Year"
+msgstr "上一年"
+
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "前一天"
 
@@ -2148,6 +2356,10 @@ msgstr "上个月"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "今天"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Year"
+msgstr "下一年"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2450,10 +2662,6 @@ msgid "Next days"
 msgstr "未来几天"
 
 #: ../contents/ui/WeekView.qml
-msgid "Event moved"
-msgstr "事件已移动"
-
-#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 天"
@@ -2462,6 +2670,16 @@ msgstr[0] "%1 天"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#: ../contents/ui/WorkingLocationLabel.qml
+msgctxt "%1 = Home, Office, ..."
+msgid "Working location: %1"
+msgstr "工作地点：%1"
+
+#: ../contents/ui/YearView.qml
+msgid "1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 个事件"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "垂直面板"

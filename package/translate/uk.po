@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:11+0200\n"
+"POT-Creation-Date: 2026-10-19 13:56+0200\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -167,6 +167,10 @@ msgstr "Помилка отримання календаря: %1"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Not logged in to Google Calendar"
 msgstr "Не виконано вхід до Календаря Google"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Could not get the free / busy times"
+msgstr "Не вдалося отримати час зайнятості"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
@@ -997,6 +1001,11 @@ msgstr "День"
 msgid "Agenda"
 msgstr "Порядок денний"
 
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing a year"
+msgid "Year"
+msgstr "Рік"
+
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
 msgstr "Перемикач подань у заголовку"
@@ -1033,6 +1042,27 @@ msgstr "Початок робочого дня"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
 msgstr "Кінець робочого дня"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Другий часовий пояс"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Немає"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Без другого часового поясу"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "Його години показуються поруч із місцевими в поданнях тижня і дня."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Шукати часові пояси"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1367,6 +1397,10 @@ msgstr "Відкрити в Календарі Google"
 msgid "Mark as Ended"
 msgstr "Позначити як завершену"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Email Guests…"
+msgstr "Написати гостям…"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "Змінити…"
@@ -1395,12 +1429,12 @@ msgid "Delete All Events of “%1”"
 msgstr "Вилучити всі події «%1»"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "Цю подію"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "Усі події серії"
 
@@ -1441,7 +1475,8 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Нагадування: за %1"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
+#: ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Назад"
 
@@ -1483,14 +1518,44 @@ msgid "Repeats"
 msgstr "Повторюється"
 
 #: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
+msgid "%1 %2 time (%3)"
+msgstr "%1, час: %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Підете?"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Out of office"
+msgstr "Поза офісом"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Focus time"
+msgstr "Час для зосередження"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines all meetings at this time"
+msgstr "Відхиляє всі зустрічі в цей час"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines new invitations at this time"
+msgstr "Відхиляє нові запрошення в цей час"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = message sent when declining"
+msgid "Message: “%1”"
+msgstr "Повідомлення: «%1»"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = titles of other events at the same time"
 msgid "Overlaps with: %1"
 msgstr "Перетинається з: %1"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Write an email to the guests"
+msgstr "Написати електронного листа гостям"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1512,6 +1577,11 @@ msgid_plural "Show all %1"
 msgstr[0] "Показати ще %1"
 msgstr[1] "Показати всі %1"
 msgstr[2] "Показати всі %1"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = start and end time in the local time zone"
+msgid "%1 your time"
+msgstr "%1 за вашим часом"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
@@ -1573,6 +1643,11 @@ msgid "Enter an email address, like name@example.com"
 msgstr "Введіть адресу електронної пошти, наприклад name@example.com"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "you, in Find a time"
+msgid "You"
+msgstr "Ви"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Змінити подію"
 
@@ -1607,8 +1682,79 @@ msgid "Title"
 msgstr "Назва"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Event"
+msgstr "Подія"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Out of office"
+msgstr "Поза офісом"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Focus time"
+msgstr "Час для зосередження"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Event type"
+msgstr "Тип події"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Don't decline invitations"
+msgstr "Не відхиляти запрошення"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new invitations in this time"
+msgstr "Відхиляти нові запрошення в цей час"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new and existing invitations in this time"
+msgstr "Відхиляти нові й наявні запрошення в цей час"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Automatically decline"
+msgstr "Автоматично відхиляти"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Message for declined invitations"
+msgstr "Повідомлення для відхилених запрошень"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Do not disturb"
+msgstr "Не турбувати"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Available"
+msgstr "Доступний"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Do not disturb or Available"
+msgid "Chat status: %1"
+msgstr "Статус у чаті: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Chat status"
+msgstr "Статус у чаті"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
 msgstr "Колір календаря"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Local time"
+msgstr "Місцевий час"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = time zone id, eg: Europe/Warsaw"
+msgid "Time zone: %1"
+msgstr "Часовий пояс: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Time zone"
+msgstr "Часовий пояс"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1855,13 +2001,71 @@ msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
 msgstr "%1 <%2>"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
+msgid "Find a Time"
+msgstr "Знайти час"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Опис"
 
 #: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Home"
+msgstr "Вдома"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Office"
+msgstr "Офіс"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Elsewhere"
+msgstr "Інше місце"
+
+#: ../contents/ui/EventModel.qml
 msgid "This calendar can't import events"
 msgstr "Цей календар не може імпортувати події"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't show free / busy times"
+msgstr "Цей календар не може показати час зайнятості"
+
+#: ../contents/ui/EventMover.qml
+msgid "Event moved"
+msgstr "Подію пересунуто"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time"
+msgid "Not available"
+msgstr "Недоступний"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time: %1 = Google's reason"
+msgid "Not available (%1)"
+msgstr "Недоступний (%1)"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Previous day"
+msgstr "Попередній день"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "Find a time: the day shown"
+msgid "ddd, d MMM"
+msgstr "ddd, d MMM"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Next day"
+msgstr "Наступний день"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "Запропонований час:"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "У робочі години цього дня немає часу, вільного для всіх."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2217,6 +2421,10 @@ msgid "Eg: 9am-5pm Work"
 msgstr "Наприклад: 9: 00-17: 00 Робота"
 
 #: ../contents/ui/PopupHeader.qml
+msgid "Previous Year"
+msgstr "Попередній рік"
+
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "Попередній день"
 
@@ -2231,6 +2439,10 @@ msgstr "Попередній місяць"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "Сьогодні"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Year"
+msgstr "Наступний рік"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2548,10 +2760,6 @@ msgid "Next days"
 msgstr "Наступні дні"
 
 #: ../contents/ui/WeekView.qml
-msgid "Event moved"
-msgstr "Подію пересунуто"
-
-#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 день"
@@ -2562,6 +2770,18 @@ msgstr[2] "%1 днів"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#: ../contents/ui/WorkingLocationLabel.qml
+msgctxt "%1 = Home, Office, ..."
+msgid "Working location: %1"
+msgstr "Місце роботи: %1"
+
+#: ../contents/ui/YearView.qml
+msgid "1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 подія"
+msgstr[1] "%1 події"
+msgstr[2] "%1 подій"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "Вертикальна панель"

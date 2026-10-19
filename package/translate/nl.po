@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:11+0200\n"
+"POT-Creation-Date: 2026-10-19 13:56+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -165,6 +165,10 @@ msgstr "Fout bij ophalen van agenda: %1"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Not logged in to Google Calendar"
 msgstr "Niet ingelogd bij Google Agenda"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Could not get the free / busy times"
+msgstr "Kan de beschikbaarheid niet ophalen"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
@@ -996,6 +1000,11 @@ msgstr "Dag"
 msgid "Agenda"
 msgstr "Agenda"
 
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing a year"
+msgid "Year"
+msgstr "Jaar"
+
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
 msgstr "Weergavekiezer in de kopregel"
@@ -1032,6 +1041,28 @@ msgstr "Begin werktijd"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
 msgstr "Einde werktijd"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Tweede tijdzone"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Geen"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Geen tweede tijdzone"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr ""
+"De uren ervan worden naast de lokale getoond in de week- en dagweergave."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Tijdzones zoeken"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1367,6 +1398,10 @@ msgstr "Openen in Google Agenda"
 msgid "Mark as Ended"
 msgstr "Markeren als afgelopen"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Email Guests…"
+msgstr "Gasten e-mailen…"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "Aanpassen…"
@@ -1395,12 +1430,12 @@ msgid "Delete All Events of “%1”"
 msgstr "Alle afspraken van ‘%1’ verwijderen"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "Deze afspraak"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "Alle afspraken in de reeks"
 
@@ -1440,7 +1475,8 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Herinneringen: %1 vooraf"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
+#: ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Terug"
 
@@ -1482,14 +1518,44 @@ msgid "Repeats"
 msgstr "Herhaalt"
 
 #: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
+msgid "%1 %2 time (%3)"
+msgstr "%1 tijd in %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "Ga je?"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Out of office"
+msgstr "Niet op kantoor"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Focus time"
+msgstr "Focustijd"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines all meetings at this time"
+msgstr "Weigert alle vergaderingen in deze periode"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines new invitations at this time"
+msgstr "Weigert nieuwe uitnodigingen in deze periode"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = message sent when declining"
+msgid "Message: “%1”"
+msgstr "Bericht: ‘%1’"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = titles of other events at the same time"
 msgid "Overlaps with: %1"
 msgstr "Overlapt met: %1"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Write an email to the guests"
+msgstr "Een e-mail naar de gasten schrijven"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1510,6 +1576,11 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Nog 1 tonen"
 msgstr[1] "Alle %1 tonen"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = start and end time in the local time zone"
+msgid "%1 your time"
+msgstr "%1 (jouw tijd)"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
@@ -1571,6 +1642,11 @@ msgid "Enter an email address, like name@example.com"
 msgstr "Voer een e-mailadres in, zoals name@example.com"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "you, in Find a time"
+msgid "You"
+msgstr "Jij"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Afspraak aanpassen"
 
@@ -1605,8 +1681,79 @@ msgid "Title"
 msgstr "Titel"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Event"
+msgstr "Afspraak"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Out of office"
+msgstr "Niet op kantoor"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Focus time"
+msgstr "Focustijd"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Event type"
+msgstr "Type afspraak"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Don't decline invitations"
+msgstr "Uitnodigingen niet weigeren"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new invitations in this time"
+msgstr "Nieuwe uitnodigingen in deze periode weigeren"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new and existing invitations in this time"
+msgstr "Nieuwe en bestaande uitnodigingen in deze periode weigeren"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Automatically decline"
+msgstr "Automatisch weigeren"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Message for declined invitations"
+msgstr "Bericht bij geweigerde uitnodigingen"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Do not disturb"
+msgstr "Niet storen"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Available"
+msgstr "Beschikbaar"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Do not disturb or Available"
+msgid "Chat status: %1"
+msgstr "Chatstatus: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Chat status"
+msgstr "Chatstatus"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
 msgstr "Kalenderkleur"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Local time"
+msgstr "Lokale tijd"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = time zone id, eg: Europe/Warsaw"
+msgid "Time zone: %1"
+msgstr "Tijdzone: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Time zone"
+msgstr "Tijdzone"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1844,13 +1991,72 @@ msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
 msgstr "%1 <%2>"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
+msgid "Find a Time"
+msgstr "Tijd zoeken"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Omschrijving"
 
 #: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Home"
+msgstr "Thuis"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Office"
+msgstr "Kantoor"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Elsewhere"
+msgstr "Elders"
+
+#: ../contents/ui/EventModel.qml
 msgid "This calendar can't import events"
 msgstr "Deze agenda kan geen afspraken importeren"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't show free / busy times"
+msgstr "Deze agenda kan geen beschikbaarheid tonen"
+
+#: ../contents/ui/EventMover.qml
+msgid "Event moved"
+msgstr "Afspraak verplaatst"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time"
+msgid "Not available"
+msgstr "Niet beschikbaar"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time: %1 = Google's reason"
+msgid "Not available (%1)"
+msgstr "Niet beschikbaar (%1)"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Previous day"
+msgstr "Vorige dag"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "Find a time: the day shown"
+msgid "ddd, d MMM"
+msgstr "ddd d MMM"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Next day"
+msgstr "Volgende dag"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "Voorgestelde tijden:"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr ""
+"Geen tijd waarop iedereen beschikbaar is binnen de werktijden van deze dag."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2199,6 +2405,10 @@ msgid "Eg: 9am-5pm Work"
 msgstr "Bijv.: 9-17: werk"
 
 #: ../contents/ui/PopupHeader.qml
+msgid "Previous Year"
+msgstr "Vorig jaar"
+
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "Vorige dag"
 
@@ -2213,6 +2423,10 @@ msgstr "Vorige maand"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "Vandaag"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Year"
+msgstr "Volgend jaar"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2524,10 +2738,6 @@ msgid "Next days"
 msgstr "Komende dagen"
 
 #: ../contents/ui/WeekView.qml
-msgid "Event moved"
-msgstr "Afspraak verplaatst"
-
-#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 dag"
@@ -2537,6 +2747,17 @@ msgstr[1] "%1 dagen"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#: ../contents/ui/WorkingLocationLabel.qml
+msgctxt "%1 = Home, Office, ..."
+msgid "Working location: %1"
+msgstr "Werklocatie: %1"
+
+#: ../contents/ui/YearView.qml
+msgid "1 event"
+msgid_plural "%1 events"
+msgstr[0] "1 afspraak"
+msgstr[1] "%1 afspraken"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "Verticaal paneel"

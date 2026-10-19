@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:11+0200\n"
+"POT-Creation-Date: 2026-10-19 13:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -153,6 +153,10 @@ msgstr "カレンダーの取得エラー: %1"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Not logged in to Google Calendar"
 msgstr "Google Calendar にログインしていません"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Could not get the free / busy times"
+msgstr "空き時間情報を取得できませんでした"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
@@ -868,6 +872,11 @@ msgstr "日"
 msgid "Agenda"
 msgstr "予定"
 
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing a year"
+msgid "Year"
+msgstr "年"
+
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
 msgstr "ヘッダーのビュー切り替え"
@@ -904,6 +913,27 @@ msgstr "勤務時間の開始"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
 msgstr "勤務時間の終了"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "2 つ目のタイムゾーン"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "なし"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "2 つ目のタイムゾーンなし"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "週と日の表示で、その時刻がローカル時刻の横に表示されます。"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "タイムゾーンを検索"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1219,6 +1249,10 @@ msgstr "Google Calendar で開く"
 msgid "Mark as Ended"
 msgstr "終了済みにする"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Email Guests…"
+msgstr "ゲストにメールを送信…"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "編集…"
@@ -1246,11 +1280,11 @@ msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "「%1」のすべてのイベントを削除"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "このイベント"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "シリーズのすべてのイベント"
 
@@ -1289,7 +1323,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "リマインダー: %1 前"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "戻る"
 
@@ -1330,14 +1364,44 @@ msgid "Repeats"
 msgstr "繰り返し"
 
 #: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
+msgid "%1 %2 time (%3)"
+msgstr "%1 (%2 時間、%3)"
+
+#: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "参加しますか?"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Out of office"
+msgstr "不在"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Focus time"
+msgstr "サイレント モード"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines all meetings at this time"
+msgstr "この時間のすべての会議を辞退します"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines new invitations at this time"
+msgstr "この時間の新しい招待を辞退します"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = message sent when declining"
+msgid "Message: “%1”"
+msgstr "メッセージ: 「%1」"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = titles of other events at the same time"
 msgid "Overlaps with: %1"
 msgstr "重複: %1"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Write an email to the guests"
+msgstr "ゲストにメールを書く"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1357,6 +1421,11 @@ msgstr "表示を減らす"
 msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "すべて表示 (%1)"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = start and end time in the local time zone"
+msgid "%1 your time"
+msgstr "%1 (あなたの時間)"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
@@ -1418,6 +1487,11 @@ msgid "Enter an email address, like name@example.com"
 msgstr "メールアドレスを入力 (例: name@example.com)"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "you, in Find a time"
+msgid "You"
+msgstr "あなた"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "イベントを編集"
 
@@ -1452,8 +1526,79 @@ msgid "Title"
 msgstr "タイトル"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Event"
+msgstr "イベント"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Out of office"
+msgstr "不在"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Focus time"
+msgstr "サイレント モード"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Event type"
+msgstr "イベントの種類"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Don't decline invitations"
+msgstr "招待を辞退しない"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new invitations in this time"
+msgstr "この時間の新しい招待を辞退する"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new and existing invitations in this time"
+msgstr "この時間の新しい招待と既存の招待を辞退する"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Automatically decline"
+msgstr "自動的に辞退"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Message for declined invitations"
+msgstr "辞退した招待へのメッセージ"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Do not disturb"
+msgstr "通知をミュート"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Available"
+msgstr "対応可能"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Do not disturb or Available"
+msgid "Chat status: %1"
+msgstr "チャットのステータス: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Chat status"
+msgstr "チャットのステータス"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
 msgstr "カレンダーの色"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Local time"
+msgstr "ローカル時間"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = time zone id, eg: Europe/Warsaw"
+msgid "Time zone: %1"
+msgstr "タイムゾーン: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Time zone"
+msgstr "タイムゾーン"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1682,13 +1827,71 @@ msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
 msgstr "%1 <%2>"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
+msgid "Find a Time"
+msgstr "時間を探す"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "説明"
 
 #: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Home"
+msgstr "自宅"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Office"
+msgstr "オフィス"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Elsewhere"
+msgstr "その他の場所"
+
+#: ../contents/ui/EventModel.qml
 msgid "This calendar can't import events"
 msgstr "このカレンダーには予定をインポートできません"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't show free / busy times"
+msgstr "このカレンダーは空き時間情報を表示できません"
+
+#: ../contents/ui/EventMover.qml
+msgid "Event moved"
+msgstr "イベントを移動しました"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time"
+msgid "Not available"
+msgstr "利用できません"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time: %1 = Google's reason"
+msgid "Not available (%1)"
+msgstr "利用できません (%1)"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Previous day"
+msgstr "前の日"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "Find a time: the day shown"
+msgid "ddd, d MMM"
+msgstr "M月 d日 (ddd)"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Next day"
+msgstr "次の日"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "候補の時間:"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "この日の勤務時間内に全員が空いている時間はありません。"
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2009,6 +2212,10 @@ msgid "Eg: 9am-5pm Work"
 msgstr "例：9am-5pm 仕事"
 
 #: ../contents/ui/PopupHeader.qml
+msgid "Previous Year"
+msgstr "前の年"
+
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "前の日"
 
@@ -2023,6 +2230,10 @@ msgstr "前の月"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "今日"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Year"
+msgstr "次の年"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2325,10 +2536,6 @@ msgid "Next days"
 msgstr "今後数日"
 
 #: ../contents/ui/WeekView.qml
-msgid "Event moved"
-msgstr "イベントを移動しました"
-
-#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "%1 日"
@@ -2337,6 +2544,16 @@ msgstr[0] "%1 日"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#: ../contents/ui/WorkingLocationLabel.qml
+msgctxt "%1 = Home, Office, ..."
+msgid "Working location: %1"
+msgstr "勤務場所: %1"
+
+#: ../contents/ui/YearView.qml
+msgid "1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 件のイベント"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "縦向きのパネル"

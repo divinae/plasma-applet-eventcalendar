@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:11+0200\n"
+"POT-Creation-Date: 2026-10-19 13:56+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -166,6 +166,10 @@ msgstr "שגיאה במשיכת לוח השנה: %1"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Not logged in to Google Calendar"
 msgstr "לא מחובר ל־Google Calendar"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Could not get the free / busy times"
+msgstr "לא ניתן לקבל את זמני הפנוי / עסוק"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
@@ -981,6 +985,11 @@ msgstr "יום"
 msgid "Agenda"
 msgstr "סדר יום"
 
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
+msgctxt "calendar view showing a year"
+msgid "Year"
+msgstr "שנה"
+
 #: ../contents/ui/config/ConfigViews.qml
 msgid "View switcher in the header"
 msgstr "בורר תצוגות בכותרת"
@@ -1017,6 +1026,27 @@ msgstr "תחילת שעות העבודה"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours end"
 msgstr "סוף שעות העבודה"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "אזור זמן שני"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "ללא"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "ללא אזור זמן שני"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "השעות שלו מוצגות לצד השעות המקומיות בתצוגות שבוע ויום."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "חיפוש אזורי זמן"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
@@ -1351,6 +1381,10 @@ msgstr "פתיחה ב־Google Calendar"
 msgid "Mark as Ended"
 msgstr "סימון כהסתיים"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Email Guests…"
+msgstr "שליחת דוא״ל לאורחים…"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "עריכה…"
@@ -1379,12 +1413,12 @@ msgid "Delete All Events of “%1”"
 msgstr "מחיקת כל האירועים של “%1”"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "האירוע הזה"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "כל האירועים בסדרה"
 
@@ -1426,7 +1460,8 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "תזכורות: %1 לפני"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
+#: ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "חזרה"
 
@@ -1468,14 +1503,44 @@ msgid "Repeats"
 msgstr "חוזר"
 
 #: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
+msgid "%1 %2 time (%3)"
+msgstr "%1 לפי שעון %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
 msgid "Going?"
 msgstr "מגיע/ה?"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Out of office"
+msgstr "מחוץ למשרד"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Focus time"
+msgstr "זמן ריכוז"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines all meetings at this time"
+msgstr "דוחה את כל הפגישות בזמן זה"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Declines new invitations at this time"
+msgstr "דוחה הזמנות חדשות בזמן זה"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = message sent when declining"
+msgid "Message: “%1”"
+msgstr "הודעה: “%1”"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = titles of other events at the same time"
 msgid "Overlaps with: %1"
 msgstr "חופף ל: %1"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Write an email to the guests"
+msgstr "כתיבת דוא״ל לאורחים"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "event organizer"
@@ -1498,6 +1563,11 @@ msgstr[0] "הצגת אחד נוסף"
 msgstr[1] "הצגת כל ה־%1"
 msgstr[2] "הצגת כל ה־%1"
 msgstr[3] "הצגת כל ה־%1"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = start and end time in the local time zone"
+msgid "%1 your time"
+msgstr "%1 לפי השעון שלך"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "Google Calendar event color"
@@ -1559,6 +1629,11 @@ msgid "Enter an email address, like name@example.com"
 msgstr "יש להזין כתובת דוא״ל, למשל name@example.com"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "you, in Find a time"
+msgid "You"
+msgstr "את/ה"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "עריכת אירוע"
 
@@ -1593,8 +1668,79 @@ msgid "Title"
 msgstr "כותרת"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Event"
+msgstr "אירוע"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Out of office"
+msgstr "מחוץ למשרד"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event type"
+msgid "Focus time"
+msgstr "זמן ריכוז"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Event type"
+msgstr "סוג אירוע"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Don't decline invitations"
+msgstr "לא לדחות הזמנות"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new invitations in this time"
+msgstr "דחיית הזמנות חדשות בזמן זה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Decline new and existing invitations in this time"
+msgstr "דחיית הזמנות חדשות וקיימות בזמן זה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Automatically decline"
+msgstr "דחייה אוטומטית"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Message for declined invitations"
+msgstr "הודעה להזמנות שנדחו"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Do not disturb"
+msgstr "נא לא להפריע"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "Google Chat status during focus time"
+msgid "Available"
+msgstr "זמין"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Do not disturb or Available"
+msgid "Chat status: %1"
+msgstr "סטטוס בצ׳אט: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Chat status"
+msgstr "סטטוס בצ׳אט"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Calendar color"
 msgstr "צבע לוח השנה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Local time"
+msgstr "שעון מקומי"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = time zone id, eg: Europe/Warsaw"
+msgid "Time zone: %1"
+msgstr "אזור זמן: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Time zone"
+msgstr "אזור זמן"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Does not repeat"
@@ -1850,13 +1996,71 @@ msgctxt "guest suggestion: %1 = name, %2 = email"
 msgid "%1 <%2>"
 msgstr "%1 <%2>"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
+msgid "Find a Time"
+msgstr "מציאת זמן"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "תיאור"
 
 #: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Home"
+msgstr "בית"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Office"
+msgstr "משרד"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "working location"
+msgid "Elsewhere"
+msgstr "מקום אחר"
+
+#: ../contents/ui/EventModel.qml
 msgid "This calendar can't import events"
 msgstr "לוח שנה זה לא יכול לייבא אירועים"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't show free / busy times"
+msgstr "לוח שנה זה לא יכול להציג זמני פנוי / עסוק"
+
+#: ../contents/ui/EventMover.qml
+msgid "Event moved"
+msgstr "האירוע הועבר"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time"
+msgid "Not available"
+msgstr "לא זמין"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "someone's calendar in Find a time: %1 = Google's reason"
+msgid "Not available (%1)"
+msgstr "לא זמין (%1)"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Previous day"
+msgstr "היום הקודם"
+
+#: ../contents/ui/FindTimeView.qml
+msgctxt "Find a time: the day shown"
+msgid "ddd, d MMM"
+msgstr "ddd, d ב־MMM"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Next day"
+msgstr "היום הבא"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "Suggested times:"
+msgstr "זמנים מוצעים:"
+
+#: ../contents/ui/FindTimeView.qml
+msgid "No time free for everyone in the working hours of this day."
+msgstr "אין זמן פנוי לכולם בשעות העבודה של יום זה."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
@@ -2218,6 +2422,10 @@ msgid "Eg: 9am-5pm Work"
 msgstr "למשל: עבודה בשעות 9:00-‏17:00"
 
 #: ../contents/ui/PopupHeader.qml
+msgid "Previous Year"
+msgstr "השנה הקודמת"
+
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"
 msgstr "היום הקודם"
 
@@ -2232,6 +2440,10 @@ msgstr "החודש הקודם"
 #: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
 msgid "Today"
 msgstr "היום"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Year"
+msgstr "השנה הבאה"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2549,10 +2761,6 @@ msgid "Next days"
 msgstr "הימים הבאים"
 
 #: ../contents/ui/WeekView.qml
-msgid "Event moved"
-msgstr "האירוע הועבר"
-
-#: ../contents/ui/WeekView.qml
 msgid "%1 day"
 msgid_plural "%1 days"
 msgstr[0] "יום אחד"
@@ -2564,6 +2772,19 @@ msgstr[3] "%1 ימים"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#: ../contents/ui/WorkingLocationLabel.qml
+msgctxt "%1 = Home, Office, ..."
+msgid "Working location: %1"
+msgstr "מיקום עבודה: %1"
+
+#: ../contents/ui/YearView.qml
+msgid "1 event"
+msgid_plural "%1 events"
+msgstr[0] "אירוע אחד"
+msgstr[1] "%1 אירועים"
+msgstr[2] "%1 אירועים"
+msgstr[3] "%1 אירועים"
 
 #~ msgid "Vertical Panel"
 #~ msgstr "לוח אנכי"
