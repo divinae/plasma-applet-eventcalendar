@@ -2,6 +2,7 @@ import QtQuick
 
 import "./calendars"
 import "./lib"
+import "./lib/Async.js" as Async
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
 import "EventCacheUtil.js" as EventCacheUtil
@@ -458,24 +459,16 @@ CalendarManager {
 		var managers = calendarManagerList.filter(function(m) {
 			return typeof m.searchEvents === 'function'
 		})
-		if (!managers.length) {
-			callback(null, [])
-			return
-		}
-		var pending = managers.length
-		var found = []
-		var firstError = null
-		managers.forEach(function(m) {
-			m.searchEvents(query, timeMin, timeMax, function(err, items) {
-				if (err) {
-					firstError = firstError || err
-				}
-				found = found.concat(items || [])
-				pending -= 1
-				if (pending === 0) {
-					callback(found.length ? null : firstError, found)
-				}
+		Async.settleAll(managers.map(function(m) {
+			return m.searchEvents.bind(m, query, timeMin, timeMax)
+		}), function(results) {
+			var found = []
+			var firstError = null
+			results.forEach(function(result) {
+				firstError = firstError || result.err
+				found = found.concat(result.data || [])
 			})
+			callback(found.length ? null : firstError, found)
 		})
 	}
 

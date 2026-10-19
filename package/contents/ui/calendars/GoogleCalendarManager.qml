@@ -424,34 +424,32 @@ CalendarManager {
 	// callback(err, items): items are parsed like fetched events. Result bodies are never logged.
 	function searchEvents(query, timeMin, timeMax, callback) {
 		var idList = getCalendarIdList()
-		if (!idList.length) {
-			callback(null, [])
-			return
-		}
-		var pending = idList.length
-		var found = []
-		var firstError = null
-		idList.forEach(function(rawId) {
-			googleRequest('GET', eventPath(rawId), {
-				q: query,
-				timeMin: timeMin.toISOString(),
-				timeMax: timeMax.toISOString(),
-				singleEvents: 'true',
-				orderBy: 'startTime',
-				maxResults: 50,
-				timeZone: 'Etc/UTC',
-			}, null, function(err, data) {
-				if (err) {
-					firstError = firstError || err
-				} else if (data && data.items) {
-					calendarParsing(scopedCalendarId(rawId), data)
-					found = found.concat(data.items)
-				}
-				pending -= 1
-				if (pending === 0) {
-					callback(found.length ? null : firstError, found)
-				}
+		var tasks = idList.map(function(rawId) {
+			return function(done) {
+				googleRequest('GET', eventPath(rawId), {
+					q: query,
+					timeMin: timeMin.toISOString(),
+					timeMax: timeMax.toISOString(),
+					singleEvents: 'true',
+					orderBy: 'startTime',
+					maxResults: 50,
+					timeZone: 'Etc/UTC',
+				}, null, function(err, data) {
+					if (!err && data && data.items) {
+						calendarParsing(scopedCalendarId(rawId), data)
+					}
+					done(err, err ? null : data && data.items)
+				})
+			}
+		})
+		Async.settleAll(tasks, function(results) {
+			var found = []
+			var firstError = null
+			results.forEach(function(result) {
+				firstError = firstError || result.err
+				found = found.concat(result.data || [])
 			})
+			callback(found.length ? null : firstError, found)
 		})
 	}
 

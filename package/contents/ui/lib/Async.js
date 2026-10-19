@@ -38,6 +38,32 @@ function parallel(tasks, finalCallback) {
 	}
 }
 
+// Runs every task(callback(err, data)) at once and waits for all of them, failed ones too.
+// done(results): results[i] = { err, data } of tasks[i] (err null when it worked). A task that
+// calls back twice counts once.
+function settleAll(tasks, done) {
+	var results = new Array(tasks.length)
+	var pending = tasks.length
+	if (pending === 0) {
+		done([])
+		return
+	}
+	tasks.forEach(function(task, i) {
+		var settled = false
+		task(function(err, data) {
+			if (settled) {
+				return
+			}
+			settled = true
+			results[i] = { err: err || null, data: data }
+			pending -= 1
+			if (pending === 0) {
+				done(results)
+			}
+		})
+	})
+}
+
 /*
 ** Example
 */
