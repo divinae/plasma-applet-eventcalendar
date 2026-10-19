@@ -324,7 +324,7 @@ CalendarManager {
 			var items = eventsByCalendar[calendarId].items
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]
-				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem)) {
+				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem) || Shared.isHiddenDeclined(eventItem, plasmoid.configuration.showDeclinedEvents)) {
 					continue
 				}
 				if (isEventInProgress(eventItem) && isMarkedEnded(eventItem)) {
@@ -402,7 +402,7 @@ CalendarManager {
 			var items = eventsByCalendar[calendarId].items
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]
-				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem)) {
+				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem) || Shared.isHiddenDeclined(eventItem, plasmoid.configuration.showDeclinedEvents)) {
 					continue
 				}
 				if (isEventInProgress(eventItem)) {

@@ -32,4 +32,10 @@ assert.strictEqual(S.isUnconfirmedResponse('declined'), true)
 assert.strictEqual(S.isUnconfirmedResponse('accepted'), false)
 assert.strictEqual(S.isUnconfirmedResponse(''), false)
 
+// Declined events left out of the views only when set to Hide.
+assert.strictEqual(S.isHiddenDeclined({ attendees: [me('declined')] }, false), true, 'declined, hidden')
+assert.strictEqual(S.isHiddenDeclined({ attendees: [me('declined')] }, true), false, 'declined, shown')
+assert.strictEqual(S.isHiddenDeclined({ attendees: [me('tentative')] }, false), false, 'maybe stays')
+assert.strictEqual(S.isHiddenDeclined({ summary: 'Own' }, false), false, 'not invited stays')
+
 console.log('my_response: ok')

@@ -160,6 +160,8 @@ KCM.SimpleKCM {
 	property var cfg_weatherShowInViewsDefault
 	property var cfg_monthClickOpensDay
 	property var cfg_monthClickOpensDayDefault
+	property var cfg_showDeclinedEvents
+	property var cfg_showDeclinedEventsDefault
 	property var cfg_eventClickAction
 	property var cfg_eventClickActionDefault
 	property var cfg_eventFontScale

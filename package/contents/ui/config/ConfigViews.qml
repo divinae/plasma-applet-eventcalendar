@@ -133,6 +133,15 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigCombo {
+				text: i18n("Declined events")
+				configKey: 'showDeclinedEvents'
+				model: [
+					{ value: true, text: i18n("Show (struck through)") },
+					{ value: false, text: i18nc("declined events", "Hide") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
 				text: i18n("Double-clicking a day")
 				configKey: 'monthDayDoubleClick'
 				model: [

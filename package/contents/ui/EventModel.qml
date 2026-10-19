@@ -385,9 +385,16 @@ CalendarManager {
 	function mergeEvents() {
 		logger.debug('eventModel.mergeEvents')
 		// Build the list first and assign once: bindings on eventsData must not see it half-filled.
+		// Declined events may be hidden; eventsByCalendar keeps them (lookups, undo, cache).
+		var showDeclined = plasmoid.configuration.showDeclinedEvents
 		var items = []
 		for (var calendarId in eventModel.eventsByCalendar) {
-			items = items.concat(eventModel.eventsByCalendar[calendarId].items)
+			var calendarItems = eventModel.eventsByCalendar[calendarId].items
+			for (var i = 0; i < calendarItems.length; i++) {
+				if (!Shared.isHiddenDeclined(calendarItems[i], showDeclined)) {
+					items.push(calendarItems[i])
+				}
+			}
 		}
 		eventModel.eventsData = { items: items }
 	}

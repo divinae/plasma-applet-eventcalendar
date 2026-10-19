@@ -290,6 +290,10 @@
 		<entry name="monthClickOpensDay" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="showDeclinedEvents" type="bool">
+			<!-- Events the user declined: shown struck through (true) or left out of the views (false) -->
+			<default>true</default>
+		</entry>
 		<entry name="eventClickAction" type="string">
 			<!-- details: event details in the widget. browser: open in Google Calendar. -->
 			<default>details</default>

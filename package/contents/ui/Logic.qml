@@ -244,6 +244,12 @@ Item {
 			eventModel.recolorEvents()
 			if (popup) popup.updateUI()
 		}
+		function onShowDeclinedEventsChanged() {
+			eventModel.mergeEvents()
+			if (popup) popup.updateUI()
+			upcomingEvents.updateNextEvent()
+			upcomingEvents.updateTooltipEvents()
+		}
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }

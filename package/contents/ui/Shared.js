@@ -184,6 +184,11 @@ function myResponse(eventItem) {
 	return ''
 }
 
+// Left out of the views (and the panel's next meeting) when declined events are set to Hide.
+function isHiddenDeclined(eventItem, showDeclined) {
+	return !showDeclined && myResponse(eventItem) === 'declined'
+}
+
 // What an event has set, as small icons after its time: 'location', 'meeting' (a join link,
 // found by the caller with MeetingLink.find), 'guests' (anyone besides the user), 'repeat' and
 // 'description'. Keys in hide are left out, eg: when the view already shows the location.
