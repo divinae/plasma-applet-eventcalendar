@@ -189,6 +189,20 @@ function isHiddenDeclined(eventItem, showDeclined) {
 	return !showDeclined && myResponse(eventItem) === 'declined'
 }
 
+// Hidden with the popup header's calendar toggles (hiddenCalendarIds). A view filter: the events
+// are still fetched and their reminders still come.
+function isHiddenCalendar(calendarId, hiddenCalendarIds) {
+	if (!hiddenCalendarIds || !calendarId) {
+		return false
+	}
+	for (var i = 0; i < hiddenCalendarIds.length; i++) {
+		if (hiddenCalendarIds[i] === String(calendarId)) {
+			return true
+		}
+	}
+	return false
+}
+
 // Titles of the events this one overlaps (EventModel sets conflictsWith, see Conflicts.js). It holds
 // { summary } objects, not strings: a ListModel (agenda) drops plain strings from nested lists.
 function conflictTitles(eventItem) {

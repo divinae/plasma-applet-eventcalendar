@@ -432,6 +432,11 @@ CalendarManager {
 		var bestInProgress = false
 		var bestHasLink = false
 		for (var calendarId in eventsByCalendar) {
+			// Calendars hidden in the popup's calendar menu are left out of the panel's next
+			// meeting and tooltip too. Their reminders still come: it's a view filter.
+			if (Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
+				continue
+			}
 			var items = eventsByCalendar[calendarId].items
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]
@@ -510,6 +515,9 @@ CalendarManager {
 		var current = null
 		var next = null
 		for (var calendarId in eventsByCalendar) {
+			if (Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
+				continue // See updateNextEvent
+			}
 			var items = eventsByCalendar[calendarId].items
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]

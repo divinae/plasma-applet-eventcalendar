@@ -386,11 +386,19 @@ CalendarManager {
 	function mergeEvents() {
 		logger.debug('eventModel.mergeEvents')
 		// Build the list first and assign once: bindings on eventsData must not see it half-filled.
-		// Declined events may be hidden; eventsByCalendar keeps them (lookups, undo, cache).
+		// Declined events and calendars hidden in the header's calendar menu may be left out;
+		// eventsByCalendar keeps them (lookups, undo, cache).
 		var showDeclined = plasmoid.configuration.showDeclinedEvents
+		var hiddenCalendarIds = plasmoid.configuration.hiddenCalendarIds
 		var all = []
+		var inHiddenCalendar = [] // Per item of all
 		for (var calendarId in eventModel.eventsByCalendar) {
-			all = all.concat(eventModel.eventsByCalendar[calendarId].items)
+			var calendarItems = eventModel.eventsByCalendar[calendarId].items
+			var calendarHidden = Shared.isHiddenCalendar(calendarId, hiddenCalendarIds)
+			all = all.concat(calendarItems)
+			for (var j = 0; j < calendarItems.length; j++) {
+				inHiddenCalendar.push(calendarHidden)
+			}
 		}
 		// Overlapping meetings, as { summary } objects (see Shared.conflictTitles). Not cached on
 		// disk, and removed before an event is sent back to Google.
@@ -403,7 +411,7 @@ CalendarManager {
 		for (var i = 0; i < all.length; i++) {
 			var titles = conflicts[Conflicts.eventKey(all[i])] || []
 			all[i].conflictsWith = titles.map(function(title) { return { summary: title } })
-			if (!Shared.isHiddenDeclined(all[i], showDeclined)) {
+			if (!inHiddenCalendar[i] && !Shared.isHiddenDeclined(all[i], showDeclined)) {
 				items.push(all[i])
 			}
 		}
@@ -588,6 +596,51 @@ CalendarManager {
 	}
 
 	//--- CalendarManager: Calendar
+	// The calendars selected in settings (those with events loaded), for the popup header's
+	// calendar toggles: [{ id, name, color, group }], grouped by account (group = account label).
+	function getSelectedCalendars() {
+		var out = []
+		var listed = {}
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			var group = String(calendarManager.accountLabel || "")
+			var list = calendarManager.getCalendarList()
+			for (var j = 0; j < list.length; j++) {
+				var calendar = list[j]
+				if (!calendar || !calendar.id || listed[calendar.id] || !eventModel.eventsByCalendar[calendar.id]) {
+					continue
+				}
+				listed[calendar.id] = true
+				out.push(selectedCalendarEntry(calendar.id, calendar, group))
+			}
+		}
+		// Calendars a manager doesn't list (iCalendar files): look them up by id.
+		for (var calendarId in eventModel.eventsByCalendar) {
+			if (listed[calendarId]) {
+				continue
+			}
+			var manager = eventModel.calendarPluginMap[calendarId]
+			var data = manager && typeof manager.getCalendar === 'function' ? manager.getCalendar(calendarId) : null
+			out.push(selectedCalendarEntry(calendarId, data || {}, ""))
+		}
+		return out
+	}
+	function selectedCalendarEntry(calendarId, calendar, group) {
+		var name = String(calendar.summary || calendar.name || "")
+		if (group && name.indexOf(group + " - ") === 0) {
+			name = name.substr(group.length + 3) // The account is the group heading
+		}
+		if (!name) {
+			name = calendarId === "plasma_Holidays" ? i18n("Holidays") : calendarId
+		}
+		return {
+			id: calendarId,
+			name: name,
+			color: String(calendar.backgroundColor || calendar.color || ""), // Empty: the theme's highlight
+			group: group,
+		}
+	}
+
 	function getCalendarList() {
 		var calendarList = []
 		for (var i = 0; i < calendarManagerList.length; i++) {

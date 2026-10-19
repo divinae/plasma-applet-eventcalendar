@@ -38,4 +38,11 @@ assert.strictEqual(S.isHiddenDeclined({ attendees: [me('declined')] }, true), fa
 assert.strictEqual(S.isHiddenDeclined({ attendees: [me('tentative')] }, false), false, 'maybe stays')
 assert.strictEqual(S.isHiddenDeclined({ summary: 'Own' }, false), false, 'not invited stays')
 
+// Calendars hidden with the popup header's toggles.
+assert.strictEqual(S.isHiddenCalendar('work', ['work', 'home']), true, 'hidden')
+assert.strictEqual(S.isHiddenCalendar('other', ['work']), false, 'shown')
+assert.strictEqual(S.isHiddenCalendar('work', []), false, 'nothing hidden')
+assert.strictEqual(S.isHiddenCalendar('work', undefined), false, 'no config')
+assert.strictEqual(S.isHiddenCalendar('', ['']), false, 'no calendar')
+
 console.log('my_response: ok')

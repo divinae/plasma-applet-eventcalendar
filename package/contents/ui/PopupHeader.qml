@@ -21,7 +21,7 @@ PlasmaExtras.PlasmoidHeading {
 	signal searchClicked()
 	signal refreshClicked()
 
-	// Left: view switcher. Center: navigation and title. Right: search, new event, refresh, pin.
+	// Left: view switcher. Center: navigation and title. Right: calendars, search, new event, refresh, pin.
 	contentItem: Item {
 		id: topBar
 		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
@@ -126,6 +126,9 @@ PlasmaExtras.PlasmoidHeading {
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 0
+			CalendarToggles {
+				id: calendarToggles
+			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "search"
 				onClicked: header.searchClicked()
