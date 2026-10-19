@@ -114,54 +114,89 @@ CalendarManager {
 
 	function fetchGoogleCalendarList() {
 		googleCalendarManager.asyncRequests += 1
-		withAccessToken(function() {
-			fetchGCalCalendars({
-				accessToken: session.accessToken,
-			}, function(err, data, xhr) {
-				if (err || (data && data.error)) {
-					googleCalendarManager.asyncRequestsDone += 1
-					handleError(err || 'fetchGCalCalendars error', data, xhr)
-					return
-				}
-				var account = getAccount()
-				var patch = {
-					calendarList: data.items,
-				}
-				if (accountsStore && accountId && account
-					&& !account.calendarSelectionInitialized
-					&& (!account.calendarIdList || !account.calendarIdList.length)
-					&& accountsStore.defaultCalendarIdList
-				) {
-					var defaultList = accountsStore.defaultCalendarIdList(data.items)
-					if (defaultList.length) {
-						patch.calendarIdList = defaultList
-						patch.calendarSelectionInitialized = true
-					}
-				}
-				if (accountsStore && accountId) {
-					accountsStore.updateAccount(accountId, patch)
-				}
-				fetchGoogleAccountEvents(getCalendarIdList())
+		googleRequest('GET', '/users/me/calendarList', null, null, function(err, data, xhr) {
+			if (err) {
 				googleCalendarManager.asyncRequestsDone += 1
-			})
-		}, function(err, isNetworkError) {
-			handleAuthError(err, true, isNetworkError)
+				handleError(err, data, xhr)
+				return
+			}
+			var account = getAccount()
+			var patch = {
+				calendarList: data.items,
+			}
+			if (accountsStore && accountId && account
+				&& !account.calendarSelectionInitialized
+				&& (!account.calendarIdList || !account.calendarIdList.length)
+				&& accountsStore.defaultCalendarIdList
+			) {
+				var defaultList = accountsStore.defaultCalendarIdList(data.items)
+				if (defaultList.length) {
+					patch.calendarIdList = defaultList
+					patch.calendarSelectionInitialized = true
+				}
+			}
+			if (accountsStore && accountId) {
+				accountsStore.updateAccount(accountId, patch)
+			}
+			fetchGoogleAccountEvents(getCalendarIdList())
+			googleCalendarManager.asyncRequestsDone += 1
 		})
 	}
 
-	function fetchGCalCalendars(args, callback) {
-		var url = 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
-		Requests.getJSON({
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
+	//--- Requests
+	readonly property string apiUrl: 'https://www.googleapis.com/calendar/v3'
+
+	// action() once the session has a valid access token (refreshed when needed), else
+	// fail(err, isNetworkError).
+	function withToken(action, fail) {
+		session.checkAccessToken(function(err, isNetworkError) {
+			if (err) {
+				fail(err, !!isNetworkError)
+				return
 			}
-		}, function(err, data, xhr) {
-			if (!err && data && data.error) {
-				return callback('fetchGCalCalendars error', data, xhr)
-			}
-			callback(err, data, xhr)
+			action()
 		})
+	}
+
+	// One Calendar API request. path: after /calendar/v3, ids encoded (see eventPath). query:
+	// optional params (see queryString). body: the JSON body (not for GET).
+	// callback(err, data, xhr), always called: err is Google's error body when it sent one. When no
+	// token could be had, xhr is null (auth error) or { status: 0, noToken: true } (offline);
+	// handleError knows both.
+	// Only the HTTP status is logged: no ids, titles, emails or bodies.
+	function googleRequest(method, path, query, body, callback) {
+		withToken(function() {
+			var opt = {
+				method: method,
+				url: apiUrl + path + queryString(query),
+				headers: {
+					"Authorization": "Bearer " + session.accessToken,
+				},
+			}
+			var send = Requests.getJSON
+			if (method !== 'GET') {
+				opt.data = body
+				send = Requests.postJSON
+			}
+			send(opt, function(err, data, xhr) {
+				logger.debug(calendarManagerId, method, 'response', xhr && xhr.status)
+				if (!err && data && data.error) {
+					err = data
+				}
+				callback(err, data, xhr)
+			})
+		}, function(err, isNetworkError) {
+			callback(err, null, isNetworkError ? { status: 0, noToken: true } : null)
+		})
+	}
+
+	// '/calendars/{calendarId}/events[/{eventId}]' for a raw (unscoped) calendar id.
+	function eventPath(rawCalendarId, eventId) {
+		var path = '/calendars/' + encodeURIComponent(rawCalendarId) + '/events'
+		if (eventId) {
+			path += '/' + encodeURIComponent(eventId)
+		}
+		return path
 	}
 
 	//-------------------------
@@ -175,7 +210,12 @@ CalendarManager {
 		}
 		googleCalendarManager.error(errorMessage, errorType)
 	}
+	// err, data, xhr: as googleRequest gives them.
 	function handleError(err, data, xhr) {
+		if (!xhr) {
+			handleAuthError(err, false, false) // No access token
+			return
+		}
 		var httpCode = xhr.status
 		if (httpCode === 0) {
 			var msg = i18n("Could not connect")
@@ -229,17 +269,6 @@ CalendarManager {
 		for (var i = 0; i < idList.length; i++) {
 			restorePreviousCalendar(scopedCalendarId(idList[i]))
 		}
-	}
-	function withAccessToken(action, onError) {
-		session.checkAccessToken(function(err, isNetworkError) {
-			if (err) {
-				if (onError) {
-					onError(err, isNetworkError)
-				}
-				return
-			}
-			action()
-		})
 	}
 
 	//--- Utils
@@ -298,7 +327,7 @@ CalendarManager {
 				fetchGoogleAccountEvents_done(data)
 			}
 		})
-		withAccessToken(func, function(err, isNetworkError) {
+		withToken(func, function(err, isNetworkError) {
 			restorePrevious(calendarIdList)
 			handleAuthError(err, true, isNetworkError)
 		})
@@ -330,7 +359,7 @@ CalendarManager {
 		})
 	}
 	function fetchGoogleAccountEvents_err(err, data, xhr) {
-		logger.debug('fetchGoogleAccountEvents_err', err, data, xhr)
+		logger.debug('fetchGoogleAccountEvents_err', xhr && xhr.status)
 		googleCalendarManager.asyncRequestsDone += 1
 		return handleError(err, data, xhr)
 	}
@@ -370,7 +399,7 @@ CalendarManager {
 			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
-				logger.debugJSON('onErrorFetchingEvents: ', err)
+				logger.debug('onErrorFetchingEvents', xhr && xhr.status)
 				var errObj = {
 					err: err,
 					data: data,
@@ -405,7 +434,7 @@ CalendarManager {
 
 	// typesRejected: the calendar refused the eventTypes list (see fetchGCalEventsPage).
 	function fetchGCalEventsPageResponse(args, finishedCallback, allData, err, data, xhr, typesRejected) {
-		logger.debug('fetchGCalEventsPageResponse', args, finishedCallback, allData, err, data, xhr)
+		logger.debug('fetchGCalEventsPageResponse', xhr && xhr.status)
 		if (typesRejected) {
 			// Again from the first page without eventTypes, dropping the pages fetched with them (a
 			// page token of that query isn't valid for the new one).
@@ -427,7 +456,6 @@ CalendarManager {
 		allData = data
 		
 		if (allData.nextPageToken) {
-			logger.debug('fetchGCalEventsPageResponse.nextPageToken', allData.nextPageToken)
 			logger.debug('fetchGCalEventsPageResponse.nextPageToken', 'allData.items.length', allData.items && allData.items.length)
 			args.pageToken = allData.nextPageToken
 			var onResponse = fetchGCalEventsPageResponse.bind(this, args, finishedCallback, allData)
@@ -506,108 +534,51 @@ CalendarManager {
 	// callback(err, items): items are parsed like fetched events. Result bodies are never logged.
 	function searchEvents(query, timeMin, timeMax, callback) {
 		var idList = getCalendarIdList()
-		if (!session.accessToken || !idList.length) {
+		if (!idList.length) {
 			callback(null, [])
 			return
 		}
-		withAccessToken(function() {
-			var pending = idList.length
-			var found = []
-			var firstError = null
-			idList.forEach(function(rawId) {
-				searchGCalEvents({
-					accessToken: session.accessToken,
-					calendarId: rawId,
-					query: query,
-					start: timeMin.toISOString(),
-					end: timeMax.toISOString(),
-				}, function(err, data) {
-					if (err) {
-						firstError = firstError || err
-					} else if (data && data.items) {
-						var scopedId = scopedCalendarId(rawId)
-						calendarParsing(scopedId, data)
-						found = found.concat(data.items)
-					}
-					pending -= 1
-					if (pending === 0) {
-						callback(found.length ? null : firstError, found)
-					}
-				})
+		var pending = idList.length
+		var found = []
+		var firstError = null
+		idList.forEach(function(rawId) {
+			googleRequest('GET', eventPath(rawId), {
+				q: query,
+				timeMin: timeMin.toISOString(),
+				timeMax: timeMax.toISOString(),
+				singleEvents: 'true',
+				orderBy: 'startTime',
+				maxResults: 50,
+				timeZone: 'Etc/UTC',
+			}, null, function(err, data) {
+				if (err) {
+					firstError = firstError || err
+				} else if (data && data.items) {
+					calendarParsing(scopedCalendarId(rawId), data)
+					found = found.concat(data.items)
+				}
+				pending -= 1
+				if (pending === 0) {
+					callback(found.length ? null : firstError, found)
+				}
 			})
-		}, function(err, isNetworkError) {
-			callback(err || 'auth', [])
-		})
-	}
-
-	function searchGCalEvents(args, callback) {
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events'
-		url += '?q=' + encodeURIComponent(args.query)
-		url += '&timeMin=' + encodeURIComponent(args.start)
-		url += '&timeMax=' + encodeURIComponent(args.end)
-		url += '&singleEvents=' + encodeURIComponent('true')
-		url += '&orderBy=' + encodeURIComponent('startTime')
-		url += '&maxResults=50'
-		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
-		Requests.getJSON({
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
-			}
-		}, function(err, data, xhr) {
-			logger.debug('searchGCalEvents.response', xhr.status) // no query or result body: private
-			if (!err && data && data.error) {
-				return callback(data, null)
-			}
-			callback(err, data)
 		})
 	}
 
 	//--- Get Single Event
+	// The server copy of an event. callback(err, data, xhr), always called.
 	function fetchGoogleCalendarEvent(calendarId, eventId, callback) {
-		logger.debug('fetchGoogleCalendarEvent', calendarId, eventId)
-		if (session.accessToken) {
-			var func = fetchGoogleCalendarEvent_run.bind(this, calendarId, eventId, callback)
-			withAccessToken(func, function(err, isNetworkError) {
-				handleAuthError(err, false, isNetworkError)
-			})
-		} else {
-			session.transactionError('attempting to "fetch an event" without an access token set')
-		}
-	}
-function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
-	logger.debugJSON('fetchGoogleCalendarEvent_run', calendarId, eventId)
-	fetchGCalEvent({
-		accessToken: session.accessToken,
-		calendarId: unscopedCalendarId(calendarId),
-		eventId: eventId,
-	}, callback)
-}
-	function fetchGCalEvent(args, callback) {
-		logger.debug('fetchGCalEvent', args.calendarId, args.eventId)
-
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events/'
-		url += encodeURIComponent(args.eventId)
-		url += '?timeZone=' + encodeURIComponent('Etc/UTC')
-		Requests.getJSON({
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
+		getServerEvent(calendarId, eventId, function(err, data, xhr) {
+			if (err && (!xhr || xhr.noToken)) {
+				handleError(err, data, xhr) // No access token: say so, as for the other requests
 			}
-		}, function(err, data, xhr) {
-			logger.debug('fetchGCalEvent.response', args.calendarId, args.eventId, err, data, xhr.status)
-			if (!err && data && data.error) {
-				return callback(data, null, xhr)
-			}
-			logger.debugJSON('\t data:', data)
 			callback(err, data, xhr)
 		})
+	}
+	function getServerEvent(calendarId, eventId, callback) {
+		googleRequest('GET', eventPath(unscopedCalendarId(calendarId), eventId), {
+			timeZone: 'Etc/UTC',
+		}, null, callback)
 	}
 
 	//--- Parsing Events
@@ -726,39 +697,23 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 
 	//--- Create / POST
 	function createEvent(calendarId, date, text) {
-		if (session.accessToken) {
-			// No date: Google reads the day from the text (eg: "tomorrow"), relative to today.
-			var eventText = text
-			if (date) {
-				var pad = function(n) { return (n < 10 ? '0' : '') + n }
-				eventText = date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + ' ' + text
-			}
-
-			var func = createEvent_run.bind(this, calendarId, eventText, function(err, data, xhr) {
-				if (err) {
-					createEvent_err(err, data, xhr)
-				} else {
-					createEvent_done(calendarId, data)
-				}
-			})
-			withAccessToken(func, function(err, isNetworkError) {
-				handleAuthError(err, false, isNetworkError)
-			})
-		} else {
-			session.transactionError('attempting to "create an event" without an access token set')
+		// No date: Google reads the day from the text (eg: "tomorrow"), relative to today.
+		var eventText = text
+		if (date) {
+			var pad = function(n) { return (n < 10 ? '0' : '') + n }
+			eventText = date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + ' ' + text
 		}
-	}
-	function createEvent_run(calendarId, eventText, callback) {
-		logger.debugJSON(calendarManagerId, 'createEvent_run', calendarId, eventText)
-		var rawCalendarId = unscopedCalendarId(calendarId)
-		createGCalEvent({
-			accessToken: session.accessToken,
-			calendarId: rawCalendarId,
+		googleRequest('POST', eventPath(unscopedCalendarId(calendarId)) + '/quickAdd', {
 			text: eventText,
-		}, callback)
+		}, "", function(err, data, xhr) {
+			if (err) {
+				createEvent_err(err, data, xhr)
+			} else {
+				createEvent_done(calendarId, data)
+			}
+		})
 	}
 	function createEvent_done(calendarId, data) {
-		logger.debugJSON(calendarManagerId, 'createEvent_done', calendarId, data)
 		var rawCalendarId = unscopedCalendarId(calendarId)
 		var calendar = getCalendar(calendarId)
 		var selectedList = getCalendarIdList()
@@ -770,67 +725,24 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		}
 	}
 	function createEvent_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'createEvent_err', err, data, xhr)
+		logger.log(calendarManagerId, 'createEvent_err', xhr && xhr.status)
 		return handleError(err, data, xhr)
 	}
 
 	// Create an event from full data: { summary, start, end, location, description, recurrence }.
-	// done(): called after it's saved (eg: to refetch the occurrences of a recurring event).
+	// done(err): optional, called once the server answered, err null when it's saved (eg: to
+	// refetch the occurrences of a recurring event).
 	// params: optional query params, eg: { sendUpdates: 'all', conferenceDataVersion: 1 }.
 	function createEventFromData(calendarId, eventData, done, params) {
-		if (!session.accessToken) {
-			session.transactionError('attempting to "create an event" without an access token set')
-			return
-		}
-		var func = function() {
-			var url = 'https://www.googleapis.com/calendar/v3/calendars/'
-			url += encodeURIComponent(unscopedCalendarId(calendarId))
-			url += '/events'
-			url += queryString(params)
-			Requests.postJSON({
-				url: url,
-				headers: {
-					"Authorization": "Bearer " + session.accessToken,
-				},
-				data: eventData,
-			}, function(err, data, xhr) {
-				if (!err && data && data.error) {
-					err = data
-				}
-				if (err) {
-					createEvent_err(err, data, xhr)
-				} else {
-					createEvent_done(calendarId, data)
-					if (done) {
-						done()
-					}
-				}
-			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			handleAuthError(err, false, isNetworkError)
-		})
-	}
-
-	function createGCalEvent(args, callback) {
-		// https://www.googleapis.com/calendar/v3/calendars/calendarId/events/quickAdd
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events/quickAdd'
-		url += '?text=' + encodeURIComponent(args.text)
-		Requests.postJSON({
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
-			},
-			data: "",
-		}, function(err, data, xhr) {
-			logger.debug('createGCalEvent.response', err, data, xhr.status)
-			if (!err && data && data.error) {
-				return callback(data, null, xhr)
+		googleRequest('POST', eventPath(unscopedCalendarId(calendarId)), params, eventData, function(err, data, xhr) {
+			if (err) {
+				createEvent_err(err, data, xhr)
+			} else {
+				createEvent_done(calendarId, data)
 			}
-			callback(err, data, xhr)
+			if (done) {
+				done(err || null)
+			}
 		})
 	}
 
@@ -839,35 +751,23 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// iCalUID, so importing the same invitation twice updates the event instead of adding a copy.
 	// Sends no invitations. done(err, data): err is a short message, or null. The caller refetches.
 	function importEvent(calendarId, eventData, done) {
-		if (!session.accessToken) {
-			done(i18n("Not logged in to Google Calendar"), null)
-			return
-		}
-		var func = function() {
-			var url = 'https://www.googleapis.com/calendar/v3/calendars/'
-			url += encodeURIComponent(unscopedCalendarId(calendarId))
-			url += '/events/import'
-			Requests.postJSON({
-				url: url,
-				headers: {
-					"Authorization": "Bearer " + session.accessToken,
-				},
-				data: eventData,
-			}, function(err, data, xhr) {
-				if (!err && data && data.error) {
-					err = data
-				}
-				if (err) {
-					logger.log(calendarManagerId, 'importEvent_err', xhr && xhr.status) // No event data in logs
-					done(IcsImport.errorMessage(err, data, xhr && xhr.status), null)
-					return
-				}
-				done(null, data)
-			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			done(isNetworkError ? i18n("Could not connect") : i18n("Google authentication failed: %1", err), null)
+		googleRequest('POST', eventPath(unscopedCalendarId(calendarId)) + '/import', null, eventData, function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'importEvent_err', xhr && xhr.status) // No event data in logs
+				done(requestErrorText(err, xhr) || IcsImport.errorMessage(err, data, xhr.status), null)
+				return
+			}
+			done(null, data)
 		})
+	}
+
+	// The message of a request that failed without an answer from Google (no access token,
+	// offline), else ''.
+	function requestErrorText(err, xhr) {
+		if (!xhr) {
+			return i18n("Google authentication failed: %1", err)
+		}
+		return Requests.isNetworkError(xhr) ? i18n("Could not connect") : ''
 	}
 
 	//--- Update Event
@@ -882,34 +782,19 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// options: optional { params } with query params for the PUT (see createEventFromData).
 	// Optional failed(report): called instead of showing the error; report() shows it.
 	function updateEventFromServer(calendarId, eventId, buildArgs, done, options, failed) {
-		if (!session.accessToken) {
-			session.transactionError('attempting to "update an event" without an access token set')
-			return
-		}
-		var func = function() {
-			fetchGoogleCalendarEvent_run(calendarId, eventId, function(err, serverEvent, xhr) {
-				if (err || !serverEvent) {
-					updateFromServer_failed(failed, err, serverEvent, xhr)
-					return
+		getServerEvent(calendarId, eventId, function(err, serverEvent, xhr) {
+			if (err || !serverEvent) {
+				updateFromServer_failed(failed, err, serverEvent, xhr)
+				return
+			}
+			var data = mergeArgs(cloneRawEvent(serverEvent), buildArgs(serverEvent))
+			updateGCalEvent(calendarId, eventId, data, options && options.params, function(err2, data2, xhr2) {
+				if (err2) {
+					updateFromServer_failed(failed, err2, data2, xhr2)
+				} else if (done) {
+					done()
 				}
-				var data = mergeArgs(cloneRawEvent(serverEvent), buildArgs(serverEvent))
-				updateGCalEvent({
-					accessToken: session.accessToken,
-					calendarId: unscopedCalendarId(calendarId),
-					eventId: eventId,
-					data: data,
-					params: options && options.params,
-				}, function(err2, data2, xhr2) {
-					if (err2) {
-						updateFromServer_failed(failed, err2, data2, xhr2)
-					} else if (done) {
-						done()
-					}
-				})
 			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			handleAuthError(err, false, isNetworkError)
 		})
 	}
 
@@ -928,7 +813,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// it's confirmed again. If that fails, copy (Undo.restoreCopy, single events only) is created
 	// as a new event. done() should refetch.
 	function restoreEvent(calendarId, eventId, copy, done) {
-		logger.debug(calendarManagerId, 'restoreEvent', calendarId, eventId)
 		updateEventFromServer(calendarId, eventId, function() {
 			return { status: 'confirmed' }
 		}, done, null, function(report) {
@@ -941,7 +825,6 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	}
 
 	function setEventProperty(calendarId, eventId, key, value) {
-		logger.debug(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
 		var args = {}
 		args[key] = value
 		setEventProperties(calendarId, eventId, args)
@@ -949,64 +832,38 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 
 	// options: optional { params } with query params for the PUT (see createEventFromData).
 	function setEventProperties(calendarId, eventId, args, options) {
-		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		updateGoogleCalendarEvent(calendarId, eventId, args, options)
 	}
 
 	function updateGoogleCalendarEvent(calendarId, eventId, args, options) {
-		if (session.accessToken) {
-			var event = getEvent(calendarId, eventId)
-			if (!event) {
-				session.transactionError('attempting to "set an event property" for an event that doesn\'t exist')
-				return
+		var event = getEvent(calendarId, eventId)
+		if (!event) {
+			logger.log(calendarManagerId, 'updateGoogleCalendarEvent', 'event not loaded')
+			return
+		}
+		var params = options && options.params
+		var callback = function(err, data, xhr) {
+			if (err) {
+				updateGoogleCalendarEvent_err(err, data, xhr)
+			} else {
+				updateGoogleCalendarEvent_done(calendarId, eventId, event, data, args)
 			}
-
-			var callback = function(err, data, xhr) {
-				if (err) {
-					updateGoogleCalendarEvent_err(err, data, xhr)
-				} else {
-					updateGoogleCalendarEvent_done(calendarId, eventId, event, data, args)
+		}
+		// Shown from the disk cache (no guests, description, ...): a PUT of that copy would wipe
+		// them, so start from the server copy.
+		if (event.fromCache) {
+			getServerEvent(calendarId, eventId, function(err, serverEvent, xhr) {
+				if (err || !serverEvent) {
+					updateGoogleCalendarEvent_err(err, serverEvent, xhr)
+					return
 				}
-			}
-			var func = updateGoogleCalendarEvent_run.bind(this, calendarId, eventId, event, args, options, callback)
-			// Shown from the disk cache (no guests, description, ...): a PUT of that copy would wipe
-			// them, so start from the server copy.
-			if (event.fromCache) {
-				func = function() {
-					fetchGoogleCalendarEvent_run(calendarId, eventId, function(err, serverEvent, xhr) {
-						if (err || !serverEvent) {
-							updateGoogleCalendarEvent_err(err, serverEvent, xhr)
-							return
-						}
-						updateGoogleCalendarEvent_run(calendarId, eventId, serverEvent, args, options, callback)
-					})
-				}
-			}
-			withAccessToken(func, function(err, isNetworkError) {
-				handleAuthError(err, false, isNetworkError)
+				updateGCalEvent(calendarId, eventId, mergeArgs(cloneRawEvent(serverEvent), args), params, callback)
 			})
 		} else {
-			session.transactionError('attempting to "set an event property" without an access token set')
+			updateGCalEvent(calendarId, eventId, mergeArgs(cloneRawEvent(event), args), params, callback)
 		}
 	}
-	function updateGoogleCalendarEvent_run(calendarId, eventId, event, args, options, callback) {
-		logger.debugJSON('updateGoogleCalendarEvent_run', calendarId, eventId, event, args)
-
-		// Merge assigned values into a cloned object
-		var data = mergeArgs(cloneRawEvent(event), args)
-		logger.debugJSON('updateGoogleCalendarEvent', 'sent', data)
-
-		updateGCalEvent({
-			accessToken: session.accessToken,
-			calendarId: unscopedCalendarId(calendarId),
-			eventId: eventId,
-			data: data,
-			params: options && options.params,
-		}, callback)
-	}
 	function updateGoogleCalendarEvent_done(calendarId, eventId, event, data, args) {
-		logger.debugJSON('updateGoogleCalendarEvent_done', calendarId, data)
-
 		// Fields removed by the update (eg: colorId, a removed Meet) are missing from the response:
 		// drop them from the event too.
 		for (var key in (args || {})) {
@@ -1024,51 +881,27 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		eventUpdated(calendarId, eventId, event)
 	}
 	function updateGoogleCalendarEvent_err(err, data, xhr) {
-		logger.log('updateGoogleCalendarEvent_err', err, data, xhr)
+		logger.log(calendarManagerId, 'updateGoogleCalendarEvent_err', xhr && xhr.status)
 		return handleError(err, data, xhr)
 	}
 
-	function updateGCalEvent(args, callback) {
-		// PUT https://www.googleapis.com/calendar/v3/calendars/calendarId/events/eventId
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events/'
-		url += encodeURIComponent(args.eventId)
+	// PUT the whole event (data). params: optional query params.
+	function updateGCalEvent(calendarId, eventId, data, params, callback) {
 		// The body is the whole event (cloneRawEvent), file attachments included: say we support
 		// them, or Google may drop them from the updated event.
-		var params = { supportsAttachments: true }
-		for (var key in (args.params || {})) {
-			params[key] = args.params[key]
+		var query = { supportsAttachments: true }
+		for (var key in (params || {})) {
+			query[key] = params[key]
 		}
-		url += queryString(params)
-		Requests.postJSON({
-			method: 'PUT',
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
-			},
-			data: args.data,
-		}, function(err, data, xhr) {
-			logger.debug('updateGCalEvent.response', err, data, xhr.status)
-			if (!err && data && data.error) {
-				return callback(data, null, xhr)
-			}
-			callback(err, data, xhr)
-		})
+		googleRequest('PUT', eventPath(unscopedCalendarId(calendarId), eventId), query, data, callback)
 	}
 
 	//--- Move Event
 	// Move an event, or a whole recurring series (eventId = its recurringEventId), to another
 	// calendar of the same account (Google events.move). The moved event keeps its id. The loaded
 	// copies are removed from the source calendar; done(err, movedEvent) should refetch to show it
-	// in the destination. params: optional query params, eg: { sendUpdates: 'all' }.
+	// in the destination. done is always called. params: optional query params, eg: { sendUpdates: 'all' }.
 	function moveEvent(calendarId, eventId, destinationCalendarId, done, params) {
-		logger.debug(calendarManagerId, 'moveEvent', calendarId, eventId, destinationCalendarId)
-		if (!session.accessToken) {
-			session.transactionError('attempting to "move an event" without an access token set')
-			return
-		}
 		// Only within this account: the scoped id of another account isn't one of our calendars.
 		if (accountId && destinationCalendarId.indexOf(accountId + "::") !== 0) {
 			logger.log(calendarManagerId, 'moveEvent', 'destination is in another account')
@@ -1081,171 +914,85 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		for (var key in (params || {})) {
 			query[key] = params[key]
 		}
-		var func = function() {
-			moveGCalEvent({
-				accessToken: session.accessToken,
-				calendarId: unscopedCalendarId(calendarId),
-				eventId: eventId,
-				params: query,
-			}, function(err, data, xhr) {
-				if (err) {
-					moveEvent_err(err, data, xhr)
-				} else {
-					moveEvent_done(calendarId, eventId)
-				}
-				if (done) {
-					done(err, data)
-				}
-			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			handleAuthError(err, false, isNetworkError)
+		googleRequest('POST', eventPath(unscopedCalendarId(calendarId), eventId) + '/move', query, "", function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'moveEvent_err', xhr && xhr.status)
+				handleError(err, data, xhr)
+			} else {
+				moveEvent_done(calendarId, eventId)
+			}
+			if (done) {
+				done(err, data)
+			}
 		})
 	}
 	// The event (or the series' loaded occurrences) left this calendar.
 	function moveEvent_done(calendarId, eventId) {
-		var calendar = googleCalendarManager.eventsByCalendar[calendarId]
-		var items = calendar && calendar.items ? calendar.items.slice() : []
+		var items = eventItems(calendarId).slice()
 		for (var i = 0; i < items.length; i++) {
 			if (items[i].id === eventId || items[i].recurringEventId === eventId) {
 				removeEvent(calendarId, items[i].id)
 			}
 		}
 	}
-	function moveEvent_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'moveEvent_err', err, data, xhr)
-		return handleError(err, data, xhr)
-	}
-
-	function moveGCalEvent(args, callback) {
-		// POST https://www.googleapis.com/calendar/v3/calendars/calendarId/events/eventId/move?destination=...
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events/'
-		url += encodeURIComponent(args.eventId)
-		url += '/move'
-		url += queryString(args.params)
-		Requests.postJSON({
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
-			},
-			data: "",
-		}, function(err, data, xhr) {
-			logger.debug('moveGCalEvent.response', err, xhr.status)
-			if (!err && data && data.error) {
-				return callback(data, null, xhr)
-			}
-			callback(err, data, xhr)
-		})
-	}
 
 	//--- Delete Event
-	// Optional done(err) once the server answered.
+	// Optional done(err), always called.
 	function deleteEvent(calendarId, eventId, done) {
-		logger.debug(calendarManagerId, 'deleteEvent', calendarId, eventId)
-		if (session.accessToken) {
-			var event = getEvent(calendarId, eventId)
-			if (!event) {
-				session.transactionError('attempting to "delete an event" for an event that doesn\'t exist')
-				return
-			}
-
-			var func = deleteEvent_run.bind(this, calendarId, eventId, function(err, data, xhr) {
-				if (err) {
-					deleteEvent_err(err, data, xhr)
-				} else {
-					deleteEvent_done(calendarId, eventId, data)
-				}
-				if (done) {
-					done(err)
-				}
-			})
-			withAccessToken(func, function(err, isNetworkError) {
-				handleAuthError(err, false, isNetworkError)
-			})
-		} else {
-			session.transactionError('attempting to "delete an event" without an access token set')
-		}
-	}
-	function deleteEvent_run(calendarId, eventId, callback) {
-		logger.debugJSON(calendarManagerId, 'deleteEvent_run', calendarId, eventId)
-		var rawCalendarId = unscopedCalendarId(calendarId)
-		deleteGCalEvent({
-			accessToken: session.accessToken,
-			calendarId: rawCalendarId,
-			eventId: eventId,
-		}, callback)
-	}
-	function deleteEvent_done(calendarId, eventId, data) {
-		logger.debugJSON(calendarManagerId, 'deleteEvent_done', calendarId, eventId, data)
-
-		// Note: No data is returned on success
 		var event = getEvent(calendarId, eventId)
-		if (event) {
-			removeEvent(calendarId, eventId)
-			eventDeleted(calendarId, eventId, event)
+		if (!event) {
+			logger.log(calendarManagerId, 'deleteEvent', 'event not loaded')
+			if (done) {
+				done('deleteEvent: event not loaded')
+			}
+			return
 		}
-	}
-	function deleteEvent_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'deleteEvent_err', err, data, xhr)
-		return handleError(err, data, xhr)
+		deleteGCalEvent(calendarId, eventId, function(err, data, xhr) {
+			if (!err) {
+				// Note: No data is returned on success
+				var deleted = getEvent(calendarId, eventId)
+				if (deleted) {
+					removeEvent(calendarId, eventId)
+					eventDeleted(calendarId, eventId, deleted)
+				}
+			}
+			if (done) {
+				done(err)
+			}
+		})
 	}
 
 	// Delete a whole recurring series by its id (an occurrence's recurringEventId). The loaded
 	// occurrences are removed locally; done(err) is called either way.
 	function deleteSeries(calendarId, seriesId, done) {
-		logger.debug(calendarManagerId, 'deleteSeries', calendarId, seriesId)
 		if (!seriesId) {
+			if (done) {
+				done('deleteSeries: no series')
+			}
 			return
 		}
-		var func = function() {
-			deleteGCalEvent({
-				accessToken: session.accessToken,
-				calendarId: unscopedCalendarId(calendarId),
-				eventId: seriesId,
-			}, function(err, data, xhr) {
-				if (err) {
-					deleteEvent_err(err, data, xhr)
-				} else {
-					var calendar = googleCalendarManager.eventsByCalendar[calendarId]
-					var items = calendar && calendar.items ? calendar.items.slice() : []
-					for (var i = 0; i < items.length; i++) {
-						if (items[i].recurringEventId === seriesId || items[i].id === seriesId) {
-							removeEvent(calendarId, items[i].id)
-							eventDeleted(calendarId, items[i].id, items[i])
-						}
+		deleteGCalEvent(calendarId, seriesId, function(err, data, xhr) {
+			if (!err) {
+				var items = eventItems(calendarId).slice()
+				for (var i = 0; i < items.length; i++) {
+					if (items[i].recurringEventId === seriesId || items[i].id === seriesId) {
+						removeEvent(calendarId, items[i].id)
+						eventDeleted(calendarId, items[i].id, items[i])
 					}
 				}
-				if (done) {
-					done(err)
-				}
-			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			handleAuthError(err, false, isNetworkError)
+			}
+			if (done) {
+				done(err)
+			}
 		})
 	}
 
-	function deleteGCalEvent(args, callback) {
-		// DELETE https://www.googleapis.com/calendar/v3/calendars/calendarId/events/eventId
-		// Note: Success means a response of xhr.status == 204 (No Content)
-		var url = 'https://www.googleapis.com/calendar/v3'
-		url += '/calendars/'
-		url += encodeURIComponent(args.calendarId)
-		url += '/events/'
-		url += encodeURIComponent(args.eventId)
-		Requests.postJSON({
-			method: 'DELETE',
-			url: url,
-			headers: {
-				"Authorization": "Bearer " + args.accessToken,
-			},
-		}, function(err, data, xhr) {
-			logger.debug('deleteGCalEvent.response', err, data, xhr.status)
-			if (!err && data && data.error) {
-				return callback(data, null, xhr)
+	// DELETE an event. Success is 204 (No Content). Errors are shown.
+	function deleteGCalEvent(calendarId, eventId, callback) {
+		googleRequest('DELETE', eventPath(unscopedCalendarId(calendarId), eventId), null, undefined, function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'deleteEvent_err', xhr && xhr.status)
+				handleError(err, data, xhr)
 			}
 			callback(err, data, xhr)
 		})
@@ -1256,37 +1003,19 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	// and to (Dates). done(err, data): data is Google's answer, { calendars: { id: { busy, errors } } };
 	// err a short message. calendarId: any calendar of the account (picks the account).
 	function freeBusy(calendarId, ids, from, to, done) {
-		if (!session.accessToken) {
-			done(i18n("Not logged in to Google Calendar"), null)
-			return
-		}
-		var func = function() {
-			Requests.postJSON({
-				url: 'https://www.googleapis.com/calendar/v3/freeBusy',
-				headers: {
-					"Authorization": "Bearer " + session.accessToken,
-				},
-				data: {
-					timeMin: from.toISOString(),
-					timeMax: to.toISOString(),
-					timeZone: 'UTC',
-					items: ids.map(function(id) { return { id: id } }),
-				},
-			}, function(err, data, xhr) {
-				if (!err && data && data.error) {
-					err = data
-				}
-				if (err) {
-					logger.log(calendarManagerId, 'freeBusy_err', xhr && xhr.status) // No emails in logs
-					done(xhr && Requests.isNetworkError(xhr) ? i18n("Could not connect") : i18n("Could not get the free / busy times"), null)
-					return
-				}
-				logger.debug(calendarManagerId, 'freeBusy', ids.length, 'calendars')
-				done(null, data)
-			})
-		}
-		withAccessToken(func, function(err, isNetworkError) {
-			done(isNetworkError ? i18n("Could not connect") : i18n("Google authentication failed: %1", err), null)
+		googleRequest('POST', '/freeBusy', null, {
+			timeMin: from.toISOString(),
+			timeMax: to.toISOString(),
+			timeZone: 'UTC',
+			items: ids.map(function(id) { return { id: id } }),
+		}, function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'freeBusy_err', xhr && xhr.status) // No emails in logs
+				done(requestErrorText(err, xhr) || i18n("Could not get the free / busy times"), null)
+				return
+			}
+			logger.debug(calendarManagerId, 'freeBusy', ids.length, 'calendars')
+			done(null, data)
 		})
 	}
 
