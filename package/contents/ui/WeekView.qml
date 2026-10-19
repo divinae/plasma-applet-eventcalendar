@@ -5,6 +5,7 @@ import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 
 import "EventBuckets.js" as EventBuckets
+import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 import "TimeZone.js" as TimeZone
@@ -177,8 +178,7 @@ Item {
 		return -1
 	}
 	function formatHour(hour) {
-		var d = new Date(2000, 0, 1, hour)
-		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : 'h AP')
+		return formatZoneTime(hour, 0)
 	}
 	function formatZoneTime(hours, minutes) {
 		var d = new Date(2000, 0, 1, hours, minutes)
@@ -800,7 +800,7 @@ Item {
 						if (span.allDay && !span.multiDay) {
 							return i18n("All day")
 						}
-						var range = i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
+						var range = LocaleFuncs.formatRange(span.startText, span.endText)
 						return span.allDay ? range + " · " + i18np("%1 day", "%1 days", span.days) : range
 					}
 					Column {
@@ -890,7 +890,7 @@ Item {
 						readonly property var span: allDayDragPreview.span
 						// The new day(s): one day just its date.
 						text: !span ? "" : span.allDay && !span.multiDay ? span.startText
-							: i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
+							: LocaleFuncs.formatRange(span.startText, span.endText)
 						opacity: 0.75
 						font: appletConfig.eventSmallFont
 						elide: Text.ElideRight

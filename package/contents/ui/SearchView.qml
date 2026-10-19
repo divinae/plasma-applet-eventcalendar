@@ -4,7 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
-import "Shared.js" as Shared
+import "LocaleFuncs.js" as LocaleFuncs
 import "EventSearch.js" as EventSearch
 
 // Search events by title, location and description: the loaded events right away, then Google
@@ -83,22 +83,9 @@ Item {
 		})
 	}
 
-	function isAllDay(e) {
-		return !!(e.start && e.start.date)
-	}
 	// "Fri 23 Oct · 12:30 – 13:30", "Fri 23 Oct · All day", or a span of days.
 	function whenText(e) {
-		var now = timeModel.currentTime
-		var span = Shared.eventSpan(e, appletConfig.timeFormat, now)
-		if (span.multiDay) {
-			return i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
-		}
-		var start = new Date(e.startDateTime)
-		var day = Qt.formatDate(start, 'ddd ' + Shared.spanDateFormat(start, start, now))
-		if (span.allDay) {
-			return i18nc("search result, %1 = date", "%1 · All day", day)
-		}
-		return i18nc("search result, %1 = date, %2 = start time, %3 = end time", "%1 · %2 – %3", day, span.startText, span.endText)
+		return LocaleFuncs.formatWhen(e, appletConfig.timeFormat, timeModel.currentTime)
 	}
 
 	Keys.onEscapePressed: closeRequested()

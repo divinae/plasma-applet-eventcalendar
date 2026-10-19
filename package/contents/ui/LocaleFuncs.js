@@ -68,6 +68,26 @@ function formatEventDuration(event, args) {
 	}
 }
 
+// "start – end" of two already formatted times / dates.
+function formatRange(startText, endText) {
+	return i18nc("event span, %1 = start, %2 = end", "%1 – %2", startText, endText)
+}
+
+// When an event is, on one line: "Fri 23 Oct · 12:30 – 13:30", "Fri 23 Oct · All day", or a span of
+// days ("14 – 16 Oct"). timeFormat: a Qt time format (appletConfig.timeFormat); now: for the year.
+function formatWhen(e, timeFormat, now) {
+	var span = Shared.eventSpan(e, timeFormat, now)
+	if (span.multiDay) {
+		return formatRange(span.startText, span.endText)
+	}
+	var start = new Date(e.startDateTime)
+	var day = Qt.formatDate(start, 'ddd ' + Shared.spanDateFormat(start, start, now))
+	if (span.allDay) {
+		return i18nc("search result, %1 = date", "%1 · All day", day)
+	}
+	return i18nc("search result, %1 = date, %2 = start time, %3 = end time", "%1 · %2 – %3", day, span.startText, span.endText)
+}
+
 function getHours(t) {
 	var hours = Math.floor(t / (60 * 60 * 1000))
 	return hours
