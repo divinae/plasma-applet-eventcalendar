@@ -1,4 +1,5 @@
 .pragma library
+.import "lib/GoogleError.js" as GoogleError
 
 // Import .ics files: events from `icsjson.py events` (the file's VEVENTs as they are) to
 // Google Calendar `events.import` bodies. Import keeps the iCalUID, so importing the same
@@ -120,17 +121,8 @@ function exceptionCount(item) {
 
 // A short message from a failed Google request: the API's error message, else the HTTP status.
 function errorMessage(err, data, status) {
-	var body = err && err.error ? err : null
-	if (!body && typeof data === 'string') {
-		try {
-			body = JSON.parse(data)
-		} catch (e) {
-			body = null
-		}
-	} else if (!body && data && data.error) {
-		body = data
-	}
-	if (body && body.error) {
+	var body = GoogleError.googleErrorBody(err, data)
+	if (body) {
 		var message = body.error.message || (body.error.errors && body.error.errors[0] && body.error.errors[0].message)
 		if (message) {
 			return (body.error.code ? body.error.code + ': ' : '') + message

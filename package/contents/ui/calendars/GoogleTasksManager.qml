@@ -5,6 +5,7 @@ import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
 import "../lib"
 import "../lib/Async.js" as Async
+import "../lib/GoogleError.js" as GoogleError
 import "../lib/Requests.js" as Requests
 
 // Google Tasks API
@@ -111,17 +112,10 @@ CalendarManager {
 		}
 
 		// https://developers.google.com/tasks/reference/rest/errors
-		// On HTTP errors, err is a string and the JSON error body is in data.
-		if (!(err && err.error) && typeof data === 'string') {
-			try {
-				err = JSON.parse(data)
-			} catch (e) {
-				// Not JSON
-			}
-		}
-		if (err && err.error && err.error.errors && err.error.errors.length >= 1) {
-			httpCode = err.error.code
-			var err0 = err.error.errors[0]
+		var body = GoogleError.googleErrorBody(err, data)
+		if (body && body.error.errors && body.error.errors.length >= 1) {
+			httpCode = body.error.code
+			var err0 = body.error.errors[0]
 
 			if (httpCode === 401 && err0.reason === 'authError') {
 				var suggestion = i18n("Widget has been updated. Please logout and login to Google Calendar again.")

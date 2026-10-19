@@ -5,12 +5,15 @@ const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
 
-const source = fs.readFileSync(
-	path.join(__dirname, '../package/contents/ui/IcsImport.js'),
-	'utf8'
-).replace(/^\.pragma library\s*/, '')
+function read(file) {
+	return fs.readFileSync(path.join(__dirname, '../package/contents/ui', file), 'utf8')
+		.replace(/^\.pragma library\s*$/m, '')
+		.replace(/^\.import .*$/mg, '')
+}
+const GoogleError = {}
+vm.runInNewContext(read('lib/GoogleError.js'), GoogleError)
 const I = {}
-vm.runInNewContext(source + '\nObject.assign(I, { googleDate, googleEventBody, importOrder, toDate, lastDay, exceptionCount, errorMessage })', { I, Date, JSON })
+vm.runInNewContext(read('IcsImport.js') + '\nObject.assign(I, { googleDate, googleEventBody, importOrder, toDate, lastDay, exceptionCount, errorMessage })', { I, Date, JSON, GoogleError })
 
 function plain(x) {
 	return JSON.parse(JSON.stringify(x))
