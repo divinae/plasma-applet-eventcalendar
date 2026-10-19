@@ -51,6 +51,7 @@ Item {
 		}
 	}
 
+	// The time lines; the date tile and the meeting dot are added below them (verticalExtraHeight).
 	property int verticalHeight: {
 		if (useFixedHeight) {
 			return fixedHeight
@@ -65,6 +66,13 @@ Item {
 			}
 		}
 	}
+
+	//--- Vertical panels: a calendar tile with the date, and a dot when a meeting is near.
+	readonly property bool isVertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
+	readonly property bool showDateTile: isVertical && plasmoid.configuration.clockVerticalShowDate
+	readonly property bool showNextEventDot: isVertical && plasmoid.configuration.clockShowNextEvent && !!nextEvent
+	readonly property int verticalExtraHeight: (showDateTile ? dateTile.height + content.spacing : 0)
+		+ (showNextEventDot ? nextEventDot.height + content.spacing : 0)
 
 	property date currentTime: new Date()
 
@@ -85,66 +93,138 @@ Item {
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
 
 	Column {
-		id: labels
-		spacing: 0
+		id: content
 		anchors.centerIn: parent
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
+		spacing: Math.max(2, Math.round(clock.width / 12))
 
-		Item {
-			id: timeContainer1
+		Column {
+			id: labels
+			spacing: 0
+			anchors.horizontalCenter: parent.horizontalCenter
 
-			PlasmaComponents3.Label {
-				id: timeLabel1
-				anchors.centerIn: parent
+			Item {
+				id: timeContainer1
 
-				font.family: appletConfig.clockFontFamily
-				font.weight: appletConfig.lineWeight1
-				font.pointSize: -1
-				font.pixelSize: timeContainer1.height
-				minimumPixelSize: 1
+				PlasmaComponents3.Label {
+					id: timeLabel1
+					anchors.centerIn: parent
 
-				fontSizeMode: Text.FixedSize
-				wrapMode: Text.NoWrap
+					font.family: appletConfig.clockFontFamily
+					font.weight: appletConfig.lineWeight1
+					font.pointSize: -1
+					font.pixelSize: timeContainer1.height
+					minimumPixelSize: 1
 
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				smooth: true
+					fontSizeMode: Text.FixedSize
+					wrapMode: Text.NoWrap
 
-				property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
-				text: Qt.formatDateTime(clock.currentTime, timeFormat)
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					smooth: true
+
+					property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
+					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				}
+
+				// Debugging
+				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel1; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
 			}
+			Item {
+				id: timeContainer2
+				visible: clock.showLine2
 
-			// Debugging
-			// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			// Rectangle { border.color: "#f00"; anchors.fill: timeLabel1; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				PlasmaComponents3.Label {
+					id: timeLabel2
+					anchors.centerIn: parent
+					font.family: appletConfig.clockFontFamily
+					font.weight: appletConfig.lineWeight2
+					font.pointSize: -1
+					font.pixelSize: timeContainer2.height
+					minimumPixelSize: 1
+
+					fontSizeMode: Text.FixedSize
+					wrapMode: Text.NoWrap
+
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					smooth: true
+
+					property string timeFormat: appletConfig.line2TimeFormat // Used in TimeFormatSizeHelper
+					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				}
+
+				// Debugging
+				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+			}
 		}
-		Item {
-			id: timeContainer2
-			visible: clock.showLine2
 
+		// Like a calendar app icon: the short weekday on a colored band, the day number below.
+		Rectangle {
+			id: dateTile
+			visible: clock.showDateTile
+			anchors.horizontalCenter: parent.horizontalCenter
+			width: Math.max(16, Math.min(clock.width - Kirigami.Units.smallSpacing * 2, Kirigami.Units.gridUnit * 2.2))
+			height: Math.round(width * 0.95)
+			radius: Math.round(width / 6)
+			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.06)
+			border.width: 1
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.3)
+			clip: true
+
+			Rectangle {
+				id: dateTileBand
+				width: parent.width
+				height: Math.round(parent.height * 0.4)
+				topLeftRadius: parent.radius
+				topRightRadius: parent.radius
+				color: Kirigami.Theme.highlightColor
+				PlasmaComponents3.Label {
+					anchors.fill: parent
+					anchors.leftMargin: 2
+					anchors.rightMargin: 2
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					// "pon." / "Mon": without a trailing dot, it's in a box.
+					text: Qt.locale().dayName(clock.currentTime.getDay(), Locale.ShortFormat).replace(/\.$/, '')
+					color: Kirigami.Theme.highlightedTextColor
+					font.pointSize: -1
+					font.pixelSize: Math.max(6, Math.round(parent.height * 0.72))
+					font.weight: Font.DemiBold
+					fontSizeMode: Text.HorizontalFit
+					minimumPixelSize: 5
+				}
+			}
 			PlasmaComponents3.Label {
-				id: timeLabel2
-				anchors.centerIn: parent
-				font.family: appletConfig.clockFontFamily
-				font.weight: appletConfig.lineWeight2
-				font.pointSize: -1
-				font.pixelSize: timeContainer2.height
-				minimumPixelSize: 1
-
-				fontSizeMode: Text.FixedSize
-				wrapMode: Text.NoWrap
-
+				anchors.top: dateTileBand.bottom
+				anchors.bottom: parent.bottom
+				anchors.left: parent.left
+				anchors.right: parent.right
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				smooth: true
-
-				property string timeFormat: appletConfig.line2TimeFormat // Used in TimeFormatSizeHelper
-				text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				text: clock.currentTime.getDate()
+				font.family: appletConfig.clockFontFamily
+				font.pointSize: -1
+				font.pixelSize: Math.max(7, Math.round(height * 0.8))
+				font.weight: Font.Bold
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 5
 			}
+		}
 
-			// Debugging
-			// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+		// A meeting near (the horizontal panel's chip doesn't fit): a dot in its calendar's color.
+		Rectangle {
+			id: nextEventDot
+			visible: clock.showNextEventDot
+			anchors.horizontalCenter: parent.horizontalCenter
+			width: Math.max(6, Math.round(clock.width / 5))
+			height: width
+			radius: width / 2
+			color: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+			border.width: 1
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
 		}
 	}
 
@@ -153,7 +233,7 @@ Item {
 	Item {
 		id: nextEventChip
 		visible: clock.showNextEventChip
-		anchors.left: labels.right
+		anchors.left: content.right
 		anchors.leftMargin: Kirigami.Units.smallSpacing * 2
 		anchors.verticalCenter: parent.verticalCenter
 		width: chipRow.width
@@ -258,8 +338,8 @@ Item {
 
 			PropertyChanges { target: clock
 				targetHeight: clock.verticalHeight
-				Layout.minimumHeight: clock.targetHeight
-				Layout.preferredHeight: clock.targetHeight
+				Layout.minimumHeight: clock.targetHeight + clock.verticalExtraHeight
+				Layout.preferredHeight: clock.targetHeight + clock.verticalExtraHeight
 			}
 			PropertyChanges { target: timeContainer1
 				width: clock.width

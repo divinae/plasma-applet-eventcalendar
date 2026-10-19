@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:23+0200\n"
+"POT-Creation-Date: 2026-10-19 08:28+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -300,12 +300,28 @@ msgid "Size"
 msgstr "Dimensione"
 
 #: ../contents/ui/config/ConfigClock.qml
+msgid "Vertical Panel"
+msgstr "Pannello verticale"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Date under the time"
+msgstr "Data sotto l'ora"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "A small calendar tile with the weekday and the day."
+msgstr "Un piccolo riquadro di calendario con il giorno della settimana e il giorno."
+
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Prossima riunione"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Mostra accanto all'orologio"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "In a vertical panel: a dot in the meeting's color."
+msgstr "In un pannello verticale: un punto del colore della riunione."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"

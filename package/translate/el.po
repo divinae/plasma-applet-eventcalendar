@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:23+0200\n"
+"POT-Creation-Date: 2026-10-19 08:28+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -329,12 +329,29 @@ msgid "Size"
 msgstr "Μέγεθος"
 
 #: ../contents/ui/config/ConfigClock.qml
+msgid "Vertical Panel"
+msgstr "Κάθετος πίνακας"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Date under the time"
+msgstr "Ημερομηνία κάτω από την ώρα"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "A small calendar tile with the weekday and the day."
+msgstr ""
+"Ένα μικρό πλακίδιο ημερολογίου με την ημέρα της εβδομάδας και την ημερομηνία."
+
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Επόμενη σύσκεψη"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Εμφάνιση δίπλα στο ρολόι"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "In a vertical panel: a dot in the meeting's color."
+msgstr "Σε κάθετο πίνακα: μια κουκκίδα στο χρώμα της σύσκεψης."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"

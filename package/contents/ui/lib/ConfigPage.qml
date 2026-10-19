@@ -178,6 +178,8 @@ KCM.SimpleKCM {
 	property var cfg_monthModeHeightDefault
 	property var cfg_eventReminderUseGoogle
 	property var cfg_eventReminderUseGoogleDefault
+	property var cfg_clockVerticalShowDate
+	property var cfg_clockVerticalShowDateDefault
 	property var cfg_clockShowNextEvent
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes

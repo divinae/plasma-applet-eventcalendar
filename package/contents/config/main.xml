@@ -261,6 +261,10 @@
 		<entry name="eventStartingSfxPath" type="string">
 			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
 		</entry>
+		<entry name="clockVerticalShowDate" type="bool">
+			<!-- Vertical panels: a small calendar tile (weekday, day) under the time. -->
+			<default>true</default>
+		</entry>
 		<entry name="clockShowNextEvent" type="bool">
 			<default>true</default>
 		</entry>
