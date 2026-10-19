@@ -3,6 +3,7 @@ const assert = require('assert')
 const config = require('../package/contents/ui/lib/GoogleOAuthConfig.js')
 
 const defaultClientId = '352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com'
+assert.strictEqual(config.defaultClientId, defaultClientId)
 
 assert.match(
 	config.authConfigurationError(defaultClientId, '', defaultClientId),

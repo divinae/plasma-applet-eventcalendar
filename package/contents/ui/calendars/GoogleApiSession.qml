@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../lib/Requests.js" as Requests
+import "../lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "../lib/GoogleOAuthToken.js" as GoogleOAuthToken
 
 QtObject {
@@ -10,7 +11,6 @@ QtObject {
 	property string accountId: ""
 	property int accountRevision: 0
 	property var connectedStore: null
-	property string defaultClientId: "352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
 
 	readonly property string accessToken: {
 		// Ensure refreshes propagate when account data updates.
@@ -35,29 +35,21 @@ QtObject {
 		return fallback
 	}
 
-	function normalizedClientValue(value) {
-		return value ? String(value).trim() : ""
-	}
-
+	// The client secret to refresh the account's token with: its own, else the configured one of
+	// its client. "" for PKCE sessions and the built-in client.
 	function resolveRefreshClientSecret(account) {
 		if (!account || account.sessionUsesPkce === true) {
 			return ""
 		}
+		var normalized = GoogleOAuthConfig.normalizedClientValue
 		if (account.sessionClientSecret) {
-			return normalizedClientValue(account.sessionClientSecret)
+			return normalized(account.sessionClientSecret)
 		}
-		var customClientId = normalizedClientValue(readConfig("customClientId", ""))
-		var customClientSecret = normalizedClientValue(readConfig("customClientSecret", ""))
-		var latestClientId = normalizedClientValue(readConfig("latestClientId", ""))
-		var latestClientSecret = normalizedClientValue(readConfig("latestClientSecret", ""))
-		if (account.sessionClientId === customClientId) {
-			return customClientSecret
+		if (account.sessionClientId === normalized(readConfig("customClientId", ""))) {
+			return normalized(readConfig("customClientSecret", ""))
 		}
-		if (account.sessionClientId === latestClientId && latestClientSecret) {
-			return latestClientSecret
-		}
-		if (account.sessionClientId === defaultClientId) {
-			return ""
+		if (account.sessionClientId === normalized(readConfig("latestClientId", ""))) {
+			return normalized(readConfig("latestClientSecret", ""))
 		}
 		return ""
 	}

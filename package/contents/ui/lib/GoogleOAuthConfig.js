@@ -1,3 +1,6 @@
+// The widget's own (built-in) Google OAuth client.
+var defaultClientId = "352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
+
 var builtInClientUnavailableMessage = "The built-in Google OAuth client is currently rejected by Google because it requires a client secret. Add your own Google OAuth client ID, or switch back to a previously stored secret-based client."
 
 function normalizedClientValue(value) {
@@ -42,6 +45,7 @@ function authConfigurationError(clientId, clientSecret, defaultClientId) {
 
 if (typeof module !== "undefined") {
 	module.exports = {
+		defaultClientId: defaultClientId,
 		builtInClientUnavailableMessage: builtInClientUnavailableMessage,
 		effectiveClientCredentials: effectiveClientCredentials,
 		authConfigurationError: authConfigurationError,

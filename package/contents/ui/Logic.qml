@@ -296,10 +296,7 @@ Item {
 		}
 	}
 	function currentGoogleCredentials() {
-		return GoogleOAuthConfig.effectiveClientCredentials(
-			plasmoid.configuration,
-			"352447874752-sej1ldpd6piqgovtpog0dr91tb4sq5q3.apps.googleusercontent.com"
-		)
+		return GoogleOAuthConfig.effectiveClientCredentials(plasmoid.configuration, GoogleOAuthConfig.defaultClientId)
 	}
 	function currentGoogleClientId() {
 		return currentGoogleCredentials().clientId
