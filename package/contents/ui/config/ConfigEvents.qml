@@ -281,7 +281,8 @@ ConfigPage {
 					}
 					currentIndex = model.length - 1
 				}
-				onModelChanged: syncIndex()
+				// Later: the inner ComboBox gets the new model after this handler and resets its index.
+				onModelChanged: Qt.callLater(syncIndex)
 				Component.onCompleted: syncIndex()
 				onActivated: function(index) {
 					var entry = model[index]
