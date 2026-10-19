@@ -117,22 +117,20 @@ Item {
 					: meetingPill.minutesUntil <= 15 ? Kirigami.Theme.neutralTextColor
 					: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
 			}
-			// The theme's highlight color, not the calendar's: a light calendar color vanished on a light
-			// panel.
+			// In the clock's text color: it always contrasts with the panel, like the time does
+			// (a calendar's or the highlight color can be too light on a light panel).
 			Rectangle {
 				visible: meetingPill.inProgress
 				anchors.verticalCenter: parent.verticalCenter
 				width: parent.width
 				height: Math.max(4, Math.round(parent.height * 0.8))
 				radius: height / 2
-				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
-				border.width: 1
-				border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
+				color: ColorUtil.setAlpha(timeLabel1.color, 0.18)
 				Rectangle {
 					width: Math.max(parent.height, parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0))
 					height: parent.height
 					radius: parent.radius
-					color: Kirigami.Theme.highlightColor
+					color: timeLabel1.color
 				}
 			}
 		}
