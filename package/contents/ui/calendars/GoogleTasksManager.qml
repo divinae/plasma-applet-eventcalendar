@@ -230,7 +230,7 @@ CalendarManager {
 		})
 	}
 	function fetchGoogleAccountTasks_run(tasklistIdList, callback) {
-		logger.debug('fetchGoogleAccountTasks_run', tasklistIdList)
+		logger.debug('fetchGoogleAccountTasks_run', tasklistIdList.length, 'tasklists')
 
 		var tasks = []
 		for (var i = 0; i < tasklistIdList.length; i++) {
@@ -242,7 +242,7 @@ CalendarManager {
 		Async.parallel(tasks, callback)
 	}
 	function fetchGoogleAccountTasks_err(err, data, xhr) {
-		logger.debug('fetchGoogleAccountTasks_err', err, data, xhr)
+		logger.debug('fetchGoogleAccountTasks_err', xhr && xhr.status)
 		googleTasksManager.asyncRequestsDone += 1
 		return googleTasksManager.handleError(err, data, xhr)
 	}
@@ -362,7 +362,7 @@ CalendarManager {
 			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
-				logger.debugJSON('onErrorFetchingTasks: ', err)
+				logger.debug('onErrorFetchingTasks', xhr && xhr.status)
 				var errObj = {
 					err: err,
 					data: data,
@@ -386,7 +386,7 @@ CalendarManager {
 	}
 
 	function fetchGCalTasksPageResponse(args, finishedCallback, allData, err, data, xhr) {
-		logger.debug('fetchGCalTasksPageResponse', args, finishedCallback, allData, err, data, xhr)
+		logger.debug('fetchGCalTasksPageResponse', xhr && xhr.status)
 		if (err) {
 			return finishedCallback(err, data, xhr)
 		}
@@ -398,7 +398,6 @@ CalendarManager {
 		allData = data
 		
 		if (allData.nextPageToken) {
-			logger.debug('fetchGCalTasksPageResponse.nextPageToken', allData.nextPageToken)
 			logger.debug('fetchGCalTasksPageResponse.nextPageToken', 'allData.items.length', allData.items && allData.items.length)
 			args.pageToken = allData.nextPageToken
 			var onResponse = fetchGCalTasksPageResponse.bind(this, args, finishedCallback, allData)
@@ -427,7 +426,7 @@ CalendarManager {
 				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
-			logger.debug('fetchGCalTasksPage.response', args.tasklistId, err, data, xhr.status)
+			logger.debug('fetchGCalTasksPage.response', xhr.status)
 			if (!err && data && data.error) {
 				return pageCallback(data, null, xhr)
 			}
@@ -455,7 +454,6 @@ CalendarManager {
 		}
 	}
 	function createEvent_run(calendarId, eventText, callback) {
-		logger.debugJSON(calendarManagerId, 'createEvent_run', calendarId, eventText)
 		var rawTasklistId = unscopedTasklistId(calendarId)
 		createGoogleTask({
 			accessToken: session.accessToken,
@@ -464,7 +462,6 @@ CalendarManager {
 		}, callback)
 	}
 	function createEvent_done(calendarId, data) {
-		logger.debugJSON(calendarManagerId, 'createEvent_done', calendarId, data)
 		var rawTasklistId = unscopedTasklistId(calendarId)
 		if (getTasklistIdList().indexOf(rawTasklistId) >= 0) {
 			var eventData = parseTaskAsEventData(data)
@@ -474,7 +471,7 @@ CalendarManager {
 		}
 	}
 	function createEvent_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'createEvent_err', err, data, xhr)
+		logger.log(calendarManagerId, 'createEvent_err', xhr && xhr.status)
 		return googleTasksManager.handleError(err, data, xhr)
 	}
 
@@ -494,7 +491,7 @@ CalendarManager {
 			},
 			data: taskData,
 		}, function(err, data, xhr) {
-			logger.debug('createGoogleTask.response', err, data, xhr.status)
+			logger.debug('createGoogleTask.response', xhr.status)
 			if (!err && data && data.error) {
 				return callback(data, null, xhr)
 			}
@@ -536,7 +533,6 @@ CalendarManager {
 		}, callback)
 	}
 	function deleteEvent_done(calendarId, eventId, data) {
-		logger.debugJSON(calendarManagerId, 'deleteEvent_done', calendarId, eventId, data)
 
 		// Note: No data is returned on success
 		var event = getEvent(calendarId, eventId)
@@ -546,7 +542,7 @@ CalendarManager {
 		}
 	}
 	function deleteEvent_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'deleteEvent_err', err, data, xhr)
+		logger.log(calendarManagerId, 'deleteEvent_err', xhr && xhr.status)
 		return googleTasksManager.handleError(err, data, xhr)
 	}
 
@@ -565,7 +561,7 @@ CalendarManager {
 				"Authorization": "Bearer " + args.accessToken,
 			},
 		}, function(err, data, xhr) {
-			logger.debug('deleteGoogleTask.response', err, data, xhr.status)
+			logger.debug('deleteGoogleTask.response', xhr.status)
 			if (!err && data && data.error) {
 				return callback(data, null, xhr)
 			}
@@ -575,7 +571,6 @@ CalendarManager {
 
 	//--- Update Task
 	function setEventProperties(calendarId, eventId, args) {
-		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {
@@ -598,12 +593,10 @@ CalendarManager {
 		}
 	}
 	function setEventProperties_run(calendarId, eventId, event, args, callback) {
-		logger.debugJSON(calendarManagerId, 'setEventProperties_run', calendarId, eventId, event, args)
 		
 		// Merge assigned values into a cloned object
 		var data = cloneRawTask(event)
 		Shared.merge(data, args)
-		logger.debugJSON(calendarManagerId, 'setEventProperties', 'sent', data)
 
 		updateGoogleTask({
 			accessToken: session.accessToken,
@@ -613,7 +606,6 @@ CalendarManager {
 		}, callback)
 	}
 	function setEventProperties_done(calendarId, eventId, event, data) {
-		logger.debugJSON(calendarManagerId, 'setEventProperties_done', calendarId, data)
 
 		// Merge serialized values
 		var eventData = parseTaskAsEventData(data)
@@ -624,7 +616,7 @@ CalendarManager {
 		eventUpdated(calendarId, eventId, event)
 	}
 	function setEventProperties_err(err, data, xhr) {
-		logger.log(calendarManagerId, 'setEventProperties_err', err, data, xhr)
+		logger.log(calendarManagerId, 'setEventProperties_err', xhr && xhr.status)
 		return googleTasksManager.handleError(err, data, xhr)
 	}
 
@@ -643,7 +635,7 @@ CalendarManager {
 			},
 			data: args.data,
 		}, function(err, data, xhr) {
-			logger.debug('updateGoogleTask.response', err, data, xhr.status)
+			logger.debug('updateGoogleTask.response', xhr.status)
 			if (!err && data && data.error) {
 				return callback(data, null, xhr)
 			}

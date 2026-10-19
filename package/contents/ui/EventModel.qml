@@ -562,7 +562,6 @@ CalendarManager {
 
 	// options: optional { params } with query params for the update (Google).
 	function setEventProperties(calendarId, eventId, args, options) {
-		logger.debugJSON('eventModel.setEventProperties', calendarId, eventId, args)
 		var calendarManager = managerWith(calendarId, 'setEventProperties')
 		if (calendarManager) {
 			calendarManager.setEventProperties(calendarId, eventId, args, options)
