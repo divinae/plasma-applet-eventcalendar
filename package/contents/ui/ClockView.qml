@@ -25,7 +25,6 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
 import "lib/ColorUtil.js" as ColorUtil
 import "LocaleFuncs.js" as LocaleFuncs
-import "Shared.js" as Shared
 
 Item {
 	id: clock
@@ -84,7 +83,7 @@ Item {
 		&& plasmoid.formFactor === PlasmaCore.Types.Horizontal
 		&& !!nextEvent
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
-	// Vertical panels: the chip doesn't fit, a small pill above the time instead.
+	// Vertical panels: the chip doesn't fit, a dot or progress bar above the time instead.
 	readonly property bool showMeetingPill: plasmoid.configuration.clockShowNextEvent
 		&& plasmoid.formFactor === PlasmaCore.Types.Vertical
 		&& !!nextEvent
@@ -96,53 +95,41 @@ Item {
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
 		spacing: Math.max(2, Math.round(clock.width / 12))
 
-		// Next meeting in a vertical panel, above the time: the minutes until it starts ("5m"), or the
-		// time left with a progress bar, on a pill in its calendar's color. The tooltip has the details.
-		Rectangle {
+		// Next meeting in a vertical panel, above the time. Before it: a dot whose color says how
+		// close it is (gray, orange from 15 min, red from 5 min). During it: a progress bar in its
+		// calendar's color. The tooltip has the details.
+		Item {
 			id: meetingPill
 			visible: clock.showMeetingPill
 			anchors.horizontalCenter: parent.horizontalCenter
-			width: Math.max(18, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
-			height: Math.max(14, Math.round(width * 0.7))
-			radius: Math.round(height / 3)
-			readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+			width: Math.max(16, Math.min(clock.width - 4, Kirigami.Units.gridUnit * 2.5))
+			height: Math.max(7, Math.round(width / 3.5))
 			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
-			color: eventColor
-			clip: true
+			readonly property int minutesUntil: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventMinutesUntil : 0
 
-			PlasmaComponents3.Label {
-				anchors.fill: parent
-				anchors.leftMargin: 1
-				anchors.rightMargin: 1
-				anchors.bottomMargin: meetingPill.inProgress ? progressBar.height : 0
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				text: {
-					if (typeof upcomingEvents === "undefined" || !clock.nextEvent) {
-						return ""
-					}
-					var minutes = meetingPill.inProgress ? upcomingEvents.nextEventMinutesLeft : upcomingEvents.nextEventMinutesUntil
-					// Under an hour: whole minutes ("5m"), else hours ("2h").
-					var seconds = minutes >= 60 ? Math.floor(minutes / 60) * 3600 : Math.max(1, minutes) * 60
-					return LocaleFuncs.durationShortFormat(seconds)
-				}
-				color: Shared.contrastTextColor(meetingPill.eventColor)
-				font.family: appletConfig.clockFontFamily
-				font.pointSize: -1
-				font.pixelSize: Math.max(9, Math.round(parent.height * 0.72))
-				font.weight: Font.Bold
-				fontSizeMode: Text.HorizontalFit
-				minimumPixelSize: 7
-			}
-			// During the meeting: how much has passed.
 			Rectangle {
-				id: progressBar
+				visible: !meetingPill.inProgress
+				anchors.centerIn: parent
+				width: parent.height
+				height: width
+				radius: width / 2
+				color: meetingPill.minutesUntil <= 5 ? Kirigami.Theme.negativeTextColor
+					: meetingPill.minutesUntil <= 15 ? Kirigami.Theme.neutralTextColor
+					: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
+			}
+			Rectangle {
 				visible: meetingPill.inProgress
-				anchors.bottom: parent.bottom
-				width: parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0)
-				height: Math.max(2, Math.round(parent.height / 6))
-				color: Shared.contrastTextColor(meetingPill.eventColor)
-				opacity: 0.8
+				anchors.verticalCenter: parent.verticalCenter
+				width: parent.width
+				height: Math.max(3, Math.round(parent.height * 0.6))
+				radius: height / 2
+				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
+				Rectangle {
+					width: Math.max(parent.height, parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0))
+					height: parent.height
+					radius: parent.radius
+					color: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+				}
 			}
 		}
 
