@@ -983,7 +983,13 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		url += encodeURIComponent(args.calendarId)
 		url += '/events/'
 		url += encodeURIComponent(args.eventId)
-		url += queryString(args.params)
+		// The body is the whole event (cloneRawEvent), file attachments included: say we support
+		// them, or Google may drop them from the updated event.
+		var params = { supportsAttachments: true }
+		for (var key in (args.params || {})) {
+			params[key] = args.params[key]
+		}
+		url += queryString(params)
 		Requests.postJSON({
 			method: 'PUT',
 			url: url,

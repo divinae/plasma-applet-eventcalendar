@@ -42,6 +42,7 @@ function fullEvent(overrides) {
 		},
 		transparency: 'transparent',
 		visibility: 'private',
+		attachments: [{ title: 'Budget sheet', fileUrl: 'https://drive.google.com/file/d/xyz', mimeType: 'application/pdf', fileId: 'xyz' }],
 		conflictsWith: [{ summary: 'Overlapping meeting' }],
 		accessToken: 'ya29.must-not-leak',
 		extendedProperties: { private: { refreshToken: '1//nope' } },
@@ -59,7 +60,7 @@ function sampleCalendars() {
 
 function testWhitelist() {
 	const text = cache.serialize(sampleCalendars(), new Date(2026, 9, 1), new Date(2026, 10, 1), NOW)
-	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting']) {
+	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting', 'attachments', 'Budget sheet', 'drive.google.com']) {
 		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
 	}
 	const data = JSON.parse(text)

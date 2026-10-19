@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "Attachments.js" as Attachments
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Guests.js" as Guests
@@ -43,6 +44,7 @@ Rectangle {
 			return rank(a) - rank(b)
 		})
 	}
+	readonly property var attachments: Attachments.list(eventItem)
 	readonly property int collapsedGuestCount: 5
 	property bool showAllGuests: false
 	property bool confirmingDelete: false
@@ -436,6 +438,50 @@ Rectangle {
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
 						text: details.reminderText()
+					}
+
+					// File attachments (Google Drive): each opens in the browser.
+					Kirigami.Icon {
+						visible: attachmentList.visible
+						source: "mail-attachment"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					ColumnLayout {
+						id: attachmentList
+						visible: details.attachments.length > 0
+						Layout.fillWidth: true
+						spacing: Kirigami.Units.smallSpacing
+						Repeater {
+							model: details.attachments
+							RowLayout {
+								Layout.fillWidth: true
+								spacing: Kirigami.Units.smallSpacing
+								Kirigami.Icon {
+									source: modelData.icon
+									fallback: "text-x-generic"
+									Layout.preferredWidth: Kirigami.Units.iconSizes.small
+									Layout.preferredHeight: Kirigami.Units.iconSizes.small
+								}
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									elide: Text.ElideMiddle
+									text: modelData.title
+									color: Kirigami.Theme.linkColor
+									font.underline: attachmentMouse.containsMouse
+									MouseArea {
+										id: attachmentMouse
+										anchors.fill: parent
+										hoverEnabled: true
+										cursorShape: Qt.PointingHandCursor
+										onClicked: Shared.openExternalUrl(modelData.url)
+									}
+									Accessible.role: Accessible.Link
+									Accessible.name: modelData.title
+								}
+							}
+						}
 					}
 
 				}
