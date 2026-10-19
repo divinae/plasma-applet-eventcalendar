@@ -96,8 +96,8 @@ Item {
 		spacing: Math.max(2, Math.round(clock.width / 12))
 
 		// Next meeting in a vertical panel, above the time. Before it: a dot whose color says how
-		// close it is (gray, orange from 15 min, red from 5 min). During it: a progress bar in its
-		// calendar's color. The tooltip has the details.
+		// close it is (gray, orange from 15 min, red from 5 min). During it: a progress bar. The
+		// tooltip has the details.
 		Item {
 			id: meetingPill
 			visible: clock.showMeetingPill
@@ -117,18 +117,22 @@ Item {
 					: meetingPill.minutesUntil <= 15 ? Kirigami.Theme.neutralTextColor
 					: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
 			}
+			// The theme's highlight color, not the calendar's: a light calendar color vanished on a light
+			// panel.
 			Rectangle {
 				visible: meetingPill.inProgress
 				anchors.verticalCenter: parent.verticalCenter
 				width: parent.width
-				height: Math.max(3, Math.round(parent.height * 0.6))
+				height: Math.max(4, Math.round(parent.height * 0.8))
 				radius: height / 2
-				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
+				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
+				border.width: 1
+				border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
 				Rectangle {
 					width: Math.max(parent.height, parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0))
 					height: parent.height
 					radius: parent.radius
-					color: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+					color: Kirigami.Theme.highlightColor
 				}
 			}
 		}
