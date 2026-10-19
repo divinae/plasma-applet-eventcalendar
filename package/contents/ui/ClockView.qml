@@ -83,68 +83,125 @@ Item {
 		&& plasmoid.formFactor === PlasmaCore.Types.Horizontal
 		&& !!nextEvent
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
+	// Vertical panels: the chip doesn't fit, a small pill under the time instead.
+	readonly property bool showMeetingPill: plasmoid.configuration.clockShowNextEvent
+		&& plasmoid.formFactor === PlasmaCore.Types.Vertical
+		&& !!nextEvent
+	readonly property real meetingPillSpace: showMeetingPill ? meetingPill.height + content.spacing : 0
 
 	Column {
-		id: labels
-		spacing: 0
+		id: content
 		anchors.centerIn: parent
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
+		spacing: Math.max(2, Math.round(clock.width / 12))
 
-		Item {
-			id: timeContainer1
+		Column {
+			id: labels
+			spacing: 0
+			anchors.horizontalCenter: parent.horizontalCenter
 
-			PlasmaComponents3.Label {
-				id: timeLabel1
-				anchors.centerIn: parent
+			Item {
+				id: timeContainer1
 
-				font.family: appletConfig.clockFontFamily
-				font.weight: appletConfig.lineWeight1
-				font.pointSize: -1
-				font.pixelSize: timeContainer1.height
-				minimumPixelSize: 1
+				PlasmaComponents3.Label {
+					id: timeLabel1
+					anchors.centerIn: parent
 
-				fontSizeMode: Text.FixedSize
-				wrapMode: Text.NoWrap
+					font.family: appletConfig.clockFontFamily
+					font.weight: appletConfig.lineWeight1
+					font.pointSize: -1
+					font.pixelSize: timeContainer1.height
+					minimumPixelSize: 1
 
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				smooth: true
+					fontSizeMode: Text.FixedSize
+					wrapMode: Text.NoWrap
 
-				property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
-				text: Qt.formatDateTime(clock.currentTime, timeFormat)
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					smooth: true
+
+					property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
+					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				}
+
+				// Debugging
+				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel1; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
 			}
+			Item {
+				id: timeContainer2
+				visible: clock.showLine2
 
-			// Debugging
-			// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			// Rectangle { border.color: "#f00"; anchors.fill: timeLabel1; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				PlasmaComponents3.Label {
+					id: timeLabel2
+					anchors.centerIn: parent
+					font.family: appletConfig.clockFontFamily
+					font.weight: appletConfig.lineWeight2
+					font.pointSize: -1
+					font.pixelSize: timeContainer2.height
+					minimumPixelSize: 1
+
+					fontSizeMode: Text.FixedSize
+					wrapMode: Text.NoWrap
+
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					smooth: true
+
+					property string timeFormat: appletConfig.line2TimeFormat // Used in TimeFormatSizeHelper
+					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				}
+
+				// Debugging
+				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
+			}
 		}
-		Item {
-			id: timeContainer2
-			visible: clock.showLine2
 
+		// Next meeting in a vertical panel: "5m" until it starts, or the time left with a progress fill,
+		// on a pill in its calendar's color. The tooltip has the details.
+		Rectangle {
+			id: meetingPill
+			visible: clock.showMeetingPill
+			anchors.horizontalCenter: parent.horizontalCenter
+			width: Math.max(18, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
+			height: Math.max(12, Math.round(width * 0.6))
+			radius: height / 2
+			readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
+			color: ColorUtil.setAlpha(eventColor, 0.25)
+			border.width: 1
+			border.color: eventColor
+			clip: true
+
+			Rectangle {
+				visible: meetingPill.inProgress
+				width: parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0)
+				height: parent.height
+				radius: parent.radius
+				color: ColorUtil.setAlpha(meetingPill.eventColor, 0.6)
+			}
 			PlasmaComponents3.Label {
-				id: timeLabel2
-				anchors.centerIn: parent
-				font.family: appletConfig.clockFontFamily
-				font.weight: appletConfig.lineWeight2
-				font.pointSize: -1
-				font.pixelSize: timeContainer2.height
-				minimumPixelSize: 1
-
-				fontSizeMode: Text.FixedSize
-				wrapMode: Text.NoWrap
-
+				anchors.fill: parent
+				anchors.leftMargin: 2
+				anchors.rightMargin: 2
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				smooth: true
-
-				property string timeFormat: appletConfig.line2TimeFormat // Used in TimeFormatSizeHelper
-				text: Qt.formatDateTime(clock.currentTime, timeFormat)
+				text: {
+					if (typeof upcomingEvents === "undefined" || !clock.nextEvent) {
+						return ""
+					}
+					var minutes = meetingPill.inProgress ? upcomingEvents.nextEventMinutesLeft : upcomingEvents.nextEventMinutesUntil
+					// Under an hour: whole minutes ("5m"), else hours ("2h").
+					var seconds = minutes >= 60 ? Math.floor(minutes / 60) * 3600 : Math.max(1, minutes) * 60
+					return LocaleFuncs.durationShortFormat(seconds)
+				}
+				font.pointSize: -1
+				font.pixelSize: Math.max(8, Math.round(parent.height * 0.62))
+				font.weight: Font.DemiBold
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 6
 			}
-
-			// Debugging
-			// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
 		}
 	}
 
@@ -153,7 +210,7 @@ Item {
 	Item {
 		id: nextEventChip
 		visible: clock.showNextEventChip
-		anchors.left: labels.right
+		anchors.left: content.right
 		anchors.leftMargin: Kirigami.Units.smallSpacing * 2
 		anchors.verticalCenter: parent.verticalCenter
 		width: chipRow.width
@@ -258,8 +315,8 @@ Item {
 
 			PropertyChanges { target: clock
 				targetHeight: clock.verticalHeight
-				Layout.minimumHeight: clock.targetHeight
-				Layout.preferredHeight: clock.targetHeight
+				Layout.minimumHeight: clock.targetHeight + clock.meetingPillSpace
+				Layout.preferredHeight: clock.targetHeight + clock.meetingPillSpace
 			}
 			PropertyChanges { target: timeContainer1
 				width: clock.width
