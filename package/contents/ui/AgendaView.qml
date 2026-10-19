@@ -1,18 +1,12 @@
 import QtQuick
 import QtQuick.Controls as QQC2
 import QtQuick.Layouts
-import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
-import "lib"
 import "Shared.js" as Shared
-import "LocaleFuncs.js" as LocaleFuncs
 
 Item {
 	id: agendaView
-
-	property color isOverdueColor: Kirigami.Theme.negativeTextColor
-	property int isOverdueFontWeight: Font.Bold
 
 	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
@@ -45,20 +39,9 @@ Item {
 
 			Repeater {
 				id: agendaRepeater
-
-				property bool populated: false
 				model: root.agendaModel
 				delegate: AgendaListItem {
 					width: parent.width
-				}
-
-				function onItemAdded(index, item) {
-					if (index === root.agendaModel.count-1) {
-						populated = true
-					}
-				}
-				function onItemRemoved(index, item) {
-					populated = false
 				}
 			}
 		}
@@ -129,10 +112,6 @@ Item {
 		function updatePosition() {
 			agendaScrollView.positionViewAtIndex(itemIndex)
 		}
-	}
-
-	function scrollToTop() {
-		agendaScrollView.positionViewAtBeginning()
 	}
 
 	function scrollToDate(date) {

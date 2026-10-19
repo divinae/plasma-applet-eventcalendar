@@ -149,13 +149,6 @@ Item {
 		origin.y: transformOrigin.y
 	}
 
-	Behavior on scale {
-		id: scaleBehavior
-		ScaleAnimator {
-			duration: Kirigami.Units.longDuration
-		}
-	}
-
 	QQC2.StackView.onStatusChanged: {
 		if (QQC2.StackView.status === QQC2.StackView.Inactive) {
 			daysCalendar.transformScale = 1
@@ -500,13 +493,13 @@ Item {
 					}
 				}
 
-					Connections {
-						target: daysCalendar
-						function onActivateHighlightedItem() {
-							if (delegate.containsMouse) {
-								delegate.clicked(null)
-							}
+				Connections {
+					target: daysCalendar
+					function onActivateHighlightedItem() {
+						if (delegate.containsMouse) {
+							delegate.clicked(null)
 						}
+					}
 				}
 			}
 		}

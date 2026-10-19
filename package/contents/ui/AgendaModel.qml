@@ -4,7 +4,6 @@ import "Shared.js" as Shared
 
 ListModel {
 	id: agendaModel
-	property var eventModel
 	property var timeModel
 
 	dynamicRoles: false
@@ -19,8 +18,6 @@ ListModel {
 
 	property int showNextNumDays: 14
 	property bool showAllDaysInMonth: true
-	property bool clipPastEvents: false
-	property bool clipPastEventsToday: false
 	property bool clipEventsOutsideLimits: true
 	property bool clipEventsFromOtherMonths: true
 	property date visibleDateMin: new Date()
@@ -297,17 +294,6 @@ ListModel {
 				for (var day = todayMidnight; day < nextNumDaysEndExclusive; day.setDate(day.getDate() + 1)) {
 					addAgendaItemIfMissing(agendaItemList, byDay, day)
 				}
-			}
-			
-			if (clipPastEvents) {
-				// Remove calendar events before today.
-				var minDate = today
-				if (!clipPastEventsToday) {
-					minDate = Shared.startOfDay(today)
-				}
-				agendaItemList = agendaItemList.filter(function(agendaItem) {
-					return !(agendaItem.date < minDate)
-				})
 			}
 
 			// Make sure the agendaItemList is sorted.

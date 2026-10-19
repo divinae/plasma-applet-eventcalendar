@@ -39,7 +39,6 @@ PlasmoidItem {
 	UpcomingEvents { id: upcomingEvents }
 	AgendaModel {
 		id: agendaModel
-		eventModel: eventModel
 		timeModel: timeModel
 		Component.onCompleted: logger.debug('AgendaModel.onCompleted')
 	}
@@ -178,7 +177,7 @@ PlasmoidItem {
 		onIsExpandedChanged: {
 			logger.debug('isExpanded', isExpanded)
 			if (!isExpanded && !plasmoid.configuration.pin) {
-				closeOverlays() // Don't come back to a stale day list or event card.
+				closeOverlays() // Don't come back to a stale search or event card.
 			}
 			if (isExpanded) {
 				updateToday()

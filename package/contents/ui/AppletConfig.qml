@@ -128,8 +128,6 @@ QtObject {
 	readonly property int agendaEventSpacing: 10 * Screen.devicePixelRatio
 	property int eventIndicatorWidth: 2 * Screen.devicePixelRatio
 
-	readonly property int agendaFontSize: Kirigami.Theme.defaultFont.pixelSize
-
 	property int timerClockFontHeight: 40 * Screen.devicePixelRatio
 	property int timerButtonWidth: 48 * Screen.devicePixelRatio
 

@@ -244,7 +244,6 @@ PinchArea {
 
 	function updateMonthOverview() {
 		var date = calendarBackend.displayedDate
-		var day = date.getDate()
 		var month = date.getMonth() // 0-11
 		var year = date.getFullYear()
 
@@ -362,9 +361,7 @@ PinchArea {
 	}
 
 	function updateYearOverview() {
-		var date = calendarBackend.displayedDate
-		var day = date.getDate()
-		var year = date.getFullYear()
+		var year = calendarBackend.displayedDate.getFullYear()
 
 		for (var i = 0, j = monthModel.count; i < j; ++i) {
 			monthModel.setProperty(i, "yearNumber", year)
@@ -372,10 +369,7 @@ PinchArea {
 	}
 
 	function updateDecadeOverview() {
-		var date = calendarBackend.displayedDate
-		var day = date.getDate()
-		var month = date.getMonth() + 1
-		var year = date.getFullYear()
+		var year = calendarBackend.displayedDate.getFullYear()
 		var decade = year - year % 10
 
 		for (var i = 0, j = yearModel.count; i < j; ++i) {
@@ -400,7 +394,6 @@ PinchArea {
 		}
 
 		Component.onCompleted: {
-
 			// Bind after configuration is loaded to prevent calling updateMonthOverview a 3rd time.
 			calendarBackend.firstDayOfWeekChanged.connect(function(){
 				updateMonthOverview()
@@ -571,15 +564,15 @@ PinchArea {
 			onHeaderClicked: {
 				stack.push(yearOverview)
 			}
-				onActivated: function(index, date, item) {
-					root.date = date
-					var dt = new Date(date.yearNumber, date.monthNumber - 1, date.dayNumber)
-					root.setSelectedDate(dt)
-					root.dateClicked(dt)
-				}
-				onDoubleClicked: function(index, date, item) {
-					root.dayDoubleClicked(date)
-				}
+			onActivated: function(index, date, item) {
+				root.date = date
+				var dt = new Date(date.yearNumber, date.monthNumber - 1, date.dayNumber)
+				root.setSelectedDate(dt)
+				root.dateClicked(dt)
+			}
+			onDoubleClicked: function(index, date, item) {
+				root.dayDoubleClicked(date)
+			}
 		}
 	}
 

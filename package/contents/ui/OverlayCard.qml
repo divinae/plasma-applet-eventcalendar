@@ -1,7 +1,7 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
 
-// A card centered over the dimmed popup content (event details, day list, event form).
+// A card centered over the dimmed popup content (search, event details, quick add, import, event form).
 // Clicking outside the card emits outsideClicked.
 Item {
 	id: overlay

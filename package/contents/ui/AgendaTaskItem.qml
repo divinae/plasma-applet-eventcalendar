@@ -134,11 +134,11 @@ LinkRect {
 				PlasmaComponents3.Label {
 					id: taskDueLabel
 					text: eventTimestamp
-					color: taskIsOverdue ? isOverdueColor : Kirigami.Theme.textColor
+					color: taskIsOverdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
 					opacity: taskIsOverdue ? 1 : 0.75
 					font.family: appletConfig.eventFont.family
 					font.pointSize: appletConfig.eventFont.pointSize
-					font.weight: taskIsOverdue ? isOverdueFontWeight : Font.Normal
+					font.weight: taskIsOverdue ? Font.Bold : Font.Normal
 				}
 			}
 
@@ -182,7 +182,7 @@ LinkRect {
 
 		} // taskColumn
 	}
-	
+
 	onLoadContextMenu: function(contextMenu) {
 		var menuItem
 		var task = tasks.get(taskItemIndex)

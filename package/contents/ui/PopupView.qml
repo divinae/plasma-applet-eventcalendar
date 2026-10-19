@@ -1,9 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
-import org.kde.plasma.extras as PlasmaExtras
 
 import "lib"
 import "Shared.js" as Shared
@@ -87,8 +85,6 @@ MouseArea {
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing
 		+ (errorBanner.visible ? errorBanner.implicitHeight + Kirigami.Units.smallSpacing : 0)
-	property bool agendaScrollOnSelect: true
-	property bool agendaScrollOnMonthChange: false
 
 	property alias today: monthView.today
 	property alias selectedDate: monthView.currentDate
@@ -101,15 +97,7 @@ MouseArea {
 		}
 	}
 	function scrollToSelection() {
-		if (!agendaScrollOnSelect) {
-			return
-		}
-
-		if (true) {
-			agendaView.scrollToDate(selectedDate)
-		} else {
-			agendaView.scrollToTop()
-		}
+		agendaView.scrollToDate(selectedDate)
 	}
 
 	Component.onCompleted: deferredUpdateUI()
@@ -123,9 +111,6 @@ MouseArea {
 			|| prevMonth.getFullYear() !== startOfMonth.getFullYear()
 			|| prevMonth.getMonth() !== startOfMonth.getMonth()
 		agendaModel.currentMonth = new Date(startOfMonth)
-		if (agendaScrollOnMonthChange) {
-			selectedDate = startOfMonth
-		}
 		// Opening the popup or picking a day / "today" in the same month keeps the month:
 		// nothing to fetch or rebuild. (A newly created popup fills itself in Component.onCompleted.)
 		if (monthChanged) {
@@ -133,8 +118,7 @@ MouseArea {
 		}
 	}
 
-	//--- View tabs: Month | Week | Agenda (classic layout)
-	property bool refreshing: false // Events are being fetched
+	property bool refreshing: false // Events are being fetched (the header's refresh button spins)
 
 	//--- Event details panel
 	property var detailsEvent: null
@@ -457,7 +441,7 @@ MouseArea {
 		}
 	}
 
-	// Overlay cards: day list, search < event details < quick add, event form.
+	// Overlay cards: search < event details < quick add, import, event form.
 	OverlayCard {
 		id: searchOverlay
 		visible: popup.searchOpen
@@ -586,7 +570,6 @@ MouseArea {
 			weatherLoading: logic.weatherLoading
 			weatherError: logic.lastForecastErr ? String(logic.lastForecastErr) : ""
 			onWeatherRetryRequested: logic.updateWeather(true)
-			showHeader: false
 			// Make sure the visible week's (or day's) month is fetched.
 			onWeekStartChanged: {
 				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + Math.floor(dayCount / 2))
@@ -604,10 +587,6 @@ MouseArea {
 		columns: 1
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
-		onColumnsChanged: {
-		}
-		onRowsChanged: {
-		}
 
 		// Created only when shown.
 		Loader {
@@ -630,13 +609,13 @@ MouseArea {
 				property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
 				rainUnits: WeatherApi.getRainUnits(plasmoid.configuration)
 
-					Rectangle {
-						id: meteogramMessageBox
-						anchors.fill: parent
-						anchors.margins: Kirigami.Units.smallSpacing
-						color: "transparent"
-						border.color: Kirigami.Theme.buttonBackgroundColor ? Kirigami.Theme.buttonBackgroundColor : Kirigami.Theme.backgroundColor
-						border.width: 1
+				Rectangle {
+					id: meteogramMessageBox
+					anchors.fill: parent
+					anchors.margins: Kirigami.Units.smallSpacing
+					color: "transparent"
+					border.color: Kirigami.Theme.buttonBackgroundColor ? Kirigami.Theme.buttonBackgroundColor : Kirigami.Theme.backgroundColor
+					border.width: 1
 
 					readonly property string message: {
 						if (!WeatherApi.weatherIsSetup(plasmoid.configuration)) {
@@ -793,11 +772,7 @@ MouseArea {
 	}
 
 	function updateUI() {
-		var now = new Date()
-
-		if (updateUITimer.running) {
-			updateUITimer.running = false
-		}
+		updateUITimer.stop()
 
 		agendaModel.parseGCalEvents(eventModel.eventsData)
 		agendaModel.parseWeatherForecast(logic.dailyWeatherData)

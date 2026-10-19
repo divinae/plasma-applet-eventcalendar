@@ -30,9 +30,6 @@ ColumnLayout {
 			agendaListItem.checkIfToday()
 		}
 	}
-	property alias tasksRepeater: tasksRepeater
-	property alias eventsRepeater: eventsRepeater
-
 	Connections {
 		target: agendaModel
 		function onPopulatingChanged() {
@@ -143,7 +140,6 @@ ColumnLayout {
 			model: agendaItemTasks
 
 			delegate: AgendaTaskItem {
-				id: agendaTaskItem
 				width: parent.width
 			}
 		}

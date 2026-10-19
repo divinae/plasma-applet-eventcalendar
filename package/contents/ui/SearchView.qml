@@ -186,7 +186,7 @@ Rectangle {
 
 				Repeater {
 					model: searchView.results
-					// Event tile in the event color, like the day list.
+					// Event tile in the event color, like the agenda.
 					Rectangle {
 						id: eventRow
 						readonly property var eventItem: modelData

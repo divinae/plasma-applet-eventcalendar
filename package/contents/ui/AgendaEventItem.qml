@@ -77,7 +77,7 @@ LinkRect {
 	readonly property bool isAllDay: !!model.start && !!model.start.date && !model.start.dateTime
 	readonly property bool isCondensed: plasmoid.configuration.agendaCondensedAllDayEvent && isAllDay
 
-	// Tile in the event color, like the day list and the week view.
+	// Tile in the event color, like the month and week views.
 	readonly property color tileColor: appletConfig.eventColor(model.backgroundColor)
 	readonly property string response: Shared.myResponse(model)
 	readonly property color tileFillColor: appletConfig.eventFillColor(tileColor, response)

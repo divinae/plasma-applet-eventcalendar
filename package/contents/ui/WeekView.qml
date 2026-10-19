@@ -16,8 +16,7 @@ Item {
 	id: weekView
 
 	property var eventModel
-	// false: the popup shows title and navigation in its own header.
-	property bool showHeader: true
+	// The popup header shows the title and the navigation (goPrevious, goNext, goToday).
 	function goPrevious() {
 		weekStart = dayDate(-dayCount)
 	}
@@ -54,7 +53,6 @@ Item {
 		return all
 	}
 	readonly property int columnCount: columnDays.length
-	// One day stretched over a wide popup looks wrong: cap its width and center it.
 	// Weather from the popup (Logic). weatherByDay: Shared.dayKey -> daily item.
 	property var weatherByDay: ({})
 	property var weatherHourly: []
@@ -635,33 +633,6 @@ Item {
 			today: weekView.dayWeather(weekView.weekStart)
 		}
 
-		RowLayout {
-			Layout.fillWidth: true
-			visible: weekView.showHeader
-			PlasmaComponents3.ToolButton {
-				icon.name: "go-previous"
-				onClicked: weekView.weekStart = weekView.dayDate(-7)
-				PlasmaComponents3.ToolTip.text: i18n("Previous Week")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			PlasmaComponents3.ToolButton {
-				text: i18n("Today")
-				onClicked: weekView.goToday()
-			}
-			PlasmaComponents3.ToolButton {
-				icon.name: "go-next"
-				onClicked: weekView.weekStart = weekView.dayDate(7)
-				PlasmaComponents3.ToolTip.text: i18n("Next Week")
-				PlasmaComponents3.ToolTip.visible: hovered
-			}
-			Kirigami.Heading {
-				Layout.fillWidth: true
-				level: 3
-				text: weekView.title
-				elide: Text.ElideRight
-			}
-		}
-
 		// Day names. Not in the Today view: the popup header shows the date.
 		Row {
 			id: dayNamesRow
@@ -997,7 +968,6 @@ Item {
 				border.width: 1
 				border.color: weekView.gridLineColor
 			}
-
 
 			Flickable {
 				id: flickable
