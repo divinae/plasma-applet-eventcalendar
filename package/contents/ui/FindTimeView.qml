@@ -118,6 +118,17 @@ Rectangle {
 		var d = wallDay.getDate()
 		return zoned ? TimeZone.toUtc(timeZone, y, m, d, hour, 0, 0) : new Date(y, m, d, hour).getTime()
 	}
+	// Where `hour`:00 of the day is in the range (0..1), by its real instant like the busy blocks:
+	// a daylight saving day has an hour more or less. -1 for an hour the day doesn't have (spring
+	// forward).
+	function hourPosition(hour) {
+		var at = instantAt(day, hour)
+		var wall = zoned ? TimeZone.wallClock(timeZone, at) : null
+		if ((wall ? wall.hours : new Date(at).getHours()) !== hour % 24) {
+			return -1
+		}
+		return (at - rangeStart) / (rangeEnd - rangeStart)
+	}
 	function shiftDay(days) {
 		day = new Date(day.getFullYear(), day.getMonth(), day.getDate() + days, 12)
 		fetch()
@@ -219,8 +230,9 @@ Rectangle {
 						PlasmaComponents3.Label {
 							readonly property int hour: findTime.startHour + index
 							readonly property int every: findTime.endHour - findTime.startHour > 12 ? 2 : 1
-							visible: (hour - findTime.startHour) % every === 0
-							x: Math.max(0, Math.min(hourScale.width - width, index / (findTime.endHour - findTime.startHour) * hourScale.width - width / 2))
+							readonly property double position: findTime.hourPosition(hour)
+							visible: (hour - findTime.startHour) % every === 0 && position >= 0
+							x: Math.max(0, Math.min(hourScale.width - width, position * hourScale.width - width / 2))
 							font: Kirigami.Theme.smallFont
 							opacity: 0.6
 							text: Qt.formatTime(new Date(2000, 0, 1, hour), appletConfig.clock24h ? "HH" : "h AP")
@@ -262,7 +274,9 @@ Rectangle {
 						Repeater {
 							model: findTime.endHour - findTime.startHour - 1
 							Rectangle {
-								x: (index + 1) / (findTime.endHour - findTime.startHour) * strip.width
+								readonly property double position: findTime.hourPosition(findTime.startHour + index + 1)
+								visible: position >= 0
+								x: position * strip.width
 								width: 1
 								height: strip.height
 								color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.08)
