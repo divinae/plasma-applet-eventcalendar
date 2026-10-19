@@ -31,9 +31,6 @@ LinkRect {
 	}
 	Component.onCompleted: agendaEventItem.checkIfInProgress()
 
-	property alias isEditing: editEventForm.active
-	clickable: !isEditing
-
 	// Keyboard and screen readers: the tile is a button that opens the event details.
 	activeFocusOnTab: clickable
 	Accessible.role: Accessible.Button
@@ -84,14 +81,14 @@ LinkRect {
 	readonly property color tileColor: appletConfig.eventColor(model.backgroundColor)
 	readonly property string response: Shared.myResponse(model)
 	readonly property color tileFillColor: appletConfig.eventFillColor(tileColor, response)
-	readonly property color tileTextColor: editEventForm.visible ? Kirigami.Theme.textColor : appletConfig.eventTextColor(tileColor, response)
+	readonly property color tileTextColor: appletConfig.eventTextColor(tileColor, response)
 	readonly property bool ended: !!model.endDateTime && !!timeModel.currentTime && model.endDateTime <= timeModel.currentTime
 	readonly property var meetingLink: MeetingLink.find(model)
 	radius: 8
 	border.width: 1
-	border.color: editEventForm.visible ? appletConfig.eventBorderColor : appletConfig.eventOutlineColor(tileColor, response)
-	backgroundColor: editEventForm.visible ? Kirigami.Theme.backgroundColor : tileFillColor
-	backgroundHoverColor: editEventForm.visible ? backgroundColor : Shared.isUnconfirmedResponse(response) ? appletConfig.agendaHoverBackground : Qt.darker(tileColor, 1.08)
+	border.color: appletConfig.eventOutlineColor(tileColor, response)
+	backgroundColor: tileFillColor
+	backgroundHoverColor: Shared.isUnconfirmedResponse(response) ? appletConfig.agendaHoverBackground : Qt.darker(tileColor, 1.08)
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
 	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
@@ -99,7 +96,7 @@ LinkRect {
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
 	StripeFill {
-		visible: (agendaEventItem.response === 'tentative' || model.eventType === 'outOfOffice') && !editEventForm.visible
+		visible: (agendaEventItem.response === 'tentative' || model.eventType === 'outOfOffice')
 		anchors.fill: parent
 		anchors.margins: 1
 		radius: agendaEventItem.radius - 1
@@ -138,7 +135,6 @@ LinkRect {
 					font.pointSize: appletConfig.eventFont.pointSize
 					font.weight: eventItemInProgress ? Font.Bold : Font.Normal
 					font.strikeout: agendaEventItem.response === 'declined'
-					visible: !editEventForm.visible
 					Layout.fillWidth: true
 					wrapMode: Text.Wrap
 				}
@@ -146,7 +142,7 @@ LinkRect {
 				RowLayout {
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
-					visible: !editEventForm.visible && !isCondensed
+					visible: !isCondensed
 					PlasmaComponents3.Label {
 						id: eventDateTime
 						// The location opens in Google Maps.
@@ -178,7 +174,7 @@ LinkRect {
 			}
 
 			JoinPill {
-				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!agendaEventItem.meetingLink && !editEventForm.visible && !agendaEventItem.ended
+				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!agendaEventItem.meetingLink && !agendaEventItem.ended
 				Layout.alignment: Qt.AlignVCenter
 				meetingLink: agendaEventItem.meetingLink
 				textColor: agendaEventItem.tileTextColor
@@ -188,7 +184,7 @@ LinkRect {
 		PlasmaComponents3.Label {
 			id: eventDescription
 			readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
-			visible: showProperty && !editEventForm.visible
+			visible: showProperty
 			Layout.topMargin: Kirigami.Units.smallSpacing
 			text: Shared.renderText(model.description)
 			color: agendaEventItem.tileTextColor
@@ -208,20 +204,6 @@ LinkRect {
 				acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
 				cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
 			}
-		}
-
-		Item {
-			visible: editEventForm.visible
-			implicitHeight: 4 * Screen.devicePixelRatio
-		}
-
-		EditEventForm {
-			id: editEventForm
-		}
-
-		Item {
-			visible: editEventForm.visible
-			implicitHeight: 4 * Screen.devicePixelRatio
 		}
 	}
 
