@@ -23,17 +23,11 @@ try:
 except ImportError:
 	recurring_ical_events = None
 
-debugging = False
 MAX_ICS_BYTES = 10 * 1024 * 1024
 REQUEST_TIMEOUT = 15
 ALLOWED_URL_SCHEMES = {"file", "http", "https"}
 SAFE_REMOTE_SCHEMES = {"http", "https"}
 LOCAL_ICS_DIR = LOCAL_DATA_DIR
-
-
-def debug(*args):
-	if debugging:
-		print(*args)
 
 
 def date_to_json(date_value):
@@ -96,7 +90,7 @@ def events_to_json(event_list=None, indent=4):
 			continue
 		start_date, end_date = get_event_bounds(event)
 		if start_date is None or end_date is None:
-			debug("Skipping event without a usable DTSTART/end", stringify(event.get("SUMMARY")))
+			# No usable DTSTART / end: skipped
 			continue
 
 		ical_uid = build_event_uid(event, start_date, end_date)
@@ -394,16 +388,7 @@ class CalendarManager:
 			return
 		for event in self.events:
 			if event_within(event, start_time, end_time):
-				start_date, end_date = get_event_bounds(event)
-				debug("within", start_date, end_date)
 				yield event
-			else:
-				start_date, end_date = get_event_bounds(event)
-				if start_date and end_date:
-					debug("out", start_date, end_date)
-
-	def to_json(self):
-		return events_to_json(self.events)
 
 
 def parse_date(date_str):
@@ -420,7 +405,7 @@ def argparse_date(value):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read and query ICS calendar files")
-	parser.add_argument("--url", type=str, help="The .ics file to read/write (query)")
+	parser.add_argument("--url", type=str, help="The .ics file or URL to read (query)")
 	subparsers = parser.add_subparsers(help="Commands", dest="subcommand")
 
 	query = subparsers.add_parser("query")
@@ -430,13 +415,7 @@ if __name__ == "__main__":
 	events = subparsers.add_parser("events", help="Print the file's events as they are (no recurrence expansion)")
 	events.add_argument("path", type=str, help="A local .ics file (path or file:// URL)")
 
-	subparsers.add_parser("add")
-	subparsers.add_parser("delete")
-
-	if debugging:
-		args = parser.parse_args(["--url", "basic.ics", "query", "2016-09-15", "2016-09-16"])
-	else:
-		args = parser.parse_args()
+	args = parser.parse_args()
 
 	if args.subcommand == "events":
 		try:
