@@ -51,7 +51,7 @@ Item {
 		}
 	}
 
-	// The time lines; the date tile and the meeting dot are added below them (verticalExtraHeight).
+	// The time lines; the date above them and the meeting dot below are added (verticalExtraHeight).
 	property int verticalHeight: {
 		if (useFixedHeight) {
 			return fixedHeight
@@ -67,7 +67,7 @@ Item {
 		}
 	}
 
-	//--- Vertical panels: a calendar tile with the date, and a dot when a meeting is near.
+	//--- Vertical panels: the date above the time, and a dot under it when a meeting is near.
 	readonly property bool isVertical: plasmoid.formFactor === PlasmaCore.Types.Vertical
 	readonly property bool showDateTile: isVertical && plasmoid.configuration.clockVerticalShowDate
 	readonly property bool showNextEventDot: isVertical && plasmoid.configuration.clockShowNextEvent && !!nextEvent
@@ -97,6 +97,51 @@ Item {
 		anchors.centerIn: parent
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
 		spacing: Math.max(2, Math.round(clock.width / 12))
+
+		// The date in a narrow panel: the short weekday as text, the day number big and bold on a
+		// badge in the highlight color. As wide as the panel allows, to stay readable.
+		Column {
+			id: dateTile
+			visible: clock.showDateTile
+			anchors.horizontalCenter: parent.horizontalCenter
+			readonly property int tileWidth: Math.max(16, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
+			width: tileWidth
+			spacing: 0
+
+			PlasmaComponents3.Label {
+				width: parent.width
+				horizontalAlignment: Text.AlignHCenter
+				// "pon." / "Mon": the dot only takes room.
+				text: Qt.locale().dayName(clock.currentTime.getDay(), Locale.ShortFormat).replace(/\.$/, '')
+				font.family: appletConfig.clockFontFamily
+				font.pointSize: -1
+				font.pixelSize: Math.max(8, Math.round(dateTile.tileWidth * 0.42))
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 7
+				opacity: 0.8
+			}
+			Rectangle {
+				width: parent.width
+				height: Math.round(dateTile.tileWidth * 0.78)
+				radius: Math.round(height / 4)
+				color: Kirigami.Theme.highlightColor
+				PlasmaComponents3.Label {
+					anchors.fill: parent
+					anchors.leftMargin: 1
+					anchors.rightMargin: 1
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					text: clock.currentTime.getDate()
+					color: Kirigami.Theme.highlightedTextColor
+					font.family: appletConfig.clockFontFamily
+					font.pointSize: -1
+					font.pixelSize: Math.max(9, Math.round(parent.height * 0.78))
+					font.weight: Font.Bold
+					fontSizeMode: Text.HorizontalFit
+					minimumPixelSize: 8
+				}
+			}
+		}
 
 		Column {
 			id: labels
@@ -158,51 +203,6 @@ Item {
 				// Debugging
 				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
 				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			}
-		}
-
-		// The date in a narrow panel: the short weekday as text, the day number big and bold on a
-		// badge in the highlight color. As wide as the panel allows, to stay readable.
-		Column {
-			id: dateTile
-			visible: clock.showDateTile
-			anchors.horizontalCenter: parent.horizontalCenter
-			readonly property int tileWidth: Math.max(16, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
-			width: tileWidth
-			spacing: 0
-
-			PlasmaComponents3.Label {
-				width: parent.width
-				horizontalAlignment: Text.AlignHCenter
-				// "pon." / "Mon": the dot only takes room.
-				text: Qt.locale().dayName(clock.currentTime.getDay(), Locale.ShortFormat).replace(/\.$/, '')
-				font.family: appletConfig.clockFontFamily
-				font.pointSize: -1
-				font.pixelSize: Math.max(8, Math.round(dateTile.tileWidth * 0.42))
-				fontSizeMode: Text.HorizontalFit
-				minimumPixelSize: 7
-				opacity: 0.8
-			}
-			Rectangle {
-				width: parent.width
-				height: Math.round(dateTile.tileWidth * 0.78)
-				radius: Math.round(height / 4)
-				color: Kirigami.Theme.highlightColor
-				PlasmaComponents3.Label {
-					anchors.fill: parent
-					anchors.leftMargin: 1
-					anchors.rightMargin: 1
-					horizontalAlignment: Text.AlignHCenter
-					verticalAlignment: Text.AlignVCenter
-					text: clock.currentTime.getDate()
-					color: Kirigami.Theme.highlightedTextColor
-					font.family: appletConfig.clockFontFamily
-					font.pointSize: -1
-					font.pixelSize: Math.max(9, Math.round(parent.height * 0.78))
-					font.weight: Font.Bold
-					fontSizeMode: Text.HorizontalFit
-					minimumPixelSize: 8
-				}
 			}
 		}
 
