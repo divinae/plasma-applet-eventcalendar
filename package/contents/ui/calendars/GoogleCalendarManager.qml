@@ -395,12 +395,27 @@ CalendarManager {
 		// return GoogleCalendarTests.testDailyLimitExceeded(callback)
 		// return GoogleCalendarTests.testBackendError(callback)
 
+		// Out of office, focus time and working locations too (see EventTypes.js), unless the calendar
+		// rejected the list before. Decided once per fetch: page tokens are only valid for the same query.
+		delete args.pageToken
+		args.withTypes = !eventTypesRejected[args.calendarId]
 		var onResponse = fetchGCalEventsPageResponse.bind(this, args, callback, null)
 		fetchGCalEventsPage(args, onResponse)
 	}
 
-	function fetchGCalEventsPageResponse(args, finishedCallback, allData, err, data, xhr) {
+	// typesRejected: the calendar refused the eventTypes list (see fetchGCalEventsPage).
+	function fetchGCalEventsPageResponse(args, finishedCallback, allData, err, data, xhr, typesRejected) {
 		logger.debug('fetchGCalEventsPageResponse', args, finishedCallback, allData, err, data, xhr)
+		if (typesRejected) {
+			// Again from the first page without eventTypes, dropping the pages fetched with them (a
+			// page token of that query isn't valid for the new one).
+			logger.log('eventTypes rejected by a calendar, fetching without them') // No calendar id/name
+			eventTypesRejected[args.calendarId] = true
+			delete args.pageToken
+			args.withTypes = false
+			fetchGCalEventsPage(args, fetchGCalEventsPageResponse.bind(this, args, finishedCallback, null))
+			return
+		}
 		if (err) {
 			return finishedCallback(err, data, xhr)
 		}
@@ -434,9 +449,9 @@ CalendarManager {
 		url += '&singleEvents=' + encodeURIComponent('true')
 		url += '&maxResults=2500' // API max. Default 250 means more sequential pages.
 		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
-		// Out of office, focus time and working locations too (see EventTypes.js). A calendar that
-		// rejects the list (400) is asked again without it, and from then on (eventTypesRejected).
-		var withTypes = !eventTypesRejected[args.calendarId]
+		// args.withTypes: the eventTypes list (see fetchGCalEvents). A calendar that rejects it (400) is
+		// asked again without it, and from then on (eventTypesRejected).
+		var withTypes = !!args.withTypes
 		if (withTypes) {
 			EventTypes.FETCHED_TYPES.forEach(function(type) {
 				url += '&eventTypes=' + encodeURIComponent(type)
@@ -453,9 +468,7 @@ CalendarManager {
 		}, function(err, data, xhr) {
 			logger.debug('fetchGCalEventsPage.response', args.calendarId, err, data, xhr.status)
 			if (withTypes && xhr && xhr.status === 400 && rejectsEventTypes(data)) {
-				logger.log('eventTypes rejected by a calendar, fetching without them') // No calendar id/name
-				eventTypesRejected[args.calendarId] = true
-				fetchGCalEventsPage(args, pageCallback)
+				pageCallback(err, data, xhr, true)
 				return
 			}
 			if (!err && data && data.error) {
