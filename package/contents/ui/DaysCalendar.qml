@@ -670,19 +670,25 @@ Item {
 		}
 	}
 
-	// The dragged event on its new first day (in the first event row), with its title.
+	// The dragged event on its new first day (in the first event row), with its title. When it would
+	// start before the first shown day: on the first shown day it takes, with a square left end like
+	// a bar continuing from before; not shown when none of its days are shown.
 	Rectangle {
 		id: dragTargetGhost
 		readonly property var info: daysCalendar.eventDrag
-		readonly property int cell: info ? Math.max(0, Math.min(daysCalendar.rows * daysCalendar.columns - 1, info.targetFirst)) : 0
+		readonly property int cell: info ? Math.max(0, info.targetFirst) : 0
+		readonly property bool shown: !!info && cell <= daysCalendar.rows * daysCalendar.columns - 1
+			&& info.targetFirst + Math.max(1, info.targetCount) - 1 >= 0
 		readonly property color barColor: appletConfig.eventColor(info ? info.eventItem.backgroundColor : null)
 		z: 2
-		visible: !!info
+		visible: shown
 		x: daysCalendar.cellX(cell) + 1
 		y: daysCalendar.cellY(cell) + daysCalendar.eventTitlesTopOffset
 		width: daysCalendar.cellWidth - 2
 		height: daysCalendar.eventTitleRowHeight
 		radius: Math.min(7, height / 2)
+		topLeftRadius: info && info.targetFirst < 0 ? 0 : radius
+		bottomLeftRadius: topLeftRadius
 		color: barColor
 		border.width: 1
 		border.color: Kirigami.Theme.highlightColor
