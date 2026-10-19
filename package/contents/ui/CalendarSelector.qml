@@ -17,6 +17,16 @@ FormComboBox {
 		return selectedCalendar.isTasklist === true
 	}
 
+	// Select a calendar of the list by id (eg: back to the event's own calendar).
+	function selectCalendar(calendarId) {
+		for (var i = 0; i < model.length; i++) {
+			if (model[i].calendarId === calendarId) {
+				currentIndex = i
+				return
+			}
+		}
+	}
+
 	function populate(calendarList, initialCalendarId) {
 		var list = []
 		var selectedIndex = 0

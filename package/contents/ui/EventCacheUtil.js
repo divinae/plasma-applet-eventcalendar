@@ -34,7 +34,7 @@ function copyDate(obj) {
 	return result
 }
 
-var PLAIN_FIELDS = ['location', 'colorId', 'backgroundColor', 'recurringEventId', 'status', 'htmlLink', 'hangoutLink', 'transparency']
+var PLAIN_FIELDS = ['location', 'colorId', 'backgroundColor', 'recurringEventId', 'status', 'htmlLink', 'hangoutLink', 'transparency', 'visibility']
 
 // The cached copy of one event (whitelisted fields only).
 function pickEvent(event) {

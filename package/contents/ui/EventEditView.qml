@@ -141,6 +141,47 @@ Rectangle {
 		logic.update()
 	}
 
+	//--- Calendar (Google): an existing event can move to another calendar of its account that we
+	// can write to (Google events.move). An occurrence only with its whole series.
+	// "account::" of the event's calendar, or '' (not a Google account calendar).
+	readonly property string accountPrefix: {
+		var id = !isNew && eventItem.calendarId ? String(eventItem.calendarId) : ''
+		var i = id.indexOf('::')
+		return i > 0 ? id.slice(0, i + 2) : ''
+	}
+	// Only the organizer's copy moves (it changes the organizer), and only default events
+	// (not birthdays, focus time, out of office...).
+	readonly property bool movable: accountPrefix !== '' && !!eventItem.canEdit && !isInvited
+		&& (!eventItem.eventType || eventItem.eventType === 'default')
+		&& eventModel.supportsMove(eventItem.calendarId)
+	readonly property bool canMove: movable && (!isOccurrence || editSeries)
+	readonly property bool moving: canMove && !!calendarSelector.selectedCalendarId
+		&& calendarSelector.selectedCalendarId !== eventItem.calendarId
+	onCanMoveChanged: {
+		if (!canMove && !isNew) {
+			calendarSelector.selectCalendar(eventItem.calendarId) // Back to "This event"
+		}
+	}
+	// Move first when another calendar was picked, then update(model, calendarId, done) on the
+	// calendar the event is in. Runs after the form closed: no ids of the form are used later on.
+	function afterMove(eventId, update) {
+		var model = eventModel
+		if (!moving) {
+			update(model, eventItem.calendarId, refetch)
+			return
+		}
+		var appLogic = logic
+		var target = calendarSelector.selectedCalendarId
+		var done = function() {
+			appLogic.update()
+		}
+		model.moveEvent(eventItem.calendarId, eventId, target, function(err) {
+			if (!err) {
+				update(model, target, done)
+			}
+		}, sendUpdatesChoice ? { sendUpdates: sendUpdatesChoice } : null)
+	}
+
 	//--- Event color (Google): '' = the calendar's color, else a colorId '1'..'11'.
 	property string initialColorId: ""
 	property string colorId: ""
@@ -199,6 +240,33 @@ Rectangle {
 		reminderOthers = state.others
 		if (!asCopy) {
 			initialReminders = state
+		}
+	}
+
+	//--- Show as and visibility (Google): transparency 'opaque' (busy, the default) or 'transparent'
+	// (free); visibility 'default' (the calendar's), 'public', 'private' (or 'confidential', kept).
+	property string initialTransparency: "opaque"
+	property string transparency: "opaque"
+	property string initialVisibility: "default"
+	property string visibility: "default"
+	// New events and copies start from the defaults, so only other values are sent.
+	function fillAvailability(item, asCopy) {
+		transparency = item.transparency === 'transparent' ? 'transparent' : 'opaque'
+		visibility = item.visibility || 'default'
+		if (!asCopy) {
+			initialTransparency = transparency
+			initialVisibility = visibility
+		}
+	}
+	function addAvailabilityArgs(args) {
+		if (!supportsRecurrence) {
+			return
+		}
+		if (transparency !== initialTransparency) {
+			args.transparency = transparency
+		}
+		if (visibility !== initialVisibility) {
+			args.visibility = visibility
 		}
 	}
 
@@ -379,6 +447,7 @@ Rectangle {
 			if (supportsRecurrence && remindersCustom) {
 				data.reminders = Reminders.toGoogle(reminderState)
 			}
+			addAvailabilityArgs(data)
 			if (supportsRecurrence) {
 				addConferenceArgs(data)
 				if (guests.length) {
@@ -407,6 +476,7 @@ Rectangle {
 				args.description = descriptionField.text
 			}
 			addColorArgs(args)
+			addAvailabilityArgs(args)
 			addConferenceArgs(args)
 			if (supportsRecurrence && remindersChanged) {
 				args.reminders = Reminders.toGoogle(reminderState)
@@ -428,18 +498,30 @@ Rectangle {
 				args.start = withTimeZone(start)
 				args.end = withTimeZone(end)
 			}
-			if (becomesRecurring || guestsChanged) {
-				// Guests: the changes applied to the server's list (the loaded copy may be incomplete,
-				// eg: from the event cache).
-				var initial = initialGuests
-				var edited = guests
-				var guestEdit = guestsChanged
-				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, function(serverEvent) {
-					if (guestEdit) {
-						args.attendees = Guests.applyChanges(serverEvent.attendees, initial, edited)
+			// Guests: the changes applied to the server's list (the loaded copy may be incomplete,
+			// eg: from the event cache).
+			var initial = initialGuests
+			var edited = guests
+			var guestEdit = guestsChanged
+			var buildArgs = function(serverEvent) {
+				if (guestEdit) {
+					args.attendees = Guests.applyChanges(serverEvent.attendees, initial, edited)
+				}
+				return args
+			}
+			if (moving) {
+				// Moved: no loaded copy in the new calendar, so the changes go to its server copy.
+				var eventId = eventItem.id
+				var hasChanges = Object.keys(args).length > 0 || guestEdit
+				afterMove(eventId, function(model, calendarId, done) {
+					if (hasChanges) {
+						model.updateEventFromServer(calendarId, eventId, buildArgs, done, options)
+					} else {
+						done()
 					}
-					return args
-				}, refetch, options)
+				})
+			} else if (becomesRecurring || guestsChanged) {
+				eventModel.updateEventFromServer(eventItem.calendarId, eventItem.id, buildArgs, refetch, options)
 			} else if (Object.keys(args).length) {
 				eventModel.setEventProperties(eventItem.calendarId, eventItem.id, args, options)
 			}
@@ -462,6 +544,7 @@ Rectangle {
 			args.description = descriptionField.text
 		}
 		addColorArgs(args)
+		addAvailabilityArgs(args)
 		addConferenceArgs(args)
 		if (supportsRecurrence && remindersChanged) {
 			args.reminders = Reminders.toGoogle(reminderState)
@@ -479,7 +562,7 @@ Rectangle {
 		var initial = initialGuests
 		var edited = guests
 
-		eventModel.updateEventFromServer(item.calendarId, item.recurringEventId, function(series) {
+		var buildArgs = function(series) {
 			var seriesArgs = {}
 			for (var key in args) {
 				seriesArgs[key] = args[key]
@@ -496,7 +579,12 @@ Rectangle {
 				seriesArgs.attendees = Guests.applyChanges(series.attendees, initial, edited)
 			}
 			return seriesArgs
-		}, refetch, options)
+		}
+		// Moved to another calendar: the whole series moves, then gets the changes there.
+		var seriesId = item.recurringEventId
+		afterMove(seriesId, function(model, calendarId, done) {
+			model.updateEventFromServer(calendarId, seriesId, buildArgs, done, options)
+		})
 	}
 
 	Keys.onEscapePressed: closeRequested()
@@ -524,6 +612,7 @@ Rectangle {
 			guests = initialGuests.slice()
 		}
 		fillReminders(item, asCopy)
+		fillAvailability(item, asCopy)
 		var allDay = !!(item.start && item.start.date)
 		allDayCheckBox.checked = allDay
 		var start = new Date(item.startDateTime)
@@ -554,6 +643,13 @@ Rectangle {
 
 	Component.onCompleted: {
 		var calendarList = eventModel.getCalendarList().filter(function(c) { return !c.isTasklist })
+		// An existing event can only move within its account (populate keeps the writable ones).
+		if (eventItem) {
+			var prefix = accountPrefix
+			calendarList = calendarList.filter(function(c) {
+				return c.id === eventItem.calendarId || (prefix !== '' && String(c.id).indexOf(prefix) === 0)
+			})
+		}
 		var initialCalendarId = eventItem ? eventItem.calendarId : plasmoid.configuration.agendaNewEventLastCalendarId
 		// Duplicate: on the same calendar when it's one we can write to.
 		if (templateEvent && calendarList.some(function(c) { return c.id === templateEvent.calendarId })) {
@@ -693,7 +789,8 @@ Rectangle {
 				CalendarSelector {
 					id: calendarSelector
 					Layout.fillWidth: true
-					enabled: form.isNew // Moving events between calendars isn't supported yet.
+					// Existing events: move to another calendar of the same account (see canMove).
+					enabled: form.isNew || form.canMove
 				}
 
 				// Event color (Google): the calendar's color or one of Google's 11 event colors.
@@ -1017,6 +1114,52 @@ Rectangle {
 						PlasmaComponents3.ToolTip.text: i18n("Remove video conferencing")
 						PlasmaComponents3.ToolTip.visible: hovered
 						PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+					}
+				}
+
+				// Show as busy / free, and who sees the details (Google).
+				RowLayout {
+					visible: form.supportsRecurrence
+					Layout.fillWidth: true
+					Kirigami.Icon {
+						source: "view-calendar-day"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+						opacity: 0.7
+					}
+					FormComboBox {
+						id: transparencyCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'opaque', text: i18nc("show the event's time as", "Busy") },
+							{ key: 'transparent', text: i18nc("show the event's time as", "Free") },
+						]
+						currentIndex: form.transparency === 'transparent' ? 1 : 0
+						displayText: i18nc("%1 = Busy or Free", "Show as: %1", currentText)
+						onActivated: function(index) { form.transparency = model[index].key }
+						Accessible.name: i18n("Show as")
+					}
+					FormComboBox {
+						id: visibilityCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'default', text: i18nc("event visibility", "Calendar default") },
+							{ key: 'public', text: i18nc("event visibility", "Public") },
+							{ key: 'private', text: i18nc("event visibility", "Private") },
+						]
+						// 'confidential' is an old name of private.
+						currentIndex: form.visibility === 'public' ? 1 : (form.visibility === 'private' || form.visibility === 'confidential' ? 2 : 0)
+						displayText: i18nc("%1 = Calendar default, Public or Private", "Visibility: %1", currentText)
+						onActivated: function(index) {
+							var key = model[index].key
+							// Keep 'confidential' unless another choice than Private is picked.
+							if (!(key === 'private' && form.visibility === 'confidential')) {
+								form.visibility = key
+							}
+						}
+						Accessible.name: i18n("Visibility")
 					}
 				}
 

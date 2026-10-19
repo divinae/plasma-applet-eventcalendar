@@ -963,6 +963,89 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		})
 	}
 
+	//--- Move Event
+	// Move an event, or a whole recurring series (eventId = its recurringEventId), to another
+	// calendar of the same account (Google events.move). The moved event keeps its id. The loaded
+	// copies are removed from the source calendar; done(err, movedEvent) should refetch to show it
+	// in the destination. params: optional query params, eg: { sendUpdates: 'all' }.
+	function moveEvent(calendarId, eventId, destinationCalendarId, done, params) {
+		logger.debug(calendarManagerId, 'moveEvent', calendarId, eventId, destinationCalendarId)
+		if (!session.accessToken) {
+			session.transactionError('attempting to "move an event" without an access token set')
+			return
+		}
+		// Only within this account: the scoped id of another account isn't one of our calendars.
+		if (accountId && destinationCalendarId.indexOf(accountId + "::") !== 0) {
+			logger.log(calendarManagerId, 'moveEvent', 'destination is in another account')
+			if (done) {
+				done('moveEvent: destination is in another account', null)
+			}
+			return
+		}
+		var query = { destination: unscopedCalendarId(destinationCalendarId) }
+		for (var key in (params || {})) {
+			query[key] = params[key]
+		}
+		var func = function() {
+			moveGCalEvent({
+				accessToken: session.accessToken,
+				calendarId: unscopedCalendarId(calendarId),
+				eventId: eventId,
+				params: query,
+			}, function(err, data, xhr) {
+				if (err) {
+					moveEvent_err(err, data, xhr)
+				} else {
+					moveEvent_done(calendarId, eventId)
+				}
+				if (done) {
+					done(err, data)
+				}
+			})
+		}
+		withAccessToken(func, function(err, isNetworkError) {
+			handleAuthError(err, false, isNetworkError)
+		})
+	}
+	// The event (or the series' loaded occurrences) left this calendar.
+	function moveEvent_done(calendarId, eventId) {
+		var calendar = googleCalendarManager.eventsByCalendar[calendarId]
+		var items = calendar && calendar.items ? calendar.items.slice() : []
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].id === eventId || items[i].recurringEventId === eventId) {
+				removeEvent(calendarId, items[i].id)
+			}
+		}
+	}
+	function moveEvent_err(err, data, xhr) {
+		logger.log(calendarManagerId, 'moveEvent_err', err, data, xhr)
+		return handleError(err, data, xhr)
+	}
+
+	function moveGCalEvent(args, callback) {
+		// POST https://www.googleapis.com/calendar/v3/calendars/calendarId/events/eventId/move?destination=...
+		var url = 'https://www.googleapis.com/calendar/v3'
+		url += '/calendars/'
+		url += encodeURIComponent(args.calendarId)
+		url += '/events/'
+		url += encodeURIComponent(args.eventId)
+		url += '/move'
+		url += queryString(args.params)
+		Requests.postJSON({
+			url: url,
+			headers: {
+				"Authorization": "Bearer " + args.accessToken,
+			},
+			data: "",
+		}, function(err, data, xhr) {
+			logger.debug('moveGCalEvent.response', err, xhr.status)
+			if (!err && data && data.error) {
+				return callback(data, null, xhr)
+			}
+			callback(err, data, xhr)
+		})
+	}
+
 	//--- Delete Event
 	// Optional done(err) once the server answered.
 	function deleteEvent(calendarId, eventId, done) {
