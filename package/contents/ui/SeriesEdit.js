@@ -36,8 +36,10 @@ function shiftedTimes(series, occurrenceStart, start, end, timeZone) {
 	var seriesStart = new Date(instant(series.start))
 	seriesStart.setDate(seriesStart.getDate() + dayShift)
 	seriesStart.setHours(newStart.getHours(), newStart.getMinutes(), 0, 0)
-	var seriesEnd = new Date(seriesStart.getTime() + duration)
 	if (start.date) {
+		// Whole days: on a daylight saving day the length in ms isn't a multiple of 24 h.
+		var seriesEnd = new Date(seriesStart)
+		seriesEnd.setDate(seriesEnd.getDate() + Math.round(duration / 86400000))
 		return {
 			start: { date: localDateString(seriesStart) },
 			end: { date: localDateString(seriesEnd) },
@@ -46,6 +48,6 @@ function shiftedTimes(series, occurrenceStart, start, end, timeZone) {
 	var zone = (series.start && series.start.timeZone) || timeZone
 	return {
 		start: { dateTime: seriesStart.toISOString(), timeZone: zone },
-		end: { dateTime: seriesEnd.toISOString(), timeZone: zone },
+		end: { dateTime: new Date(seriesStart.getTime() + duration).toISOString(), timeZone: zone },
 	}
 }

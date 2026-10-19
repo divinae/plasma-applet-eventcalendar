@@ -89,6 +89,18 @@ s = S.shiftedTimes({ start: { date: '2026-09-04' }, end: { date: '2026-09-05' } 
 	new Date(2026, 9, 16), { date: '2026-10-17' }, { date: '2026-10-18' }, 'UTC')
 assert.deepStrictEqual(JSON.parse(JSON.stringify(s)), { start: { date: '2026-09-05' }, end: { date: '2026-09-06' } })
 
+// All-day over the spring daylight saving change (29 March 2026 in Warsaw is 23 h long): still
+// whole days, never an empty range.
+s = S.shiftedTimes({ start: { date: '2026-03-22' }, end: { date: '2026-03-23' } },
+	new Date(2026, 2, 28), { date: '2026-03-29' }, { date: '2026-03-30' }, 'UTC')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(s)), { start: { date: '2026-03-23' }, end: { date: '2026-03-24' } })
+s = S.shiftedTimes({ start: { date: '2026-03-28' }, end: { date: '2026-03-29' } },
+	new Date(2026, 3, 4), { date: '2026-04-05' }, { date: '2026-04-06' }, 'UTC')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(s)), { start: { date: '2026-03-29' }, end: { date: '2026-03-30' } })
+s = S.shiftedTimes({ start: { date: '2026-03-21' }, end: { date: '2026-03-23' } },
+	new Date(2026, 2, 28), { date: '2026-03-28' }, { date: '2026-03-30' }, 'UTC')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(s)), { start: { date: '2026-03-21' }, end: { date: '2026-03-23' } }, 'two days over the change')
+
 //--- Whole day moves (month view, all-day row)
 const W = load('WeekDrag.js', ['canMove', 'dayDelta', 'movedByDays', 'timedTimes'])
 // dayDelta counts calendar days, also over the daylight saving change (25 October).
