@@ -394,7 +394,11 @@ CalendarManager {
 		}
 		// Overlapping meetings, as { summary } objects (see Shared.conflictTitles). Not cached on
 		// disk, and removed before an event is sent back to Google.
-		var conflicts = Conflicts.find(all)
+		// Only your own time counts: calendars you can edit, and meetings you're invited to. Others'
+		// calendars you only follow (a colleague's, holidays) would show false conflicts.
+		var conflicts = Conflicts.find(all.filter(function(eventItem) {
+			return !!eventItem.canEdit || !!Shared.myResponse(eventItem)
+		}))
 		var items = []
 		for (var i = 0; i < all.length; i++) {
 			var titles = conflicts[Conflicts.eventKey(all[i])] || []
