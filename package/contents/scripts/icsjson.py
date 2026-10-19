@@ -130,6 +130,150 @@ def events_to_json(event_list=None, indent=4):
 	return json.dumps(data, indent=indent)
 
 
+#--- Raw events (import): the VEVENTs as they are, recurring series kept with their rules.
+
+def time_zone_name(dt):
+	"""IANA name of an aware datetime's zone, or "" (UTC offsets, unknown or Windows names)."""
+	tz = getattr(dt, "tzinfo", None)
+	if tz is None:
+		return ""
+	name = getattr(tz, "key", None) or getattr(tz, "zone", None) or ""
+	if not name:
+		if dt.utcoffset() == datetime.timedelta(0):
+			return "UTC"
+		return ""
+	try:
+		import zoneinfo
+		zoneinfo.ZoneInfo(name)
+	except Exception:
+		return ""
+	return name
+
+
+def raw_date_to_json(value):
+	if isinstance(value, datetime.datetime):
+		data = {"dateTime": value.isoformat()}
+		zone = time_zone_name(value)
+		if zone:
+			data["timeZone"] = zone
+		return data
+	return {"date": value.isoformat()}
+
+
+def ical_date_value(value):
+	"""An EXDATE/RDATE value: a date, a UTC time, or a floating (local) time."""
+	if isinstance(value, datetime.datetime):
+		if value.tzinfo is not None:
+			return value.astimezone(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+		return value.strftime("%Y%m%dT%H%M%S")
+	if isinstance(value, datetime.date):
+		return value.strftime("%Y%m%d")
+	return None
+
+
+def date_list_lines(event, key):
+	"""EXDATE / RDATE as lines Google accepts: times in UTC, so no (maybe Windows) TZID."""
+	prop = event.get(key)
+	if prop is None:
+		return []
+	props = prop if isinstance(prop, list) else [prop]
+	times = []
+	dates = []
+	for item in props:
+		for entry in getattr(item, "dts", []):
+			value = getattr(entry, "dt", None)
+			if isinstance(value, tuple):  # RDATE periods aren't supported by Google
+				continue
+			text = ical_date_value(value)
+			if text is None:
+				continue
+			if isinstance(value, datetime.datetime):
+				times.append(text)
+			else:
+				dates.append(text)
+	lines = []
+	if times:
+		lines.append("{}:{}".format(key, ",".join(times)))
+	if dates:
+		lines.append("{};VALUE=DATE:{}".format(key, ",".join(dates)))
+	return lines
+
+
+def event_recurrence(event):
+	lines = []
+	rules = event.get("RRULE")
+	if rules is not None:
+		for rule in (rules if isinstance(rules, list) else [rules]):
+			lines.append("RRULE:" + rule.to_ical().decode("utf-8"))
+	lines.extend(date_list_lines(event, "RDATE"))
+	lines.extend(date_list_lines(event, "EXDATE"))
+	return lines
+
+
+def event_to_raw(event):
+	start, end = get_event_bounds(event)
+	if start is None or end is None:
+		return None
+	item = {
+		"iCalUID": build_event_uid(event, start, end),  # Google's import needs one
+		"summary": stringify(event.get("SUMMARY")),
+		"start": raw_date_to_json(start),
+		"end": raw_date_to_json(end),
+		"allDay": not isinstance(start, datetime.datetime),
+	}
+	for key, name in (("LOCATION", "location"), ("DESCRIPTION", "description")):
+		if key in event:
+			item[name] = stringify(event.get(key))
+	transp = stringify(event.get("TRANSP")).strip().upper()
+	if transp:
+		item["transp"] = transp
+	klass = stringify(event.get("CLASS")).strip().upper()
+	if klass:
+		item["class"] = klass
+	recurrence = event_recurrence(event)
+	if recurrence:
+		item["recurrence"] = recurrence
+	recurrence_id = get_event_date(event, "RECURRENCE-ID")
+	if recurrence_id is not None:
+		item["recurrenceId"] = raw_date_to_json(recurrence_id)
+	attendees = event.get("ATTENDEE")
+	if attendees is not None:
+		item["attendeeCount"] = len(attendees) if isinstance(attendees, list) else 1
+	return item
+
+
+def raw_events_to_json(cal, indent=4):
+	"""The calendar's VEVENTs without expanding recurring series. Cancelled ones are skipped."""
+	data = {"items": [], "skipped": 0}
+	method = stringify(cal.get("METHOD")).strip().upper()
+	if method:
+		data["method"] = method
+	for event in cal.walk("vevent"):
+		status = stringify(event.get("STATUS")).strip().lower()
+		item = None if status == "cancelled" else event_to_raw(event)
+		if item is None:
+			data["skipped"] += 1
+			continue
+		data["items"].append(item)
+	return json.dumps(data, indent=indent)
+
+
+def read_import_file(path):
+	"""A .ics file the user picked to import (any folder, unlike calendar URLs)."""
+	if path.startswith("file://"):
+		path = urllib.request.url2pathname(urllib.parse.urlparse(path).path)
+	path = os.path.realpath(os.path.expanduser(path))
+	if not path.lower().endswith(".ics"):
+		raise ValueError("Only .ics files can be imported")
+	if not os.path.isfile(path):
+		raise ValueError("File not found")
+	with open(path, "rb") as handle:
+		data = handle.read(MAX_ICS_BYTES + 1)
+	if len(data) > MAX_ICS_BYTES:
+		raise ValueError("Calendar file exceeds size limit")
+	return Calendar.from_ical(data)
+
+
 def ensure_date_time(dt):
 	if isinstance(dt, datetime.date) and not isinstance(dt, datetime.datetime):
 		dt = datetime.datetime.combine(dt, datetime.time.min)
@@ -276,12 +420,15 @@ def argparse_date(value):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Read and query ICS calendar files")
-	parser.add_argument("--url", type=str, required=True, help="The .ics file to read/write")
+	parser.add_argument("--url", type=str, help="The .ics file to read/write (query)")
 	subparsers = parser.add_subparsers(help="Commands", dest="subcommand")
 
 	query = subparsers.add_parser("query")
 	query.add_argument("startTime", type=argparse_date, help="Inclusive starting date in YYYY-MM-DD format")
 	query.add_argument("endTime", type=argparse_date, help="Exclusive ending date in YYYY-MM-DD format")
+
+	events = subparsers.add_parser("events", help="Print the file's events as they are (no recurrence expansion)")
+	events.add_argument("path", type=str, help="A local .ics file (path or file:// URL)")
 
 	subparsers.add_parser("add")
 	subparsers.add_parser("delete")
@@ -291,6 +438,16 @@ if __name__ == "__main__":
 	else:
 		args = parser.parse_args()
 
+	if args.subcommand == "events":
+		try:
+			print(raw_events_to_json(read_import_file(args.path)))
+		except Exception as error:
+			print("{}: {}".format(type(error).__name__, error), file=sys.stderr)
+			sys.exit(1)
+		sys.exit(0)
+
+	if not args.url:
+		parser.error("--url is required")
 	manager = CalendarManager(args.url)
 	if args.subcommand == "query":
 		manager.read()

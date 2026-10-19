@@ -402,6 +402,20 @@ MouseArea {
 		quickAddOpen = false
 	}
 
+	//--- Import a .ics file (the widget menu's "Import Events…"). The file dialog lives in main.qml,
+	// outside the popup, which may close while the dialog is open.
+	signal importFileRequested()
+	property bool importOpen: false
+	property string importFileUrl: ""
+	function openImport(fileUrl) {
+		importFileUrl = String(fileUrl || "")
+		importOpen = true
+	}
+	function closeImport() {
+		importOpen = false
+		importFileUrl = ""
+	}
+
 	//--- Month view: clicking a day opens it in the Today view.
 	property var pendingDayViewDate: null // Picked up when the day view is created
 	function showDayView(date) {
@@ -456,6 +470,7 @@ MouseArea {
 		detailsEvent = null
 		searchOpen = false
 		quickAddOpen = false
+		closeImport()
 	}
 	// Overlays belong to the view they were opened from.
 	Connections {
@@ -673,6 +688,26 @@ MouseArea {
 					popup.closeQuickAdd()
 					popup.newEvent(popup.selectedDate, null, title)
 				}
+			}
+		}
+	}
+
+	OverlayCard {
+		id: importOverlay
+		visible: popup.importOpen
+		z: 6
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		onOutsideClicked: {} // Don't lose the checked events on a stray click.
+		cardComponent: visible ? importCard : null
+		Component {
+			id: importCard
+			ImportView {
+				fileUrl: popup.importFileUrl
+				onCloseRequested: popup.closeImport()
+				onChooseFileRequested: popup.importFileRequested()
 			}
 		}
 	}
