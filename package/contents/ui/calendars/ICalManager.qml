@@ -18,11 +18,6 @@ CalendarManager {
 	property var calendarList: [
 	]
 
-	function localFilePath(url) {
-		var path = String(url)
-		return path.indexOf("file://") === 0 ? path.slice(7) : path
-	}
-
 	function getCalendar(calendarId) {
 		for (var i = 0; i < calendarList.length; i++) {
 			var calendarData = calendarList[i]
