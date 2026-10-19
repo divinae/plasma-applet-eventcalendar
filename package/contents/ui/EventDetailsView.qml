@@ -8,6 +8,7 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Guests.js" as Guests
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "lib/ColorUtil.js" as ColorUtil
 import "code/GooglePalette.js" as GooglePalette
 
@@ -281,6 +282,27 @@ Rectangle {
 								return when
 							}
 							opacity: 0.8
+						}
+						// The event's own time zone, when its clock differs from the local one.
+						PlasmaComponents3.Label {
+							readonly property string zone: details.eventItem && !details.isAllDay && details.eventItem.start
+								&& details.eventItem.start.timeZone ? String(details.eventItem.start.timeZone) : ""
+							readonly property double startMs: details.eventItem ? new Date(details.eventItem.startDateTime).getTime() : 0
+							visible: text !== ""
+							Layout.fillWidth: true
+							wrapMode: Text.Wrap
+							opacity: 0.6
+							text: {
+								if (!zone || !TimeZone.knows(zone) || TimeZone.matchesLocal(zone, startMs)) {
+									return ""
+								}
+								var format = { clock24h: appletConfig.clock24h }
+								var start = TimeZone.toWallDate(zone, startMs)
+								var end = TimeZone.toWallDate(zone, new Date(details.eventItem.endDateTime).getTime())
+								return i18nc("%1 = start and end time, %2 = city, %3 = time zone id", "%1 %2 time (%3)",
+									LocaleFuncs.formatEventTime(start, format) + "–" + LocaleFuncs.formatEventTime(end, format),
+									TimeZone.cityName(zone), zone)
+							}
 						}
 					}
 				}

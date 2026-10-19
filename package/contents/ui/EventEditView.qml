@@ -6,11 +6,13 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "EventTypes.js" as EventTypes
 import "Guests.js" as Guests
+import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
 import "Reminders.js" as Reminders
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "code/ColorIdMap.js" as ColorIdMap
 import "code/GooglePalette.js" as GooglePalette
 import "lib/ColorUtil.js" as ColorUtil
@@ -133,10 +135,90 @@ Rectangle {
 	}
 	// Google needs a time zone on the start / end of recurring timed events (to expand them).
 	function withTimeZone(obj) {
-		if (obj.dateTime) {
-			obj.timeZone = calendarTimeZone()
+		if (obj.dateTime && !obj.timeZone) {
+			obj.timeZone = timeZone || calendarTimeZone()
 		}
 		return obj
+	}
+
+	//--- Time zone (Google): the editor's times are the wall clock in `timeZone` (the selectors
+	// show local Dates with that clock time; see TimeZone.toWallDate). '' = local time.
+	property string timeZone: ""
+	property string initialTimeZone: ""
+	property bool timeZoneTouched: false // Picked by the user: no longer follows the calendar
+	readonly property bool supportsTimeZone: supportsRecurrence
+	readonly property bool timeZoneChanged: supportsTimeZone && !allDayCheckBox.checked && timeZone !== initialTimeZone
+	// The local zone's id: from the time data engine (Plasma), else one with the same rules.
+	function localZoneName() {
+		var data = typeof timeModel !== "undefined" && timeModel.dataSource && timeModel.dataSource.data
+		var local = data && data.Local && data.Local.Timezone
+		if (local && TimeZone.knows(String(local))) {
+			return String(local)
+		}
+		return TimeZone.guessLocal(Date.now())
+	}
+	// The zone a new or edited event starts in: its own, its calendar's or the local one.
+	function defaultTimeZone(item) {
+		if (!supportsTimeZone) {
+			return ""
+		}
+		if (item && item.start && item.start.timeZone) {
+			return String(item.start.timeZone)
+		}
+		var calendar = calendarSelector.selectedCalendar
+		return calendar && calendar.timeZone ? String(calendar.timeZone) : localZoneName()
+	}
+	function toWall(instant) {
+		return TimeZone.knows(timeZone) ? TimeZone.toWallDate(timeZone, instant) : new Date(instant)
+	}
+	function fromWall(wallDate) {
+		return TimeZone.knows(timeZone) ? TimeZone.fromWallDate(timeZone, wallDate) : new Date(wallDate)
+	}
+	// The event's start / end instants.
+	function startInstant() {
+		return fromWall(durationSelector.startDateTime)
+	}
+	function endInstant() {
+		return fromWall(durationSelector.endDateTime)
+	}
+	// Picked by the user: the clock times stay, in the new zone (as in Google Calendar).
+	function setTimeZone(zone) {
+		timeZoneTouched = true
+		timeZone = zone
+	}
+	// Another zone showing the same instants (eg: a new event's calendar changed).
+	function moveToTimeZone(zone) {
+		var start = startInstant()
+		var end = endInstant()
+		timeZone = zone
+		durationSelector.startDateTime = toWall(start)
+		durationSelector.endDateTime = toWall(end)
+	}
+	property bool initialized: false
+	Connections {
+		target: calendarSelector
+		function onSelectedCalendarChanged() {
+			if (form.isNew && form.initialized && !form.timeZoneTouched) {
+				form.moveToTimeZone(form.defaultTimeZone(null))
+			}
+		}
+	}
+	// Local times of the event, when its zone shows another clock.
+	readonly property string localTimesText: {
+		if (!supportsTimeZone || allDayCheckBox.checked || !TimeZone.knows(timeZone)) {
+			return ""
+		}
+		var start = fromWall(durationSelector.startDateTime)
+		var end = fromWall(durationSelector.endDateTime)
+		if (TimeZone.matchesLocal(timeZone, start.getTime())) {
+			return ""
+		}
+		var format = { clock24h: appletConfig.clock24h }
+		var text = LocaleFuncs.formatEventTime(start, format) + " – " + LocaleFuncs.formatEventTime(end, format)
+		if (start.toDateString() !== durationSelector.startDateTime.toDateString()) {
+			text = Qt.formatDate(start, i18nc("event editor date format", "d MMM, yyyy")) + " " + text
+		}
+		return i18nc("%1 = start and end time in the local time zone", "%1 your time", text)
 	}
 	function refetch() {
 		logic.update()
@@ -400,7 +482,7 @@ Rectangle {
 		}
 		var wasAllDay = !!(eventItem.start && eventItem.start.date)
 		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, startObj()) || dateObjChanged(eventItem.end, endObj())
-			|| (canEditRepeat && repeatChanged)
+			|| timeZoneChanged || (canEditRepeat && repeatChanged)
 		var placeChanged = Shared.hasChanged(eventItem.location, locationField.text)
 			|| (conferenceAction === 'add' && !hadConference) || (conferenceAction === 'remove' && hadConference)
 		return timeChanged || placeChanged ? 'update' : ''
@@ -426,16 +508,24 @@ Rectangle {
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + fieldsColumn.implicitHeight + Kirigami.Units.largeSpacing * 2
 
 
-	// Google start / end objects. All-day events end at midnight the next day.
+	// Google start / end objects. All-day events end at midnight the next day. Timed ones in UTC,
+	// with the editor's time zone (Google).
+	function timedObj(instant) {
+		var obj = { dateTime: Shared.dateTimeString(instant) }
+		if (supportsTimeZone && timeZone) {
+			obj.timeZone = timeZone
+		}
+		return obj
+	}
 	function startObj() {
 		if (!allDayCheckBox.checked) {
-			return { dateTime: Shared.dateTimeString(durationSelector.startDateTime) }
+			return timedObj(startInstant())
 		}
 		return { date: Shared.localeDateString(durationSelector.startDateTime) }
 	}
 	function endObj() {
 		if (!allDayCheckBox.checked) {
-			return { dateTime: Shared.dateTimeString(durationSelector.endDateTime) }
+			return timedObj(endInstant())
 		}
 		var dayAfter = new Date(durationSelector.endDateTime)
 		dayAfter.setDate(dayAfter.getDate() + 1)
@@ -518,7 +608,7 @@ Rectangle {
 			var start = startObj()
 			var end = endObj()
 			var wasAllDay = !!(eventItem.start && eventItem.start.date)
-			if (wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, start) || dateObjChanged(eventItem.end, end)) {
+			if (wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, start) || dateObjChanged(eventItem.end, end) || timeZoneChanged) {
 				// The update replaces start / end as a whole, so switching all-day <-> timed is clean.
 				args.start = start
 				args.end = end
@@ -587,6 +677,7 @@ Rectangle {
 		var end = endObj()
 		var wasAllDay = !!(item.start && item.start.date)
 		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(item.start, start) || dateObjChanged(item.end, end)
+			|| timeZoneChanged
 		var occurrenceStart = new Date(item.startDateTime)
 		var rule = repeatRule()
 		var ruleChanged = repeatChanged
@@ -655,12 +746,19 @@ Rectangle {
 		fillAvailability(item, asCopy)
 		var allDay = !!(item.start && item.start.date)
 		allDayCheckBox.checked = allDay
+		timeZone = defaultTimeZone(item)
+		if (!asCopy) {
+			initialTimeZone = timeZone
+		}
 		var start = new Date(item.startDateTime)
 		var end = new Date(item.endDateTime)
 		if (allDay) {
 			end.setDate(end.getDate() - 1) // Inclusive last day in the form
 			start.setHours(9, 0, 0, 0) // Times used if All day is unchecked
 			end.setHours(10, 0, 0, 0)
+		} else {
+			start = toWall(start)
+			end = toWall(end)
 		}
 		durationSelector.startDateTime = start
 		durationSelector.endDateTime = end
@@ -707,10 +805,12 @@ Rectangle {
 			var s = initialStart
 				? new Date(initialStart)
 				: new Date(initialDate.getFullYear(), initialDate.getMonth(), initialDate.getDate(), now.getHours() + 1, 0)
-			durationSelector.startDateTime = s
-			durationSelector.endDateTime = new Date(s.getTime() + 60 * 60 * 1000)
+			timeZone = defaultTimeZone(null)
+			durationSelector.startDateTime = toWall(s)
+			durationSelector.endDateTime = toWall(new Date(s.getTime() + 60 * 60 * 1000))
 			titleField.text = initialTitle
 		}
+		initialized = true
 		knownGuests = eventModel.knownGuestEmails ? eventModel.knownGuestEmails() : []
 		titleField.forceActiveFocus()
 		if (templateEvent) {
@@ -970,6 +1070,80 @@ Rectangle {
 					id: durationSelector
 					Layout.fillWidth: true
 					showTime: !allDayCheckBox.checked
+				}
+
+				// Time zone of the times above (Google, timed events).
+				ColumnLayout {
+					id: timeZoneSection
+					visible: form.supportsTimeZone && !allDayCheckBox.checked
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+					property bool expanded: false
+
+					RowLayout {
+						Layout.fillWidth: true
+						Kirigami.Icon {
+							source: "preferences-system-time"
+							Layout.preferredWidth: Kirigami.Units.iconSizes.small
+							Layout.preferredHeight: Layout.preferredWidth
+							opacity: 0.7
+						}
+						PlasmaComponents3.ToolButton {
+							id: timeZoneButton
+							Layout.fillWidth: true
+							Layout.minimumWidth: 0
+							checked: timeZoneSection.expanded
+							onClicked: {
+								timeZoneSection.expanded = !timeZoneSection.expanded
+								if (timeZoneSection.expanded) {
+									timeZoneSearch.text = ""
+									timeZoneSearch.forceActiveFocus()
+								}
+							}
+							contentItem: RowLayout {
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									elide: Text.ElideRight
+									text: {
+										var zone = form.timeZone || i18n("Local time")
+										var abbr = TimeZone.abbreviation(form.timeZone, form.startInstant().getTime())
+										return i18nc("%1 = time zone id, eg: Europe/Warsaw", "Time zone: %1", zone.replace(/_/g, ' ')) + (abbr ? " (" + abbr + ")" : "")
+									}
+								}
+								PlasmaComponents3.Label {
+									visible: form.localTimesText !== ""
+									opacity: 0.7
+									text: form.localTimesText
+								}
+							}
+							Accessible.name: i18n("Time zone")
+						}
+					}
+					PlasmaComponents3.TextField {
+						id: timeZoneSearch
+						visible: timeZoneSection.expanded
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						placeholderText: i18n("Search time zones")
+						Keys.onUpPressed: timeZoneList.moveUp()
+						Keys.onDownPressed: timeZoneList.moveDown()
+						Keys.onEscapePressed: timeZoneSection.expanded = false
+						onAccepted: timeZoneList.pickCurrent()
+					}
+					TimeZoneList {
+						id: timeZoneList
+						visible: timeZoneSection.expanded
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.preferredHeight: Kirigami.Units.gridUnit * 9
+						query: timeZoneSearch.text
+						currentZone: form.timeZone
+						referenceTime: durationSelector.startDateTime.getTime()
+						onPicked: function(zone) {
+							form.setTimeZone(zone)
+							timeZoneSection.expanded = false
+						}
+					}
 				}
 
 				RowLayout {
