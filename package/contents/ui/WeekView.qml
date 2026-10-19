@@ -6,8 +6,6 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "EventBuckets.js" as EventBuckets
 import "MeetingLink.js" as MeetingLink
-import "SeriesEdit.js" as SeriesEdit
-import "Undo.js" as Undo
 import "Shared.js" as Shared
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
@@ -359,11 +357,16 @@ Item {
 	function dayIndexAtX(x) {
 		return WeekDrag.dayIndexAtX(x, gutterWidth, columnWidth, columnCount)
 	}
-	// Pieces of events continuing into another day and all-day events can't be dragged (yet).
+	// Pieces of timed events continuing into another day can't be dragged.
 	function canDrag(block) {
-		return !!block.eventItem.canEdit && !block.continued && !block.continues && !(dragState && dragState.pending)
+		return WeekDrag.canMove(block.eventItem) && !block.continued && !block.continues && !(dragState && dragState.pending)
 	}
-	function dragBegin(block, mode, viewportPoint) {
+	// All-day bars (also cut ones: the whole event moves by the days dragged).
+	function canDragBar(bar) {
+		return WeekDrag.canMove(bar.eventItem) && !(dragState && dragState.pending)
+	}
+	// copy: Ctrl held (the drop makes a copy); only for moves, not resizing.
+	function dragBegin(block, mode, viewportPoint, copy) {
 		var item = block.eventItem
 		dragState = {
 			eventItem: item,
@@ -373,12 +376,13 @@ Item {
 			start: item.startDateTime,
 			end: item.endDateTime,
 			dayIndex: Math.max(0, columnOfDay(block.dayStart)), // Column
+			copy: mode === 'move' && !!copy,
 			pending: false,
 		}
-		dragMove(viewportPoint)
+		dragMove(viewportPoint, copy)
 	}
-	function dragMove(viewportPoint) {
-		if (!dragState || dragState.pending) {
+	function dragMove(viewportPoint, copy) {
+		if (!dragState || dragState.pending || dragState.mode === 'days') {
 			return
 		}
 		dragPointer = viewportPoint
@@ -387,6 +391,9 @@ Item {
 		var dy = viewportPoint.y + flickable.contentY - d.pressY
 		var item = d.eventItem
 		var times
+		if (copy !== undefined) {
+			d.copy = d.mode === 'move' && !!copy
+		}
 		if (d.mode === 'move') {
 			d.dayIndex = dayIndexAtX(viewportPoint.x)
 			var top = Math.max(0, Math.min(flickable.contentHeight - hourHeight / 4, hourY(block.start, block.dayStart) + dy))
@@ -399,74 +406,78 @@ Item {
 		d.end = times.end
 		dragState = Object.assign({}, d) // A new object, so the preview updates
 	}
-	function dragDrop() {
+	// copy: Ctrl held at the drop (moves only): a copy at the new times instead of moving the event.
+	function dragDrop(copy) {
 		var d = dragState
 		if (!d || d.pending) {
 			return
 		}
-		if (d.start.getTime() === d.eventItem.startDateTime.getTime() && d.end.getTime() === d.eventItem.endDateTime.getTime()) {
-			dragState = null
-			return
+		if (copy !== undefined) {
+			d.copy = d.mode !== 'resize' && !!copy
+		}
+		var times
+		if (d.mode === 'days') {
+			if (d.days === 0) {
+				dragState = null
+				return
+			}
+			times = WeekDrag.movedByDays(d.eventItem, d.days)
+		} else {
+			if (d.start.getTime() === d.eventItem.startDateTime.getTime() && d.end.getTime() === d.eventItem.endDateTime.getTime()) {
+				dragState = null
+				return
+			}
+			times = WeekDrag.timedTimes(d.eventItem, d.start, d.end)
 		}
 		d.pending = true
 		dragState = Object.assign({}, d)
-		if (d.eventItem.recurringEventId) {
-			dropScopeMenu.chosen = false
-			dropScopeMenu.popup(dragPreview, 0, dragPreview.height)
-		} else {
-			saveDrop(false)
-		}
+		dropTimeout.restart()
+		var menuParent = d.mode === 'days' ? allDayDragPreview : dragPreview
+		eventMover.drop(d.eventItem, times.start, times.end, d.copy, menuParent, 0, menuParent.height)
 	}
 	function dragCancel() {
 		dragState = null
 	}
-	function saveDrop(wholeSeries) {
-		var item = dragState.eventItem
-		var start = { dateTime: Shared.dateTimeString(dragState.start) }
-		var end = { dateTime: Shared.dateTimeString(dragState.end) }
-		dropTimeout.restart()
-		var calendarId = item.calendarId
-		if (!wholeSeries) {
-			// Undo puts the old times back, offered once the move is saved (onEventUpdated).
-			moveUndo = eventModel.canRestore(calendarId) ? {
-				calendarId: calendarId,
-				eventId: item.id,
-				times: Undo.savedTimes(item),
-			} : null
-			eventModel.setEventProperties(calendarId, item.id, { start: start, end: end })
-			return
+
+	// All-day bars: dragged between the day columns, the event moves by whole days.
+	// dragState { eventItem, mode: 'days', bar, pressIndex, dayIndex, days, start, end, copy, pending }.
+	// x: in the all-day row (the same as the hour grid's).
+	function dragBeginDays(bar, x, copy) {
+		var pressIndex = dayIndexAtX(x)
+		dragState = {
+			eventItem: bar.eventItem,
+			mode: 'days',
+			bar: bar,
+			pressIndex: pressIndex,
+			dayIndex: pressIndex,
+			days: 0,
+			start: bar.eventItem.startDateTime,
+			end: bar.eventItem.endDateTime,
+			copy: !!copy,
+			pending: false,
 		}
-		moveUndo = null
-		var seriesId = item.recurringEventId
-		var occurrenceStart = new Date(item.startDateTime)
-		var calendar = eventModel.getCalendarList().filter(function(c) { return c.id === calendarId })[0]
-		var timeZone = (calendar && calendar.timeZone) || 'UTC'
-		var seriesTimes = null // The series' times before the move, for undo.
-		eventModel.updateEventFromServer(calendarId, seriesId, function(series) {
-			seriesTimes = Undo.savedTimes(series)
-			return SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
-		}, function() {
-			logic.update() // The occurrences come from a refetch.
-			popup.offerUndo(i18n("Event moved"), function() {
-				eventModel.updateEventFromServer(calendarId, seriesId, function() {
-					return seriesTimes
-				}, function() {
-					logic.update()
-				})
-			})
-		})
+		dragMoveDays(x, copy)
 	}
-	// A saved single move: { calendarId, eventId, times } until its update arrives.
-	property var moveUndo: null
-	function offerMoveUndo(calendarId, eventId) {
-		var u = moveUndo
-		if (!u || u.calendarId !== calendarId || u.eventId !== eventId) {
+	function dragMoveDays(x, copy) {
+		var d = dragState
+		if (!d || d.pending || d.mode !== 'days') {
 			return
 		}
-		moveUndo = null
-		popup.offerUndo(i18n("Event moved"), function() {
-			eventModel.setEventProperties(u.calendarId, u.eventId, u.times)
-		})
+		d.dayIndex = dayIndexAtX(x)
+		d.days = WeekDrag.dayDelta(columnDate(d.pressIndex), columnDate(d.dayIndex))
+		var times = WeekDrag.movedByDays(d.eventItem, d.days)
+		d.start = times.startDateTime
+		d.end = times.endDateTime
+		if (copy !== undefined) {
+			d.copy = !!copy
+		}
+		dragState = Object.assign({}, d)
+	}
+
+	EventMover {
+		id: eventMover
+		eventModel: weekView.eventModel
+		onCanceled: weekView.dragCancel()
 	}
 	// No answer at all (eg: signed out): put the block back.
 	Timer {
@@ -477,44 +488,16 @@ Item {
 	Connections {
 		target: weekView.eventModel
 		function onError() {
-			weekView.moveUndo = null
 			if (weekView.dragState && weekView.dragState.pending) {
 				weekView.dragState = null
 			}
 		}
-		function onEventUpdated(calendarId, eventId, data) {
-			weekView.offerMoveUndo(calendarId, eventId)
-		}
-	}
-	PlasmaComponents3.Menu {
-		id: dropScopeMenu
-		property bool chosen: false
-		PlasmaComponents3.MenuItem {
-			text: i18n("This event")
-			onTriggered: {
-				dropScopeMenu.chosen = true
-				weekView.saveDrop(false)
-			}
-		}
-		PlasmaComponents3.MenuItem {
-			text: i18n("All events in the series")
-			onTriggered: {
-				dropScopeMenu.chosen = true
-				weekView.saveDrop(true)
-			}
-		}
-		// Closed without a choice: nothing changes. (closed comes before triggered.)
-		onClosed: Qt.callLater(function() {
-			if (!dropScopeMenu.chosen) {
-				weekView.dragCancel()
-			}
-		})
 	}
 	// Dragging near the top / bottom edge scrolls the grid.
 	Timer {
 		interval: 30
 		repeat: true
-		running: !!weekView.dragState && !weekView.dragState.pending
+		running: !!weekView.dragState && !weekView.dragState.pending && weekView.dragState.mode !== 'days'
 		onTriggered: {
 			var edge = Math.min(weekView.hourHeight, flickable.height / 4)
 			var step = 0
@@ -727,7 +710,10 @@ Item {
 					readonly property bool unconfirmed: Shared.isUnconfirmedResponse(response)
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
-					opacity: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
+					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
+					readonly property bool dragSource: !!weekView.dragState && weekView.dragState.mode === 'days' && weekView.dragState.eventItem === eventItem
+					opacity: dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
+						: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 4
 					height: weekView.allDayRowHeight
 					// Square ends where the event continues before or after this week.
@@ -797,12 +783,49 @@ Item {
 							elide: Text.ElideRight
 						}
 					}
+					// Click opens the event, right click its menu, press and drag moves it by days (Ctrl: copies).
 					MouseArea {
+						id: barMouse
 						anchors.fill: parent
-						cursorShape: Qt.PointingHandCursor
+						cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
 						acceptedButtons: Qt.LeftButton | Qt.RightButton
+						readonly property bool draggable: weekView.canDragBar(parent.bar)
+						preventStealing: draggable
+						property point pressPoint
+						property bool dragged: false
+						onPressed: function(mouse) {
+							dragged = false
+							pressPoint = Qt.point(mouse.x, mouse.y)
+						}
+						onPositionChanged: function(mouse) {
+							if (!draggable || !(pressedButtons & Qt.LeftButton)) {
+								return
+							}
+							var copy = !!(mouse.modifiers & Qt.ControlModifier)
+							var x = mapToItem(allDayArea, mouse.x, mouse.y).x
+							if (dragged) {
+								weekView.dragMoveDays(x, copy)
+							} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
+								dragged = true
+								weekView.dragBeginDays(parent.bar, mapToItem(allDayArea, pressPoint.x, pressPoint.y).x, copy)
+								weekView.dragMoveDays(x, copy)
+							}
+						}
+						onReleased: function(mouse) {
+							if (dragged) {
+								weekView.dragDrop(!!(mouse.modifiers & Qt.ControlModifier))
+							}
+						}
+						onCanceled: {
+							if (dragged) {
+								dragged = false
+								weekView.dragCancel()
+							}
+						}
 						onClicked: function(mouse) {
-							if (mouse.button === Qt.RightButton) {
+							if (dragged) { // The end of a drag, not a click
+								dragged = false
+							} else if (mouse.button === Qt.RightButton) {
 								popup.showEventMenu(parent.eventItem, parent, mouse.x, mouse.y)
 							} else {
 								weekView.openEvent(parent.eventItem)
@@ -815,6 +838,58 @@ Item {
 						subText: containsMouse ? weekView.eventModel.eventDetailsText(parent.eventItem) : ""
 						textFormat: Text.PlainText
 					}
+				}
+			}
+
+			// Where a dragged all-day bar would go (its lane, moved by the columns dragged), with its new days.
+			Rectangle {
+				id: allDayDragPreview
+				readonly property var info: weekView.dragState && weekView.dragState.mode === 'days' ? weekView.dragState : null
+				readonly property int shift: info ? info.dayIndex - info.pressIndex : 0
+				readonly property int first: info ? Math.max(0, Math.min(weekView.columnCount - 1, info.bar.first + shift)) : 0
+				readonly property int last: info ? Math.max(0, Math.min(weekView.columnCount - 1, info.bar.last + shift)) : 0
+				readonly property color stripeColor: info ? appletConfig.eventColor(info.eventItem.backgroundColor) : "transparent"
+				readonly property var span: info ? Shared.eventSpan({ start: info.eventItem.start, startDateTime: info.start, endDateTime: info.end }, appletConfig.timeFormat, weekView.currentTime) : null
+				z: 3
+				visible: !!info
+				x: weekView.gutterWidth + first * weekView.columnWidth + 2
+				y: info ? 3 + Math.min(info.bar.lane, allDayArea.rows - 1) * (weekView.allDayRowHeight + 2) : 0
+				width: (last - first + 1) * weekView.columnWidth - 4
+				height: weekView.allDayRowHeight
+				radius: Math.min(8, height / 2)
+				color: Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.45 : 0.35))
+				border.width: 1
+				border.color: Kirigami.Theme.highlightColor
+				Column {
+					anchors.left: parent.left
+					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.leftMargin: 8
+					anchors.rightMargin: 4
+					PlasmaComponents3.Label {
+						width: parent.width
+						text: allDayDragPreview.info ? allDayDragPreview.info.eventItem.summary : ""
+						font.family: appletConfig.eventFont.family
+						font.pointSize: appletConfig.eventFont.pointSize
+						font.weight: Font.DemiBold
+						elide: Text.ElideRight
+					}
+					PlasmaComponents3.Label {
+						width: parent.width
+						readonly property var span: allDayDragPreview.span
+						// The new day(s): one day just its date.
+						text: !span ? "" : span.allDay && !span.multiDay ? span.startText
+							: i18nc("event span, %1 = start, %2 = end", "%1 – %2", span.startText, span.endText)
+						opacity: 0.75
+						font: appletConfig.eventSmallFont
+						elide: Text.ElideRight
+					}
+				}
+				DragCopyBadge {
+					visible: !!allDayDragPreview.info && allDayDragPreview.info.copy
+					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.rightMargin: 3
 				}
 			}
 
@@ -926,7 +1001,7 @@ Item {
 					// Where a dragged block would go, with its new times.
 					Rectangle {
 						id: dragPreview
-						readonly property var info: weekView.dragState
+						readonly property var info: weekView.dragState && weekView.dragState.mode !== 'days' ? weekView.dragState : null
 						readonly property real dayStart: info ? weekView.columnDate(info.dayIndex).getTime() : 0
 						readonly property color barColor: info ? appletConfig.eventColor(info.eventItem.backgroundColor) : "transparent"
 						readonly property real topY: info ? Math.max(0, weekView.hourY(info.start.getTime(), dayStart)) : 0
@@ -963,6 +1038,12 @@ Item {
 								font: appletConfig.eventSmallFont
 								elide: Text.ElideRight
 							}
+						}
+						DragCopyBadge {
+							visible: !!dragPreview.info && dragPreview.info.copy
+							anchors.right: parent.right
+							anchors.top: parent.top
+							anchors.margins: 2
 						}
 					}
 
@@ -1067,7 +1148,8 @@ Item {
 									readonly property real visibleEnd: Math.min(Math.max(block.end, block.start + 15 * 60000), rangeEnd)
 									// Being dragged: faded where it was; dropped: the preview stands in for it.
 									readonly property bool dragSource: !!weekView.dragState && weekView.dragState.eventItem === eventItem
-									opacity: dragSource ? (weekView.dragState.pending ? 0 : 0.35)
+									// A copy leaves it as it is.
+									opacity: dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
 										: eventItem.endDateTime <= weekView.currentTime ? appletConfig.pastOpacity : 1
 									visible: visibleEnd > visibleStart
 									x: 2 + block.column * slotWidth
@@ -1191,17 +1273,18 @@ Item {
 												return
 											}
 											var viewportPoint = mapToItem(flickable, mouse.x, mouse.y)
+											var copy = !!(mouse.modifiers & Qt.ControlModifier)
 											if (dragged) {
-												weekView.dragMove(viewportPoint)
+												weekView.dragMove(viewportPoint, copy)
 											} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
 												dragged = true
-												weekView.dragBegin(eventBlock.block, 'move', mapToItem(flickable, pressPoint.x, pressPoint.y))
-												weekView.dragMove(viewportPoint)
+												weekView.dragBegin(eventBlock.block, 'move', mapToItem(flickable, pressPoint.x, pressPoint.y), copy)
+												weekView.dragMove(viewportPoint, copy)
 											}
 										}
-										onReleased: {
+										onReleased: function(mouse) {
 											if (dragged) {
-												weekView.dragDrop()
+												weekView.dragDrop(!!(mouse.modifiers & Qt.ControlModifier)) // Ctrl: a copy
 											}
 										}
 										onCanceled: {
@@ -1256,7 +1339,7 @@ Item {
 										onPositionChanged: function(mouse) {
 											weekView.dragMove(mapToItem(flickable, mouse.x, mouse.y))
 										}
-										onReleased: weekView.dragDrop()
+										onReleased: weekView.dragDrop(false)
 										onCanceled: weekView.dragCancel()
 									}
 								}
