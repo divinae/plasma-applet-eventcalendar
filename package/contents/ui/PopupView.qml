@@ -982,7 +982,7 @@ MouseArea {
 		scrollToSelection()
 	}
 
-	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
+	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-4. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup).
 	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen
 	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : 'classic'

@@ -64,7 +64,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="popupMode" type="string">
-			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. week: week view. today: one day. year: twelve month grids. -->
+			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. week: week view. today: one day. -->
 			<default>classic</default>
 		</entry>
 		<entry name="showViewTabs" type="bool">

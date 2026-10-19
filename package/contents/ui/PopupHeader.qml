@@ -11,9 +11,9 @@ PlasmaExtras.PlasmoidHeading {
 	id: header
 
 	property Item monthViewItem
-	property Item weekViewItem // Week and Day views, null otherwise
-	// The view with its own title and navigation (goPrevious, goNext, goToday), null: the month view.
-	readonly property Item navViewItem: weekViewItem
+	// Week and Day views (their own title and navigation: goPrevious, goNext, goToday), null: the
+	// month view.
+	property Item weekViewItem
 	property bool showViewTabs: true
 	property bool showPinButton: true
 	property bool refreshing: false
@@ -114,10 +114,10 @@ PlasmaExtras.PlasmoidHeading {
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
 				font.capitalization: Font.Capitalize
-				text: header.navViewItem ? header.navViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+				text: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
 				MouseArea {
 					anchors.fill: parent
-					enabled: !header.navViewItem
+					enabled: !header.weekViewItem
 					onClicked: header.monthViewItem.titleClicked() // Year / decade view
 				}
 			}
@@ -126,19 +126,19 @@ PlasmaExtras.PlasmoidHeading {
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
-				onClicked: header.navViewItem ? header.navViewItem.goPrevious() : header.monthViewItem.goPrevious()
+				onClicked: header.weekViewItem ? header.weekViewItem.goPrevious() : header.monthViewItem.goPrevious()
 				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-jump-today"
-				onClicked: header.navViewItem ? header.navViewItem.goToday() : header.monthViewItem.resetToToday()
+				onClicked: header.weekViewItem ? header.weekViewItem.goToday() : header.monthViewItem.resetToToday()
 				PlasmaComponents3.ToolTip.text: i18n("Today")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next"
-				onClicked: header.navViewItem ? header.navViewItem.goNext() : header.monthViewItem.goNext()
+				onClicked: header.weekViewItem ? header.weekViewItem.goNext() : header.monthViewItem.goNext()
 				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
