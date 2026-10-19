@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -329,28 +329,12 @@ msgid "Size"
 msgstr "Größe"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "Senkrechte Leiste"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "Datum unter der Uhrzeit"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "Ein kleines Kalenderblatt mit Wochentag und Tag."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Nächste Besprechung"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Neben der Uhr anzeigen"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "In einer senkrechten Leiste: ein Punkt in der Farbe der Besprechung."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2086,6 +2070,19 @@ msgstr[1] "%1 Tage"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "Senkrechte Leiste"
+
+#~ msgid "Date under the time"
+#~ msgstr "Datum unter der Uhrzeit"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "Ein kleines Kalenderblatt mit Wochentag und Tag."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr ""
+#~ "In einer senkrechten Leiste: ein Punkt in der Farbe der Besprechung."
 
 #~ msgid "First hour shown"
 #~ msgstr "Erste angezeigte Stunde"

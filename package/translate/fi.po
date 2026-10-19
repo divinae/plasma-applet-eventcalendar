@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,28 +303,12 @@ msgid "Size"
 msgstr "Koko"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "Pystypaneeli"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "Päivämäärä kellonajan alla"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "Pieni kalenteriruutu, jossa viikonpäivä ja päivä."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Seuraava kokous"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Näytä kellon vieressä"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "Pystypaneelissa: piste tapaamisen värillä."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -1948,6 +1932,18 @@ msgstr[1] "%1 päivää"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "Pystypaneeli"
+
+#~ msgid "Date under the time"
+#~ msgstr "Päivämäärä kellonajan alla"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "Pieni kalenteriruutu, jossa viikonpäivä ja päivä."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "Pystypaneelissa: piste tapaamisen värillä."
 
 #~ msgid "First hour shown"
 #~ msgstr "Ensimmäinen näytettävä tunti"

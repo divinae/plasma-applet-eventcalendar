@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -327,29 +327,12 @@ msgid "Size"
 msgstr "Taille"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "Panneau vertical"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "Date sous l'heure"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr ""
-"Une petite vignette de calendrier avec le jour de la semaine et le jour."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Prochaine réunion"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Afficher à côté de l'horloge"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "Dans un panneau vertical : un point de la couleur de la réunion."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2083,6 +2066,19 @@ msgstr[1] "%1 jours"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "Panneau vertical"
+
+#~ msgid "Date under the time"
+#~ msgstr "Date sous l'heure"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr ""
+#~ "Une petite vignette de calendrier avec le jour de la semaine et le jour."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "Dans un panneau vertical : un point de la couleur de la réunion."
 
 #~ msgid "First hour shown"
 #~ msgstr "Première heure affichée"

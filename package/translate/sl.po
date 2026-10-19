@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -331,28 +331,12 @@ msgid "Size"
 msgstr "Velikost"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "Navpična plošča"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "Datum pod uro"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "Majhna koledarska ploščica z dnevom v tednu in dnevom."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Naslednji sestanek"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Prikaži zraven ure"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "Na navpični plošči: pika v barvi sestanka."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2090,6 +2074,18 @@ msgstr[3] "%1 dni"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "Navpična plošča"
+
+#~ msgid "Date under the time"
+#~ msgstr "Datum pod uro"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "Majhna koledarska ploščica z dnevom v tednu in dnevom."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "Na navpični plošči: pika v barvi sestanka."
 
 #~ msgid "First hour shown"
 #~ msgstr "Prva prikazana ura"

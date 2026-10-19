@@ -182,18 +182,6 @@ ConfigPage {
 			}
 		}
 
-		//--- Vertical panel
-		FormCard.FormHeader {
-			title: i18n("Vertical Panel")
-		}
-		FormCard.FormCard {
-			FormConfigSwitch {
-				text: i18n("Date under the time")
-				description: i18n("A small calendar tile with the weekday and the day.")
-				configKey: 'clockVerticalShowDate'
-			}
-		}
-
 		//--- Next meeting
 		FormCard.FormHeader {
 			title: i18n("Next Meeting")
@@ -202,7 +190,6 @@ ConfigPage {
 			FormConfigSwitch {
 				id: clockShowNextEvent
 				text: i18n("Show next to the clock")
-				description: i18n("In a vertical panel: a dot in the meeting's color.")
 				configKey: 'clockShowNextEvent'
 			}
 			FormCard.FormDelegateSeparator {}

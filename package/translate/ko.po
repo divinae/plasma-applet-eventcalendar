@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -325,28 +325,12 @@ msgid "Size"
 msgstr "크기"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "세로 패널"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "시간 아래에 날짜"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "요일과 날짜를 보여 주는 작은 달력 타일입니다."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "다음 회의"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "시계 옆에 표시"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "세로 패널: 회의 색상의 점을 표시합니다."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2050,6 +2034,18 @@ msgstr[0] "%1일"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "세로 패널"
+
+#~ msgid "Date under the time"
+#~ msgstr "시간 아래에 날짜"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "요일과 날짜를 보여 주는 작은 달력 타일입니다."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "세로 패널: 회의 색상의 점을 표시합니다."
 
 #~ msgid "First hour shown"
 #~ msgstr "표시할 첫 시간"

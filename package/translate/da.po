@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -326,28 +326,12 @@ msgid "Size"
 msgstr "Størrelse"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "Lodret panel"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "Dato under klokkeslættet"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "En lille kalenderbrik med ugedag og dag."
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "Næste møde"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "Vis ved siden af uret"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "I et lodret panel: en prik i mødets farve."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2063,6 +2047,18 @@ msgstr[1] "%1 dage"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "Lodret panel"
+
+#~ msgid "Date under the time"
+#~ msgstr "Dato under klokkeslættet"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "En lille kalenderbrik med ugedag og dag."
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "I et lodret panel: en prik i mødets farve."
 
 #~ msgid "First hour shown"
 #~ msgstr "Første viste time"

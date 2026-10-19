@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:32+0200\n"
+"POT-Creation-Date: 2026-10-19 08:41+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -323,28 +323,12 @@ msgid "Size"
 msgstr "大小"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid "Vertical Panel"
-msgstr "垂直面板"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Date under the time"
-msgstr "在时间下方显示日期"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "A small calendar tile with the weekday and the day."
-msgstr "显示星期和日期的小日历图块。"
-
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Next Meeting"
 msgstr "下一个会议"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show next to the clock"
 msgstr "在时钟旁显示"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "In a vertical panel: a dot in the meeting's color."
-msgstr "在垂直面板中：以会议颜色显示一个圆点。"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "When it starts within"
@@ -2028,6 +2012,18 @@ msgstr[0] "%1 天"
 msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
+
+#~ msgid "Vertical Panel"
+#~ msgstr "垂直面板"
+
+#~ msgid "Date under the time"
+#~ msgstr "在时间下方显示日期"
+
+#~ msgid "A small calendar tile with the weekday and the day."
+#~ msgstr "显示星期和日期的小日历图块。"
+
+#~ msgid "In a vertical panel: a dot in the meeting's color."
+#~ msgstr "在垂直面板中：以会议颜色显示一个圆点。"
 
 #~ msgid "First hour shown"
 #~ msgstr "起始小时"
