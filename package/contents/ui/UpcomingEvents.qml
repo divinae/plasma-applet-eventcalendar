@@ -6,6 +6,7 @@ import "MeetingLink.js" as MeetingLink
 import "NotifyTiming.js" as NotifyTiming
 import "Invitations.js" as Invitations
 import "DailyAgenda.js" as DailyAgenda
+import "MeetingRules.js" as MeetingRules
 import "Shared.js" as Shared
 import "./calendars"
 
@@ -294,6 +295,26 @@ CalendarManager {
 		snoozedReminders = remaining
 	}
 
+	//--- At a meeting's start, independent of the notifications: open its link (auto-join).
+	// Keys without the calendar, so a meeting in two calendars is joined once.
+	function meetingKey(eventItem) {
+		return String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
+	}
+	function atMeetingStart(eventItem, sent, now) {
+		if (eventItem.endDateTime <= now || isMarkedEnded(eventItem)) {
+			return
+		}
+		var key = meetingKey(eventItem)
+		if (plasmoid.configuration.meetingAutoJoin && !sent[key + '|join']) {
+			var meetingLink = MeetingLink.find(eventItem)
+			if (MeetingRules.canAutoJoin(eventItem, !!meetingLink)) {
+				sent[key + '|join'] = now
+				logger.log('auto-join', eventItem.startDateTime) // No title or link in the log
+				meetingOpener.open(meetingLink.url)
+			}
+		}
+	}
+
 	// Every minute since the last check (see NotifyTiming), each notification once.
 	property real lastNotifyCheck: NaN
 	property var sentNotifications: ({}) // key -> when sent
@@ -305,12 +326,13 @@ CalendarManager {
 		for (var calendarId in eventsByCalendar) {
 			var calendar = eventsByCalendar[calendarId]
 			calendar.items.forEach(function(eventItem) {
-				if (!shouldNotify(eventItem)) {
-					return
-				}
-				var due = NotifyTiming.dueFor(eventItem, reminderMinutesFor(eventItem), win, now)
+				var notify = shouldNotify(eventItem)
+				var due = NotifyTiming.dueFor(eventItem, notify ? reminderMinutesFor(eventItem) : [], win, now)
 				for (var i = 0; i < due.length; i++) {
-					if (sent[due[i].key]) {
+					if (due[i].kind === 'start') {
+						upcomingEvents.atMeetingStart(eventItem, sent, now)
+					}
+					if (!notify || sent[due[i].key]) {
 						continue
 					}
 					// Logged without the title, to tell this widget's notifications apart from others

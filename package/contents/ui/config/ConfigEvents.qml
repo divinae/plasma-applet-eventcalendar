@@ -318,6 +318,18 @@ ConfigPage {
 			text: i18n("Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default.")
 		}
 
+		//--- Meetings
+		FormCard.FormHeader {
+			title: i18n("Meetings")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Open the meeting link when a meeting starts")
+				description: i18n("For meetings you accepted or organize, not marked as ended.")
+				configKey: 'meetingAutoJoin'
+			}
+		}
+
 		//--- Invitations
 		FormCard.FormHeader {
 			title: i18n("Invitations")

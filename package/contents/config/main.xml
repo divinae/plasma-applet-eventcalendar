@@ -277,6 +277,10 @@
 			<!-- "day|calendar|event|start" of invitations notified today, so they aren't repeated. -->
 			<default></default>
 		</entry>
+		<entry name="meetingAutoJoin" type="bool">
+			<!-- Open the meeting link when a meeting (accepted or own, timed) starts. -->
+			<default>false</default>
+		</entry>
 		<entry name="dailyAgendaEnabled" type="bool">
 			<!-- A notification with today's events once a day (see DailyAgenda.js). -->
 			<default>false</default>
