@@ -70,10 +70,6 @@ KCM.SimpleKCM {
 	property var cfg_monthEventBadgeTypeDefault
 	property var cfg_firstDayOfWeek
 	property var cfg_firstDayOfWeekDefault
-	property var cfg_monthHeightSingleColumn
-	property var cfg_monthHeightSingleColumnDefault
-	property var cfg_twoColumns
-	property var cfg_twoColumnsDefault
 	property var cfg_agendaBreakupMultiDayEvents
 	property var cfg_agendaBreakupMultiDayEventsDefault
 	property var cfg_agendaNewEventRememberCalendar
