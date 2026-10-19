@@ -166,26 +166,11 @@ PinchArea {
 		id: eventMover
 		eventModel: root.eventDragModel
 		onCanceled: root.eventDragCancel()
-		onSaving: eventDropTimeout.restart()
 	}
 	// The drag was reset (eg: the days were filled again) while the occurrence menu is open: no save.
 	onEventDragStateChanged: {
 		if (!eventDragState) {
 			eventMover.abandon()
-		}
-	}
-	// No answer at all (eg: signed out): put the event back.
-	Timer {
-		id: eventDropTimeout
-		interval: 20000
-		onTriggered: root.eventDragState = null
-	}
-	Connections {
-		target: root.eventDragModel
-		function onError() {
-			if (root.eventDragState && root.eventDragState.pending) {
-				root.eventDragState = null
-			}
 		}
 	}
 
@@ -326,7 +311,6 @@ PinchArea {
 	function setEvents(items) {
 		// The days are filled again (eg: with a dropped event saved): a drag in progress ends.
 		eventDragState = null
-		eventDropTimeout.stop()
 		// Not laid out yet (eg: just switched to the month view): fill once the cells have a size,
 		// see onEventRowCapacityChanged, so they aren't filled twice in different orders.
 		if (spanBarsActive && eventRowCapacity <= 0) {

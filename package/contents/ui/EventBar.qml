@@ -84,17 +84,11 @@ Rectangle {
 	DragMouseArea {
 		id: dragArea
 		anchors.fill: parent
+		eventItem: bar.eventItem
 		onDragStarted: function(from, at, copy) { bar.dragStarted(from, at, copy) }
 		onDragMoved: function(at, copy) { bar.dragMoved(at, copy) }
 		onDropped: function(copy) { bar.dropped(copy) }
 		onDragCanceled: bar.dragCanceled()
-		onEventClicked: function(button, x, y) {
-			if (button === Qt.RightButton) {
-				popup.showEventMenu(bar.eventItem, bar, x, y)
-			} else {
-				popup.activateEvent(bar.eventItem)
-			}
-		}
 	}
 
 	PlasmaCore.ToolTipArea {

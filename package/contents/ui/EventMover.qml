@@ -8,15 +8,14 @@ import "Undo.js" as Undo
 // Saves an event dropped by dragging (week / day and month views): moves it, with an undo offer,
 // or (copy, Ctrl held at the drop) creates a copy on the same calendar (no undo: the copy can be
 // deleted). An occurrence of a repeating event asks first: this event or the whole series.
+// The view keeps its dropped preview until its events are refilled (and then calls abandon());
+// canceled() puts the event back: no choice in the menu, an error, or no answer at all.
 Item {
 	id: eventMover
 
 	property var eventModel
-	// Nothing is saved: the occurrence menu was closed without a choice. The view puts the event back.
+	// Nothing is saved, or saving failed: the view puts the event back.
 	signal canceled()
-	// The drop is being saved (at once, or once "This event" / "All events" was chosen): the view
-	// waits for the update from here on.
-	signal saving()
 
 	// start / end: Google start / end objects. menuParent, menuX, menuY: where the occurrence menu opens.
 	function drop(eventItem, start, end, copy, menuParent, menuX, menuY) {
@@ -32,9 +31,14 @@ Item {
 			saveMove(eventItem, start, end, false)
 		}
 	}
+	// The drop is being saved: wait for the update (the view refills its events).
+	function saving() {
+		dropTimeout.restart()
+	}
 	// The view dropped the drag (eg: its events were refreshed): a menu still open goes away
 	// without saving.
 	function abandon() {
+		dropTimeout.stop()
 		if (!pendingDrop) {
 			return
 		}
@@ -99,10 +103,21 @@ Item {
 		target: eventMover.eventModel
 		function onError() {
 			eventMover.moveUndo = null
+			if (eventMover.pendingDrop || dropTimeout.running) {
+				eventMover.abandon()
+				eventMover.canceled()
+			}
 		}
 		function onEventUpdated(calendarId, eventId, data) {
 			eventMover.offerMoveUndo(calendarId, eventId)
 		}
+	}
+
+	// No answer at all (eg: signed out): put the event back.
+	Timer {
+		id: dropTimeout
+		interval: 20000
+		onTriggered: eventMover.canceled()
 	}
 
 	PlasmaComponents3.Menu {

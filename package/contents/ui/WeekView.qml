@@ -236,7 +236,6 @@ Item {
 	function rebuild() {
 		// The blocks are recreated: a drag in progress ends, a dropped one shows its saved times.
 		dragState = null
-		dropTimeout.stop()
 		var items = eventModel && eventModel.eventsData ? eventModel.eventsData.items : []
 		var result = []
 		for (var i = 0; i < columnCount; i++) {
@@ -384,10 +383,6 @@ Item {
 		return ((ms - dayStart) / 3600000 - firstHour) * hourHeight
 	}
 
-	function openEvent(eventItem) {
-		popup.activateEvent(eventItem)
-	}
-
 	//--- Drag & drop: move a timed block (to another time or day) or resize it from its bottom edge.
 	// { eventItem, mode: 'move' | 'resize', block, pressY, start, end, dayIndex, pending }.
 	// pending: dropped and being saved; the preview stays where it was dropped until the views
@@ -520,26 +515,11 @@ Item {
 		id: eventMover
 		eventModel: weekView.eventModel
 		onCanceled: weekView.dragCancel()
-		onSaving: dropTimeout.restart()
 	}
 	// The drag was reset (eg: the blocks were rebuilt) while the occurrence menu is open: no save.
 	onDragStateChanged: {
 		if (!dragState) {
 			eventMover.abandon()
-		}
-	}
-	// No answer at all (eg: signed out): put the block back.
-	Timer {
-		id: dropTimeout
-		interval: 20000
-		onTriggered: weekView.dragState = null
-	}
-	Connections {
-		target: weekView.eventModel
-		function onError() {
-			if (weekView.dragState && weekView.dragState.pending) {
-				weekView.dragState = null
-			}
 		}
 	}
 	// Dragging near the top / bottom edge scrolls the grid.
@@ -856,6 +836,7 @@ Item {
 					DragMouseArea {
 						id: barMouse
 						anchors.fill: parent
+						eventItem: parent.eventItem
 						draggable: weekView.canDragBar(parent.bar)
 						mapTo: allDayArea
 						onDragStarted: function(from, at, copy) {
@@ -865,13 +846,6 @@ Item {
 						onDragMoved: function(at, copy) { weekView.dragMoveDays(at.x, copy) }
 						onDropped: function(copy) { weekView.dragDrop(copy) }
 						onDragCanceled: weekView.dragCancel()
-						onEventClicked: function(button, x, y) {
-							if (button === Qt.RightButton) {
-								popup.showEventMenu(parent.eventItem, parent, x, y)
-							} else {
-								weekView.openEvent(parent.eventItem)
-							}
-						}
 					}
 					PlasmaCore.ToolTipArea {
 						anchors.fill: parent
