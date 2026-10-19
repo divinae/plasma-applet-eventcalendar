@@ -4,6 +4,7 @@ import "../ErrorType.js" as ErrorType
 import "../EventTypes.js" as EventTypes
 import "../IcsImport.js" as IcsImport
 import "../Shared.js" as Shared
+import "EventFields.js" as EventFields
 import "../lib"
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
@@ -276,17 +277,7 @@ CalendarManager {
 		// Clone the event data and clean up the extra stuff we added when parsing the event.
 		var data = JSON.parse(JSON.stringify(event)) // clone
 		if (data.description === "") delete data.description
-		if (data.calendarManagerId) delete data.calendarManagerId
-		if (data.calendarId) delete data.calendarId
-		delete data.startDateTime
-		delete data.endDateTime
-		delete data.canEdit
-		delete data._summary
-		delete data.reminderMinutes
-		delete data.reminderOwn
-		delete data.fromCache
-		delete data.conflictsWith
-		return data
+		return EventFields.stripWidgetFields(data)
 	}
 	// Merge changed fields into an event body. A field set to undefined is removed: updates are a
 	// full PUT, so a key left in the body keeps its old value (eg: colorId back to the calendar color).

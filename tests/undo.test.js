@@ -4,11 +4,14 @@ const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
 
-const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/Undo.js'), 'utf8')
-	.replace(/^\.pragma library\s*$/m, '')
-	.replace(/^\.import .*$/mg, '')
-const U = {}
-vm.runInNewContext(source, U)
+function load(file, context) {
+	const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui', file), 'utf8')
+		.replace(/^\.pragma library\s*$/m, '')
+		.replace(/^\.import .*$/mg, '')
+	vm.runInNewContext(source, context)
+	return context
+}
+const U = load('Undo.js', { EventFields: load('calendars/EventFields.js', {}) })
 const plain = obj => JSON.parse(JSON.stringify(obj))
 
 // A parsed Google event as the widget keeps it.
@@ -42,6 +45,8 @@ const parsed = {
 	reminderMinutes: 15,
 	backgroundColor: '#33b679',
 	conflictsWith: [{ summary: 'Standup' }],
+	reminderOwn: true,
+	fromCache: true,
 }
 
 const copy = plain(U.restoreCopy(parsed))

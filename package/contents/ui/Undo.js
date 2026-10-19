@@ -1,10 +1,10 @@
 .pragma library
+.import "calendars/EventFields.js" as EventFields
 
 // Undo after deleting or moving an event (Google Calendar).
 
-// Fields the widget adds when it parses an event, and the ones the server sets on its own.
-var localFields = ['calendarManagerId', 'calendarId', 'startDateTime', 'endDateTime', 'canEdit',
-	'_summary', 'reminderMinutes', 'backgroundColor', 'accepted', 'conflictsWith']
+// Fields the widget adds when it parses or shows an event, and the ones the server sets on its own.
+var localFields = EventFields.widgetFields.concat(['backgroundColor', 'accepted'])
 var serverFields = ['id', 'etag', 'iCalUID', 'htmlLink', 'created', 'updated', 'creator',
 	'organizer', 'sequence', 'hangoutLink', 'kind', 'status']
 
