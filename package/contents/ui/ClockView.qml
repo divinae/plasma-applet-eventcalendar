@@ -119,11 +119,12 @@ Item {
 			}
 			// In the clock's text color: it always contrasts with the panel, like the time does
 			// (a calendar's or the highlight color can be too light on a light panel).
+			// Thin and as wide as the panel allows.
 			Rectangle {
 				visible: meetingPill.inProgress
-				anchors.verticalCenter: parent.verticalCenter
-				width: parent.width
-				height: Math.max(4, Math.round(parent.height * 0.8))
+				anchors.centerIn: parent
+				width: Math.max(parent.width, clock.width - 2)
+				height: Math.max(2, Math.round(clock.width / 14))
 				radius: height / 2
 				color: ColorUtil.setAlpha(timeLabel1.color, 0.18)
 				Rectangle {
