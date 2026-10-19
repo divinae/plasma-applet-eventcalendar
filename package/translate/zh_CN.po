@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -482,6 +482,46 @@ msgid "Event starts"
 msgstr "事件开始"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "会议链接打开方式"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "默认浏览器"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "其他命令…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "命令"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google 账号"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "默认"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"“加入”按钮会在这里打开 Google Meet 链接；其他会议链接在默认浏览器中打开。在命"
+"令中，%u 表示会议链接。Google 账号：其编号（0、1、…）或邮箱，与 Google 账号切"
+"换器一致；留空则使用应用的默认账号。"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "所有事件通知"
 
@@ -884,10 +924,6 @@ msgstr "日历"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "每周第一天"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "默认"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -492,6 +492,47 @@ msgid "Event starts"
 msgstr "תחילת אירוע"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "פתיחת קישורי פגישות ב"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "דפדפן ברירת המחדל"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "פקודה אחרת…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "פקודה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "חשבון Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "ברירת מחדל"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"כפתורי ההצטרפות פותחים שם קישורי Google Meet; קישורי פגישה אחרים נפתחים "
+"בדפדפן ברירת המחדל. בפקודה, %u מייצג את קישור הפגישה. חשבון Google: המספר "
+"שלו (0, 1, …) או הדוא״ל, כמו בבורר החשבונות של Google; ריק משתמש בברירת "
+"המחדל של היישום."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "כל התראות האירועים"
 
@@ -902,10 +943,6 @@ msgstr "לוח שנה"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "היום הראשון בשבוע"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "ברירת מחדל"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

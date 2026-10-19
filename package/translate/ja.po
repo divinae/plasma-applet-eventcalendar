@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -451,6 +451,39 @@ msgid "Event starts"
 msgstr "イベント開始"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "会議リンクを開くアプリ"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "既定のブラウザ"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "その他のコマンド…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "コマンド"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google アカウント"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "デフォルト"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "参加ボタンは Google Meet のリンクをここで開きます。その他の会議リンクは既定のブラウザで開きます。コマンドでは %u が会議リンクを表します。Google アカウント: Google のアカウント切り替えと同じ番号 (0、1、…) またはメールアドレス。空欄の場合はアプリの既定になります。"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "すべてのイベント通知"
 
@@ -806,10 +839,6 @@ msgstr "カレンダー"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "週の最初の曜日"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "デフォルト"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

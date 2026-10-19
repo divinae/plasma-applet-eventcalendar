@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -493,6 +493,48 @@ msgid "Event starts"
 msgstr "Έναρξη συμβάντος"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "Άνοιγμα συνδέσμων σύσκεψης σε"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Προεπιλεγμένος περιηγητής"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Άλλη εντολή…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Εντολή"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Λογαριασμός Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Προεπιλογή"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"Τα κουμπιά συμμετοχής ανοίγουν εδώ τους συνδέσμους Google Meet· οι άλλοι "
+"σύνδεσμοι σύσκεψης ανοίγουν στον προεπιλεγμένο περιηγητή. Σε μια εντολή, το "
+"%u αντιστοιχεί στον σύνδεσμο. Λογαριασμός Google: ο αριθμός του (0, 1, …) ή "
+"το email του, όπως στην εναλλαγή λογαριασμών της Google· κενό χρησιμοποιεί "
+"την προεπιλογή της εφαρμογής."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "Όλες οι ειδοποιήσεις συμβάντων"
 
@@ -921,10 +963,6 @@ msgstr "Ημερολόγιο"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "Πρώτη ημέρα της εβδομάδας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Προεπιλογή"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

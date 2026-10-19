@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -454,6 +454,39 @@ msgid "Event starts"
 msgstr "Inizio dell'evento"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "Apri i link delle riunioni in"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Browser predefinito"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Altro comando…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Comando"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Account Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Predefinito"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "I pulsanti Partecipa aprono lì i link di Google Meet; gli altri link delle riunioni si aprono nel browser predefinito. In un comando, %u indica il link della riunione. Account Google: il suo numero (0, 1, …) o la sua email, come nel selettore account di Google; vuoto usa il predefinito dell'applicazione."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "Tutte le notifiche degli eventi"
 
@@ -809,10 +842,6 @@ msgstr "Calendario"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "Primo giorno della settimana"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Predefinito"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

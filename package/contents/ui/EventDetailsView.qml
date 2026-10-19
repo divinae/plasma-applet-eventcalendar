@@ -270,7 +270,7 @@ Rectangle {
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					icon.name: "call-start"
 					text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
-					onClicked: Shared.openExternalUrl(details.meetingLink.url)
+					onClicked: meetingOpener.open(details.meetingLink.url)
 				}
 
 				// RSVP

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -495,6 +495,47 @@ msgid "Event starts"
 msgstr "Začetek dogodka"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "Odpri povezave do sestankov v"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Privzeti brskalnik"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Drug ukaz …"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Ukaz"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Račun Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Ponastavi"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"Gumbi Pridruži se tam odprejo povezave Google Meet; druge povezave do "
+"sestankov se odprejo v privzetem brskalniku. V ukazu %u pomeni povezavo do "
+"sestanka. Račun Google: njegova številka (0, 1, …) ali e-pošta, kot v "
+"Googlovem preklopniku računov; prazno uporabi privzeto vrednost programa."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "Vsa obvestila o dogodkih"
 
@@ -913,10 +954,6 @@ msgstr "Koledar"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "Prvi dan tedna"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Ponastavi"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

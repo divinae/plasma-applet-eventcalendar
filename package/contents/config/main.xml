@@ -261,6 +261,14 @@
 		<entry name="eventStartingSfxPath" type="string">
 			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
 		</entry>
+		<entry name="meetLinkCommand" type="string">
+			<!-- Command that opens Google Meet links (%u = the link), eg: a Meet web app. Empty: the default browser. -->
+			<default></default>
+		</entry>
+		<entry name="meetLinkAuthUser" type="string">
+			<!-- Google account to join Meet with: index (0, 1, ...) or email. Empty: the app's default. -->
+			<default></default>
+		</entry>
 		<entry name="clockShowNextEvent" type="bool">
 			<default>true</default>
 		</entry>

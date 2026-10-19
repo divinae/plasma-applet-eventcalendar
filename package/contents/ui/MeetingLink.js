@@ -69,3 +69,88 @@ function find(event) {
 
 	return findInText(event.location) || findInText(event.description)
 }
+
+//--- Opening Google Meet links in a chosen app (MeetingOpener.qml)
+
+function isGoogleMeet(url) {
+	return /^https:\/\/meet\.google\.com\//i.test(String(url || ''))
+}
+
+// The Google account to join with: an index ("1") or an email, as Google's authuser parameter.
+function withAuthUser(url, authuser) {
+	if (!authuser || /[?&]authuser=/.test(url)) {
+		return url
+	}
+	var hash = ''
+	var hashIndex = url.indexOf('#')
+	if (hashIndex >= 0) {
+		hash = url.substring(hashIndex)
+		url = url.substring(0, hashIndex)
+	}
+	return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'authuser=' + encodeURIComponent(authuser) + hash
+}
+
+// A command line split into arguments like a shell would, without running one: quotes and
+// backslashes group, nothing is expanded. Returns null when quotes don't match.
+function splitCommand(command) {
+	var args = []
+	var current = ''
+	var hasCurrent = false
+	var quote = ''
+	var text = String(command || '')
+	for (var i = 0; i < text.length; i++) {
+		var c = text[i]
+		if (quote) {
+			if (c === quote) {
+				quote = ''
+			} else if (c === '\\' && quote === '"' && i + 1 < text.length) {
+				current += text[++i]
+			} else {
+				current += c
+			}
+		} else if (c === '"' || c === "'") {
+			quote = c
+			hasCurrent = true
+		} else if (c === '\\' && i + 1 < text.length) {
+			current += text[++i]
+			hasCurrent = true
+		} else if (/\s/.test(c)) {
+			if (hasCurrent) {
+				args.push(current)
+				current = ''
+				hasCurrent = false
+			}
+		} else {
+			current += c
+			hasCurrent = true
+		}
+	}
+	if (quote) {
+		return null
+	}
+	if (hasCurrent) {
+		args.push(current)
+	}
+	return args
+}
+
+// The arguments to run: %u replaced by the URL (as part of one argument, never re-split), or the
+// URL added at the end when the command has no %u. null for an empty or broken command.
+function launchArgv(command, url) {
+	var args = splitCommand(command)
+	if (!args || !args.length) {
+		return null
+	}
+	var used = false
+	args = args.map(function(arg) {
+		if (arg.indexOf('%u') >= 0) {
+			used = true
+			return arg.split('%u').join(url)
+		}
+		return arg
+	})
+	if (!used) {
+		args.push(url)
+	}
+	return args
+}

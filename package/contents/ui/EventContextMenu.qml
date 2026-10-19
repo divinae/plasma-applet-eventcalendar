@@ -96,7 +96,7 @@ PlasmaComponents3.Menu {
 		height: visible ? implicitHeight : 0
 		text: eventMenu.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", eventMenu.meetingLink.label) : ""
 		icon.name: "call-start"
-		onTriggered: Shared.openExternalUrl(eventMenu.meetingLink.url)
+		onTriggered: meetingOpener.open(eventMenu.meetingLink.url)
 	}
 	PlasmaComponents3.MenuItem {
 		visible: !!(eventMenu.eventItem && eventMenu.eventItem.htmlLink)

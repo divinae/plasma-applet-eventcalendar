@@ -23,6 +23,7 @@ PlasmoidItem {
 	ConfigMigration { id: configMigration }
 	AppletConfig { id: appletConfig }
 	NotificationManager { id: notificationManager }
+	MeetingOpener { id: meetingOpener }
 	NetworkMonitor { id: networkMonitor }
 
 	property alias eventModel: eventModel

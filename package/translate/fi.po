@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -457,6 +457,39 @@ msgid "Event starts"
 msgstr "Tapahtuma alkaa"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "Avaa kokouslinkit sovelluksessa"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Oletusselain"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Muu komento…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Komento"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google-tili"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Oletus"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "Liity-painikkeet avaavat Google Meet -linkit siinä; muut kokouslinkit avautuvat oletusselaimessa. Komennossa %u tarkoittaa kokouslinkkiä. Google-tili: sen numero (0, 1, …) tai sähköposti kuten Googlen tilinvaihtajassa; tyhjä käyttää sovelluksen oletusta."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "Kaikki tapahtumailmoitukset"
 
@@ -812,10 +845,6 @@ msgstr "Kalenteri"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "Viikon ensimmäinen päivä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Oletus"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

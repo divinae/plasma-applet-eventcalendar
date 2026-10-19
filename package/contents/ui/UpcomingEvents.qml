@@ -99,7 +99,7 @@ CalendarManager {
 			if (actionId === 'default') {
 				upcomingEvents.showInWidget(eventItem) // Clicking the notification itself
 			} else if (actionId === 'join' && meetingLink) {
-				Shared.openExternalUrl(meetingLink.url)
+				meetingOpener.open(meetingLink.url)
 			} else if (actionId === 'open' && eventItem.htmlLink) {
 				Shared.openExternalUrl(eventItem.htmlLink)
 			} else if (actionId === 'snooze') {
@@ -379,7 +379,7 @@ CalendarManager {
 
 	function joinNextEvent() {
 		if (nextEventMeetingLink) {
-			Shared.openExternalUrl(nextEventMeetingLink.url)
+			meetingOpener.open(nextEventMeetingLink.url)
 		} else if (nextEvent && nextEvent.htmlLink) {
 			Shared.openExternalUrl(nextEvent.htmlLink)
 		}

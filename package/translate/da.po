@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:59+0200\n"
+"POT-Creation-Date: 2026-10-19 10:04+0200\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -487,6 +487,47 @@ msgid "Event starts"
 msgstr "Begivenhed starter"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Meet"
+msgstr "Google Meet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Open meeting links in"
+msgstr "Åbn mødelinks i"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Standardbrowser"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Anden kommando…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Kommando"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google-konto"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Standard"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"Deltag-knapper åbner Google Meet-links her; andre mødelinks åbnes i "
+"standardbrowseren. I en kommando står %u for mødelinket. Google-konto: dens "
+"nummer (0, 1, …) eller e-mail som i Googles kontoskifter; tom bruger appens "
+"standard."
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "All Event Notifications"
 msgstr "Alle bekendtgørelser om begivenheder"
 
@@ -907,10 +948,6 @@ msgstr "Kalender"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "First day of week"
 msgstr "Første ugedag"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Standard"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event colors"

@@ -46,7 +46,7 @@ Rectangle {
 		anchors.fill: parent
 		hoverEnabled: true
 		cursorShape: Qt.PointingHandCursor
-		onClicked: Shared.openExternalUrl(joinPill.meetingLink.url)
+		onClicked: meetingOpener.open(joinPill.meetingLink.url)
 	}
 	PlasmaComponents3.ToolTip.text: meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label) : ""
 	PlasmaComponents3.ToolTip.visible: joinMouse.containsMouse

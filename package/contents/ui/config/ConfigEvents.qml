@@ -12,6 +12,21 @@ ConfigPage {
 	id: page
 	property var eventPluginsManager: null
 
+	// Google Meet web apps that can open a meeting link: [{ name, command, authuser }]
+	property var meetApps: []
+	ExecUtil { id: meetAppFinder }
+	function findMeetApps() {
+		var script = String(Qt.resolvedUrl("../../scripts/find_meet_apps.py")).replace(/^file:\/\//, "")
+		meetAppFinder.execArgv(["python3", "-I", script], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			try {
+				var apps = JSON.parse(stdout)
+				page.meetApps = Array.isArray(apps) ? apps : []
+			} catch (e) {
+				page.meetApps = []
+			}
+		})
+	}
+
 	// From digitalclock's configCalendar.qml
 	signal configurationChanged()
 	function saveConfig() {
@@ -23,6 +38,7 @@ ConfigPage {
 		page.configBridge.write("enabledCalendarPluginsAllowEmpty", enabledPluginFilenames.length === 0)
 	}
 	Component.onCompleted: {
+		findMeetApps()
 		try {
 			eventPluginsManager = Qt.createQmlObject(
 				"import org.kde.plasma.workspace.calendar as PlasmaCalendar; PlasmaCalendar.EventPluginsManager {}",
@@ -229,6 +245,69 @@ ConfigPage {
 				sfxEnabledKey: 'eventStartingSfxEnabled'
 				sfxPathKey: 'eventStartingSfxPath'
 			}
+		}
+
+		//--- Google Meet: which app opens Meet links (Join buttons)
+		FormCard.FormHeader {
+			title: i18n("Google Meet")
+		}
+		FormCard.FormCard {
+			FormCard.FormComboBoxDelegate {
+				id: meetAppCombo
+				text: i18n("Open meeting links in")
+				textRole: "text"
+				// Default browser, the Meet web apps found (scripts/find_meet_apps.py), a command.
+				model: [{ text: i18n("Default browser"), command: "" }]
+					.concat(page.meetApps.map(function(app) { return { text: app.name, command: app.command, authuser: app.authuser } }))
+					.concat([{ text: i18n("Other command…"), custom: true }])
+				function syncIndex() {
+					var command = String(page.configBridge.read("meetLinkCommand", "") || "")
+					if (!command) {
+						currentIndex = 0
+						return
+					}
+					for (var i = 1; i < model.length - 1; i++) {
+						if (model[i].command === command) {
+							currentIndex = i
+							return
+						}
+					}
+					currentIndex = model.length - 1
+				}
+				onModelChanged: syncIndex()
+				Component.onCompleted: syncIndex()
+				onActivated: function(index) {
+					var entry = model[index]
+					if (entry.custom) {
+						meetCommandField.forceActiveFocus()
+						return
+					}
+					page.configBridge.write("meetLinkCommand", entry.command)
+					meetCommandField.text = entry.command
+					if (entry.authuser) {
+						page.configBridge.write("meetLinkAuthUser", entry.authuser)
+						meetAuthUserField.text = entry.authuser
+					}
+				}
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigText {
+				id: meetCommandField
+				visible: meetAppCombo.currentIndex === meetAppCombo.count - 1
+				label: i18n("Command")
+				configKey: 'meetLinkCommand'
+				placeholderText: "vivaldi-stable --app=%u"
+			}
+			FormCard.FormDelegateSeparator { visible: meetCommandField.visible }
+			FormConfigText {
+				id: meetAuthUserField
+				label: i18n("Google account")
+				configKey: 'meetLinkAuthUser'
+				placeholderText: i18n("Default")
+			}
+		}
+		FormCard.FormSectionText {
+			text: i18n("Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default.")
 		}
 
 		//--- Both

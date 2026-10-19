@@ -178,6 +178,10 @@ KCM.SimpleKCM {
 	property var cfg_monthModeHeightDefault
 	property var cfg_eventReminderUseGoogle
 	property var cfg_eventReminderUseGoogleDefault
+	property var cfg_meetLinkCommand
+	property var cfg_meetLinkCommandDefault
+	property var cfg_meetLinkAuthUser
+	property var cfg_meetLinkAuthUserDefault
 	property var cfg_clockShowNextEvent
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes
