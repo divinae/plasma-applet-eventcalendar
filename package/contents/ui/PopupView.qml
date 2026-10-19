@@ -35,7 +35,6 @@ MouseArea {
 	property int topRowHeight: Math.round(plasmoid.configuration.topRowHeight * heightScale)
 	// All views share one size (Settings > Views).
 	property int bottomRowHeight: Math.round(plasmoid.configuration.monthModeHeight * heightScale)
-	property int singleColumnMonthViewHeight: Math.round(plasmoid.configuration.monthHeightSingleColumn * heightScale)
 
 	// DigitalClock LeftColumn minWidth: Kirigami.Units.gridUnit * 22
 	// DigitalClock RightColumn minWidth: Kirigami.Units.gridUnit * 14
@@ -44,85 +43,27 @@ MouseArea {
 	property int leftColumnWidth: Math.round(plasmoid.configuration.monthModeWidth * widthScale) // Meteogram + MonthView
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
-	property int singleColumnWidth: {
-		if (hourGridMode) {
-			return leftColumnWidth
-		}
-		if (showAgenda && showCalendar) {
-			return Math.max(leftColumnWidth, rightColumnWidth)
-		} else if (showCalendar) {
-			return leftColumnWidth
-		} else if (showAgenda) {
-			return leftColumnWidth
-		}
-
-		var width = 0
-		if (showMeteogram) {
-			width = Math.max(width, leftColumnWidth)
-		}
-		if (showTimer) {
-			width = Math.max(width, rightColumnWidth)
-		}
-		return width
-	}
-
-	property int singleColumnHeight: {
-		if (hourGridMode) {
-			return bottomRowHeight + viewTabsHeight
-		}
-		var rows = []
+	// Every view has the configured width. Height: the view, plus (agenda view) the meteogram and
+	// timer rows above it.
+	property int contentHeight: {
+		var rows = [bottomRowHeight]
 		if (showMeteogram) {
 			rows.push(topRowHeight)
 		}
 		if (showTimer) {
 			rows.push(topRowHeight)
-		}
-		if (showCalendar || showAgenda) {
-			rows.push(bottomRowHeight)
 		}
 		var h = viewTabsHeight
 		for (var i = 0; i < rows.length; i++) {
 			h += rows[i]
 		}
-		if (rows.length > 1) {
-			h += spacing * (rows.length - 1)
-		}
-		return h
+		return h + spacing * (rows.length - 1)
 	}
 
-	property bool singleColumn: !showAgenda || !showCalendar
-	property bool singleColumnFullHeight: !plasmoid.configuration.twoColumns && showAgenda && showCalendar
-	property bool twoColumns: plasmoid.configuration.twoColumns && showAgenda && showCalendar
-
-	Layout.minimumWidth: {
-		if (twoColumns) {
-			return Kirigami.Units.gridUnit * 28
-		} else {
-			return Kirigami.Units.gridUnit * 14
-		}
-	}
-	Layout.preferredWidth: {
-		if (twoColumns) {
-			return (leftColumnWidth + spacing + rightColumnWidth) + padding * 2
-		} else {
-			return singleColumnWidth + padding * 2
-		}
-	}
-
+	Layout.minimumWidth: Kirigami.Units.gridUnit * 14
+	Layout.preferredWidth: leftColumnWidth + padding * 2
 	Layout.minimumHeight: Kirigami.Units.gridUnit * 14
-	Layout.preferredHeight: {
-		if (singleColumnFullHeight) {
-			return plasmoid.screenGeometry.height
-		} else if (singleColumn) {
-			return singleColumnHeight + padding * 2
-		} else { // twoColumns
-			var h = bottomRowHeight + viewTabsHeight // showAgenda || showCalendar
-			if (showMeteogram || showTimer) {
-				h += spacing + topRowHeight
-			}
-			return h + padding * 2
-		}
-	}
+	Layout.preferredHeight: contentHeight + padding * 2
 
 	property var eventModel
 	property var agendaModel
@@ -191,120 +132,6 @@ MouseArea {
 			logic.updateEvents()
 		}
 	}
-
-	onStateChanged: {
-	}
-	states: [
-		State {
-			name: "calendar"
-			when: !popup.showAgenda && popup.showCalendar && !popup.showMeteogram && !popup.showTimer
-
-			PropertyChanges { target: popup
-				// Use the same size as the digitalclock popup
-				// since we don't need more space to fit more agenda items.
-				Layout.preferredWidth: 378 * popup.widthScale
-				Layout.preferredHeight: 378 * popup.heightScale
-			}
-			PropertyChanges { target: monthView
-				Layout.preferredWidth: -1
-				Layout.preferredHeight: -1
-			}
-		},
-		State {
-			name: "twoColumns+agenda+month"
-			when: popup.twoColumns && popup.showAgenda && popup.showCalendar && !popup.showMeteogram && !popup.showTimer
-
-			PropertyChanges { target: widgetGrid
-				columns: 2
-				rows: 1
-			}
-		},
-		State {
-			name: "twoColumns+meteogram+agenda+month"
-			when: popup.twoColumns && popup.showAgenda && popup.showCalendar && popup.showMeteogram && !popup.showTimer
-
-			PropertyChanges { target: widgetGrid
-				columns: 2
-				rows: 2
-			}
-			PropertyChanges { target: meteogramView
-				Layout.columnSpan: 2
-			}
-		},
-		State {
-			name: "twoColumns+timer+agenda+month"
-			when: popup.twoColumns && popup.showAgenda && popup.showCalendar && !popup.showMeteogram && popup.showTimer
-
-			PropertyChanges { target: widgetGrid
-				columns: 2
-				rows: 2
-			}
-			AnchorChanges { target: timerView
-				anchors.top: widgetGrid.top
-				anchors.left: widgetGrid.left
-			}
-			AnchorChanges { target: monthView
-				anchors.top: timerView.bottom
-				anchors.left: widgetGrid.left
-				anchors.bottom: widgetGrid.bottom
-			}
-			PropertyChanges { target: monthView
-				anchors.topMargin: widgetGrid.rowSpacing
-			}
-			AnchorChanges { target: agendaView
-				anchors.top: widgetGrid.top
-				anchors.right: widgetGrid.right
-				anchors.bottom: widgetGrid.bottom
-			}
-		},
-		State {
-			name: "twoColumns+meteogram+timer+agenda+month"
-			when: popup.twoColumns && popup.showAgenda && popup.showCalendar && popup.showMeteogram && popup.showTimer
-
-			PropertyChanges { target: widgetGrid
-				columns: 2
-				rows: 2
-			}
-		},
-		State {
-			name: "singleColumnFullHeight"
-			when: !popup.twoColumns && popup.showAgenda && popup.showCalendar
-
-			PropertyChanges { target: widgetGrid
-				columns: 1
-				anchors.margins: 0
-				anchors.topMargin: popup.padding
-			}
-			PropertyChanges { target: meteogramView
-				Layout.maximumHeight: popup.topRowHeight
-			}
-			PropertyChanges { target: timerView
-				Layout.maximumHeight: popup.topRowHeight
-			}
-			PropertyChanges { target: monthView
-				Layout.minimumHeight: popup.singleColumnMonthViewHeight
-				Layout.preferredHeight: popup.singleColumnMonthViewHeight
-				Layout.maximumHeight: popup.singleColumnMonthViewHeight
-			}
-			PropertyChanges { target: agendaView
-				Layout.preferredHeight: popup.bottomRowHeight
-			}
-		},
-		State {
-			name: "singleColumn"
-			when: !popup.showAgenda || !popup.showCalendar
-
-			PropertyChanges { target: widgetGrid
-				columns: 1
-			}
-			PropertyChanges { target: meteogramView
-				Layout.maximumHeight: popup.topRowHeight * 1.5 // 150%
-			}
-			PropertyChanges { target: timerView
-				Layout.maximumHeight: popup.topRowHeight
-			}
-		}
-	]
 
 	//--- View tabs: Month | Week | Agenda (classic layout)
 	property bool refreshing: false // Events are being fetched
@@ -774,6 +601,7 @@ MouseArea {
 		anchors.fill: parent
 		anchors.margins: popup.padding
 		anchors.topMargin: popup.viewTabsHeight
+		columns: 1
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
 		onColumnsChanged: {
@@ -792,6 +620,7 @@ MouseArea {
 			Layout.minimumHeight: popup.topRowHeight
 			Layout.preferredWidth: popup.leftColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
+			Layout.maximumHeight: popup.topRowHeight * 1.5
 			onLoaded: popup.updateMeteogram()
 
 			sourceComponent: MeteogramView {
@@ -843,6 +672,7 @@ MouseArea {
 			Layout.minimumHeight: Math.max(popup.topRowHeight, implicitHeight)
 			Layout.preferredWidth: popup.rightColumnWidth
 			Layout.preferredHeight: popup.topRowHeight
+			Layout.maximumHeight: popup.topRowHeight
 
 			sourceComponent: TimerView {}
 		}
@@ -859,9 +689,6 @@ MouseArea {
 			Layout.preferredHeight: popup.bottomRowHeight
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			// Next to the agenda, keep the calendar at its configured size; extra room goes to the agenda.
-			Layout.maximumWidth: popup.twoColumns ? popup.leftColumnWidth : Number.POSITIVE_INFINITY
-			Layout.maximumHeight: popup.twoColumns ? popup.bottomRowHeight : Number.POSITIVE_INFINITY
 			Layout.alignment: Qt.AlignCenter
 
 			// Multi-day events as bars across the days (with event titles, ie: the month popup mode).
