@@ -355,7 +355,7 @@ ConfigPage {
 							readonly property var calendar: accountSection.calendars[index]
 							Layout.fillWidth: true
 							name: calendar ? (calendar.summaryOverride || calendar.summary) : ""
-							swatchColor: calendar ? (page.configBridge.read("googleColorPalette", "current") !== "classic" ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor) : "transparent"
+							swatchColor: calendar ? GooglePalette.displayCalendarColor(calendar, page.configBridge.read("googleColorPalette", "current")) : "transparent"
 							readOnly: calendar ? calendar.accessRole === "reader" : false
 							checked: calendar ? page.isCalendarShown(accountSection.account, calendar) : false
 							onToggled: page.setCalendarShown(accountSection.account, calendar, checked)

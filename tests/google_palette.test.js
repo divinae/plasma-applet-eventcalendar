@@ -48,8 +48,16 @@ function testEventPalette() {
 	assert.strictEqual(new Set(palette.eventPalette.map((e) => e.name)).size, 11)
 }
 
+function testDisplayCalendarColor() {
+	const calendar = { backgroundColor: '#92e1c0', colorId: '13' }
+	assert.strictEqual(palette.displayCalendarColor(calendar, 'current'), '#33b679')
+	assert.strictEqual(palette.displayCalendarColor(calendar, 'system'), '#33b679')
+	assert.strictEqual(palette.displayCalendarColor(calendar, 'classic'), '#92e1c0')
+}
+
 testPaletteListsTheCurrentColors()
 testEventPalette()
+testDisplayCalendarColor()
 testClassicColorsAreMapped()
 testCurrentColorsPassThrough()
 testUnknownColorsFallBackToColorId()

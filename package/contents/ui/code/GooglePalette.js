@@ -107,6 +107,12 @@ function calendarColor(calendarOrColor) {
 	return color
 }
 
+// The color the widget shows for a calendar with the googleColorPalette setting `palette`:
+// Google's current colors (calendarColor) unless 'classic' (the color the API returns).
+function displayCalendarColor(calendar, palette) {
+	return palette !== 'classic' ? calendarColor(calendar) : calendar.backgroundColor
+}
+
 function eventColor(colorId) {
 	return eventColors[String(colorId)] || null
 }

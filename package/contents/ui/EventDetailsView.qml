@@ -455,7 +455,7 @@ Rectangle {
 						Layout.alignment: Qt.AlignTop
 						radius: width / 2
 						color: details.calendar && details.calendar.backgroundColor
-							? (plasmoid.configuration.googleColorPalette !== 'classic' ? GooglePalette.calendarColor(details.calendar) : details.calendar.backgroundColor)
+							? GooglePalette.displayCalendarColor(details.calendar, plasmoid.configuration.googleColorPalette)
 							: details.eventColor
 					}
 					PlasmaComponents3.Label {

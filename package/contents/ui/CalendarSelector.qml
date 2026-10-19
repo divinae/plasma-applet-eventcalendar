@@ -42,7 +42,7 @@ FormComboBox {
 				list.push({
 					'calendarId': calendar.id,
 					'text': calendar.summary,
-					'backgroundColor': plasmoid.configuration.googleColorPalette !== 'classic' ? GooglePalette.calendarColor(calendar) : calendar.backgroundColor,
+					'backgroundColor': GooglePalette.displayCalendarColor(calendar, plasmoid.configuration.googleColorPalette),
 					'isTasklist': calendar.isTasklist,
 					'timeZone': calendar.timeZone || '', // Needed for recurring events
 					'primary': calendar.primary === true, // Google: out of office / focus time only there
