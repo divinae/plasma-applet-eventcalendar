@@ -318,6 +318,23 @@ Rectangle {
 					columnSpacing: Kirigami.Units.largeSpacing
 					rowSpacing: Kirigami.Units.largeSpacing
 
+					// Overlapping meetings
+					Kirigami.Icon {
+						visible: conflictLabel.visible
+						source: Shared.EVENT_INDICATOR_ICONS.conflict
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					PlasmaComponents3.Label {
+						id: conflictLabel
+						readonly property var titles: Shared.conflictTitles(details.eventItem)
+						visible: titles.length > 0
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						text: i18nc("%1 = titles of other events at the same time", "Overlaps with: %1", titles.join(", "))
+					}
+
 					// Location
 					Kirigami.Icon {
 						visible: locationLabel.visible

@@ -41,6 +41,7 @@ const parsed = {
 	canEdit: true,
 	reminderMinutes: 15,
 	backgroundColor: '#33b679',
+	conflictsWith: [{ summary: 'Standup' }],
 }
 
 const copy = plain(U.restoreCopy(parsed))

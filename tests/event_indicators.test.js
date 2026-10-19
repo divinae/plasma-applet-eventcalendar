@@ -28,7 +28,16 @@ assert.deepStrictEqual(keys({ recurrence: ['RRULE:FREQ=WEEKLY'] }), ['repeat'], 
 // Agenda: attendees as a ListModel.
 const model = list => ({ count: list.length, get: i => list[i] })
 assert.deepStrictEqual(keys({ attendees: model([{ self: true }, { email: 'sam@example.com' }]) }), ['guests'], 'ListModel attendees')
-for (const k of ['location', 'meeting', 'guests', 'repeat', 'description']) {
+// Overlaps another meeting: shown first.
+const overlapping = Object.assign({ conflictsWith: [{ summary: 'Standup' }, { summary: '1:1' }] }, full)
+assert.deepStrictEqual(keys(overlapping, true), ['conflict', 'location', 'meeting', 'guests', 'repeat', 'description'], 'conflict first')
+assert.deepStrictEqual(keys({ conflictsWith: [] }), [], 'no conflicts')
+assert.deepStrictEqual(keys({ conflictsWith: model([{ summary: 'Standup' }]) }), ['conflict'], 'ListModel conflicts')
+assert.deepStrictEqual(keys(overlapping, false, { conflict: true, location: true }), ['guests', 'repeat', 'description'], 'conflict hidden')
+assert.deepStrictEqual(Array.from(S.conflictTitles(overlapping)), ['Standup', '1:1'])
+assert.deepStrictEqual(Array.from(S.conflictTitles({ conflictsWith: model([{ summary: 'Standup' }]) })), ['Standup'])
+assert.deepStrictEqual(Array.from(S.conflictTitles(null)), [])
+for (const k of ['conflict', 'location', 'meeting', 'guests', 'repeat', 'description']) {
 	assert.ok(S.EVENT_INDICATOR_ICONS[k], 'icon for ' + k)
 }
 console.log('event_indicators: ok')

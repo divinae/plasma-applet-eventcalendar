@@ -6,6 +6,7 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
 import "EventCacheUtil.js" as EventCacheUtil
 import "Guests.js" as Guests
+import "Conflicts.js" as Conflicts
 
 CalendarManager {
 	id: eventModel
@@ -387,13 +388,19 @@ CalendarManager {
 		// Build the list first and assign once: bindings on eventsData must not see it half-filled.
 		// Declined events may be hidden; eventsByCalendar keeps them (lookups, undo, cache).
 		var showDeclined = plasmoid.configuration.showDeclinedEvents
-		var items = []
+		var all = []
 		for (var calendarId in eventModel.eventsByCalendar) {
-			var calendarItems = eventModel.eventsByCalendar[calendarId].items
-			for (var i = 0; i < calendarItems.length; i++) {
-				if (!Shared.isHiddenDeclined(calendarItems[i], showDeclined)) {
-					items.push(calendarItems[i])
-				}
+			all = all.concat(eventModel.eventsByCalendar[calendarId].items)
+		}
+		// Overlapping meetings, as { summary } objects (see Shared.conflictTitles). Not cached on
+		// disk, and removed before an event is sent back to Google.
+		var conflicts = Conflicts.find(all)
+		var items = []
+		for (var i = 0; i < all.length; i++) {
+			var titles = conflicts[Conflicts.eventKey(all[i])] || []
+			all[i].conflictsWith = titles.map(function(title) { return { summary: title } })
+			if (!Shared.isHiddenDeclined(all[i], showDeclined)) {
+				items.push(all[i])
 			}
 		}
 		eventModel.eventsData = { items: items }

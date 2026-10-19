@@ -254,6 +254,7 @@ CalendarManager {
 		delete data.reminderMinutes
 		delete data.reminderOwn
 		delete data.fromCache
+		delete data.conflictsWith
 		return data
 	}
 	// Merge changed fields into an event body. A field set to undefined is removed: updates are a

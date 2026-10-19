@@ -40,6 +40,8 @@ function fullEvent(overrides) {
 			],
 			conferenceSolution: { name: 'Google Meet', iconUri: 'https://x/icon.png' },
 		},
+		transparency: 'transparent',
+		conflictsWith: [{ summary: 'Overlapping meeting' }],
 		accessToken: 'ya29.must-not-leak',
 		extendedProperties: { private: { refreshToken: '1//nope' } },
 	}, overrides || {})
@@ -56,7 +58,7 @@ function sampleCalendars() {
 
 function testWhitelist() {
 	const text = cache.serialize(sampleCalendars(), new Date(2026, 9, 1), new Date(2026, 10, 1), NOW)
-	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName']) {
+	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting']) {
 		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
 	}
 	const data = JSON.parse(text)
@@ -65,7 +67,7 @@ function testWhitelist() {
 	const event = data.calendars['acc_1::work@example.test'][0]
 	assert.deepStrictEqual(Object.keys(event).sort(), [
 		'attendees', 'backgroundColor', 'canEdit', 'colorId', 'conferenceData', 'end', 'fromCache', 'hangoutLink',
-		'htmlLink', 'id', 'location', 'recurringEventId', 'reminderMinutes', 'start', 'status', 'summary',
+		'htmlLink', 'id', 'location', 'recurringEventId', 'reminderMinutes', 'start', 'status', 'summary', 'transparency',
 	])
 	assert.deepStrictEqual(event.attendees, [{ self: true, responseStatus: 'declined' }])
 	assert.deepStrictEqual(event.reminderMinutes, [10, 0])
