@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../ErrorType.js" as ErrorType
+import "../EventTypes.js" as EventTypes
 import "../IcsImport.js" as IcsImport
 import "../Shared.js" as Shared
 import "../lib"
@@ -433,6 +434,10 @@ CalendarManager {
 		url += '&singleEvents=' + encodeURIComponent('true')
 		url += '&maxResults=2500' // API max. Default 250 means more sequential pages.
 		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
+		// Out of office, focus time and working locations too (see EventTypes.js).
+		EventTypes.FETCHED_TYPES.forEach(function(type) {
+			url += '&eventTypes=' + encodeURIComponent(type)
+		})
 		if (args.pageToken) {
 			url += '&pageToken=' + encodeURIComponent(args.pageToken)
 		}

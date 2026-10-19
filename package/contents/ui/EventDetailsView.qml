@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Attachments.js" as Attachments
+import "EventTypes.js" as EventTypes
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Guests.js" as Guests
@@ -45,6 +46,8 @@ Rectangle {
 		})
 	}
 	readonly property var attachments: Attachments.list(eventItem)
+	readonly property bool isOutOfOffice: EventTypes.isOutOfOffice(eventItem)
+	readonly property bool isFocusTime: EventTypes.isFocusTime(eventItem)
 	// "Email Guests…": everyone invited except you and rooms.
 	readonly property string mailtoUrl: Guests.eventMailtoUrl(eventItem)
 	readonly property int collapsedGuestCount: 5
@@ -342,6 +345,34 @@ Rectangle {
 					columns: 2
 					columnSpacing: Kirigami.Units.largeSpacing
 					rowSpacing: Kirigami.Units.largeSpacing
+
+					// Out of office / focus time (Google event types), with their auto-decline.
+					Kirigami.Icon {
+						visible: eventTypeLabel.visible
+						source: details.isOutOfOffice ? Shared.EVENT_INDICATOR_ICONS.outOfOffice : Shared.EVENT_INDICATOR_ICONS.focusTime
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+						Layout.alignment: Qt.AlignTop
+					}
+					PlasmaComponents3.Label {
+						id: eventTypeLabel
+						readonly property var decline: EventTypes.autoDecline(details.eventItem)
+						visible: details.isOutOfOffice || details.isFocusTime
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						text: {
+							var lines = [details.isOutOfOffice ? i18n("Out of office") : i18n("Focus time")]
+							if (decline.declines === 'all') {
+								lines.push(i18n("Declines all meetings at this time"))
+							} else if (decline.declines === 'new') {
+								lines.push(i18n("Declines new invitations at this time"))
+							}
+							if (decline.message) {
+								lines.push(i18nc("%1 = message sent when declining", "Message: “%1”", decline.message))
+							}
+							return lines.join("\n")
+						}
+					}
 
 					// Overlapping meetings
 					Kirigami.Icon {

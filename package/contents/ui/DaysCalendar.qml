@@ -515,11 +515,11 @@ Item {
 			border.color: appletConfig.eventOutlineColor(barColor, response)
 
 			StripeFill {
-				visible: spanBar.response === 'tentative'
+				visible: spanBar.response === 'tentative' || !!(spanBar.eventItem && spanBar.eventItem.eventType === 'outOfOffice')
 				anchors.fill: parent
 				anchors.margins: 1
 				radius: spanBar.cutLeft || spanBar.cutRight ? 0 : Math.max(0, spanBar.cornerRadius - 1)
-				stripeColor: spanBar.barColor
+				stripeColor: spanBar.response === 'tentative' ? spanBar.barColor : appletConfig.eventTextColor(spanBar.barColor, spanBar.response)
 			}
 
 			// Title at the start of the bar, again in each week row.

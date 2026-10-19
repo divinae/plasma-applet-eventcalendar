@@ -80,6 +80,12 @@ ColumnLayout {
 			text: agendaListItem.dayTitle
 		}
 
+		// Google working location ("Home", "Office", ...)
+		WorkingLocationLabel {
+			date: agendaListItem.agendaItemDate
+			maxWidth: Kirigami.Units.gridUnit * 8
+		}
+
 		// Weather
 		RowLayout {
 			visible: showWeather

@@ -85,6 +85,24 @@ function testWhitelist() {
 	assert.strictEqual(data.dateMin, new Date(2026, 9, 1).getTime())
 }
 
+function testEventTypes() {
+	const ooo = fullEvent({ eventType: 'outOfOffice', outOfOfficeProperties: { autoDeclineMode: 'declineAllConflictingInvitations', declineMessage: 'Away, ask Ola' } })
+	const wl = fullEvent({
+		id: 'wl', eventType: 'workingLocation',
+		workingLocationProperties: { type: 'officeLocation', officeLocation: { label: 'Oslo HQ', buildingId: 'b-secret', deskId: 'd-7' } },
+	})
+	const text = cache.serialize({ 'a::c': { items: [ooo, wl] } }, 0, 0, NOW)
+	for (const word of ['Away, ask Ola', 'outOfOfficeProperties', 'b-secret', 'd-7', 'buildingId']) {
+		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
+	}
+	const events = JSON.parse(text).calendars['a::c']
+	assert.strictEqual(events[0].eventType, 'outOfOffice')
+	assert.strictEqual(events[1].eventType, 'workingLocation')
+	assert.deepStrictEqual(events[1].workingLocationProperties, { type: 'officeLocation', officeLocation: { label: 'Oslo HQ' } })
+	const home = cache.pickEvent(fullEvent({ eventType: 'workingLocation', workingLocationProperties: { type: 'homeOffice', homeOffice: { x: 1 } } }))
+	assert.deepStrictEqual(home.workingLocationProperties, { type: 'homeOffice', homeOffice: {} })
+}
+
 function testSummaryUsesRawTitle() {
 	// GoogleCalendarManager can decorate summary for display; _summary is the real title.
 	const text = cache.serialize({ 'a::c': { items: [fullEvent({ summary: '✓ Standup', _summary: 'Standup' })] } }, 0, 0, NOW)
@@ -138,6 +156,7 @@ function testSelectedCalendarIds() {
 
 testWhitelist()
 testSummaryUsesRawTitle()
+testEventTypes()
 testRoundTripAndSelection()
 testRejectsOldBrokenOrForeign()
 testReadIsWhitelistedToo()

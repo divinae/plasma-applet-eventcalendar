@@ -7,6 +7,7 @@ import "Shared.js" as Shared
 import "EventCacheUtil.js" as EventCacheUtil
 import "Guests.js" as Guests
 import "Conflicts.js" as Conflicts
+import "EventTypes.js" as EventTypes
 
 CalendarManager {
 	id: eventModel
@@ -14,6 +15,9 @@ CalendarManager {
 	property var calendarManagerList: []
 	property var calendarPluginMap: ({}) // Empty Map
 	property var eventsData: { "items": [] }
+	// Google working locations, not shown as events: { Shared.dayKey(day): "Home" / "Office" / ... }
+	// for the day headers. Only your own (calendars you can edit), not hidden ones.
+	property var workingLocations: ({})
 
 	Component.onCompleted: {
 		bindSignals(plasmaCalendarManager)
@@ -392,11 +396,19 @@ CalendarManager {
 		var hiddenCalendarIds = plasmoid.configuration.hiddenCalendarIds
 		var all = []
 		var inHiddenCalendar = [] // Per item of all
+		var workingLocationItems = []
 		for (var calendarId in eventModel.eventsByCalendar) {
 			var calendarItems = eventModel.eventsByCalendar[calendarId].items
 			var calendarHidden = Shared.isHiddenCalendar(calendarId, hiddenCalendarIds)
-			all = all.concat(calendarItems)
 			for (var j = 0; j < calendarItems.length; j++) {
+				// Working locations: a label in the day headers, not an event (nor a conflict).
+				if (EventTypes.isWorkingLocation(calendarItems[j])) {
+					if (!calendarHidden && calendarItems[j].canEdit) {
+						workingLocationItems.push(calendarItems[j])
+					}
+					continue
+				}
+				all.push(calendarItems[j])
 				inHiddenCalendar.push(calendarHidden)
 			}
 		}
@@ -418,6 +430,11 @@ CalendarManager {
 				items.push(all[i])
 			}
 		}
+		eventModel.workingLocations = EventTypes.workingLocationMap(workingLocationItems, {
+			home: i18nc("working location", "Home"),
+			office: i18nc("working location", "Office"),
+			custom: i18nc("working location", "Elsewhere"),
+		})
 		eventModel.eventsData = { items: items }
 	}
 
@@ -453,7 +470,10 @@ CalendarManager {
 				if (err) {
 					firstError = firstError || err
 				}
-				found = found.concat(items || [])
+				// Working locations aren't events to show (see mergeEvents).
+				found = found.concat((items || []).filter(function(eventItem) {
+					return !EventTypes.isWorkingLocation(eventItem)
+				}))
 				pending -= 1
 				if (pending === 0) {
 					callback(found.length ? null : firstError, found)
