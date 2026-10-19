@@ -40,6 +40,9 @@ Item {
 	// "+N" only where there is a row left for it, not over the cell below.
 	readonly property bool showHiddenCount: hiddenEventCount > 0 && visibleEventCount < freeRows
 
+	// The month grid (DaysCalendar), for dragging events to other days.
+	readonly property Item calendarView: dayStyle.calendarView
+
 	function eventAt(i) {
 		return modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
 	}
@@ -64,6 +67,9 @@ Item {
 				readonly property string response: Shared.myResponse(eventItem)
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
+				// Being dragged: faded (not for a copy); once dropped the ghost stands in for it.
+				readonly property bool dragSource: !!eventTitlesBadge.calendarView && eventTitlesBadge.calendarView.isDragSource(eventItem)
+				opacity: dragSource && !eventTitlesBadge.calendarView.eventDrag.copy ? (eventTitlesBadge.calendarView.eventDrag.pending ? 0 : 0.35) : 1
 				radius: Math.min(7, height / 2)
 				color: appletConfig.eventFillColor(barColor, response)
 				border.width: 1
@@ -94,12 +100,49 @@ Item {
 					wrapMode: Text.NoWrap
 				}
 
+				// Click opens the event, right click its menu, press and drag moves it to another day
+				// (Ctrl: a copy).
 				MouseArea {
 					anchors.fill: parent
-					cursorShape: Qt.PointingHandCursor
+					cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
 					acceptedButtons: Qt.LeftButton | Qt.RightButton
+					readonly property Item calendarView: eventTitlesBadge.calendarView
+					readonly property bool draggable: !!calendarView && calendarView.canDragEvent(eventBar.eventItem)
+					preventStealing: draggable
+					property point pressPoint
+					property bool dragged: false
+					onPressed: function(mouse) {
+						dragged = false
+						pressPoint = Qt.point(mouse.x, mouse.y)
+					}
+					onPositionChanged: function(mouse) {
+						if (!draggable || !(pressedButtons & Qt.LeftButton)) {
+							return
+						}
+						var copy = !!(mouse.modifiers & Qt.ControlModifier)
+						if (dragged) {
+							calendarView.eventDragMove(mapToItem(calendarView, mouse.x, mouse.y), copy)
+						} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
+							dragged = true
+							calendarView.eventDragBegin(eventBar.eventItem, mapToItem(calendarView, pressPoint.x, pressPoint.y), copy)
+							calendarView.eventDragMove(mapToItem(calendarView, mouse.x, mouse.y), copy)
+						}
+					}
+					onReleased: function(mouse) {
+						if (dragged) {
+							calendarView.eventDragDrop(!!(mouse.modifiers & Qt.ControlModifier))
+						}
+					}
+					onCanceled: {
+						if (dragged) {
+							dragged = false
+							calendarView.eventDragCancel()
+						}
+					}
 					onClicked: function(mouse) {
-						if (mouse.button === Qt.RightButton) {
+						if (dragged) { // The end of a drag, not a click
+							dragged = false
+						} else if (mouse.button === Qt.RightButton) {
 							popup.showEventMenu(eventBar.eventItem, eventBar, mouse.x, mouse.y)
 						} else {
 							popup.activateEvent(eventBar.eventItem)

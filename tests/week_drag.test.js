@@ -89,4 +89,51 @@ s = S.shiftedTimes({ start: { date: '2026-09-04' }, end: { date: '2026-09-05' } 
 	new Date(2026, 9, 16), { date: '2026-10-17' }, { date: '2026-10-18' }, 'UTC')
 assert.deepStrictEqual(JSON.parse(JSON.stringify(s)), { start: { date: '2026-09-05' }, end: { date: '2026-09-06' } })
 
+//--- Whole day moves (month view, all-day row)
+const W = load('WeekDrag.js', ['canMove', 'dayDelta', 'movedByDays', 'timedTimes'])
+// dayDelta counts calendar days, also over the daylight saving change (25 October).
+assert.strictEqual(W.dayDelta(new Date(2026, 9, 12), new Date(2026, 9, 12, 23, 59)), 0)
+assert.strictEqual(W.dayDelta(new Date(2026, 9, 24), new Date(2026, 9, 26)), 2)
+assert.strictEqual(W.dayDelta(new Date(2026, 9, 26).getTime(), new Date(2026, 9, 24).getTime()), -2)
+assert.strictEqual(W.dayDelta(new Date(2026, 9, 30), new Date(2026, 10, 2)), 3, 'into the next month')
+
+// A timed event keeps its local time of day across the daylight saving change, and its zone.
+const timedEvent = {
+	start: { dateTime: new Date(2026, 9, 23, 9, 30).toISOString(), timeZone: 'Europe/Warsaw' },
+	end: { dateTime: new Date(2026, 9, 23, 11, 0).toISOString(), timeZone: 'Europe/Warsaw' },
+}
+let m = W.movedByDays(timedEvent, 3)
+assert.strictEqual(m.startDateTime.getTime(), new Date(2026, 9, 26, 9, 30).getTime())
+assert.strictEqual(m.endDateTime.getTime(), new Date(2026, 9, 26, 11, 0).getTime())
+assert.strictEqual(m.start.dateTime, new Date(2026, 9, 26, 9, 30).toISOString())
+assert.strictEqual(m.start.timeZone, 'Europe/Warsaw')
+assert.strictEqual(m.end.timeZone, 'Europe/Warsaw')
+m = W.movedByDays({ start: { dateTime: '2026-10-12T08:00:00Z' }, end: { dateTime: '2026-10-12T09:00:00Z' } }, -1)
+assert.strictEqual(m.start.dateTime, '2026-10-11T08:00:00.000Z')
+assert.strictEqual(m.start.timeZone, undefined, 'no zone when the event had none')
+// Over midnight: the same duration.
+m = W.movedByDays({ start: { dateTime: new Date(2026, 9, 12, 23, 0).toISOString() }, end: { dateTime: new Date(2026, 9, 13, 1, 0).toISOString() } }, 1)
+assert.strictEqual(m.endDateTime.getTime(), new Date(2026, 9, 14, 1, 0).getTime())
+// All-day events keep their length in days (exclusive end date), over month ends too.
+m = W.movedByDays({ start: { date: '2026-10-30' }, end: { date: '2026-11-02' } }, 2)
+assert.deepStrictEqual(JSON.parse(JSON.stringify({ start: m.start, end: m.end })), { start: { date: '2026-11-01' }, end: { date: '2026-11-04' } })
+assert.strictEqual(m.startDateTime.getTime(), new Date(2026, 10, 1).getTime())
+m = W.movedByDays({ start: { date: '2026-10-24' }, end: { date: '2026-10-25' } }, 2)
+assert.strictEqual(m.start.date, '2026-10-26')
+assert.strictEqual(m.end.date, '2026-10-27')
+m = W.movedByDays({ start: { date: '2026-01-01' }, end: { date: '2026-01-02' } }, -1)
+assert.strictEqual(m.start.date, '2025-12-31')
+
+// timedTimes keeps the zones.
+const tt = W.timedTimes(timedEvent, new Date(2026, 9, 12, 10), new Date(2026, 9, 12, 11))
+assert.strictEqual(tt.start.dateTime, new Date(2026, 9, 12, 10).toISOString())
+assert.strictEqual(tt.end.timeZone, 'Europe/Warsaw')
+
+// Only editable events, not tasks.
+assert.strictEqual(W.canMove({ canEdit: true, start: { date: '2026-10-12' } }), true)
+assert.strictEqual(W.canMove({ canEdit: false, start: { date: '2026-10-12' } }), false)
+assert.strictEqual(W.canMove({ canEdit: true, kind: 'tasks#task', start: { date: '2026-10-12' } }), false)
+assert.strictEqual(W.canMove({ canEdit: true }), false)
+assert.strictEqual(W.canMove(null), false)
+
 console.log('week drag tests passed')

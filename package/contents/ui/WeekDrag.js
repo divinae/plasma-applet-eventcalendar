@@ -30,3 +30,73 @@ function resized(start, end, newEnd) {
 	var min = start.getTime() + snapMinutes * 60000
 	return { start: start, end: new Date(Math.max(min, newEnd.getTime())) }
 }
+
+//--- Whole day moves (month view, all-day row)
+
+// Events that can be dragged: editable calendar events (not tasks, they only have a due date).
+function canMove(eventItem) {
+	return !!eventItem && !!eventItem.canEdit && eventItem.kind !== 'tasks#task'
+		&& !!eventItem.start && !!(eventItem.start.date || eventItem.start.dateTime)
+}
+
+// Days from the day of `from` to the day of `to` (Dates or ms), in local calendar days: a
+// daylight saving change in between doesn't make it a fraction.
+function dayDelta(from, to) {
+	var a = new Date(from)
+	var b = new Date(to)
+	return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000)
+}
+
+function pad2(n) {
+	return (n < 10 ? '0' : '') + n
+}
+function dateOnlyString(d) {
+	return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())
+}
+function parseDateOnly(s) {
+	var p = s.split('-')
+	return new Date(+p[0], +p[1] - 1, +p[2])
+}
+function addDays(d, days) {
+	var r = new Date(d)
+	r.setDate(r.getDate() + days)
+	return r
+}
+
+// The Google start / end objects of `event` moved by `days` whole days, with the new times as
+// Dates: { start, end, startDateTime, endDateTime }. All-day events keep their length in days,
+// timed events their local time of day, duration and time zones.
+function movedByDays(event, days) {
+	if (event.start.date) {
+		var startDay = addDays(parseDateOnly(event.start.date), days)
+		var endDay = event.end && event.end.date ? addDays(parseDateOnly(event.end.date), days) : addDays(startDay, 1)
+		return {
+			start: { date: dateOnlyString(startDay) },
+			end: { date: dateOnlyString(endDay) },
+			startDateTime: startDay,
+			endDateTime: endDay,
+		}
+	}
+	var oldStart = new Date(event.start.dateTime)
+	var oldEnd = new Date(event.end.dateTime)
+	var newStart = addDays(oldStart, days)
+	var newEnd = new Date(newStart.getTime() + (oldEnd - oldStart))
+	var times = timedTimes(event, newStart, newEnd)
+	times.startDateTime = newStart
+	times.endDateTime = newEnd
+	return times
+}
+
+// Google start / end objects for the Dates `start` / `end`, with the event's time zones (a copy
+// needs them; Google keeps them on a move anyway).
+function timedTimes(event, start, end) {
+	var s = { dateTime: start.toISOString() }
+	var e = { dateTime: end.toISOString() }
+	if (event.start && event.start.timeZone) {
+		s.timeZone = event.start.timeZone
+	}
+	if (event.end && event.end.timeZone) {
+		e.timeZone = event.end.timeZone
+	}
+	return { start: s, end: e }
+}

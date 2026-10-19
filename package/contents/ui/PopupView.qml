@@ -893,6 +893,9 @@ MouseArea {
 
 			// Multi-day events as bars across the days (with event titles, ie: the month popup mode).
 			spanBarsEnabled: true
+			// Events can be dragged to other days (with event titles).
+			eventDragEnabled: true
+			eventDragModel: popup.eventModel
 
 			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
 			// The bar lanes depend on how many event rows fit in a day cell. Refilled right away
