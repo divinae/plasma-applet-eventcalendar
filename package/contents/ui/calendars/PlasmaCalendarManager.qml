@@ -58,44 +58,27 @@ CalendarManager {
 			return
 		}
 
-		logger.debug('calendarModel', calendarModel)
 		logger.debug('calendarModel.count', calendarModel.rowCount())
 		var DataRole = Qt.UserRole + 1
-		for (var i = 0; i < calendarModel.rowCount(); i++) {
-			var index = calendarModel.index(i, 0)
-			var calendarName = calendarModel.data(index, Qt.DisplayRole)
+		// An enabled calendar (a row, or a child of one) of the model.
+		function push(index) {
 			var calendarData = calendarModel.data(index, DataRole)
-			logger.debugJSON('PimCalendarsModel', i, calendarName, calendarData)
-
 			if (calendarData['enabled']) {
-				var calendarId = "plasma_Events_" + calendarData['id']
 				calendarList.push({
-					"id": calendarId,
-					"summary": calendarName,
+					"id": "plasma_Events_" + calendarData['id'],
+					"summary": calendarModel.data(index, Qt.DisplayRole),
 					"backgroundColor": "#9a9cff",
 					"accessRole": "owner",
 					"isTasklist": false,
 				})
 			}
-
+		}
+		for (var i = 0; i < calendarModel.rowCount(); i++) {
+			var index = calendarModel.index(i, 0)
+			push(index)
 			if (calendarModel.hasChildren(index)) {
-				var parentIndex = index
-				for (var j = 0; j < calendarModel.rowCount(parentIndex); j++) {
-					var childIndex = calendarModel.index(j, 0, parentIndex)
-					var calendarName = calendarModel.data(childIndex, Qt.DisplayRole)
-					var calendarData = calendarModel.data(childIndex, DataRole)
-					logger.debugJSON('PimCalendarsModel', i, j, calendarName, calendarData)
-
-					if (calendarData['enabled']) {
-						var calendarId = "plasma_Events_" + calendarData['id']
-						calendarList.push({
-							"id": calendarId,
-							"summary": calendarName,
-							"backgroundColor": "#9a9cff",
-							"accessRole": "owner",
-							"isTasklist": false,
-						})
-					}
+				for (var j = 0; j < calendarModel.rowCount(index); j++) {
+					push(calendarModel.index(j, 0, index))
 				}
 			}
 		}
@@ -275,14 +258,6 @@ CalendarManager {
 		return items
 	}
 
-	function filterEventsIntoCalendars() {
-	}
-
-	function getEventsForDate(date) {
-		var dayEvents = calendarBackend.daysModel.eventsForDate(date)
-		return parseEventsForDate(date, dayEvents)
-	}
-
 	function getEventsForDuration(dateMin, dateMax) {
 		var numDays = 0
 		for (var day = new Date(dateMin); day < dateMax; day.setDate(day.getDate() + 1)) {
@@ -352,17 +327,8 @@ CalendarManager {
 	}
 
 	function parseCalendarData(calendarId, data) {
-		var calendar = getCalendar(calendarId)
-		parseEventList(calendar, data.items)
-	}
-
-	function parseEvent(calendar, event) {
-		event.canEdit = false
-	}
-
-	function parseEventList(calendar, eventList) {
-		eventList.forEach(function(event) {
-			parseEvent(calendar, event)
+		data.items.forEach(function(event) {
+			event.canEdit = false
 		})
 	}
 
@@ -391,18 +357,12 @@ CalendarManager {
 			text,
 		]
 		executable.execArgv(cmd, function(cmd, exitCode, exitStatus, stdout, stderr){
-			logger.debug('konsolekalendar.cmd', cmd)
-			logger.debug('konsolekalendar.exitCode', exitCode)
-			logger.debug('konsolekalendar.exitStatus', exitStatus)
-			logger.debug('konsolekalendar.stdout', stdout)
-			logger.debug('konsolekalendar.stderr', stderr)
+			logger.debug('konsolekalendar.exitCode', exitCode, exitStatus) // No command line: the title is in it
 
 			if (exitCode === 0) {
 				// It takes a few secs for PIM Events to sync with the PlasmaCalendar API.
 				// refresh calls deferredUpdate which is a 200ms delay which seems to work.
 				refresh()
-			} else {
-				// Error
 			}
 		})
 	}

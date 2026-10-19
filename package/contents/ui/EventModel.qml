@@ -567,16 +567,6 @@ CalendarManager {
 		return Guests.knownGuests(eventModel.eventsData.items)
 	}
 
-	function setEventProperty(calendarId, eventId, key, value) {
-		logger.debug('eventModel.setEventProperty', calendarId, eventId, key, value)
-		var calendarManager = managerWith(calendarId, 'setEventProperty')
-		if (calendarManager) {
-			calendarManager.setEventProperty(calendarId, eventId, key, value)
-		} else {
-			logger.log('Could not setEventProperty. Could not find calendarManager for calendarId = ', calendarId)
-		}
-	}
-
 	// options: optional { params } with query params for the update (Google).
 	function setEventProperties(calendarId, eventId, args, options) {
 		logger.debugJSON('eventModel.setEventProperties', calendarId, eventId, args)

@@ -220,9 +220,6 @@ Item {
 		resetAuthState()
 		pendingAuthContext = buildAuthContext(mode)
 	}
-	function maybeUseLegacyForLocal() {
-		return false
-	}
 	function authConfigurationError() {
 		return authConfigurationErrorFor(effectiveClientId, effectiveClientSecret)
 	}

@@ -580,13 +580,6 @@ CalendarManager {
 	}
 
 	//--- Update Task
-	function setEventProperty(calendarId, eventId, key, value) {
-		logger.debug(calendarManagerId, 'setEventProperty', calendarId, eventId, key, value)
-		var args = {}
-		args[key] = value
-		setEventProperties(calendarId, eventId, args)
-	}
-
 	function setEventProperties(calendarId, eventId, args) {
 		logger.debugJSON(calendarManagerId, 'setEventProperties', calendarId, eventId, args)
 		if (session.accessToken) {

@@ -640,25 +640,10 @@ Item {
 		}
 	}
 
-	function localFileUrl(path) {
-		return path.indexOf("file://") === 0 ? path : "file://" + path
-	}
-
 	function generateTempFilePath(prefix) {
 		var timePart = Date.now().toString(36)
 		var randPart = Math.floor(Math.random() * 1000000).toString(36)
 		return "/tmp/" + prefix + "-" + timePart + "-" + randPart + ".json"
-	}
-
-	function delay(delayTime, callback) {
-		var timer = Qt.createQmlObject("import QtQuick; Timer {}", store)
-		timer.interval = delayTime
-		timer.repeat = false
-		timer.triggered.connect(function() {
-			timer.destroy()
-			callback()
-		})
-		timer.start()
 	}
 
 	function waitForReadyFile(readyFile, callback, attemptsLeft) {

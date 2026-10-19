@@ -35,24 +35,7 @@ CalendarManager {
 	}
 
 	function getCalendarIdList() {
-		var account = getAccount()
-		if (!account) {
-			return []
-		}
-		if (accountsStore && accountId && accountsStore.ensureCalendarSelection) {
-			return accountsStore.ensureCalendarSelection(accountId)
-		}
-		var list = account.calendarIdList || []
-		if (account.calendarSelectionInitialized) {
-			return list
-		}
-		if (list.length) {
-			if (accountsStore && accountId) {
-				accountsStore.updateAccount(accountId, { calendarSelectionInitialized: true })
-			}
-			return list
-		}
-		return []
+		return getAccount() ? accountsStore.ensureCalendarSelection(accountId) : []
 	}
 
 	function scopedCalendarId(rawId) {
@@ -306,83 +289,38 @@ CalendarManager {
 	function fetchGoogleAccountEvents(calendarIdList) {
 		googleCalendarManager.asyncRequests += 1
 		var generation = googleCalendarManager.fetchGeneration
-		var func = fetchGoogleAccountEvents_run.bind(this, calendarIdList, function(errObj, data) {
-			if (generation !== googleCalendarManager.fetchGeneration) {
-				logger.debug('fetchGoogleAccountEvents', 'dropping stale response')
-				return
-			}
-			if (errObj) {
-				restorePrevious(calendarIdList)
-				fetchGoogleAccountEvents_err(errObj.err, errObj.data, errObj.xhr)
-			} else {
-				fetchGoogleAccountEvents_done(data)
-			}
-		})
-		withToken(func, function(err, isNetworkError) {
+		withToken(function() {
+			var tasks = calendarIdList.map(function(calendarId) {
+				return fetchGoogleCalendarEvents.bind(this, calendarId)
+			})
+			// Tasks never fail: a calendar's error is in its result.
+			Async.parallel(tasks, function(err, results) {
+				if (generation !== googleCalendarManager.fetchGeneration) {
+					logger.debug('fetchGoogleAccountEvents', 'dropping stale response')
+					return
+				}
+				fetchGoogleAccountEvents_done(results)
+			})
+		}, function(err, isNetworkError) {
 			restorePrevious(calendarIdList)
 			handleAuthError(err, true, isNetworkError)
 		})
 	}
-	function fetchGoogleAccountEvents_run(calendarIdList, callback) {
-		logger.debug('fetchGoogleAccountEvents_run', calendarIdList)
-
-		var tasks = []
-		for (var i = 0; i < calendarIdList.length; i++) {
-			var calendarId = calendarIdList[i]
-			var task = fetchGoogleCalendarEventsAllowError.bind(this, calendarId)
-			tasks.push(task)
-		}
-
-		Async.parallel(tasks, callback)
-	}
-
-	function fetchGoogleCalendarEventsAllowError(calendarId, callback) {
-		fetchGoogleCalendarEvents(calendarId, function(errObj, data) {
-			if (errObj) {
-				callback(null, {
-					calendarId: calendarId,
-					scopedCalendarId: scopedCalendarId(calendarId),
-					error: errObj,
-				})
-				return
-			}
-			callback(null, data)
-		})
-	}
-	function fetchGoogleAccountEvents_err(err, data, xhr) {
-		logger.debug('fetchGoogleAccountEvents_err', xhr && xhr.status)
-		googleCalendarManager.asyncRequestsDone += 1
-		return handleError(err, data, xhr)
-	}
 	function fetchGoogleAccountEvents_done(results) {
 		for (var i = 0; i < results.length; i++) {
 			var result = results[i]
-			if (!result) {
-				continue
-			}
 			if (result.error) {
-				restorePreviousCalendar(result.scopedCalendarId || scopedCalendarId(result.calendarId))
-				var errObj = result.error
-				if (errObj && errObj.xhr) {
-					handleError(errObj.err, errObj.data, errObj.xhr)
-				} else {
-					googleCalendarManager.error(
-						i18n("Error fetching calendar: %1", result.calendarId || ""),
-						ErrorType.UnknownError
-					)
-				}
-				continue
+				restorePreviousCalendar(result.scopedCalendarId)
+				handleError(result.error.err, result.error.data, result.error.xhr)
+			} else {
+				setCalendarData(result.scopedCalendarId, result.data)
 			}
-			var calendarId = result.calendarId
-			var calendarData = result.data
-			var scopedId = result.scopedCalendarId || scopedCalendarId(calendarId)
-			setCalendarData(scopedId, calendarData)
 		}
 		googleCalendarManager.asyncRequestsDone += 1
 	}
 
+	// callback(null, { scopedCalendarId, data, error }): error is { err, data, xhr } or null.
 	function fetchGoogleCalendarEvents(calendarId, callback) {
-		logger.debug('fetchGoogleCalendarEvents', calendarId)
 		fetchGCalEvents({
 			calendarId: calendarId,
 			start: googleCalendarManager.dateMin.toISOString(),
@@ -391,30 +329,16 @@ CalendarManager {
 		}, function(err, data, xhr) {
 			if (err) {
 				logger.debug('onErrorFetchingEvents', xhr && xhr.status)
-				var errObj = {
-					err: err,
-					data: data,
-					xhr: xhr,
-				}
-				return callback(errObj, null)
 			}
-
-			return callback(null, {
-				calendarId: calendarId,
+			callback(null, {
 				scopedCalendarId: scopedCalendarId(calendarId),
 				data: data,
+				error: err ? { err: err, data: data, xhr: xhr } : null,
 			})
 		})
 	}
 
 	function fetchGCalEvents(args, callback) {
-		logger.debug('fetchGCalEvents', args.calendarId)
-
-		// return GoogleCalendarTests.testCouldNotConnect(callback)
-		// return GoogleCalendarTests.testInvalidCredentials(callback)
-		// return GoogleCalendarTests.testDailyLimitExceeded(callback)
-		// return GoogleCalendarTests.testBackendError(callback)
-
 		// Out of office, focus time and working locations too (see EventTypes.js), unless the calendar
 		// rejected the list before. Decided once per fetch: page tokens are only valid for the same query.
 		delete args.pageToken
@@ -441,11 +365,9 @@ CalendarManager {
 		}
 		if (allData) {
 			data.items = allData.items.concat(data.items)
-			delete allData.items
-			delete allData
 		}
 		allData = data
-		
+
 		if (allData.nextPageToken) {
 			logger.debug('fetchGCalEventsPageResponse.nextPageToken', 'allData.items.length', allData.items && allData.items.length)
 			args.pageToken = allData.nextPageToken
@@ -656,9 +578,8 @@ CalendarManager {
 						event.htmlLink = 'https://calendar.google.com/calendar/r/eventedit/' + eid
 					}
 				}
-			} else if (plasmoid.configuration.googleEventClickAction === 'WebMonthView') {
-				// Default behavior
 			}
+			// WebMonthView: the htmlLink as it is.
 		}
 	}
 
@@ -813,12 +734,6 @@ CalendarManager {
 				report()
 			}
 		})
-	}
-
-	function setEventProperty(calendarId, eventId, key, value) {
-		var args = {}
-		args[key] = value
-		setEventProperties(calendarId, eventId, args)
 	}
 
 	// options: optional { params } with query params for the PUT (see createEventFromData).
