@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:00+0200\n"
+"POT-Creation-Date: 2026-10-19 12:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -150,6 +150,10 @@ msgstr "Google の認証に失敗しました: %1"
 msgid "Error fetching calendar: %1"
 msgstr "カレンダーの取得エラー: %1"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Not logged in to Google Calendar"
+msgstr "Google Calendar にログインしていません"
+
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
 msgstr "iCalendar"
@@ -162,7 +166,7 @@ msgstr "不明な iCalendar ヘルパーエラー"
 msgid "Could not load %1: %2"
 msgstr "%1 を読み込めませんでした: %2"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "祝日"
 
@@ -173,6 +177,18 @@ msgstr "ToDo"
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "その他"
+
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
+msgid "Calendars"
+msgstr "カレンダー"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "No calendars selected in the settings."
+msgstr "設定でカレンダーが選択されていません。"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Show All"
+msgstr "すべて表示"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -225,7 +241,7 @@ msgstr "色"
 msgid "Save"
 msgstr "保存"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -336,10 +352,6 @@ msgstr "デスクトップウィジェット"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
 msgstr "デバッグログと追加の設定ページ"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
-msgid "Calendars"
-msgstr "カレンダー"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -787,7 +799,7 @@ msgstr "https:// の URL またはローカルの %1/*.ics ファイル"
 msgid "Browse"
 msgstr "ブラウズ"
 
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -871,6 +883,19 @@ msgstr "ポップアップの高さ"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "週と日"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "表示する日数"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "7 days"
+msgstr "7 日間"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "平日のみ (週末を除く)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
@@ -1292,11 +1317,15 @@ msgstr "この繰り返しイベントのすべての回を削除します。"
 msgid "Duplicate"
 msgstr "複製"
 
+#: ../contents/ui/EventDetailsView.qml
+msgid "Private event"
+msgstr "非公開の予定"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "終日"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Repeats"
 msgstr "繰り返し"
 
@@ -1430,7 +1459,7 @@ msgstr "カレンダーの色"
 msgid "Does not repeat"
 msgstr "繰り返さない"
 
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
 msgid "Daily"
 msgstr "毎日"
 
@@ -1541,6 +1570,49 @@ msgid "Remove video conferencing"
 msgstr "ビデオ会議を削除"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Busy"
+msgstr "予定あり"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Free"
+msgstr "予定なし"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Busy or Free"
+msgid "Show as: %1"
+msgstr "表示方法: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Show as"
+msgstr "表示方法"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Calendar default"
+msgstr "デフォルトの公開設定"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Public"
+msgstr "公開"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Private"
+msgstr "非公開"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Calendar default, Public or Private"
+msgid "Visibility: %1"
+msgstr "公開設定: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Visibility"
+msgstr "公開設定"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Reminders"
 msgstr "リマインダー"
 
@@ -1613,6 +1685,157 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "説明"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "このカレンダーには予定をインポートできません"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file."
+msgstr "ファイルを読み込めませんでした。"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr ".ics ファイルの読み込みには Python の icalendar モジュール (python-icalendar) が必要です。"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file: %1"
+msgstr "ファイルを読み込めませんでした: %1"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · 終日"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
+
+#: ../contents/ui/ImportView.qml
+msgid "Changed occurrence of a repeating event"
+msgstr "繰り返し予定の変更された回"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "%1 日ごと"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "%1 週間ごと"
+
+#: ../contents/ui/ImportView.qml
+msgid "Weekly"
+msgstr "毎週"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly / Every 2 weeks, %2 = days"
+msgid "%1 on %2"
+msgstr "%1 %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "%1 か月ごと"
+
+#: ../contents/ui/ImportView.qml
+msgid "Monthly"
+msgstr "毎月"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "%1 年ごと"
+
+#: ../contents/ui/ImportView.qml
+msgid "Yearly"
+msgstr "毎年"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%2 = Weekly on Monday, ..."
+msgid "%2, %1 time"
+msgid_plural "%2, %1 times"
+msgstr[0] "%2、%1 回"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly on Monday, ..., %2 = date"
+msgid "%1, until %2"
+msgstr "%1、%2 まで"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 exception"
+msgid_plural "%1 exceptions"
+msgstr[0] "例外 %1 件"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "閉じる"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "予定をインポート"
+
+#: ../contents/ui/ImportView.qml
+msgid "Import"
+msgstr "インポート"
+
+#: ../contents/ui/ImportView.qml
+msgid "No file chosen"
+msgstr "ファイルが選択されていません"
+
+#: ../contents/ui/ImportView.qml
+msgid "Choose File…"
+msgstr "ファイルを選択…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading the file…"
+msgstr "ファイルを読み込んでいます…"
+
+#: ../contents/ui/ImportView.qml
+msgid "No events in this file"
+msgstr "このファイルには予定がありません"
+
+#: ../contents/ui/ImportView.qml
+msgid "(No title)"
+msgstr "(タイトルなし)"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 cancelled event isn't imported."
+msgid_plural "%1 cancelled events aren't imported."
+msgstr[0] "キャンセルされた予定 %1 件はインポートされません。"
+
+#: ../contents/ui/ImportView.qml
+msgid "Calendar:"
+msgstr "カレンダー:"
+
+#: ../contents/ui/ImportView.qml
+msgid "Guests and the organizer aren't imported, and no invitations are sent. Importing the same event again updates it."
+msgstr "ゲストと主催者はインポートされず、招待状も送信されません。同じ予定をもう一度インポートすると更新されます。"
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing needs a Google Calendar you can edit. Log in to Google Calendar in the settings."
+msgstr "インポートするには編集可能な Google カレンダーが必要です。設定で Google Calendar にログインしてください。"
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing… %1 of %2"
+msgstr "インポートしています… %1 / %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] "%1 件の予定をインポートしました"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 failed: %2"
+msgid_plural "%1 failed, eg: %2"
+msgstr[0] "%1 件が失敗しました: %2"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
@@ -1740,6 +1963,10 @@ msgstr "「%1」を終了済みにする"
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "新しいイベント…"
+
+#: ../contents/ui/main.qml
+msgid "Import Events…"
+msgstr "予定をインポート…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
@@ -1882,21 +2109,6 @@ msgstr "内容、日時、場所を入力します。日付を指定しない場
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "その他のオプション…"
-
-#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · 終日"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"

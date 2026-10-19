@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:00+0200\n"
+"POT-Creation-Date: 2026-10-19 12:11+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -163,6 +163,10 @@ msgstr "Google 인증 실패: %1"
 msgid "Error fetching calendar: %1"
 msgstr "달력 가져오기 오류: %1"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Not logged in to Google Calendar"
+msgstr "Google 캘린더에 로그인하지 않았습니다"
+
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
 msgstr "iCalendar"
@@ -176,6 +180,7 @@ msgid "Could not load %1: %2"
 msgstr "%1을(를) 불러올 수 없음: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "공휴일"
 
@@ -187,6 +192,20 @@ msgstr "할 일"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "기타"
+
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Calendars"
+msgstr "달력"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "No calendars selected in the settings."
+msgstr "설정에서 선택한 달력이 없습니다."
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Show All"
+msgstr "모두 표시"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -246,7 +265,7 @@ msgstr "저장"
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
 msgid "Cancel"
 msgstr "취소"
 
@@ -363,12 +382,6 @@ msgstr "바탕 화면 위젯"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
 msgstr "디버그 로그 및 추가 설정 페이지"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendars"
-msgstr "달력"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -898,7 +911,7 @@ msgstr "https:// URL 또는 로컬 %1/*.ics 파일"
 msgid "Browse"
 msgstr "찾기"
 
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -983,6 +996,19 @@ msgstr "팝업 높이"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "주 및 일"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "표시할 날짜"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "7 days"
+msgstr "7일"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "근무 주간 (주말 제외)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
@@ -1426,12 +1452,16 @@ msgstr "이 반복 이벤트의 모든 일정을 삭제합니다."
 msgid "Duplicate"
 msgstr "복제"
 
+#: ../contents/ui/EventDetailsView.qml
+msgid "Private event"
+msgstr "비공개 일정"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "종일"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Repeats"
 msgstr "반복"
 
@@ -1565,7 +1595,7 @@ msgstr "달력 색상"
 msgid "Does not repeat"
 msgstr "반복 안 함"
 
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
 msgid "Daily"
 msgstr "매일"
 
@@ -1676,6 +1706,49 @@ msgid "Remove video conferencing"
 msgstr "화상 회의 삭제"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Busy"
+msgstr "바쁨"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Free"
+msgstr "한가함"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Busy or Free"
+msgid "Show as: %1"
+msgstr "표시 방법: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Show as"
+msgstr "표시 방법"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Calendar default"
+msgstr "기본 공개 설정"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Public"
+msgstr "공개"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Private"
+msgstr "비공개"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Calendar default, Public or Private"
+msgid "Visibility: %1"
+msgstr "공개 설정: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Visibility"
+msgstr "공개 설정"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Reminders"
 msgstr "알림"
 
@@ -1748,6 +1821,168 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "설명"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "이 달력으로는 일정을 가져올 수 없습니다"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file."
+msgstr "파일을 읽을 수 없습니다."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr ""
+".ics 파일을 읽으려면 Python icalendar 모듈(python-icalendar)이 필요합니다."
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file: %1"
+msgstr "파일을 읽을 수 없습니다: %1"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · 하루 종일"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
+
+#: ../contents/ui/ImportView.qml
+msgid "Changed occurrence of a repeating event"
+msgstr "반복 일정의 변경된 일정"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "%1일마다"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "%1주마다"
+
+#: ../contents/ui/ImportView.qml
+msgid "Weekly"
+msgstr "매주"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly / Every 2 weeks, %2 = days"
+msgid "%1 on %2"
+msgstr "%1 %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "%1개월마다"
+
+#: ../contents/ui/ImportView.qml
+msgid "Monthly"
+msgstr "매월"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "%1년마다"
+
+#: ../contents/ui/ImportView.qml
+msgid "Yearly"
+msgstr "매년"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%2 = Weekly on Monday, ..."
+msgid "%2, %1 time"
+msgid_plural "%2, %1 times"
+msgstr[0] "%2, %1회"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly on Monday, ..., %2 = date"
+msgid "%1, until %2"
+msgstr "%1, %2까지"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 exception"
+msgid_plural "%1 exceptions"
+msgstr[0] "예외 %1개"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "닫기"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "일정 가져오기"
+
+#: ../contents/ui/ImportView.qml
+msgid "Import"
+msgstr "가져오기"
+
+#: ../contents/ui/ImportView.qml
+msgid "No file chosen"
+msgstr "선택한 파일 없음"
+
+#: ../contents/ui/ImportView.qml
+msgid "Choose File…"
+msgstr "파일 선택…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading the file…"
+msgstr "파일을 읽는 중…"
+
+#: ../contents/ui/ImportView.qml
+msgid "No events in this file"
+msgstr "이 파일에 일정이 없습니다"
+
+#: ../contents/ui/ImportView.qml
+msgid "(No title)"
+msgstr "(제목 없음)"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 cancelled event isn't imported."
+msgid_plural "%1 cancelled events aren't imported."
+msgstr[0] "취소된 일정 %1개는 가져오지 않습니다."
+
+#: ../contents/ui/ImportView.qml
+msgid "Calendar:"
+msgstr "달력:"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Guests and the organizer aren't imported, and no invitations are sent. "
+"Importing the same event again updates it."
+msgstr ""
+"참석자와 주최자는 가져오지 않으며 초대장도 전송되지 않습니다. 같은 일정을 다"
+"시 가져오면 업데이트됩니다."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
+"the settings."
+msgstr ""
+"가져오려면 편집할 수 있는 Google 캘린더가 필요합니다. 설정에서 Google 캘린더"
+"에 로그인하세요."
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing… %1 of %2"
+msgstr "가져오는 중… %1/%2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] "일정 %1개를 가져왔습니다"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 failed: %2"
+msgid_plural "%1 failed, eg: %2"
+msgstr[0] "%1개 실패: %2"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
@@ -1880,6 +2115,10 @@ msgstr "“%1” 종료로 표시"
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "새 이벤트…"
+
+#: ../contents/ui/main.qml
+msgid "Import Events…"
+msgstr "일정 가져오기…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
@@ -2026,21 +2265,6 @@ msgstr ""
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "추가 옵션…"
-
-#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · 하루 종일"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"

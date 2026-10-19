@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:00+0200\n"
+"POT-Creation-Date: 2026-10-19 12:11+0200\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -164,6 +164,10 @@ msgstr "Échec de l'authentification Google : %1"
 msgid "Error fetching calendar: %1"
 msgstr "Erreur lors de la récupération du calendrier : %1"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Not logged in to Google Calendar"
+msgstr "Non connecté à Google Calendar"
+
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
 msgstr "iCalendar"
@@ -177,6 +181,7 @@ msgid "Could not load %1: %2"
 msgstr "Impossible de charger %1 : %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "Jours fériés"
 
@@ -188,6 +193,20 @@ msgstr "À faire"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Autre"
+
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Calendars"
+msgstr "Calendriers"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "No calendars selected in the settings."
+msgstr "Aucun calendrier sélectionné dans les paramètres."
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Show All"
+msgstr "Tout afficher"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -248,7 +267,7 @@ msgstr "Enregistrer"
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -368,12 +387,6 @@ msgstr "Widget de bureau"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Journalisation de débogage et pages de paramètres supplémentaires"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendars"
-msgstr "Calendriers"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -921,7 +934,7 @@ msgstr "URL https:// ou fichier local %1/*.ics"
 msgid "Browse"
 msgstr "Naviguer"
 
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -1006,6 +1019,19 @@ msgstr "Hauteur de la fenêtre"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "Semaine et jour"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Jours affichés"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "7 days"
+msgstr "7 jours"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "Semaine de travail (sans le week-end)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
@@ -1451,12 +1477,16 @@ msgstr "Supprime toutes les occurrences de cet événement récurrent."
 msgid "Duplicate"
 msgstr "Dupliquer"
 
+#: ../contents/ui/EventDetailsView.qml
+msgid "Private event"
+msgstr "Événement privé"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "Toute la journée"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Repeats"
 msgstr "Se répète"
 
@@ -1591,7 +1621,7 @@ msgstr "Couleur du calendrier"
 msgid "Does not repeat"
 msgstr "Ne se répète pas"
 
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
 msgid "Daily"
 msgstr "Tous les jours"
 
@@ -1707,6 +1737,49 @@ msgid "Remove video conferencing"
 msgstr "Supprimer la visioconférence"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Busy"
+msgstr "Occupé"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Free"
+msgstr "Disponible"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Busy or Free"
+msgid "Show as: %1"
+msgstr "Afficher comme : %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Show as"
+msgstr "Afficher comme"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Calendar default"
+msgstr "Visibilité par défaut"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Public"
+msgstr "Public"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Private"
+msgstr "Privé"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Calendar default, Public or Private"
+msgid "Visibility: %1"
+msgstr "Visibilité : %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Visibility"
+msgstr "Visibilité"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Reminders"
 msgstr "Rappels"
 
@@ -1783,6 +1856,178 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Description"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "Ce calendrier ne peut pas importer d'événements"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file."
+msgstr "Impossible de lire le fichier."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr ""
+"La lecture des fichiers .ics nécessite le module Python icalendar (python-"
+"icalendar)."
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file: %1"
+msgstr "Impossible de lire le fichier : %1"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · Toute la journée"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
+
+#: ../contents/ui/ImportView.qml
+msgid "Changed occurrence of a repeating event"
+msgstr "Occurrence modifiée d'un événement périodique"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "Tous les %1 jour"
+msgstr[1] "Tous les %1 jours"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "Toutes les %1 semaine"
+msgstr[1] "Toutes les %1 semaines"
+
+#: ../contents/ui/ImportView.qml
+msgid "Weekly"
+msgstr "Toutes les semaines"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly / Every 2 weeks, %2 = days"
+msgid "%1 on %2"
+msgstr "%1 le %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "Tous les %1 mois"
+msgstr[1] "Tous les %1 mois"
+
+#: ../contents/ui/ImportView.qml
+msgid "Monthly"
+msgstr "Tous les mois"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "Tous les %1 an"
+msgstr[1] "Tous les %1 ans"
+
+#: ../contents/ui/ImportView.qml
+msgid "Yearly"
+msgstr "Tous les ans"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%2 = Weekly on Monday, ..."
+msgid "%2, %1 time"
+msgid_plural "%2, %1 times"
+msgstr[0] "%2, %1 fois"
+msgstr[1] "%2, %1 fois"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly on Monday, ..., %2 = date"
+msgid "%1, until %2"
+msgstr "%1, jusqu'au %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 exception"
+msgid_plural "%1 exceptions"
+msgstr[0] "%1 exception"
+msgstr[1] "%1 exceptions"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Fermer"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Importer des événements"
+
+#: ../contents/ui/ImportView.qml
+msgid "Import"
+msgstr "Importer"
+
+#: ../contents/ui/ImportView.qml
+msgid "No file chosen"
+msgstr "Aucun fichier choisi"
+
+#: ../contents/ui/ImportView.qml
+msgid "Choose File…"
+msgstr "Choisir un fichier…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading the file…"
+msgstr "Lecture du fichier…"
+
+#: ../contents/ui/ImportView.qml
+msgid "No events in this file"
+msgstr "Aucun événement dans ce fichier"
+
+#: ../contents/ui/ImportView.qml
+msgid "(No title)"
+msgstr "(Sans titre)"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 cancelled event isn't imported."
+msgid_plural "%1 cancelled events aren't imported."
+msgstr[0] "%1 événement annulé n'est pas importé."
+msgstr[1] "%1 événements annulés ne sont pas importés."
+
+#: ../contents/ui/ImportView.qml
+msgid "Calendar:"
+msgstr "Calendrier :"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Guests and the organizer aren't imported, and no invitations are sent. "
+"Importing the same event again updates it."
+msgstr ""
+"Les invités et l'organisateur ne sont pas importés, et aucune invitation "
+"n'est envoyée. Importer à nouveau le même événement le met à jour."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
+"the settings."
+msgstr ""
+"L'importation nécessite un calendrier Google Calendar modifiable. Connectez-"
+"vous à Google Calendar dans les paramètres."
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing… %1 of %2"
+msgstr "Importation… %1 sur %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] "%1 événement importé"
+msgstr[1] "%1 événements importés"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 failed: %2"
+msgid_plural "%1 failed, eg: %2"
+msgstr[0] "%1 échec : %2"
+msgstr[1] "%1 échecs, par ex. : %2"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
@@ -1916,6 +2161,10 @@ msgstr "Marquer « %1 » comme terminée"
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Nouvel événement…"
+
+#: ../contents/ui/main.qml
+msgid "Import Events…"
+msgstr "Importer des événements…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
@@ -2063,21 +2312,6 @@ msgstr ""
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "Plus d'options…"
-
-#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · Toute la journée"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"

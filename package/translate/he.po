@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:00+0200\n"
+"POT-Creation-Date: 2026-10-19 12:11+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -163,6 +163,10 @@ msgstr "האימות מול Google נכשל: %1"
 msgid "Error fetching calendar: %1"
 msgstr "שגיאה במשיכת לוח השנה: %1"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Not logged in to Google Calendar"
+msgstr "לא מחובר ל־Google Calendar"
+
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
 msgstr "iCalendar"
@@ -176,6 +180,7 @@ msgid "Could not load %1: %2"
 msgstr "לא ניתן לטעון את %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "חגים"
 
@@ -187,6 +192,20 @@ msgstr "מטלות"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "אחר"
+
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Calendars"
+msgstr "לוחות שנה"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "No calendars selected in the settings."
+msgstr "לא נבחרו לוחות שנה בהגדרות."
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Show All"
+msgstr "הצגת הכול"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -251,7 +270,7 @@ msgstr "שמירה"
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -368,12 +387,6 @@ msgstr "יישומון לשולחן העבודה"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
 msgstr "רישום ניפוי שגיאות ועמודי הגדרות נוספים"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendars"
-msgstr "לוחות שנה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -898,7 +911,7 @@ msgstr "כתובת https://‎ או קובץ %1/*.ics מקומי"
 msgid "Browse"
 msgstr "עיון"
 
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (.ics)"
 
@@ -983,6 +996,19 @@ msgstr "גובה החלון הקופץ"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "שבוע ויום"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "ימים מוצגים"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "7 days"
+msgstr "7 ימים"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "שבוע עבודה (ללא סוף השבוע)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
@@ -1428,12 +1454,16 @@ msgstr "מוחק את כל המופעים של האירוע החוזר הזה."
 msgid "Duplicate"
 msgstr "שכפול"
 
+#: ../contents/ui/EventDetailsView.qml
+msgid "Private event"
+msgstr "אירוע פרטי"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "כל היום"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Repeats"
 msgstr "חוזר"
 
@@ -1570,7 +1600,7 @@ msgstr "צבע לוח השנה"
 msgid "Does not repeat"
 msgstr "ללא חזרה"
 
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
 msgid "Daily"
 msgstr "יומי"
 
@@ -1696,6 +1726,49 @@ msgid "Remove video conferencing"
 msgstr "הסרת שיחת הווידאו"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Busy"
+msgstr "עסוק"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Free"
+msgstr "פנוי"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Busy or Free"
+msgid "Show as: %1"
+msgstr "הצגה בתור: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Show as"
+msgstr "הצגה בתור"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Calendar default"
+msgstr "ברירת המחדל של לוח השנה"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Public"
+msgstr "ציבורי"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Private"
+msgstr "פרטי"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Calendar default, Public or Private"
+msgid "Visibility: %1"
+msgstr "חשיפה: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Visibility"
+msgstr "חשיפה"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Reminders"
 msgstr "תזכורות"
 
@@ -1780,6 +1853,194 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "תיאור"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "לוח שנה זה לא יכול לייבא אירועים"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file."
+msgstr "לא ניתן לקרוא את הקובץ."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr "קריאת קובצי ‎.ics דורשת את מודול ה־Python‏ icalendar ‏(python-icalendar)."
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file: %1"
+msgstr "לא ניתן לקרוא את הקובץ: %1"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · כל היום"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
+
+#: ../contents/ui/ImportView.qml
+msgid "Changed occurrence of a repeating event"
+msgstr "מופע שהשתנה של אירוע חוזר"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "כל יום (%1)"
+msgstr[1] "כל %1 ימים"
+msgstr[2] "כל %1 ימים"
+msgstr[3] "כל %1 ימים"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "כל שבוע (%1)"
+msgstr[1] "כל %1 שבועות"
+msgstr[2] "כל %1 שבועות"
+msgstr[3] "כל %1 שבועות"
+
+#: ../contents/ui/ImportView.qml
+msgid "Weekly"
+msgstr "שבועי"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly / Every 2 weeks, %2 = days"
+msgid "%1 on %2"
+msgstr "%1 בימי %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "כל חודש (%1)"
+msgstr[1] "כל %1 חודשים"
+msgstr[2] "כל %1 חודשים"
+msgstr[3] "כל %1 חודשים"
+
+#: ../contents/ui/ImportView.qml
+msgid "Monthly"
+msgstr "חודשי"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "כל שנה (%1)"
+msgstr[1] "כל %1 שנים"
+msgstr[2] "כל %1 שנים"
+msgstr[3] "כל %1 שנים"
+
+#: ../contents/ui/ImportView.qml
+msgid "Yearly"
+msgstr "שנתי"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%2 = Weekly on Monday, ..."
+msgid "%2, %1 time"
+msgid_plural "%2, %1 times"
+msgstr[0] "%2, פעם אחת (%1)"
+msgstr[1] "%2, %1 פעמים"
+msgstr[2] "%2, %1 פעמים"
+msgstr[3] "%2, %1 פעמים"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly on Monday, ..., %2 = date"
+msgid "%1, until %2"
+msgstr "%1, עד %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 exception"
+msgid_plural "%1 exceptions"
+msgstr[0] "חריגה %1"
+msgstr[1] "%1 חריגות"
+msgstr[2] "%1 חריגות"
+msgstr[3] "%1 חריגות"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "סגירה"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "ייבוא אירועים"
+
+#: ../contents/ui/ImportView.qml
+msgid "Import"
+msgstr "ייבוא"
+
+#: ../contents/ui/ImportView.qml
+msgid "No file chosen"
+msgstr "לא נבחר קובץ"
+
+#: ../contents/ui/ImportView.qml
+msgid "Choose File…"
+msgstr "בחירת קובץ…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading the file…"
+msgstr "הקובץ נקרא…"
+
+#: ../contents/ui/ImportView.qml
+msgid "No events in this file"
+msgstr "אין אירועים בקובץ זה"
+
+#: ../contents/ui/ImportView.qml
+msgid "(No title)"
+msgstr "(ללא כותרת)"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 cancelled event isn't imported."
+msgid_plural "%1 cancelled events aren't imported."
+msgstr[0] "%1 אירוע שבוטל לא מיובא."
+msgstr[1] "%1 אירועים שבוטלו לא מיובאים."
+msgstr[2] "%1 אירועים שבוטלו לא מיובאים."
+msgstr[3] "%1 אירועים שבוטלו לא מיובאים."
+
+#: ../contents/ui/ImportView.qml
+msgid "Calendar:"
+msgstr "לוח שנה:"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Guests and the organizer aren't imported, and no invitations are sent. "
+"Importing the same event again updates it."
+msgstr ""
+"האורחים והמארגן לא מיובאים, ולא נשלחות הזמנות. ייבוא חוזר של אותו אירוע "
+"מעדכן אותו."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
+"the settings."
+msgstr ""
+"לייבוא נדרש לוח שנה של Google Calendar שניתן לערוך. יש להתחבר ל־Google "
+"Calendar בהגדרות."
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing… %1 of %2"
+msgstr "מתבצע ייבוא… %1 מתוך %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] "אירוע %1 יובא"
+msgstr[1] "%1 אירועים יובאו"
+msgstr[2] "%1 אירועים יובאו"
+msgstr[3] "%1 אירועים יובאו"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 failed: %2"
+msgid_plural "%1 failed, eg: %2"
+msgstr[0] "%1 נכשל: %2"
+msgstr[1] "%1 נכשלו, למשל: %2"
+msgstr[2] "%1 נכשלו, למשל: %2"
+msgstr[3] "%1 נכשלו, למשל: %2"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
@@ -1911,6 +2172,10 @@ msgstr "סימון “%1” כהסתיים"
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "אירוע חדש…"
+
+#: ../contents/ui/main.qml
+msgid "Import Events…"
+msgstr "ייבוא אירועים…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
@@ -2059,21 +2324,6 @@ msgstr "יש להקליד מה, מתי ואיפה. ללא יום, האירוע �
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "אפשרויות נוספות…"
-
-#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · כל היום"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"

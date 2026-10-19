@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 12:00+0200\n"
+"POT-Creation-Date: 2026-10-19 12:11+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -164,6 +164,10 @@ msgstr "Google kimlik doğrulaması başarısız: %1"
 msgid "Error fetching calendar: %1"
 msgstr "Takvim alınırken hata: %1"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Not logged in to Google Calendar"
+msgstr "Google Takvim'de oturum açılmadı"
+
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "iCalendar"
 msgstr "iCalendar"
@@ -177,6 +181,7 @@ msgid "Could not load %1: %2"
 msgstr "%1 yüklenemedi: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "Tatiller"
 
@@ -188,6 +193,20 @@ msgstr "Yapılacaklar"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Diğer"
+
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Calendars"
+msgstr "Takvimler"
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "No calendars selected in the settings."
+msgstr "Ayarlarda hiç takvim seçilmedi."
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Show All"
+msgstr "Tümünü Göster"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -249,7 +268,7 @@ msgstr "Kaydet"
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
 msgid "Cancel"
 msgstr "İptal"
 
@@ -366,12 +385,6 @@ msgstr "Masaüstü araç takımı"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Hata ayıklama günlüğü ve ek ayar sayfaları"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendars"
-msgstr "Takvimler"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -911,7 +924,7 @@ msgstr "https:// URL'si veya yerel %1/*.ics dosyası"
 msgid "Browse"
 msgstr "Tara"
 
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -996,6 +1009,19 @@ msgstr "Açılır pencere yüksekliği"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
 msgstr "Hafta ve Gün"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Gösterilen günler"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "7 days"
+msgstr "7 gün"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "İş haftası (hafta sonu hariç)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Working hours start"
@@ -1440,12 +1466,16 @@ msgstr "Bu yinelenen etkinliğin tüm tekrarlarını siler."
 msgid "Duplicate"
 msgstr "Çoğalt"
 
+#: ../contents/ui/EventDetailsView.qml
+msgid "Private event"
+msgstr "Gizli etkinlik"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "Tüm gün"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Repeats"
 msgstr "Tekrarlanır"
 
@@ -1580,7 +1610,7 @@ msgstr "Takvim rengi"
 msgid "Does not repeat"
 msgstr "Tekrarlanmaz"
 
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
 msgid "Daily"
 msgstr "Her gün"
 
@@ -1696,6 +1726,49 @@ msgid "Remove video conferencing"
 msgstr "Görüntülü toplantıyı kaldır"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Busy"
+msgstr "Meşgul"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "show the event's time as"
+msgid "Free"
+msgstr "Müsait"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Busy or Free"
+msgid "Show as: %1"
+msgstr "Durum: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Show as"
+msgstr "Durum"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Calendar default"
+msgstr "Varsayılan görünürlük"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Public"
+msgstr "Herkese açık"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "event visibility"
+msgid "Private"
+msgstr "Gizli"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "%1 = Calendar default, Public or Private"
+msgid "Visibility: %1"
+msgstr "Görünürlük: %1"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Visibility"
+msgstr "Görünürlük"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Reminders"
 msgstr "Hatırlatıcılar"
 
@@ -1772,6 +1845,178 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Açıklama"
+
+#: ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "Bu takvim etkinlikleri içe aktaramaz"
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file."
+msgstr "Dosya okunamadı."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr ""
+".ics dosyalarını okumak için Python icalendar modülü (python-icalendar) "
+"gerekir."
+
+#: ../contents/ui/ImportView.qml
+msgid "Could not read the file: %1"
+msgstr "Dosya okunamadı: %1"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/WeekView.qml
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · Tüm gün"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
+
+#: ../contents/ui/ImportView.qml
+msgid "Changed occurrence of a repeating event"
+msgstr "Yinelenen bir etkinliğin değiştirilmiş tekrarı"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 day"
+msgid_plural "Every %1 days"
+msgstr[0] "%1 günde bir"
+msgstr[1] "%1 günde bir"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "%1 haftada bir"
+msgstr[1] "%1 haftada bir"
+
+#: ../contents/ui/ImportView.qml
+msgid "Weekly"
+msgstr "Her hafta"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly / Every 2 weeks, %2 = days"
+msgid "%1 on %2"
+msgstr "%1 %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 month"
+msgid_plural "Every %1 months"
+msgstr[0] "%1 ayda bir"
+msgstr[1] "%1 ayda bir"
+
+#: ../contents/ui/ImportView.qml
+msgid "Monthly"
+msgstr "Her ay"
+
+#: ../contents/ui/ImportView.qml
+msgid "Every %1 year"
+msgid_plural "Every %1 years"
+msgstr[0] "%1 yılda bir"
+msgstr[1] "%1 yılda bir"
+
+#: ../contents/ui/ImportView.qml
+msgid "Yearly"
+msgstr "Her yıl"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%2 = Weekly on Monday, ..."
+msgid "%2, %1 time"
+msgid_plural "%2, %1 times"
+msgstr[0] "%2, %1 kez"
+msgstr[1] "%2, %1 kez"
+
+#: ../contents/ui/ImportView.qml
+msgctxt "%1 = Weekly on Monday, ..., %2 = date"
+msgid "%1, until %2"
+msgstr "%1, %2 tarihine kadar"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 exception"
+msgid_plural "%1 exceptions"
+msgstr[0] "%1 istisna"
+msgstr[1] "%1 istisna"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Kapat"
+
+#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Etkinlikleri İçe Aktar"
+
+#: ../contents/ui/ImportView.qml
+msgid "Import"
+msgstr "İçe Aktar"
+
+#: ../contents/ui/ImportView.qml
+msgid "No file chosen"
+msgstr "Dosya seçilmedi"
+
+#: ../contents/ui/ImportView.qml
+msgid "Choose File…"
+msgstr "Dosya Seç…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Reading the file…"
+msgstr "Dosya okunuyor…"
+
+#: ../contents/ui/ImportView.qml
+msgid "No events in this file"
+msgstr "Bu dosyada etkinlik yok"
+
+#: ../contents/ui/ImportView.qml
+msgid "(No title)"
+msgstr "(Başlıksız)"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 cancelled event isn't imported."
+msgid_plural "%1 cancelled events aren't imported."
+msgstr[0] "%1 iptal edilmiş etkinlik içe aktarılmaz."
+msgstr[1] "%1 iptal edilmiş etkinlik içe aktarılmaz."
+
+#: ../contents/ui/ImportView.qml
+msgid "Calendar:"
+msgstr "Takvim:"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Guests and the organizer aren't imported, and no invitations are sent. "
+"Importing the same event again updates it."
+msgstr ""
+"Konuklar ve düzenleyen içe aktarılmaz, davet de gönderilmez. Aynı etkinliği "
+"yeniden içe aktarmak onu günceller."
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
+"the settings."
+msgstr ""
+"İçe aktarmak için düzenleyebileceğiniz bir Google Takvim gerekir. Ayarlardan "
+"Google Takvim'de oturum açın."
+
+#: ../contents/ui/ImportView.qml
+msgid "Importing… %1 of %2"
+msgstr "İçe aktarılıyor… %1 / %2"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] "%1 etkinlik içe aktarıldı"
+msgstr[1] "%1 etkinlik içe aktarıldı"
+
+#: ../contents/ui/ImportView.qml
+msgid "%1 failed: %2"
+msgid_plural "%1 failed, eg: %2"
+msgstr[0] "%1 başarısız: %2"
+msgstr[1] "%1 başarısız, örn.: %2"
 
 #: ../contents/ui/JoinPill.qml
 msgid "Join"
@@ -1905,6 +2150,10 @@ msgstr "“%1” etkinliğini bitti olarak işaretle"
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Yeni Etkinlik…"
+
+#: ../contents/ui/main.qml
+msgid "Import Events…"
+msgstr "Etkinlikleri İçe Aktar…"
 
 #: ../contents/ui/main.qml
 msgid "Open Google Calendar"
@@ -2053,21 +2302,6 @@ msgstr ""
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "Daha fazla seçenek…"
-
-#: ../contents/ui/SearchView.qml ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · Tüm gün"
-
-#: ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
