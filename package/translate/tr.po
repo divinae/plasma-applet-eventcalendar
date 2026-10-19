@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:28+0200\n"
+"POT-Creation-Date: 2026-10-19 08:32+0200\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1667,6 +1667,10 @@ msgid "Could not connect."
 msgstr "Bağlanılamadı."
 
 #: ../contents/ui/Logic.qml
+msgid "The weather service is not available right now."
+msgstr "Hava durumu hizmeti şu anda kullanılamıyor."
+
+#: ../contents/ui/Logic.qml
 msgid "Weather API limit reached"
 msgstr "Hava durumu API sınırına ulaşıldı"
 
@@ -1809,7 +1813,7 @@ msgstr[1] "%1 dakika içinde yeniden denenecek."
 msgid "Can't connect. Showing the last loaded events."
 msgstr "Bağlanılamıyor. Son yüklenen etkinlikler gösteriliyor."
 
-#: ../contents/ui/PopupView.qml
+#: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Şimdi Yeniden Dene"
 

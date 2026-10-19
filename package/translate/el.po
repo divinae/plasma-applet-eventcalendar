@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:28+0200\n"
+"POT-Creation-Date: 2026-10-19 08:32+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1679,6 +1679,10 @@ msgid "Could not connect."
 msgstr "Αδυναμία σύνδεσης."
 
 #: ../contents/ui/Logic.qml
+msgid "The weather service is not available right now."
+msgstr "Η υπηρεσία καιρού δεν είναι διαθέσιμη αυτή τη στιγμή."
+
+#: ../contents/ui/Logic.qml
 msgid "Weather API limit reached"
 msgstr "Συμπληρώθηκε το όριο του API καιρού"
 
@@ -1821,7 +1825,7 @@ msgstr[1] "Νέα προσπάθεια σε %1 λεπτά."
 msgid "Can't connect. Showing the last loaded events."
 msgstr "Αδυναμία σύνδεσης. Εμφανίζονται τα τελευταία φορτωμένα συμβάντα."
 
-#: ../contents/ui/PopupView.qml
+#: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Νέα προσπάθεια τώρα"
 

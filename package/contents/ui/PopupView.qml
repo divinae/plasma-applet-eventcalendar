@@ -720,6 +720,8 @@ MouseArea {
 			weatherCurrent: logic.currentWeatherData
 			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
 			weatherLoading: logic.weatherLoading
+			weatherError: logic.lastForecastErr ? String(logic.lastForecastErr) : ""
+			onWeatherRetryRequested: logic.updateWeather(true)
 			showHeader: false
 			// Make sure the visible week's (or day's) month is fetched.
 			onWeekStartChanged: {

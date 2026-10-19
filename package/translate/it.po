@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:28+0200\n"
+"POT-Creation-Date: 2026-10-19 08:32+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1551,6 +1551,10 @@ msgid "Could not connect."
 msgstr "Impossibile connettersi."
 
 #: ../contents/ui/Logic.qml
+msgid "The weather service is not available right now."
+msgstr "Il servizio meteo non è disponibile al momento."
+
+#: ../contents/ui/Logic.qml
 msgid "Weather API limit reached"
 msgstr "Raggiunto il limite dell'API del meteo"
 
@@ -1687,7 +1691,7 @@ msgstr[1] "Nuovo tentativo tra %1 minuti."
 msgid "Can't connect. Showing the last loaded events."
 msgstr "Impossibile connettersi. Vengono mostrati gli ultimi eventi caricati."
 
-#: ../contents/ui/PopupView.qml
+#: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Riprova ora"
 

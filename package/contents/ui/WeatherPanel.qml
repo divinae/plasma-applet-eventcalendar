@@ -20,10 +20,12 @@ ColumnLayout {
 	property string locationName: ""
 	property bool compact: false // One row above the grid when the popup is narrow
 	property bool loading: false // A forecast request is running
+	property string errorText: "" // The last request failed
+	signal retryRequested()
 	readonly property bool hasData: !!current || !!today || hourly.length > 0
 	// First load: a loading view instead of the (empty) sections. Refreshes keep the old data.
 	readonly property bool showLoading: isSetup && loading && !hasData
-	readonly property bool showData: isSetup && !showLoading
+	readonly property bool showData: isSetup && !showLoading && (hasData || !errorText)
 
 	spacing: Kirigami.Units.smallSpacing
 
@@ -71,6 +73,35 @@ ColumnLayout {
 			wrapMode: Text.Wrap
 			text: i18n("Set a location in Settings > Weather to see the forecast here.")
 			opacity: 0.7
+		}
+	}
+
+	// No forecast yet and the request failed: why, and a way to try again.
+	ColumnLayout {
+		visible: panel.isSetup && !panel.loading && !panel.hasData && !!panel.errorText
+		Layout.fillWidth: true
+		Layout.topMargin: panel.compact ? 0 : Kirigami.Units.gridUnit * 3
+		spacing: Kirigami.Units.largeSpacing
+		Kirigami.Icon {
+			visible: !panel.compact
+			Layout.alignment: Qt.AlignHCenter
+			source: "weather-none-available"
+			Layout.preferredWidth: Kirigami.Units.iconSizes.large
+			Layout.preferredHeight: Layout.preferredWidth
+			opacity: 0.6
+		}
+		PlasmaComponents3.Label {
+			Layout.fillWidth: true
+			horizontalAlignment: Text.AlignHCenter
+			wrapMode: Text.Wrap
+			text: panel.errorText
+			opacity: 0.7
+		}
+		PlasmaComponents3.Button {
+			Layout.alignment: Qt.AlignHCenter
+			icon.name: "view-refresh"
+			text: i18n("Retry Now")
+			onClicked: panel.retryRequested()
 		}
 	}
 

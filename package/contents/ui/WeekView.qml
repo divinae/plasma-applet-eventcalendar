@@ -47,6 +47,8 @@ Item {
 	property var weatherCurrent: null
 	property bool weatherIsSetup: false
 	property bool weatherLoading: false
+	property string weatherError: "" // The last forecast request failed
+	signal weatherRetryRequested()
 	readonly property bool showWeather: Object.keys(weatherByDay).length > 0 || weatherIsSetup
 
 	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
@@ -532,6 +534,8 @@ Item {
 		height: parent.height - y - Kirigami.Units.largeSpacing
 		isSetup: weekView.weatherIsSetup
 		loading: weekView.weatherLoading
+		errorText: weekView.weatherError
+		onRetryRequested: weekView.weatherRetryRequested()
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		isToday: weekView.showingToday
 		current: weekView.showingToday ? weekView.weatherCurrent : null
@@ -561,6 +565,8 @@ Item {
 			compact: true
 			isSetup: weekView.weatherIsSetup
 			loading: weekView.weatherLoading
+			errorText: weekView.weatherError
+			onRetryRequested: weekView.weatherRetryRequested()
 			isToday: weekView.showingToday
 			current: weekView.showingToday ? weekView.weatherCurrent : null
 			today: weekView.dayWeather(weekView.weekStart)

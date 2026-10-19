@@ -140,6 +140,10 @@ Item {
 			logic.lastForecastErr = i18n("Could not connect.") + '\n' + i18n("Will try again soon.")
 			logic.weatherNetworkFailed = true
 			logic.networkFailed()
+		} else if (xhr && xhr.status >= 500 && xhr.status < 600) {
+			// The service is down or overloaded (eg: Open-Meteo's 503): try again soon, not in an hour.
+			logic.lastForecastErr = i18n("The weather service is not available right now.") + '\n' + i18n("Will try again soon.")
+			logic.scheduleWeatherRetry()
 		} else if (xhr && xhr.status === 429) {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			var msg = i18n("Weather API limit reached")
@@ -150,6 +154,26 @@ Item {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			logic.lastForecastErr = err
 		}
+	}
+
+	// Server errors: retried after 30 s, 1, 2, then every 5 minutes, until a forecast arrives.
+	property int weatherRetries: 0
+	function scheduleWeatherRetry() {
+		if (weatherRetryTimer.running) {
+			return // Daily and hourly both failed: one retry
+		}
+		var delays = [30, 60, 120, 300]
+		weatherRetryTimer.interval = delays[Math.min(weatherRetries, delays.length - 1)] * 1000
+		weatherRetries++
+		weatherRetryTimer.start()
+	}
+	Timer {
+		id: weatherRetryTimer
+		onTriggered: logic.updateWeather(true)
+	}
+	function weatherArrived() {
+		weatherRetries = 0
+		weatherRetryTimer.stop()
 	}
 
 	function updateDailyWeather() {
@@ -165,6 +189,7 @@ Item {
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
 			logic.weatherNetworkFailed = false
+			logic.weatherArrived()
 			logic.networkRecovered()
 			logic.dailyWeatherData = data
 			if (data.current) {
@@ -187,6 +212,7 @@ Item {
 			logic.lastForecastAt = Date.now()
 			logic.lastForecastErr = null
 			logic.weatherNetworkFailed = false
+			logic.weatherArrived()
 			logic.networkRecovered()
 			logic.hourlyWeatherData = data
 			logic.currentWeatherData = data.current || data.list[0]
