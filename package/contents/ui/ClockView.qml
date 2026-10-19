@@ -95,27 +95,35 @@ Item {
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
 		spacing: Math.max(2, Math.round(clock.width / 12))
 
-		// Next meeting in a vertical panel, above the time. Before it: a dot whose color says how
-		// close it is (gray, orange from 15 min, red from 5 min). During it: a progress bar. The
+		// Next meeting in a vertical panel, above the time. Before it: the time until it starts ("5m").
+		// During it: a progress bar. In the clock's text color, which contrasts with the panel. The
 		// tooltip has the details.
 		Item {
 			id: meetingPill
 			visible: clock.showMeetingPill
 			anchors.horizontalCenter: parent.horizontalCenter
 			width: Math.max(16, Math.min(clock.width - 4, Kirigami.Units.gridUnit * 2.5))
-			height: Math.max(7, Math.round(width / 3.5))
+			height: Math.max(9, Math.round(clock.width * 0.45))
 			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
 			readonly property int minutesUntil: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventMinutesUntil : 0
 
-			Rectangle {
+			PlasmaComponents3.Label {
 				visible: !meetingPill.inProgress
 				anchors.centerIn: parent
-				width: parent.height
-				height: width
-				radius: width / 2
-				color: meetingPill.minutesUntil <= 5 ? Kirigami.Theme.negativeTextColor
-					: meetingPill.minutesUntil <= 15 ? Kirigami.Theme.neutralTextColor
-					: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
+				width: Math.max(parent.width, clock.width - 2)
+				horizontalAlignment: Text.AlignHCenter
+				// "5m", from an hour "1h"
+				text: {
+					var minutes = Math.max(1, meetingPill.minutesUntil)
+					return LocaleFuncs.durationShortFormat(minutes >= 60 ? Math.floor(minutes / 60) * 3600 : minutes * 60)
+				}
+				color: timeLabel1.color
+				font.family: appletConfig.clockFontFamily
+				font.pointSize: -1
+				font.pixelSize: Math.max(8, Math.round(clock.width * 0.38))
+				font.weight: Font.Bold
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 7
 			}
 			// In the clock's text color: it always contrasts with the panel, like the time does
 			// (a calendar's or the highlight color can be too light on a light panel).
