@@ -41,6 +41,7 @@ function fullEvent(overrides) {
 			conferenceSolution: { name: 'Google Meet', iconUri: 'https://x/icon.png' },
 		},
 		transparency: 'transparent',
+		visibility: 'private',
 		conflictsWith: [{ summary: 'Overlapping meeting' }],
 		accessToken: 'ya29.must-not-leak',
 		extendedProperties: { private: { refreshToken: '1//nope' } },
@@ -67,7 +68,7 @@ function testWhitelist() {
 	const event = data.calendars['acc_1::work@example.test'][0]
 	assert.deepStrictEqual(Object.keys(event).sort(), [
 		'attendees', 'backgroundColor', 'canEdit', 'colorId', 'conferenceData', 'end', 'fromCache', 'hangoutLink',
-		'htmlLink', 'id', 'location', 'recurringEventId', 'reminderMinutes', 'start', 'status', 'summary', 'transparency',
+		'htmlLink', 'id', 'location', 'recurringEventId', 'reminderMinutes', 'start', 'status', 'summary', 'transparency', 'visibility',
 	])
 	assert.deepStrictEqual(event.attendees, [{ self: true, responseStatus: 'declined' }])
 	assert.deepStrictEqual(event.reminderMinutes, [10, 0])

@@ -234,11 +234,32 @@ Rectangle {
 					ColumnLayout {
 						Layout.fillWidth: true
 						spacing: Kirigami.Units.smallSpacing
-						Kirigami.Heading {
+						RowLayout {
 							Layout.fillWidth: true
-							level: 2
-							wrapMode: Text.Wrap
-							text: details.eventItem ? details.eventItem.summary : ""
+							Kirigami.Heading {
+								Layout.fillWidth: true
+								level: 2
+								wrapMode: Text.Wrap
+								text: details.eventItem ? details.eventItem.summary : ""
+							}
+							// Private event (Google visibility): only you see its details.
+							Kirigami.Icon {
+								id: privateIcon
+								readonly property string visibility: details.eventItem && details.eventItem.visibility || ""
+								visible: visibility === 'private' || visibility === 'confidential'
+								source: "object-locked"
+								Layout.preferredWidth: Kirigami.Units.iconSizes.small
+								Layout.preferredHeight: Kirigami.Units.iconSizes.small
+								Layout.alignment: Qt.AlignTop
+								opacity: 0.7
+								Accessible.name: i18n("Private event")
+								HoverHandler {
+									id: privateHover
+								}
+								PlasmaComponents3.ToolTip.text: i18n("Private event")
+								PlasmaComponents3.ToolTip.visible: privateHover.hovered
+								PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
 						}
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true

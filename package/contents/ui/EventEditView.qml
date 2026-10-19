@@ -243,6 +243,33 @@ Rectangle {
 		}
 	}
 
+	//--- Show as and visibility (Google): transparency 'opaque' (busy, the default) or 'transparent'
+	// (free); visibility 'default' (the calendar's), 'public', 'private' (or 'confidential', kept).
+	property string initialTransparency: "opaque"
+	property string transparency: "opaque"
+	property string initialVisibility: "default"
+	property string visibility: "default"
+	// New events and copies start from the defaults, so only other values are sent.
+	function fillAvailability(item, asCopy) {
+		transparency = item.transparency === 'transparent' ? 'transparent' : 'opaque'
+		visibility = item.visibility || 'default'
+		if (!asCopy) {
+			initialTransparency = transparency
+			initialVisibility = visibility
+		}
+	}
+	function addAvailabilityArgs(args) {
+		if (!supportsRecurrence) {
+			return
+		}
+		if (transparency !== initialTransparency) {
+			args.transparency = transparency
+		}
+		if (visibility !== initialVisibility) {
+			args.visibility = visibility
+		}
+	}
+
 	//--- Video conferencing (Google Meet)
 	readonly property bool hadConference: !isNew && !!(eventItem.hangoutLink || eventItem.conferenceData)
 	property string conferenceAction: "" // '', 'add' or 'remove'
@@ -420,6 +447,7 @@ Rectangle {
 			if (supportsRecurrence && remindersCustom) {
 				data.reminders = Reminders.toGoogle(reminderState)
 			}
+			addAvailabilityArgs(data)
 			if (supportsRecurrence) {
 				addConferenceArgs(data)
 				if (guests.length) {
@@ -448,6 +476,7 @@ Rectangle {
 				args.description = descriptionField.text
 			}
 			addColorArgs(args)
+			addAvailabilityArgs(args)
 			addConferenceArgs(args)
 			if (supportsRecurrence && remindersChanged) {
 				args.reminders = Reminders.toGoogle(reminderState)
@@ -515,6 +544,7 @@ Rectangle {
 			args.description = descriptionField.text
 		}
 		addColorArgs(args)
+		addAvailabilityArgs(args)
 		addConferenceArgs(args)
 		if (supportsRecurrence && remindersChanged) {
 			args.reminders = Reminders.toGoogle(reminderState)
@@ -582,6 +612,7 @@ Rectangle {
 			guests = initialGuests.slice()
 		}
 		fillReminders(item, asCopy)
+		fillAvailability(item, asCopy)
 		var allDay = !!(item.start && item.start.date)
 		allDayCheckBox.checked = allDay
 		var start = new Date(item.startDateTime)
@@ -1083,6 +1114,52 @@ Rectangle {
 						PlasmaComponents3.ToolTip.text: i18n("Remove video conferencing")
 						PlasmaComponents3.ToolTip.visible: hovered
 						PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+					}
+				}
+
+				// Show as busy / free, and who sees the details (Google).
+				RowLayout {
+					visible: form.supportsRecurrence
+					Layout.fillWidth: true
+					Kirigami.Icon {
+						source: "view-calendar-day"
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+						opacity: 0.7
+					}
+					FormComboBox {
+						id: transparencyCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'opaque', text: i18nc("show the event's time as", "Busy") },
+							{ key: 'transparent', text: i18nc("show the event's time as", "Free") },
+						]
+						currentIndex: form.transparency === 'transparent' ? 1 : 0
+						displayText: i18nc("%1 = Busy or Free", "Show as: %1", currentText)
+						onActivated: function(index) { form.transparency = model[index].key }
+						Accessible.name: i18n("Show as")
+					}
+					FormComboBox {
+						id: visibilityCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'default', text: i18nc("event visibility", "Calendar default") },
+							{ key: 'public', text: i18nc("event visibility", "Public") },
+							{ key: 'private', text: i18nc("event visibility", "Private") },
+						]
+						// 'confidential' is an old name of private.
+						currentIndex: form.visibility === 'public' ? 1 : (form.visibility === 'private' || form.visibility === 'confidential' ? 2 : 0)
+						displayText: i18nc("%1 = Calendar default, Public or Private", "Visibility: %1", currentText)
+						onActivated: function(index) {
+							var key = model[index].key
+							// Keep 'confidential' unless another choice than Private is picked.
+							if (!(key === 'private' && form.visibility === 'confidential')) {
+								form.visibility = key
+							}
+						}
+						Accessible.name: i18n("Visibility")
 					}
 				}
 
