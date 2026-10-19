@@ -86,6 +86,65 @@ ConfigPage {
 				to: 24
 			}
 			FormCard.FormDelegateSeparator {}
+			// An extra column of hour labels in another time zone.
+			FormCard.AbstractFormDelegate {
+				id: secondZoneDelegate
+				property string zone: page.configBridge.read("weekViewSecondTimeZone", "") || ""
+				function setZone(value) {
+					zone = value
+					page.configBridge.write("weekViewSecondTimeZone", value)
+					zoneSearch.text = ""
+				}
+				background: null
+				contentItem: ColumnLayout {
+					spacing: Kirigami.Units.smallSpacing
+					RowLayout {
+						Layout.fillWidth: true
+						QQC2.Label {
+							Layout.fillWidth: true
+							text: i18n("Second time zone")
+						}
+						QQC2.Label {
+							text: secondZoneDelegate.zone ? secondZoneDelegate.zone.replace(/_/g, ' ') : i18nc("no second time zone", "None")
+							opacity: 0.7
+						}
+						QQC2.ToolButton {
+							visible: secondZoneDelegate.zone !== ""
+							icon.name: "edit-clear"
+							onClicked: secondZoneDelegate.setZone("")
+							Accessible.name: QQC2.ToolTip.text
+							QQC2.ToolTip.text: i18n("No second time zone")
+							QQC2.ToolTip.visible: hovered
+						}
+					}
+					QQC2.Label {
+						Layout.fillWidth: true
+						wrapMode: Text.Wrap
+						font: Kirigami.Theme.smallFont
+						opacity: 0.7
+						text: i18n("Its hours are shown next to the local ones in the Week and Day views.")
+					}
+					Kirigami.SearchField {
+						id: zoneSearch
+						Layout.fillWidth: true
+						placeholderText: i18n("Search time zones")
+						autoAccept: false // Enter picks the highlighted zone
+						Keys.onUpPressed: zoneList.moveUp()
+						Keys.onDownPressed: zoneList.moveDown()
+						onAccepted: zoneList.pickCurrent()
+					}
+					TimeZoneList {
+						id: zoneList
+						visible: zoneSearch.text !== ""
+						Layout.fillWidth: true
+						Layout.preferredHeight: Kirigami.Units.gridUnit * 8
+						query: zoneSearch.text
+						currentZone: secondZoneDelegate.zone
+						onPicked: function(zone) { secondZoneDelegate.setZone(zone) }
+					}
+				}
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Weather")
 				description: i18n("Forecast in the day headers and, in the Day view, a weather panel.")

@@ -654,6 +654,21 @@ CalendarManager {
 		}
 	}
 
+	// Find a time: busy times of people (Google freeBusy, through the calendar's account).
+	function supportsFreeBusy(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && typeof calendarManager.freeBusy === 'function'
+	}
+	// See GoogleCalendarManager.freeBusy. done(err, data)
+	function freeBusy(calendarId, ids, from, to, done) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.freeBusy === 'function') {
+			calendarManager.freeBusy(calendarId, ids, from, to, done)
+		} else {
+			done(i18n("This calendar can't show free / busy times"), null)
+		}
+	}
+
 	//--- CalendarManager: Calendar
 	// The calendars selected in settings (those with events loaded), for the popup header's
 	// calendar toggles: [{ id, name, color, group }], grouped by account (group = account label).

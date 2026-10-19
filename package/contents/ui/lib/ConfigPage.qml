@@ -174,6 +174,8 @@ KCM.SimpleKCM {
 	property var cfg_weekViewStartHourDefault
 	property var cfg_weekViewEndHour
 	property var cfg_weekViewEndHourDefault
+	property var cfg_weekViewSecondTimeZone
+	property var cfg_weekViewSecondTimeZoneDefault
 	property var cfg_showViewTabs
 	property var cfg_showViewTabsDefault
 	property var cfg_popupMode

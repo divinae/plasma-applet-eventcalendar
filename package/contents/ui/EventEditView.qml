@@ -4,12 +4,15 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "EventTypes.js" as EventTypes
 import "Guests.js" as Guests
+import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
 import "Reminders.js" as Reminders
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "code/ColorIdMap.js" as ColorIdMap
 import "code/GooglePalette.js" as GooglePalette
 import "lib/ColorUtil.js" as ColorUtil
@@ -132,10 +135,90 @@ Rectangle {
 	}
 	// Google needs a time zone on the start / end of recurring timed events (to expand them).
 	function withTimeZone(obj) {
-		if (obj.dateTime) {
-			obj.timeZone = calendarTimeZone()
+		if (obj.dateTime && !obj.timeZone) {
+			obj.timeZone = timeZone || calendarTimeZone()
 		}
 		return obj
+	}
+
+	//--- Time zone (Google): the editor's times are the wall clock in `timeZone` (the selectors
+	// show local Dates with that clock time; see TimeZone.toWallDate). '' = local time.
+	property string timeZone: ""
+	property string initialTimeZone: ""
+	property bool timeZoneTouched: false // Picked by the user: no longer follows the calendar
+	readonly property bool supportsTimeZone: supportsRecurrence
+	readonly property bool timeZoneChanged: supportsTimeZone && !allDayCheckBox.checked && timeZone !== initialTimeZone
+	// The local zone's id: from the time data engine (Plasma), else one with the same rules.
+	function localZoneName() {
+		var data = typeof timeModel !== "undefined" && timeModel.dataSource && timeModel.dataSource.data
+		var local = data && data.Local && data.Local.Timezone
+		if (local && TimeZone.knows(String(local))) {
+			return String(local)
+		}
+		return TimeZone.guessLocal(Date.now())
+	}
+	// The zone a new or edited event starts in: its own, its calendar's or the local one.
+	function defaultTimeZone(item) {
+		if (!supportsTimeZone) {
+			return ""
+		}
+		if (item && item.start && item.start.timeZone) {
+			return String(item.start.timeZone)
+		}
+		var calendar = calendarSelector.selectedCalendar
+		return calendar && calendar.timeZone ? String(calendar.timeZone) : localZoneName()
+	}
+	function toWall(instant) {
+		return TimeZone.knows(timeZone) ? TimeZone.toWallDate(timeZone, instant) : new Date(instant)
+	}
+	function fromWall(wallDate) {
+		return TimeZone.knows(timeZone) ? TimeZone.fromWallDate(timeZone, wallDate) : new Date(wallDate)
+	}
+	// The event's start / end instants.
+	function startInstant() {
+		return fromWall(durationSelector.startDateTime)
+	}
+	function endInstant() {
+		return fromWall(durationSelector.endDateTime)
+	}
+	// Picked by the user: the clock times stay, in the new zone (as in Google Calendar).
+	function setTimeZone(zone) {
+		timeZoneTouched = true
+		timeZone = zone
+	}
+	// Another zone showing the same instants (eg: a new event's calendar changed).
+	function moveToTimeZone(zone) {
+		var start = startInstant()
+		var end = endInstant()
+		timeZone = zone
+		durationSelector.startDateTime = toWall(start)
+		durationSelector.endDateTime = toWall(end)
+	}
+	property bool initialized: false
+	Connections {
+		target: calendarSelector
+		function onSelectedCalendarChanged() {
+			if (form.isNew && form.initialized && !form.timeZoneTouched) {
+				form.moveToTimeZone(form.defaultTimeZone(null))
+			}
+		}
+	}
+	// Local times of the event, when its zone shows another clock.
+	readonly property string localTimesText: {
+		if (!supportsTimeZone || allDayCheckBox.checked || !TimeZone.knows(timeZone)) {
+			return ""
+		}
+		var start = fromWall(durationSelector.startDateTime)
+		var end = fromWall(durationSelector.endDateTime)
+		if (TimeZone.matchesLocal(timeZone, start.getTime())) {
+			return ""
+		}
+		var format = { clock24h: appletConfig.clock24h }
+		var text = LocaleFuncs.formatEventTime(start, format) + " – " + LocaleFuncs.formatEventTime(end, format)
+		if (start.toDateString() !== durationSelector.startDateTime.toDateString()) {
+			text = Qt.formatDate(start, i18nc("event editor date format", "d MMM, yyyy")) + " " + text
+		}
+		return i18nc("%1 = start and end time in the local time zone", "%1 your time", text)
 	}
 	function refetch() {
 		logic.update()
@@ -270,6 +353,37 @@ Rectangle {
 		}
 	}
 
+	//--- Event type (Google): new events on a primary calendar can be out of office or focus time.
+	property string eventType: "default"
+	property string autoDeclineMode: "declineNone"
+	property string declineMessage: ""
+	property string chatStatus: "doNotDisturb"
+	readonly property bool canSetType: isNew && supportsRecurrence && !!calendarSelector.selectedCalendar
+		&& calendarSelector.selectedCalendar.primary === true
+	readonly property string effectiveType: canSetType ? eventType : "default"
+	// No guests, video call, location or free time on these (Google refuses them), nor all day.
+	readonly property bool isSpecialType: EventTypes.isSpecial(effectiveType)
+	onIsSpecialTypeChanged: {
+		if (isSpecialType) {
+			allDayCheckBox.checked = false
+		}
+	}
+	function setEventType(type) {
+		// A title for an empty one, as Google Calendar does.
+		var defaultTitles = ['', i18n("Out of office"), i18n("Focus time")]
+		if (defaultTitles.indexOf(titleField.text.trim()) >= 0) {
+			titleField.text = type === 'outOfOffice' ? defaultTitles[1] : (type === 'focusTime' ? defaultTitles[2] : '')
+		}
+		eventType = type
+	}
+	function addTypeArgs(data) {
+		EventTypes.applyTo(data, effectiveType, {
+			autoDeclineMode: autoDeclineMode,
+			declineMessage: declineMessage,
+			chatStatus: chatStatus,
+		})
+	}
+
 	//--- Video conferencing (Google Meet)
 	readonly property bool hadConference: !isNew && !!(eventItem.hangoutLink || eventItem.conferenceData)
 	property string conferenceAction: "" // '', 'add' or 'remove'
@@ -349,6 +463,48 @@ Rectangle {
 		guests = Guests.removeGuest(guests, email)
 	}
 
+	//--- Find a time (Google): the guests' busy times on the event's day, to pick a free slot.
+	property bool findTimeOpen: false
+	readonly property var otherGuests: guests.filter(function(guest) { return !guest.self && guest.email })
+	readonly property bool canFindTime: supportsRecurrence && !isSpecialType && !allDayCheckBox.checked
+		&& otherGuests.length > 0 && !!calendarSelector.selectedCalendarId
+		&& !!eventModel.supportsFreeBusy && eventModel.supportsFreeBusy(calendarSelector.selectedCalendarId)
+	function openFindTime() {
+		findTimeOpen = true
+	}
+	// You in Find a time: the primary calendar of the selected calendar's account (its id is the
+	// account's email), else Google's 'primary'.
+	function ownFreeBusyId() {
+		var id = String(calendarSelector.selectedCalendarId || '')
+		var i = id.indexOf('::')
+		var prefix = i > 0 ? id.slice(0, i + 2) : ''
+		var list = eventModel.getCalendarList()
+		for (var j = 0; j < list.length; j++) {
+			var calendarId = String(list[j].id || '')
+			if (list[j].primary === true && calendarId.indexOf(prefix) === 0) {
+				return calendarId.slice(prefix.length)
+			}
+		}
+		return 'primary'
+	}
+	function findTimePeople() {
+		var people = [{ id: ownFreeBusyId(), name: i18nc("you, in Find a time", "You") }]
+		otherGuests.forEach(function(guest) {
+			if (guest.email !== people[0].id) {
+				people.push({ id: guest.email, name: guest.displayName || guest.email, email: guest.email })
+			}
+		})
+		return people
+	}
+	// A slot picked in Find a time: same length, starting then.
+	function pickSlot(start) {
+		var length = endInstant().getTime() - startInstant().getTime()
+		var s = new Date(start)
+		durationSelector.startDateTime = toWall(s)
+		durationSelector.endDateTime = toWall(new Date(s.getTime() + length))
+		findTimeOpen = false
+	}
+
 	// Whether to ask before saving if guests get emails: 'invite' (new event with guests), 'update'
 	// (guests changed, or the event has guests and its time, place or video call changed) or ''.
 	property string sendUpdatesChoice: "" // 'all' or 'none' once answered
@@ -358,7 +514,7 @@ Rectangle {
 			return ''
 		}
 		if (isNew) {
-			return guests.length ? 'invite' : ''
+			return guests.length && !isSpecialType ? 'invite' : ''
 		}
 		if (guestsChanged) {
 			return 'update'
@@ -368,7 +524,7 @@ Rectangle {
 		}
 		var wasAllDay = !!(eventItem.start && eventItem.start.date)
 		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, startObj()) || dateObjChanged(eventItem.end, endObj())
-			|| (canEditRepeat && repeatChanged)
+			|| timeZoneChanged || (canEditRepeat && repeatChanged)
 		var placeChanged = Shared.hasChanged(eventItem.location, locationField.text)
 			|| (conferenceAction === 'add' && !hadConference) || (conferenceAction === 'remove' && hadConference)
 		return timeChanged || placeChanged ? 'update' : ''
@@ -394,16 +550,24 @@ Rectangle {
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + fieldsColumn.implicitHeight + Kirigami.Units.largeSpacing * 2
 
 
-	// Google start / end objects. All-day events end at midnight the next day.
+	// Google start / end objects. All-day events end at midnight the next day. Timed ones in UTC,
+	// with the editor's time zone (Google).
+	function timedObj(instant) {
+		var obj = { dateTime: Shared.dateTimeString(instant) }
+		if (supportsTimeZone && timeZone) {
+			obj.timeZone = timeZone
+		}
+		return obj
+	}
 	function startObj() {
 		if (!allDayCheckBox.checked) {
-			return { dateTime: Shared.dateTimeString(durationSelector.startDateTime) }
+			return timedObj(startInstant())
 		}
 		return { date: Shared.localeDateString(durationSelector.startDateTime) }
 	}
 	function endObj() {
 		if (!allDayCheckBox.checked) {
-			return { dateTime: Shared.dateTimeString(durationSelector.endDateTime) }
+			return timedObj(endInstant())
 		}
 		var dayAfter = new Date(durationSelector.endDateTime)
 		dayAfter.setDate(dayAfter.getDate() + 1)
@@ -460,6 +624,7 @@ Rectangle {
 				withTimeZone(data.start)
 				withTimeZone(data.end)
 			}
+			addTypeArgs(data)
 			// A new recurring event: its occurrences come from a refetch.
 			eventModel.createEventFromData(calendarSelector.selectedCalendarId, data, newRule ? refetch : null, requestParams(data))
 		} else if (editSeries) {
@@ -485,7 +650,7 @@ Rectangle {
 			var start = startObj()
 			var end = endObj()
 			var wasAllDay = !!(eventItem.start && eventItem.start.date)
-			if (wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, start) || dateObjChanged(eventItem.end, end)) {
+			if (wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, start) || dateObjChanged(eventItem.end, end) || timeZoneChanged) {
 				// The update replaces start / end as a whole, so switching all-day <-> timed is clean.
 				args.start = start
 				args.end = end
@@ -554,6 +719,7 @@ Rectangle {
 		var end = endObj()
 		var wasAllDay = !!(item.start && item.start.date)
 		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(item.start, start) || dateObjChanged(item.end, end)
+			|| timeZoneChanged
 		var occurrenceStart = new Date(item.startDateTime)
 		var rule = repeatRule()
 		var ruleChanged = repeatChanged
@@ -605,6 +771,13 @@ Rectangle {
 			if (item.hangoutLink || item.conferenceData) {
 				conferenceAction = 'add'
 			}
+			var typeOptions = EventTypes.optionsOf(item)
+			if (typeOptions) {
+				eventType = typeOptions.type
+				autoDeclineMode = typeOptions.autoDeclineMode
+				declineMessage = typeOptions.declineMessage
+				chatStatus = typeOptions.chatStatus
+			}
 		} else {
 			initialColorId = item.colorId ? String(item.colorId) : ""
 			colorId = initialColorId
@@ -615,12 +788,19 @@ Rectangle {
 		fillAvailability(item, asCopy)
 		var allDay = !!(item.start && item.start.date)
 		allDayCheckBox.checked = allDay
+		timeZone = defaultTimeZone(item)
+		if (!asCopy) {
+			initialTimeZone = timeZone
+		}
 		var start = new Date(item.startDateTime)
 		var end = new Date(item.endDateTime)
 		if (allDay) {
 			end.setDate(end.getDate() - 1) // Inclusive last day in the form
 			start.setHours(9, 0, 0, 0) // Times used if All day is unchecked
 			end.setHours(10, 0, 0, 0)
+		} else {
+			start = toWall(start)
+			end = toWall(end)
 		}
 		durationSelector.startDateTime = start
 		durationSelector.endDateTime = end
@@ -667,10 +847,12 @@ Rectangle {
 			var s = initialStart
 				? new Date(initialStart)
 				: new Date(initialDate.getFullYear(), initialDate.getMonth(), initialDate.getDate(), now.getHours() + 1, 0)
-			durationSelector.startDateTime = s
-			durationSelector.endDateTime = new Date(s.getTime() + 60 * 60 * 1000)
+			timeZone = defaultTimeZone(null)
+			durationSelector.startDateTime = toWall(s)
+			durationSelector.endDateTime = toWall(new Date(s.getTime() + 60 * 60 * 1000))
 			titleField.text = initialTitle
 		}
+		initialized = true
 		knownGuests = eventModel.knownGuestEmails ? eventModel.knownGuestEmails() : []
 		titleField.forceActiveFocus()
 		if (templateEvent) {
@@ -793,6 +975,71 @@ Rectangle {
 					enabled: form.isNew || form.canMove
 				}
 
+				// Event type (new events on a primary Google calendar).
+				RowLayout {
+					visible: form.canSetType
+					Layout.fillWidth: true
+					Kirigami.Icon {
+						source: form.effectiveType === 'outOfOffice' ? "user-away" : (form.effectiveType === 'focusTime' ? "audio-headphones" : "view-calendar-day")
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+						opacity: 0.7
+					}
+					FormComboBox {
+						id: eventTypeCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'default', text: i18nc("event type", "Event") },
+							{ key: 'outOfOffice', text: i18nc("event type", "Out of office") },
+							{ key: 'focusTime', text: i18nc("event type", "Focus time") },
+						]
+						currentIndex: EventTypes.TYPES.indexOf(form.eventType)
+						onActivated: function(index) { form.setEventType(model[index].key) }
+						Accessible.name: i18n("Event type")
+					}
+				}
+				ColumnLayout {
+					visible: form.isSpecialType
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+					FormComboBox {
+						id: declineCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'declineNone', text: i18n("Don't decline invitations") },
+							{ key: 'declineOnlyNewConflictingInvitations', text: i18n("Decline new invitations in this time") },
+							{ key: 'declineAllConflictingInvitations', text: i18n("Decline new and existing invitations in this time") },
+						]
+						currentIndex: EventTypes.DECLINE_MODES.indexOf(form.autoDeclineMode)
+						onActivated: function(index) { form.autoDeclineMode = model[index].key }
+						Accessible.name: i18n("Automatically decline")
+					}
+					PlasmaComponents3.TextField {
+						id: declineMessageField
+						visible: form.autoDeclineMode !== 'declineNone'
+						Layout.fillWidth: true
+						placeholderText: i18n("Message for declined invitations")
+						text: form.declineMessage
+						onTextEdited: form.declineMessage = text
+					}
+					FormComboBox {
+						visible: form.effectiveType === 'focusTime'
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'doNotDisturb', text: i18nc("Google Chat status during focus time", "Do not disturb") },
+							{ key: 'available', text: i18nc("Google Chat status during focus time", "Available") },
+						]
+						currentIndex: form.chatStatus === 'available' ? 1 : 0
+						displayText: i18nc("%1 = Do not disturb or Available", "Chat status: %1", currentText)
+						onActivated: function(index) { form.chatStatus = model[index].key }
+						Accessible.name: i18n("Chat status")
+					}
+				}
+
 				// Event color (Google): the calendar's color or one of Google's 11 event colors.
 				Flow {
 					id: colorRow
@@ -857,6 +1104,7 @@ Rectangle {
 
 				PlasmaComponents3.CheckBox {
 					id: allDayCheckBox
+					visible: !form.isSpecialType
 					text: i18n("All day")
 				}
 
@@ -864,6 +1112,80 @@ Rectangle {
 					id: durationSelector
 					Layout.fillWidth: true
 					showTime: !allDayCheckBox.checked
+				}
+
+				// Time zone of the times above (Google, timed events).
+				ColumnLayout {
+					id: timeZoneSection
+					visible: form.supportsTimeZone && !allDayCheckBox.checked
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+					property bool expanded: false
+
+					RowLayout {
+						Layout.fillWidth: true
+						Kirigami.Icon {
+							source: "preferences-system-time"
+							Layout.preferredWidth: Kirigami.Units.iconSizes.small
+							Layout.preferredHeight: Layout.preferredWidth
+							opacity: 0.7
+						}
+						PlasmaComponents3.ToolButton {
+							id: timeZoneButton
+							Layout.fillWidth: true
+							Layout.minimumWidth: 0
+							checked: timeZoneSection.expanded
+							onClicked: {
+								timeZoneSection.expanded = !timeZoneSection.expanded
+								if (timeZoneSection.expanded) {
+									timeZoneSearch.text = ""
+									timeZoneSearch.forceActiveFocus()
+								}
+							}
+							contentItem: RowLayout {
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									elide: Text.ElideRight
+									text: {
+										var zone = form.timeZone || i18n("Local time")
+										var abbr = TimeZone.abbreviation(form.timeZone, form.startInstant().getTime())
+										return i18nc("%1 = time zone id, eg: Europe/Warsaw", "Time zone: %1", zone.replace(/_/g, ' ')) + (abbr ? " (" + abbr + ")" : "")
+									}
+								}
+								PlasmaComponents3.Label {
+									visible: form.localTimesText !== ""
+									opacity: 0.7
+									text: form.localTimesText
+								}
+							}
+							Accessible.name: i18n("Time zone")
+						}
+					}
+					PlasmaComponents3.TextField {
+						id: timeZoneSearch
+						visible: timeZoneSection.expanded
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						placeholderText: i18n("Search time zones")
+						Keys.onUpPressed: timeZoneList.moveUp()
+						Keys.onDownPressed: timeZoneList.moveDown()
+						Keys.onEscapePressed: timeZoneSection.expanded = false
+						onAccepted: timeZoneList.pickCurrent()
+					}
+					TimeZoneList {
+						id: timeZoneList
+						visible: timeZoneSection.expanded
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.preferredHeight: Kirigami.Units.gridUnit * 9
+						query: timeZoneSearch.text
+						currentZone: form.timeZone
+						referenceTime: durationSelector.startDateTime.getTime()
+						onPicked: function(zone) {
+							form.setTimeZone(zone)
+							timeZoneSection.expanded = false
+						}
+					}
 				}
 
 				RowLayout {
@@ -1049,6 +1371,7 @@ Rectangle {
 
 				PlasmaComponents3.TextField {
 					id: locationField
+					visible: !form.isSpecialType
 					Layout.fillWidth: true
 					placeholderText: i18n("Location")
 				}
@@ -1056,7 +1379,7 @@ Rectangle {
 				// Google Meet: add one, or the event's video call with a remove button.
 				RowLayout {
 					id: conferenceRow
-					visible: form.supportsRecurrence && (form.hadConference || (form.meetAllowed && !form.isInvited))
+					visible: form.supportsRecurrence && !form.isSpecialType && (form.hadConference || (form.meetAllowed && !form.isInvited))
 					Layout.fillWidth: true
 					Kirigami.Icon {
 						source: "camera-web"
@@ -1129,6 +1452,7 @@ Rectangle {
 					}
 					FormComboBox {
 						id: transparencyCombo
+						visible: !form.isSpecialType // Always busy
 						Layout.fillWidth: true
 						textRole: "text"
 						model: [
@@ -1244,7 +1568,7 @@ Rectangle {
 				// Guests: add by email (with suggestions), remove with the chips' close button.
 				ColumnLayout {
 					id: guestsSection
-					visible: form.supportsRecurrence
+					visible: form.supportsRecurrence && !form.isSpecialType
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
 
@@ -1315,6 +1639,14 @@ Rectangle {
 						text: form.guestError
 					}
 
+					PlasmaComponents3.Button {
+						visible: form.canFindTime
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						icon.name: "view-calendar-day"
+						text: i18n("Find a Time")
+						onClicked: form.openFindTime()
+					}
+
 					Flow {
 						visible: form.guests.length > 0
 						Layout.fillWidth: true
@@ -1344,6 +1676,37 @@ Rectangle {
 					placeholderText: i18n("Description")
 					wrapMode: TextEdit.Wrap
 				}
+			}
+		}
+	}
+
+	// Find a time: a card over the form.
+	Loader {
+		anchors.fill: parent
+		active: form.findTimeOpen
+		z: 10
+		sourceComponent: Item {
+			Rectangle {
+				anchors.fill: parent
+				radius: form.radius
+				color: Kirigami.Theme.backgroundColor
+				opacity: 0.85
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: form.findTimeOpen = false
+			}
+			FindTimeView {
+				anchors.centerIn: parent
+				width: parent.width - Kirigami.Units.gridUnit
+				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit)
+				calendarId: calendarSelector.selectedCalendarId || ""
+				people: form.findTimePeople()
+				day: form.startInstant()
+				duration: form.endInstant().getTime() - form.startInstant().getTime()
+				selectedStart: form.startInstant().getTime()
+				onSlotPicked: function(start) { form.pickSlot(start) }
+				onCloseRequested: form.findTimeOpen = false
 			}
 		}
 	}

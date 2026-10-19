@@ -1215,6 +1215,45 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		})
 	}
 
+	//--- Free / busy (Find a time)
+	// Busy times of calendars (people's emails, or 'primary') of this account's view between from
+	// and to (Dates). done(err, data): data is Google's answer, { calendars: { id: { busy, errors } } };
+	// err a short message. calendarId: any calendar of the account (picks the account).
+	function freeBusy(calendarId, ids, from, to, done) {
+		if (!session.accessToken) {
+			done(i18n("Not logged in to Google Calendar"), null)
+			return
+		}
+		var func = function() {
+			Requests.postJSON({
+				url: 'https://www.googleapis.com/calendar/v3/freeBusy',
+				headers: {
+					"Authorization": "Bearer " + session.accessToken,
+				},
+				data: {
+					timeMin: from.toISOString(),
+					timeMax: to.toISOString(),
+					timeZone: 'UTC',
+					items: ids.map(function(id) { return { id: id } }),
+				},
+			}, function(err, data, xhr) {
+				if (!err && data && data.error) {
+					err = data
+				}
+				if (err) {
+					logger.log(calendarManagerId, 'freeBusy_err', xhr && xhr.status) // No emails in logs
+					done(xhr && Requests.isNetworkError(xhr) ? i18n("Could not connect") : i18n("Could not get the free / busy times"), null)
+					return
+				}
+				logger.debug(calendarManagerId, 'freeBusy', ids.length, 'calendars')
+				done(null, data)
+			})
+		}
+		withAccessToken(func, function(err, isNetworkError) {
+			done(isNetworkError ? i18n("Could not connect") : i18n("Google authentication failed: %1", err), null)
+		})
+	}
+
 	//--- CalendarManager
 	function getCalendarList() {
 		var account = getAccount()

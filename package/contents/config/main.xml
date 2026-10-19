@@ -84,6 +84,10 @@
 		<entry name="weekViewEndHour" type="int">
 			<default>20</default>
 		</entry>
+		<entry name="weekViewSecondTimeZone" type="String">
+			<!-- Week and Day views: hour labels of a second time zone (IANA id) in the hour column. Empty: none. -->
+			<default></default>
+		</entry>
 		<entry name="monthModeWidth" type="uint">
 			<default>700</default>
 		</entry>
