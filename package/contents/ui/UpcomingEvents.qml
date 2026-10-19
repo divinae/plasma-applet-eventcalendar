@@ -47,15 +47,32 @@ CalendarManager {
 		if (plasmoid.configuration.eventNotifySkipAllDay && eventItem.start && eventItem.start.date) {
 			return false
 		}
-		var attendees = eventItem.attendees
-		if (plasmoid.configuration.eventNotifySkipDeclined && attendees) {
-			for (var i = 0; i < attendees.length; i++) {
-				if (attendees[i].self && attendees[i].responseStatus === 'declined') {
-					return false
-				}
+		return !(plasmoid.configuration.eventNotifySkipDeclined && Shared.myResponse(eventItem) === 'declined')
+	}
+
+	// Every loaded event, calendar by calendar.
+	function allEventItems() {
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
+		}
+		return items
+	}
+
+	// Events the panel's next meeting and tooltip can show: none of calendars hidden in the popup's
+	// calendar menu (their reminders still come: it's a view filter), no tasks, no hidden declined
+	// ones, only ones that would be notified.
+	function viewCandidates() {
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			if (!Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
+				items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
 			}
 		}
-		return true
+		return items.filter(function(eventItem) {
+			return eventItem.kind !== 'tasks#task' && shouldNotify(eventItem)
+				&& !Shared.isHiddenDeclined(eventItem, plasmoid.configuration.showDeclinedEvents)
+		})
 	}
 
 	property int snoozeMinutes: plasmoid.configuration.eventReminderSnoozeMinutes // 0 = no Snooze button
@@ -156,10 +173,7 @@ CalendarManager {
 		if (!plasmoid.configuration.invitationNotificationEnabled) {
 			return
 		}
-		var items = []
-		for (var calendarId in eventsByCalendar) {
-			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
-		}
+		var items = allEventItems()
 		var now = timeModel.currentTime
 		var notified = Shared.toArray(plasmoid.configuration.invitationsNotified)
 		var pending = Invitations.pendingToday(items, now, notified)
@@ -192,13 +206,6 @@ CalendarManager {
 	//--- Daily agenda: today's events once a day, at the first check at or after the set time
 	// (also when the computer is turned on later). Only with synced events, else it would be empty.
 	property bool eventsSynced: false
-	function allEventItems() {
-		var items = []
-		for (var calendarId in eventsByCalendar) {
-			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
-		}
-		return items
-	}
 	function checkDailyAgenda() {
 		if (!plasmoid.configuration.dailyAgendaEnabled || !eventsSynced) {
 			return
@@ -351,34 +358,31 @@ CalendarManager {
 		var win = NotifyTiming.checkWindow(isFinite(lastNotifyCheck) ? lastNotifyCheck : null, now, 10 * 60000)
 		lastNotifyCheck = now
 		var sent = NotifyTiming.pruneSent(sentNotifications, now)
-		for (var calendarId in eventsByCalendar) {
-			var calendar = eventsByCalendar[calendarId]
-			calendar.items.forEach(function(eventItem) {
-				var notify = shouldNotify(eventItem)
-				var due = NotifyTiming.dueFor(eventItem, notify ? reminderMinutesFor(eventItem) : [], win, now)
-				for (var i = 0; i < due.length; i++) {
-					if (due[i].kind === 'start') {
-						upcomingEvents.atMeetingStart(eventItem, sent, now)
-					}
-					if (!notify || sent[due[i].key]) {
-						continue
-					}
-					// Logged without the title, to tell this widget's notifications apart from others
-					// (eg: Google Calendar's own in a browser).
-					if (due[i].kind === 'start') {
-						if (plasmoid.configuration.eventStartingNotificationEnabled) {
-							sent[due[i].key] = now
-							logger.log('notification: event starting', eventItem.startDateTime)
-							sendEventStartingNotification(eventItem)
-						}
-					} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
-						sent[due[i].key] = now
-						logger.log('notification: reminder', due[i].minutes, 'min before', eventItem.startDateTime)
-						sendEventReminderNotification(eventItem, due[i].minutes)
-					}
+		allEventItems().forEach(function(eventItem) {
+			var notify = shouldNotify(eventItem)
+			var due = NotifyTiming.dueFor(eventItem, notify ? reminderMinutesFor(eventItem) : [], win, now)
+			for (var i = 0; i < due.length; i++) {
+				if (due[i].kind === 'start') {
+					upcomingEvents.atMeetingStart(eventItem, sent, now)
 				}
-			})
-		}
+				if (!notify || sent[due[i].key]) {
+					continue
+				}
+				// Logged without the title, to tell this widget's notifications apart from others
+				// (eg: Google Calendar's own in a browser).
+				if (due[i].kind === 'start') {
+					if (plasmoid.configuration.eventStartingNotificationEnabled) {
+						sent[due[i].key] = now
+						logger.log('notification: event starting', eventItem.startDateTime)
+						sendEventStartingNotification(eventItem)
+					}
+				} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
+					sent[due[i].key] = now
+					logger.log('notification: reminder', due[i].minutes, 'min before', eventItem.startDateTime)
+					sendEventReminderNotification(eventItem, due[i].minutes)
+				}
+			}
+		})
 		sentNotifications = sent
 		checkSnoozedReminders()
 	}
@@ -426,36 +430,26 @@ CalendarManager {
 		var best = null
 		var bestInProgress = false
 		var bestHasLink = false
-		for (var calendarId in eventsByCalendar) {
-			// Calendars hidden in the popup's calendar menu are left out of the panel's next
-			// meeting and tooltip too. Their reminders still come: it's a view filter.
-			if (Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
+		var items = viewCandidates()
+		for (var i = 0; i < items.length; i++) {
+			var eventItem = items[i]
+			if (isEventInProgress(eventItem) && isMarkedEnded(eventItem)) {
 				continue
 			}
-			var items = eventsByCalendar[calendarId].items
-			for (var i = 0; i < items.length; i++) {
-				var eventItem = items[i]
-				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem) || Shared.isHiddenDeclined(eventItem, plasmoid.configuration.showDeclinedEvents)) {
-					continue
-				}
-				if (isEventInProgress(eventItem) && isMarkedEnded(eventItem)) {
-					continue
-				}
-				var inProgress = isEventInProgress(eventItem)
-				if (!inProgress && !(now < eventItem.startDateTime && eventItem.startDateTime.getTime() <= windowEnd)) {
-					continue
-				}
-				var hasLink = !!MeetingLink.find(eventItem)
-				var better = !best
-					// In progress beats upcoming. Among in progress, one with a meeting link, then the latest started.
-					|| (inProgress && !bestInProgress)
-					|| (inProgress && bestInProgress && (hasLink && !bestHasLink || hasLink === bestHasLink && eventItem.startDateTime > best.startDateTime))
-					|| (!inProgress && !bestInProgress && eventItem.startDateTime < best.startDateTime)
-				if (better) {
-					best = eventItem
-					bestInProgress = inProgress
-					bestHasLink = hasLink
-				}
+			var inProgress = isEventInProgress(eventItem)
+			if (!inProgress && !(now < eventItem.startDateTime && eventItem.startDateTime.getTime() <= windowEnd)) {
+				continue
+			}
+			var hasLink = !!MeetingLink.find(eventItem)
+			var better = !best
+				// In progress beats upcoming. Among in progress, one with a meeting link, then the latest started.
+				|| (inProgress && !bestInProgress)
+				|| (inProgress && bestInProgress && (hasLink && !bestHasLink || hasLink === bestHasLink && eventItem.startDateTime > best.startDateTime))
+				|| (!inProgress && !bestInProgress && eventItem.startDateTime < best.startDateTime)
+			if (better) {
+				best = eventItem
+				bestInProgress = inProgress
+				bestHasLink = hasLink
 			}
 		}
 		nextEvent = best
@@ -509,27 +503,19 @@ CalendarManager {
 		var now = timeModel.currentTime
 		var current = null
 		var next = null
-		for (var calendarId in eventsByCalendar) {
-			if (Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
-				continue // See updateNextEvent
-			}
-			var items = eventsByCalendar[calendarId].items
-			for (var i = 0; i < items.length; i++) {
-				var eventItem = items[i]
-				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem) || Shared.isHiddenDeclined(eventItem, plasmoid.configuration.showDeclinedEvents)) {
+		var items = viewCandidates()
+		for (var i = 0; i < items.length; i++) {
+			var eventItem = items[i]
+			if (isEventInProgress(eventItem)) {
+				if (isMarkedEnded(eventItem)) {
 					continue
 				}
-				if (isEventInProgress(eventItem)) {
-					if (isMarkedEnded(eventItem)) {
-						continue
-					}
-					if (!current || eventItem.startDateTime > current.startDateTime) {
-						current = eventItem
-					}
-				} else if (now < eventItem.startDateTime) {
-					if (!next || eventItem.startDateTime < next.startDateTime) {
-						next = eventItem
-					}
+				if (!current || eventItem.startDateTime > current.startDateTime) {
+					current = eventItem
+				}
+			} else if (now < eventItem.startDateTime) {
+				if (!next || eventItem.startDateTime < next.startDateTime) {
+					next = eventItem
 				}
 			}
 		}
