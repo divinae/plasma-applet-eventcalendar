@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:54+0200\n"
+"POT-Creation-Date: 2026-10-19 09:59+0200\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1459,6 +1459,62 @@ msgstr "Rozmowa wideo"
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
 msgstr "Usuń rozmowę wideo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Reminders"
+msgstr "Przypomnienia"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar's default"
+msgstr "Domyślne kalendarza"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Set for this event"
+msgstr "Ustawione dla tego wydarzenia"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "minute before"
+msgid_plural "minutes before"
+msgstr[0] "minutę przed"
+msgstr[1] "minuty przed"
+msgstr[2] "minut przed"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "hour before"
+msgid_plural "hours before"
+msgstr[0] "godzinę przed"
+msgstr[1] "godziny przed"
+msgstr[2] "godzin przed"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "day before"
+msgid_plural "days before"
+msgstr[0] "dzień przed"
+msgstr[1] "dni przed"
+msgstr[2] "dni przed"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "week before"
+msgid_plural "weeks before"
+msgstr[0] "tydzień przed"
+msgstr[1] "tygodnie przed"
+msgstr[2] "tygodni przed"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove reminder"
+msgstr "Usuń przypomnienie"
+
+#: ../contents/ui/EventEditView.qml
+msgid "No notification reminders"
+msgstr "Brak przypomnień"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Reminder"
+msgstr "Dodaj przypomnienie"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"

@@ -24,7 +24,11 @@ CalendarManager {
 	}
 
 	// Google events carry their own reminder times (event or calendar defaults).
+	// Reminders set on the event itself always count; the calendar's defaults only when chosen.
 	function reminderMinutesFor(eventItem) {
+		if (eventItem.reminderOwn && Shared.isList(eventItem.reminderMinutes)) {
+			return Shared.toArray(eventItem.reminderMinutes)
+		}
 		if (plasmoid.configuration.eventReminderUseGoogle && Shared.isList(eventItem.reminderMinutes)) {
 			return Shared.toArray(eventItem.reminderMinutes)
 		}

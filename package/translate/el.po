@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:54+0200\n"
+"POT-Creation-Date: 2026-10-19 09:59+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1582,6 +1582,58 @@ msgstr "Βιντεοδιάσκεψη"
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
 msgstr "Αφαίρεση βιντεοδιάσκεψης"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Reminders"
+msgstr "Υπενθυμίσεις"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar's default"
+msgstr "Προεπιλογή ημερολογίου"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Set for this event"
+msgstr "Ορισμένες για αυτό το γεγονός"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "minute before"
+msgid_plural "minutes before"
+msgstr[0] "λεπτό πριν"
+msgstr[1] "λεπτά πριν"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "hour before"
+msgid_plural "hours before"
+msgstr[0] "ώρα πριν"
+msgstr[1] "ώρες πριν"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "day before"
+msgid_plural "days before"
+msgstr[0] "ημέρα πριν"
+msgstr[1] "ημέρες πριν"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "week before"
+msgid_plural "weeks before"
+msgstr[0] "εβδομάδα πριν"
+msgstr[1] "εβδομάδες πριν"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove reminder"
+msgstr "Αφαίρεση υπενθύμισης"
+
+#: ../contents/ui/EventEditView.qml
+msgid "No notification reminders"
+msgstr "Χωρίς υπενθυμίσεις"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Reminder"
+msgstr "Προσθήκη υπενθύμισης"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"

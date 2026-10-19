@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:54+0200\n"
+"POT-Creation-Date: 2026-10-19 09:59+0200\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -1572,6 +1572,58 @@ msgstr "Videovergadering"
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
 msgstr "Videovergadering verwijderen"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Reminders"
+msgstr "Herinneringen"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar's default"
+msgstr "Standaard van de agenda"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Set for this event"
+msgstr "Ingesteld voor deze afspraak"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "minute before"
+msgid_plural "minutes before"
+msgstr[0] "minuut van tevoren"
+msgstr[1] "minuten van tevoren"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "hour before"
+msgid_plural "hours before"
+msgstr[0] "uur van tevoren"
+msgstr[1] "uur van tevoren"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "day before"
+msgid_plural "days before"
+msgstr[0] "dag van tevoren"
+msgstr[1] "dagen van tevoren"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "week before"
+msgid_plural "weeks before"
+msgstr[0] "week van tevoren"
+msgstr[1] "weken van tevoren"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove reminder"
+msgstr "Herinnering verwijderen"
+
+#: ../contents/ui/EventEditView.qml
+msgid "No notification reminders"
+msgstr "Geen herinneringen"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Reminder"
+msgstr "Herinnering toevoegen"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"

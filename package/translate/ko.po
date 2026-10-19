@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:54+0200\n"
+"POT-Creation-Date: 2026-10-19 09:59+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1552,6 +1552,54 @@ msgstr "화상 회의"
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
 msgstr "화상 회의 삭제"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Reminders"
+msgstr "알림"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar's default"
+msgstr "캘린더 기본값"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Set for this event"
+msgstr "이 일정에 설정"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "minute before"
+msgid_plural "minutes before"
+msgstr[0] "분 전"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "hour before"
+msgid_plural "hours before"
+msgstr[0] "시간 전"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "day before"
+msgid_plural "days before"
+msgstr[0] "일 전"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "week before"
+msgid_plural "weeks before"
+msgstr[0] "주 전"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove reminder"
+msgstr "알림 삭제"
+
+#: ../contents/ui/EventEditView.qml
+msgid "No notification reminders"
+msgstr "알림 없음"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Reminder"
+msgstr "알림 추가"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"

@@ -7,6 +7,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Guests.js" as Guests
 import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
+import "Reminders.js" as Reminders
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
 import "code/ColorIdMap.js" as ColorIdMap
@@ -168,6 +169,39 @@ Rectangle {
 		}
 		return appletConfig.eventColor(GooglePalette.eventColor(id))
 	}
+	//--- Reminders (Google): the calendar's defaults, or the event's own notification times
+	property bool remindersCustom: false
+	property var reminderItems: [] // [{ value, unit }]
+	property var reminderOthers: [] // Other kinds (email), kept as they are
+	property var initialReminders: ({ custom: false, items: [], others: [] })
+	readonly property var reminderState: ({ custom: remindersCustom, items: reminderItems, others: reminderOthers })
+	readonly property bool remindersChanged: !Reminders.sameAs(reminderState, initialReminders)
+	readonly property bool canAddReminder: reminderItems.length + reminderOthers.length < Reminders.MAX_OVERRIDES
+	function addReminder() {
+		var used = reminderItems.map(Reminders.toMinutes)
+		var minutes = [10, 30, 60, 1440, 5].filter(function(m) { return used.indexOf(m) < 0 })[0] || 15
+		reminderItems = reminderItems.concat([Reminders.split(minutes)])
+	}
+	function setReminder(index, value, unit) {
+		var items = reminderItems.slice()
+		items[index] = { value: value, unit: unit }
+		reminderItems = items
+	}
+	function removeReminder(index) {
+		var items = reminderItems.slice()
+		items.splice(index, 1)
+		reminderItems = items
+	}
+	function fillReminders(item, asCopy) {
+		var state = Reminders.fromEvent(item)
+		remindersCustom = state.custom
+		reminderItems = state.items
+		reminderOthers = state.others
+		if (!asCopy) {
+			initialReminders = state
+		}
+	}
+
 	//--- Video conferencing (Google Meet)
 	readonly property bool hadConference: !isNew && !!(eventItem.hangoutLink || eventItem.conferenceData)
 	property string conferenceAction: "" // '', 'add' or 'remove'
@@ -342,6 +376,9 @@ Rectangle {
 			if (supportsRecurrence && colorId) {
 				data.colorId = colorId
 			}
+			if (supportsRecurrence && remindersCustom) {
+				data.reminders = Reminders.toGoogle(reminderState)
+			}
 			if (supportsRecurrence) {
 				addConferenceArgs(data)
 				if (guests.length) {
@@ -371,6 +408,9 @@ Rectangle {
 			}
 			addColorArgs(args)
 			addConferenceArgs(args)
+			if (supportsRecurrence && remindersChanged) {
+				args.reminders = Reminders.toGoogle(reminderState)
+			}
 			var options = { params: requestParams(args) }
 			var start = startObj()
 			var end = endObj()
@@ -423,6 +463,9 @@ Rectangle {
 		}
 		addColorArgs(args)
 		addConferenceArgs(args)
+		if (supportsRecurrence && remindersChanged) {
+			args.reminders = Reminders.toGoogle(reminderState)
+		}
 		var options = { params: requestParams(args) }
 		var start = startObj()
 		var end = endObj()
@@ -480,6 +523,7 @@ Rectangle {
 			initialGuests = Guests.people(item.attendees)
 			guests = initialGuests.slice()
 		}
+		fillReminders(item, asCopy)
 		var allDay = !!(item.start && item.start.date)
 		allDayCheckBox.checked = allDay
 		var start = new Date(item.startDateTime)
@@ -973,6 +1017,84 @@ Rectangle {
 						PlasmaComponents3.ToolTip.text: i18n("Remove video conferencing")
 						PlasmaComponents3.ToolTip.visible: hovered
 						PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+					}
+				}
+
+				// Reminders: the calendar's defaults, or this event's own notification times.
+				ColumnLayout {
+					visible: form.supportsRecurrence
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+
+					RowLayout {
+						Layout.fillWidth: true
+						Kirigami.Icon {
+							source: "notifications"
+							Layout.preferredWidth: Kirigami.Units.iconSizes.small
+							Layout.preferredHeight: Layout.preferredWidth
+							opacity: 0.7
+						}
+						PlasmaComponents3.Label {
+							text: i18n("Reminders")
+						}
+						FormComboBox {
+							Layout.fillWidth: true
+							model: [i18n("Calendar's default"), i18n("Set for this event")]
+							currentIndex: form.remindersCustom ? 1 : 0
+							onActivated: function(index) {
+								form.remindersCustom = index === 1
+								if (form.remindersCustom && !form.reminderItems.length && !form.reminderOthers.length) {
+									form.addReminder()
+								}
+							}
+						}
+					}
+					Repeater {
+						model: form.remindersCustom ? form.reminderItems : []
+						RowLayout {
+							Layout.fillWidth: true
+							Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+							readonly property int itemIndex: index
+							PlasmaComponents3.SpinBox {
+								from: 1
+								to: 999
+								value: modelData.value
+								onValueModified: form.setReminder(parent.itemIndex, value, modelData.unit)
+							}
+							FormComboBox {
+								Layout.fillWidth: true
+								model: [
+									i18ncp("reminder: N … before the event", "minute before", "minutes before", modelData.value),
+									i18ncp("reminder: N … before the event", "hour before", "hours before", modelData.value),
+									i18ncp("reminder: N … before the event", "day before", "days before", modelData.value),
+									i18ncp("reminder: N … before the event", "week before", "weeks before", modelData.value),
+								]
+								currentIndex: Reminders.UNITS.indexOf(modelData.unit)
+								onActivated: function(unitIndex) { form.setReminder(parent.itemIndex, modelData.value, Reminders.UNITS[unitIndex]) }
+							}
+							PlasmaComponents3.ToolButton {
+								icon.name: "edit-delete-remove"
+								onClicked: form.removeReminder(parent.itemIndex)
+								Accessible.name: PlasmaComponents3.ToolTip.text
+								PlasmaComponents3.ToolTip.text: i18n("Remove reminder")
+								PlasmaComponents3.ToolTip.visible: hovered
+								PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
+						}
+					}
+					PlasmaComponents3.Label {
+						visible: form.remindersCustom && form.reminderItems.length === 0
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						text: i18n("No notification reminders")
+						opacity: 0.7
+					}
+					PlasmaComponents3.ToolButton {
+						visible: form.remindersCustom
+						enabled: form.canAddReminder
+						Layout.leftMargin: Kirigami.Units.iconSizes.small
+						icon.name: "list-add"
+						text: i18n("Add Reminder")
+						onClicked: form.addReminder()
 					}
 				}
 

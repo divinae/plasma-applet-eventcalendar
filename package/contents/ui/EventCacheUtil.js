@@ -57,6 +57,9 @@ function pickEvent(event) {
 	if (event.reminderMinutes) {
 		picked.reminderMinutes = toList(event.reminderMinutes).map(Number).filter(function(minutes) { return isFinite(minutes) })
 	}
+	if (event.reminderOwn) {
+		picked.reminderOwn = true
+	}
 	// Only your own response (to skip events you declined): no other guests, no e-mails.
 	var attendees = toList(event.attendees)
 	for (var a = 0; a < attendees.length; a++) {

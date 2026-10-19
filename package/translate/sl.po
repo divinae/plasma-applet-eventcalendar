@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 09:54+0200\n"
+"POT-Creation-Date: 2026-10-19 09:59+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1587,6 +1587,66 @@ msgstr "Videokonferenca"
 #: ../contents/ui/EventEditView.qml
 msgid "Remove video conferencing"
 msgstr "Odstrani videokonferenco"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Reminders"
+msgstr "Opomniki"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Calendar's default"
+msgstr "Privzeto koledarja"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Set for this event"
+msgstr "Nastavljeni za ta dogodek"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "minute before"
+msgid_plural "minutes before"
+msgstr[0] "minuto prej"
+msgstr[1] "minuti prej"
+msgstr[2] "minute prej"
+msgstr[3] "minut prej"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "hour before"
+msgid_plural "hours before"
+msgstr[0] "uro prej"
+msgstr[1] "uri prej"
+msgstr[2] "ure prej"
+msgstr[3] "ur prej"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "day before"
+msgid_plural "days before"
+msgstr[0] "dan prej"
+msgstr[1] "dneva prej"
+msgstr[2] "dni prej"
+msgstr[3] "dni prej"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "reminder: N … before the event"
+msgid "week before"
+msgid_plural "weeks before"
+msgstr[0] "teden prej"
+msgstr[1] "tedna prej"
+msgstr[2] "tedne prej"
+msgstr[3] "tednov prej"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove reminder"
+msgstr "Odstrani opomnik"
+
+#: ../contents/ui/EventEditView.qml
+msgid "No notification reminders"
+msgstr "Brez opomnikov"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add Reminder"
+msgstr "Dodaj opomnik"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Guests"

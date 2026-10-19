@@ -252,6 +252,7 @@ CalendarManager {
 		delete data.canEdit
 		delete data._summary
 		delete data.reminderMinutes
+		delete data.reminderOwn
 		delete data.fromCache
 		return data
 	}
@@ -611,6 +612,9 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 	function parseEvent(calendar, event) {
 		event.description = event.description || ""
 		event.reminderMinutes = parseReminderMinutes(calendar, event)
+		// Set on the event itself (not the calendar's defaults): used even when the widget's own
+		// reminder time is chosen over Google's (UpcomingEvents.reminderMinutesFor).
+		event.reminderOwn = !!(event.reminders && event.reminders.useDefault === false)
 		event.backgroundColor = parseColor(calendar, event)
 		// Recurring events: edits and deletes apply to this occurrence only (Google makes it an exception).
 		event.canEdit = (calendar.accessRole === 'writer' || calendar.accessRole === 'owner')
