@@ -108,7 +108,7 @@ Item {
 
 	// Remove from model only
 	function removeEvent(calendarId, eventId) {
-		logger.debug(calendarManager, 'removeEvent', calendarId, eventId)
+		logger.debug(calendarManager, 'removeEvent')
 		var events = eventItems(calendarId)
 		var index = indexOfEvent(events, eventId)
 		if (index < 0) {
@@ -198,10 +198,10 @@ Item {
 	}
 
 	function deleteEvent(calendarId, eventId) {
-		logger.log(calendarManager, 'deleteEvent(', calendarId, eventId, ') is not implemented')
+		logger.log(calendarManager, 'deleteEvent is not implemented')
 	}
 
 	function setEventProperties(calendarId, eventId, args) {
-		logger.log(calendarManager, 'setEventProperties(', calendarId, eventId, args, ') is not implemented')
+		logger.log(calendarManager, 'setEventProperties is not implemented')
 	}
 }

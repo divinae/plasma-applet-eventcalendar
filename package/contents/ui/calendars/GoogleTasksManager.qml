@@ -501,7 +501,7 @@ CalendarManager {
 
 	//--- Delete Task
 	function deleteEvent(calendarId, eventId) {
-		logger.debug(calendarManagerId, 'deleteEvent', calendarId, eventId)
+		logger.debug(calendarManagerId, 'deleteEvent')
 		if (session.accessToken) {
 			var event = getEvent(calendarId, eventId)
 			if (!event) {
@@ -524,7 +524,7 @@ CalendarManager {
 		}
 	}
 	function deleteEvent_run(calendarId, eventId, callback) {
-		logger.debugJSON(calendarManagerId, 'deleteEvent_run', calendarId, eventId)
+		logger.debug(calendarManagerId, 'deleteEvent_run')
 
 		deleteGoogleTask({
 			accessToken: session.accessToken,

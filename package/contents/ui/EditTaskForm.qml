@@ -23,8 +23,6 @@ Loader {
 			Component.onCompleted: {
 				agendaScrollView.positionViewAtTask(agendaItemIndex, taskItemIndex)
 				editSummaryTextField.forceActiveFocus()
-
-				logger.debugJSON('EditTaskForm.task', task)
 			}
 
 			function populateIfChanged(args, propKey, newValue) {
@@ -42,7 +40,6 @@ Loader {
 			}
 			function submit() {
 				logger.debug('editTaskItem.submit()')
-				logger.debugJSON('task', task)
 
 				if (task.calendarId != calendarSelector.selectedCalendarId) {
 					// TODO: Move task

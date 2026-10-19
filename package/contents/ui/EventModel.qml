@@ -449,7 +449,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.createEvent(calendarId, date, text)
 		} else {
-			logger.log('Could not createEvent. Could not find calendarManager for calendarId = ', calendarId)
+			logger.log('Could not createEvent: no calendar manager')
 		}
 	}
 
@@ -481,7 +481,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.createEventFromData(calendarId, eventData, done, params)
 		} else {
-			logger.log('Could not createEventFromData for calendarId = ', calendarId)
+			logger.log('Could not createEventFromData: no calendar manager')
 		}
 	}
 
@@ -491,7 +491,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.deleteEvent(calendarId, eventId, done)
 		} else {
-			logger.log('Could not deleteEvent. Could not find calendarManager for calendarId = ', calendarId)
+			logger.log('Could not deleteEvent: no calendar manager')
 		}
 	}
 
@@ -501,7 +501,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.deleteSeries(calendarId, seriesId, done)
 		} else {
-			logger.log('Could not deleteSeries for calendarId = ', calendarId)
+			logger.log('Could not deleteSeries: no calendar manager')
 		}
 	}
 
@@ -517,7 +517,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.restoreEvent(calendarId, eventId, copy, done)
 		} else {
-			logger.log('Could not restoreEvent for calendarId = ', calendarId)
+			logger.log('Could not restoreEvent: no calendar manager')
 		}
 	}
 
@@ -566,7 +566,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.setEventProperties(calendarId, eventId, args, options)
 		} else {
-			logger.log('Could not setEventProperties. Could not find calendarManager for calendarId = ', calendarId)
+			logger.log('Could not setEventProperties: no calendar manager')
 		}
 	}
 
@@ -591,7 +591,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.updateEventFromServer(calendarId, eventId, buildArgs, done, options, failed)
 		} else {
-			logger.log('Could not updateEventFromServer for calendarId = ', calendarId)
+			logger.log('Could not updateEventFromServer: no calendar manager')
 		}
 	}
 
@@ -607,7 +607,7 @@ CalendarManager {
 		if (calendarManager) {
 			calendarManager.moveEvent(calendarId, eventId, destinationCalendarId, done, params)
 		} else {
-			logger.log('Could not moveEvent for calendarId = ', calendarId)
+			logger.log('Could not moveEvent: no calendar manager')
 			if (done) {
 				done('moveEvent not supported', null)
 			}

@@ -335,12 +335,12 @@ CalendarManager {
 	//--- Create
 	function createEvent(calendarId, date, text) {
 		if (calendarId.indexOf('plasma_Events_') !== 0) {
-			logger.log('Could not create event with calendarId=', calendarId)
+			logger.log('Could not create event: unknown calendar')
 			return
 		}
 		var akonadiCalendarId = calendarId.substr('plasma_Events_'.length)
 		if (!/^[0-9]+$/.test(akonadiCalendarId)) {
-			logger.log('Could not parse a proper akonadiCalendarId=', akonadiCalendarId, ' from calendarId=', calendarId)
+			logger.log('Could not parse the Akonadi calendar id')
 			return
 		}
 		var dateString = Shared.localeDateString(date || new Date()) // Local day: toISOString would be UTC

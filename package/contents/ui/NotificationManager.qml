@@ -56,7 +56,7 @@ QtObject {
 	}
 
 	function notify(args, callback) {
-		logger.debugJSON('NotificationManager.notify', args.event, args.summary)
+		logger.debug('NotificationManager.notify', args.event) // No event titles in logs
 		var answered = false
 		function answer(actionId) {
 			if (answered) {

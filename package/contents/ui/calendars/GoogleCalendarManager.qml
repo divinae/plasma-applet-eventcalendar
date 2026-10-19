@@ -357,7 +357,7 @@ CalendarManager {
 	}
 
 	function fetchGCalEventsPage(args, pageCallback) {
-		logger.debug('fetchGCalEventsPage', args.calendarId)
+		logger.debug('fetchGCalEventsPage')
 		var url = 'https://www.googleapis.com/calendar/v3'
 		url += '/calendars/'
 		url += encodeURIComponent(args.calendarId)
@@ -384,7 +384,7 @@ CalendarManager {
 				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
-			logger.debug('fetchGCalEventsPage.response', args.calendarId, err, data, xhr.status)
+			logger.debug('fetchGCalEventsPage.response', xhr.status) // No event data in logs
 			if (withTypes && xhr && xhr.status === 400 && rejectsEventTypes(data)) {
 				pageCallback(err, data, xhr, true)
 				return
@@ -473,7 +473,7 @@ CalendarManager {
 	function parseCalendarData(calendarId, data) {
 		var calendar = getCalendar(calendarId)
 		if (!calendar) {
-			logger.debug('googleCalendarManager.missingCalendar', calendarId)
+			logger.debug('googleCalendarManager.missingCalendar')
 			calendar = {
 				accessRole: 'reader',
 				backgroundColor: null,
