@@ -238,7 +238,9 @@ def load_ready_payload(path: str) -> dict | None:
     return payload
 
 
-class StoreOnceHandler(BaseHTTPRequestHandler):
+class OnceHandler(BaseHTTPRequestHandler):
+    """One authorized request on 127.0.0.1 (Bearer token from the ready file), then the server stops."""
+
     server_version = "SecretStore/1.0"
 
     def log_message(self, format: str, *args) -> None:
@@ -252,13 +254,25 @@ class StoreOnceHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def do_POST(self) -> None:
-        if self.path != "/store":
+    def _authorized(self, path: str) -> bool:
+        if self.path != path:
             self._send_json(404, {"error": "Not found."})
-            return
+            return False
         expected_auth = "Bearer " + self.server.secret_token
         if self.headers.get("Authorization", "") != expected_auth:
             self._send_json(403, {"error": "Forbidden."})
+            return False
+        return True
+
+    def _finish(self, result: int) -> None:
+        self.server.result = result
+        self.server.shutdown_requested = True
+        self.close_connection = True
+
+
+class StoreOnceHandler(OnceHandler):
+    def do_POST(self) -> None:
+        if not self._authorized("/store"):
             return
         try:
             content_length = int(self.headers.get("Content-Length", "0"))
@@ -273,45 +287,23 @@ class StoreOnceHandler(BaseHTTPRequestHandler):
         ok, error = store_secret(self.server.attributes, self.server.label, value)
         if not ok:
             self._send_json(500, {"error": error or "Secret storage backend unavailable."})
-            self.server.result = 1
+            self._finish(1)
         else:
             self._send_json(200, {"ok": True})
-            self.server.result = 0
-        self.server.shutdown_requested = True
-        self.close_connection = True
+            self._finish(0)
 
 
-class ReadOnceHandler(BaseHTTPRequestHandler):
-    server_version = "SecretStore/1.0"
-
-    def log_message(self, format: str, *args) -> None:
-        return
-
-    def _send_json(self, status: int, payload: dict) -> None:
-        body = json.dumps(payload).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
-
+class ReadOnceHandler(OnceHandler):
     def do_GET(self) -> None:
-        if self.path != "/read":
-            self._send_json(404, {"error": "Not found."})
-            return
-        expected_auth = "Bearer " + self.server.secret_token
-        if self.headers.get("Authorization", "") != expected_auth:
-            self._send_json(403, {"error": "Forbidden."})
+        if not self._authorized("/read"):
             return
         found, value = lookup_secret(self.server.attributes)
         self._send_json(200, {"found": found, "value": value if found else ""})
-        self.server.result = 0
-        self.server.shutdown_requested = True
-        self.close_connection = True
+        self._finish(0)
 
 
-class StoreOnceServer(HTTPServer):
-    def __init__(self, server_address, request_handler_class, *, attributes, label, secret_token):
+class OnceServer(HTTPServer):
+    def __init__(self, server_address, request_handler_class, *, attributes, secret_token, label=""):
         super().__init__(server_address, request_handler_class)
         self.attributes = attributes
         self.label = label
@@ -320,13 +312,30 @@ class StoreOnceServer(HTTPServer):
         self.shutdown_requested = False
 
 
-class ReadOnceServer(HTTPServer):
-    def __init__(self, server_address, request_handler_class, *, attributes, secret_token):
-        super().__init__(server_address, request_handler_class)
-        self.attributes = attributes
-        self.secret_token = secret_token
-        self.result = 1
-        self.shutdown_requested = False
+def serve_once(args: argparse.Namespace, handler_class, label: str = "") -> int:
+    """Serves one request of handler_class until args.timeout; its port and token go to args.ready_file."""
+    attributes = build_attributes(args)
+    token = secrets.token_urlsafe(24)
+    server = OnceServer(("127.0.0.1", 0), handler_class, attributes=attributes, label=label, secret_token=token)
+    ready_payload = {
+        "port": server.server_address[1],
+        "token": token,
+    }
+    atomic_write_json(args.ready_file, ready_payload)
+    deadline = time.monotonic() + args.timeout
+    server.timeout = 1
+    try:
+        while not server.shutdown_requested and time.monotonic() < deadline:
+            server.handle_request()
+    finally:
+        server.server_close()
+        try:
+            os.unlink(args.ready_file)
+        except OSError:
+            pass
+    if not server.shutdown_requested:
+        return 1
+    return server.result
 
 
 def run_read(args: argparse.Namespace) -> int:
@@ -343,54 +352,12 @@ def run_clear(args: argparse.Namespace) -> int:
 
 
 def run_store_once(args: argparse.Namespace) -> int:
-    attributes = build_attributes(args)
     label = "{} {} {}".format(APP_ID, args.scope, args.key)
-    token = secrets.token_urlsafe(24)
-    server = StoreOnceServer(("127.0.0.1", 0), StoreOnceHandler, attributes=attributes, label=label, secret_token=token)
-    ready_payload = {
-        "port": server.server_address[1],
-        "token": token,
-    }
-    atomic_write_json(args.ready_file, ready_payload)
-    deadline = time.monotonic() + args.timeout
-    server.timeout = 1
-    try:
-        while not server.shutdown_requested and time.monotonic() < deadline:
-            server.handle_request()
-    finally:
-        server.server_close()
-        try:
-            os.unlink(args.ready_file)
-        except OSError:
-            pass
-    if not server.shutdown_requested:
-        return 1
-    return server.result
+    return serve_once(args, StoreOnceHandler, label)
 
 
 def run_read_once(args: argparse.Namespace) -> int:
-    attributes = build_attributes(args)
-    token = secrets.token_urlsafe(24)
-    server = ReadOnceServer(("127.0.0.1", 0), ReadOnceHandler, attributes=attributes, secret_token=token)
-    ready_payload = {
-        "port": server.server_address[1],
-        "token": token,
-    }
-    atomic_write_json(args.ready_file, ready_payload)
-    deadline = time.monotonic() + args.timeout
-    server.timeout = 1
-    try:
-        while not server.shutdown_requested and time.monotonic() < deadline:
-            server.handle_request()
-    finally:
-        server.server_close()
-        try:
-            os.unlink(args.ready_file)
-        except OSError:
-            pass
-    if not server.shutdown_requested:
-        return 1
-    return server.result
+    return serve_once(args, ReadOnceHandler)
 
 
 def run_wait_ready(args: argparse.Namespace) -> int:
