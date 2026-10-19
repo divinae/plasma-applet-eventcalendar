@@ -1,3 +1,40 @@
+## v1.3.0 - October 19 2026
+
+### Meetings
+* Notifications for new invitations to today's meetings, with Yes / Maybe / No (a repeating meeting is answered for the whole series).
+* Do Not Disturb during meetings (optionally only the ones you accepted); marking a meeting as ended turns it off.
+* Auto-join: open the meeting link when a meeting starts.
+* A daily agenda: today's events in a notification once a day.
+* Meetings that overlap another one are marked (your own calendars and meetings you're invited to).
+* Find a time: free slots for you and the guests in the event editor.
+
+### Events and Google Calendar
+* Move an event to another calendar of the same Google account.
+* Show as busy / free and the event's visibility (default / public / private).
+* Out of office and focus time events: shown like in Google Calendar and can be created; working locations show in the Month, Week and Agenda views.
+* The event's own time zone in the editor.
+* Import events from .ics files into a Google calendar.
+* File attachments in the event details; "Email Guests…" in the details and the event menu.
+* Option to hide declined events.
+
+### Views
+* Calendar toggles in the popup header: show or hide each calendar.
+* Week view: a work week option, and a second time zone in the hour column (also in the Day view).
+* Month view: drag events to other days; Week view: drag all-day bars between days. Ctrl + drag copies.
+* Keyboard navigation in the popup.
+* The Month view uses the popup size set in the settings, like the other views.
+* Search results show invitations like the other views (outlined / striped / struck through).
+
+### Fixes
+* The editor no longer stays on "Loading…", and saving, moving, deleting and creating no longer hang, when Google sign-in fails.
+* A failed move or copy puts the event back right away; a slow save is no longer undone.
+* Editing a repeating series used the calendar's time zone instead of the one picked.
+* Settings: the chosen Meet app is shown again when the settings are reopened; drop-down lists keep the current value after a pick; time zones are picked from the list instead of saved as typed.
+* Notifications: no "Open in Calendar" button (clicking the notification opens the event in the widget).
+* Logs no longer contain calendar ids, event titles or event data.
+* Install paths with special characters work for the helper scripts.
+* Lots of internal cleanup: dead code and old settings removed, shared components for event bars and cards.
+
 ## v1.2.0 - October 19 2026
 
 ### Events

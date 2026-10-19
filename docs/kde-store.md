@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.2.0
+    1.3.0
 
 **License**
 
@@ -60,20 +60,25 @@ Views (switch from the popup's header)
 - Month: event titles in the days, multi-day events as bars across them
 - Week and Day: an hour grid you can scroll through the whole day; drag events to move or resize them; the Day view has a weather panel for the day shown
 - Agenda: upcoming days as event tiles
+- Drag events between days (Ctrl + drag copies), calendar toggles, work week, a second time zone, keyboard navigation
 
 Google Calendar
 - Several accounts; choose calendars and task lists per account
 - Create, edit, duplicate and delete events: color, guests, Google Meet, reminders, recurring events (ends on a date / after N times, custom repeats; one occurrence or the whole series)
 - Quick add ("Lunch with Anna tomorrow 13:00"), search, answer invitations (Yes / Maybe / No), undo after a delete or move
+- Move events between calendars, busy / free, visibility, time zones, out of office, focus time, working locations
+- Find a time (free slots for you and the guests), attachments, Email Guests, import .ics files
 - Rename and recolor calendars
 - Tokens are kept in the system keyring
 
 Meetings
 - Join buttons for Google Meet, Zoom, Teams and other links; Google Meet links can open in a Meet web app with a chosen Google account
 - The panel clock shows the next meeting ("in 5 min" / "12 min left"); a meeting that ended early can be marked as ended
+- Optional Do Not Disturb during meetings and auto-join; overlapping meetings are marked
 
 Notifications (KDE's notification system)
 - Reminders before events (with Snooze, optionally hidden after N seconds) and when an event starts (optionally critical / persistent)
+- New invitations for today (Yes / Maybe / No) and a daily agenda
 
 Weather from Open-Meteo (free, no API key), OpenWeatherMap or Weather Canada.
 
@@ -88,24 +93,25 @@ Source, issues and install from source: https://github.com/divinae/plasma-applet
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.2.0)**
+**Changelog (1.3.0)**
 
 ```
-- Duplicate an event (event menu, event details)
-- Set an event's own reminders in the editor; notifications always use them
-- Join opens Google Meet links in a chosen app (eg: a Meet web app) with a chosen Google account
-- Mark a meeting in progress as ended
-- Vertical panels: the next meeting above the time (time until it, then a progress bar)
-- The next meeting shows from 15 minutes before by default
-- Reminders can hide after a set number of seconds
-- Notifications are no longer missed when the minute check comes late, and none is sent twice
-- Weather is retried soon after a server error; the Day view shows the error with Retry Now
+- Notifications for new invitations to today's meetings, with Yes / Maybe / No
+- Do Not Disturb during meetings, auto-join, a daily agenda notification
+- Overlapping meetings are marked; Find a time in the event editor
+- Move events between calendars; busy / free and visibility; the event's time zone
+- Out of office, focus time and working locations
+- Import .ics files into Google Calendar; attachments; Email Guests
+- Calendar toggles in the popup; hide declined events
+- Week view: work week, a second time zone; drag events in the Month view and all-day bars in the Week view (Ctrl copies)
+- Keyboard navigation; the Month view uses the configured popup size
+- Fixes: no hang when Google sign-in fails, failed moves put the event back, series time zone, settings combos
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.2.0-plasma6.0.plasmoid` from the
-  [v1.2.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.2.0),
+- **Product file:** `eventcalendar-v1.3.0-plasma6.0.plasmoid` from the
+  [v1.3.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.3.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`
