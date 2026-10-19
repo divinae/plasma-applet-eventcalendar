@@ -356,13 +356,17 @@ Rectangle {
 	}
 
 	//--- Event type (Google): new events on a primary calendar can be out of office or focus time.
+	// An existing one keeps its type; its settings (auto-decline, chat status) can be changed.
 	property string eventType: "default"
 	property string autoDeclineMode: "declineNone"
 	property string declineMessage: ""
 	property string chatStatus: "doNotDisturb"
 	readonly property bool canSetType: isNew && supportsRecurrence && !!calendarSelector.selectedCalendar
 		&& calendarSelector.selectedCalendar.primary === true
-	readonly property string effectiveType: canSetType ? eventType : "default"
+	readonly property string effectiveType: isNew ? (canSetType ? eventType : "default") : eventType
+	// Existing event: its settings as loaded (JSON of EventTypes.properties), '' until known (a copy
+	// from the disk cache doesn't have them: they come from the server copy).
+	property string initialTypeProperties: ""
 	// No guests, video call, location or free time on these (Google refuses them), nor all day.
 	readonly property bool isSpecialType: EventTypes.isSpecial(effectiveType)
 	onIsSpecialTypeChanged: {
@@ -378,12 +382,38 @@ Rectangle {
 		}
 		eventType = type
 	}
-	function addTypeArgs(data) {
-		EventTypes.applyTo(data, effectiveType, {
+	function typeOptions() {
+		return {
 			autoDeclineMode: autoDeclineMode,
 			declineMessage: declineMessage,
 			chatStatus: chatStatus,
-		})
+		}
+	}
+	function addTypeArgs(data) {
+		EventTypes.applyTo(data, effectiveType, typeOptions())
+	}
+	// Existing out of office / focus time event: its changed settings.
+	function addTypePropertiesArgs(args) {
+		if (isNew || !isSpecialType || !initialTypeProperties) {
+			return
+		}
+		var props = EventTypes.properties(effectiveType, typeOptions())
+		if (JSON.stringify(props) !== initialTypeProperties) {
+			args[effectiveType === 'outOfOffice' ? 'outOfOfficeProperties' : 'focusTimeProperties'] = props
+		}
+	}
+	function loadTypeOptions(item, asCopy) {
+		var options = EventTypes.optionsOf(item)
+		if (!options) {
+			return
+		}
+		eventType = options.type
+		autoDeclineMode = options.autoDeclineMode
+		declineMessage = options.declineMessage
+		chatStatus = options.chatStatus
+		if (!asCopy) {
+			initialTypeProperties = JSON.stringify(EventTypes.properties(options.type, options))
+		}
 	}
 
 	//--- Video conferencing (Google Meet)
@@ -636,6 +666,7 @@ Rectangle {
 			addColorArgs(args)
 			addAvailabilityArgs(args)
 			addConferenceArgs(args)
+			addTypePropertiesArgs(args)
 			if (supportsRecurrence && remindersChanged) {
 				args.reminders = Reminders.toGoogle(reminderState)
 			}
@@ -704,6 +735,7 @@ Rectangle {
 		addColorArgs(args)
 		addAvailabilityArgs(args)
 		addConferenceArgs(args)
+		addTypePropertiesArgs(args)
 		if (supportsRecurrence && remindersChanged) {
 			args.reminders = Reminders.toGoogle(reminderState)
 		}
@@ -764,18 +796,20 @@ Rectangle {
 			if (item.hangoutLink || item.conferenceData) {
 				conferenceAction = 'add'
 			}
-			var typeOptions = EventTypes.optionsOf(item)
-			if (typeOptions) {
-				eventType = typeOptions.type
-				autoDeclineMode = typeOptions.autoDeclineMode
-				declineMessage = typeOptions.declineMessage
-				chatStatus = typeOptions.chatStatus
-			}
 		} else {
 			initialColorId = item.colorId ? String(item.colorId) : ""
 			colorId = initialColorId
 			initialGuests = Guests.people(item.attendees)
 			guests = initialGuests.slice()
+		}
+		loadTypeOptions(item, asCopy)
+		if (!asCopy && item.fromCache && isSpecialType) {
+			// The disk cache has no type settings: the server copy's.
+			eventModel.fetchEvent(item.calendarId, item.id, function(err, serverEvent) {
+				if (!err && serverEvent) {
+					loadTypeOptions(serverEvent, false)
+				}
+			})
 		}
 		fillReminders(item, asCopy)
 		fillAvailability(item, asCopy)
@@ -994,6 +1028,8 @@ Rectangle {
 				}
 				ColumnLayout {
 					visible: form.isSpecialType
+					// Existing event from the disk cache: until its settings are loaded.
+					enabled: form.isNew || form.initialTypeProperties !== ""
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
 					spacing: Kirigami.Units.smallSpacing
