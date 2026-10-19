@@ -108,55 +108,6 @@
 		<entry name="v72Migration" type="bool">
 			<default>false</default>
 		</entry>
-		<!-- Deprecated in: v71 -->
-		<entry name="v71Migration" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="widget_show_meteogram" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="widget_show_timer" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="timer_sfx_enabled" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="timer_sfx_filepath" type="string">
-			<default>/usr/share/sounds/freedesktop/stereo/complete.oga</default>
-		</entry>
-		<entry name="timer_repeats" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="clock_fontfamily" type="string">
-			<default></default>
-		</entry>
-		<entry name="clock_timeformat" type="string">
-			<default></default>
-		</entry>
-		<entry name="clock_timeformat_2" type="string">
-			<default></default>
-		</entry>
-		<entry name="clock_line_2" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="clock_line_2_height_ratio" type="double">
-			<default>0.4</default>
-		</entry>
-		<entry name="clock_line_1_bold" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="clock_line_2_bold" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="clock_maxheight" type="int">
-			<default>0</default>
-		</entry>
-		<entry name="clock_mousewheel_up" type="string">
-			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume"</default>
-		</entry>
-		<entry name="clock_mousewheel_down" type="string">
-			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"</default>
-		</entry>
 		<!-- Removed in: v71
 		-->
 		<!-- Removed in: v33
@@ -191,13 +142,6 @@
 		<entry name="monthHeightSingleColumn" type="uint">
 			<default>300</default>
 		</entry>
-		<!-- Deprecated in: v71 -->
-		<entry name="month_show_weeknumbers" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="month_eventbadge_type" type="string">
-			<default>theme</default>
-		</entry>
 	</group>
 
 	<group name="Agenda">
@@ -227,16 +171,6 @@
 		</entry>
 		<entry name="agendaPlaceOverdueTasksOnToday" type="bool">
 			<default>true</default>
-		</entry>
-		<!-- Deprecated in: v71 -->
-		<entry name="agenda_newevent_remember_calendar" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="agenda_newevent_last_calendar_id" type="string">
-			<default></default>
-		</entry>
-		<entry name="agenda_breakup_multiday_events" type="bool">
-			<default>false</default>
 		</entry>
 	</group>
 
@@ -385,9 +319,6 @@
 		<entry name="googleActiveAccountId" type="string">
 			<default></default>
 		</entry>
-		<entry name="googleRedirectMode" type="string">
-			<default>local</default>
-		</entry>
 		<!-- Built-in secret-based OAuth client (works without Google Cloud setup); a custom client ID
 		     in the settings overrides it. The secretless "desktop" client is rejected by Google. -->
 		<entry name="latestClientId" type="string">
@@ -452,9 +383,6 @@
 		<entry name="access_token" type="string">
 			<default></default>
 		</entry>
-		<entry name="events_pollinterval" type="uint">
-			<default>20</default>
-		</entry>
 		<!-- Removed in: v71
 		-->
 		<!-- Removed in: v62
@@ -494,25 +422,6 @@
 			<default>metric</default>
 		</entry>
 		<entry name="meteogramHours" type="uint">
-			<default>30</default>
-		</entry>
-		<!-- Deprecated in: v71 -->
-		<entry name="weather_app_id" type="string">
-			<default>99e575d9aa8a8407bcee7693d5912c6a</default>
-		</entry>
-		<entry name="weather_city_id" type="uint">
-			<default>0</default>
-		</entry>
-		<entry name="weather_canada_city_id" type="string">
-			<default></default>
-		</entry>
-		<entry name="weather_service" type="string">
-			<default>OpenWeatherMap</default>
-		</entry>
-		<entry name="weather_units" type="string">
-			<default>metric</default>
-		</entry>
-		<entry name="meteogram_hours" type="uint">
 			<default>30</default>
 		</entry>
 	</group>

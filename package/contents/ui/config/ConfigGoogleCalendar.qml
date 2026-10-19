@@ -6,30 +6,17 @@ import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
-import "../lib/Requests.js" as Requests
-import "../lib/ColorUtil.js" as ColorUtil
 import "../Shared.js" as Shared
 import "../code/GooglePalette.js" as GooglePalette
 
 ConfigPage {
 	id: page
 
-	SystemPalette { id: syspal }
-
 	function markDirty() {
 		if (typeof kcm !== "undefined") {
 			kcm.needsSave = true
 		}
 	}
-
-	function save() {
-		if (typeof kcm !== "undefined") {
-			kcm.needsSave = false
-		}
-	}
-
-	readonly property color readablePositiveTextColor: Qt.tint(Kirigami.Theme.textColor, ColorUtil.setAlpha(Kirigami.Theme.positiveTextColor, 0.5))
-	readonly property color readableNegativeTextColor: Qt.tint(Kirigami.Theme.textColor, ColorUtil.setAlpha(Kirigami.Theme.negativeTextColor, 0.5))
 
 	function localFilePath(url) {
 		var path = String(url)
@@ -106,8 +93,6 @@ ConfigPage {
 	property bool autoLoginInProgress: false
 	property bool autoLoginCancelled: false
 	property int loginAttempt: 0 // Callbacks of older (replaced / cancelled) sign-ins are ignored
-	readonly property bool localRedirect: googleLoginManager.redirectMode === "local"
-	readonly property bool showDebug: page.configBridge.read("debugging", false)
 
 	function extractJson(text) {
 		var start = text.indexOf('{')
@@ -180,9 +165,7 @@ ConfigPage {
 			return
 		}
 		var authContext = googleLoginManager.currentAuthContext()
-		messageWidget.info(localRedirect
-			? i18n("Waiting for browser callback...")
-			: i18n("Waiting for the helper page to send the code..."))
+		messageWidget.info(i18n("Waiting for browser callback..."))
 		// Only the port and the one-time state: the client secret and PKCE verifier stay in the
 		// widget (argv is visible to other processes), which exchanges the code itself.
 		var cmd = [
@@ -193,7 +176,6 @@ ConfigPage {
 			'--state',
 			authContext.state,
 		]
-		debugOutput.text = "Waiting for the browser sign-in…\n"
 		callbackListener.execArgv(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (attempt !== loginAttempt) {
 				return // Replaced by a newer sign-in
@@ -204,7 +186,6 @@ ConfigPage {
 			}
 			autoLoginInProgress = false
 			// Never show stdout: it has the authorization code.
-			debugOutput.text += "Exit: " + exitCode + "\nStderr: " + stderr + "\n"
 			if (exitCode === 2) {
 				messageWidget.err(i18n("Sign-in timed out. Try again."))
 				return
@@ -535,9 +516,7 @@ ConfigPage {
 						spacing: Kirigami.Units.smallSpacing
 						LinkText {
 							Layout.fillWidth: true
-							text: localRedirect
-								? i18n("Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it.", googleLoginManager.authorizationCodeUrl, 'https://accounts.google.com/...')
-								: i18n("Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to the helper page and will try to send the code back automatically. If it fails, copy the code and paste it below.", googleLoginManager.authorizationCodeUrl, 'https://accounts.google.com/...')
+							text: i18n("Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it.", googleLoginManager.authorizationCodeUrl, 'https://accounts.google.com/...')
 							wrapMode: Text.Wrap
 							onLinkActivated: function(link) {
 								try {
@@ -591,18 +570,14 @@ ConfigPage {
 						}
 						LinkText {
 							Layout.fillWidth: true
-							text: localRedirect
-								? i18n("Helper page (optional): <a href=\"%1\">%1</a>", googleLoginManager.hostedRedirectUri)
-								: i18n("Helper page: <a href=\"%1\">%1</a>", googleLoginManager.redirectUri)
+							text: i18n("Helper page (optional): <a href=\"%1\">%1</a>", googleLoginManager.hostedRedirectUri)
 							wrapMode: Text.Wrap
 						}
 						Label {
 							Layout.fillWidth: true
 							wrapMode: Text.Wrap
 							opacity: 0.7
-							text: localRedirect
-								? i18n("If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything.")
-								: i18n("If auto-capture fails, copy the code from the helper page and paste it below.")
+							text: i18n("If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything.")
 						}
 					}
 				}
@@ -622,7 +597,7 @@ ConfigPage {
 						}
 						Button {
 							text: googleLoginManager.isLoggedIn ? i18n("Add Account") : i18n("Submit")
-							enabled: !authConfigurationMessage && (!autoLoginInProgress || !localRedirect || !!authorizationCodeInput.text)
+							enabled: !authConfigurationMessage && (!autoLoginInProgress || !!authorizationCodeInput.text)
 							onClicked: submitAuthorization("")
 						}
 					}
@@ -642,60 +617,6 @@ ConfigPage {
 				text: i18n("Hide \"This event was added from Goals in Google Calendar\" description")
 				onToggled: markDirty()
 			}
-		}
-
-		// Debug (only with debugging enabled)
-		FormCard.FormHeader {
-			visible: showDebug
-			title: "Debug Info (Temporary)"
-		}
-		FormCard.FormCard {
-			visible: showDebug
-			FormCard.AbstractFormDelegate {
-				background: null
-				contentItem: ColumnLayout {
-					RowLayout {
-						Button {
-							text: "Test Echo"
-							onClicked: {
-								var cmd = ['echo', 'Hello World']
-								debugOutput.text = "Running: echo Hello World\n"
-								callbackListener.execArgv(cmd, function(c, code, status, out, err) {
-									debugOutput.text += "Result: " + out + " (Code: " + code + ")\n"
-								})
-							}
-						}
-						Button {
-							text: "Show Python Path"
-							onClicked: {
-								var path = localFilePath(Qt.resolvedUrl("../../scripts/google_redirect.py"))
-								debugOutput.text = "Script Path: " + path + "\n"
-								var cmd = ['python3', '--version']
-								callbackListener.execArgv(cmd, function(c, code, status, out, err) {
-									debugOutput.text += "Python Version: " + out + " " + err + "\n"
-								})
-							}
-						}
-					}
-					TextArea {
-						id: debugOutput
-						Layout.fillWidth: true
-						implicitHeight: 200
-						readOnly: true
-						text: "Debug logs will appear here..."
-						background: Rectangle {
-							color: syspal.base
-							border.color: syspal.mid
-						}
-					}
-				}
-			}
-		}
-	}
-
-	Component.onCompleted: {
-		if (page.cfg_googleRedirectMode !== "local") {
-			page.configBridge.write("googleRedirectMode", "local")
 		}
 	}
 }

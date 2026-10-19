@@ -14,14 +14,6 @@ QtObject {
 		}
 	}
 
-	function copy(oldKey, newKey) {
-		if (typeof plasmoid.configuration[oldKey] === 'undefined') return
-		if (typeof plasmoid.configuration[newKey] === 'undefined') return
-		if (plasmoid.configuration[oldKey] === plasmoid.configuration[newKey]) return
-		plasmoid.configuration[newKey] = plasmoid.configuration[oldKey]
-		logMigration('copy ' + oldKey + ' => ' + newKey)
-	}
-
 	Component.onCompleted: migrate()
 	onMigrate: {
 		// The Year view (briefly on master before 1.3) was removed: back to the month view.
@@ -54,43 +46,6 @@ QtObject {
 			}
 
 			plasmoid.configuration.v73Migration = true
-		}
-
-		// Renamed in: v71
-		if (!plasmoid.configuration.v71Migration) {
-			copy('widget_show_meteogram', 'widgetShowMeteogram')
-			copy('widget_show_timer', 'widgetShowTimer')
-			copy('timer_sfx_enabled', 'timerSfxEnabled')
-			copy('timer_sfx_filepath', 'timerSfxFilepath')
-			copy('timer_repeats', 'timerRepeats')
-			copy('clock_fontfamily', 'clockFontFamily')
-			copy('clock_timeformat', 'clockTimeFormat1')
-			copy('clock_timeformat_2', 'clockTimeFormat2')
-			copy('clock_line_2', 'clockShowLine2')
-			copy('clock_line_2_height_ratio', 'clockLine2HeightRatio')
-			copy('clock_line_1_bold', 'clockLineBold1')
-			copy('clock_line_2_bold', 'clockLineBold2')
-			copy('clock_maxheight', 'clockMaxHeight')
-			copy('clock_mousewheel_up', 'clockMouseWheelUp')
-			copy('clock_mousewheel_down', 'clockMouseWheelDown')
-
-			copy('month_show_weeknumbers', 'monthShowWeekNumbers')
-			copy('month_eventbadge_type', 'monthEventBadgeType')
-
-			copy('agenda_newevent_remember_calendar', 'agendaNewEventRememberCalendar')
-			copy('agenda_newevent_last_calendar_id', 'agendaNewEventLastCalendarId')
-			copy('agenda_breakup_multiday_events', 'agendaBreakupMultiDayEvents')
-
-			copy('events_pollinterval', 'eventsPollInterval')
-
-			copy('weather_app_id', 'openWeatherMapAppId')
-			copy('weather_city_id', 'openWeatherMapCityId')
-			copy('weather_canada_city_id', 'weatherCanadaCityId')
-			copy('weather_service', 'weatherService')
-			copy('weather_units', 'weatherUnits')
-			copy('meteogram_hours', 'meteogramHours')
-
-			plasmoid.configuration.v71Migration = true
 		}
 	}
 
