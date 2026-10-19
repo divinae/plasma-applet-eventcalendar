@@ -330,6 +330,46 @@ ConfigPage {
 			}
 		}
 
+		//--- Daily agenda: today's events once a day (DailyAgenda.js)
+		FormCard.FormHeader {
+			title: i18n("Daily Agenda")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				id: dailyAgendaEnabled
+				text: i18n("Today's events every morning")
+				description: i18n("A notification with today's events once a day, also when the computer is turned on later.")
+				configKey: 'dailyAgendaEnabled'
+			}
+			FormCard.FormDelegateSeparator {}
+			// dailyAgendaTime: minutes since midnight, shown as a time.
+			FormCard.FormSpinBoxDelegate {
+				enabled: dailyAgendaEnabled.checked
+				label: i18n("At")
+				value: page.configBridge.read("dailyAgendaTime", 480)
+				from: 0
+				to: 24 * 60 - 15
+				stepSize: 15
+				textFromValue: function(value, locale) {
+					return Qt.formatTime(new Date(2000, 0, 1, Math.floor(value / 60), value % 60), Qt.locale().timeFormat(Locale.ShortFormat))
+				}
+				valueFromText: function(text, locale) {
+					var match = /(\d{1,2})\D*(\d{2})?\s*(am|pm)?/i.exec(String(text))
+					if (!match) {
+						return 480
+					}
+					var hours = Number(match[1]) % 24
+					if (match[3] && match[3].toLowerCase() === 'pm' && hours < 12) {
+						hours += 12
+					} else if (match[3] && match[3].toLowerCase() === 'am' && hours === 12) {
+						hours = 0
+					}
+					return Math.min(24 * 60 - 1, hours * 60 + Number(match[2] || 0))
+				}
+				onValueModified: page.configBridge.write("dailyAgendaTime", value)
+			}
+		}
+
 		//--- Both
 		FormCard.FormHeader {
 			title: i18n("All Event Notifications")

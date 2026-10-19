@@ -277,6 +277,18 @@
 			<!-- "day|calendar|event|start" of invitations notified today, so they aren't repeated. -->
 			<default></default>
 		</entry>
+		<entry name="dailyAgendaEnabled" type="bool">
+			<!-- A notification with today's events once a day (see DailyAgenda.js). -->
+			<default>false</default>
+		</entry>
+		<entry name="dailyAgendaTime" type="int">
+			<!-- When the daily agenda is shown: minutes since midnight. -->
+			<default>480</default>
+		</entry>
+		<entry name="dailyAgendaDay" type="string">
+			<!-- "yyyy-m-d" of the last daily agenda shown, so it's shown once a day. -->
+			<default></default>
+		</entry>
 		<entry name="clockShowNextEvent" type="bool">
 			<default>true</default>
 		</entry>

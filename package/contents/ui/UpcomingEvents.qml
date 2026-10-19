@@ -5,6 +5,7 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "NotifyTiming.js" as NotifyTiming
 import "Invitations.js" as Invitations
+import "DailyAgenda.js" as DailyAgenda
 import "Shared.js" as Shared
 import "./calendars"
 
@@ -189,6 +190,60 @@ CalendarManager {
 			summary: i18nc("%1 = event title", "Invitation: %1", eventItem.summary),
 			body: body,
 			respond: true,
+		})
+	}
+
+	//--- Daily agenda: today's events once a day, at the first check at or after the set time
+	// (also when the computer is turned on later). Only with synced events, else it would be empty.
+	property bool eventsSynced: false
+	function allEventItems() {
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
+		}
+		return items
+	}
+	function checkDailyAgenda() {
+		if (!plasmoid.configuration.dailyAgendaEnabled || !eventsSynced) {
+			return
+		}
+		var now = timeModel.currentTime
+		if (!(upcomingEvents.dateMin <= now && now <= upcomingEvents.dateMax)) {
+			return // Events of another month: wait for the sync
+		}
+		if (!DailyAgenda.isDue(now, plasmoid.configuration.dailyAgendaTime, plasmoid.configuration.dailyAgendaDay)) {
+			return
+		}
+		plasmoid.configuration.dailyAgendaDay = DailyAgenda.dayKey(now)
+		var agenda = DailyAgenda.summarize(allEventItems(), now, 5)
+		logger.log('notification: daily agenda,', agenda.count, 'events') // No titles in the log
+		sendDailyAgendaNotification(agenda)
+	}
+
+	function sendDailyAgendaNotification(agenda) {
+		var lines = agenda.items.map(function(item) {
+			var title = Shared.escapeHtml(item.title)
+			return item.allDay
+				? i18nc("daily agenda, %1 = event title", "All day: %1", title)
+				: Qt.formatTime(item.start, appletConfig.timeFormat) + ' ' + title
+		})
+		if (agenda.more > 0) {
+			lines.push(i18ncp("daily agenda, more events", "+%1 more", "+%1 more", agenda.more))
+		}
+		notificationManager.notify({
+			appName: i18n("Event Calendar"),
+			appIcon: "view-calendar-day",
+			event: 'dailyAgenda',
+			expireTimeout: -1,
+			summary: agenda.count > 0
+				? i18np("Today: %1 event", "Today: %1 events", agenda.count)
+				: i18n("Nothing planned today"),
+			body: lines.join('<br />'),
+			actions: ['agenda,' + i18n("Open Agenda")],
+		}, function(actionId) {
+			if (actionId === 'default' || actionId === 'agenda') {
+				root.expanded = true
+			}
 		})
 	}
 
@@ -436,6 +491,7 @@ CalendarManager {
 
 	function tick() {
 		checkForEventsStarting()
+		checkDailyAgenda()
 		updateNextEvent()
 		updateTooltipEvents()
 	}
@@ -452,7 +508,9 @@ CalendarManager {
 				upcomingEvents.dateMax = eventModel.dateMax
 				upcomingEvents.eventsByCalendar = eventModel.eventsByCalendar
 				upcomingEvents.allDataFetched()
+				upcomingEvents.eventsSynced = true
 				upcomingEvents.checkInvitations()
+				upcomingEvents.checkDailyAgenda()
 				upcomingEvents.updateNextEvent()
 				upcomingEvents.updateTooltipEvents()
 			}
