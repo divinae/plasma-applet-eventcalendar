@@ -59,6 +59,19 @@ PlasmaComponents3.ToolButton {
 		y: calendarToggles.height
 		// Stays open while toggling several calendars; closes on a click outside or Escape.
 		closePolicy: PlasmaComponents3.Popup.CloseOnEscape | PlasmaComponents3.Popup.CloseOnPressOutsideParent
+		padding: Kirigami.Units.smallSpacing * 2
+
+		// Solid, like the widget's other cards: the theme's translucent frame has no blur here, so
+		// the views showed through it.
+		background: Kirigami.ShadowedRectangle {
+			color: Kirigami.Theme.backgroundColor
+			radius: Kirigami.Units.cornerRadius * 2
+			border.width: 1
+			border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+			shadow.size: Kirigami.Units.gridUnit
+			shadow.color: Qt.rgba(0, 0, 0, 0.25)
+			shadow.yOffset: 2
+		}
 
 		contentItem: ColumnLayout {
 			spacing: 0
