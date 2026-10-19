@@ -328,6 +328,19 @@ ConfigPage {
 				description: i18n("For meetings you accepted or organize, not marked as ended.")
 				configKey: 'meetingAutoJoin'
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				id: meetingDoNotDisturb
+				text: i18n("Do Not Disturb during meetings")
+				description: i18n("Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off.")
+				configKey: 'meetingDoNotDisturb'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				enabled: meetingDoNotDisturb.checked
+				text: i18n("Only meetings I accepted")
+				configKey: 'meetingDoNotDisturbAcceptedOnly'
+			}
 		}
 
 		//--- Invitations

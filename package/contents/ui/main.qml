@@ -24,6 +24,7 @@ PlasmoidItem {
 	AppletConfig { id: appletConfig }
 	NotificationManager { id: notificationManager }
 	MeetingOpener { id: meetingOpener }
+	FocusMode { id: focusMode }
 	NetworkMonitor { id: networkMonitor }
 
 	property alias eventModel: eventModel

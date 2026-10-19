@@ -313,6 +313,39 @@ CalendarManager {
 				meetingOpener.open(meetingLink.url)
 			}
 		}
+		startDoNotDisturb(eventItem, sent, now)
+	}
+
+	//--- Do Not Disturb during meetings (FocusMode.qml): at the start, and on startup / sync for a
+	// meeting in progress; once per meeting (a Do Not Disturb turned off by hand stays off).
+	function startDoNotDisturb(eventItem, sent, now) {
+		if (!plasmoid.configuration.meetingDoNotDisturb) {
+			return
+		}
+		var key = meetingKey(eventItem)
+		if (sent[key + '|dnd'] || eventItem.endDateTime <= now || isMarkedEnded(eventItem)) {
+			return
+		}
+		var hasLink = !!MeetingLink.find(eventItem)
+		if (!MeetingRules.isDoNotDisturbMeeting(eventItem, hasLink, plasmoid.configuration.meetingDoNotDisturbAcceptedOnly)) {
+			return
+		}
+		sent[key + '|dnd'] = now
+		logger.log('do not disturb: meeting', eventItem.startDateTime, '-', eventItem.endDateTime) // No title in the log
+		focusMode.startUntil(eventItem.endDateTime, key, timeModel.currentTime)
+	}
+	function checkMeetingsInProgress() {
+		if (!plasmoid.configuration.meetingDoNotDisturb) {
+			return
+		}
+		var now = timeModel.currentTime.getTime()
+		var sent = sentNotifications
+		allEventItems().forEach(function(eventItem) {
+			if (isOngoing(eventItem)) {
+				startDoNotDisturb(eventItem, sent, now)
+			}
+		})
+		sentNotifications = sent
 	}
 
 	// Every minute since the last check (see NotifyTiming), each notification once.
@@ -383,6 +416,7 @@ CalendarManager {
 		}
 		kept[endedKey(eventItem)] = new Date(eventItem.endDateTime).getTime()
 		endedEvents = kept
+		focusMode.endIfOwn(meetingKey(eventItem), timeModel.currentTime) // Do Not Disturb off, if the widget set it
 		updateNextEvent()
 		updateTooltipEvents()
 	}
@@ -533,6 +567,7 @@ CalendarManager {
 				upcomingEvents.eventsSynced = true
 				upcomingEvents.checkInvitations()
 				upcomingEvents.checkDailyAgenda()
+				upcomingEvents.checkMeetingsInProgress()
 				upcomingEvents.updateNextEvent()
 				upcomingEvents.updateTooltipEvents()
 			}

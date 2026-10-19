@@ -281,6 +281,14 @@
 			<!-- Open the meeting link when a meeting (accepted or own, timed) starts. -->
 			<default>false</default>
 		</entry>
+		<entry name="meetingDoNotDisturb" type="bool">
+			<!-- Plasma's Do Not Disturb until a meeting's end, at its start (see FocusMode.qml). -->
+			<default>false</default>
+		</entry>
+		<entry name="meetingDoNotDisturbAcceptedOnly" type="bool">
+			<!-- Do Not Disturb only for meetings accepted or organized (else any not declined). -->
+			<default>true</default>
+		</entry>
 		<entry name="dailyAgendaEnabled" type="bool">
 			<!-- A notification with today's events once a day (see DailyAgenda.js). -->
 			<default>false</default>
