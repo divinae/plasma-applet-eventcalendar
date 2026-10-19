@@ -14,26 +14,7 @@ LinkRect {
 	implicitWidth: contents.implicitWidth // Not childrenRect: the contents follow the width (binding loop)
 	implicitHeight: contents.implicitHeight
 
-	property bool taskIsOverdue: false
-	function checkIfIsOverdue() {
-		if (model.due) {
-			taskIsOverdue = !model.isCompleted && model.dueEndTime < timeModel.currentTime
-		} else {
-			taskIsOverdue = false
-		}
-	}
-	Connections {
-		target: timeModel
-		function onLoaded() {
-			agendaTaskItem.checkIfIsOverdue()
-		}
-		function onMinuteChanged() {
-			agendaTaskItem.checkIfIsOverdue()
-		}
-	}
-	Component.onCompleted: {
-		agendaTaskItem.checkIfIsOverdue()
-	}
+	readonly property bool taskIsOverdue: !!model.due && !model.isCompleted && model.dueEndTime < timeModel.currentTime
 
 	property alias isEditing: editTaskForm.active
 	clickable: !isEditing

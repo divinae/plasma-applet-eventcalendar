@@ -14,22 +14,9 @@ ColumnLayout {
 	property var agendaItemEvents: model.events
 	property var agendaItemTasks: model.tasks
 	property var agendaItemDate: model.date // var: model.date is briefly undefined while delegates are removed.
-	property bool agendaItemIsToday: false
+	readonly property bool agendaItemIsToday: !!agendaItemDate && !!timeModel.currentTime && Shared.isSameDate(timeModel.currentTime, agendaItemDate)
 	// Past days are dimmed (still clickable).
 	opacity: agendaItemDate && timeModel.currentTime && Shared.isPastDay(agendaItemDate, timeModel.currentTime) ? appletConfig.pastOpacity : 1
-	function checkIfToday() {
-		agendaItemIsToday = timeModel.currentTime && model.date ? Shared.isSameDate(timeModel.currentTime, model.date) : false
-	}
-	Component.onCompleted: agendaListItem.checkIfToday()
-	Connections {
-		target: timeModel
-		function onLoaded() {
-			agendaListItem.checkIfToday()
-		}
-		function onDateChanged() {
-			agendaListItem.checkIfToday()
-		}
-	}
 	Connections {
 		target: agendaModel
 		function onPopulatingChanged() {
@@ -40,7 +27,6 @@ ColumnLayout {
 	}
 	function reset() {
 		newEventForm.active = false
-		agendaListItem.checkIfToday()
 	}
 
 	readonly property int eventCount: agendaItemEvents ? agendaItemEvents.count : 0

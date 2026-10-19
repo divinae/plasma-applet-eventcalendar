@@ -12,24 +12,8 @@ LinkRect {
 	readonly property int eventItemIndex: index
 	Layout.fillWidth: true
 
-	property bool eventItemInProgress: false
-	function checkIfInProgress() {
-		if (model.startDateTime && timeModel.currentTime && model.endDateTime) {
-			eventItemInProgress = model.startDateTime <= timeModel.currentTime && timeModel.currentTime <= model.endDateTime
-		} else {
-			eventItemInProgress = false
-		}
-	}
-	Connections {
-		target: timeModel
-		function onLoaded() {
-			agendaEventItem.checkIfInProgress()
-		}
-		function onMinuteChanged() {
-			agendaEventItem.checkIfInProgress()
-		}
-	}
-	Component.onCompleted: agendaEventItem.checkIfInProgress()
+	readonly property bool eventItemInProgress: !!model.startDateTime && !!model.endDateTime && !!timeModel.currentTime
+		&& model.startDateTime <= timeModel.currentTime && timeModel.currentTime <= model.endDateTime
 
 	// Keyboard and screen readers: the tile is a button that opens the event details.
 	activeFocusOnTab: clickable
