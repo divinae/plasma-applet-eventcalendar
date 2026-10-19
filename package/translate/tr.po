@@ -1747,7 +1747,7 @@ msgstr "Durum"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "Varsayılan görünürlük"
+msgstr "Takvim varsayılanı"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"

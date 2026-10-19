@@ -1832,8 +1832,8 @@ msgstr "(Ei otsikkoa)"
 #: ../contents/ui/ImportView.qml
 msgid "%1 cancelled event isn't imported."
 msgid_plural "%1 cancelled events aren't imported."
-msgstr[0] "%1 peruttua tapahtumaa ei tuoda."
-msgstr[1] "%1 peruttua tapahtumaa ei tuoda."
+msgstr[0] "%1 peruttu tapahtuma jätetään tuomatta."
+msgstr[1] "%1 peruttua tapahtumaa jätetään tuomatta."
 
 #: ../contents/ui/ImportView.qml
 msgid "Calendar:"

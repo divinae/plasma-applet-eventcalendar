@@ -1000,7 +1000,7 @@ msgstr "주 및 일"
 #: ../contents/ui/config/ConfigViews.qml
 msgctxt "week view setting"
 msgid "Days shown"
-msgstr "표시할 날짜"
+msgstr "표시할 요일"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "7 days"
@@ -1727,7 +1727,7 @@ msgstr "표시 방법"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "기본 공개 설정"
+msgstr "달력 기본값"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"

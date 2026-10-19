@@ -1601,7 +1601,7 @@ msgstr "Visa som"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "Standardsynlighet"
+msgstr "Kalenderns standard"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"

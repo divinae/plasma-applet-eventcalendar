@@ -1278,7 +1278,7 @@ msgstr "%1 a aguardar"
 #: ../contents/ui/EventDetailsView.qml
 msgid "1 guest"
 msgid_plural "%1 guests"
-msgstr[0] "1 convidado"
+msgstr[0] "%1 convidado"
 msgstr[1] "%1 convidados"
 
 #: ../contents/ui/EventDetailsView.qml
@@ -1358,7 +1358,7 @@ msgstr "Mostrar menos"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Show 1 more"
 msgid_plural "Show all %1"
-msgstr[0] "Mostrar mais 1"
+msgstr[0] "Mostrar mais %1"
 msgstr[1] "Mostrar todos os %1"
 
 #: ../contents/ui/EventEditView.qml

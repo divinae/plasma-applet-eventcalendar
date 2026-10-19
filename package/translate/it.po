@@ -1601,7 +1601,7 @@ msgstr "Mostra come"
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
 msgid "Calendar default"
-msgstr "Visibilità predefinita"
+msgstr "Predefinita del calendario"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event visibility"
