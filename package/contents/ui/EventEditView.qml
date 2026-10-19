@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "EventEdit.js" as EventEdit
 import "EventTypes.js" as EventTypes
 import "Guests.js" as Guests
 import "LocaleFuncs.js" as LocaleFuncs
@@ -28,6 +29,8 @@ Rectangle {
 	property string initialTitle: "" // New events: title typed so far (eg: in quick add)
 	property var templateEvent: null // New events: a copy of this event (Duplicate)
 	readonly property bool isNew: !eventItem
+	// Rows below a row with an icon line up with its text.
+	readonly property real indent: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
 	signal closeRequested()
 
 	//--- Recurrence
@@ -545,9 +548,7 @@ Rectangle {
 		if (!Guests.hasOtherGuests(eventItem.attendees)) {
 			return ''
 		}
-		var wasAllDay = !!(eventItem.start && eventItem.start.date)
-		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, startObj()) || dateObjChanged(eventItem.end, endObj())
-			|| timeZoneChanged || (canEditRepeat && repeatChanged)
+		var timeChanged = timesChanged(eventItem) || (canEditRepeat && repeatChanged)
 		var placeChanged = Shared.hasChanged(eventItem.location, locationField.text)
 			|| (conferenceAction === 'add' && !hadConference) || (conferenceAction === 'remove' && hadConference)
 		return timeChanged || placeChanged ? 'update' : ''
@@ -596,13 +597,26 @@ Rectangle {
 		dayAfter.setDate(dayAfter.getDate() + 1)
 		return { date: Shared.localeDateString(dayAfter) }
 	}
-	function dateObjChanged(oldObj, newObj) {
-		oldObj = oldObj || {}
-		if (newObj.date) {
-			return oldObj.date !== newObj.date
+	// The form's times differ from those of `item` (all day, start, end or time zone).
+	function timesChanged(item) {
+		return EventEdit.timesChanged(item, allDayCheckBox.checked, startObj(), endObj()) || timeZoneChanged
+	}
+	// The changes to `item` that an event and its whole series both get: text fields, color, show
+	// as / visibility, video call, type settings and reminders.
+	function changedArgs(item, summary) {
+		var args = EventEdit.changedFields(item, {
+			summary: summary,
+			location: locationField.text,
+			description: descriptionField.text,
+		})
+		addColorArgs(args)
+		addAvailabilityArgs(args)
+		addConferenceArgs(args)
+		addTypePropertiesArgs(args)
+		if (supportsRecurrence && remindersChanged) {
+			args.reminders = Reminders.toGoogle(reminderState)
 		}
-		// Compare instants: Google returns dateTime with an offset, we send UTC.
-		return !oldObj.dateTime || new Date(oldObj.dateTime).getTime() !== new Date(newObj.dateTime).getTime()
+		return args
 	}
 
 	function save() {
@@ -617,17 +631,13 @@ Rectangle {
 			return
 		}
 		if (isNew) {
-			var data = {
+			var data = EventEdit.changedFields(null, {
 				summary: summary,
 				start: startObj(),
 				end: endObj(),
-			}
-			if (locationField.text) {
-				data.location = locationField.text
-			}
-			if (descriptionField.text) {
-				data.description = descriptionField.text
-			}
+				location: locationField.text,
+				description: descriptionField.text,
+			})
 			if (supportsRecurrence && colorId) {
 				data.colorId = colorId
 			}
@@ -653,28 +663,11 @@ Rectangle {
 		} else if (editSeries) {
 			saveSeries(summary)
 		} else {
-			var args = {}
-			if (Shared.hasChanged(eventItem.summary, summary)) {
-				args.summary = summary
-			}
-			if (Shared.hasChanged(eventItem.location, locationField.text)) {
-				args.location = locationField.text
-			}
-			if (Shared.hasChanged(eventItem.description, descriptionField.text)) {
-				args.description = descriptionField.text
-			}
-			addColorArgs(args)
-			addAvailabilityArgs(args)
-			addConferenceArgs(args)
-			addTypePropertiesArgs(args)
-			if (supportsRecurrence && remindersChanged) {
-				args.reminders = Reminders.toGoogle(reminderState)
-			}
+			var args = changedArgs(eventItem, summary)
 			var options = { params: requestParams(args) }
 			var start = startObj()
 			var end = endObj()
-			var wasAllDay = !!(eventItem.start && eventItem.start.date)
-			if (wasAllDay !== allDayCheckBox.checked || dateObjChanged(eventItem.start, start) || dateObjChanged(eventItem.end, end) || timeZoneChanged) {
+			if (timesChanged(eventItem)) {
 				// The update replaces start / end as a whole, so switching all-day <-> timed is clean.
 				args.start = start
 				args.end = end
@@ -722,33 +715,16 @@ Rectangle {
 	// this occurrence moved, and the repeat rule.
 	function saveSeries(summary) {
 		var item = eventItem
-		var args = {}
-		if (Shared.hasChanged(item.summary, summary)) {
-			args.summary = summary
-		}
-		if (Shared.hasChanged(item.location, locationField.text)) {
-			args.location = locationField.text
-		}
-		if (Shared.hasChanged(item.description, descriptionField.text)) {
-			args.description = descriptionField.text
-		}
-		addColorArgs(args)
-		addAvailabilityArgs(args)
-		addConferenceArgs(args)
-		addTypePropertiesArgs(args)
-		if (supportsRecurrence && remindersChanged) {
-			args.reminders = Reminders.toGoogle(reminderState)
-		}
+		var args = changedArgs(item, summary)
 		var options = { params: requestParams(args) }
 		var start = startObj()
 		var end = endObj()
-		var wasAllDay = !!(item.start && item.start.date)
-		var timeChanged = wasAllDay !== allDayCheckBox.checked || dateObjChanged(item.start, start) || dateObjChanged(item.end, end)
-			|| timeZoneChanged
+		var timeChanged = timesChanged(item)
 		var occurrenceStart = new Date(item.startDateTime)
 		var rule = repeatRule()
 		var ruleChanged = repeatChanged
-		var timeZone = calendarTimeZone()
+		// A series without a zone of its own gets the editor's (as withTimeZone does).
+		var seriesZone = timeZone || calendarTimeZone()
 		var guestEdit = guestsChanged
 		var initial = initialGuests
 		var edited = guests
@@ -759,7 +735,7 @@ Rectangle {
 				seriesArgs[key] = args[key]
 			}
 			if (timeChanged) {
-				var times = SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
+				var times = SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, seriesZone)
 				seriesArgs.start = times.start
 				seriesArgs.end = times.end
 			}
@@ -1006,23 +982,19 @@ Rectangle {
 				RowLayout {
 					visible: form.canSetType
 					Layout.fillWidth: true
-					Kirigami.Icon {
+					RowIcon {
 						source: form.effectiveType === 'outOfOffice' ? "user-away" : (form.effectiveType === 'focusTime' ? "audio-headphones" : "view-calendar-day")
-						Layout.preferredWidth: Kirigami.Units.iconSizes.small
-						Layout.preferredHeight: Layout.preferredWidth
-						opacity: 0.7
 					}
-					FormComboBox {
+					KeyComboBox {
 						id: eventTypeCombo
 						Layout.fillWidth: true
-						textRole: "text"
 						model: [
 							{ key: 'default', text: i18nc("event type", "Event") },
 							{ key: 'outOfOffice', text: i18nc("event type", "Out of office") },
 							{ key: 'focusTime', text: i18nc("event type", "Focus time") },
 						]
-						currentIndex: EventTypes.TYPES.indexOf(form.eventType)
-						onActivated: function(index) { form.setEventType(model[index].key) }
+						currentKey: form.eventType
+						onPicked: function(key) { form.setEventType(key) }
 						Accessible.name: i18n("Event type")
 					}
 				}
@@ -1031,19 +1003,18 @@ Rectangle {
 					// Existing event from the disk cache: until its settings are loaded.
 					enabled: form.isNew || form.initialTypeProperties !== ""
 					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					Layout.leftMargin: form.indent
 					spacing: Kirigami.Units.smallSpacing
-					FormComboBox {
+					KeyComboBox {
 						id: declineCombo
 						Layout.fillWidth: true
-						textRole: "text"
 						model: [
 							{ key: 'declineNone', text: i18n("Don't decline invitations") },
 							{ key: 'declineOnlyNewConflictingInvitations', text: i18n("Decline new invitations in this time") },
 							{ key: 'declineAllConflictingInvitations', text: i18n("Decline new and existing invitations in this time") },
 						]
-						currentIndex: EventTypes.DECLINE_MODES.indexOf(form.autoDeclineMode)
-						onActivated: function(index) { form.autoDeclineMode = model[index].key }
+						currentKey: form.autoDeclineMode
+						onPicked: function(key) { form.autoDeclineMode = key }
 						Accessible.name: i18n("Automatically decline")
 					}
 					PlasmaComponents3.TextField {
@@ -1054,17 +1025,16 @@ Rectangle {
 						text: form.declineMessage
 						onTextEdited: form.declineMessage = text
 					}
-					FormComboBox {
+					KeyComboBox {
 						visible: form.effectiveType === 'focusTime'
 						Layout.fillWidth: true
-						textRole: "text"
 						model: [
 							{ key: 'doNotDisturb', text: i18nc("Google Chat status during focus time", "Do not disturb") },
 							{ key: 'available', text: i18nc("Google Chat status during focus time", "Available") },
 						]
-						currentIndex: form.chatStatus === 'available' ? 1 : 0
+						currentKey: form.chatStatus === 'available' ? 'available' : 'doNotDisturb'
 						displayText: i18nc("%1 = Do not disturb or Available", "Chat status: %1", currentText)
-						onActivated: function(index) { form.chatStatus = model[index].key }
+						onPicked: function(key) { form.chatStatus = key }
 						Accessible.name: i18n("Chat status")
 					}
 				}
@@ -1153,11 +1123,8 @@ Rectangle {
 
 					RowLayout {
 						Layout.fillWidth: true
-						Kirigami.Icon {
+						RowIcon {
 							source: "preferences-system-time"
-							Layout.preferredWidth: Kirigami.Units.iconSizes.small
-							Layout.preferredHeight: Layout.preferredWidth
-							opacity: 0.7
 						}
 						PlasmaComponents3.ToolButton {
 							id: timeZoneButton
@@ -1194,7 +1161,7 @@ Rectangle {
 						id: timeZoneSearch
 						visible: timeZoneSection.expanded
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						placeholderText: i18n("Search time zones")
 						Keys.onUpPressed: timeZoneList.moveUp()
 						Keys.onDownPressed: timeZoneList.moveDown()
@@ -1205,7 +1172,7 @@ Rectangle {
 						id: timeZoneList
 						visible: timeZoneSection.expanded
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						Layout.preferredHeight: Kirigami.Units.gridUnit * 9
 						query: timeZoneSearch.text
 						currentZone: form.timeZone
@@ -1220,17 +1187,13 @@ Rectangle {
 				RowLayout {
 					visible: form.supportsRecurrence
 					Layout.fillWidth: true
-					Kirigami.Icon {
+					RowIcon {
 						source: "view-refresh"
-						Layout.preferredWidth: Kirigami.Units.iconSizes.small
-						Layout.preferredHeight: Layout.preferredWidth
-						opacity: 0.7
 					}
-					FormComboBox {
+					KeyComboBox {
 						id: repeatCombo
 						Layout.fillWidth: true
 						enabled: form.canEditRepeat
-						textRole: "text"
 						model: {
 							var start = durationSelector.startDateTime
 							var list = [
@@ -1247,21 +1210,8 @@ Rectangle {
 							list.push({ key: 'custom', text: i18n("Custom…") })
 							return list
 						}
-						function syncIndex() {
-							for (var i = 0; i < model.length; i++) {
-								if (model[i].key === form.repeatKey) {
-									currentIndex = i
-									return
-								}
-							}
-						}
-						onModelChanged: syncIndex()
-						Connections {
-							target: form
-							function onRepeatKeyChanged() { repeatCombo.syncIndex() }
-						}
-						onActivated: function(index) {
-							var key = model[index].key
+						currentKey: form.repeatKey
+						onPicked: function(key) {
 							if (key === 'custom' && form.repeatKey !== 'custom') {
 								// Start from what was picked before, eg: Weekly on Thursday.
 								form.setCustom(Recurrence.customOf(form.repeatRule(), durationSelector.startDateTime))
@@ -1277,7 +1227,7 @@ Rectangle {
 					visible: form.supportsRecurrence && form.repeatKey === 'custom'
 					enabled: form.canEditRepeat
 					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					Layout.leftMargin: form.indent
 					spacing: Kirigami.Units.smallSpacing
 
 					RowLayout {
@@ -1291,25 +1241,17 @@ Rectangle {
 							value: form.customInterval
 							onValueModified: form.customInterval = value
 						}
-						FormComboBox {
+						KeyComboBox {
 							id: freqCombo
 							Layout.fillWidth: true
-							textRole: "text"
 							model: [
 								{ key: 'DAILY', text: i18ncp("Repeat every N", "day", "days", form.customInterval) },
 								{ key: 'WEEKLY', text: i18ncp("Repeat every N", "week", "weeks", form.customInterval) },
 								{ key: 'MONTHLY', text: i18ncp("Repeat every N", "month", "months", form.customInterval) },
 								{ key: 'YEARLY', text: i18ncp("Repeat every N", "year", "years", form.customInterval) },
 							]
-							function syncIndex() {
-								currentIndex = ['DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'].indexOf(form.customFreq)
-							}
-							onModelChanged: syncIndex()
-							Connections {
-								target: form
-								function onCustomFreqChanged() { freqCombo.syncIndex() }
-							}
-							onActivated: function(index) { form.customFreq = model[index].key }
+							currentKey: form.customFreq
+							onPicked: function(key) { form.customFreq = key }
 						}
 					}
 
@@ -1344,29 +1286,20 @@ Rectangle {
 					visible: form.supportsRecurrence && form.repeatKey !== 'none'
 					enabled: form.canEditRepeat
 					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					Layout.leftMargin: form.indent
 					PlasmaComponents3.Label {
 						text: i18nc("Repeat ends: never / on date / after N times", "Ends:")
 					}
-					FormComboBox {
+					KeyComboBox {
 						id: endCombo
 						Layout.fillWidth: form.endType === 'never'
-						textRole: "text"
 						model: [
 							{ key: 'never', text: i18nc("Repeat ends", "Never") },
 							{ key: 'until', text: i18nc("Repeat ends on [date]", "On") },
 							{ key: 'count', text: i18nc("Repeat ends after [N] times", "After") },
 						]
-						function syncIndex() {
-							currentIndex = ['never', 'until', 'count'].indexOf(form.endType)
-						}
-						onModelChanged: syncIndex()
-						Connections {
-							target: form
-							function onEndTypeChanged() { endCombo.syncIndex() }
-						}
-						onActivated: function(index) {
-							var key = model[index].key
+						currentKey: form.endType
+						onPicked: function(key) {
 							if (key === 'until' && !form.endDate) {
 								var d = new Date(durationSelector.startDateTime)
 								d.setMonth(d.getMonth() + 1)
@@ -1410,11 +1343,8 @@ Rectangle {
 					id: conferenceRow
 					visible: form.supportsRecurrence && !form.isSpecialType && (form.hadConference || (form.meetAllowed && !form.isInvited))
 					Layout.fillWidth: true
-					Kirigami.Icon {
+					RowIcon {
 						source: "camera-web"
-						Layout.preferredWidth: Kirigami.Units.iconSizes.small
-						Layout.preferredHeight: Layout.preferredWidth
-						opacity: 0.7
 					}
 					PlasmaComponents3.Button {
 						id: addMeetButton
@@ -1473,40 +1403,34 @@ Rectangle {
 				RowLayout {
 					visible: form.supportsRecurrence
 					Layout.fillWidth: true
-					Kirigami.Icon {
+					RowIcon {
 						source: "view-calendar-day"
-						Layout.preferredWidth: Kirigami.Units.iconSizes.small
-						Layout.preferredHeight: Layout.preferredWidth
-						opacity: 0.7
 					}
-					FormComboBox {
+					KeyComboBox {
 						id: transparencyCombo
 						visible: !form.isSpecialType // Always busy
 						Layout.fillWidth: true
-						textRole: "text"
 						model: [
 							{ key: 'opaque', text: i18nc("show the event's time as", "Busy") },
 							{ key: 'transparent', text: i18nc("show the event's time as", "Free") },
 						]
-						currentIndex: form.transparency === 'transparent' ? 1 : 0
+						currentKey: form.transparency === 'transparent' ? 'transparent' : 'opaque'
 						displayText: i18nc("%1 = Busy or Free", "Show as: %1", currentText)
-						onActivated: function(index) { form.transparency = model[index].key }
+						onPicked: function(key) { form.transparency = key }
 						Accessible.name: i18n("Show as")
 					}
-					FormComboBox {
+					KeyComboBox {
 						id: visibilityCombo
 						Layout.fillWidth: true
-						textRole: "text"
 						model: [
 							{ key: 'default', text: i18nc("event visibility", "Calendar default") },
 							{ key: 'public', text: i18nc("event visibility", "Public") },
 							{ key: 'private', text: i18nc("event visibility", "Private") },
 						]
 						// 'confidential' is an old name of private.
-						currentIndex: form.visibility === 'public' ? 1 : (form.visibility === 'private' || form.visibility === 'confidential' ? 2 : 0)
+						currentKey: form.visibility === 'public' ? 'public' : (form.visibility === 'private' || form.visibility === 'confidential' ? 'private' : 'default')
 						displayText: i18nc("%1 = Calendar default, Public or Private", "Visibility: %1", currentText)
-						onActivated: function(index) {
-							var key = model[index].key
+						onPicked: function(key) {
 							// Keep 'confidential' unless another choice than Private is picked.
 							if (!(key === 'private' && form.visibility === 'confidential')) {
 								form.visibility = key
@@ -1524,21 +1448,21 @@ Rectangle {
 
 					RowLayout {
 						Layout.fillWidth: true
-						Kirigami.Icon {
+						RowIcon {
 							source: "notifications"
-							Layout.preferredWidth: Kirigami.Units.iconSizes.small
-							Layout.preferredHeight: Layout.preferredWidth
-							opacity: 0.7
 						}
 						PlasmaComponents3.Label {
 							text: i18n("Reminders")
 						}
-						FormComboBox {
+						KeyComboBox {
 							Layout.fillWidth: true
-							model: [i18n("Calendar's default"), i18n("Set for this event")]
-							currentIndex: form.remindersCustom ? 1 : 0
-							onActivated: function(index) {
-								form.remindersCustom = index === 1
+							model: [
+								{ key: 'default', text: i18n("Calendar's default") },
+								{ key: 'custom', text: i18n("Set for this event") },
+							]
+							currentKey: form.remindersCustom ? 'custom' : 'default'
+							onPicked: function(key) {
+								form.remindersCustom = key === 'custom'
 								if (form.remindersCustom && !form.reminderItems.length && !form.reminderOthers.length) {
 									form.addReminder()
 								}
@@ -1549,7 +1473,7 @@ Rectangle {
 						model: form.remindersCustom ? form.reminderItems : []
 						RowLayout {
 							Layout.fillWidth: true
-							Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+							Layout.leftMargin: form.indent
 							readonly property int itemIndex: index
 							PlasmaComponents3.SpinBox {
 								from: 1
@@ -1557,16 +1481,16 @@ Rectangle {
 								value: modelData.value
 								onValueModified: form.setReminder(parent.itemIndex, value, modelData.unit)
 							}
-							FormComboBox {
+							KeyComboBox {
 								Layout.fillWidth: true
 								model: [
-									i18ncp("reminder: N … before the event", "minute before", "minutes before", modelData.value),
-									i18ncp("reminder: N … before the event", "hour before", "hours before", modelData.value),
-									i18ncp("reminder: N … before the event", "day before", "days before", modelData.value),
-									i18ncp("reminder: N … before the event", "week before", "weeks before", modelData.value),
+									{ key: 'minutes', text: i18ncp("reminder: N … before the event", "minute before", "minutes before", modelData.value) },
+									{ key: 'hours', text: i18ncp("reminder: N … before the event", "hour before", "hours before", modelData.value) },
+									{ key: 'days', text: i18ncp("reminder: N … before the event", "day before", "days before", modelData.value) },
+									{ key: 'weeks', text: i18ncp("reminder: N … before the event", "week before", "weeks before", modelData.value) },
 								]
-								currentIndex: Reminders.UNITS.indexOf(modelData.unit)
-								onActivated: function(unitIndex) { form.setReminder(parent.itemIndex, modelData.value, Reminders.UNITS[unitIndex]) }
+								currentKey: modelData.unit
+								onPicked: function(key) { form.setReminder(parent.itemIndex, modelData.value, key) }
 							}
 							PlasmaComponents3.ToolButton {
 								icon.name: "edit-delete-remove"
@@ -1580,7 +1504,7 @@ Rectangle {
 					}
 					PlasmaComponents3.Label {
 						visible: form.remindersCustom && form.reminderItems.length === 0
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						text: i18n("No notification reminders")
 						opacity: 0.7
 					}
@@ -1603,11 +1527,8 @@ Rectangle {
 
 					RowLayout {
 						Layout.fillWidth: true
-						Kirigami.Icon {
+						RowIcon {
 							source: "group"
-							Layout.preferredWidth: Kirigami.Units.iconSizes.small
-							Layout.preferredHeight: Layout.preferredWidth
-							opacity: 0.7
 						}
 						PlasmaComponents3.Label {
 							text: i18n("Guests")
@@ -1624,7 +1545,7 @@ Rectangle {
 					RowLayout {
 						visible: form.canEditGuests
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						PlasmaComponents3.TextField {
 							id: guestField
 							Layout.fillWidth: true
@@ -1645,7 +1566,7 @@ Rectangle {
 					ColumnLayout {
 						visible: form.canEditGuests && guestField.activeFocus && form.guestSuggestions.length > 0
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						spacing: 0
 						Repeater {
 							model: form.guestSuggestions
@@ -1662,7 +1583,7 @@ Rectangle {
 					PlasmaComponents3.Label {
 						visible: form.guestError !== ""
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						wrapMode: Text.Wrap
 						color: Kirigami.Theme.negativeTextColor
 						text: form.guestError
@@ -1670,7 +1591,7 @@ Rectangle {
 
 					PlasmaComponents3.Button {
 						visible: form.canFindTime
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						icon.name: "view-calendar-day"
 						text: i18n("Find a Time")
 						onClicked: form.openFindTime()
@@ -1679,7 +1600,7 @@ Rectangle {
 					Flow {
 						visible: form.guests.length > 0
 						Layout.fillWidth: true
-						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						Layout.leftMargin: form.indent
 						spacing: Kirigami.Units.smallSpacing
 						Repeater {
 							model: form.guests
