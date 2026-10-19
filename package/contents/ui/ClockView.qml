@@ -103,29 +103,13 @@ Item {
 			visible: clock.showMeetingPill
 			anchors.horizontalCenter: parent.horizontalCenter
 			width: Math.max(16, Math.min(clock.width - 4, Kirigami.Units.gridUnit * 2.5))
-			// Before the meeting: a calendar icon over the time until it; during it: the bar's row.
-			readonly property int labelHeight: Math.max(9, Math.round(clock.width * 0.45))
-			readonly property int iconSize: Math.max(10, Math.round(clock.width * 0.5))
-			height: inProgress ? labelHeight : iconSize + labelHeight
+			height: Math.max(9, Math.round(clock.width * 0.45))
 			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
 			readonly property int minutesUntil: typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventMinutesUntil : 0
 
-			Kirigami.Icon {
-				visible: !meetingPill.inProgress
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.top: parent.top
-				width: meetingPill.iconSize
-				height: width
-				source: "view-calendar-symbolic"
-				isMask: true
-				color: timeLabel1.color
-			}
 			PlasmaComponents3.Label {
 				visible: !meetingPill.inProgress
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.bottom: parent.bottom
-				height: meetingPill.labelHeight
-				verticalAlignment: Text.AlignVCenter
+				anchors.centerIn: parent
 				width: Math.max(parent.width, clock.width - 2)
 				horizontalAlignment: Text.AlignHCenter
 				// "5m", from an hour "1h"
