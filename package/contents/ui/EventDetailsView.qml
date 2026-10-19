@@ -8,6 +8,7 @@ import "Attachments.js" as Attachments
 import "EventTypes.js" as EventTypes
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
+import "Responses.js" as Responses
 import "Guests.js" as Guests
 import "Shared.js" as Shared
 import "TimeZone.js" as TimeZone
@@ -63,8 +64,7 @@ Rectangle {
 
 	//--- RSVP: only the signed-in user's own response, on events they were invited to.
 	readonly property var selfAttendee: eventItem && typeof eventModel !== "undefined" ? eventModel.selfAttendee(eventItem) : null
-	readonly property bool canRespond: !!selfAttendee && !!(eventItem && eventItem.canEdit)
-		&& eventModel.supportsRecurrence(eventItem.calendarId)
+	readonly property bool canRespond: !!eventItem && typeof eventModel !== "undefined" && eventModel.canRespond(eventItem)
 	property string pendingResponse: "" // Shown right away, until the refetch brings the saved one
 	readonly property string currentResponse: pendingResponse || (selfAttendee ? selfAttendee.responseStatus || "" : "")
 	function respond(status) {
@@ -77,11 +77,7 @@ Rectangle {
 	}
 	function saveResponse(status, series) {
 		pendingResponse = status
-		eventModel.respondToEvent(eventItem, status, series, function() {
-			if (typeof logic !== "undefined") {
-				logic.update() // The response (and, for a series, every occurrence) comes back with the refetch
-			}
-		})
+		eventModel.respondToEvent(eventItem, status, series) // The saved response comes with the refetch
 	}
 	PlasmaComponents3.Menu {
 		id: rsvpScopeMenu
@@ -335,11 +331,7 @@ Rectangle {
 						Layout.rightMargin: Kirigami.Units.smallSpacing
 					}
 					Repeater {
-						model: [
-							{ status: 'accepted', text: i18nc("RSVP", "Yes"), icon: "dialog-ok-apply" },
-							{ status: 'tentative', text: i18nc("RSVP", "Maybe"), icon: "question" },
-							{ status: 'declined', text: i18nc("RSVP", "No"), icon: "dialog-cancel" },
-						]
+						model: Responses.choices()
 						PlasmaComponents3.ToolButton {
 							text: modelData.text
 							icon.name: modelData.icon

@@ -523,9 +523,13 @@ CalendarManager {
 
 	// RSVP (Google): set only the signed-in user's own attendee responseStatus ('accepted',
 	// 'tentative', 'declined'), on the occurrence or, with series, the whole recurring series.
+	// done: by default a refetch (the response, and for a series every occurrence, comes back with it).
 	function respondToEvent(eventItem, status, series, done) {
 		if (!eventItem || ['accepted', 'tentative', 'declined'].indexOf(status) < 0) {
 			return
+		}
+		if (!done) {
+			done = function() { logic.update() }
 		}
 		var eventId = series && eventItem.recurringEventId ? eventItem.recurringEventId : eventItem.id
 		updateEventFromServer(eventItem.calendarId, eventId, function(serverEvent) {
@@ -541,6 +545,12 @@ CalendarManager {
 			})
 			return { attendees: attendees }
 		}, done)
+	}
+
+	// The signed-in user can answer the invitation: invited (not organizing) on a Google calendar
+	// they can write to.
+	function canRespond(eventItem) {
+		return !!selfAttendee(eventItem) && !!eventItem.canEdit && supportsRecurrence(eventItem.calendarId)
 	}
 
 	// The signed-in user's attendee entry when invited (not when organizing), else null.

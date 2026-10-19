@@ -2,6 +2,7 @@ import QtQuick
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Guests.js" as Guests
+import "Responses.js" as Responses
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 
@@ -16,7 +17,7 @@ PlasmaComponents3.Menu {
 	readonly property bool canEdit: !!(eventItem && eventItem.canEdit)
 	readonly property bool isRecurring: !!(eventItem && eventItem.recurringEventId)
 	readonly property var selfAttendee: eventItem ? eventModel.selfAttendee(eventItem) : null
-	readonly property bool canRespond: !!selfAttendee && canEdit && eventModel.supportsRecurrence(eventItem.calendarId)
+	readonly property bool canRespond: !!eventItem && eventModel.canRespond(eventItem)
 	readonly property string response: selfAttendee ? selfAttendee.responseStatus || "" : ""
 	readonly property string mailtoUrl: Guests.eventMailtoUrl(eventItem)
 
@@ -41,18 +42,14 @@ PlasmaComponents3.Menu {
 		}
 	}
 	function respond(status, series) {
-		eventModel.respondToEvent(eventItem, status, series, function() {
-			if (typeof logic !== "undefined") {
-				logic.update()
-			}
-		})
+		eventModel.respondToEvent(eventItem, status, series)
 	}
 
 	property PlasmaComponents3.Menu respondMenu: PlasmaComponents3.Menu {
 		title: i18nc("RSVP to an invitation", "Respond")
 		icon.name: "mail-meeting-request-reply"
 		Repeater {
-			model: eventMenu.responseModel
+			model: Responses.choices()
 			PlasmaComponents3.MenuItem {
 				text: modelData.text
 				icon.name: modelData.icon
@@ -69,7 +66,7 @@ PlasmaComponents3.Menu {
 			height: visible ? implicitHeight : 0
 		}
 		Repeater {
-			model: eventMenu.responseModel
+			model: Responses.choices()
 			PlasmaComponents3.MenuItem {
 				visible: eventMenu.isRecurring
 				height: visible ? implicitHeight : 0
@@ -79,15 +76,6 @@ PlasmaComponents3.Menu {
 			}
 		}
 	}
-	readonly property var responseModel: [
-		{ status: 'accepted', icon: "dialog-ok-apply",
-			text: i18nc("RSVP", "Yes"), seriesText: i18nc("RSVP", "Yes to All Events") },
-		{ status: 'tentative', icon: "question",
-			text: i18nc("RSVP", "Maybe"), seriesText: i18nc("RSVP", "Maybe to All Events") },
-		{ status: 'declined', icon: "dialog-cancel",
-			text: i18nc("RSVP", "No"), seriesText: i18nc("RSVP", "No to All Events") },
-	]
-
 	PlasmaComponents3.MenuItem {
 		text: i18n("Show Details")
 		icon.name: "view-calendar-day"
