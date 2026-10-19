@@ -1,3 +1,24 @@
+## v1.2.0 - October 19 2026
+
+### Events
+* Duplicate an event: "Duplicate…" in the event menu and a Duplicate button in the event details open the editor with a copy (time, place, description, color, repeat, guests, a new Google Meet).
+* Set an event's own reminders in the editor (N minutes / hours / days / weeks before, up to 5); notifications always use them.
+* Join opens Google Meet links in a chosen app, eg: a Meet web app (found automatically), with a chosen Google account; other meeting links still open in the browser.
+* Mark a meeting in progress as ended (panel and event menus): no progress or "Now:" for it in the panel.
+
+### Panel clock
+* Vertical panels show the next meeting above the time: the time until it starts, then a thin progress bar during it, in the clock's text color.
+* The next meeting shows from 15 minutes before by default (was 60).
+
+### Notifications
+* Reminders can hide after a set number of seconds instead of Plasma's popup timeout.
+* An "event starting" notification or a reminder is no longer missed when the minute check is skipped or late (eg: a busy or restarting Plasma), and none is sent twice.
+* Sent notifications are logged (time and kind, no title).
+
+### Fixes
+* Weather: retried soon after a server error (eg: Open-Meteo "503 overloaded") instead of after an hour; the Day view shows the error with Retry Now.
+* Closing the event details logged an error.
+
 ## v1.1.0 - October 16 2026
 
 ### Views

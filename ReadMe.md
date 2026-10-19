@@ -17,15 +17,19 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   shown) and **Agenda** (a list of upcoming days).
 - **Google Calendar**: several accounts at once, choose calendars and task lists per account.
   Create, edit and delete events with color, guests, Google Meet and **recurring events** (ends on
-  a date / after N times, custom repeats; edit one occurrence or the whole series). Quick add
-  ("Lunch with Anna tomorrow 13:00"), search, answer invitations (Yes / Maybe / No), undo after a
-  delete or move, rename and recolor calendars. Tokens are kept in the system keyring.
+  a date / after N times, custom repeats; edit one occurrence or the whole series) and their own
+  reminders. Quick add ("Lunch with Anna tomorrow 13:00"), search, duplicate events, answer
+  invitations (Yes / Maybe / No), undo after a delete or move, rename and recolor calendars.
+  Tokens are kept in the system keyring.
 - **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
-  Day view, the event details, notifications and the panel's right-click menu. The panel clock
-  can show the next meeting ("in 5 min" / "12 min left").
-- **Notifications** through KDE's notification system: reminders before events (with Snooze),
-  when an event starts (optionally critical / persistent), each configurable in System Settings >
-  Notifications > Event Calendar. Clicking one opens the event in the widget.
+  Day view, the event details, notifications and the panel's right-click menu; Google Meet links
+  can open in a Meet web app with a chosen Google account. The panel clock shows the next meeting
+  ("in 5 min" / "12 min left", or above the time in a vertical panel); a meeting that ended early
+  can be marked as ended.
+- **Notifications** through KDE's notification system: reminders before events (with Snooze,
+  optionally hidden after N seconds), when an event starts (optionally critical / persistent),
+  each configurable in System Settings > Notifications > Event Calendar. Clicking one opens the
+  event in the widget.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap / Weather Canada.
 - **Starts instantly and works offline**: the last loaded events are shown right away and stay
@@ -52,9 +56,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.1.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.2.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.1.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.2.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a
