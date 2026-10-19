@@ -434,10 +434,14 @@ CalendarManager {
 		url += '&singleEvents=' + encodeURIComponent('true')
 		url += '&maxResults=2500' // API max. Default 250 means more sequential pages.
 		url += '&timeZone=' + encodeURIComponent('Etc/UTC')
-		// Out of office, focus time and working locations too (see EventTypes.js).
-		EventTypes.FETCHED_TYPES.forEach(function(type) {
-			url += '&eventTypes=' + encodeURIComponent(type)
-		})
+		// Out of office, focus time and working locations too (see EventTypes.js). A calendar that
+		// rejects the list (400) is asked again without it, and from then on (eventTypesRejected).
+		var withTypes = !eventTypesRejected[args.calendarId]
+		if (withTypes) {
+			EventTypes.FETCHED_TYPES.forEach(function(type) {
+				url += '&eventTypes=' + encodeURIComponent(type)
+			})
+		}
 		if (args.pageToken) {
 			url += '&pageToken=' + encodeURIComponent(args.pageToken)
 		}
@@ -448,12 +452,19 @@ CalendarManager {
 			}
 		}, function(err, data, xhr) {
 			logger.debug('fetchGCalEventsPage.response', args.calendarId, err, data, xhr.status)
+			if (withTypes && xhr && xhr.status === 400) {
+				logger.log('eventTypes rejected by a calendar, fetching without them') // No calendar id/name
+				eventTypesRejected[args.calendarId] = true
+				fetchGCalEventsPage(args, pageCallback)
+				return
+			}
 			if (!err && data && data.error) {
 				return pageCallback(data, null, xhr)
 			}
 			pageCallback(err, data, xhr)
 		})
 	}
+	property var eventTypesRejected: ({}) // Raw calendar id -> true
 
 	//--- Search
 	// Events matching query in the selected calendars between timeMin and timeMax (Dates).
