@@ -25,6 +25,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
 import "lib/ColorUtil.js" as ColorUtil
 import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 Item {
 	id: clock
@@ -83,7 +84,7 @@ Item {
 		&& plasmoid.formFactor === PlasmaCore.Types.Horizontal
 		&& !!nextEvent
 	readonly property real nextEventChipWidth: showNextEventChip ? nextEventChip.width + Kirigami.Units.smallSpacing * 2 : 0
-	// Vertical panels: the chip doesn't fit, a small pill under the time instead.
+	// Vertical panels: the chip doesn't fit, a small pill above the time instead.
 	readonly property bool showMeetingPill: plasmoid.configuration.clockShowNextEvent
 		&& plasmoid.formFactor === PlasmaCore.Types.Vertical
 		&& !!nextEvent
@@ -94,6 +95,56 @@ Item {
 		anchors.centerIn: parent
 		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
 		spacing: Math.max(2, Math.round(clock.width / 12))
+
+		// Next meeting in a vertical panel, above the time: the minutes until it starts ("5m"), or the
+		// time left with a progress bar, on a pill in its calendar's color. The tooltip has the details.
+		Rectangle {
+			id: meetingPill
+			visible: clock.showMeetingPill
+			anchors.horizontalCenter: parent.horizontalCenter
+			width: Math.max(18, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
+			height: Math.max(14, Math.round(width * 0.7))
+			radius: Math.round(height / 3)
+			readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
+			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
+			color: eventColor
+			clip: true
+
+			PlasmaComponents3.Label {
+				anchors.fill: parent
+				anchors.leftMargin: 1
+				anchors.rightMargin: 1
+				anchors.bottomMargin: meetingPill.inProgress ? progressBar.height : 0
+				horizontalAlignment: Text.AlignHCenter
+				verticalAlignment: Text.AlignVCenter
+				text: {
+					if (typeof upcomingEvents === "undefined" || !clock.nextEvent) {
+						return ""
+					}
+					var minutes = meetingPill.inProgress ? upcomingEvents.nextEventMinutesLeft : upcomingEvents.nextEventMinutesUntil
+					// Under an hour: whole minutes ("5m"), else hours ("2h").
+					var seconds = minutes >= 60 ? Math.floor(minutes / 60) * 3600 : Math.max(1, minutes) * 60
+					return LocaleFuncs.durationShortFormat(seconds)
+				}
+				color: Shared.contrastTextColor(meetingPill.eventColor)
+				font.family: appletConfig.clockFontFamily
+				font.pointSize: -1
+				font.pixelSize: Math.max(9, Math.round(parent.height * 0.72))
+				font.weight: Font.Bold
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 7
+			}
+			// During the meeting: how much has passed.
+			Rectangle {
+				id: progressBar
+				visible: meetingPill.inProgress
+				anchors.bottom: parent.bottom
+				width: parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0)
+				height: Math.max(2, Math.round(parent.height / 6))
+				color: Shared.contrastTextColor(meetingPill.eventColor)
+				opacity: 0.8
+			}
+		}
 
 		Column {
 			id: labels
@@ -155,52 +206,6 @@ Item {
 				// Debugging
 				// Rectangle { border.color: "#ff0"; anchors.fill: parent; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
 				// Rectangle { border.color: "#f00"; anchors.fill: timeLabel2; border.width: 1; color: "transparent"; visible: plasmoid.configuration.debugging }
-			}
-		}
-
-		// Next meeting in a vertical panel: "5m" until it starts, or the time left with a progress fill,
-		// on a pill in its calendar's color. The tooltip has the details.
-		Rectangle {
-			id: meetingPill
-			visible: clock.showMeetingPill
-			anchors.horizontalCenter: parent.horizontalCenter
-			width: Math.max(18, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
-			height: Math.max(12, Math.round(width * 0.6))
-			radius: height / 2
-			readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
-			readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
-			color: ColorUtil.setAlpha(eventColor, 0.25)
-			border.width: 1
-			border.color: eventColor
-			clip: true
-
-			Rectangle {
-				visible: meetingPill.inProgress
-				width: parent.width * (typeof upcomingEvents !== "undefined" ? upcomingEvents.nextEventProgress : 0)
-				height: parent.height
-				radius: parent.radius
-				color: ColorUtil.setAlpha(meetingPill.eventColor, 0.6)
-			}
-			PlasmaComponents3.Label {
-				anchors.fill: parent
-				anchors.leftMargin: 2
-				anchors.rightMargin: 2
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				text: {
-					if (typeof upcomingEvents === "undefined" || !clock.nextEvent) {
-						return ""
-					}
-					var minutes = meetingPill.inProgress ? upcomingEvents.nextEventMinutesLeft : upcomingEvents.nextEventMinutesUntil
-					// Under an hour: whole minutes ("5m"), else hours ("2h").
-					var seconds = minutes >= 60 ? Math.floor(minutes / 60) * 3600 : Math.max(1, minutes) * 60
-					return LocaleFuncs.durationShortFormat(seconds)
-				}
-				font.pointSize: -1
-				font.pixelSize: Math.max(8, Math.round(parent.height * 0.62))
-				font.weight: Font.DemiBold
-				fontSizeMode: Text.HorizontalFit
-				minimumPixelSize: 6
 			}
 		}
 	}
