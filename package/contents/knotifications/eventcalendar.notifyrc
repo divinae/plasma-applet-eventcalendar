@@ -18,6 +18,11 @@ Name=New invitation
 Comment=An invitation for today to answer
 Action=Popup
 
+[Event/dailyAgenda]
+Name=Daily agenda
+Comment=Today's events, once in the morning
+Action=Popup
+
 [Event/timer]
 Name=Timer finished
 Comment=The widget's timer has finished

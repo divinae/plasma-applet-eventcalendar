@@ -318,6 +318,31 @@ ConfigPage {
 			text: i18n("Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default.")
 		}
 
+		//--- Meetings
+		FormCard.FormHeader {
+			title: i18n("Meetings")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Open the meeting link when a meeting starts")
+				description: i18n("For meetings you accepted or organize, not marked as ended.")
+				configKey: 'meetingAutoJoin'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				id: meetingDoNotDisturb
+				text: i18n("Do Not Disturb during meetings")
+				description: i18n("Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off.")
+				configKey: 'meetingDoNotDisturb'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				enabled: meetingDoNotDisturb.checked
+				text: i18n("Only meetings I accepted")
+				configKey: 'meetingDoNotDisturbAcceptedOnly'
+			}
+		}
+
 		//--- Invitations
 		FormCard.FormHeader {
 			title: i18n("Invitations")
@@ -327,6 +352,46 @@ ConfigPage {
 				text: i18n("New invitations for today")
 				description: i18n("A notification for each meeting today you haven't answered yet, with Yes, Maybe and No.")
 				configKey: 'invitationNotificationEnabled'
+			}
+		}
+
+		//--- Daily agenda: today's events once a day (DailyAgenda.js)
+		FormCard.FormHeader {
+			title: i18n("Daily Agenda")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				id: dailyAgendaEnabled
+				text: i18n("Today's events every morning")
+				description: i18n("A notification with today's events once a day, also when the computer is turned on later.")
+				configKey: 'dailyAgendaEnabled'
+			}
+			FormCard.FormDelegateSeparator {}
+			// dailyAgendaTime: minutes since midnight, shown as a time.
+			FormCard.FormSpinBoxDelegate {
+				enabled: dailyAgendaEnabled.checked
+				label: i18n("At")
+				value: page.configBridge.read("dailyAgendaTime", 480)
+				from: 0
+				to: 24 * 60 - 15
+				stepSize: 15
+				textFromValue: function(value, locale) {
+					return Qt.formatTime(new Date(2000, 0, 1, Math.floor(value / 60), value % 60), Qt.locale().timeFormat(Locale.ShortFormat))
+				}
+				valueFromText: function(text, locale) {
+					var match = /(\d{1,2})\D*(\d{2})?\s*(am|pm)?/i.exec(String(text))
+					if (!match) {
+						return 480
+					}
+					var hours = Number(match[1]) % 24
+					if (match[3] && match[3].toLowerCase() === 'pm' && hours < 12) {
+						hours += 12
+					} else if (match[3] && match[3].toLowerCase() === 'am' && hours === 12) {
+						hours = 0
+					}
+					return Math.min(24 * 60 - 1, hours * 60 + Number(match[2] || 0))
+				}
+				onValueModified: page.configBridge.write("dailyAgendaTime", value)
 			}
 		}
 

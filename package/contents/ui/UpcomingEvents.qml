@@ -5,6 +5,8 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "NotifyTiming.js" as NotifyTiming
 import "Invitations.js" as Invitations
+import "DailyAgenda.js" as DailyAgenda
+import "MeetingRules.js" as MeetingRules
 import "Shared.js" as Shared
 import "./calendars"
 
@@ -192,6 +194,60 @@ CalendarManager {
 		})
 	}
 
+	//--- Daily agenda: today's events once a day, at the first check at or after the set time
+	// (also when the computer is turned on later). Only with synced events, else it would be empty.
+	property bool eventsSynced: false
+	function allEventItems() {
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
+		}
+		return items
+	}
+	function checkDailyAgenda() {
+		if (!plasmoid.configuration.dailyAgendaEnabled || !eventsSynced) {
+			return
+		}
+		var now = timeModel.currentTime
+		if (!(upcomingEvents.dateMin <= now && now <= upcomingEvents.dateMax)) {
+			return // Events of another month: wait for the sync
+		}
+		if (!DailyAgenda.isDue(now, plasmoid.configuration.dailyAgendaTime, plasmoid.configuration.dailyAgendaDay)) {
+			return
+		}
+		plasmoid.configuration.dailyAgendaDay = DailyAgenda.dayKey(now)
+		var agenda = DailyAgenda.summarize(allEventItems(), now, 5)
+		logger.log('notification: daily agenda,', agenda.count, 'events') // No titles in the log
+		sendDailyAgendaNotification(agenda)
+	}
+
+	function sendDailyAgendaNotification(agenda) {
+		var lines = agenda.items.map(function(item) {
+			var title = Shared.escapeHtml(item.title)
+			return item.allDay
+				? i18nc("daily agenda, %1 = event title", "All day: %1", title)
+				: Qt.formatTime(item.start, appletConfig.timeFormat) + ' ' + title
+		})
+		if (agenda.more > 0) {
+			lines.push(i18ncp("daily agenda, more events", "+%1 more", "+%1 more", agenda.more))
+		}
+		notificationManager.notify({
+			appName: i18n("Event Calendar"),
+			appIcon: "view-calendar-day",
+			event: 'dailyAgenda',
+			expireTimeout: -1,
+			summary: agenda.count > 0
+				? i18np("Today: %1 event", "Today: %1 events", agenda.count)
+				: i18n("Nothing planned today"),
+			body: lines.join('<br />'),
+			actions: ['agenda,' + i18n("Open Agenda")],
+		}, function(actionId) {
+			if (actionId === 'default' || actionId === 'agenda') {
+				root.expanded = true
+			}
+		})
+	}
+
 	function sendSnoozedReminderNotification(eventItem) {
 		var meetingLink = MeetingLink.find(eventItem)
 		var minutesLeft = Math.round((eventItem.startDateTime - timeModel.currentTime) / 60000)
@@ -239,6 +295,59 @@ CalendarManager {
 		snoozedReminders = remaining
 	}
 
+	//--- At a meeting's start, independent of the notifications: open its link (auto-join).
+	// Keys without the calendar, so a meeting in two calendars is joined once.
+	function meetingKey(eventItem) {
+		return String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
+	}
+	function atMeetingStart(eventItem, sent, now) {
+		if (eventItem.endDateTime <= now || isMarkedEnded(eventItem)) {
+			return
+		}
+		var key = meetingKey(eventItem)
+		if (plasmoid.configuration.meetingAutoJoin && !sent[key + '|join']) {
+			var meetingLink = MeetingLink.find(eventItem)
+			if (MeetingRules.canAutoJoin(eventItem, !!meetingLink)) {
+				sent[key + '|join'] = now
+				logger.log('auto-join', eventItem.startDateTime) // No title or link in the log
+				meetingOpener.open(meetingLink.url)
+			}
+		}
+		startDoNotDisturb(eventItem, sent, now)
+	}
+
+	//--- Do Not Disturb during meetings (FocusMode.qml): at the start, and on startup / sync for a
+	// meeting in progress; once per meeting (a Do Not Disturb turned off by hand stays off).
+	function startDoNotDisturb(eventItem, sent, now) {
+		if (!plasmoid.configuration.meetingDoNotDisturb) {
+			return
+		}
+		var key = meetingKey(eventItem)
+		if (sent[key + '|dnd'] || eventItem.endDateTime <= now || isMarkedEnded(eventItem)) {
+			return
+		}
+		var hasLink = !!MeetingLink.find(eventItem)
+		if (!MeetingRules.isDoNotDisturbMeeting(eventItem, hasLink, plasmoid.configuration.meetingDoNotDisturbAcceptedOnly)) {
+			return
+		}
+		sent[key + '|dnd'] = now
+		logger.log('do not disturb: meeting', eventItem.startDateTime, '-', eventItem.endDateTime) // No title in the log
+		focusMode.startUntil(eventItem.endDateTime, key, timeModel.currentTime)
+	}
+	function checkMeetingsInProgress() {
+		if (!plasmoid.configuration.meetingDoNotDisturb) {
+			return
+		}
+		var now = timeModel.currentTime.getTime()
+		var sent = sentNotifications
+		allEventItems().forEach(function(eventItem) {
+			if (isOngoing(eventItem)) {
+				startDoNotDisturb(eventItem, sent, now)
+			}
+		})
+		sentNotifications = sent
+	}
+
 	// Every minute since the last check (see NotifyTiming), each notification once.
 	property real lastNotifyCheck: NaN
 	property var sentNotifications: ({}) // key -> when sent
@@ -250,12 +359,13 @@ CalendarManager {
 		for (var calendarId in eventsByCalendar) {
 			var calendar = eventsByCalendar[calendarId]
 			calendar.items.forEach(function(eventItem) {
-				if (!shouldNotify(eventItem)) {
-					return
-				}
-				var due = NotifyTiming.dueFor(eventItem, reminderMinutesFor(eventItem), win, now)
+				var notify = shouldNotify(eventItem)
+				var due = NotifyTiming.dueFor(eventItem, notify ? reminderMinutesFor(eventItem) : [], win, now)
 				for (var i = 0; i < due.length; i++) {
-					if (sent[due[i].key]) {
+					if (due[i].kind === 'start') {
+						upcomingEvents.atMeetingStart(eventItem, sent, now)
+					}
+					if (!notify || sent[due[i].key]) {
 						continue
 					}
 					// Logged without the title, to tell this widget's notifications apart from others
@@ -306,6 +416,7 @@ CalendarManager {
 		}
 		kept[endedKey(eventItem)] = new Date(eventItem.endDateTime).getTime()
 		endedEvents = kept
+		focusMode.endIfOwn(meetingKey(eventItem), timeModel.currentTime) // Do Not Disturb off, if the widget set it
 		updateNextEvent()
 		updateTooltipEvents()
 	}
@@ -436,6 +547,7 @@ CalendarManager {
 
 	function tick() {
 		checkForEventsStarting()
+		checkDailyAgenda()
 		updateNextEvent()
 		updateTooltipEvents()
 	}
@@ -452,7 +564,10 @@ CalendarManager {
 				upcomingEvents.dateMax = eventModel.dateMax
 				upcomingEvents.eventsByCalendar = eventModel.eventsByCalendar
 				upcomingEvents.allDataFetched()
+				upcomingEvents.eventsSynced = true
 				upcomingEvents.checkInvitations()
+				upcomingEvents.checkDailyAgenda()
+				upcomingEvents.checkMeetingsInProgress()
 				upcomingEvents.updateNextEvent()
 				upcomingEvents.updateTooltipEvents()
 			}

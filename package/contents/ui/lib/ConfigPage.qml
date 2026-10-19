@@ -188,6 +188,18 @@ KCM.SimpleKCM {
 	property var cfg_invitationNotificationEnabledDefault
 	property var cfg_invitationsNotified
 	property var cfg_invitationsNotifiedDefault
+	property var cfg_meetingAutoJoin
+	property var cfg_meetingAutoJoinDefault
+	property var cfg_meetingDoNotDisturb
+	property var cfg_meetingDoNotDisturbDefault
+	property var cfg_meetingDoNotDisturbAcceptedOnly
+	property var cfg_meetingDoNotDisturbAcceptedOnlyDefault
+	property var cfg_dailyAgendaEnabled
+	property var cfg_dailyAgendaEnabledDefault
+	property var cfg_dailyAgendaTime
+	property var cfg_dailyAgendaTimeDefault
+	property var cfg_dailyAgendaDay
+	property var cfg_dailyAgendaDayDefault
 	property var cfg_clockShowNextEvent
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes
