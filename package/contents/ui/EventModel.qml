@@ -587,6 +587,26 @@ CalendarManager {
 		}
 	}
 
+	// Events can move to another calendar of the same account (Google): see moveEvent.
+	function supportsMove(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && typeof calendarManager.moveEvent === 'function'
+	}
+
+	// Move an event, or a series (eventId = recurringEventId), to destinationCalendarId (same
+	// account). See GoogleCalendarManager.moveEvent. done(err, movedEvent)
+	function moveEvent(calendarId, eventId, destinationCalendarId, done, params) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.moveEvent === 'function') {
+			calendarManager.moveEvent(calendarId, eventId, destinationCalendarId, done, params)
+		} else {
+			logger.log('Could not moveEvent for calendarId = ', calendarId)
+			if (done) {
+				done('moveEvent not supported', null)
+			}
+		}
+	}
+
 	//--- CalendarManager: Calendar
 	function getCalendarList() {
 		var calendarList = []
