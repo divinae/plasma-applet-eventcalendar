@@ -8,6 +8,7 @@ import org.kde.plasma.extras as PlasmaExtras
 import "lib"
 import "Shared.js" as Shared
 import "Undo.js" as Undo
+import "KeyNav.js" as KeyNav
 import "./weather/WeatherApi.js" as WeatherApi
 
 MouseArea {
@@ -497,6 +498,7 @@ MouseArea {
 	Connections {
 		target: monthView
 		function onDateClicked(clickedDate) {
+			monthView.keyboardActive = false // The focus ring follows the keys only
 			if (popup.monthMode && plasmoid.configuration.monthClickOpensDay) {
 				popup.showDayView(clickedDate)
 			}
@@ -1005,5 +1007,78 @@ MouseArea {
 			yearViewLoader.item.rebuild()
 		}
 		scrollToSelection()
+	}
+
+	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
+	// their keys; Esc is left to the cards and to Plasma (closes the popup).
+	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen
+	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : yearMode ? 'year' : 'classic'
+	// Take the keys when the popup opens and when the last card closes (its focus is gone).
+	function focusForKeys() {
+		if (!anyOverlayOpen) {
+			forceActiveFocus()
+		}
+	}
+	onAnyOverlayOpenChanged: if (!anyOverlayOpen) Qt.callLater(focusForKeys)
+
+	Keys.onPressed: function(event) {
+		if (anyOverlayOpen || KeyNav.isTextInput(Window.activeFocusItem)) {
+			return
+		}
+		var action = KeyNav.actionFor(event.key, event.modifiers, currentViewMode)
+		if (action && runKeyAction(action)) {
+			event.accepted = true
+		}
+	}
+
+	// The day shown by the Day view, otherwise the selected day.
+	function keyDate() {
+		if (dayMode && weekViewLoader.item) {
+			return weekViewLoader.item.weekStart
+		}
+		return selectedDate
+	}
+
+	function runKeyAction(action) {
+		var nav = weekViewLoader.item || yearViewLoader.item
+		switch (action.type) {
+			case 'previous':
+				if (nav) nav.goPrevious(); else monthView.goPrevious()
+				return true
+			case 'next':
+				if (nav) nav.goNext(); else monthView.goNext()
+				return true
+			case 'today':
+				if (nav) nav.goToday(); else monthView.resetToToday()
+				return true
+			case 'move':
+				var date = KeyNav.addDays(selectedDate, action.days)
+				if (date.getFullYear() !== monthViewDate.getFullYear() || date.getMonth() !== monthViewDate.getMonth()) {
+					monthViewDate = date
+				}
+				monthView.keyboardActive = true
+				monthView.setSelectedDate(date)
+				return true
+			case 'open':
+				showDayView(selectedDate)
+				return true
+			case 'new':
+				var day = keyDate()
+				if (!Shared.isSameDate(day, selectedDate)) {
+					selectedDate = day
+				}
+				openQuickAdd()
+				return true
+			case 'search':
+				openSearch()
+				return true
+			case 'view':
+				if (action.mode !== plasmoid.configuration.popupMode) {
+					closeOverlays()
+					plasmoid.configuration.popupMode = action.mode
+				}
+				return true
+		}
+		return false
 	}
 }

@@ -183,6 +183,7 @@ PlasmoidItem {
 			if (isExpanded) {
 				updateToday()
 				logic.updateWeather()
+				Qt.callLater(focusForKeys) // Keyboard shortcuts (PopupView Keys)
 			}
 		}
 

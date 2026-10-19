@@ -55,6 +55,8 @@ PinchArea {
 
 	property QtObject date
 	property date currentDate
+	// The selected day was picked with the keyboard (PopupView): it gets a focus ring.
+	property bool keyboardActive: false
 
 	property int borderWidth: 1
 	property real borderOpacity: 0.4

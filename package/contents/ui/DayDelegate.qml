@@ -101,6 +101,17 @@ MouseArea {
 		z: todayRect.z - 1
 	}
 
+	// Keyboard focus ring on the selected day (month grid, after arrow keys in the popup).
+	Rectangle {
+		anchors.fill: parent
+		visible: dayStyle.selected && !!root.keyboardActive && dateMatchingPrecision >= PlasmaCalendar.Calendar.MatchYearMonthAndDay
+		color: "transparent"
+		border.width: 2
+		border.color: Kirigami.Theme.focusColor
+		radius: dayStyle.radius
+		z: todayRect.z + 1
+	}
+
 	// model.events is a ListModel, or a plain array (Qt 6.12 sequence) from some calendar sources.
 	function eventsLength(events) {
 		if (!events) {
