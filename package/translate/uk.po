@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 15:03+0200\n"
+"POT-Creation-Date: 2026-10-19 15:51+0200\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -161,14 +161,6 @@ msgid "Google authentication failed: %1"
 msgstr "Помилка автентифікації Google: %1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Error fetching calendar: %1"
-msgstr "Помилка отримання календаря: %1"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Not logged in to Google Calendar"
-msgstr "Не виконано вхід до Календаря Google"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Could not get the free / busy times"
 msgstr "Не вдалося отримати час зайнятості"
 
@@ -211,6 +203,12 @@ msgstr "У параметрах не вибрано жодного календ�
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "Показати всі"
+
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+msgid "Cancel"
+msgstr "Скасувати"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -269,13 +267,6 @@ msgstr "Колір"
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
 msgstr "Зберегти"
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
-msgid "Cancel"
-msgstr "Скасувати"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -665,10 +656,6 @@ msgid "Waiting for browser callback..."
 msgstr "Очікування відповіді від браузера..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the helper page to send the code..."
-msgstr "Очікування коду від допоміжної сторінки..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
 msgstr "Час очікування входу вичерпано. Спробуйте ще раз."
 
@@ -838,17 +825,6 @@ msgstr ""
 "адресу (або лише код) і вставте її."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to the helper page and will try to send the code back "
-"automatically. If it fails, copy the code and paste it below."
-msgstr ""
-"Натисніть «Вхід (авто)», щоб відкрити <a href=\"%1\">%2</a>. Після надання "
-"доступу браузер переспрямує вас на допоміжну сторінку, яка спробує "
-"автоматично передати код. Якщо це не вдасться, скопіюйте код і вставте його "
-"нижче."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
 msgstr "Не вдалося автоматично відкрити браузер."
 
@@ -861,10 +837,6 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "Допоміжна сторінка (необов'язково): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr "Допоміжна сторінка: <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If your browser shows a connection error, that's expected. Copy the URL from "
 "the address bar anyway and paste it below. If auto-capture works, you do not "
@@ -873,13 +845,6 @@ msgstr ""
 "Якщо браузер покаже помилку з'єднання, це очікувано. Все одно скопіюйте "
 "адресу з адресного рядка і вставте її нижче. Якщо автоматичне перехоплення "
 "спрацює, нічого вставляти не потрібно."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If auto-capture fails, copy the code from the helper page and paste it below."
-msgstr ""
-"Якщо автоматичне перехоплення не спрацює, скопіюйте код із допоміжної "
-"сторінки і вставте його нижче."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -1307,72 +1272,30 @@ msgstr "d MMM yyyy"
 msgid "to"
 msgstr "до"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "Назва події"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/LocaleFuncs.js
-msgid "All Day"
-msgstr "Весь день"
-
-#: ../contents/ui/EditEventForm.qml
-msgid "Add location"
-msgstr "Додати місце"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "Додати опис"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "Зберегти"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Скасувати"
 
 #: ../contents/ui/EditTaskForm.qml
 msgid "Add due date"
 msgstr "Додати термін"
 
+#: ../contents/ui/EditTaskForm.qml
+msgid "&Save"
+msgstr "Зберегти"
+
+#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Скасувати"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Відповісти"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Yes"
-msgstr "Так"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Yes to All Events"
-msgstr "Так для всіх подій"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Maybe"
-msgstr "Можливо"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Maybe to All Events"
-msgstr "Можливо для всіх подій"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "No"
-msgstr "Ні"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "No to All Events"
-msgstr "Ні для всіх подій"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -2095,22 +2018,6 @@ msgstr ""
 msgid "Could not read the file: %1"
 msgstr "Не вдалося прочитати файл: %1"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · Весь день"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
-
 #: ../contents/ui/ImportView.qml
 msgid "Changed occurrence of a repeating event"
 msgstr "Змінене повторення повторюваної події"
@@ -2180,13 +2087,13 @@ msgstr[0] "%1 виняток"
 msgstr[1] "%1 винятки"
 msgstr[2] "%1 винятків"
 
-#: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Закрити"
-
 #: ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Імпортувати події"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Закрити"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
@@ -2312,9 +2219,28 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
+msgid "All Day"
+msgstr "Весь день"
+
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · Весь день"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/LocaleFuncs.js
 #, no-c-format
@@ -2438,7 +2364,7 @@ msgstr "Наприклад: 9: 00-17: 00 Робота"
 msgid "Previous Day"
 msgstr "Попередній день"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Попередній тиждень"
 
@@ -2446,7 +2372,7 @@ msgstr "Попередній тиждень"
 msgid "Previous Month"
 msgstr "Попередній місяць"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Today"
 msgstr "Сьогодні"
 
@@ -2454,7 +2380,7 @@ msgstr "Сьогодні"
 msgid "Next Day"
 msgstr "Наступний день"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Наступний тиждень"
 
@@ -2540,6 +2466,36 @@ msgstr "Вкажіть, що, коли і де. Якщо день не вказ�
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "Інші параметри…"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr "Так"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr "Так для всіх подій"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr "Можливо"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr "Можливо для всіх подій"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr "Ні"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr "Ні для всіх подій"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
@@ -2787,6 +2743,38 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "Error fetching calendar: %1"
+#~ msgstr "Помилка отримання календаря: %1"
+
+#~ msgid "Not logged in to Google Calendar"
+#~ msgstr "Не виконано вхід до Календаря Google"
+
+#~ msgid "Waiting for the helper page to send the code..."
+#~ msgstr "Очікування коду від допоміжної сторінки..."
+
+#~ msgid ""
+#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+#~ "the browser redirects to the helper page and will try to send the code "
+#~ "back automatically. If it fails, copy the code and paste it below."
+#~ msgstr ""
+#~ "Натисніть «Вхід (авто)», щоб відкрити <a href=\"%1\">%2</a>. Після "
+#~ "надання доступу браузер переспрямує вас на допоміжну сторінку, яка "
+#~ "спробує автоматично передати код. Якщо це не вдасться, скопіюйте код і "
+#~ "вставте його нижче."
+
+#~ msgid "Helper page: <a href=\"%1\">%1</a>"
+#~ msgstr "Допоміжна сторінка: <a href=\"%1\">%1</a>"
+
+#~ msgid ""
+#~ "If auto-capture fails, copy the code from the helper page and paste it "
+#~ "below."
+#~ msgstr ""
+#~ "Якщо автоматичне перехоплення не спрацює, скопіюйте код із допоміжної "
+#~ "сторінки і вставте його нижче."
+
+#~ msgid "Add location"
+#~ msgstr "Додати місце"
 
 #~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
 #~ msgstr "Кнопки «Приєднатися до зустрічі» і «Відкрити в календарі»"

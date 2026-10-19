@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 15:03+0200\n"
+"POT-Creation-Date: 2026-10-19 15:51+0200\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -159,14 +159,6 @@ msgid "Google authentication failed: %1"
 msgstr "Google 身份验证失败：%1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Error fetching calendar: %1"
-msgstr "获取日历出错：%1"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Not logged in to Google Calendar"
-msgstr "未登录 Google 日历"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Could not get the free / busy times"
 msgstr "无法获取忙碌 / 空闲时间"
 
@@ -209,6 +201,12 @@ msgstr "设置中未选择任何日历。"
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "全部显示"
+
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+msgid "Cancel"
+msgstr "取消"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -263,13 +261,6 @@ msgstr "颜色"
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
 msgstr "保存"
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
-msgid "Cancel"
-msgstr "取消"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -645,10 +636,6 @@ msgid "Waiting for browser callback..."
 msgstr "正在等待浏览器回调..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the helper page to send the code..."
-msgstr "正在等待辅助页面发送代码..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
 msgstr "登录超时。请重试。"
 
@@ -809,15 +796,6 @@ msgstr ""
 "URL（或仅复制代码）并粘贴。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to the helper page and will try to send the code back "
-"automatically. If it fails, copy the code and paste it below."
-msgstr ""
-"点击“登录（自动）”打开 <a href=\"%1\">%2</a>。授予访问权限后，浏览器会重定向"
-"到辅助页面，并尝试自动发回代码。如果失败，请复制代码并粘贴到下方。"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
 msgstr "桌面无法自动打开浏览器。"
 
@@ -830,10 +808,6 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "辅助页面（可选）：<a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr "辅助页面：<a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If your browser shows a connection error, that's expected. Copy the URL from "
 "the address bar anyway and paste it below. If auto-capture works, you do not "
@@ -841,11 +815,6 @@ msgid ""
 msgstr ""
 "如果浏览器显示连接错误，这是正常的。仍请复制地址栏中的 URL 并粘贴到下方。如果"
 "自动捕获成功，则无需粘贴任何内容。"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If auto-capture fails, copy the code from the helper page and paste it below."
-msgstr "如果自动捕获失败，请从辅助页面复制代码并粘贴到下方。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -1271,72 +1240,30 @@ msgstr "yyyy年M月d日"
 msgid "to"
 msgstr "至"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "事件标题"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/LocaleFuncs.js
-msgid "All Day"
-msgstr "全天"
-
-#: ../contents/ui/EditEventForm.qml
-msgid "Add location"
-msgstr "添加地点"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "添加描述"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "保存"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "取消"
 
 #: ../contents/ui/EditTaskForm.qml
 msgid "Add due date"
 msgstr "添加截止日期"
 
+#: ../contents/ui/EditTaskForm.qml
+msgid "&Save"
+msgstr "保存"
+
+#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "取消"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "回复"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Yes"
-msgstr "是"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Yes to All Events"
-msgstr "所有事件：是"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Maybe"
-msgstr "可能"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Maybe to All Events"
-msgstr "所有事件：可能"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "No"
-msgstr "否"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "No to All Events"
-msgstr "所有事件：否"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -2036,22 +1963,6 @@ msgstr "读取 .ics 文件需要 Python icalendar 模块（python-icalendar）�
 msgid "Could not read the file: %1"
 msgstr "无法读取文件：%1"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · 全天"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
-
 #: ../contents/ui/ImportView.qml
 msgid "Changed occurrence of a repeating event"
 msgstr "重复事件中已更改的单次事件"
@@ -2109,13 +2020,13 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 个例外"
 
-#: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "关闭"
-
 #: ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "导入事件"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "关闭"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
@@ -2231,9 +2142,28 @@ msgid "%1, %2"
 msgstr "%1 %2"
 
 #: ../contents/ui/LocaleFuncs.js
+msgid "All Day"
+msgstr "全天"
+
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · 全天"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/LocaleFuncs.js
 #, no-c-format
@@ -2355,7 +2285,7 @@ msgstr "例如：9am-5pm 工作"
 msgid "Previous Day"
 msgstr "前一天"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "上一周"
 
@@ -2363,7 +2293,7 @@ msgstr "上一周"
 msgid "Previous Month"
 msgstr "上个月"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Today"
 msgstr "今天"
 
@@ -2371,7 +2301,7 @@ msgstr "今天"
 msgid "Next Day"
 msgstr "后一天"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "下一周"
 
@@ -2452,6 +2382,36 @@ msgstr "输入内容、时间和地点。未指定日期时，事件将添加到
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "更多选项…"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr "是"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr "所有事件：是"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr "可能"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr "所有事件：可能"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr "否"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr "所有事件：否"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
@@ -2687,6 +2647,34 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Error fetching calendar: %1"
+#~ msgstr "获取日历出错：%1"
+
+#~ msgid "Not logged in to Google Calendar"
+#~ msgstr "未登录 Google 日历"
+
+#~ msgid "Waiting for the helper page to send the code..."
+#~ msgstr "正在等待辅助页面发送代码..."
+
+#~ msgid ""
+#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+#~ "the browser redirects to the helper page and will try to send the code "
+#~ "back automatically. If it fails, copy the code and paste it below."
+#~ msgstr ""
+#~ "点击“登录（自动）”打开 <a href=\"%1\">%2</a>。授予访问权限后，浏览器会重定"
+#~ "向到辅助页面，并尝试自动发回代码。如果失败，请复制代码并粘贴到下方。"
+
+#~ msgid "Helper page: <a href=\"%1\">%1</a>"
+#~ msgstr "辅助页面：<a href=\"%1\">%1</a>"
+
+#~ msgid ""
+#~ "If auto-capture fails, copy the code from the helper page and paste it "
+#~ "below."
+#~ msgstr "如果自动捕获失败，请从辅助页面复制代码并粘贴到下方。"
+
+#~ msgid "Add location"
+#~ msgstr "添加地点"
 
 #~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
 #~ msgstr "“加入会议”和“在日历中打开”按钮"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 15:03+0200\n"
+"POT-Creation-Date: 2026-10-19 15:51+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -160,14 +160,6 @@ msgid "Google authentication failed: %1"
 msgstr "Google 인증 실패: %1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Error fetching calendar: %1"
-msgstr "달력 가져오기 오류: %1"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Not logged in to Google Calendar"
-msgstr "Google 캘린더에 로그인하지 않았습니다"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Could not get the free / busy times"
 msgstr "바쁨 / 한가함 시간을 가져올 수 없습니다"
 
@@ -210,6 +202,12 @@ msgstr "설정에서 선택한 달력이 없습니다."
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "모두 표시"
+
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+msgid "Cancel"
+msgstr "취소"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -265,13 +263,6 @@ msgstr "색상"
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
 msgstr "저장"
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
-msgid "Cancel"
-msgstr "취소"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -654,10 +645,6 @@ msgid "Waiting for browser callback..."
 msgstr "브라우저 콜백 대기 중..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the helper page to send the code..."
-msgstr "도우미 페이지에서 코드를 보내기를 기다리는 중..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
 msgstr "로그인 시간이 초과되었습니다. 다시 시도하십시오."
 
@@ -824,16 +811,6 @@ msgstr ""
 "십시오."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to the helper page and will try to send the code back "
-"automatically. If it fails, copy the code and paste it below."
-msgstr ""
-"로그인(자동)을 클릭하면 <a href=\"%1\">%2</a>이(가) 열립니다. 접근을 허용하"
-"면 브라우저가 도우미 페이지로 리디렉션되며 코드를 자동으로 다시 보내려고 시도"
-"합니다. 실패하면 코드를 복사하여 아래에 붙여 넣으십시오."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
 msgstr "데스크톱에서 브라우저를 자동으로 열 수 없습니다."
 
@@ -846,10 +823,6 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "도우미 페이지(선택 사항): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr "도우미 페이지: <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If your browser shows a connection error, that's expected. Copy the URL from "
 "the address bar anyway and paste it below. If auto-capture works, you do not "
@@ -858,13 +831,6 @@ msgstr ""
 "브라우저에 연결 오류가 표시되는 것은 정상입니다. 그래도 주소 표시줄의 URL을 "
 "복사하여 아래에 붙여 넣으십시오. 자동 캡처가 작동하면 아무것도 붙여 넣을 필요"
 "가 없습니다."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If auto-capture fails, copy the code from the helper page and paste it below."
-msgstr ""
-"자동 캡처에 실패하면 도우미 페이지에서 코드를 복사하여 아래에 붙여 넣으십시"
-"오."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -1292,72 +1258,30 @@ msgstr "yyyy년 MMM d일"
 msgid "to"
 msgstr "~"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "이벤트 제목"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/LocaleFuncs.js
-msgid "All Day"
-msgstr "하루 종일"
-
-#: ../contents/ui/EditEventForm.qml
-msgid "Add location"
-msgstr "위치 추가"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "설명 추가"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "저장(&S)"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "취소(&C)"
 
 #: ../contents/ui/EditTaskForm.qml
 msgid "Add due date"
 msgstr "기한 추가"
 
+#: ../contents/ui/EditTaskForm.qml
+msgid "&Save"
+msgstr "저장(&S)"
+
+#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "취소(&C)"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "응답"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Yes"
-msgstr "예"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Yes to All Events"
-msgstr "모든 이벤트에 예"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Maybe"
-msgstr "미정"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Maybe to All Events"
-msgstr "모든 이벤트에 미정"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "No"
-msgstr "아니요"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "No to All Events"
-msgstr "모든 이벤트에 아니요"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -2058,22 +1982,6 @@ msgstr ""
 msgid "Could not read the file: %1"
 msgstr "파일을 읽을 수 없습니다: %1"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · 하루 종일"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
-
 #: ../contents/ui/ImportView.qml
 msgid "Changed occurrence of a repeating event"
 msgstr "반복 일정의 변경된 일정"
@@ -2131,13 +2039,13 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "예외 %1개"
 
-#: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "닫기"
-
 #: ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "일정 가져오기"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "닫기"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
@@ -2257,9 +2165,28 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
+msgid "All Day"
+msgstr "하루 종일"
+
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · 하루 종일"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/LocaleFuncs.js
 #, no-c-format
@@ -2382,7 +2309,7 @@ msgstr "예: 오전 9시 - 오후 5시 근무"
 msgid "Previous Day"
 msgstr "이전 날"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "이전 주"
 
@@ -2390,7 +2317,7 @@ msgstr "이전 주"
 msgid "Previous Month"
 msgstr "이전 달"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Today"
 msgstr "오늘"
 
@@ -2398,7 +2325,7 @@ msgstr "오늘"
 msgid "Next Day"
 msgstr "다음 날"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "다음 주"
 
@@ -2483,6 +2410,36 @@ msgstr ""
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "추가 옵션…"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr "예"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr "모든 이벤트에 예"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr "미정"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr "모든 이벤트에 미정"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr "아니요"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr "모든 이벤트에 아니요"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
@@ -2719,6 +2676,37 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Error fetching calendar: %1"
+#~ msgstr "달력 가져오기 오류: %1"
+
+#~ msgid "Not logged in to Google Calendar"
+#~ msgstr "Google 캘린더에 로그인하지 않았습니다"
+
+#~ msgid "Waiting for the helper page to send the code..."
+#~ msgstr "도우미 페이지에서 코드를 보내기를 기다리는 중..."
+
+#~ msgid ""
+#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+#~ "the browser redirects to the helper page and will try to send the code "
+#~ "back automatically. If it fails, copy the code and paste it below."
+#~ msgstr ""
+#~ "로그인(자동)을 클릭하면 <a href=\"%1\">%2</a>이(가) 열립니다. 접근을 허용"
+#~ "하면 브라우저가 도우미 페이지로 리디렉션되며 코드를 자동으로 다시 보내려"
+#~ "고 시도합니다. 실패하면 코드를 복사하여 아래에 붙여 넣으십시오."
+
+#~ msgid "Helper page: <a href=\"%1\">%1</a>"
+#~ msgstr "도우미 페이지: <a href=\"%1\">%1</a>"
+
+#~ msgid ""
+#~ "If auto-capture fails, copy the code from the helper page and paste it "
+#~ "below."
+#~ msgstr ""
+#~ "자동 캡처에 실패하면 도우미 페이지에서 코드를 복사하여 아래에 붙여 넣으십"
+#~ "시오."
+
+#~ msgid "Add location"
+#~ msgstr "위치 추가"
 
 #~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
 #~ msgstr "\"회의 참가\" 및 \"달력에서 열기\" 단추"

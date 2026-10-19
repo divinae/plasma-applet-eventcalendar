@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 15:03+0200\n"
+"POT-Creation-Date: 2026-10-19 15:51+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -161,14 +161,6 @@ msgid "Google authentication failed: %1"
 msgstr "Overitev pri Googlu ni uspela: %1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Error fetching calendar: %1"
-msgstr "Napaka pri pridobivanju koledarja: %1"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Not logged in to Google Calendar"
-msgstr "Niste prijavljeni v Googlov koledar"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Could not get the free / busy times"
 msgstr "Ni bilo mogoče pridobiti zasedenih / prostih terminov"
 
@@ -211,6 +203,12 @@ msgstr "V nastavitvah ni izbranih koledarjev."
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "Prikaži vse"
+
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+msgid "Cancel"
+msgstr "Prekliči"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -271,13 +269,6 @@ msgstr "Barva"
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
 msgstr "Shrani"
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
-msgid "Cancel"
-msgstr "Prekliči"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -667,10 +658,6 @@ msgid "Waiting for browser callback..."
 msgstr "Čakanje na odziv brskalnika..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the helper page to send the code..."
-msgstr "Čakanje, da pomožna stran pošlje kodo..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
 msgstr "Čas za prijavo je potekel. Poskusite znova."
 
@@ -839,16 +826,6 @@ msgstr ""
 "ga prilepite."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to the helper page and will try to send the code back "
-"automatically. If it fails, copy the code and paste it below."
-msgstr ""
-"Kliknite Prijava (samodejna), da odprete <a href=\"%1\">%2</a>. Ko odobrite "
-"dostop, vas brskalnik preusmeri na pomožno stran, ki bo poskusila samodejno "
-"poslati kodo nazaj. Če ne uspe, kopirajte kodo in jo prilepite spodaj."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
 msgstr "Namizje ni moglo samodejno odpreti brskalnika."
 
@@ -861,10 +838,6 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "Pomožna stran (izbirno): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr "Pomožna stran: <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If your browser shows a connection error, that's expected. Copy the URL from "
 "the address bar anyway and paste it below. If auto-capture works, you do not "
@@ -873,13 +846,6 @@ msgstr ""
 "Če brskalnik prikaže napako povezave, je to pričakovano. Vseeno kopirajte "
 "URL iz naslovne vrstice in ga prilepite spodaj. Če samodejni zajem deluje, "
 "vam ni treba ničesar prilepiti."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If auto-capture fails, copy the code from the helper page and paste it below."
-msgstr ""
-"Če samodejni zajem ne uspe, kopirajte kodo s pomožne strani in jo prilepite "
-"spodaj."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -1309,72 +1275,30 @@ msgstr "d. MMM yyyy"
 msgid "to"
 msgstr "do"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "Ime dogodka"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/LocaleFuncs.js
-msgid "All Day"
-msgstr "Ves dan"
-
-#: ../contents/ui/EditEventForm.qml
-msgid "Add location"
-msgstr "Dodaj lokacijo"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "Dodaj opis"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Shrani"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Prekliči"
 
 #: ../contents/ui/EditTaskForm.qml
 msgid "Add due date"
 msgstr "Dodaj rok"
 
+#: ../contents/ui/EditTaskForm.qml
+msgid "&Save"
+msgstr "&Shrani"
+
+#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Prekliči"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Odgovori"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Yes"
-msgstr "Da"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Yes to All Events"
-msgstr "Da za vse dogodke"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Maybe"
-msgstr "Mogoče"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Maybe to All Events"
-msgstr "Mogoče za vse dogodke"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "No"
-msgstr "Ne"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "No to All Events"
-msgstr "Ne za vse dogodke"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -2108,22 +2032,6 @@ msgstr ""
 msgid "Could not read the file: %1"
 msgstr "Datoteke ni bilo mogoče prebrati: %1"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · Ves dan"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
-
 #: ../contents/ui/ImportView.qml
 msgid "Changed occurrence of a repeating event"
 msgstr "Spremenjena ponovitev ponavljajočega se dogodka"
@@ -2199,13 +2107,13 @@ msgstr[1] "%1 izjemi"
 msgstr[2] "%1 izjeme"
 msgstr[3] "%1 izjem"
 
-#: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Zapri"
-
 #: ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Uvozi dogodke"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Zapri"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
@@ -2334,9 +2242,28 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
+msgid "All Day"
+msgstr "Ves dan"
+
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · Ves dan"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/LocaleFuncs.js
 #, no-c-format
@@ -2460,7 +2387,7 @@ msgstr "npr.: 9.00-17.00 služba"
 msgid "Previous Day"
 msgstr "Prejšnji dan"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Prejšnji teden"
 
@@ -2468,7 +2395,7 @@ msgstr "Prejšnji teden"
 msgid "Previous Month"
 msgstr "Prejšnji mesec"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Today"
 msgstr "Danes"
 
@@ -2476,7 +2403,7 @@ msgstr "Danes"
 msgid "Next Day"
 msgstr "Naslednji dan"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Naslednji teden"
 
@@ -2563,6 +2490,36 @@ msgstr "Vpišite kaj, kdaj in kje. Če dan ni naveden, je dogodek dodan dne %1."
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "Več možnosti…"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr "Da"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr "Da za vse dogodke"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr "Mogoče"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr "Mogoče za vse dogodke"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr "Ne"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr "Ne za vse dogodke"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
@@ -2811,6 +2768,38 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Error fetching calendar: %1"
+#~ msgstr "Napaka pri pridobivanju koledarja: %1"
+
+#~ msgid "Not logged in to Google Calendar"
+#~ msgstr "Niste prijavljeni v Googlov koledar"
+
+#~ msgid "Waiting for the helper page to send the code..."
+#~ msgstr "Čakanje, da pomožna stran pošlje kodo..."
+
+#~ msgid ""
+#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+#~ "the browser redirects to the helper page and will try to send the code "
+#~ "back automatically. If it fails, copy the code and paste it below."
+#~ msgstr ""
+#~ "Kliknite Prijava (samodejna), da odprete <a href=\"%1\">%2</a>. Ko "
+#~ "odobrite dostop, vas brskalnik preusmeri na pomožno stran, ki bo "
+#~ "poskusila samodejno poslati kodo nazaj. Če ne uspe, kopirajte kodo in jo "
+#~ "prilepite spodaj."
+
+#~ msgid "Helper page: <a href=\"%1\">%1</a>"
+#~ msgstr "Pomožna stran: <a href=\"%1\">%1</a>"
+
+#~ msgid ""
+#~ "If auto-capture fails, copy the code from the helper page and paste it "
+#~ "below."
+#~ msgstr ""
+#~ "Če samodejni zajem ne uspe, kopirajte kodo s pomožne strani in jo "
+#~ "prilepite spodaj."
+
+#~ msgid "Add location"
+#~ msgstr "Dodaj lokacijo"
 
 #~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
 #~ msgstr "Gumba »Pridruži se sestanku« in »Odpri v koledarju«"

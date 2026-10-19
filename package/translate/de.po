@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 15:03+0200\n"
+"POT-Creation-Date: 2026-10-19 15:51+0200\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -162,14 +162,6 @@ msgid "Google authentication failed: %1"
 msgstr "Google-Authentifizierung fehlgeschlagen: %1"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Error fetching calendar: %1"
-msgstr "Fehler beim Abrufen des Kalenders: %1"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-msgid "Not logged in to Google Calendar"
-msgstr "Nicht beim Google Kalender angemeldet"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
 msgid "Could not get the free / busy times"
 msgstr "Die Verfügbarkeit konnte nicht abgerufen werden"
 
@@ -212,6 +204,12 @@ msgstr "In den Einstellungen sind keine Kalender ausgewählt."
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "Alle anzeigen"
+
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+msgid "Cancel"
+msgstr "Abbrechen"
 
 #: ../contents/ui/ClockView.qml
 msgctxt "time left in the current meeting"
@@ -269,13 +267,6 @@ msgstr "Farbe"
 #: ../contents/ui/EventEditView.qml
 msgid "Save"
 msgstr "Speichern"
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddView.qml
-msgid "Cancel"
-msgstr "Abbrechen"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -666,10 +657,6 @@ msgid "Waiting for browser callback..."
 msgstr "Warte auf Rückmeldung des Browsers..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the helper page to send the code..."
-msgstr "Warte, bis die Hilfsseite den Code sendet..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign-in timed out. Try again."
 msgstr "Zeitüberschreitung bei der Anmeldung. Bitte erneut versuchen."
 
@@ -842,17 +829,6 @@ msgstr ""
 "Code) und fügen sie ein."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to the helper page and will try to send the code back "
-"automatically. If it fails, copy the code and paste it below."
-msgstr ""
-"Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu "
-"öffnen. Nach der Freigabe leitet der Browser zur Hilfsseite weiter, die "
-"versucht, den Code automatisch zurückzusenden. Falls das fehlschlägt, "
-"kopieren Sie den Code und fügen ihn unten ein."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
 msgstr "Die Arbeitsfläche konnte den Browser nicht automatisch öffnen."
 
@@ -865,10 +841,6 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "Hilfsseite (optional): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page: <a href=\"%1\">%1</a>"
-msgstr "Hilfsseite: <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "If your browser shows a connection error, that's expected. Copy the URL from "
 "the address bar anyway and paste it below. If auto-capture works, you do not "
@@ -877,13 +849,6 @@ msgstr ""
 "Wenn Ihr Browser einen Verbindungsfehler anzeigt, ist das normal. Kopieren "
 "Sie trotzdem die URL aus der Adressleiste und fügen Sie sie unten ein. Wenn "
 "die automatische Übernahme funktioniert, müssen Sie nichts einfügen."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If auto-capture fails, copy the code from the helper page and paste it below."
-msgstr ""
-"Wenn die automatische Übernahme fehlschlägt, kopieren Sie den Code von der "
-"Hilfsseite und fügen ihn unten ein."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -1318,72 +1283,30 @@ msgstr "d MMM yyyy"
 msgid "to"
 msgstr "bis"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "Ereignistitel"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/LocaleFuncs.js
-msgid "All Day"
-msgstr "ganztags"
-
-#: ../contents/ui/EditEventForm.qml
-msgid "Add location"
-msgstr "Ort hinzufügen"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "Beschreibung hinzufügen"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Sichern"
-
-#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Abbrechen"
 
 #: ../contents/ui/EditTaskForm.qml
 msgid "Add due date"
 msgstr "Enddatum hinzufügen"
 
+#: ../contents/ui/EditTaskForm.qml
+msgid "&Save"
+msgstr "&Sichern"
+
+#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Abbrechen"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Antworten"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Yes"
-msgstr "Ja"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Yes to All Events"
-msgstr "Ja für alle Ereignisse"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "Maybe"
-msgstr "Vielleicht"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "Maybe to All Events"
-msgstr "Vielleicht für alle Ereignisse"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/UpcomingEvents.qml
-msgctxt "RSVP"
-msgid "No"
-msgstr "Nein"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "RSVP"
-msgid "No to All Events"
-msgstr "Nein für alle Ereignisse"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -2096,22 +2019,6 @@ msgstr ""
 msgid "Could not read the file: %1"
 msgstr "Die Datei konnte nicht gelesen werden: %1"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-#: ../contents/ui/WeekView.qml
-msgctxt "event span, %1 = start, %2 = end"
-msgid "%1 – %2"
-msgstr "%1 – %2"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date"
-msgid "%1 · All day"
-msgstr "%1 · ganztags"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/SearchView.qml
-msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
-msgid "%1 · %2 – %3"
-msgstr "%1 · %2 – %3"
-
 #: ../contents/ui/ImportView.qml
 msgid "Changed occurrence of a repeating event"
 msgstr "Geändertes Vorkommen eines wiederkehrenden Termins"
@@ -2175,13 +2082,13 @@ msgid_plural "%1 exceptions"
 msgstr[0] "%1 Ausnahme"
 msgstr[1] "%1 Ausnahmen"
 
-#: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Schließen"
-
 #: ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Termine importieren"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Schließen"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
@@ -2305,9 +2212,28 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
+msgid "All Day"
+msgstr "ganztags"
+
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
 msgstr "%1 - %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "event span, %1 = start, %2 = end"
+msgid "%1 – %2"
+msgstr "%1 – %2"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date"
+msgid "%1 · All day"
+msgstr "%1 · ganztags"
+
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "search result, %1 = date, %2 = start time, %3 = end time"
+msgid "%1 · %2 – %3"
+msgstr "%1 · %2 – %3"
 
 #: ../contents/ui/LocaleFuncs.js
 #, no-c-format
@@ -2432,7 +2358,7 @@ msgstr "z.B.: 9-17 Arbeit"
 msgid "Previous Day"
 msgstr "Vorheriger Tag"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Vorherige Woche"
 
@@ -2440,7 +2366,7 @@ msgstr "Vorherige Woche"
 msgid "Previous Month"
 msgstr "Vorheriger Monat"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Today"
 msgstr "Heute"
 
@@ -2448,7 +2374,7 @@ msgstr "Heute"
 msgid "Next Day"
 msgstr "Nächster Tag"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Nächste Woche"
 
@@ -2536,6 +2462,36 @@ msgstr ""
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
 msgstr "Weitere Optionen…"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Yes"
+msgstr "Ja"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Yes to All Events"
+msgstr "Ja für alle Ereignisse"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "Maybe"
+msgstr "Vielleicht"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "Maybe to All Events"
+msgstr "Vielleicht für alle Ereignisse"
+
+#: ../contents/ui/Responses.js ../contents/ui/UpcomingEvents.qml
+msgctxt "RSVP"
+msgid "No"
+msgstr "Nein"
+
+#: ../contents/ui/Responses.js
+msgctxt "RSVP"
+msgid "No to All Events"
+msgstr "Nein für alle Ereignisse"
 
 #: ../contents/ui/SearchView.qml
 msgid "Search events…"
@@ -2779,6 +2735,38 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Error fetching calendar: %1"
+#~ msgstr "Fehler beim Abrufen des Kalenders: %1"
+
+#~ msgid "Not logged in to Google Calendar"
+#~ msgstr "Nicht beim Google Kalender angemeldet"
+
+#~ msgid "Waiting for the helper page to send the code..."
+#~ msgstr "Warte, bis die Hilfsseite den Code sendet..."
+
+#~ msgid ""
+#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+#~ "the browser redirects to the helper page and will try to send the code "
+#~ "back automatically. If it fails, copy the code and paste it below."
+#~ msgstr ""
+#~ "Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu "
+#~ "öffnen. Nach der Freigabe leitet der Browser zur Hilfsseite weiter, die "
+#~ "versucht, den Code automatisch zurückzusenden. Falls das fehlschlägt, "
+#~ "kopieren Sie den Code und fügen ihn unten ein."
+
+#~ msgid "Helper page: <a href=\"%1\">%1</a>"
+#~ msgstr "Hilfsseite: <a href=\"%1\">%1</a>"
+
+#~ msgid ""
+#~ "If auto-capture fails, copy the code from the helper page and paste it "
+#~ "below."
+#~ msgstr ""
+#~ "Wenn die automatische Übernahme fehlschlägt, kopieren Sie den Code von "
+#~ "der Hilfsseite und fügen ihn unten ein."
+
+#~ msgid "Add location"
+#~ msgstr "Ort hinzufügen"
 
 #~ msgid "\"Join meeting\" and \"Open in Calendar\" buttons"
 #~ msgstr "Schaltflächen „Besprechung beitreten“ und „Im Kalender öffnen“"
