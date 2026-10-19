@@ -42,14 +42,6 @@ CalendarManager {
 		}
 		return calendar.items
 	}
-	function indexOfEvent(items, eventId) {
-		for (var i = 0; i < items.length; i++) {
-			if (items[i].id == eventId) {
-				return i
-			}
-		}
-		return -1
-	}
 	function eventAddedListener(calendarId, data) {
 		var items = ownEventList(calendarId)
 		if (indexOfEvent(items, data.id) < 0) {

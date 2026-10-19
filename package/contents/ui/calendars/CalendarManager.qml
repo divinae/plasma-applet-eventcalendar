@@ -81,13 +81,23 @@ Item {
 	}
 
 	//--- Event
-	function getEvent(calendarId, eventId) {
-		var events = calendarManager.eventsByCalendar[calendarId].items
-		for (var i = 0; i < events.length; i++) {
-			if (events[i].id == eventId) {
-				return events[i]
+	// The loaded events of a calendar, [] when it has none.
+	function eventItems(calendarId) {
+		var calendar = calendarManager.eventsByCalendar[calendarId]
+		return calendar && calendar.items ? calendar.items : []
+	}
+	function indexOfEvent(items, eventId) {
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].id == eventId) {
+				return i
 			}
 		}
+		return -1
+	}
+	function getEvent(calendarId, eventId) {
+		var events = eventItems(calendarId)
+		var index = indexOfEvent(events, eventId)
+		return index >= 0 ? events[index] : undefined
 	}
 
 	// Add to model only
@@ -99,16 +109,15 @@ Item {
 	// Remove from model only
 	function removeEvent(calendarId, eventId) {
 		logger.debug(calendarManager, 'removeEvent', calendarId, eventId)
-		var events = calendarManager.eventsByCalendar[calendarId].items
-		for (var i = 0; i < events.length; i++) {
-			if (events[i].id == eventId) {
-				var data = events[i]
-				events.splice(i, 1) // Remove item at index
-				eventRemoved(calendarId, eventId, data)
-				return
-			}
+		var events = eventItems(calendarId)
+		var index = indexOfEvent(events, eventId)
+		if (index < 0) {
+			logger.log(calendarManager, 'removeEvent', 'event didn\'t exist')
+			return
 		}
-		logger.log(calendarManager, 'removeEvent', 'event didn\'t exist')
+		var data = events[index]
+		events.splice(index, 1) // Remove item at index
+		eventRemoved(calendarId, eventId, data)
 	}
 
 	//---
