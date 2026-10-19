@@ -105,8 +105,10 @@ Plasma 5 is not supported; use the original [Event Calendar](https://github.com/
 
 ## Support
 
-If the widget is useful to you, you can support its development on
-[Ko-fi](https://ko-fi.com/divinae4535).
+If the widget is useful to you, you can support this fork's development on
+[Ko-fi](https://ko-fi.com/divinae4535). Donations go to this fork's maintainer, not to the
+authors of the original Event Calendar (Chris Holland / Zren) or of the Plasma 6 port
+(ALikesToCode) it builds on.
 
 ## Contributing
 
