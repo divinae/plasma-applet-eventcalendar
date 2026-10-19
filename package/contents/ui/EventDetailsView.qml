@@ -45,6 +45,8 @@ Rectangle {
 		})
 	}
 	readonly property var attachments: Attachments.list(eventItem)
+	// "Email Guests…": everyone invited except you and rooms.
+	readonly property string mailtoUrl: Guests.eventMailtoUrl(eventItem)
 	readonly property int collapsedGuestCount: 5
 	property bool showAllGuests: false
 	property bool confirmingDelete: false
@@ -514,6 +516,15 @@ Rectangle {
 							wrapMode: Text.Wrap
 							font.weight: Font.DemiBold
 							text: details.attendeeSummary()
+						}
+						PlasmaComponents3.ToolButton {
+							visible: !!details.mailtoUrl
+							icon.name: "mail-message-new"
+							text: i18n("Email Guests…")
+							display: details.width < Kirigami.Units.gridUnit * 22 ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+							onClicked: Shared.openMailtoUrl(details.mailtoUrl)
+							PlasmaComponents3.ToolTip.text: i18n("Write an email to the guests")
+							PlasmaComponents3.ToolTip.visible: hovered
 						}
 					}
 					Repeater {

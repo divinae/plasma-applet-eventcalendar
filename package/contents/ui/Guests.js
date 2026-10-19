@@ -171,6 +171,44 @@ function suggest(known, text, current, limit) {
 	return list
 }
 
+// Emails of the other guests, to write to them: not the user, not rooms, valid and deduplicated
+// (case-insensitive), in list order.
+function otherGuestEmails(attendees) {
+	var seen = {}
+	var emails = []
+	people(attendees).forEach(function(a) {
+		var key = normalizeEmail(a.email)
+		if (a.self || seen[key] || !isValidEmail(key)) {
+			return
+		}
+		seen[key] = true
+		emails.push(String(a.email).trim())
+	})
+	return emails
+}
+
+// "Email Guests": a mailto: link to the other guests with the event title as subject, or '' when
+// there's nobody to write to. Each part is percent-encoded ('@' kept), so a title can't add
+// headers (eg: "&bcc=").
+function mailtoUrl(attendees, subject) {
+	var emails = otherGuestEmails(attendees)
+	if (!emails.length) {
+		return ''
+	}
+	var to = emails.map(function(email) {
+		return encodeURIComponent(email).replace(/%40/g, '@')
+	}).join(',')
+	var title = String(subject || '').trim()
+	return 'mailto:' + to + (title ? '?subject=' + encodeURIComponent(title) : '')
+}
+// mailtoUrl for an event: its own title (_summary), not the "(No title)" shown for untitled ones.
+function eventMailtoUrl(event) {
+	if (!event) {
+		return ''
+	}
+	return mailtoUrl(event.attendees, '_summary' in event ? event._summary : event.summary)
+}
+
 // Icon for an attendee's answer.
 function responseIcon(status) {
 	switch (status) {

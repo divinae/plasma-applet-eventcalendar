@@ -358,6 +358,14 @@ function openExternalUrl(url) {
 	Qt.openUrlExternally(url.trim())
 	return true
 }
+// A mailto: link (eg: Guests.mailtoUrl) in the user's mail app. Nothing else, no spaces.
+function openMailtoUrl(url) {
+	if (typeof url !== 'string' || !/^mailto:[^\s]+$/i.test(url)) {
+		return false
+	}
+	Qt.openUrlExternally(url)
+	return true
+}
 // A URL location opens as is, anything else as a Google Maps search.
 function locationUrl(location) {
 	var text = String(location || '').trim()
