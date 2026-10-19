@@ -769,11 +769,13 @@ Item {
 				Rectangle {
 					readonly property var bar: modelData
 					readonly property var eventItem: bar.eventItem
+					readonly property EventStyle eventStyle: EventStyle {
+						eventItem: bar.eventItem
+					}
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors.
-					readonly property color stripeColor: appletConfig.eventColor(eventItem.backgroundColor)
-					readonly property string response: Shared.myResponse(eventItem)
-					readonly property bool unconfirmed: Shared.isUnconfirmedResponse(response)
+					readonly property color stripeColor: eventStyle.color
+					readonly property bool unconfirmed: eventStyle.unconfirmed
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
@@ -794,11 +796,11 @@ Item {
 					bottomRightRadius: cutRight ? 0 : cornerRadius
 					color: unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: unconfirmed ? appletConfig.eventOutlineColor(stripeColor, response) : ColorUtil.setAlpha(stripeColor, 0.45)
+					border.color: unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(stripeColor, 0.45)
 					clip: true
 					// Maybe, or out of office (hatched like Google Calendar)
 					StripeFill {
-						visible: parent.response === 'tentative' || parent.eventItem.eventType === 'outOfOffice'
+						visible: parent.eventStyle.striped
 						anchors.fill: parent
 						anchors.margins: 1
 						radius: Math.max(0, parent.cornerRadius - 1)
@@ -838,7 +840,7 @@ Item {
 							font.family: appletConfig.eventFont.family
 							font.pointSize: appletConfig.eventFont.pointSize
 							font.weight: Font.DemiBold
-							font.strikeout: response === 'declined'
+							font.strikeout: eventStyle.declined
 							elide: Text.ElideRight
 						}
 						PlasmaComponents3.Label {
@@ -1181,24 +1183,34 @@ Item {
 
 							Repeater {
 								model: dayColumn.day.timed
-								Rectangle {
+								// Click opens the event, right click its menu, press and drag moves it.
+								EventBar {
 									id: eventBlock
 									readonly property var block: modelData
-									readonly property var eventItem: block.eventItem
-									readonly property color barColor: appletConfig.eventColor(eventItem.backgroundColor)
-									readonly property string response: Shared.myResponse(eventItem)
-									readonly property color textColor: appletConfig.eventTextColor(barColor, response)
+									eventItem: block.eventItem
+									detailsModel: weekView.eventModel
+									showTitle: false
+									readonly property color barColor: eventStyle.color
+									readonly property color textColor: eventStyle.textColor
 									readonly property real slotWidth: (dayColumn.width - 3) / block.columns
 									// Clip to the visible hour range.
 									readonly property real rangeStart: block.dayStart + weekView.firstHour * 3600000
 									readonly property real rangeEnd: block.dayStart + weekView.lastHour * 3600000
 									readonly property real visibleStart: Math.max(block.start, rangeStart)
 									readonly property real visibleEnd: Math.min(Math.max(block.end, block.start + 15 * 60000), rangeEnd)
-									// Being dragged: faded where it was; dropped: the preview stands in for it.
-									readonly property bool dragSource: !!weekView.dragState && weekView.dragState.eventItem === eventItem
-									// A copy leaves it as it is.
-									opacity: dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
-										: eventItem.endDateTime <= weekView.currentTime ? appletConfig.pastOpacity : 1
+									dragSource: !!weekView.dragState && weekView.dragState.eventItem === eventItem
+									dragCopy: !!weekView.dragState && weekView.dragState.copy
+									dragPending: !!weekView.dragState && weekView.dragState.pending
+									dimmed: eventItem.endDateTime <= weekView.currentTime
+									draggable: weekView.canDrag(block)
+									dragMapTo: flickable
+									onDragStarted: function(from, at, copy) {
+										weekView.dragBegin(block, 'move', from, copy)
+										weekView.dragMove(at, copy)
+									}
+									onDragMoved: function(at, copy) { weekView.dragMove(at, copy) }
+									onDropped: function(copy) { weekView.dragDrop(copy) } // Ctrl: a copy
+									onDragCanceled: weekView.dragCancel()
 									visible: visibleEnd > visibleStart
 									x: 2 + block.column * slotWidth
 									y: weekView.hourY(visibleStart, block.dayStart) + 1
@@ -1206,26 +1218,10 @@ Item {
 									height: Math.max(weekView.lineHeight + 2, (visibleEnd - visibleStart) / 3600000 * weekView.hourHeight - 2)
 									// Square edges where the event continues beyond what's shown
 									// (from the previous day / before the first hour, or past the last one).
-									readonly property bool cutTop: block.continued || block.start < rangeStart
-									readonly property bool cutBottom: block.continues || block.end > rangeEnd
-									readonly property real cornerRadius: Math.min(10, height / 2)
-									radius: cornerRadius
-									topLeftRadius: cutTop ? 0 : cornerRadius
-									topRightRadius: cutTop ? 0 : cornerRadius
-									bottomLeftRadius: cutBottom ? 0 : cornerRadius
-									bottomRightRadius: cutBottom ? 0 : cornerRadius
-									color: appletConfig.eventFillColor(barColor, response)
-									border.width: 1
-									border.color: appletConfig.eventOutlineColor(barColor, response)
-
-									// Maybe, or out of office (hatched like Google Calendar)
-									StripeFill {
-										visible: eventBlock.response === 'tentative' || eventBlock.eventItem.eventType === 'outOfOffice'
-										anchors.fill: parent
-										anchors.margins: 1
-										radius: Math.max(0, eventBlock.cornerRadius - 1)
-										stripeColor: eventBlock.response === 'tentative' ? eventBlock.barColor : eventBlock.textColor
-									}
+									cuttable: true
+									cutTop: block.continued || block.start < rangeStart
+									cutBottom: block.continues || block.end > rangeEnd
+									maxRadius: 10
 
 									// Today view: join button for meetings that haven't ended.
 									readonly property var meetingLink: weekView.singleDay && plasmoid.configuration.agendaShowEventHangoutLink && eventItem.endDateTime > weekView.currentTime ? MeetingLink.find(eventItem) : null
@@ -1255,9 +1251,8 @@ Item {
 											color: eventBlock.textColor
 											font.family: appletConfig.eventFont.family
 											font.pointSize: appletConfig.eventFont.pointSize
-											font.strikeout: eventBlock.response === 'declined'
-											// Event in progress
-											font.bold: eventBlock.eventItem.startDateTime <= weekView.currentTime && weekView.currentTime < eventBlock.eventItem.endDateTime
+											font.strikeout: eventBlock.eventStyle.declined
+											font.bold: eventBlock.inProgress // Event in progress
 											elide: Text.ElideRight
 											wrapMode: Text.WordWrap
 											maximumLineCount: Math.max(1, Math.floor((eventBlock.height - 4) / weekView.lineHeight) - 1)
@@ -1303,33 +1298,6 @@ Item {
 											}
 										}
 									}
-									// Click opens the event, right click its menu, press and drag moves it.
-									DragMouseArea {
-										id: blockMouse
-										anchors.fill: parent
-										draggable: weekView.canDrag(eventBlock.block)
-										mapTo: flickable
-										onDragStarted: function(from, at, copy) {
-											weekView.dragBegin(eventBlock.block, 'move', from, copy)
-											weekView.dragMove(at, copy)
-										}
-										onDragMoved: function(at, copy) { weekView.dragMove(at, copy) }
-										onDropped: function(copy) { weekView.dragDrop(copy) } // Ctrl: a copy
-										onDragCanceled: weekView.dragCancel()
-										onEventClicked: function(button, x, y) {
-											if (button === Qt.RightButton) {
-												popup.showEventMenu(eventBlock.eventItem, eventBlock, x, y)
-											} else {
-												weekView.openEvent(eventBlock.eventItem)
-											}
-										}
-									}
-									PlasmaCore.ToolTipArea {
-										anchors.fill: parent
-										mainText: eventBlock.eventItem.summary
-										subText: containsMouse ? weekView.eventModel.eventDetailsText(eventBlock.eventItem) : ""
-										textFormat: Text.PlainText
-									}
 									JoinPill {
 										id: joinPill
 										visible: !!eventBlock.meetingLink && eventBlock.width >= Kirigami.Units.gridUnit * 10
@@ -1347,7 +1315,7 @@ Item {
 									// Bottom edge: drag to change the end time.
 									MouseArea {
 										z: 2
-										visible: blockMouse.draggable && !eventBlock.cutBottom && eventBlock.height >= weekView.lineHeight * 1.5
+										visible: eventBlock.draggable && !eventBlock.cutBottom && eventBlock.height >= weekView.lineHeight * 1.5
 										anchors.left: parent.left
 										anchors.right: parent.right
 										anchors.bottom: parent.bottom

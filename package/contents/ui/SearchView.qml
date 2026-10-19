@@ -186,12 +186,15 @@ Rectangle {
 
 				Repeater {
 					model: searchView.results
-					// Event tile in the event color, like the agenda.
+					// Event tile in the event color (outlined, striped or struck through by the user's
+					// answer), like the agenda.
 					Rectangle {
 						id: eventRow
 						readonly property var eventItem: modelData
-						readonly property color tileColor: appletConfig.eventColor(eventItem.backgroundColor)
-						readonly property color textColor: Shared.contrastTextColor(tileColor)
+						readonly property EventStyle eventStyle: EventStyle {
+							eventItem: eventRow.eventItem
+						}
+						readonly property color textColor: eventStyle.textColor
 						readonly property bool past: eventItem.endDateTime < timeModel.currentTime
 						Layout.fillWidth: true
 						Layout.leftMargin: Kirigami.Units.largeSpacing
@@ -199,10 +202,18 @@ Rectangle {
 						Layout.topMargin: index === 0 ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
 						implicitHeight: tileColumn.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 						radius: 8
-						color: tileColor
+						color: eventStyle.fillColor
 						border.width: 1
-						border.color: appletConfig.eventBorderColor
+						border.color: eventStyle.outlineColor
 						opacity: (past ? 0.6 : 1) * (tileMouse.containsMouse ? 0.85 : 1)
+
+						StripeFill {
+							visible: eventRow.eventStyle.striped
+							anchors.fill: parent
+							anchors.margins: 1
+							radius: eventRow.radius - 1
+							stripeColor: eventRow.eventStyle.stripeColor
+						}
 
 						ColumnLayout {
 							id: tileColumn
@@ -217,6 +228,7 @@ Rectangle {
 								wrapMode: Text.Wrap
 								text: eventRow.eventItem.summary
 								color: eventRow.textColor
+								font.strikeout: eventRow.eventStyle.declined
 							}
 							PlasmaComponents3.Label {
 								Layout.fillWidth: true
