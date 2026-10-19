@@ -1,0 +1,141 @@
+import QtQuick
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents3
+
+import "Shared.js" as Shared
+
+// Popup header button: the calendars selected in settings, with a checkbox each to show or hide
+// them in the views (hiddenCalendarIds). A view filter: the selection in settings stays, the
+// events are still fetched and their reminders still come.
+PlasmaComponents3.ToolButton {
+	id: calendarToggles
+
+	readonly property var hiddenIds: plasmoid.configuration.hiddenCalendarIds || []
+	property var calendars: [] // eventModel.getSelectedCalendars(), read when opened
+	readonly property bool anyHidden: {
+		for (var i = 0; i < calendars.length; i++) {
+			if (Shared.isHiddenCalendar(calendars[i].id, hiddenIds)) {
+				return true
+			}
+		}
+		return false
+	}
+
+	icon.name: "view-calendar-list"
+	down: pressed || calendarPopup.visible
+	onClicked: {
+		if (calendarPopup.visible) {
+			calendarPopup.close()
+		} else {
+			open()
+		}
+	}
+	PlasmaComponents3.ToolTip.text: i18n("Calendars")
+	PlasmaComponents3.ToolTip.visible: hovered && !calendarPopup.visible
+	Accessible.name: i18n("Calendars")
+
+	function open() {
+		calendars = eventModel.getSelectedCalendars()
+		calendarPopup.open()
+	}
+
+	function setHidden(calendarId, hide) {
+		var ids = []
+		for (var i = 0; i < hiddenIds.length; i++) {
+			if (hiddenIds[i] !== calendarId) {
+				ids.push(String(hiddenIds[i]))
+			}
+		}
+		if (hide) {
+			ids.push(calendarId)
+		}
+		plasmoid.configuration.hiddenCalendarIds = ids
+	}
+
+	PlasmaComponents3.Popup {
+		id: calendarPopup
+		x: calendarToggles.mirrored ? 0 : calendarToggles.width - width
+		y: calendarToggles.height
+		// Stays open while toggling several calendars; closes on a click outside or Escape.
+		closePolicy: PlasmaComponents3.Popup.CloseOnEscape | PlasmaComponents3.Popup.CloseOnPressOutsideParent
+
+		contentItem: ColumnLayout {
+			spacing: 0
+
+			PlasmaComponents3.Label {
+				visible: !calendarToggles.calendars.length
+				Layout.margins: Kirigami.Units.smallSpacing
+				text: i18n("No calendars selected in the settings.")
+				opacity: 0.7
+			}
+
+			Repeater {
+				model: calendarToggles.calendars
+				ColumnLayout {
+					id: calendarRow
+					Layout.fillWidth: true
+					spacing: 0
+					readonly property bool groupStart: index === 0 || calendarToggles.calendars[index - 1].group !== modelData.group
+					readonly property bool shown: !Shared.isHiddenCalendar(modelData.id, calendarToggles.hiddenIds)
+
+					// Account heading, when the calendars come from more than one place.
+					PlasmaComponents3.Label {
+						visible: calendarRow.groupStart && !!modelData.group
+						Layout.fillWidth: true
+						Layout.topMargin: index > 0 ? Kirigami.Units.smallSpacing : 0
+						Layout.leftMargin: Kirigami.Units.smallSpacing
+						text: modelData.group
+						font.bold: true
+						elide: Text.ElideRight
+					}
+					Kirigami.Separator {
+						visible: calendarRow.groupStart && !modelData.group && index > 0
+						Layout.fillWidth: true
+						Layout.topMargin: Kirigami.Units.smallSpacing
+						Layout.bottomMargin: Kirigami.Units.smallSpacing
+					}
+
+					RowLayout {
+						Layout.fillWidth: true
+						Layout.maximumWidth: Kirigami.Units.gridUnit * 20
+						spacing: Kirigami.Units.smallSpacing
+
+						PlasmaComponents3.CheckBox {
+							id: calendarCheck
+							checked: calendarRow.shown
+							onToggled: calendarToggles.setHidden(modelData.id, !checked)
+							Accessible.name: modelData.name
+						}
+						Rectangle {
+							implicitWidth: Kirigami.Units.iconSizes.small * 0.75
+							implicitHeight: implicitWidth
+							radius: width / 2
+							color: modelData.color || Kirigami.Theme.highlightColor
+							opacity: calendarRow.shown ? 1 : 0.4
+						}
+						PlasmaComponents3.Label {
+							Layout.fillWidth: true
+							text: modelData.name
+							elide: Text.ElideRight
+							opacity: calendarRow.shown ? 1 : 0.6
+							MouseArea {
+								anchors.fill: parent
+								onClicked: calendarToggles.setHidden(modelData.id, calendarRow.shown)
+							}
+						}
+					}
+				}
+			}
+
+			PlasmaComponents3.ToolButton {
+				visible: calendarToggles.anyHidden
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				Layout.alignment: Qt.AlignRight
+				icon.name: "view-visible"
+				text: i18n("Show All")
+				onClicked: plasmoid.configuration.hiddenCalendarIds = []
+			}
+		}
+	}
+}

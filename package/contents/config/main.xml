@@ -74,6 +74,10 @@
 			<!-- Event text size in the views, percent of the theme font. -->
 			<default>100</default>
 		</entry>
+		<entry name="weekViewWorkWeek" type="bool">
+			<!-- Week view: only the locale's working days (Monday to Friday), in week order. -->
+			<default>false</default>
+		</entry>
 		<entry name="weekViewStartHour" type="int">
 			<default>7</default>
 		</entry>
@@ -317,6 +321,11 @@
 		<entry name="showDeclinedEvents" type="bool">
 			<!-- Events the user declined: shown struck through (true) or left out of the views (false) -->
 			<default>true</default>
+		</entry>
+		<entry name="hiddenCalendarIds" type="StringList">
+			<!-- Calendars hidden in the popup's views (header calendars menu). A view filter only:
+			     their events are still fetched, and reminders still come. -->
+			<default></default>
 		</entry>
 		<entry name="eventClickAction" type="string">
 			<!-- details: event details in the widget. browser: open in Google Calendar. -->

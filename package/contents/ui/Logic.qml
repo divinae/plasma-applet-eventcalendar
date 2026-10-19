@@ -78,6 +78,14 @@ Item {
 		interval: 1000
 		onTriggered: logic.deferredUpdateEvents()
 	}
+	// A view filter changed (declined events, hidden calendars): rebuild from what's loaded.
+	function refilterEvents() {
+		eventModel.mergeEvents()
+		if (popup) popup.updateUI()
+		upcomingEvents.updateNextEvent()
+		upcomingEvents.updateTooltipEvents()
+	}
+
 	function deferredUpdateEvents() {
 		var range = agendaModel.getDateRange(agendaModel.currentMonth)
 
@@ -244,12 +252,9 @@ Item {
 			eventModel.recolorEvents()
 			if (popup) popup.updateUI()
 		}
-		function onShowDeclinedEventsChanged() {
-			eventModel.mergeEvents()
-			if (popup) popup.updateUI()
-			upcomingEvents.updateNextEvent()
-			upcomingEvents.updateTooltipEvents()
-		}
+		function onShowDeclinedEventsChanged() { logic.refilterEvents() }
+		// Calendars hidden in the popup header's menu: a view filter, nothing is fetched again.
+		function onHiddenCalendarIdsChanged() { logic.refilterEvents() }
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }

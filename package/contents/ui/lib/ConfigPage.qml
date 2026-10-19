@@ -162,10 +162,14 @@ KCM.SimpleKCM {
 	property var cfg_monthClickOpensDayDefault
 	property var cfg_showDeclinedEvents
 	property var cfg_showDeclinedEventsDefault
+	property var cfg_hiddenCalendarIds
+	property var cfg_hiddenCalendarIdsDefault
 	property var cfg_eventClickAction
 	property var cfg_eventClickActionDefault
 	property var cfg_eventFontScale
 	property var cfg_eventFontScaleDefault
+	property var cfg_weekViewWorkWeek
+	property var cfg_weekViewWorkWeekDefault
 	property var cfg_weekViewStartHour
 	property var cfg_weekViewStartHourDefault
 	property var cfg_weekViewEndHour
