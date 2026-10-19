@@ -7,16 +7,19 @@ import org.kde.plasma.components as PlasmaComponents3
 import "FreeSlots.js" as FreeSlots
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "lib/ColorUtil.js" as ColorUtil
 
 // Find a time (in the event editor): the busy times of you and the guests on a day, within the
-// working hours (settings), from Google's freeBusy, and free slots for the event's length.
+// working hours (settings), from Google's freeBusy, and free slots for the event's length. The day,
+// the working hours and the times shown are in the editor's time zone.
 Rectangle {
 	id: findTime
 
 	property string calendarId: "" // Any calendar of the Google account
 	property var people: [] // [{ id: a calendar id (email), name, email (guests) }]
-	property date day: new Date()
+	property string timeZone: "" // The editor's zone ('' or unknown: local time)
+	property date day: new Date() // The day: its local date fields are the date in timeZone
 	property double duration: 3600000 // The event's length, ms
 	property double selectedStart: 0 // The event's start, ms (outlined)
 	signal slotPicked(double start)
@@ -24,8 +27,9 @@ Rectangle {
 
 	readonly property int startHour: plasmoid.configuration.weekViewStartHour
 	readonly property int endHour: Math.max(startHour + 1, plasmoid.configuration.weekViewEndHour)
-	readonly property double rangeStart: new Date(day.getFullYear(), day.getMonth(), day.getDate(), startHour).getTime()
-	readonly property double rangeEnd: new Date(day.getFullYear(), day.getMonth(), day.getDate(), endHour).getTime()
+	readonly property bool zoned: TimeZone.knows(timeZone)
+	readonly property double rangeStart: instantAt(day, startHour)
+	readonly property double rangeEnd: instantAt(day, endHour)
 	// Slots every 30 minutes, or 15 for short events.
 	readonly property double step: duration < 30 * 60000 ? 15 * 60000 : 30 * 60000
 
@@ -34,8 +38,30 @@ Rectangle {
 	property var results: ({}) // id -> { busy: [{ start, end }], error }
 	property int requestId: 0
 
+	readonly property bool loaded: !loading && !error
+	// The people whose busy times we don't have (their calendar isn't shared, unknown...): the
+	// suggestions don't count them, and say so.
+	readonly property var notCounted: {
+		if (!loaded) {
+			return []
+		}
+		return people.filter(function(person) {
+			var result = results[person.id]
+			return !result || !!result.error
+		}).map(function(person) { return person.name })
+	}
+	// Suggestions only when we know the busy times of at least one guest (people[0] is you).
+	readonly property bool hasGuestData: {
+		for (var i = 1; i < people.length; i++) {
+			var result = results[people[i].id]
+			if (result && !result.error) {
+				return true
+			}
+		}
+		return false
+	}
 	readonly property var suggestions: {
-		if (loading || error) {
+		if (!loaded || !hasGuestData) {
 			return []
 		}
 		var lists = []
@@ -45,7 +71,20 @@ Rectangle {
 				lists.push(result.busy)
 			}
 		}
-		return lists.length ? FreeSlots.freeSlots(lists, rangeStart, rangeEnd, duration, step, Date.now(), 8) : []
+		return FreeSlots.freeSlots(lists, rangeStart, rangeEnd, duration, step, Date.now(), 8)
+	}
+	readonly property string suggestionsText: {
+		var names = notCounted.join(i18nc("separator of names in a list", ", "))
+		if (!hasGuestData) {
+			return i18n("No suggestions: the guests' busy times aren't available.")
+		} else if (suggestions.length) {
+			return names
+				? i18nc("%1 = names of people", "Suggested times (not counting %1):", names)
+				: i18n("Suggested times:")
+		}
+		return names
+			? i18nc("%1 = names of people", "No time free in the working hours of this day (not counting %1).", names)
+			: i18n("No time free for everyone in the working hours of this day.")
 	}
 
 	color: Kirigami.Theme.backgroundColor
@@ -72,14 +111,22 @@ Rectangle {
 			results = FreeSlots.parseResponse(data, ids)
 		})
 	}
+	// The instant of `hour`:00 on the date of `wallDay` in the zone.
+	function instantAt(wallDay, hour) {
+		var y = wallDay.getFullYear()
+		var m = wallDay.getMonth()
+		var d = wallDay.getDate()
+		return zoned ? TimeZone.toUtc(timeZone, y, m, d, hour, 0, 0) : new Date(y, m, d, hour).getTime()
+	}
 	function shiftDay(days) {
-		var d = new Date(day)
-		d.setDate(d.getDate() + days)
-		day = d
+		day = new Date(day.getFullYear(), day.getMonth(), day.getDate() + days, 12)
 		fetch()
 	}
+	// An instant's clock time in the zone.
 	function timeText(ms) {
-		return LocaleFuncs.formatEventTime(new Date(ms), { clock24h: appletConfig.clock24h })
+		var wall = zoned ? TimeZone.wallClock(timeZone, ms) : null
+		var d = wall ? new Date(2000, 0, 1, wall.hours, wall.minutes) : new Date(ms)
+		return LocaleFuncs.formatEventTime(d, { clock24h: appletConfig.clock24h })
 	}
 	function errorText(reason) {
 		return reason === 'notFound' || reason === 'notFoundOrNoAccess'
@@ -94,6 +141,14 @@ Rectangle {
 	Keys.onEscapePressed: closeRequested()
 	Keys.onLeftPressed: shiftDay(-1)
 	Keys.onRightPressed: shiftDay(1)
+
+	// Clicks on the card stay in it (the editor closes the card on clicks around it) and give the
+	// keys back to it.
+	MouseArea {
+		anchors.fill: parent
+		acceptedButtons: Qt.AllButtons
+		onPressed: findTime.forceActiveFocus()
+	}
 
 	ColumnLayout {
 		id: content
@@ -263,14 +318,12 @@ Rectangle {
 			text: findTime.error
 		}
 
-		// Free for everyone
+		// Free for everyone (we know the busy times of)
 		PlasmaComponents3.Label {
-			visible: !findTime.loading && !findTime.error
+			visible: findTime.loaded
 			Layout.fillWidth: true
 			wrapMode: Text.Wrap
-			text: findTime.suggestions.length
-				? i18n("Suggested times:")
-				: i18n("No time free for everyone in the working hours of this day.")
+			text: findTime.suggestionsText
 			opacity: findTime.suggestions.length ? 1 : 0.7
 		}
 		Flow {

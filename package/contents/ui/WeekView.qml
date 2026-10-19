@@ -135,7 +135,8 @@ Item {
 		var zone = String(plasmoid.configuration.weekViewSecondTimeZone || "")
 		return TimeZone.knows(zone) ? zone : ""
 	}
-	readonly property int localGutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)))) + Kirigami.Units.smallSpacing * 2
+	readonly property int localGutterWidth: Math.ceil(Math.max(smallFontMetrics.advanceWidth(formatHour(23)), smallFontMetrics.advanceWidth(formatHour(12)),
+		secondZone ? smallFontMetrics.advanceWidth(zoneAbbreviation("")) + Kirigami.Units.smallSpacing : 0)) + Kirigami.Units.smallSpacing * 2
 	readonly property int secondGutterWidth: secondZone ? Math.ceil(Math.max(
 		smallFontMetrics.advanceWidth(formatZoneTime(23, 45)), smallFontMetrics.advanceWidth(formatZoneTime(12, 45)),
 		smallFontMetrics.advanceWidth(zoneAbbreviation(secondZone)))) + Kirigami.Units.smallSpacing : 0
@@ -185,7 +186,8 @@ Item {
 		var d = new Date(2000, 0, 1, hours, minutes)
 		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : (minutes ? 'h:mm AP' : 'h AP'))
 	}
-	// The second zone's clock at a local hour of the first shown day.
+	// The second zone's clock at a local hour of the first shown day. When the time difference
+	// changes during the shown days (a DST switch), the header says so (secondZoneShifts).
 	function secondZoneLabel(hour) {
 		var day = columnDate(0)
 		var instant = new Date(day.getFullYear(), day.getMonth(), day.getDate(), hour).getTime()
@@ -193,12 +195,26 @@ Item {
 		return wall ? formatZoneTime(wall.hours, wall.minutes) : ""
 	}
 	// Short zone names for the hour column header: the local one from Qt, the other from tz rules.
+	// Both names when it changes between the first and last shown day (eg: "EDT/EST").
+	function zoneAbbreviationAt(zone, ms) {
+		return zone ? TimeZone.abbreviation(zone, ms) : Qt.formatDateTime(new Date(ms), "t")
+	}
 	function zoneAbbreviation(zone) {
-		var noon = columnDate(0).getTime() + 12 * 3600000
-		if (!zone) {
-			return Qt.formatDateTime(new Date(noon), "t")
+		var first = zoneAbbreviationAt(zone, columnDate(0).getTime() + 12 * 3600000)
+		var last = zoneAbbreviationAt(zone, columnDate(columnCount - 1).getTime() + 12 * 3600000)
+		return first === last ? first : first + "/" + last
+	}
+	// Whether the second zone's hour labels (of the first shown day) are off for some shown days.
+	readonly property bool secondZoneShifts: {
+		if (!secondZone || columnCount < 2) {
+			return false
 		}
-		return TimeZone.abbreviation(zone, noon)
+		var first = columnDate(0).getTime() + 12 * 3600000
+		var last = columnDate(columnCount - 1).getTime() + 12 * 3600000
+		var difference = function(ms) {
+			return TimeZone.offsetAt(secondZone, ms) + new Date(ms).getTimezoneOffset()
+		}
+		return difference(first) !== difference(last)
 	}
 	function isToday(d) {
 		return Shared.isSameDate(d, currentTime)
@@ -660,7 +676,10 @@ Item {
 						text: weekView.secondZone ? weekView.zoneAbbreviation(weekView.secondZone) : ""
 						font: Kirigami.Theme.smallFont
 						opacity: 0.6
-						PlasmaComponents3.ToolTip.text: weekView.secondZone.replace(/_/g, ' ')
+						PlasmaComponents3.ToolTip.text: weekView.secondZoneShifts
+							? i18nc("%1 = time zone, %2 = a date", "%1\nThe time difference changes during these days: the hours shown are those of %2.",
+								weekView.secondZone.replace(/_/g, ' '), Qt.formatDate(weekView.columnDate(0), Qt.locale().dateFormat(Locale.ShortFormat)))
+							: weekView.secondZone.replace(/_/g, ' ')
 						PlasmaComponents3.ToolTip.visible: secondZoneHover.hovered
 						HoverHandler {
 							id: secondZoneHover

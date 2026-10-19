@@ -452,7 +452,7 @@ CalendarManager {
 			}
 		}, function(err, data, xhr) {
 			logger.debug('fetchGCalEventsPage.response', args.calendarId, err, data, xhr.status)
-			if (withTypes && xhr && xhr.status === 400) {
+			if (withTypes && xhr && xhr.status === 400 && rejectsEventTypes(data)) {
 				logger.log('eventTypes rejected by a calendar, fetching without them') // No calendar id/name
 				eventTypesRejected[args.calendarId] = true
 				fetchGCalEventsPage(args, pageCallback)
@@ -465,6 +465,28 @@ CalendarManager {
 		})
 	}
 	property var eventTypesRejected: ({}) // Raw calendar id -> true
+	// Whether a 400 answer is about the eventTypes parameter (another 400 is a real error). body:
+	// the answer's text (or parsed JSON), { error: { message, errors: [{ reason, location, message }] } }.
+	function rejectsEventTypes(body) {
+		var data = body
+		if (typeof data === 'string') {
+			try {
+				data = JSON.parse(data)
+			} catch (e) {
+				return false
+			}
+		}
+		var error = data && data.error
+		if (!error) {
+			return false
+		}
+		var texts = [error.message]
+		var errors = error.errors || []
+		for (var i = 0; i < errors.length; i++) {
+			texts.push(errors[i].reason, errors[i].location, errors[i].message)
+		}
+		return texts.some(function(text) { return /event\s*_?types?/i.test(String(text || '')) })
+	}
 
 	//--- Search
 	// Events matching query in the selected calendars between timeMin and timeMax (Dates).
@@ -1252,6 +1274,19 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		withAccessToken(func, function(err, isNetworkError) {
 			done(isNetworkError ? i18n("Could not connect") : i18n("Google authentication failed: %1", err), null)
 		})
+	}
+
+	// You in freeBusy: this account's primary calendar (its raw id is the account's email), else
+	// Google's 'primary' (the account of the token).
+	function ownFreeBusyId() {
+		var account = getAccount()
+		var list = (account && account.calendarList) || []
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].primary === true && list[i].id) {
+				return String(list[i].id)
+			}
+		}
+		return 'primary'
 	}
 
 	//--- CalendarManager

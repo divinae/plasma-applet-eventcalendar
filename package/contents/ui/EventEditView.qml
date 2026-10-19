@@ -168,11 +168,13 @@ Rectangle {
 		var calendar = calendarSelector.selectedCalendar
 		return calendar && calendar.timeZone ? String(calendar.timeZone) : localZoneName()
 	}
+	// Instants of wall times shifted by the local DST gap (see TimeZone.toWallDate).
+	property var wallMemo: ({})
 	function toWall(instant) {
-		return TimeZone.knows(timeZone) ? TimeZone.toWallDate(timeZone, instant) : new Date(instant)
+		return TimeZone.knows(timeZone) ? TimeZone.toWallDate(timeZone, instant, wallMemo) : new Date(instant)
 	}
 	function fromWall(wallDate) {
-		return TimeZone.knows(timeZone) ? TimeZone.fromWallDate(timeZone, wallDate) : new Date(wallDate)
+		return TimeZone.knows(timeZone) ? TimeZone.fromWallDate(timeZone, wallDate, wallMemo) : new Date(wallDate)
 	}
 	// The event's start / end instants.
 	function startInstant() {
@@ -473,19 +475,10 @@ Rectangle {
 		findTimeOpen = true
 	}
 	// You in Find a time: the primary calendar of the selected calendar's account (its id is the
-	// account's email), else Google's 'primary'.
+	// account's email), else Google's 'primary' (of that account: freeBusy goes through it).
 	function ownFreeBusyId() {
 		var id = String(calendarSelector.selectedCalendarId || '')
-		var i = id.indexOf('::')
-		var prefix = i > 0 ? id.slice(0, i + 2) : ''
-		var list = eventModel.getCalendarList()
-		for (var j = 0; j < list.length; j++) {
-			var calendarId = String(list[j].id || '')
-			if (list[j].primary === true && calendarId.indexOf(prefix) === 0) {
-				return calendarId.slice(prefix.length)
-			}
-		}
-		return 'primary'
+		return eventModel.ownFreeBusyId ? eventModel.ownFreeBusyId(id) : 'primary'
 	}
 	function findTimePeople() {
 		var people = [{ id: ownFreeBusyId(), name: i18nc("you, in Find a time", "You") }]
@@ -1692,7 +1685,7 @@ Rectangle {
 				color: Kirigami.Theme.backgroundColor
 				opacity: 0.85
 			}
-			MouseArea {
+			MouseArea { // Around the card (the card keeps its own clicks)
 				anchors.fill: parent
 				onClicked: form.findTimeOpen = false
 			}
@@ -1702,7 +1695,8 @@ Rectangle {
 				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit)
 				calendarId: calendarSelector.selectedCalendarId || ""
 				people: form.findTimePeople()
-				day: form.startInstant()
+				timeZone: TimeZone.knows(form.timeZone) ? form.timeZone : ""
+				day: durationSelector.startDateTime // The wall date in the editor's zone
 				duration: form.endInstant().getTime() - form.startInstant().getTime()
 				selectedStart: form.startInstant().getTime()
 				onSlotPicked: function(start) { form.pickSlot(start) }

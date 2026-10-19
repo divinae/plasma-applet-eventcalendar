@@ -135,6 +135,23 @@ assert.strictEqual(T.fromWallDate('America/New_York', new Date(2026, 10, 3, 14, 
 // Unknown zone: unchanged (local)
 assert.strictEqual(T.fromWallDate('', wallDate).getTime(), wallDate.getTime())
 
+// A wall time in the local DST gap: Tokyo 02:30 on 29 March 2026, when Warsaw skips 02:00-03:00.
+const tokyoGap = T.toUtc('Asia/Tokyo', 2026, 2, 29, 2, 30)
+assert.strictEqual(new Date(tokyoGap).toISOString(), '2026-03-28T17:30:00.000Z')
+const memo = {}
+const gapWall = T.toWallDate('Asia/Tokyo', tokyoGap, memo)
+assert.strictEqual(gapWall.getHours(), 3) // The local Date can't show 02:30 that night
+assert.strictEqual(T.fromWallDate('Asia/Tokyo', gapWall, memo).getTime(), tokyoGap) // Same instant back
+assert.strictEqual(T.fromWallDate('Asia/Tokyo', gapWall).getTime(), tokyoGap + 3600000) // Without the memo: 03:30
+// Other times don't need the memo.
+const tokyoMorning = T.toUtc('Asia/Tokyo', 2026, 2, 29, 9, 0)
+const memo2 = {}
+const morningWall = T.toWallDate('Asia/Tokyo', tokyoMorning, memo2)
+assert.deepStrictEqual(Object.keys(memo2), [])
+assert.strictEqual(T.fromWallDate('Asia/Tokyo', morningWall, memo2).getTime(), tokyoMorning)
+// The memo is per zone: the same local Date in another zone is read normally.
+assert.strictEqual(T.fromWallDate('Asia/Seoul', gapWall, memo).toISOString(), '2026-03-28T18:30:00.000Z')
+
 // Local zone detection
 assert.ok(T.matchesLocal('Europe/Warsaw', Date.UTC(2026, 5, 1)))
 assert.ok(T.matchesLocal('Europe/Berlin', Date.UTC(2026, 5, 1)))

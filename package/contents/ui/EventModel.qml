@@ -659,6 +659,14 @@ CalendarManager {
 		var calendarManager = getCalendarManager(calendarId)
 		return !!calendarManager && typeof calendarManager.freeBusy === 'function'
 	}
+	// You in freeBusy: the id of the primary calendar of the account of calendarId, else 'primary'.
+	function ownFreeBusyId(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.ownFreeBusyId === 'function') {
+			return calendarManager.ownFreeBusyId()
+		}
+		return 'primary'
+	}
 	// See GoogleCalendarManager.freeBusy. done(err, data)
 	function freeBusy(calendarId, ids, from, to, done) {
 		var calendarManager = getCalendarManager(calendarId)

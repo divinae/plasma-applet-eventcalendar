@@ -250,17 +250,29 @@ function toUtc(zone, year, month, day, hours, minutes, seconds) {
 }
 
 // Dates whose local fields show a zone's wall clock: the editor's selectors work on local Dates.
-// toWallDate(zone, instant) -> a Date with the zone's clock time as local time.
-function toWallDate(zone, instant) {
-	var w = wallClock(zone, new Date(instant).getTime())
+// A wall time that doesn't exist in the local time zone (in its DST gap, eg: 02:30 in Tokyo on the
+// night clocks move forward in Warsaw) moves in the Date (03:30): with a `memo` object, toWallDate
+// remembers the instant of such a Date and fromWallDate gives it back (instead of 03:30 there).
+// toWallDate(zone, instant, memo) -> a Date with the zone's clock time as local time.
+function toWallDate(zone, instant, memo) {
+	var t = new Date(instant).getTime()
+	var w = wallClock(zone, t)
 	if (!w) {
 		return new Date(instant)
 	}
-	return new Date(w.year, w.month, w.day, w.hours, w.minutes, w.seconds)
+	var d = new Date(w.year, w.month, w.day, w.hours, w.minutes, w.seconds)
+	if (memo && (d.getDate() !== w.day || d.getHours() !== w.hours || d.getMinutes() !== w.minutes)) {
+		memo[zone + '|' + d.getTime()] = t
+	}
+	return d
 }
-// fromWallDate(zone, wallDate) -> the instant (Date) of that clock time in the zone.
-function fromWallDate(zone, wallDate) {
+// fromWallDate(zone, wallDate, memo) -> the instant (Date) of that clock time in the zone.
+function fromWallDate(zone, wallDate, memo) {
 	var d = new Date(wallDate)
+	var key = zone + '|' + d.getTime()
+	if (memo && Object.prototype.hasOwnProperty.call(memo, key)) {
+		return new Date(memo[key])
+	}
 	var t = toUtc(zone, d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds())
 	return t === null ? d : new Date(t)
 }
