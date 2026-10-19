@@ -1860,16 +1860,16 @@ msgstr "イベントを移動しました"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr "、"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
-msgstr ""
+msgstr "候補なし: ゲストの予定あり時間を取得できません。"
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "候補の時間 (%1 を除く):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -1878,7 +1878,7 @@ msgstr "候補の時間:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "この日の勤務時間に空き時間がありません (%1 を除く)。"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2547,6 +2547,8 @@ msgid ""
 "%1\n"
 "The time difference changes during these days: the hours shown are those of %2."
 msgstr ""
+"%1\n"
+"この期間中に時差が変わります: 表示されている時刻は %2 のものです。"
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

@@ -2029,16 +2029,16 @@ msgstr "האירוע הועבר"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
-msgstr ""
+msgstr "אין הצעות: זמני העיסוק של האורחים אינם זמינים."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "זמנים מוצעים (בלי %1):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -2047,7 +2047,7 @@ msgstr "זמנים מוצעים:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "אין זמן פנוי בשעות העבודה ביום זה (בלי %1)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2773,6 +2773,8 @@ msgid ""
 "The time difference changes during these days: the hours shown are those of "
 "%2."
 msgstr ""
+"%1\n"
+"הפרש השעות משתנה בימים אלה: השעות המוצגות הן של %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

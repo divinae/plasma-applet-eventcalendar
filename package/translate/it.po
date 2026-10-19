@@ -1874,16 +1874,16 @@ msgstr "Evento spostato"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
-msgstr ""
+msgstr "Nessun suggerimento: gli orari occupati degli invitati non sono disponibili."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "Orari suggeriti (senza contare %1):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -1892,7 +1892,7 @@ msgstr "Orari suggeriti:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "Nessun orario libero nell'orario di lavoro di questo giorno (senza contare %1)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2575,6 +2575,8 @@ msgid ""
 "%1\n"
 "The time difference changes during these days: the hours shown are those of %2."
 msgstr ""
+"%1\n"
+"La differenza di fuso cambia in questi giorni: gli orari mostrati sono quelli del %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

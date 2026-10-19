@@ -2022,16 +2022,16 @@ msgstr "Etkinlik taşındı"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
-msgstr ""
+msgstr "Öneri yok: konukların meşgul saatleri alınamıyor."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "Önerilen saatler (%1 hariç):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -2040,7 +2040,7 @@ msgstr "Önerilen zamanlar:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "Bu günün çalışma saatlerinde boş zaman yok (%1 hariç)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2751,6 +2751,8 @@ msgid ""
 "The time difference changes during these days: the hours shown are those of "
 "%2."
 msgstr ""
+"%1\n"
+"Saat farkı bu günlerde değişiyor: gösterilen saatler %2 içindir."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

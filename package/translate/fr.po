@@ -2034,16 +2034,17 @@ msgstr "Événement déplacé"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
 msgstr ""
+"Aucune suggestion : les disponibilités des invités ne sont pas accessibles."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "Créneaux suggérés (sans compter %1) :"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -2053,6 +2054,8 @@ msgstr "Créneaux suggérés :"
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
 msgstr ""
+"Aucun créneau libre pendant les heures de travail de ce jour (sans compter "
+"%1)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2762,6 +2765,9 @@ msgid ""
 "The time difference changes during these days: the hours shown are those of "
 "%2."
 msgstr ""
+"%1\n"
+"Le décalage horaire change pendant ces jours : les heures affichées sont "
+"celles du %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

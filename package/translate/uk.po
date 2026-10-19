@@ -2034,16 +2034,16 @@ msgstr "Подію пересунуто"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
-msgstr ""
+msgstr "Немає пропозицій: зайнятість гостей недоступна."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "Запропонований час (без урахування: %1):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -2052,7 +2052,7 @@ msgstr "Запропонований час:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "Немає вільного часу в робочі години цього дня (без урахування: %1)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2772,6 +2772,8 @@ msgid ""
 "The time difference changes during these days: the hours shown are those of "
 "%2."
 msgstr ""
+"%1\n"
+"Різниця в часі змінюється в ці дні: показано години для %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"

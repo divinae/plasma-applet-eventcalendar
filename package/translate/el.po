@@ -2038,16 +2038,18 @@ msgstr "Το συμβάν μετακινήθηκε"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."
 msgstr ""
+"Χωρίς προτάσεις: οι απασχολημένες ώρες των προσκεκλημένων δεν είναι "
+"διαθέσιμες."
 
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "Suggested times (not counting %1):"
-msgstr ""
+msgstr "Προτεινόμενες ώρες (χωρίς %1):"
 
 #: ../contents/ui/FindTimeView.qml
 msgid "Suggested times:"
@@ -2056,7 +2058,7 @@ msgstr "Προτεινόμενες ώρες:"
 #: ../contents/ui/FindTimeView.qml
 msgctxt "%1 = names of people"
 msgid "No time free in the working hours of this day (not counting %1)."
-msgstr ""
+msgstr "Καμία ελεύθερη ώρα στο ωράριο εργασίας αυτής της ημέρας (χωρίς %1)."
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No time free for everyone in the working hours of this day."
@@ -2768,6 +2770,9 @@ msgid ""
 "The time difference changes during these days: the hours shown are those of "
 "%2."
 msgstr ""
+"%1\n"
+"Η διαφορά ώρας αλλάζει αυτές τις ημέρες: οι ώρες που εμφανίζονται είναι "
+"αυτές της %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"
