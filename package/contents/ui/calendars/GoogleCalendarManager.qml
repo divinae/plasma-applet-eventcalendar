@@ -1,6 +1,7 @@
 import QtQuick
 
 import "../ErrorType.js" as ErrorType
+import "../IcsImport.js" as IcsImport
 import "../Shared.js" as Shared
 import "../lib"
 import "../lib/Async.js" as Async
@@ -778,6 +779,42 @@ function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 				return callback(data, null, xhr)
 			}
 			callback(err, data, xhr)
+		})
+	}
+
+	//--- Import (.ics)
+	// Import an event body (see IcsImport.googleEventBody) with events.import: it keeps the
+	// iCalUID, so importing the same invitation twice updates the event instead of adding a copy.
+	// Sends no invitations. done(err, data): err is a short message, or null. The caller refetches.
+	function importEvent(calendarId, eventData, done) {
+		if (!session.accessToken) {
+			done(i18n("Not logged in to Google Calendar"), null)
+			return
+		}
+		var func = function() {
+			var url = 'https://www.googleapis.com/calendar/v3/calendars/'
+			url += encodeURIComponent(unscopedCalendarId(calendarId))
+			url += '/events/import'
+			Requests.postJSON({
+				url: url,
+				headers: {
+					"Authorization": "Bearer " + session.accessToken,
+				},
+				data: eventData,
+			}, function(err, data, xhr) {
+				if (!err && data && data.error) {
+					err = data
+				}
+				if (err) {
+					logger.log(calendarManagerId, 'importEvent_err', xhr && xhr.status) // No event data in logs
+					done(IcsImport.errorMessage(err, data, xhr && xhr.status), null)
+					return
+				}
+				done(null, data)
+			})
+		}
+		withAccessToken(func, function(err, isNetworkError) {
+			done(isNetworkError ? i18n("Could not connect") : i18n("Google authentication failed: %1", err), null)
 		})
 	}
 

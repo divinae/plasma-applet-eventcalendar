@@ -587,6 +587,22 @@ CalendarManager {
 		}
 	}
 
+	// Events can be imported from .ics files (Google Calendar).
+	function supportsImport(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && typeof calendarManager.importEvent === 'function'
+	}
+
+	// See GoogleCalendarManager.importEvent. done(err, data)
+	function importEvent(calendarId, eventData, done) {
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager && typeof calendarManager.importEvent === 'function') {
+			calendarManager.importEvent(calendarId, eventData, done)
+		} else {
+			done(i18n("This calendar can't import events"), null)
+		}
+	}
+
 	//--- CalendarManager: Calendar
 	function getCalendarList() {
 		var calendarList = []
