@@ -614,47 +614,20 @@ Item {
 
 			// Click opens the event, right click its menu, press and drag moves it to other days
 			// (the whole event, by the days dragged; Ctrl: a copy).
-			MouseArea {
+			DragMouseArea {
 				anchors.fill: parent
-				cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
-				acceptedButtons: Qt.LeftButton | Qt.RightButton
-				readonly property bool draggable: daysCalendar.canDragEvent(spanBar.eventItem)
-				preventStealing: draggable
-				property point pressPoint
-				property bool dragged: false
-				onPressed: function(mouse) {
-					dragged = false
-					pressPoint = Qt.point(mouse.x, mouse.y)
+				draggable: daysCalendar.canDragEvent(spanBar.eventItem)
+				mapTo: daysCalendar
+				onDragStarted: function(from, at, copy) {
+					daysCalendar.eventDragBegin(spanBar.eventItem, from, copy)
+					daysCalendar.eventDragMove(at, copy)
 				}
-				onPositionChanged: function(mouse) {
-					if (!draggable || !(pressedButtons & Qt.LeftButton)) {
-						return
-					}
-					var copy = !!(mouse.modifiers & Qt.ControlModifier)
-					if (dragged) {
-						daysCalendar.eventDragMove(mapToItem(daysCalendar, mouse.x, mouse.y), copy)
-					} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
-						dragged = true
-						daysCalendar.eventDragBegin(spanBar.eventItem, mapToItem(daysCalendar, pressPoint.x, pressPoint.y), copy)
-						daysCalendar.eventDragMove(mapToItem(daysCalendar, mouse.x, mouse.y), copy)
-					}
-				}
-				onReleased: function(mouse) {
-					if (dragged) {
-						daysCalendar.eventDragDrop(!!(mouse.modifiers & Qt.ControlModifier))
-					}
-				}
-				onCanceled: {
-					if (dragged) {
-						dragged = false
-						daysCalendar.eventDragCancel()
-					}
-				}
-				onClicked: function(mouse) {
-					if (dragged) { // The end of a drag, not a click
-						dragged = false
-					} else if (mouse.button === Qt.RightButton) {
-						popup.showEventMenu(spanBar.eventItem, spanBar, mouse.x, mouse.y)
+				onDragMoved: function(at, copy) { daysCalendar.eventDragMove(at, copy) }
+				onDropped: function(copy) { daysCalendar.eventDragDrop(copy) }
+				onDragCanceled: daysCalendar.eventDragCancel()
+				onEventClicked: function(button, x, y) {
+					if (button === Qt.RightButton) {
+						popup.showEventMenu(spanBar.eventItem, spanBar, x, y)
 					} else {
 						popup.activateEvent(spanBar.eventItem)
 					}

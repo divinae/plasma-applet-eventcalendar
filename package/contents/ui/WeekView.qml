@@ -880,49 +880,21 @@ Item {
 						}
 					}
 					// Click opens the event, right click its menu, press and drag moves it by days (Ctrl: copies).
-					MouseArea {
+					DragMouseArea {
 						id: barMouse
 						anchors.fill: parent
-						cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
-						acceptedButtons: Qt.LeftButton | Qt.RightButton
-						readonly property bool draggable: weekView.canDragBar(parent.bar)
-						preventStealing: draggable
-						property point pressPoint
-						property bool dragged: false
-						onPressed: function(mouse) {
-							dragged = false
-							pressPoint = Qt.point(mouse.x, mouse.y)
+						draggable: weekView.canDragBar(parent.bar)
+						mapTo: allDayArea
+						onDragStarted: function(from, at, copy) {
+							weekView.dragBeginDays(parent.bar, from.x, copy)
+							weekView.dragMoveDays(at.x, copy)
 						}
-						onPositionChanged: function(mouse) {
-							if (!draggable || !(pressedButtons & Qt.LeftButton)) {
-								return
-							}
-							var copy = !!(mouse.modifiers & Qt.ControlModifier)
-							var x = mapToItem(allDayArea, mouse.x, mouse.y).x
-							if (dragged) {
-								weekView.dragMoveDays(x, copy)
-							} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
-								dragged = true
-								weekView.dragBeginDays(parent.bar, mapToItem(allDayArea, pressPoint.x, pressPoint.y).x, copy)
-								weekView.dragMoveDays(x, copy)
-							}
-						}
-						onReleased: function(mouse) {
-							if (dragged) {
-								weekView.dragDrop(!!(mouse.modifiers & Qt.ControlModifier))
-							}
-						}
-						onCanceled: {
-							if (dragged) {
-								dragged = false
-								weekView.dragCancel()
-							}
-						}
-						onClicked: function(mouse) {
-							if (dragged) { // The end of a drag, not a click
-								dragged = false
-							} else if (mouse.button === Qt.RightButton) {
-								popup.showEventMenu(parent.eventItem, parent, mouse.x, mouse.y)
+						onDragMoved: function(at, copy) { weekView.dragMoveDays(at.x, copy) }
+						onDropped: function(copy) { weekView.dragDrop(copy) }
+						onDragCanceled: weekView.dragCancel()
+						onEventClicked: function(button, x, y) {
+							if (button === Qt.RightButton) {
+								popup.showEventMenu(parent.eventItem, parent, x, y)
 							} else {
 								weekView.openEvent(parent.eventItem)
 							}
@@ -1362,49 +1334,21 @@ Item {
 										}
 									}
 									// Click opens the event, right click its menu, press and drag moves it.
-									MouseArea {
+									DragMouseArea {
 										id: blockMouse
 										anchors.fill: parent
-										cursorShape: dragged ? Qt.ClosedHandCursor : Qt.PointingHandCursor
-										acceptedButtons: Qt.LeftButton | Qt.RightButton
-										readonly property bool draggable: weekView.canDrag(eventBlock.block)
-										preventStealing: draggable // The grid doesn't scroll while dragging
-										property point pressPoint
-										property bool dragged: false
-										onPressed: function(mouse) {
-											dragged = false
-											pressPoint = Qt.point(mouse.x, mouse.y)
+										draggable: weekView.canDrag(eventBlock.block)
+										mapTo: flickable
+										onDragStarted: function(from, at, copy) {
+											weekView.dragBegin(eventBlock.block, 'move', from, copy)
+											weekView.dragMove(at, copy)
 										}
-										onPositionChanged: function(mouse) {
-											if (!draggable || !(pressedButtons & Qt.LeftButton)) {
-												return
-											}
-											var viewportPoint = mapToItem(flickable, mouse.x, mouse.y)
-											var copy = !!(mouse.modifiers & Qt.ControlModifier)
-											if (dragged) {
-												weekView.dragMove(viewportPoint, copy)
-											} else if (Math.abs(mouse.x - pressPoint.x) + Math.abs(mouse.y - pressPoint.y) >= Qt.styleHints.startDragDistance) {
-												dragged = true
-												weekView.dragBegin(eventBlock.block, 'move', mapToItem(flickable, pressPoint.x, pressPoint.y), copy)
-												weekView.dragMove(viewportPoint, copy)
-											}
-										}
-										onReleased: function(mouse) {
-											if (dragged) {
-												weekView.dragDrop(!!(mouse.modifiers & Qt.ControlModifier)) // Ctrl: a copy
-											}
-										}
-										onCanceled: {
-											if (dragged) {
-												dragged = false
-												weekView.dragCancel()
-											}
-										}
-										onClicked: function(mouse) {
-											if (dragged) { // The end of a drag, not a click
-												dragged = false
-											} else if (mouse.button === Qt.RightButton) {
-												popup.showEventMenu(eventBlock.eventItem, eventBlock, mouse.x, mouse.y)
+										onDragMoved: function(at, copy) { weekView.dragMove(at, copy) }
+										onDropped: function(copy) { weekView.dragDrop(copy) } // Ctrl: a copy
+										onDragCanceled: weekView.dragCancel()
+										onEventClicked: function(button, x, y) {
+											if (button === Qt.RightButton) {
+												popup.showEventMenu(eventBlock.eventItem, eventBlock, x, y)
 											} else {
 												weekView.openEvent(eventBlock.eventItem)
 											}
