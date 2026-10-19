@@ -3,6 +3,7 @@ import org.kde.plasma.core as PlasmaCore
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
+import "NotifyTiming.js" as NotifyTiming
 import "Shared.js" as Shared
 import "./calendars"
 
@@ -22,43 +23,12 @@ CalendarManager {
 		)
 	}
 
-	function isSameMinute(a, b) {
-		return a.getFullYear() === b.getFullYear()
-			&& a.getMonth() === b.getMonth()
-			&& a.getDate() === b.getDate()
-			&& a.getHours() === b.getHours()
-			&& a.getMinutes() === b.getMinutes()
-	}
-
-	function getDeltaMinutes(a1, n) {
-		var a2 = new Date(a1)
-		a2.setMinutes(a2.getMinutes() + n)
-		return a2
-	}
-
 	// Google events carry their own reminder times (event or calendar defaults).
 	function reminderMinutesFor(eventItem) {
 		if (plasmoid.configuration.eventReminderUseGoogle && Shared.isList(eventItem.reminderMinutes)) {
 			return Shared.toArray(eventItem.reminderMinutes)
 		}
 		return [minutesBeforeReminding]
-	}
-
-	// Returns the reminder minutes matching this minute, or 0. 0 minute reminders
-	// are covered by the "starting" notification.
-	function dueReminderMinutes(eventItem) {
-		var list = reminderMinutesFor(eventItem)
-		for (var i = 0; i < list.length; i++) {
-			var minutes = list[i]
-			if (minutes > 0 && isSameMinute(getDeltaMinutes(timeModel.currentTime, minutes), eventItem.startDateTime)) {
-				return minutes
-			}
-		}
-		return 0
-	}
-
-	function isEventStarting(eventItem) {
-		return isSameMinute(timeModel.currentTime, eventItem.startDateTime) // starting this minute
 	}
 
 	function isEventInProgress(eventItem) {
@@ -208,25 +178,38 @@ CalendarManager {
 		snoozedReminders = remaining
 	}
 
+	// Every minute since the last check (see NotifyTiming), each notification once.
+	property real lastNotifyCheck: NaN
+	property var sentNotifications: ({}) // key -> when sent
 	function checkForEventsStarting() {
+		var now = timeModel.currentTime.getTime()
+		var win = NotifyTiming.checkWindow(isFinite(lastNotifyCheck) ? lastNotifyCheck : null, now, 10 * 60000)
+		lastNotifyCheck = now
+		var sent = NotifyTiming.pruneSent(sentNotifications, now)
 		for (var calendarId in eventsByCalendar) {
 			var calendar = eventsByCalendar[calendarId]
-			calendar.items.forEach(function(eventItem, index, calendarEventList) {
+			calendar.items.forEach(function(eventItem) {
 				if (!shouldNotify(eventItem)) {
 					return
 				}
-				if (isEventStarting(eventItem)) {
-					if (plasmoid.configuration.eventStartingNotificationEnabled) {
-						sendEventStartingNotification(eventItem)
+				var due = NotifyTiming.dueFor(eventItem, reminderMinutesFor(eventItem), win, now)
+				for (var i = 0; i < due.length; i++) {
+					if (sent[due[i].key]) {
+						continue
 					}
-				} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
-					var reminderMinutes = dueReminderMinutes(eventItem)
-					if (reminderMinutes > 0) {
-						sendEventReminderNotification(eventItem, reminderMinutes)
+					if (due[i].kind === 'start') {
+						if (plasmoid.configuration.eventStartingNotificationEnabled) {
+							sent[due[i].key] = now
+							sendEventStartingNotification(eventItem)
+						}
+					} else if (plasmoid.configuration.eventReminderNotificationEnabled) {
+						sent[due[i].key] = now
+						sendEventReminderNotification(eventItem, due[i].minutes)
 					}
 				}
 			})
 		}
+		sentNotifications = sent
 		checkSnoozedReminders()
 	}
 

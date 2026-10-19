@@ -382,8 +382,7 @@ MouseArea {
 	}
 	function closeEventDetails() {
 		detailsEvent = null
-		dayEventsOverlay.focusCard() // Esc closes the day list (or search) next
-		searchOverlay.focusCard()
+		searchOverlay.focusCard() // Esc closes the search next
 	}
 
 	//--- Search, and quick add (the header's "+")
