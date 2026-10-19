@@ -30,6 +30,7 @@ ConfigPage {
 					{ value: 'week', text: i18n("Week") },
 					{ value: 'today', text: i18nc("calendar view showing one day", "Day") },
 					{ value: 'classic', text: i18n("Agenda") },
+					{ value: 'year', text: i18nc("calendar view showing a year", "Year") },
 				]
 			}
 			FormCard.FormDelegateSeparator {}

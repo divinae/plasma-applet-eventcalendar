@@ -12,6 +12,9 @@ PlasmaExtras.PlasmoidHeading {
 
 	property Item monthViewItem
 	property Item weekViewItem // Week and Day views, null otherwise
+	property Item yearViewItem // Year view, null otherwise
+	// The view with its own title and navigation (goPrevious, goNext, goToday), null: the month view.
+	readonly property Item navViewItem: weekViewItem || yearViewItem
 	property bool showViewTabs: true
 	property bool showPinButton: true
 	property bool refreshing: false
@@ -26,6 +29,31 @@ PlasmaExtras.PlasmoidHeading {
 		id: topBar
 		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
 		readonly property real sideWidth: Math.max(leftGroup.implicitWidth, rightGroup.implicitWidth)
+		// Not enough room for the view names next to the title: icons only (names in tooltips).
+		readonly property bool compactTabs: header.showViewTabs
+			&& width < Math.max(fullTabsMeasure.implicitWidth, rightGroup.implicitWidth) * 2 + centerGroup.implicitWidth + Kirigami.Units.largeSpacing * 2
+
+		readonly property var viewTabs: [
+			{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+			{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+			{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
+			{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
+			{ mode: 'year', icon: "view-calendar", text: i18nc("calendar view showing a year", "Year") },
+		]
+		// The view switcher's width with names, measured off screen.
+		Row {
+			id: fullTabsMeasure
+			visible: false
+			spacing: 2
+			Repeater {
+				model: topBar.viewTabs
+				PlasmaComponents3.ToolButton {
+					icon.name: modelData.icon
+					text: modelData.text
+					display: QQC2.AbstractButton.TextBesideIcon
+				}
+			}
+		}
 
 		RowLayout {
 			id: leftGroup
@@ -39,12 +67,7 @@ PlasmaExtras.PlasmoidHeading {
 				spacing: 2
 
 				Repeater {
-					model: [
-						{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
-						{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
-						{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
-						{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
-					]
+					model: topBar.viewTabs
 					Item {
 						readonly property bool current: plasmoid.configuration.popupMode === modelData.mode
 						implicitWidth: viewButton.implicitWidth
@@ -63,7 +86,9 @@ PlasmaExtras.PlasmoidHeading {
 							anchors.fill: parent
 							icon.name: modelData.icon
 							text: modelData.text
-							display: QQC2.AbstractButton.TextBesideIcon
+							display: topBar.compactTabs ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+							PlasmaComponents3.ToolTip.text: modelData.text
+							PlasmaComponents3.ToolTip.visible: topBar.compactTabs && hovered
 							// Not checkable: the style's checked look changes the size and elides the text.
 							onClicked: header.viewSelected(modelData.mode)
 							Accessible.name: modelData.text
@@ -91,10 +116,10 @@ PlasmaExtras.PlasmoidHeading {
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
 				font.capitalization: Font.Capitalize
-				text: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+				text: header.navViewItem ? header.navViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
 				MouseArea {
 					anchors.fill: parent
-					enabled: !header.weekViewItem
+					enabled: !header.navViewItem
 					onClicked: header.monthViewItem.titleClicked() // Year / decade view
 				}
 			}
@@ -103,20 +128,20 @@ PlasmaExtras.PlasmoidHeading {
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-previous"
-				onClicked: header.weekViewItem ? header.weekViewItem.goPrevious() : header.monthViewItem.goPrevious()
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
+				onClicked: header.navViewItem ? header.navViewItem.goPrevious() : header.monthViewItem.goPrevious()
+				PlasmaComponents3.ToolTip.text: header.yearViewItem ? i18n("Previous Year") : header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-jump-today"
-				onClicked: header.weekViewItem ? header.weekViewItem.goToday() : header.monthViewItem.resetToToday()
+				onClicked: header.navViewItem ? header.navViewItem.goToday() : header.monthViewItem.resetToToday()
 				PlasmaComponents3.ToolTip.text: i18n("Today")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next"
-				onClicked: header.weekViewItem ? header.weekViewItem.goNext() : header.monthViewItem.goNext()
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
+				onClicked: header.navViewItem ? header.navViewItem.goNext() : header.monthViewItem.goNext()
+				PlasmaComponents3.ToolTip.text: header.yearViewItem ? i18n("Next Year") : header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 		}

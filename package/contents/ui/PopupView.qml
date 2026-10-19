@@ -44,7 +44,7 @@ MouseArea {
 	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
 
 	property int singleColumnWidth: {
-		if (hourGridMode) {
+		if (hourGridMode || yearMode) {
 			return leftColumnWidth
 		}
 		if (showAgenda && showCalendar) {
@@ -66,7 +66,7 @@ MouseArea {
 	}
 
 	property int singleColumnHeight: {
-		if (hourGridMode) {
+		if (hourGridMode || yearMode) {
 			return bottomRowHeight + viewTabsHeight
 		}
 		var rows = []
@@ -132,7 +132,10 @@ MouseArea {
 	readonly property bool weekMode: plasmoid.configuration.popupMode === 'week'
 	readonly property bool dayMode: plasmoid.configuration.popupMode === 'today'
 	readonly property bool hourGridMode: weekMode || dayMode // Both use WeekView
-	readonly property bool fullViewMode: monthMode || hourGridMode
+	readonly property bool yearMode: plasmoid.configuration.popupMode === 'year'
+	readonly property bool fullViewMode: monthMode || hourGridMode || yearMode
+	// The year view fetches the whole year (Logic.deferredUpdateEvents), the other views a month.
+	onYearModeChanged: logic.updateEvents()
 	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
 	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
 	// The agenda view is the agenda list only (plus optional meteogram / timer); the month view
@@ -518,6 +521,7 @@ MouseArea {
 		anchors.right: parent.right
 		monthViewItem: monthView
 		weekViewItem: weekViewLoader.item
+		yearViewItem: yearViewLoader.item
 		showViewTabs: popup.showViewTabs
 		showPinButton: popup.showPinButton
 		refreshing: popup.refreshing
@@ -766,9 +770,32 @@ MouseArea {
 		}
 	}
 
+	Loader {
+		id: yearViewLoader
+		active: popup.yearMode
+		visible: active
+		anchors.fill: widgetGrid
+		sourceComponent: YearView {
+			eventModel: popup.eventModel
+			year: popup.monthViewDate.getFullYear()
+			today: popup.today
+			onYearRequested: function(year) {
+				popup.monthViewDate = new Date(year, popup.monthViewDate.getMonth(), 1)
+			}
+			onDayClicked: function(date) {
+				popup.selectedDate = date
+				popup.showDayView(date)
+			}
+			onMonthClicked: function(date) {
+				popup.monthViewDate = date
+				plasmoid.configuration.popupMode = 'month'
+			}
+		}
+	}
+
 	GridLayout {
 		id: widgetGrid
-		visible: !popup.hourGridMode
+		visible: !popup.hourGridMode && !popup.yearMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
 		anchors.topMargin: popup.viewTabsHeight
@@ -973,6 +1000,9 @@ MouseArea {
 		monthView.parseGCalEvents(eventModel.eventsData)
 		if (weekViewLoader.item) {
 			weekViewLoader.item.rebuild()
+		}
+		if (yearViewLoader.item) {
+			yearViewLoader.item.rebuild()
 		}
 		scrollToSelection()
 	}

@@ -5,6 +5,7 @@ import "./weather/WeatherApi.js" as WeatherApi
 import "./lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "./lib/SafeConfig.js" as SafeConfig
 import "./EventCacheUtil.js" as EventCacheUtil
+import "./YearCounts.js" as YearCounts
 
 Item {
 	readonly property Item popup: root.fullRepresentationItem
@@ -87,7 +88,9 @@ Item {
 	}
 
 	function deferredUpdateEvents() {
-		var range = agendaModel.getDateRange(agendaModel.currentMonth)
+		var range = plasmoid.configuration.popupMode === 'year'
+			? YearCounts.fetchRange(agendaModel.currentMonth.getFullYear(), new Date(timeModel.currentTime), agendaModel.showNextNumDays)
+			: agendaModel.getDateRange(agendaModel.currentMonth)
 
 		agendaModel.visibleDateMin = range.min
 		agendaModel.visibleDateMax = range.max
