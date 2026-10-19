@@ -1,5 +1,7 @@
 .pragma library
 
+.import "Shared.js" as Shared
+
 // Google event types (event.eventType): 'default', 'birthday', 'fromGmail', 'focusTime',
 // 'outOfOffice' and 'workingLocation'. Out of office and focus time are shown as events with an
 // icon; working locations ("Home", "Office", ...) are not drawn as events but as a label on their
@@ -59,10 +61,6 @@ function workingLocationText(event, words) {
 	return String(event && (event._summary || event.summary) || '').trim()
 }
 
-function dayKey(d) {
-	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
-}
-
 // Day keys ('Shared.dayKey') an event covers: all-day events end at midnight (exclusive), timed
 // ones count every day they touch.
 function coveredDayKeys(event) {
@@ -74,7 +72,7 @@ function coveredDayKeys(event) {
 	var keys = []
 	var day = new Date(start.getFullYear(), start.getMonth(), start.getDate())
 	do {
-		keys.push(dayKey(day))
+		keys.push(Shared.dayKey(day))
 		day = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1)
 	} while (day < end && keys.length < 366)
 	return keys

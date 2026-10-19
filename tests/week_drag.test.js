@@ -6,11 +6,13 @@ const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
 
+const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/ui', file), 'utf8')
+	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
+const Shared = {}
+vm.runInNewContext(read('Shared.js'), Shared)
 function load(file, names) {
-	const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui', file), 'utf8')
-		.replace(/^\.pragma library\s*/, '')
 	const out = {}
-	vm.runInNewContext(source + '\nObject.assign(out, { ' + names.join(', ') + ' })', { out, Date })
+	vm.runInNewContext(read(file) + '\nObject.assign(out, { ' + names.join(', ') + ' })', { out, Date, Shared })
 	return out
 }
 const D = load('WeekDrag.js', ['timeAtY', 'dayIndexAtX', 'moved', 'resized'])

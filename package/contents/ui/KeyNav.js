@@ -96,9 +96,3 @@ function actionFor(key, modifiers, mode) {
 function isTextInput(item) {
 	return !!item && typeof item.cursorPosition === 'number' && typeof item.selectAll === 'function'
 }
-
-// The day n days after date (local midnight; DST safe).
-function addDays(date, n) {
-	var d = new Date(date)
-	return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n)
-}

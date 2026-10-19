@@ -308,6 +308,25 @@ function dayKey(d) {
 	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
 }
 
+function pad2(n) {
+	return (n < 10 ? '0' : '') + n
+}
+// "2026-10-19" of the local date of d (an all-day event's Google date).
+function localDateString(d) {
+	return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())
+}
+// Local midnight of a "2026-10-19" date.
+function parseLocalDate(s) {
+	var p = s.split('-')
+	return new Date(+p[0], +p[1] - 1, +p[2])
+}
+// d moved by `days` calendar days, keeping its local time of day (also over a daylight saving change).
+function addDays(d, days) {
+	var r = new Date(d)
+	r.setDate(r.getDate() + days)
+	return r
+}
+
 // Before today (midnight).
 function isPastDay(d, now) {
 	return d < startOfDay(now)

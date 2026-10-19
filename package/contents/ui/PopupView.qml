@@ -1025,7 +1025,7 @@ MouseArea {
 				if (nav) nav.goToday(); else monthView.resetToToday()
 				return true
 			case 'move':
-				var date = KeyNav.addDays(selectedDate, action.days)
+				var date = Shared.startOfDay(Shared.addDays(selectedDate, action.days))
 				if (date.getFullYear() !== monthViewDate.getFullYear() || date.getMonth() !== monthViewDate.getMonth()) {
 					monthViewDate = date
 				}

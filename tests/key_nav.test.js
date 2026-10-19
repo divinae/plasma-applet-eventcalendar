@@ -8,6 +8,8 @@ const read = name => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const K = {}
 vm.runInNewContext(read('KeyNav.js'), K)
+const Shared = {}
+vm.runInNewContext(read('Shared.js'), Shared)
 const { Key, Modifier } = K
 const act = (key, mods, mode) => JSON.parse(JSON.stringify(K.actionFor(key, mods, mode)))
 
@@ -67,11 +69,12 @@ assert.strictEqual(K.isTextInput({ cursorPosition: 3, selectAll() {} }), true)
 assert.strictEqual(K.isTextInput({ text: 'Label' }), false)
 assert.strictEqual(K.isTextInput(null), false)
 
-// Moving days: calendar days, across months and DST changes.
+// Moving days (PopupView, with Shared.js): calendar days, across months and DST changes.
 const ymd = d => [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours()]
-assert.deepStrictEqual(ymd(K.addDays(new Date(2026, 9, 31, 15), 1)), [2026, 11, 1, 0])
-assert.deepStrictEqual(ymd(K.addDays(new Date(2026, 2, 3), -7)), [2026, 2, 24, 0])
-assert.deepStrictEqual(ymd(K.addDays(new Date(2026, 2, 28), 1)), [2026, 3, 29, 0])
-assert.deepStrictEqual(ymd(K.addDays(new Date(2026, 11, 28), 7)), [2027, 1, 4, 0])
+const moveDays = (date, n) => Shared.startOfDay(Shared.addDays(date, n))
+assert.deepStrictEqual(ymd(moveDays(new Date(2026, 9, 31, 15), 1)), [2026, 11, 1, 0])
+assert.deepStrictEqual(ymd(moveDays(new Date(2026, 2, 3), -7)), [2026, 2, 24, 0])
+assert.deepStrictEqual(ymd(moveDays(new Date(2026, 2, 28), 1)), [2026, 3, 29, 0])
+assert.deepStrictEqual(ymd(moveDays(new Date(2026, 11, 28), 7)), [2027, 1, 4, 0])
 
 console.log('key_nav ok')

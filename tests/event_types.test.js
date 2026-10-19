@@ -4,10 +4,12 @@ const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
 
-const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/EventTypes.js'), 'utf8')
-	.replace(/^\.pragma library\s*$/m, '')
-const T = {}
-vm.runInNewContext(source, T)
+const read = name => fs.readFileSync(path.join(__dirname, '../package/contents/ui', name), 'utf8')
+	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
+const Shared = {}
+vm.runInNewContext(read('Shared.js'), Shared)
+const T = { Shared }
+vm.runInNewContext(read('EventTypes.js'), T)
 const plain = (value) => JSON.parse(JSON.stringify(value))
 
 // Types

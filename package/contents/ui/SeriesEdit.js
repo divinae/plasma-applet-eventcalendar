@@ -1,27 +1,16 @@
 .pragma library
 
+.import "Shared.js" as Shared
+
 // Moving a whole series of a recurring event by as much as one of its occurrences moved.
 // Used by the event editor and by dragging an occurrence in the week view.
-
-function startOfDay(d) {
-	return new Date(d.getFullYear(), d.getMonth(), d.getDate())
-}
-
-function pad2(n) {
-	return (n < 10 ? '0' : '') + n
-}
-
-function localDateString(d) {
-	return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())
-}
 
 // The instant of a Google start / end object. All-day dates are local midnight.
 function instant(obj) {
 	if (obj.dateTime) {
 		return new Date(obj.dateTime).getTime()
 	}
-	var d = obj.date.split('-')
-	return new Date(+d[0], +d[1] - 1, +d[2]).getTime()
+	return Shared.parseLocalDate(obj.date).getTime()
 }
 
 // New start / end objects for `series` (the recurring event), when its occurrence that started
@@ -31,18 +20,17 @@ function instant(obj) {
 // series' time zone, or get `timeZone` (Google needs one to expand a recurring event).
 function shiftedTimes(series, occurrenceStart, start, end, timeZone) {
 	var newStart = new Date(instant(start))
-	var dayShift = Math.round((startOfDay(newStart) - startOfDay(new Date(occurrenceStart))) / 86400000)
+	var dayShift = Math.round((Shared.startOfDay(newStart) - Shared.startOfDay(new Date(occurrenceStart))) / 86400000)
 	var duration = instant(end) - instant(start)
 	var seriesStart = new Date(instant(series.start))
 	seriesStart.setDate(seriesStart.getDate() + dayShift)
 	seriesStart.setHours(newStart.getHours(), newStart.getMinutes(), 0, 0)
 	if (start.date) {
 		// Whole days: on a daylight saving day the length in ms isn't a multiple of 24 h.
-		var seriesEnd = new Date(seriesStart)
-		seriesEnd.setDate(seriesEnd.getDate() + Math.round(duration / 86400000))
+		var seriesEnd = Shared.addDays(seriesStart, Math.round(duration / 86400000))
 		return {
-			start: { date: localDateString(seriesStart) },
-			end: { date: localDateString(seriesEnd) },
+			start: { date: Shared.localDateString(seriesStart) },
+			end: { date: Shared.localDateString(seriesEnd) },
 		}
 	}
 	var zone = (series.start && series.start.timeZone) || timeZone

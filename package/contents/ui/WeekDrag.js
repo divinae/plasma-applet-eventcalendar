@@ -1,5 +1,7 @@
 .pragma library
 
+.import "Shared.js" as Shared
+
 // Positions <-> times for dragging event blocks in the week / day view's hour grid.
 
 var snapMinutes = 15
@@ -47,39 +49,23 @@ function dayDelta(from, to) {
 	return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000)
 }
 
-function pad2(n) {
-	return (n < 10 ? '0' : '') + n
-}
-function dateOnlyString(d) {
-	return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())
-}
-function parseDateOnly(s) {
-	var p = s.split('-')
-	return new Date(+p[0], +p[1] - 1, +p[2])
-}
-function addDays(d, days) {
-	var r = new Date(d)
-	r.setDate(r.getDate() + days)
-	return r
-}
-
 // The Google start / end objects of `event` moved by `days` whole days, with the new times as
 // Dates: { start, end, startDateTime, endDateTime }. All-day events keep their length in days,
 // timed events their local time of day, duration and time zones.
 function movedByDays(event, days) {
 	if (event.start.date) {
-		var startDay = addDays(parseDateOnly(event.start.date), days)
-		var endDay = event.end && event.end.date ? addDays(parseDateOnly(event.end.date), days) : addDays(startDay, 1)
+		var startDay = Shared.addDays(Shared.parseLocalDate(event.start.date), days)
+		var endDay = event.end && event.end.date ? Shared.addDays(Shared.parseLocalDate(event.end.date), days) : Shared.addDays(startDay, 1)
 		return {
-			start: { date: dateOnlyString(startDay) },
-			end: { date: dateOnlyString(endDay) },
+			start: { date: Shared.localDateString(startDay) },
+			end: { date: Shared.localDateString(endDay) },
 			startDateTime: startDay,
 			endDateTime: endDay,
 		}
 	}
 	var oldStart = new Date(event.start.dateTime)
 	var oldEnd = new Date(event.end.dateTime)
-	var newStart = addDays(oldStart, days)
+	var newStart = Shared.addDays(oldStart, days)
 	var newEnd = new Date(newStart.getTime() + (oldEnd - oldStart))
 	var times = timedTimes(event, newStart, newEnd)
 	times.startDateTime = newStart

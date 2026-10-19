@@ -4,7 +4,7 @@ const path = require('path')
 const vm = require('vm')
 
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/EventTypes.js'), 'utf8')
-	.replace(/^\.pragma library\s*/, '')
+	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const T = {}
 vm.runInNewContext(source + '\nObject.assign(out, { isSpecial, properties, applyTo, optionsOf, DECLINE_MODES })', { out: T })
 const plain = x => JSON.parse(JSON.stringify(x))
