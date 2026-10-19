@@ -9,7 +9,7 @@ import "Undo.js" as Undo
 // or (copy, Ctrl held at the drop) creates a copy on the same calendar (no undo: the copy can be
 // deleted). An occurrence of a repeating event asks first: this event or the whole series.
 // The view keeps its dropped preview until its events are refilled (and then calls abandon());
-// canceled() puts the event back: no choice in the menu, an error, or no answer at all.
+// canceled() puts the event back: no choice in the menu, saving failed, or no answer at all.
 Item {
 	id: eventMover
 
@@ -20,7 +20,7 @@ Item {
 	// start / end: Google start / end objects. menuParent, menuX, menuY: where the occurrence menu opens.
 	function drop(eventItem, start, end, copy, menuParent, menuX, menuY) {
 		if (copy) {
-			saving()
+			saving(true)
 			saveCopy(eventItem, start, end)
 		} else if (eventItem.recurringEventId) {
 			pendingDrop = { eventItem: eventItem, start: start, end: end }
@@ -31,9 +31,23 @@ Item {
 			saveMove(eventItem, start, end, false)
 		}
 	}
-	// The drop is being saved: wait for the update (the view refills its events).
-	function saving() {
+	// The drop is being saved: wait for the update (the view refills its events). Copies and
+	// series moves report back: then the wait starts again, for the refill only.
+	function saving(reportsBack) {
+		savingReportsBack = !!reportsBack
 		dropTimeout.restart()
+	}
+	property bool savingReportsBack: false
+	function saved() {
+		if (dropTimeout.running) {
+			dropTimeout.restart()
+		}
+	}
+	function saveFailed() {
+		if (dropTimeout.running) {
+			abandon()
+			canceled()
+		}
 	}
 	// The view dropped the drag (eg: its events were refreshed): a menu still open goes away
 	// without saving.
@@ -49,7 +63,13 @@ Item {
 
 	function saveCopy(eventItem, start, end) {
 		var source = eventModel.getEvent(eventItem.calendarId, eventItem.id) || eventItem
-		eventModel.createEventFromData(eventItem.calendarId, EventCopy.copyBody(source, start, end))
+		eventModel.createEventFromData(eventItem.calendarId, EventCopy.copyBody(source, start, end), function(err) {
+			if (err) {
+				eventMover.saveFailed()
+			} else {
+				eventMover.saved()
+			}
+		})
 	}
 
 	function saveMove(eventItem, start, end, wholeSeries) {
@@ -74,6 +94,7 @@ Item {
 			seriesTimes = Undo.savedTimes(series)
 			return SeriesEdit.shiftedTimes(series, occurrenceStart, start, end, timeZone)
 		}, function() {
+			eventMover.saved()
 			logic.update() // The occurrences come from a refetch.
 			popup.offerUndo(i18n("Event moved"), function() {
 				eventModel.updateEventFromServer(calendarId, seriesId, function() {
@@ -82,6 +103,9 @@ Item {
 					logic.update()
 				})
 			})
+		}, null, function(report) {
+			report()
+			eventMover.saveFailed()
 		})
 	}
 
@@ -103,7 +127,8 @@ Item {
 		target: eventMover.eventModel
 		function onError() {
 			eventMover.moveUndo = null
-			if (eventMover.pendingDrop || dropTimeout.running) {
+			// A single move doesn't report back: any error while it's saved puts it back.
+			if (eventMover.pendingDrop || (dropTimeout.running && !eventMover.savingReportsBack)) {
 				eventMover.abandon()
 				eventMover.canceled()
 			}
@@ -128,7 +153,7 @@ Item {
 			var d = eventMover.pendingDrop
 			eventMover.pendingDrop = null
 			if (d) {
-				eventMover.saving()
+				eventMover.saving(wholeSeries)
 				eventMover.saveMove(d.eventItem, d.start, d.end, wholeSeries)
 			}
 		}
