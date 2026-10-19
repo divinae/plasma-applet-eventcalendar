@@ -6,6 +6,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
+import "../TimeZone.js" as TimeZone
 
 ConfigPage {
 	id: page
@@ -80,8 +81,7 @@ ConfigPage {
 		if (zoneId === "Local") {
 			return i18n("Local")
 		}
-		var parts = zoneId.split('/')
-		return parts[parts.length - 1].replace(/_/g, ' ')
+		return TimeZone.cityName(zoneId)
 	}
 
 	Component.onCompleted: syncFromConfig()
@@ -146,22 +146,36 @@ ConfigPage {
 				}
 			}
 			FormCard.FormDelegateSeparator {}
+			// Search the known zones; Enter, Add or a click adds the highlighted one.
 			FormCard.AbstractFormDelegate {
 				Layout.fillWidth: true
 				background: null
-				contentItem: RowLayout {
+				contentItem: ColumnLayout {
 					spacing: Kirigami.Units.smallSpacing
-					TextField {
-						id: timezoneInput
-						Layout.fillWidth: true
-						placeholderText: i18n("Add a time zone, eg: America/New_York")
-						onAccepted: addTimezone(text)
+					RowLayout {
+						spacing: Kirigami.Units.smallSpacing
+						TextField {
+							id: timezoneInput
+							Layout.fillWidth: true
+							placeholderText: i18n("Add a time zone, eg: America/New_York")
+							Keys.onUpPressed: zoneList.moveUp()
+							Keys.onDownPressed: zoneList.moveDown()
+							onAccepted: zoneList.pickCurrent()
+						}
+						Button {
+							icon.name: "list-add"
+							text: i18n("Add")
+							enabled: timezoneInput.text.trim().length > 0 && zoneList.count > 0
+							onClicked: zoneList.pickCurrent()
+						}
 					}
-					Button {
-						icon.name: "list-add"
-						text: i18n("Add")
-						enabled: timezoneInput.text.trim().length > 0
-						onClicked: addTimezone(timezoneInput.text)
+					TimeZoneList {
+						id: zoneList
+						visible: timezoneInput.text.trim() !== ""
+						Layout.fillWidth: true
+						Layout.preferredHeight: Kirigami.Units.gridUnit * 8
+						query: timezoneInput.text
+						onPicked: function(zone) { addTimezone(zone) }
 					}
 				}
 			}
