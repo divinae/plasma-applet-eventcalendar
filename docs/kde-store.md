@@ -37,6 +37,10 @@ version, the changelog and the file for each release.
 
     calendar, agenda, google calendar, clock, weather, events, meetings, plasma6
 
+**Donation link** (the store's donation / "Support" field)
+
+    https://ko-fi.com/divinae4535
+
 **Source / homepage**
 
     https://github.com/divinae/plasma-applet-eventcalendar
@@ -80,6 +84,8 @@ Translated into 20 languages.
 Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files.
 
 Source, issues and install from source: https://github.com/divinae/plasma-applet-eventcalendar
+
+Support the development: https://ko-fi.com/divinae4535
 ```
 
 **Changelog (1.2.0)**

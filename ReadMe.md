@@ -1,6 +1,7 @@
 # Event Calendar for Plasma 6
 
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
 A calendar, agenda and weather widget for the KDE Plasma 6 panel that syncs with Google Calendar,
 Plasma (Akonadi / holiday) calendars and iCalendar (.ics) files.
@@ -101,6 +102,11 @@ Optional:
 4. **Views**: choose the default view, the popup size and the hours shown in the week view.
 
 Plasma 5 is not supported; use the original [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar) there.
+
+## Support
+
+If the widget is useful to you, you can support its development on
+[Ko-fi](https://ko-fi.com/divinae4535).
 
 ## Contributing
 
