@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "EventTypes.js" as EventTypes
 import "Guests.js" as Guests
 import "MeetingLink.js" as MeetingLink
 import "Recurrence.js" as Recurrence
@@ -270,6 +271,37 @@ Rectangle {
 		}
 	}
 
+	//--- Event type (Google): new events on a primary calendar can be out of office or focus time.
+	property string eventType: "default"
+	property string autoDeclineMode: "declineNone"
+	property string declineMessage: ""
+	property string chatStatus: "doNotDisturb"
+	readonly property bool canSetType: isNew && supportsRecurrence && !!calendarSelector.selectedCalendar
+		&& calendarSelector.selectedCalendar.primary === true
+	readonly property string effectiveType: canSetType ? eventType : "default"
+	// No guests, video call, location or free time on these (Google refuses them), nor all day.
+	readonly property bool isSpecialType: EventTypes.isSpecial(effectiveType)
+	onIsSpecialTypeChanged: {
+		if (isSpecialType) {
+			allDayCheckBox.checked = false
+		}
+	}
+	function setEventType(type) {
+		// A title for an empty one, as Google Calendar does.
+		var defaultTitles = ['', i18n("Out of office"), i18n("Focus time")]
+		if (defaultTitles.indexOf(titleField.text.trim()) >= 0) {
+			titleField.text = type === 'outOfOffice' ? defaultTitles[1] : (type === 'focusTime' ? defaultTitles[2] : '')
+		}
+		eventType = type
+	}
+	function addTypeArgs(data) {
+		EventTypes.applyTo(data, effectiveType, {
+			autoDeclineMode: autoDeclineMode,
+			declineMessage: declineMessage,
+			chatStatus: chatStatus,
+		})
+	}
+
 	//--- Video conferencing (Google Meet)
 	readonly property bool hadConference: !isNew && !!(eventItem.hangoutLink || eventItem.conferenceData)
 	property string conferenceAction: "" // '', 'add' or 'remove'
@@ -358,7 +390,7 @@ Rectangle {
 			return ''
 		}
 		if (isNew) {
-			return guests.length ? 'invite' : ''
+			return guests.length && !isSpecialType ? 'invite' : ''
 		}
 		if (guestsChanged) {
 			return 'update'
@@ -460,6 +492,7 @@ Rectangle {
 				withTimeZone(data.start)
 				withTimeZone(data.end)
 			}
+			addTypeArgs(data)
 			// A new recurring event: its occurrences come from a refetch.
 			eventModel.createEventFromData(calendarSelector.selectedCalendarId, data, newRule ? refetch : null, requestParams(data))
 		} else if (editSeries) {
@@ -604,6 +637,13 @@ Rectangle {
 			})
 			if (item.hangoutLink || item.conferenceData) {
 				conferenceAction = 'add'
+			}
+			var typeOptions = EventTypes.optionsOf(item)
+			if (typeOptions) {
+				eventType = typeOptions.type
+				autoDeclineMode = typeOptions.autoDeclineMode
+				declineMessage = typeOptions.declineMessage
+				chatStatus = typeOptions.chatStatus
 			}
 		} else {
 			initialColorId = item.colorId ? String(item.colorId) : ""
@@ -793,6 +833,71 @@ Rectangle {
 					enabled: form.isNew || form.canMove
 				}
 
+				// Event type (new events on a primary Google calendar).
+				RowLayout {
+					visible: form.canSetType
+					Layout.fillWidth: true
+					Kirigami.Icon {
+						source: form.effectiveType === 'outOfOffice' ? "user-away" : (form.effectiveType === 'focusTime' ? "audio-headphones" : "view-calendar-day")
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Layout.preferredWidth
+						opacity: 0.7
+					}
+					FormComboBox {
+						id: eventTypeCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'default', text: i18nc("event type", "Event") },
+							{ key: 'outOfOffice', text: i18nc("event type", "Out of office") },
+							{ key: 'focusTime', text: i18nc("event type", "Focus time") },
+						]
+						currentIndex: EventTypes.TYPES.indexOf(form.eventType)
+						onActivated: function(index) { form.setEventType(model[index].key) }
+						Accessible.name: i18n("Event type")
+					}
+				}
+				ColumnLayout {
+					visible: form.isSpecialType
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+					FormComboBox {
+						id: declineCombo
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'declineNone', text: i18n("Don't decline invitations") },
+							{ key: 'declineOnlyNewConflictingInvitations', text: i18n("Decline new invitations in this time") },
+							{ key: 'declineAllConflictingInvitations', text: i18n("Decline new and existing invitations in this time") },
+						]
+						currentIndex: EventTypes.DECLINE_MODES.indexOf(form.autoDeclineMode)
+						onActivated: function(index) { form.autoDeclineMode = model[index].key }
+						Accessible.name: i18n("Automatically decline")
+					}
+					PlasmaComponents3.TextField {
+						id: declineMessageField
+						visible: form.autoDeclineMode !== 'declineNone'
+						Layout.fillWidth: true
+						placeholderText: i18n("Message for declined invitations")
+						text: form.declineMessage
+						onTextEdited: form.declineMessage = text
+					}
+					FormComboBox {
+						visible: form.effectiveType === 'focusTime'
+						Layout.fillWidth: true
+						textRole: "text"
+						model: [
+							{ key: 'doNotDisturb', text: i18nc("Google Chat status during focus time", "Do not disturb") },
+							{ key: 'available', text: i18nc("Google Chat status during focus time", "Available") },
+						]
+						currentIndex: form.chatStatus === 'available' ? 1 : 0
+						displayText: i18nc("%1 = Do not disturb or Available", "Chat status: %1", currentText)
+						onActivated: function(index) { form.chatStatus = model[index].key }
+						Accessible.name: i18n("Chat status")
+					}
+				}
+
 				// Event color (Google): the calendar's color or one of Google's 11 event colors.
 				Flow {
 					id: colorRow
@@ -857,6 +962,7 @@ Rectangle {
 
 				PlasmaComponents3.CheckBox {
 					id: allDayCheckBox
+					visible: !form.isSpecialType
 					text: i18n("All day")
 				}
 
@@ -1049,6 +1155,7 @@ Rectangle {
 
 				PlasmaComponents3.TextField {
 					id: locationField
+					visible: !form.isSpecialType
 					Layout.fillWidth: true
 					placeholderText: i18n("Location")
 				}
@@ -1056,7 +1163,7 @@ Rectangle {
 				// Google Meet: add one, or the event's video call with a remove button.
 				RowLayout {
 					id: conferenceRow
-					visible: form.supportsRecurrence && (form.hadConference || (form.meetAllowed && !form.isInvited))
+					visible: form.supportsRecurrence && !form.isSpecialType && (form.hadConference || (form.meetAllowed && !form.isInvited))
 					Layout.fillWidth: true
 					Kirigami.Icon {
 						source: "camera-web"
@@ -1129,6 +1236,7 @@ Rectangle {
 					}
 					FormComboBox {
 						id: transparencyCombo
+						visible: !form.isSpecialType // Always busy
 						Layout.fillWidth: true
 						textRole: "text"
 						model: [
@@ -1244,7 +1352,7 @@ Rectangle {
 				// Guests: add by email (with suggestions), remove with the chips' close button.
 				ColumnLayout {
 					id: guestsSection
-					visible: form.supportsRecurrence
+					visible: form.supportsRecurrence && !form.isSpecialType
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
 
