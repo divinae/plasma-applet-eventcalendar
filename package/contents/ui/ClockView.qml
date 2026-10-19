@@ -161,48 +161,56 @@ Item {
 			}
 		}
 
-		// The date in a narrow panel: the short weekday as text, the day number big and bold on a
-		// badge in the highlight color. As wide as the panel allows, to stay readable.
-		Column {
+		// Like a calendar app icon: the short weekday on a colored band, the day number below.
+		Rectangle {
 			id: dateTile
 			visible: clock.showDateTile
 			anchors.horizontalCenter: parent.horizontalCenter
-			readonly property int tileWidth: Math.max(16, Math.min(clock.width - 2, Kirigami.Units.gridUnit * 2.5))
-			width: tileWidth
-			spacing: 0
+			width: Math.max(16, Math.min(clock.width - Kirigami.Units.smallSpacing * 2, Kirigami.Units.gridUnit * 2.2))
+			height: Math.round(width * 0.95)
+			radius: Math.round(width / 6)
+			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.06)
+			border.width: 1
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.3)
+			clip: true
 
-			PlasmaComponents3.Label {
-				width: parent.width
-				horizontalAlignment: Text.AlignHCenter
-				// "pon." / "Mon": the dot only takes room.
-				text: Qt.locale().dayName(clock.currentTime.getDay(), Locale.ShortFormat).replace(/\.$/, '')
-				font.family: appletConfig.clockFontFamily
-				font.pointSize: -1
-				font.pixelSize: Math.max(8, Math.round(dateTile.tileWidth * 0.42))
-				fontSizeMode: Text.HorizontalFit
-				minimumPixelSize: 7
-				opacity: 0.8
-			}
 			Rectangle {
+				id: dateTileBand
 				width: parent.width
-				height: Math.round(dateTile.tileWidth * 0.78)
-				radius: Math.round(height / 4)
+				height: Math.round(parent.height * 0.4)
+				topLeftRadius: parent.radius
+				topRightRadius: parent.radius
 				color: Kirigami.Theme.highlightColor
 				PlasmaComponents3.Label {
 					anchors.fill: parent
-					anchors.leftMargin: 1
-					anchors.rightMargin: 1
+					anchors.leftMargin: 2
+					anchors.rightMargin: 2
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
-					text: clock.currentTime.getDate()
+					// "pon." / "Mon": without a trailing dot, it's in a box.
+					text: Qt.locale().dayName(clock.currentTime.getDay(), Locale.ShortFormat).replace(/\.$/, '')
 					color: Kirigami.Theme.highlightedTextColor
-					font.family: appletConfig.clockFontFamily
 					font.pointSize: -1
-					font.pixelSize: Math.max(9, Math.round(parent.height * 0.78))
-					font.weight: Font.Bold
+					font.pixelSize: Math.max(6, Math.round(parent.height * 0.72))
+					font.weight: Font.DemiBold
 					fontSizeMode: Text.HorizontalFit
-					minimumPixelSize: 8
+					minimumPixelSize: 5
 				}
+			}
+			PlasmaComponents3.Label {
+				anchors.top: dateTileBand.bottom
+				anchors.bottom: parent.bottom
+				anchors.left: parent.left
+				anchors.right: parent.right
+				horizontalAlignment: Text.AlignHCenter
+				verticalAlignment: Text.AlignVCenter
+				text: clock.currentTime.getDate()
+				font.family: appletConfig.clockFontFamily
+				font.pointSize: -1
+				font.pixelSize: Math.max(7, Math.round(height * 0.8))
+				font.weight: Font.Bold
+				fontSizeMode: Text.HorizontalFit
+				minimumPixelSize: 5
 			}
 		}
 
