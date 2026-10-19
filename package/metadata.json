@@ -12,7 +12,7 @@
 			}
 		],
 		"Category": "Date and Time",
-		"Description": "Calendar, agenda, week and today views with weather and Google Calendar sync. Plasma 6.",
+		"Description": "Calendar, agenda, week and day views with weather and Google Calendar sync. Plasma 6.",
 		"Description[de]": "Miniprogramm für einen Kalender mit Ereignisansicht und Wetter, der Ereignisse mit Google Kalender synchronisiert.",
 		"Description[es]": "Plasmoid para calendario + agenda con información del clima. Sincroniza con Google Calendar.",
 		"Description[fi]": "Plasmoidi kalenteri + agenda säätietoineen synkronoitu Google Calendarin kanssa.",
