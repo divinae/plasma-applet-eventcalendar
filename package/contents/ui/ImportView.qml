@@ -9,12 +9,11 @@ import "IcsImport.js" as IcsImport
 import "Recurrence.js" as Recurrence
 import "ScriptPath.js" as ScriptPath
 import "lib"
-import "lib/ColorUtil.js" as ColorUtil
 
 // Import the events of a .ics file (eg: an invitation saved from an email, or an export) into a
 // Google calendar. The file is read with scripts/icsjson.py; each event is sent to Google's
 // events.import, which keeps its iCalUID: importing the same file again updates the events.
-Rectangle {
+Item {
 	id: importView
 
 	property string fileUrl: ""
@@ -43,10 +42,6 @@ Rectangle {
 		return name.slice(name.lastIndexOf('/') + 1)
 	}
 
-	color: Kirigami.Theme.backgroundColor
-	radius: Kirigami.Units.cornerRadius * 2
-	border.width: 1
-	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2 + 1
 		+ fieldsColumn.implicitHeight + Kirigami.Units.largeSpacing * 2
 
@@ -245,38 +240,17 @@ Rectangle {
 		spacing: 0
 
 		// Cancel on the left, title centered, Import on the right.
-		Item {
+		CardHeader {
 			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
-			implicitHeight: Math.max(cancelButton.implicitHeight, importButton.implicitHeight, cardTitle.implicitHeight)
-
-			PlasmaComponents3.ToolButton {
-				id: cancelButton
-				anchors.left: parent.left
-				anchors.verticalCenter: parent.verticalCenter
-				icon.name: "go-previous"
-				text: importView.finished ? i18n("Close") : i18n("Cancel")
-				onClicked: importView.closeRequested()
-			}
-			Kirigami.Heading {
-				id: cardTitle
-				anchors.centerIn: parent
-				width: Math.min(implicitWidth, parent.width - Math.max(cancelButton.width, importButton.width) * 2 - Kirigami.Units.largeSpacing * 2)
-				horizontalAlignment: Text.AlignHCenter
-				level: 3
-				elide: Text.ElideRight
-				text: i18n("Import Events")
-			}
-			PlasmaComponents3.Button {
-				id: importButton
-				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
-				icon.name: "document-import"
-				text: i18n("Import")
-				enabled: importView.canImport
-				onClicked: importView.startImport()
-			}
+			title: i18n("Import Events")
+			cancelText: importView.finished ? i18n("Close") : i18n("Cancel")
+			actionText: i18n("Import")
+			actionIcon: "document-import"
+			actionEnabled: importView.canImport
+			onCancelClicked: importView.closeRequested()
+			onActionClicked: importView.startImport()
 		}
 
 		Kirigami.Separator {

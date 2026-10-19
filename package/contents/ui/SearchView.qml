@@ -6,11 +6,10 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
 import "EventSearch.js" as EventSearch
-import "lib/ColorUtil.js" as ColorUtil
 
 // Search events by title, location and description: the loaded events right away, then Google
 // Calendar a year back and ahead (the server also matches guests and other fields).
-Rectangle {
+Item {
 	id: searchView
 
 	signal closeRequested()
@@ -43,10 +42,6 @@ Rectangle {
 		return EventSearch.merge(localResults, remote, timeModel.currentTime, resultLimit)
 	}
 
-	color: Kirigami.Theme.backgroundColor
-	radius: Kirigami.Units.cornerRadius * 2
-	border.width: 1
-	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)
 	// With a query the card takes the available height, so it doesn't jump while results come in.
 	implicitHeight: actionsRow.implicitHeight + Kirigami.Units.smallSpacing * 2
 		+ (query ? Kirigami.Units.gridUnit * 40 : resultsColumn.implicitHeight + Kirigami.Units.largeSpacing)

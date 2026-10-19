@@ -442,108 +442,100 @@ MouseArea {
 	}
 
 	// Overlay cards: search < event details < quick add, import, event form.
-	OverlayCard {
-		id: searchOverlay
-		visible: popup.searchOpen
+	// Later cards stack above earlier ones; the undo banner stays above them all.
+	Item {
+		id: overlays
 		z: 4
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
-		onOutsideClicked: popup.closeSearch()
-		cardComponent: visible ? searchCard : null
-		Component {
-			id: searchCard
-			SearchView {
-				onCloseRequested: popup.closeSearch()
-				onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
-			}
-		}
-	}
 
-	OverlayCard {
-		id: eventDetailsOverlay
-		visible: !!popup.detailsEvent
-		z: 5
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		onOutsideClicked: popup.closeEventDetails()
-		cardComponent: visible ? eventDetailsCard : null
-		Component {
-			id: eventDetailsCard
-			EventDetailsView {
-				eventItem: popup.detailsEvent
-				onCloseRequested: popup.closeEventDetails()
-				onEditRequested: popup.editEvent(popup.detailsEvent)
-				onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
-			}
-		}
-	}
-
-	OverlayCard {
-		id: quickAddOverlay
-		visible: popup.quickAddOpen
-		z: 6
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		onOutsideClicked: popup.closeQuickAdd()
-		cardComponent: visible ? quickAddCard : null
-		Component {
-			id: quickAddCard
-			QuickAddView {
-				date: popup.selectedDate
-				onCloseRequested: popup.closeQuickAdd()
-				onMoreOptionsRequested: function(title) {
-					popup.closeQuickAdd()
-					popup.newEvent(popup.selectedDate, null, title)
+		OverlayCard {
+			id: searchOverlay
+			visible: popup.searchOpen
+			anchors.fill: parent
+			onOutsideClicked: popup.closeSearch()
+			cardComponent: visible ? searchCard : null
+			Component {
+				id: searchCard
+				SearchView {
+					onCloseRequested: popup.closeSearch()
+					onEventClicked: function(eventItem) { popup.activateEvent(eventItem) }
 				}
 			}
 		}
-	}
 
-	OverlayCard {
-		id: importOverlay
-		visible: popup.importOpen
-		z: 6
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		onOutsideClicked: {} // Don't lose the checked events on a stray click.
-		cardComponent: visible ? importCard : null
-		Component {
-			id: importCard
-			ImportView {
-				fileUrl: popup.importFileUrl
-				onCloseRequested: popup.closeImport()
-				onChooseFileRequested: popup.importFileRequested()
+		OverlayCard {
+			id: eventDetailsOverlay
+			visible: !!popup.detailsEvent
+			anchors.fill: parent
+			framed: false // The card draws its own frame
+			onOutsideClicked: popup.closeEventDetails()
+			cardComponent: visible ? eventDetailsCard : null
+			Component {
+				id: eventDetailsCard
+				EventDetailsView {
+					eventItem: popup.detailsEvent
+					onCloseRequested: popup.closeEventDetails()
+					onEditRequested: popup.editEvent(popup.detailsEvent)
+					onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
+				}
 			}
 		}
-	}
 
-	OverlayCard {
-		id: eventEditorOverlay
-		visible: popup.editorOpen
-		z: 6
-		anchors.top: header.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		onOutsideClicked: {} // Don't lose typed input on a stray click.
-		cardComponent: visible ? eventEditorCard : null
-		Component {
-			id: eventEditorCard
-			EventEditView {
-				eventItem: popup.editorEvent
-				initialDate: popup.editorDate
-				initialStart: popup.editorStart
-				initialTitle: popup.editorTitle
-				templateEvent: popup.editorTemplate
-				onCloseRequested: popup.closeEditor()
+		OverlayCard {
+			id: quickAddOverlay
+			visible: popup.quickAddOpen
+			anchors.fill: parent
+			onOutsideClicked: popup.closeQuickAdd()
+			cardComponent: visible ? quickAddCard : null
+			Component {
+				id: quickAddCard
+				QuickAddView {
+					date: popup.selectedDate
+					onCloseRequested: popup.closeQuickAdd()
+					onMoreOptionsRequested: function(title) {
+						popup.closeQuickAdd()
+						popup.newEvent(popup.selectedDate, null, title)
+					}
+				}
+			}
+		}
+
+		OverlayCard {
+			id: importOverlay
+			visible: popup.importOpen
+			anchors.fill: parent
+			onOutsideClicked: {} // Don't lose the checked events on a stray click.
+			cardComponent: visible ? importCard : null
+			Component {
+				id: importCard
+				ImportView {
+					fileUrl: popup.importFileUrl
+					onCloseRequested: popup.closeImport()
+					onChooseFileRequested: popup.importFileRequested()
+				}
+			}
+		}
+
+		OverlayCard {
+			id: eventEditorOverlay
+			visible: popup.editorOpen
+			anchors.fill: parent
+			framed: false // The card draws its own frame
+			onOutsideClicked: {} // Don't lose typed input on a stray click.
+			cardComponent: visible ? eventEditorCard : null
+			Component {
+				id: eventEditorCard
+				EventEditView {
+					eventItem: popup.editorEvent
+					initialDate: popup.editorDate
+					initialStart: popup.editorStart
+					initialTitle: popup.editorTitle
+					templateEvent: popup.editorTemplate
+					onCloseRequested: popup.closeEditor()
+				}
 			}
 		}
 	}

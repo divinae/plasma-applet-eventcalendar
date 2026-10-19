@@ -868,38 +868,16 @@ Rectangle {
 		spacing: 0
 
 		// Cancel on the left, title centered, Save on the right.
-		Item {
+		CardHeader {
 			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
-			implicitHeight: Math.max(cancelButton.implicitHeight, saveButton.implicitHeight, formTitle.implicitHeight)
-
-			PlasmaComponents3.ToolButton {
-				id: cancelButton
-				anchors.left: parent.left
-				anchors.verticalCenter: parent.verticalCenter
-				icon.name: "go-previous"
-				text: i18n("Cancel")
-				onClicked: form.closeRequested()
-			}
-			Kirigami.Heading {
-				id: formTitle
-				anchors.centerIn: parent
-				width: Math.min(implicitWidth, parent.width - Math.max(cancelButton.width, saveButton.width) * 2 - Kirigami.Units.largeSpacing * 2)
-				horizontalAlignment: Text.AlignHCenter
-				level: 3
-				elide: Text.ElideRight
-				text: form.isNew ? i18n("New Event") : i18n("Edit Event")
-			}
-			PlasmaComponents3.Button {
-				id: saveButton
-				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
-				icon.name: "document-save"
-				text: i18n("Save")
-				enabled: titleField.text.trim().length > 0 && !!calendarSelector.selectedCalendarId
-				onClicked: form.save()
-			}
+			title: form.isNew ? i18n("New Event") : i18n("Edit Event")
+			actionText: i18n("Save")
+			actionIcon: "document-save"
+			actionEnabled: titleField.text.trim().length > 0 && !!calendarSelector.selectedCalendarId
+			onCancelClicked: form.closeRequested()
+			onActionClicked: form.save()
 		}
 
 		Kirigami.Separator {
