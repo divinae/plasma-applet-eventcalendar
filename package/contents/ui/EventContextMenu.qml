@@ -105,6 +105,14 @@ PlasmaComponents3.Menu {
 		icon.name: "globe"
 		onTriggered: Shared.openExternalUrl(eventMenu.eventItem.htmlLink)
 	}
+	// A meeting that ended early: no progress in the panel for it.
+	PlasmaComponents3.MenuItem {
+		visible: !!eventMenu.eventItem && upcomingEvents.isOngoing(eventMenu.eventItem)
+		height: visible ? implicitHeight : 0
+		text: i18n("Mark as Ended")
+		icon.name: "dialog-ok"
+		onTriggered: upcomingEvents.markEnded(eventMenu.eventItem)
+	}
 	PlasmaComponents3.MenuSeparator {} // Edit, Duplicate, Delete
 	PlasmaComponents3.MenuItem {
 		visible: eventMenu.canEdit

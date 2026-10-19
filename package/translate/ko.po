@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:41+0200\n"
+"POT-Creation-Date: 2026-10-19 09:42+0200\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1183,6 +1183,10 @@ msgid "Open in Google Calendar"
 msgstr "Google 캘린더에서 열기"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Ended"
+msgstr "종료로 표시"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "편집…"
 
@@ -1674,6 +1678,11 @@ msgstr ""
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 msgid "Join %1: %2 (%3)"
 msgstr "%1 참가: %2 (%3)"
+
+#: ../contents/ui/main.qml
+msgctxt "%1 = event title"
+msgid "Mark “%1” as Ended"
+msgstr "“%1” 종료로 표시"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"

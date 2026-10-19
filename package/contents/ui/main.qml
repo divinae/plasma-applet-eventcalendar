@@ -235,6 +235,14 @@ PlasmoidItem {
 			onTriggered: upcomingEvents.joinNextEvent()
 		},
 		PlasmaCore.Action {
+			text: upcomingEvents.nextEventInProgress && upcomingEvents.nextEvent
+				? i18nc("%1 = event title", "Mark “%1” as Ended", upcomingEvents.nextEvent.summary)
+				: ""
+			icon.name: "dialog-ok"
+			visible: upcomingEvents.nextEventInProgress
+			onTriggered: upcomingEvents.markEnded(upcomingEvents.nextEvent)
+		},
+		PlasmaCore.Action {
 			text: i18n("New Event…")
 			icon.name: "list-add"
 			onTriggered: root.openPopupAndNewEvent()

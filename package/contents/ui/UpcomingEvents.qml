@@ -226,6 +226,33 @@ CalendarManager {
 	property int nextEventMinutesLeft: 0 // In progress: minutes until it ends
 	property real nextEventProgress: 0 // In progress: 0..1 of its duration
 
+	//--- Meetings marked as ended (they often end early, or turn out not to be needed): no progress
+	// bar, chip or "Now:" line for them. Until the event's real end; not kept across restarts.
+	property var endedEvents: ({}) // key -> end time (ms)
+	function endedKey(eventItem) {
+		return String(eventItem.calendarId || '') + '|' + String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
+	}
+	function isMarkedEnded(eventItem) {
+		return !!endedEvents[endedKey(eventItem)]
+	}
+	function markEnded(eventItem) {
+		var now = timeModel.currentTime.getTime()
+		var kept = {}
+		for (var key in endedEvents) {
+			if (endedEvents[key] > now) {
+				kept[key] = endedEvents[key]
+			}
+		}
+		kept[endedKey(eventItem)] = new Date(eventItem.endDateTime).getTime()
+		endedEvents = kept
+		updateNextEvent()
+		updateTooltipEvents()
+	}
+	// In progress and not marked as ended.
+	function isOngoing(eventItem) {
+		return isEventInProgress(eventItem) && !isMarkedEnded(eventItem)
+	}
+
 	function updateNextEvent() {
 		var now = timeModel.currentTime
 		var windowEnd = now.getTime() + plasmoid.configuration.clockNextEventMinutes * 60 * 1000
@@ -237,6 +264,9 @@ CalendarManager {
 			for (var i = 0; i < items.length; i++) {
 				var eventItem = items[i]
 				if (eventItem.kind === 'tasks#task' || !shouldNotify(eventItem)) {
+					continue
+				}
+				if (isEventInProgress(eventItem) && isMarkedEnded(eventItem)) {
 					continue
 				}
 				var inProgress = isEventInProgress(eventItem)
@@ -315,6 +345,9 @@ CalendarManager {
 					continue
 				}
 				if (isEventInProgress(eventItem)) {
+					if (isMarkedEnded(eventItem)) {
+						continue
+					}
 					if (!current || eventItem.startDateTime > current.startDateTime) {
 						current = eventItem
 					}

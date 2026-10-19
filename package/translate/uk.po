@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:41+0200\n"
+"POT-Creation-Date: 2026-10-19 09:42+0200\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1193,6 +1193,10 @@ msgid "Open in Google Calendar"
 msgstr "Відкрити в Календарі Google"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Ended"
+msgstr "Позначити як завершену"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "Змінити…"
 
@@ -1699,6 +1703,11 @@ msgstr ""
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 msgid "Join %1: %2 (%3)"
 msgstr "Приєднатися через %1: %2 (%3)"
+
+#: ../contents/ui/main.qml
+msgctxt "%1 = event title"
+msgid "Mark “%1” as Ended"
+msgstr "Позначити «%1» як завершену"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"

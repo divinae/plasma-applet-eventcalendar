@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:41+0200\n"
+"POT-Creation-Date: 2026-10-19 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1078,6 +1078,10 @@ msgid "Open in Google Calendar"
 msgstr "Google Calendar で開く"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Ended"
+msgstr "終了済みにする"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "編集…"
 
@@ -1561,6 +1565,11 @@ msgstr "接続がありません。最後に読み込んだイベントを表示
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 msgid "Join %1: %2 (%3)"
 msgstr "%1 に参加: %2 (%3)"
+
+#: ../contents/ui/main.qml
+msgctxt "%1 = event title"
+msgid "Mark “%1” as Ended"
+msgstr "「%1」を終了済みにする"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"

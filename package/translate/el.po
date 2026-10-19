@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-19 08:41+0200\n"
+"POT-Creation-Date: 2026-10-19 09:42+0200\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1204,6 +1204,10 @@ msgid "Open in Google Calendar"
 msgstr "Άνοιγμα στο Ημερολόγιο Google"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Ended"
+msgstr "Σήμανση ως ολοκληρωμένης"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Edit…"
 msgstr "Επεξεργασία…"
 
@@ -1703,6 +1707,11 @@ msgstr ""
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 msgid "Join %1: %2 (%3)"
 msgstr "Συμμετοχή μέσω %1: %2 (%3)"
+
+#: ../contents/ui/main.qml
+msgctxt "%1 = event title"
+msgid "Mark “%1” as Ended"
+msgstr "Σήμανση «%1» ως ολοκληρωμένης"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
