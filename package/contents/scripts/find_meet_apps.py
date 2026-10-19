@@ -12,6 +12,7 @@ import configparser
 import json
 import os
 import shlex
+import shutil
 import sys
 from urllib.parse import parse_qs, urlparse
 
@@ -45,7 +46,7 @@ def app_from_entry(entry: dict[str, str]) -> dict[str, str] | None:
     except ValueError:
         return None
     argv = [arg for arg in argv if arg not in FIELD_CODES]
-    if not argv:
+    if not argv or not shutil.which(argv[0]):
         return None
     for index, arg in enumerate(argv):
         if arg.startswith("--app=") and MEET_HOST in arg:
@@ -79,6 +80,11 @@ def main() -> int:
             seen.add(filename)
             entry = read_entry(os.path.join(directory, filename))
             if not entry or entry.get("Type", "Application") != "Application":
+                continue
+            # Removed apps (Hidden) and ones whose program is gone (TryExec, or the Exec program).
+            if entry.get("Hidden", "").lower() == "true":
+                continue
+            if entry.get("TryExec") and not shutil.which(os.path.expanduser(entry["TryExec"])):
                 continue
             app = app_from_entry(entry)
             if app:

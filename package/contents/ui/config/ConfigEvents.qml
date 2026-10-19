@@ -14,16 +14,19 @@ ConfigPage {
 
 	// Google Meet web apps that can open a meeting link: [{ name, command, authuser }]
 	property var meetApps: []
+	property bool meetAppsLoaded: false // Until then a saved app's command can't be matched
 	ExecUtil { id: meetAppFinder }
 	function findMeetApps() {
-		var script = String(Qt.resolvedUrl("../../scripts/find_meet_apps.py")).replace(/^file:\/\//, "")
+		var script = decodeURIComponent(String(Qt.resolvedUrl("../../scripts/find_meet_apps.py")).replace(/^file:\/\//, ""))
 		meetAppFinder.execArgv(["python3", "-I", script], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			var apps = []
 			try {
-				var apps = JSON.parse(stdout)
-				page.meetApps = Array.isArray(apps) ? apps : []
+				var parsed = JSON.parse(stdout)
+				apps = Array.isArray(parsed) ? parsed : []
 			} catch (e) {
-				page.meetApps = []
 			}
+			page.meetAppsLoaded = true // Before the list: the combo matches the saved app on the change
+			page.meetApps = apps
 		})
 	}
 
@@ -266,6 +269,10 @@ ConfigPage {
 						currentIndex = 0
 						return
 					}
+					if (!page.meetAppsLoaded) {
+						currentIndex = -1 // Not "Other command…" while the apps are still being looked up
+						return
+					}
 					for (var i = 1; i < model.length - 1; i++) {
 						if (model[i].command === command) {
 							currentIndex = i
@@ -284,16 +291,17 @@ ConfigPage {
 					}
 					page.configBridge.write("meetLinkCommand", entry.command)
 					meetCommandField.text = entry.command
-					if (entry.authuser) {
-						page.configBridge.write("meetLinkAuthUser", entry.authuser)
-						meetAuthUserField.text = entry.authuser
+					// A web app brings its own account (or none); the browser keeps what's set.
+					if (index > 0) {
+						page.configBridge.write("meetLinkAuthUser", entry.authuser || "")
+						meetAuthUserField.text = entry.authuser || ""
 					}
 				}
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigText {
 				id: meetCommandField
-				visible: meetAppCombo.currentIndex === meetAppCombo.count - 1
+				visible: page.meetAppsLoaded && meetAppCombo.currentIndex === meetAppCombo.count - 1
 				label: i18n("Command")
 				configKey: 'meetLinkCommand'
 				placeholderText: "vivaldi-stable --app=%u"

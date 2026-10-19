@@ -34,4 +34,16 @@ assert.deepStrictEqual(list(M.launchArgv('app --app=%u', nasty)), ['app', '--app
 assert.strictEqual(M.launchArgv('', url), null)
 assert.strictEqual(M.launchArgv('   ', url), null)
 
+// Same hosts as the Join button's label.
+assert.strictEqual(M.isGoogleMeet('http://meet.google.com/abc'), true)
+assert.strictEqual(M.isGoogleMeet('https://x.meet.google.com/abc'), true)
+assert.strictEqual(M.isGoogleMeet('https://meet.google.com'), true)
+assert.strictEqual(M.isGoogleMeet('https://notmeet.google.com/abc'), false)
+// An authuser only in the fragment doesn't count.
+assert.strictEqual(M.withAuthUser('https://meet.google.com/abc#x?authuser=0', '1'), 'https://meet.google.com/abc?authuser=1#x?authuser=0')
+// Desktop entry field codes.
+assert.deepStrictEqual(list(M.launchArgv('chromium --app-id=xyz %U', url)), ['chromium', '--app-id=xyz', url])
+assert.deepStrictEqual(list(M.launchArgv('app %f --x=100%% %u', url)), ['app', '--x=100%', url])
+assert.strictEqual(M.launchArgv('%F', url), null)
+
 console.log('meeting_open: ok')

@@ -13,6 +13,7 @@ QtObject {
 
 	readonly property string meetCommand: String(plasmoid.configuration.meetLinkCommand || '').trim()
 	readonly property string meetAuthUser: String(plasmoid.configuration.meetLinkAuthUser || '').trim()
+	readonly property string launcherPath: decodeURIComponent(String(Qt.resolvedUrl("../scripts/launch_detached.py")).replace(/^file:\/\//, ''))
 
 	function open(url) {
 		if (!url) {
@@ -28,8 +29,9 @@ QtObject {
 			Shared.openExternalUrl(url)
 			return
 		}
-		// Detached (setsid -f): the app keeps running on its own, the widget doesn't wait for it.
-		executable.execArgv(['setsid', '-f'].concat(argv), function(cmd, exitCode, exitStatus, stdout, stderr) {
+		// Detached (scripts/launch_detached.py): own session, no pipes to us, so nothing waits for
+		// the app; it reports when the app can't start, and then the browser is used.
+		executable.execArgv(['python3', '-I', launcherPath, '--'].concat(argv), function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (exitCode !== 0) {
 				logger.log('meeting app failed to start, opening the browser instead', exitCode)
 				Shared.openExternalUrl(url)
