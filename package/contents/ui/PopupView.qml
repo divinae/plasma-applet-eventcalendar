@@ -555,7 +555,7 @@ MouseArea {
 			eventModel: popup.eventModel
 			dayCount: popup.dayMode ? 1 : 7
 			workWeek: plasmoid.configuration.weekViewWorkWeek // Week view only
-			weatherByDay: popup.weatherInViews ? popup.weatherByDay : ({})
+			weatherByDay: popup.weatherInViews ? root.weatherByDay : ({})
 			weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
 			weatherCurrent: logic.currentWeatherData
 			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
@@ -753,22 +753,12 @@ MouseArea {
 
 	//--- Weather for the views
 	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
-	property var weatherByDay: ({}) // Shared.dayKey -> daily forecast item
-	function updateWeatherByDay() {
-		var map = {}
-		var list = logic.dailyWeatherData && logic.dailyWeatherData.list ? logic.dailyWeatherData.list : []
-		for (var i = 0; i < list.length; i++) {
-			map[Shared.dayKey(new Date(list[i].dt * 1000))] = list[i]
-		}
-		weatherByDay = map
-	}
 
 	function updateUI() {
 		updateUITimer.stop()
 
 		agendaModel.parseGCalEvents(eventModel.eventsData)
-		agendaModel.parseWeatherForecast(logic.dailyWeatherData)
-		updateWeatherByDay()
+		agendaModel.parseWeatherForecast(root.weatherByDay)
 		monthView.parseGCalEvents(eventModel.eventsData)
 		if (weekViewLoader.item) {
 			weekViewLoader.item.rebuild()

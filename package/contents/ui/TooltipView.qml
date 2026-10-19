@@ -119,18 +119,8 @@ Item {
 				RowLayout {
 					id: tooltipWeather
 					readonly property var current: typeof logic !== "undefined" ? logic.currentWeatherData : null
-					readonly property var today: {
-						var list = typeof logic !== "undefined" && logic.dailyWeatherData ? logic.dailyWeatherData.list : null
-						if (!list) {
-							return null
-						}
-						for (var i = 0; i < list.length; i++) {
-							if (Shared.isSameDate(new Date(list[i].dt * 1000), timeModel.currentTime)) {
-								return list[i]
-							}
-						}
-						return null
-					}
+					readonly property var today: typeof root !== "undefined" && root.weatherByDay
+						? root.weatherByDay[Shared.dayKey(timeModel.currentTime)] || null : null
 					visible: !!current || !!today
 					Layout.topMargin: Kirigami.Units.smallSpacing
 					Layout.maximumWidth: preferredTextWidth

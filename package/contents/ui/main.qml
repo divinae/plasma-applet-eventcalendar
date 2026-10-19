@@ -12,6 +12,7 @@ import org.kde.config as KConfig
 import org.kde.kcmutils as KCMUtils
 
 import "./lib"
+import "DayWeather.js" as DayWeather
 
 PlasmoidItem {
 	id: root
@@ -43,6 +44,8 @@ PlasmoidItem {
 		Component.onCompleted: logger.debug('AgendaModel.onCompleted')
 	}
 	Logic { id: logic }
+	// The daily forecast by day (Shared.dayKey): the views, the agenda and the tooltip.
+	readonly property var weatherByDay: DayWeather.byDay(logic.dailyWeatherData)
 
 	FontLoader {
 		source: "../fonts/weathericons-regular-webfont.ttf"

@@ -566,21 +566,25 @@ Item {
 		}
 	}
 
-	WeatherPanel {
+	// Day view: the shown day's weather, beside the grid or (too narrow) as a compact row above it.
+	component DayWeatherPanel: WeatherPanel {
+		isSetup: weekView.weatherIsSetup
+		loading: weekView.weatherLoading
+		errorText: weekView.weatherError
+		onRetryRequested: weekView.weatherRetryRequested()
+		isToday: weekView.showingToday
+		current: weekView.showingToday ? weekView.weatherCurrent : null
+		today: weekView.dayWeather(weekView.weekStart)
+	}
+
+	DayWeatherPanel {
 		visible: weekView.weatherBeside
 		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
 		// Top aligned with the day header, like the grid, with a little padding.
 		y: dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.weatherPanelWidth - Kirigami.Units.largeSpacing
 		height: parent.height - y - Kirigami.Units.largeSpacing
-		isSetup: weekView.weatherIsSetup
-		loading: weekView.weatherLoading
-		errorText: weekView.weatherError
-		onRetryRequested: weekView.weatherRetryRequested()
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
-		isToday: weekView.showingToday
-		current: weekView.showingToday ? weekView.weatherCurrent : null
-		today: weekView.dayWeather(weekView.weekStart)
 		hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
 		nextDays: {
 			var list = []
@@ -600,17 +604,10 @@ Item {
 		height: parent.height
 		spacing: Kirigami.Units.smallSpacing
 
-		WeatherPanel {
+		DayWeatherPanel {
 			visible: weekView.singleDay && weekView.showWeather && !weekView.weatherBeside && weekView.weatherIsSetup
 			Layout.fillWidth: true
 			compact: true
-			isSetup: weekView.weatherIsSetup
-			loading: weekView.weatherLoading
-			errorText: weekView.weatherError
-			onRetryRequested: weekView.weatherRetryRequested()
-			isToday: weekView.showingToday
-			current: weekView.showingToday ? weekView.weatherCurrent : null
-			today: weekView.dayWeather(weekView.weekStart)
 		}
 
 		// Day names. Not in the Today view: the popup header shows the date.
