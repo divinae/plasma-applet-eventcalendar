@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 15:04+0200\n"
+"POT-Creation-Date: 2026-10-19 08:23+0200\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1083,6 +1083,10 @@ msgstr "Apri in Google Calendar"
 msgid "Edit…"
 msgstr "Modifica…"
 
+#: ../contents/ui/EventContextMenu.qml
+msgid "Duplicate…"
+msgstr "Duplica…"
+
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Delete"
 msgstr "Elimina"
@@ -1169,6 +1173,10 @@ msgstr "Tutti gli eventi"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Elimina tutte le occorrenze di questo evento ricorrente."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Duplicate"
+msgstr "Duplica"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
 msgid "All day"

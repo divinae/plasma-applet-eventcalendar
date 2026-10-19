@@ -18,6 +18,7 @@ Rectangle {
 	property var eventItem: null
 	signal closeRequested()
 	signal editRequested()
+	signal duplicateRequested()
 
 	color: Kirigami.Theme.backgroundColor
 	radius: Kirigami.Units.cornerRadius * 2
@@ -185,6 +186,15 @@ Rectangle {
 				icon.name: "document-edit"
 				text: i18n("Edit")
 				onClicked: details.editRequested()
+			}
+			PlasmaComponents3.ToolButton {
+				visible: !details.confirmingDelete && !!details.eventItem
+				icon.name: "edit-copy"
+				text: i18n("Duplicate")
+				display: QQC2.AbstractButton.IconOnly
+				onClicked: details.duplicateRequested()
+				PlasmaComponents3.ToolTip.text: text
+				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)

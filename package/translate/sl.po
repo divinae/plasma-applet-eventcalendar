@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-16 15:04+0200\n"
+"POT-Creation-Date: 2026-10-19 08:23+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1196,6 +1196,10 @@ msgstr "Odpri v Googlovem koledarju"
 msgid "Edit…"
 msgstr "Uredi…"
 
+#: ../contents/ui/EventContextMenu.qml
+msgid "Duplicate…"
+msgstr "Podvoji…"
+
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Delete"
 msgstr "Izbriši"
@@ -1286,6 +1290,10 @@ msgstr "Vse dogodke"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Izbriše vse ponovitve tega ponavljajočega se dogodka."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Duplicate"
+msgstr "Podvoji"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/WeekView.qml

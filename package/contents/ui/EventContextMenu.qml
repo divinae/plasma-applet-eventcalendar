@@ -20,6 +20,7 @@ PlasmaComponents3.Menu {
 
 	signal showDetails(var eventItem)
 	signal editEvent(var eventItem)
+	signal duplicateEvent(var eventItem)
 
 	function openFor(item, parentItem, x, y) {
 		eventItem = item
@@ -104,16 +105,19 @@ PlasmaComponents3.Menu {
 		icon.name: "globe"
 		onTriggered: Shared.openExternalUrl(eventMenu.eventItem.htmlLink)
 	}
-	PlasmaComponents3.MenuSeparator {
-		visible: eventMenu.canEdit
-		height: visible ? implicitHeight : 0
-	}
+	PlasmaComponents3.MenuSeparator {} // Edit, Duplicate, Delete
 	PlasmaComponents3.MenuItem {
 		visible: eventMenu.canEdit
 		height: visible ? implicitHeight : 0
 		text: i18n("Edit…")
 		icon.name: "document-edit"
 		onTriggered: eventMenu.editEvent(eventMenu.eventItem)
+	}
+	// A new event as a copy (also of events you can't edit, eg: on a shared calendar).
+	PlasmaComponents3.MenuItem {
+		text: i18n("Duplicate…")
+		icon.name: "edit-copy"
+		onTriggered: eventMenu.duplicateEvent(eventMenu.eventItem)
 	}
 	PlasmaComponents3.Menu {
 		id: deleteMenu

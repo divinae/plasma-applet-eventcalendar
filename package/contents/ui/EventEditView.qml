@@ -22,6 +22,7 @@ Rectangle {
 	property date initialDate: new Date() // New events: day to create on
 	property var initialStart: null // New events: exact start time (eg: clicked week view slot)
 	property string initialTitle: "" // New events: title typed so far (eg: in quick add)
+	property var templateEvent: null // New events: a copy of this event (Duplicate)
 	readonly property bool isNew: !eventItem
 	signal closeRequested()
 
@@ -457,41 +458,69 @@ Rectangle {
 
 	Keys.onEscapePressed: closeRequested()
 
+	// The form from an event: the event being edited, or (asCopy) the one being duplicated, as a new
+	// event: same fields, color, guests (invited again) and repeat; a new Google Meet if it had one.
+	function fillFrom(item, asCopy) {
+		titleField.text = item.summary || ""
+		locationField.text = item.location || ""
+		descriptionField.text = item.description || ""
+		if (asCopy) {
+			colorId = item.colorId ? String(item.colorId) : ""
+			guests = Guests.people(item.attendees).filter(function(guest) {
+				return !guest.self
+			}).map(function(guest) {
+				return guest.displayName ? { email: guest.email, displayName: guest.displayName } : { email: guest.email }
+			})
+			if (item.hangoutLink || item.conferenceData) {
+				conferenceAction = 'add'
+			}
+		} else {
+			initialColorId = item.colorId ? String(item.colorId) : ""
+			colorId = initialColorId
+			initialGuests = Guests.people(item.attendees)
+			guests = initialGuests.slice()
+		}
+		var allDay = !!(item.start && item.start.date)
+		allDayCheckBox.checked = allDay
+		var start = new Date(item.startDateTime)
+		var end = new Date(item.endDateTime)
+		if (allDay) {
+			end.setDate(end.getDate() - 1) // Inclusive last day in the form
+			start.setHours(9, 0, 0, 0) // Times used if All day is unchecked
+			end.setHours(10, 0, 0, 0)
+		}
+		durationSelector.startDateTime = start
+		durationSelector.endDateTime = end
+		if (asCopy && item.recurrence) {
+			setInitialRepeat(Recurrence.ruleOf(item.recurrence), start)
+		} else if (item.recurringEventId) {
+			seriesLoading = true
+			eventModel.fetchEvent(item.calendarId, item.recurringEventId, function(err, series) {
+				seriesLoading = false
+				if (err || !series) {
+					return
+				}
+				if (!asCopy) {
+					seriesEvent = series
+				}
+				setInitialRepeat(Recurrence.ruleOf(series.recurrence), durationSelector.startDateTime)
+			})
+		}
+	}
+
 	Component.onCompleted: {
 		var calendarList = eventModel.getCalendarList().filter(function(c) { return !c.isTasklist })
 		var initialCalendarId = eventItem ? eventItem.calendarId : plasmoid.configuration.agendaNewEventLastCalendarId
+		// Duplicate: on the same calendar when it's one we can write to.
+		if (templateEvent && calendarList.some(function(c) { return c.id === templateEvent.calendarId })) {
+			initialCalendarId = templateEvent.calendarId
+		}
 		calendarSelector.populate(calendarList, initialCalendarId)
 
 		if (eventItem) {
-			titleField.text = eventItem.summary || ""
-			locationField.text = eventItem.location || ""
-			descriptionField.text = eventItem.description || ""
-			initialColorId = eventItem.colorId ? String(eventItem.colorId) : ""
-			colorId = initialColorId
-			initialGuests = Guests.people(eventItem.attendees)
-			guests = initialGuests.slice()
-			var allDay = !!(eventItem.start && eventItem.start.date)
-			allDayCheckBox.checked = allDay
-			var start = new Date(eventItem.startDateTime)
-			var end = new Date(eventItem.endDateTime)
-			if (allDay) {
-				end.setDate(end.getDate() - 1) // Inclusive last day in the form
-				start.setHours(9, 0, 0, 0) // Times used if All day is unchecked
-				end.setHours(10, 0, 0, 0)
-			}
-			durationSelector.startDateTime = start
-			durationSelector.endDateTime = end
-			if (isOccurrence) {
-				seriesLoading = true
-				eventModel.fetchEvent(eventItem.calendarId, eventItem.recurringEventId, function(err, series) {
-					seriesLoading = false
-					if (err || !series) {
-						return
-					}
-					seriesEvent = series
-					setInitialRepeat(Recurrence.ruleOf(series.recurrence), durationSelector.startDateTime)
-				})
-			}
+			fillFrom(eventItem, false)
+		} else if (templateEvent) {
+			fillFrom(templateEvent, true)
 		} else {
 			// Given start, or the next full hour on the chosen day. 1 hour long.
 			var now = new Date()
@@ -504,6 +533,9 @@ Rectangle {
 		}
 		knownGuests = eventModel.knownGuestEmails ? eventModel.knownGuestEmails() : []
 		titleField.forceActiveFocus()
+		if (templateEvent) {
+			titleField.selectAll()
+		}
 	}
 
 	ColumnLayout {

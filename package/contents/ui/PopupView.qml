@@ -316,6 +316,7 @@ MouseArea {
 		id: eventContextMenu
 		onShowDetails: function(eventItem) { popup.activateEvent(eventItem) }
 		onEditEvent: function(eventItem) { popup.editEvent(eventItem) }
+		onDuplicateEvent: function(eventItem) { popup.duplicateEvent(eventItem) }
 	}
 	//--- Undo (delete, move)
 	// Show "text" with an Undo button for a while; a newer offer replaces it.
@@ -420,8 +421,10 @@ MouseArea {
 	property date editorDate: new Date()
 	property var editorStart: null
 	property string editorTitle: ""
+	property var editorTemplate: null // Duplicate: the new event starts as a copy of this one
 	function newEvent(date, startTime, title) {
 		editorEvent = null
+		editorTemplate = null
 		editorDate = date || selectedDate || new Date()
 		editorStart = startTime || null
 		editorTitle = title || ""
@@ -429,17 +432,28 @@ MouseArea {
 	}
 	function editEvent(eventItem) {
 		editorEvent = eventItem
+		editorTemplate = null
+		editorOpen = true
+	}
+	function duplicateEvent(eventItem) {
+		editorEvent = null
+		editorTemplate = eventItem
+		editorDate = eventItem.startDateTime || new Date()
+		editorStart = null
+		editorTitle = ""
 		editorOpen = true
 	}
 	function closeEditor() {
 		editorOpen = false
 		editorEvent = null
+		editorTemplate = null
 		eventDetailsOverlay.focusCard()
 	}
 
 	function closeOverlays() {
 		editorOpen = false
 		editorEvent = null
+		editorTemplate = null
 		detailsEvent = null
 		searchOpen = false
 		quickAddOpen = false
@@ -636,6 +650,7 @@ MouseArea {
 				eventItem: popup.detailsEvent
 				onCloseRequested: popup.closeEventDetails()
 				onEditRequested: popup.editEvent(popup.detailsEvent)
+				onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
 			}
 		}
 	}
@@ -680,6 +695,7 @@ MouseArea {
 				initialDate: popup.editorDate
 				initialStart: popup.editorStart
 				initialTitle: popup.editorTitle
+				templateEvent: popup.editorTemplate
 				onCloseRequested: popup.closeEditor()
 			}
 		}
