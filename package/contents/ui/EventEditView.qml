@@ -463,6 +463,48 @@ Rectangle {
 		guests = Guests.removeGuest(guests, email)
 	}
 
+	//--- Find a time (Google): the guests' busy times on the event's day, to pick a free slot.
+	property bool findTimeOpen: false
+	readonly property var otherGuests: guests.filter(function(guest) { return !guest.self && guest.email })
+	readonly property bool canFindTime: supportsRecurrence && !isSpecialType && !allDayCheckBox.checked
+		&& otherGuests.length > 0 && !!calendarSelector.selectedCalendarId
+		&& !!eventModel.supportsFreeBusy && eventModel.supportsFreeBusy(calendarSelector.selectedCalendarId)
+	function openFindTime() {
+		findTimeOpen = true
+	}
+	// You in Find a time: the primary calendar of the selected calendar's account (its id is the
+	// account's email), else Google's 'primary'.
+	function ownFreeBusyId() {
+		var id = String(calendarSelector.selectedCalendarId || '')
+		var i = id.indexOf('::')
+		var prefix = i > 0 ? id.slice(0, i + 2) : ''
+		var list = eventModel.getCalendarList()
+		for (var j = 0; j < list.length; j++) {
+			var calendarId = String(list[j].id || '')
+			if (list[j].primary === true && calendarId.indexOf(prefix) === 0) {
+				return calendarId.slice(prefix.length)
+			}
+		}
+		return 'primary'
+	}
+	function findTimePeople() {
+		var people = [{ id: ownFreeBusyId(), name: i18nc("you, in Find a time", "You") }]
+		otherGuests.forEach(function(guest) {
+			if (guest.email !== people[0].id) {
+				people.push({ id: guest.email, name: guest.displayName || guest.email, email: guest.email })
+			}
+		})
+		return people
+	}
+	// A slot picked in Find a time: same length, starting then.
+	function pickSlot(start) {
+		var length = endInstant().getTime() - startInstant().getTime()
+		var s = new Date(start)
+		durationSelector.startDateTime = toWall(s)
+		durationSelector.endDateTime = toWall(new Date(s.getTime() + length))
+		findTimeOpen = false
+	}
+
 	// Whether to ask before saving if guests get emails: 'invite' (new event with guests), 'update'
 	// (guests changed, or the event has guests and its time, place or video call changed) or ''.
 	property string sendUpdatesChoice: "" // 'all' or 'none' once answered
@@ -1597,6 +1639,14 @@ Rectangle {
 						text: form.guestError
 					}
 
+					PlasmaComponents3.Button {
+						visible: form.canFindTime
+						Layout.leftMargin: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+						icon.name: "view-calendar-day"
+						text: i18n("Find a Time")
+						onClicked: form.openFindTime()
+					}
+
 					Flow {
 						visible: form.guests.length > 0
 						Layout.fillWidth: true
@@ -1626,6 +1676,37 @@ Rectangle {
 					placeholderText: i18n("Description")
 					wrapMode: TextEdit.Wrap
 				}
+			}
+		}
+	}
+
+	// Find a time: a card over the form.
+	Loader {
+		anchors.fill: parent
+		active: form.findTimeOpen
+		z: 10
+		sourceComponent: Item {
+			Rectangle {
+				anchors.fill: parent
+				radius: form.radius
+				color: Kirigami.Theme.backgroundColor
+				opacity: 0.85
+			}
+			MouseArea {
+				anchors.fill: parent
+				onClicked: form.findTimeOpen = false
+			}
+			FindTimeView {
+				anchors.centerIn: parent
+				width: parent.width - Kirigami.Units.gridUnit
+				height: Math.min(implicitHeight, parent.height - Kirigami.Units.gridUnit)
+				calendarId: calendarSelector.selectedCalendarId || ""
+				people: form.findTimePeople()
+				day: form.startInstant()
+				duration: form.endInstant().getTime() - form.startInstant().getTime()
+				selectedStart: form.startInstant().getTime()
+				onSlotPicked: function(start) { form.pickSlot(start) }
+				onCloseRequested: form.findTimeOpen = false
 			}
 		}
 	}
