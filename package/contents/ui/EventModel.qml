@@ -404,8 +404,11 @@ CalendarManager {
 		// disk, and removed before an event is sent back to Google.
 		// Only your own time counts: calendars you can edit, and meetings you're invited to. Others'
 		// calendars you only follow (a colleague's, holidays) would show false conflicts.
+		// Calendars hidden from the views don't count either: their events can't be seen.
+		var hiddenCalendars = Shared.toArray(plasmoid.configuration.hiddenCalendarIds)
 		var conflicts = Conflicts.find(all.filter(function(eventItem) {
-			return !!eventItem.canEdit || !!Shared.myResponse(eventItem)
+			return (!!eventItem.canEdit || !!Shared.myResponse(eventItem))
+				&& !Shared.isHiddenCalendar(eventItem.calendarId, hiddenCalendars)
 		}))
 		var items = []
 		for (var i = 0; i < all.length; i++) {
