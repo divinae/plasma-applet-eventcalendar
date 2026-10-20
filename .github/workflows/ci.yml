@@ -39,7 +39,7 @@ jobs:
         run: python -m unittest discover -s tests -p '*_test.py' -v
 
       - name: Shellcheck
-        run: shellcheck --severity=warning install update uninstall build package/translate/build package/translate/merge tests/qml_compile.sh
+        run: shellcheck --severity=warning install update uninstall build package/translate/build package/translate/merge tests/qml_compile.sh tests/qml_compile_oldest_formcard.sh
 
   package:
     # Arch: current Qt 6 / Plasma 6 QML modules, and the same gettext as the catalogs are made
@@ -50,7 +50,7 @@ jobs:
     steps:
       - name: Install Qt, KDE QML modules and build tools
         run: |
-          pacman -Syu --noconfirm --needed git findutils python gettext zip \
+          pacman -Syu --noconfirm --needed git findutils python gettext zip curl \
             qt6-declarative qt6-5compat \
             kirigami kirigami-addons qqc2-desktop-style \
             libplasma plasma-workspace plasma-nm plasma5support \
@@ -63,6 +63,9 @@ jobs:
 
       - name: Compile every QML file
         run: bash tests/qml_compile.sh
+
+      - name: Compile every QML file against the oldest supported FormCard (Kirigami Addons 1.12)
+        run: bash tests/qml_compile_oldest_formcard.sh
 
       # Also fails when the translation catalogs are out of date with the sources.
       - name: Build the .plasmoid

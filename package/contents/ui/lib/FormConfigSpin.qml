@@ -18,7 +18,10 @@ FormCard.FormSpinBoxDelegate {
 	valueFromText: function(text, locale) {
 		return Number.fromLocaleString(locale, String(text).replace(control.suffix, '').trim())
 	}
-	onValueModified: {
+	// Not onValueModified: FormSpinBoxDelegate has it only after Kirigami Addons 1.12 (Debian 14
+	// ships 1.12), and an unknown handler fails the whole settings page. Writing the value it was
+	// bound to is a no-op (configBridge.write compares).
+	onValueChanged: {
 		if (configBridge && configKey) {
 			configBridge.write(configKey, value)
 		}

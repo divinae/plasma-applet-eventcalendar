@@ -188,7 +188,13 @@ ConfigPage {
 					var n = parseInt(text, 10)
 					return isNaN(n) ? 0 : n
 				}
-				onValueModified: page.configBridge.write("eventReminderTimeout", value > 0 ? value : -1)
+				// onValueChanged (see FormConfigSpin): only a value that differs from the saved one, so
+				// 0 ("keep", shown as 0 here) isn't turned into -1.
+				onValueChanged: {
+					if (value !== Math.max(0, page.configBridge.read("eventReminderTimeout", -1))) {
+						page.configBridge.write("eventReminderTimeout", value > 0 ? value : -1)
+					}
+				}
 			}
 			FormCard.FormSectionText {
 				visible: reminderHideAfter.enabled
@@ -393,7 +399,7 @@ ConfigPage {
 					}
 					return Math.min(24 * 60 - 1, hours * 60 + Number(match[2] || 0))
 				}
-				onValueModified: page.configBridge.write("dailyAgendaTime", value)
+				onValueChanged: page.configBridge.write("dailyAgendaTime", value) // See FormConfigSpin
 			}
 		}
 
