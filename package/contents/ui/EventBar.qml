@@ -58,30 +58,33 @@ Rectangle {
 	border.width: 1
 	border.color: eventStyle.outlineColor
 
+	// "Bar" event look: the bar in the event color along the start side (not when the event continues
+	// from before what's shown).
+	readonly property bool showBar: eventStyle.showBar && !cutLeft
+	ColorBarFill {
+		visible: eventBar.showBar
+		barColor: eventBar.eventStyle.color
+		fillColor: eventBar.eventStyle.fillColor
+		borderColor: eventBar.eventStyle.outlineColor
+		topLeftRadius: eventBar.cuttable && eventBar.cutTop ? 0 : eventBar.cornerRadius
+		bottomLeftRadius: eventBar.cuttable && eventBar.cutBottom ? 0 : eventBar.cornerRadius
+		topRightRadius: eventBar.cuttable && (eventBar.cutRight || eventBar.cutTop) ? 0 : eventBar.cornerRadius
+		bottomRightRadius: eventBar.cuttable && (eventBar.cutRight || eventBar.cutBottom) ? 0 : eventBar.cornerRadius
+	}
+
 	StripeFill {
 		visible: eventBar.eventStyle.striped
 		anchors.fill: parent
 		anchors.margins: 1
+		anchors.leftMargin: eventBar.showBar ? 5 : 1
 		radius: eventBar.stripeRadius
 		stripeColor: eventBar.eventStyle.stripeColor
-	}
-
-	// "Bar" event look: the bar in the event color on the start side (not when the event continues
-	// from before what's shown), inset to stay inside the rounded corners.
-	Rectangle {
-		visible: eventBar.eventStyle.showBar && !eventBar.cutLeft
-		x: 2
-		y: 2
-		width: 3
-		height: Math.max(0, parent.height - 4)
-		radius: 1.5
-		color: eventBar.eventStyle.color
 	}
 
 	Text {
 		visible: eventBar.showTitle
 		anchors.fill: parent
-		anchors.leftMargin: eventBar.eventStyle.showBar ? 8 : 4
+		anchors.leftMargin: eventBar.showBar ? 9 : 4
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
 		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""

@@ -189,21 +189,23 @@ Item {
 						border.color: eventStyle.outlineColor
 						opacity: (past ? 0.6 : 1) * (tileMouse.containsMouse ? 0.85 : 1)
 
+						ColorBarFill {
+							visible: eventRow.eventStyle.showBar // "Bar" event look
+							barColor: eventRow.eventStyle.color
+							fillColor: eventRow.eventStyle.fillColor
+							borderColor: eventRow.eventStyle.outlineColor
+							topLeftRadius: eventRow.radius
+							bottomLeftRadius: eventRow.radius
+							topRightRadius: eventRow.radius
+							bottomRightRadius: eventRow.radius
+						}
 						StripeFill {
 							visible: eventRow.eventStyle.striped
 							anchors.fill: parent
 							anchors.margins: 1
+							anchors.leftMargin: eventRow.eventStyle.showBar ? 5 : 1
 							radius: eventRow.radius - 1
 							stripeColor: eventRow.eventStyle.stripeColor
-						}
-						Rectangle {
-							visible: eventRow.eventStyle.showBar // "Bar" event look
-							x: 3
-							y: 4
-							width: 3
-							height: Math.max(0, parent.height - 8)
-							radius: 1.5
-							color: eventRow.eventStyle.color
 						}
 
 						ColumnLayout {
@@ -211,7 +213,7 @@ Item {
 							anchors.left: parent.left
 							anchors.right: parent.right
 							anchors.verticalCenter: parent.verticalCenter
-							anchors.leftMargin: Kirigami.Units.largeSpacing + (eventRow.eventStyle.showBar ? 3 : 0)
+							anchors.leftMargin: Kirigami.Units.largeSpacing + (eventRow.eventStyle.showBar ? 4 : 0)
 							anchors.rightMargin: Kirigami.Units.largeSpacing
 							spacing: 1
 							PlasmaComponents3.Label {

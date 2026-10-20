@@ -80,23 +80,25 @@ LinkRect {
 	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
+	// "Bar" event look: the bar in the event color along the left edge (EventStyle.showBar).
+	ColorBarFill {
+		visible: agendaEventItem.eventStyle.showBar
+		barColor: agendaEventItem.eventStyle.color
+		fillColor: agendaEventItem.color // With the hover color
+		borderColor: agendaEventItem.eventStyle.outlineColor
+		topLeftRadius: agendaEventItem.radius
+		bottomLeftRadius: agendaEventItem.radius
+		topRightRadius: agendaEventItem.radius
+		bottomRightRadius: agendaEventItem.radius
+	}
+
 	StripeFill {
 		visible: agendaEventItem.eventStyle.striped
 		anchors.fill: parent
 		anchors.margins: 1
+		anchors.leftMargin: agendaEventItem.eventStyle.showBar ? 5 : 1
 		radius: agendaEventItem.radius - 1
 		stripeColor: agendaEventItem.eventStyle.stripeColor
-	}
-
-	// "Bar" event look: the bar in the event color (EventStyle.showBar).
-	Rectangle {
-		visible: agendaEventItem.eventStyle.showBar
-		x: 3
-		y: 4
-		width: 3
-		height: Math.max(0, parent.height - 8)
-		radius: 1.5
-		color: agendaEventItem.eventStyle.color
 	}
 
 	ColumnLayout {
@@ -104,7 +106,7 @@ LinkRect {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.leftMargin: Kirigami.Units.largeSpacing + (agendaEventItem.eventStyle.showBar ? 3 : 0)
+		anchors.leftMargin: Kirigami.Units.largeSpacing + (agendaEventItem.eventStyle.showBar ? 4 : 0)
 		anchors.rightMargin: Kirigami.Units.smallSpacing
 		anchors.topMargin: Kirigami.Units.smallSpacing + 1
 		spacing: 0
