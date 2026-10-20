@@ -61,9 +61,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.3.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.3.1-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.3.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.3.1-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a
@@ -113,6 +113,12 @@ If the widget is useful to you, you can support this fork's development on
 [Ko-fi](https://ko-fi.com/divinae4535). Donations go to this fork's maintainer, not to the
 authors of the original Event Calendar (Chris Holland / Zren) or of the Plasma 6 port
 (ALikesToCode) it builds on.
+
+## Bugs and ideas
+
+Report them in [GitHub Issues](https://github.com/divinae/plasma-applet-eventcalendar/issues): your distribution, the Plasma version, the widget version,
+and for a problem in the settings or the popup the output of
+`journalctl --user -b | grep -i eventcalendar`.
 
 ## Contributing
 

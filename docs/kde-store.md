@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.3.0
+    1.3.1
 
 **License**
 
@@ -88,30 +88,23 @@ Translated into 20 languages.
 
 Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files.
 
-Source, issues and install from source: https://github.com/divinae/plasma-applet-eventcalendar
+Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
+Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
 
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.3.0)**
+**Changelog (1.3.1)**
 
 ```
-- Notifications for new invitations to today's meetings, with Yes / Maybe / No
-- Do Not Disturb during meetings, auto-join, a daily agenda notification
-- Overlapping meetings are marked; Find a time in the event editor
-- Move events between calendars; busy / free and visibility; the event's time zone
-- Out of office, focus time and working locations
-- Import .ics files into Google Calendar; attachments; Email Guests
-- Calendar toggles in the popup; hide declined events
-- Week view: work week, a second time zone; drag events in the Month view and all-day bars in the Week view (Ctrl copies)
-- Keyboard navigation; the Month view uses the configured popup size
-- Fixes: no hang when Google sign-in fails, failed moves put the event back, series time zone, settings combos
+- Fix: the Views, Clock, Events and Weather settings pages were blank with older Kirigami Addons (eg: Debian 14)
+- The widget's About page links to the bug tracker
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.3.0-plasma6.0.plasmoid` from the
-  [v1.3.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.3.0),
+- **Product file:** `eventcalendar-v1.3.1-plasma6.0.plasmoid` from the
+  [v1.3.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.3.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`

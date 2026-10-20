@@ -1,3 +1,9 @@
+## v1.3.1 - October 20 2026
+
+### Fixes
+* Settings: the Views, Clock, Events and Weather pages were blank with older Kirigami Addons (eg: 1.12 in Debian 14). CI now also checks the settings against Kirigami Addons 1.12.
+* The widget's About page links to the bug tracker.
+
 ## v1.3.0 - October 19 2026
 
 ### Meetings
