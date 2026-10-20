@@ -66,10 +66,22 @@ Rectangle {
 		stripeColor: eventBar.eventStyle.stripeColor
 	}
 
+	// "Bar" event look: the bar in the event color on the start side (not when the event continues
+	// from before what's shown), inset to stay inside the rounded corners.
+	Rectangle {
+		visible: eventBar.eventStyle.showBar && !eventBar.cutLeft
+		x: 2
+		y: 2
+		width: 3
+		height: Math.max(0, parent.height - 4)
+		radius: 1.5
+		color: eventBar.eventStyle.color
+	}
+
 	Text {
 		visible: eventBar.showTitle
 		anchors.fill: parent
-		anchors.leftMargin: 4
+		anchors.leftMargin: eventBar.eventStyle.showBar ? 8 : 4
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
 		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""

@@ -73,7 +73,7 @@ LinkRect {
 	border.width: 1
 	border.color: eventStyle.outlineColor
 	backgroundColor: eventStyle.fillColor
-	backgroundHoverColor: eventStyle.unconfirmed ? appletConfig.agendaHoverBackground : Qt.darker(tileColor, 1.08)
+	backgroundHoverColor: eventStyle.unconfirmed ? appletConfig.agendaHoverBackground : Qt.darker(eventStyle.fillColor, 1.08)
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
 	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
@@ -88,12 +88,23 @@ LinkRect {
 		stripeColor: agendaEventItem.eventStyle.stripeColor
 	}
 
+	// "Bar" event look: the bar in the event color (EventStyle.showBar).
+	Rectangle {
+		visible: agendaEventItem.eventStyle.showBar
+		x: 3
+		y: 4
+		width: 3
+		height: Math.max(0, parent.height - 8)
+		radius: 1.5
+		color: agendaEventItem.eventStyle.color
+	}
+
 	ColumnLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.leftMargin: Kirigami.Units.largeSpacing
+		anchors.leftMargin: Kirigami.Units.largeSpacing + (agendaEventItem.eventStyle.showBar ? 3 : 0)
 		anchors.rightMargin: Kirigami.Units.smallSpacing
 		anchors.topMargin: Kirigami.Units.smallSpacing + 1
 		spacing: 0

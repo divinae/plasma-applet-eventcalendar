@@ -87,6 +87,12 @@ QtObject {
 	readonly property color eventBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.2)
 	// Invitations not answered yes (Shared.myResponse), like Google Calendar: an outline in the event
 	// color on the background instead of a filled tile; maybe adds stripes, declined is struck through.
+	// Settings > Views > Event look = "All-day filled, timed light with a color bar": timed events
+	// are a light tint of their color (opaque, theme text) with a bar in the full color.
+	readonly property bool barEventLook: plasmoid.configuration.eventLook === 'bar'
+	function eventTintColor(color) {
+		return Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(color, darkTheme ? 0.32 : 0.24))
+	}
 	function eventFillColor(color, response) {
 		return Shared.isUnconfirmedResponse(response) ? Kirigami.Theme.backgroundColor : color
 	}

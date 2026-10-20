@@ -196,13 +196,22 @@ Item {
 							radius: eventRow.radius - 1
 							stripeColor: eventRow.eventStyle.stripeColor
 						}
+						Rectangle {
+							visible: eventRow.eventStyle.showBar // "Bar" event look
+							x: 3
+							y: 4
+							width: 3
+							height: Math.max(0, parent.height - 8)
+							radius: 1.5
+							color: eventRow.eventStyle.color
+						}
 
 						ColumnLayout {
 							id: tileColumn
 							anchors.left: parent.left
 							anchors.right: parent.right
 							anchors.verticalCenter: parent.verticalCenter
-							anchors.leftMargin: Kirigami.Units.largeSpacing
+							anchors.leftMargin: Kirigami.Units.largeSpacing + (eventRow.eventStyle.showBar ? 3 : 0)
 							anchors.rightMargin: Kirigami.Units.largeSpacing
 							spacing: 1
 							PlasmaComponents3.Label {

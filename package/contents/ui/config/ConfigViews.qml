@@ -180,6 +180,15 @@ ConfigPage {
 				]
 			}
 			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
+				text: i18n("Event look")
+				configKey: 'eventLook'
+				model: [
+					{ value: 'solid', text: i18n("Filled in the event color") },
+					{ value: 'bar', text: i18n("All-day filled, timed light with a color bar") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Event text size")
 				configKey: 'eventFontScale'

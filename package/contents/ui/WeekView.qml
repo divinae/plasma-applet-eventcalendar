@@ -750,7 +750,9 @@ Item {
 						eventItem: bar.eventItem
 					}
 					// Light tint of the event color with a full-color stripe and theme text: reads better
-					// than a solid bar, also with pastel or (dark theme) darkened colors.
+					// than a solid bar, also with pastel or (dark theme) darkened colors. With the "bar"
+					// event look, all-day events are filled in their color instead (EventStyle).
+					readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
@@ -769,9 +771,10 @@ Item {
 					bottomLeftRadius: cutLeft ? 0 : cornerRadius
 					topRightRadius: cutRight ? 0 : cornerRadius
 					bottomRightRadius: cutRight ? 0 : cornerRadius
-					color: eventStyle.unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(eventStyle.color, appletConfig.darkTheme ? 0.3 : 0.22)
+					color: solid ? eventStyle.fillColor : eventStyle.unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(eventStyle.color, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: eventStyle.unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(eventStyle.color, 0.45)
+					border.color: solid || eventStyle.unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(eventStyle.color, 0.45)
+					readonly property color titleColor: solid ? eventStyle.textColor : Kirigami.Theme.textColor
 					clip: true
 					// Maybe, or out of office (hatched like Google Calendar). On the light tint, always in
 					// the event color (EventStyle.stripeColor is for filled bars).
@@ -780,12 +783,12 @@ Item {
 						anchors.fill: parent
 						anchors.margins: 1
 						radius: Math.max(0, parent.cornerRadius - 1)
-						stripeColor: parent.eventStyle.color
+						stripeColor: parent.solid ? parent.eventStyle.stripeColor : parent.eventStyle.color
 					}
 					// Stripe on the start side (not when the event began before this week), inset so it
 					// stays inside the rounded corners.
 					Rectangle {
-						visible: !parent.cutLeft
+						visible: !parent.cutLeft && !parent.solid
 						x: 3
 						y: 3
 						width: 3
@@ -807,12 +810,12 @@ Item {
 						anchors.left: parent.left
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter
-						anchors.leftMargin: 11
+						anchors.leftMargin: parent.solid ? 6 : 11
 						anchors.rightMargin: 4
 						PlasmaComponents3.Label {
 							width: parent.width
 							text: eventItem.summary
-							color: Kirigami.Theme.textColor
+							color: parent.parent.titleColor
 							font.family: appletConfig.eventFont.family
 							font.pointSize: appletConfig.eventFont.pointSize
 							font.weight: Font.DemiBold
@@ -822,7 +825,7 @@ Item {
 						PlasmaComponents3.Label {
 							width: parent.width
 							text: spanText
-							color: Kirigami.Theme.textColor
+							color: parent.parent.titleColor
 							opacity: 0.75
 							font: appletConfig.eventSmallFont
 							elide: Text.ElideRight

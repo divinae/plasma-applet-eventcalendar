@@ -39,8 +39,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   OpenWeatherMap / Weather Canada.
 - **Starts instantly and works offline**: the last loaded events are shown right away and stay
   visible offline, fetches are retried automatically, and a banner shows when it can't connect.
-- Invitations look like in Google Calendar (outlined / striped / struck through), icons for what
-  an event has set, adjustable event text size, event locations open in Google Maps, dark theme
+- Invitations look like in Google Calendar (outlined / striped / struck through), events filled
+  in their color or timed ones light with a color bar, icons for what an event has set, adjustable event text size, event locations open in Google Maps, dark theme
   friendly event colors, right-click menus on events, translated into 20 languages.
 
 ## Screenshots

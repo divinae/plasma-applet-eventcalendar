@@ -1,10 +1,12 @@
 import QtQuick
+import org.kde.kirigami as Kirigami
 
 import "Shared.js" as Shared
 
 // How an event looks in the views: its color (AppletConfig.eventColor) and the user's answer to
 // it, like Google Calendar: not (yet) a yes is outlined in the event color on the background,
-// maybe and out of office are striped (StripeFill), declined is struck through.
+// maybe and out of office are striped (StripeFill), declined is struck through. With the "bar"
+// event look (AppletConfig.barEventLook) timed events are a light tint with a bar in their color.
 QtObject {
 	property var eventItem: null
 
@@ -16,9 +18,14 @@ QtObject {
 	readonly property bool outOfOffice: !!eventItem && eventItem.eventType === 'outOfOffice'
 	readonly property bool striped: tentative || outOfOffice
 
-	readonly property color fillColor: appletConfig.eventFillColor(color, response)
-	readonly property color textColor: appletConfig.eventTextColor(color, response)
-	readonly property color outlineColor: appletConfig.eventOutlineColor(color, response)
+	readonly property bool allDay: !!eventItem && !!eventItem.start && !!eventItem.start.date && !eventItem.start.dateTime
+	// The bar in the event color (the view draws it on the start side).
+	readonly property bool showBar: appletConfig.barEventLook && !!eventItem && !allDay
+	readonly property bool tinted: showBar && !unconfirmed
+
+	readonly property color fillColor: tinted ? appletConfig.eventTintColor(color) : appletConfig.eventFillColor(color, response)
+	readonly property color textColor: showBar ? Kirigami.Theme.textColor : appletConfig.eventTextColor(color, response)
+	readonly property color outlineColor: tinted && !declined ? fillColor : appletConfig.eventOutlineColor(color, response)
 	// Maybe: stripes in the event color; out of office: in the text color.
 	readonly property color stripeColor: tentative ? color : textColor
 }
