@@ -186,7 +186,7 @@ Item {
 						radius: 8
 						color: eventStyle.fillColor
 						border.width: 1
-						border.color: eventStyle.outlineColor
+						border.color: eventStyle.showBar ? "transparent" : eventStyle.outlineColor // ColorBarFill draws it
 						opacity: (past ? 0.6 : 1) * (tileMouse.containsMouse ? 0.85 : 1)
 
 						ColorBarFill {

@@ -71,7 +71,7 @@ LinkRect {
 	readonly property var meetingLink: MeetingLink.find(model)
 	radius: 8
 	border.width: 1
-	border.color: eventStyle.outlineColor
+	border.color: eventStyle.showBar ? "transparent" : eventStyle.outlineColor // ColorBarFill draws it
 	backgroundColor: eventStyle.fillColor
 	backgroundHoverColor: eventStyle.unconfirmed ? appletConfig.agendaHoverBackground : Qt.darker(eventStyle.fillColor, 1.08)
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).

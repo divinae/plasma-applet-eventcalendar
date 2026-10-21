@@ -56,7 +56,7 @@ Rectangle {
 	bottomRightRadius: !cuttable ? undefined : cutRight || cutBottom ? 0 : cornerRadius
 	color: eventStyle.fillColor
 	border.width: 1
-	border.color: eventStyle.outlineColor
+	border.color: showBar ? "transparent" : eventStyle.outlineColor // ColorBarFill draws it
 
 	// "Bar" event look: the bar in the event color along the start side (not when the event continues
 	// from before what's shown).
