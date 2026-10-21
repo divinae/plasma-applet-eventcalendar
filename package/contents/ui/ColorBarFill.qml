@@ -11,8 +11,8 @@ Item {
 	property color fillColor
 	property color borderColor
 	property real barWidth: 5
-	// Not yet answered: the bar outlined in its color instead of filled.
-	property bool hollow: false
+	// Not yet answered: the shape outlined in the bar color around a fill that may be transparent.
+	property bool outlined: false
 	// The event item's corner radii.
 	property real topLeftRadius: 0
 	property real bottomLeftRadius: 0
@@ -24,7 +24,7 @@ Item {
 	// Only the left part (bar plus the rounding of the left corners): under the right corners it
 	// would show through the fill's anti-aliased edge as a second outline.
 	Rectangle {
-		visible: !colorBarFill.hollow
+		visible: !colorBarFill.outlined
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
@@ -34,7 +34,7 @@ Item {
 		bottomLeftRadius: colorBarFill.bottomLeftRadius
 	}
 	Rectangle {
-		visible: !colorBarFill.hollow
+		visible: !colorBarFill.outlined
 		anchors.fill: parent
 		anchors.leftMargin: colorBarFill.barWidth
 		color: colorBarFill.fillColor
@@ -44,10 +44,10 @@ Item {
 		bottomRightRadius: colorBarFill.bottomRightRadius
 	}
 
-	// Hollow (the inside may be transparent): the whole shape outlined in the bar color, and the
-	// bar's inner edge as a line.
+	// Outlined (the inside may be transparent): the whole shape outlined in the bar color, and the
+	// bar cut from the same rounded shape, so it follows the left corners.
 	Rectangle {
-		visible: colorBarFill.hollow
+		visible: colorBarFill.outlined
 		anchors.fill: parent
 		color: colorBarFill.fillColor
 		border.width: 1
@@ -57,12 +57,19 @@ Item {
 		topRightRadius: colorBarFill.topRightRadius
 		bottomRightRadius: colorBarFill.bottomRightRadius
 	}
-	Rectangle {
-		visible: colorBarFill.hollow
-		x: colorBarFill.barWidth
-		y: 1
-		width: 1
-		height: Math.max(0, parent.height - 2)
-		color: colorBarFill.barColor
+	Item {
+		visible: colorBarFill.outlined
+		width: colorBarFill.barWidth
+		height: parent.height
+		clip: true
+		Rectangle {
+			width: colorBarFill.width
+			height: colorBarFill.height
+			color: colorBarFill.barColor
+			topLeftRadius: colorBarFill.topLeftRadius
+			bottomLeftRadius: colorBarFill.bottomLeftRadius
+			topRightRadius: colorBarFill.topRightRadius
+			bottomRightRadius: colorBarFill.bottomRightRadius
+		}
 	}
 }

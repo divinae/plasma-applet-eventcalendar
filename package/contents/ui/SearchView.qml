@@ -192,7 +192,7 @@ Item {
 						ColorBarFill {
 							visible: eventRow.eventStyle.showBar // "Bar" event look
 							barColor: eventRow.eventStyle.barColor
-							hollow: eventRow.eventStyle.unconfirmed
+							outlined: eventRow.eventStyle.unconfirmed
 							fillColor: eventRow.eventStyle.fillColor
 							borderColor: eventRow.eventStyle.outlineColor
 							topLeftRadius: eventRow.radius
