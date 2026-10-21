@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-20 15:54+0200\n"
+"POT-Creation-Date: 2026-10-21 09:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -502,6 +502,14 @@ msgstr "会議の開始時に会議リンクを開く"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "承諾した会議または主催する会議で、終了済みにしていないもの。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Pause music and videos when joining a meeting"
+msgstr "会議に参加するときに音楽や動画を一時停止"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts."
+msgstr "再生中のプレーヤー（例：Spotify、Elisa、ブラウザーの動画）を、参加ボタンで会議を開いたときや会議の開始時に自動で開いたときに一時停止します。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"

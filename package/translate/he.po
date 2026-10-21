@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-20 15:54+0200\n"
+"POT-Creation-Date: 2026-10-21 09:38+0200\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -551,6 +551,18 @@ msgstr "פתיחת קישור הפגישה כשהפגישה מתחילה"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "לפגישות שאישרת או שארגנת, שלא סומנו כהסתיימו."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Pause music and videos when joining a meeting"
+msgstr "השהיית מוזיקה וסרטונים בהצטרפות לפגישה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Players that are playing (eg: Spotify, Elisa, a video in the browser), when "
+"a Join button opens a meeting or it opens when the meeting starts."
+msgstr ""
+"נגנים שמנגנים (למשל Spotify,‏ Elisa, סרטון בדפדפן), כשכפתור הצטרפות פותח "
+"פגישה או כשהיא נפתחת בתחילתה."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"

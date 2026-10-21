@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-20 15:54+0200\n"
+"POT-Creation-Date: 2026-10-21 09:38+0200\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -556,6 +556,18 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Za sestanke, ki ste jih sprejeli ali jih organizirate in niso označeni kot "
 "končani."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Pause music and videos when joining a meeting"
+msgstr "Ustavi glasbo in videe ob pridružitvi sestanku"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Players that are playing (eg: Spotify, Elisa, a video in the browser), when "
+"a Join button opens a meeting or it opens when the meeting starts."
+msgstr ""
+"Predvajalniki, ki predvajajo (npr. Spotify, Elisa, video v brskalniku), ko "
+"gumb Pridruži odpre sestanek ali se ta odpre ob začetku."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"

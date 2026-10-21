@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-20 15:54+0200\n"
+"POT-Creation-Date: 2026-10-21 09:38+0200\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -553,6 +553,19 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Pour les réunions que vous avez acceptées ou que vous organisez, non "
 "marquées comme terminées."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Pause music and videos when joining a meeting"
+msgstr "Mettre en pause la musique et les vidéos en rejoignant une réunion"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Players that are playing (eg: Spotify, Elisa, a video in the browser), when "
+"a Join button opens a meeting or it opens when the meeting starts."
+msgstr ""
+"Lecteurs en cours de lecture (ex. : Spotify, Elisa, une vidéo dans le "
+"navigateur), quand un bouton Rejoindre ouvre une réunion ou qu’elle s’ouvre "
+"à son début."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"

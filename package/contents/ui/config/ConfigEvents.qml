@@ -338,6 +338,12 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
+				text: i18n("Pause music and videos when joining a meeting")
+				description: i18n("Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts.")
+				configKey: 'meetingPauseMedia'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
 				id: meetingDoNotDisturb
 				text: i18n("Do Not Disturb during meetings")
 				description: i18n("Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off.")

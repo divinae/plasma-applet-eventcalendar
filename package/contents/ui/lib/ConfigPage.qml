@@ -148,6 +148,8 @@ KCM.SimpleKCM {
 	property var cfg_invitationNotificationEnabledDefault
 	property var cfg_invitationsNotified
 	property var cfg_invitationsNotifiedDefault
+	property var cfg_meetingPauseMedia
+	property var cfg_meetingPauseMediaDefault
 	property var cfg_meetingAutoJoin
 	property var cfg_meetingAutoJoinDefault
 	property var cfg_meetingDoNotDisturb

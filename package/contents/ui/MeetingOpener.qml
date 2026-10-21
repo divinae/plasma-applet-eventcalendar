@@ -15,11 +15,27 @@ QtObject {
 	readonly property string meetCommand: String(plasmoid.configuration.meetLinkCommand || '').trim()
 	readonly property string meetAuthUser: String(plasmoid.configuration.meetLinkAuthUser || '').trim()
 	readonly property string launcherPath: ScriptPath.scriptPath("launch_detached.py")
+	readonly property string pauseMediaPath: ScriptPath.scriptPath("pause_media.py")
+
+	// Pauses the media players that are playing (scripts/pause_media.py, MPRIS), if set.
+	function pauseMedia() {
+		if (!plasmoid.configuration.meetingPauseMedia) {
+			return
+		}
+		executable.execArgv(['python3', '-I', pauseMediaPath], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			if (exitCode !== 0) {
+				logger.log('pausing media failed', exitCode)
+			} else if (Number(stdout) > 0) {
+				logger.log('paused media players:', Number(stdout))
+			}
+		})
+	}
 
 	function open(url) {
 		if (!url) {
 			return
 		}
+		pauseMedia()
 		if (!MeetingLink.isGoogleMeet(url)) {
 			Shared.openExternalUrl(url)
 			return
