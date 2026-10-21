@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.3.1
+    1.4.0
 
 **License**
 
@@ -74,7 +74,7 @@ Google Calendar
 Meetings
 - Join buttons for Google Meet, Zoom, Teams and other links; Google Meet links can open in a Meet web app with a chosen Google account
 - The panel clock shows the next meeting ("in 5 min" / "12 min left"); a meeting that ended early can be marked as ended
-- Optional Do Not Disturb during meetings and auto-join; overlapping meetings are marked
+- Music and videos pause when you join; optional Do Not Disturb during meetings and auto-join; overlapping meetings are marked
 
 Notifications (KDE's notification system)
 - Reminders before events (with Snooze, optionally hidden after N seconds) and when an event starts (optionally critical / persistent)
@@ -94,17 +94,21 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.3.1)**
+**Changelog (1.4.0)**
 
 ```
-- Fix: the Views, Clock, Events and Weather settings pages were blank with older Kirigami Addons (eg: Debian 14)
-- The widget's About page links to the bug tracker
+- New event look: all-day events filled, timed events a light tint with a color bar (Settings > Views > Event look)
+- Unanswered invitations: a small question mark icon; with the bar look also outlined and titled in the event color
+- Music and videos pause when you join a meeting (Settings > Events > Meetings)
+- Month view: event rows keep clear of the cell edges and today's frame
+- New defaults (only settings never changed): Month view, Open-Meteo weather, events fetched every 10 minutes, "event starts" not critical, Ocean sounds
+- Fix: scrolling on the clock changes the volume again (Plasma 6 has no qdbus)
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.3.1-plasma6.0.plasmoid` from the
-  [v1.3.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.3.1),
+- **Product file:** `eventcalendar-v1.4.0-plasma6.0.plasmoid` from the
+  [v1.4.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.4.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`

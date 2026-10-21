@@ -29,8 +29,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Day view, the event details, notifications and the panel's right-click menu; Google Meet links
   can open in a Meet web app with a chosen Google account. The panel clock shows the next meeting
   ("in 5 min" / "12 min left", or above the time in a vertical panel); a meeting that ended early
-  can be marked as ended. Optional Do Not Disturb during meetings and auto-join; overlapping
-  meetings are marked.
+  can be marked as ended. Music and videos pause when you join; optional Do Not Disturb during
+  meetings and auto-join; overlapping meetings are marked.
 - **Notifications** through KDE's notification system: reminders before events (with Snooze,
   optionally hidden after N seconds), when an event starts (optionally critical / persistent),
   new invitations for today (with Yes / Maybe / No) and a daily agenda, each configurable in
@@ -61,9 +61,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.3.1-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.4.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.3.1-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.4.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a

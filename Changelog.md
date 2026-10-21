@@ -1,3 +1,22 @@
+## v1.4.0 - October 21 2026
+
+### Views
+* New event look (Settings > Views > Event look): all-day events filled in their color, timed events a light tint with a bar in their color along the left edge. Pale and grey colors get a darker bar and an outline so they stand out.
+* Invitations not answered yet: a small question mark icon (month, week, day and agenda views); with the bar look they are also outlined, see-through and titled in the event color.
+* Month view: event rows keep clear of the cell edges and today's frame.
+
+### Meetings
+* Music and videos pause when you join a meeting (Join buttons and auto-join; Settings > Events > Meetings, on by default). Players on other devices (KDE Connect) are left alone.
+
+### Defaults (only settings never changed)
+* Opens in the Month view (was the Agenda).
+* Weather from Open-Meteo (free, no API key). An OpenWeatherMap city set without picking a service keeps OpenWeatherMap.
+* Events are fetched every 10 minutes (was 20).
+* "Event starts" notifications are no longer critical (those get through Do Not Disturb).
+* The timer is hidden in the Agenda.
+* Sounds from Plasma's Ocean theme (the Oxygen and freedesktop files are often missing).
+* Scrolling on the clock changes the volume again: it used qdbus, which Plasma 6 doesn't install.
+
 ## v1.3.1 - October 20 2026
 
 ### Fixes
