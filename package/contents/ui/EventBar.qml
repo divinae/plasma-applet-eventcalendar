@@ -1,5 +1,8 @@
 import QtQuick
+import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
+
+import "Shared.js" as Shared
 
 // An event as a bar or block in the month and week views: filled and outlined in the event color
 // (EventStyle: outlined, striped or struck through by the user's answer), with its title. Click
@@ -82,10 +85,24 @@ Rectangle {
 		stripeColor: eventBar.eventStyle.stripeColor
 	}
 
+	// Invitation not answered yet: a small question mark before the title (Shared.EVENT_INDICATOR_ICONS).
+	readonly property bool showNeedsAction: showTitle && eventStyle.response === 'needsAction'
+	Kirigami.Icon {
+		id: needsActionIcon
+		visible: eventBar.showNeedsAction
+		x: eventBar.showBar ? 8 : 4
+		anchors.verticalCenter: parent.verticalCenter
+		width: Math.min(Kirigami.Units.iconSizes.small, parent.height - 4)
+		height: width
+		source: Shared.EVENT_INDICATOR_ICONS.needsAction
+		isMask: true
+		color: eventBar.eventStyle.textColor
+	}
+
 	Text {
 		visible: eventBar.showTitle
 		anchors.fill: parent
-		anchors.leftMargin: eventBar.showBar ? 9 : 4
+		anchors.leftMargin: (eventBar.showBar ? 9 : 4) + (eventBar.showNeedsAction ? needsActionIcon.width + 2 : 0)
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
 		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""

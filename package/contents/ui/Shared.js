@@ -246,6 +246,7 @@ function conflictTitles(eventItem) {
 // besides the user), 'repeat' and 'description'. Keys in hide are left out, eg: when the view
 // already shows the location. attendees may be an array or a ListModel (agenda).
 var EVENT_INDICATOR_ICONS = {
+	needsAction: 'dialog-question',
 	outOfOffice: 'im-user-away',
 	focusTime: 'audio-headphones',
 	conflict: 'dialog-warning',
@@ -287,6 +288,7 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 			keys.push(key)
 		}
 	}
+	add('needsAction', myResponse(eventItem) === 'needsAction') // Invitation not answered yet
 	add('outOfOffice', eventItem.eventType === 'outOfOffice')
 	add('focusTime', eventItem.eventType === 'focusTime')
 	add('conflict', conflictTitles(eventItem).length > 0)

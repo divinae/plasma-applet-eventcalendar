@@ -42,7 +42,10 @@ assert.deepStrictEqual(keys(Object.assign({ eventType: 'outOfOffice' }, overlapp
 assert.deepStrictEqual(keys({ eventType: 'focusTime' }), ['focusTime'])
 assert.deepStrictEqual(keys({ eventType: 'focusTime' }, false, { focusTime: true }), [], 'focus time hidden')
 assert.deepStrictEqual(keys({ eventType: 'default' }), [])
-for (const k of ['outOfOffice', 'focusTime', 'conflict', 'location', 'meeting', 'guests', 'repeat', 'description']) {
+assert.deepStrictEqual(keys({ attendees: [{ self: true, responseStatus: 'needsAction' }, { email: 'a@example.com' }] }), ['needsAction', 'guests'], 'not answered first')
+assert.deepStrictEqual(keys({ attendees: [{ self: true, responseStatus: 'accepted' }] }), [], 'answered: no icon')
+assert.deepStrictEqual(keys({ attendees: [{ self: true, responseStatus: 'needsAction' }] }, false, { needsAction: true }), [], 'not answered hidden')
+for (const k of ['needsAction', 'outOfOffice', 'focusTime', 'conflict', 'location', 'meeting', 'guests', 'repeat', 'description']) {
 	assert.ok(S.EVENT_INDICATOR_ICONS[k], 'icon for ' + k)
 }
 console.log('event_indicators: ok')
