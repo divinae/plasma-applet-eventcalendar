@@ -29,9 +29,9 @@ QtObject {
 	// Bar look, not yet answered: no fill, the cell shows through (outline and bar only).
 	readonly property color fillColor: tinted ? appletConfig.eventTintColor(barColor)
 		: showBar && unconfirmed ? "transparent" : appletConfig.eventFillColor(color, response)
-	// Bar look: not yet answered has its title in the event color (on the background, outlined), so
+	// Bar look: not yet answered (not maybe) has its title in the event color (on the background, outlined), so
 	// it stands apart from the tinted events.
-	readonly property color textColor: showBar ? (unconfirmed ? appletConfig.eventColoredTextColor(barColor) : Kirigami.Theme.textColor) : appletConfig.eventTextColor(color, response)
+	readonly property color textColor: showBar ? (unconfirmed && !tentative ? appletConfig.eventColoredTextColor(barColor) : Kirigami.Theme.textColor) : appletConfig.eventTextColor(color, response)
 	readonly property color outlineColor: tinted && !declined ? appletConfig.eventTintOutlineColor(barColor) : appletConfig.eventOutlineColor(barColor, response)
 	// Maybe: stripes in the event color; out of office: in the text color.
 	readonly property color stripeColor: tentative ? barColor : textColor
