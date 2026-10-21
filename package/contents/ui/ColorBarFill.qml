@@ -20,6 +20,9 @@ Item {
 	property real bottomRightRadius: 0
 
 	anchors.fill: parent
+	// One layer: faded (past events, dimmed days) as a whole. Otherwise each part gets the opacity on
+	// its own and the bar layer shows through the fill as a wider patch.
+	layer.enabled: visible
 
 	// Only the left part (bar plus the rounding of the left corners): under the right corners it
 	// would show through the fill's anti-aliased edge as a second outline.
