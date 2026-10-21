@@ -184,8 +184,8 @@ ConfigPage {
 				text: i18n("Event look")
 				configKey: 'eventLook'
 				model: [
-					{ value: 'solid', text: i18n("Filled in the event color") },
 					{ value: 'bar', text: i18n("All-day filled, timed light with a color bar") },
+					{ value: 'solid', text: i18n("Filled in the event color") },
 				]
 			}
 			FormCard.FormDelegateSeparator {}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-21 09:38+0200\n"
+"POT-Creation-Date: 2026-10-21 10:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -961,11 +961,11 @@ msgid "Event look"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Filled in the event color"
+msgid "All-day filled, timed light with a color bar"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "All-day filled, timed light with a color bar"
+msgid "Filled in the event color"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml

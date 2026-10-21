@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-21 09:38+0200\n"
+"POT-Creation-Date: 2026-10-21 10:11+0200\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -1091,12 +1091,12 @@ msgid "Event look"
 msgstr "Aussehen der Termine"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Filled in the event color"
-msgstr "In der Terminfarbe gefüllt"
-
-#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day filled, timed light with a color bar"
 msgstr "Ganztägig gefüllt, mit Uhrzeit hell mit Farbbalken"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Filled in the event color"
+msgstr "In der Terminfarbe gefüllt"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
