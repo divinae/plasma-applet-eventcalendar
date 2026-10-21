@@ -813,7 +813,12 @@ Item {
 						anchors.leftMargin: parent.solid ? 6 : 11
 						anchors.rightMargin: 4
 						PlasmaComponents3.Label {
+							id: allDayTitle
+							// Invitation not answered yet: the question mark before the title (Shared.isAwaitingAnswer).
+							readonly property bool awaitingAnswer: Shared.isAwaitingAnswer(parent.parent.eventStyle.response)
+							readonly property int iconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, height) / 2)
 							width: parent.width
+							leftPadding: awaitingAnswer ? iconSize + 3 : 0
 							text: eventItem.summary
 							color: parent.parent.titleColor
 							font.family: appletConfig.eventFont.family
@@ -821,6 +826,16 @@ Item {
 							font.weight: Font.DemiBold
 							font.strikeout: eventStyle.declined
 							elide: Text.ElideRight
+							Kirigami.Icon {
+								visible: allDayTitle.awaitingAnswer
+								anchors.verticalCenter: parent.verticalCenter
+								width: allDayTitle.iconSize
+								height: width
+								roundToIconSize: false
+								source: Shared.EVENT_INDICATOR_ICONS.needsAction
+								isMask: true
+								color: allDayTitle.color
+							}
 						}
 						PlasmaComponents3.Label {
 							width: parent.width

@@ -4,7 +4,8 @@ import org.kde.kirigami as Kirigami
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 
-// Small icons for what an event has set (place, join link, guests, repeats, notes), shown after
+// Small icons for what an event is or has set (not answered yet, place, join link, guests, repeats,
+// notes), shown after
 // its time. Views hide the ones they already show, eg: the location as text or a Join button.
 Row {
 	id: indicators
@@ -15,6 +16,7 @@ Row {
 	property bool showMeeting: true
 	property bool showDescription: true
 	property bool showRepeat: true
+	property bool showNeedsAction: true
 	// Only as many icons as fit in this width.
 	property real maxWidth: Infinity
 
@@ -23,6 +25,7 @@ Row {
 		meeting: !showMeeting,
 		description: !showDescription,
 		repeat: !showRepeat,
+		needsAction: !showNeedsAction,
 	})
 	readonly property var shownKeys: {
 		var fit = Math.floor((maxWidth + spacing) / (iconSize + spacing))

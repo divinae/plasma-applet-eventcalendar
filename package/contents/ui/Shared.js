@@ -240,8 +240,9 @@ function conflictTitles(eventItem) {
 	return titles
 }
 
-// What an event is or has set, as small icons after its time: 'outOfOffice' / 'focusTime' (Google
-// event types, see EventTypes.js), 'conflict' (overlaps another meeting),
+// What an event is or has set, as small icons after its time: 'needsAction' (an invitation not
+// answered yet, see isAwaitingAnswer; EventBar shows its icon before the title instead),
+// 'outOfOffice' / 'focusTime' (Google event types, see EventTypes.js), 'conflict' (overlaps another meeting),
 // 'location', 'meeting' (a join link, found by the caller with MeetingLink.find), 'guests' (anyone
 // besides the user), 'repeat' and 'description'. Keys in hide are left out, eg: when the view
 // already shows the location. attendees may be an array or a ListModel (agenda).
@@ -265,6 +266,10 @@ function eventIndicatorIconSize(key, size) {
 	var scale = EVENT_INDICATOR_SCALE[key] || 1
 	return scale === 1 ? size : 2 * Math.round(size * scale / 2)
 }
+// An invitation the user hasn't answered yet (the question mark icon), from Shared.myResponse.
+function isAwaitingAnswer(response) {
+	return response === 'needsAction'
+}
 function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 	if (!eventItem) {
 		return []
@@ -272,12 +277,15 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 	hide = hide || {}
 	var attendees = eventItem.attendees
 	var guestCount = 0
+	var response = ''
 	if (attendees) {
 		var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
 		var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
 		for (var i = 0; i < count; i++) {
 			var attendee = isModel ? attendees.get(i) : attendees[i]
-			if (attendee && !attendee.self && !attendee.resource) {
+			if (attendee && attendee.self) {
+				response = attendee.organizer ? '' : String(attendee.responseStatus || '') // As myResponse
+			} else if (attendee && !attendee.resource) {
 				guestCount++
 			}
 		}
@@ -288,7 +296,7 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 			keys.push(key)
 		}
 	}
-	add('needsAction', myResponse(eventItem) === 'needsAction') // Invitation not answered yet
+	add('needsAction', isAwaitingAnswer(response))
 	add('outOfOffice', eventItem.eventType === 'outOfOffice')
 	add('focusTime', eventItem.eventType === 'focusTime')
 	add('conflict', conflictTitles(eventItem).length > 0)

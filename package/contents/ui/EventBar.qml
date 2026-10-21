@@ -85,15 +85,20 @@ Rectangle {
 		stripeColor: eventBar.eventStyle.stripeColor
 	}
 
-	// Invitation not answered yet: a small question mark before the title (Shared.EVENT_INDICATOR_ICONS).
-	readonly property bool showNeedsAction: showTitle && eventStyle.response === 'needsAction'
+	// Invitation not answered yet: a small question mark before the title (Shared.isAwaitingAnswer),
+	// once per event (not again on a bar continuing from the previous week row) and only where the
+	// title keeps some room. An even size, like EventIndicators.
+	readonly property int needsActionIconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, height - 4) / 2)
+	readonly property bool showNeedsAction: showTitle && !cutLeft && Shared.isAwaitingAnswer(eventStyle.response)
+		&& width >= needsActionIconSize * 3 + 12
 	Kirigami.Icon {
 		id: needsActionIcon
 		visible: eventBar.showNeedsAction
 		x: eventBar.showBar ? 8 : 4
 		anchors.verticalCenter: parent.verticalCenter
-		width: Math.min(Kirigami.Units.iconSizes.small, parent.height - 4)
+		width: eventBar.needsActionIconSize
 		height: width
+		roundToIconSize: false
 		source: Shared.EVENT_INDICATOR_ICONS.needsAction
 		isMask: true
 		color: eventBar.eventStyle.textColor
