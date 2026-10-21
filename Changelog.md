@@ -1,3 +1,8 @@
+## v1.4.1 - October 21 2026
+
+* The new event look (all-day events filled, timed events a light tint with a color bar) is the default; "Filled in the event color" is still in Settings > Views > Event look.
+* Week and day views: the same gap between the color bar and the text as in the other views.
+
 ## v1.4.0 - October 21 2026
 
 ### Views

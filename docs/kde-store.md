@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.4.0
+    1.4.1
 
 **License**
 
@@ -94,21 +94,17 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.4.0)**
+**Changelog (1.4.1)**
 
 ```
-- New event look: all-day events filled, timed events a light tint with a color bar (Settings > Views > Event look)
-- Unanswered invitations: a small question mark icon; with the bar look also outlined and titled in the event color
-- Music and videos pause when you join a meeting (Settings > Events > Meetings)
-- Month view: event rows keep clear of the cell edges and today's frame
-- New defaults (only settings never changed): Month view, Open-Meteo weather, events fetched every 10 minutes, "event starts" not critical, Ocean sounds
-- Fix: scrolling on the clock changes the volume again (Plasma 6 has no qdbus)
+- The new event look is the default: all-day events filled, timed events a light tint with a color bar ("Filled in the event color" is still in Settings > Views > Event look)
+- Week and day views: the same gap between the color bar and the text as in the other views
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.4.0-plasma6.0.plasmoid` from the
-  [v1.4.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.4.0),
+- **Product file:** `eventcalendar-v1.4.1-plasma6.0.plasmoid` from the
+  [v1.4.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.4.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`
