@@ -1216,7 +1216,8 @@ Item {
 										z: 1 // Above the block's mouse area: location links take their clicks
 										anchors.fill: parent
 										anchors.margins: 2
-										anchors.leftMargin: 6
+										// Clear of the color bar (bar look), like the month view's rows.
+										anchors.leftMargin: eventBlock.showBar ? 9 : 6
 										anchors.rightMargin: joinPill.visible ? joinPill.width + Kirigami.Units.smallSpacing * 2 : 2
 										clip: true
 										PlasmaComponents3.Label {
