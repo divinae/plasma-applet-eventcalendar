@@ -63,7 +63,7 @@ Rectangle {
 	readonly property bool showBar: eventStyle.showBar && !cutLeft
 	ColorBarFill {
 		visible: eventBar.showBar
-		barColor: eventBar.eventStyle.color
+		barColor: eventBar.eventStyle.barColor
 		fillColor: eventBar.eventStyle.fillColor
 		borderColor: eventBar.eventStyle.outlineColor
 		topLeftRadius: eventBar.cuttable && eventBar.cutTop ? 0 : eventBar.cornerRadius

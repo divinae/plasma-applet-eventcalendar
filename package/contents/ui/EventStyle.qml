@@ -23,9 +23,12 @@ QtObject {
 	readonly property bool showBar: appletConfig.barEventLook && !!eventItem && !allDay
 	readonly property bool tinted: showBar && !unconfirmed
 
-	readonly property color fillColor: tinted ? appletConfig.eventTintColor(color) : appletConfig.eventFillColor(color, response)
+	// The bar, and the base of the tint and the outline (pale colors darker, AppletConfig.eventBarColor).
+	readonly property color barColor: showBar ? appletConfig.eventBarColor(color) : color
+
+	readonly property color fillColor: tinted ? appletConfig.eventTintColor(barColor) : appletConfig.eventFillColor(color, response)
 	readonly property color textColor: showBar ? Kirigami.Theme.textColor : appletConfig.eventTextColor(color, response)
-	readonly property color outlineColor: tinted && !declined ? fillColor : appletConfig.eventOutlineColor(color, response)
+	readonly property color outlineColor: tinted && !declined ? appletConfig.eventTintOutlineColor(barColor) : appletConfig.eventOutlineColor(barColor, response)
 	// Maybe: stripes in the event color; out of office: in the text color.
-	readonly property color stripeColor: tentative ? color : textColor
+	readonly property color stripeColor: tentative ? barColor : textColor
 }

@@ -83,7 +83,7 @@ LinkRect {
 	// "Bar" event look: the bar in the event color along the left edge (EventStyle.showBar).
 	ColorBarFill {
 		visible: agendaEventItem.eventStyle.showBar
-		barColor: agendaEventItem.eventStyle.color
+		barColor: agendaEventItem.eventStyle.barColor
 		fillColor: agendaEventItem.color // With the hover color
 		borderColor: agendaEventItem.eventStyle.outlineColor
 		topLeftRadius: agendaEventItem.radius

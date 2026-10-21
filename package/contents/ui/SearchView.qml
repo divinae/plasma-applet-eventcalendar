@@ -191,7 +191,7 @@ Item {
 
 						ColorBarFill {
 							visible: eventRow.eventStyle.showBar // "Bar" event look
-							barColor: eventRow.eventStyle.color
+							barColor: eventRow.eventStyle.barColor
 							fillColor: eventRow.eventStyle.fillColor
 							borderColor: eventRow.eventStyle.outlineColor
 							topLeftRadius: eventRow.radius

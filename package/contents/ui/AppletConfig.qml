@@ -90,8 +90,22 @@ QtObject {
 	// Settings > Views > Event look = "All-day filled, timed light with a color bar": timed events
 	// are a light tint of their color (opaque, theme text) with a bar in the full color.
 	readonly property bool barEventLook: plasmoid.configuration.eventLook === 'bar'
+	// The bar's color: the event color, but pale ones (light greys, pastels) darker in a light theme,
+	// so the bar, the tint and the outline stand out from the background.
+	function eventBarColor(color) {
+		var c = Qt.color(color)
+		if (darkTheme || c.hslLightness <= 0.55) {
+			return c
+		}
+		return Qt.hsla(Math.max(0, c.hslHue), c.hslSaturation, 0.55, 1)
+	}
 	function eventTintColor(color) {
-		return Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(color, darkTheme ? 0.32 : 0.24))
+		return Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(color, darkTheme ? 0.38 : 0.3))
+	}
+	// Its outline: between the tint and the full color, so pale colors (eg: banana, graphite) still
+	// stand out from the background and from tinted cells (today, weekends).
+	function eventTintOutlineColor(color) {
+		return Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(color, 0.6))
 	}
 	function eventFillColor(color, response) {
 		return Shared.isUnconfirmedResponse(response) ? Kirigami.Theme.backgroundColor : color
