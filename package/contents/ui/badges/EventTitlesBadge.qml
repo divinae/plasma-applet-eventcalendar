@@ -67,6 +67,9 @@ Item {
 					return eventTitlesBadge.eventAt(index)
 				}
 				titleFont: eventTitlesBadge.titleFont
+				// Today: events that already ended are dimmed like past days (those dim the whole cell).
+				dimmed: !dayStyle.isPast && !!eventItem && !!eventItem.endDateTime && typeof timeModel !== "undefined"
+					&& eventItem.endDateTime <= timeModel.currentTime
 				width: parent.width
 				height: eventTitlesBadge.rowHeight
 				dragSource: !!calendarView && calendarView.isDragSource(eventItem)

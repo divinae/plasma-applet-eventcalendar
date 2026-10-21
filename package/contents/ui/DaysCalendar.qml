@@ -566,8 +566,9 @@ Item {
 			cutLeft: span.continuesBefore
 			cutRight: span.continuesAfter
 			stripeRadius: cutLeft || cutRight ? 0 : Math.max(0, cornerRadius - 1)
-			// Past days are dimmed like the cells.
-			dimmed: typeof timeModel !== "undefined" && Shared.isPastDay(new Date(span.lastTime), timeModel.currentTime)
+			// Dimmed like past days once over (also when it ended earlier today).
+			dimmed: typeof timeModel !== "undefined" && (Shared.isPastDay(new Date(span.lastTime), timeModel.currentTime)
+				|| (!!eventItem.endDateTime && eventItem.endDateTime <= timeModel.currentTime))
 			dragSource: daysCalendar.isDragSource(eventItem)
 			dragCopy: !!daysCalendar.eventDrag && daysCalendar.eventDrag.copy
 			dragPending: !!daysCalendar.eventDrag && daysCalendar.eventDrag.pending
