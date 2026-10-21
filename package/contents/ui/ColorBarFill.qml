@@ -11,6 +11,8 @@ Item {
 	property color fillColor
 	property color borderColor
 	property real barWidth: 5
+	// Not yet answered: the bar outlined in its color instead of filled.
+	property bool hollow: false
 	// The event item's corner radii.
 	property real topLeftRadius: 0
 	property real bottomLeftRadius: 0
@@ -26,7 +28,9 @@ Item {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		width: Math.min(parent.width, colorBarFill.barWidth + Math.max(colorBarFill.topLeftRadius, colorBarFill.bottomLeftRadius) + 1)
-		color: colorBarFill.barColor
+		color: colorBarFill.hollow ? colorBarFill.fillColor : colorBarFill.barColor
+		border.width: colorBarFill.hollow ? 1 : 0
+		border.color: colorBarFill.barColor
 		topLeftRadius: colorBarFill.topLeftRadius
 		bottomLeftRadius: colorBarFill.bottomLeftRadius
 	}

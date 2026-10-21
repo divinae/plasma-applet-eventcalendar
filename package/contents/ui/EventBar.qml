@@ -64,6 +64,7 @@ Rectangle {
 	ColorBarFill {
 		visible: eventBar.showBar
 		barColor: eventBar.eventStyle.barColor
+		hollow: eventBar.eventStyle.unconfirmed
 		fillColor: eventBar.eventStyle.fillColor
 		borderColor: eventBar.eventStyle.outlineColor
 		topLeftRadius: eventBar.cuttable && eventBar.cutTop ? 0 : eventBar.cornerRadius

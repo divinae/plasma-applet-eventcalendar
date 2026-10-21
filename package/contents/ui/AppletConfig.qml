@@ -99,6 +99,13 @@ QtObject {
 		}
 		return Qt.hsla(Math.max(0, c.hslHue), c.hslSaturation, 0.55, 1)
 	}
+	// Text in the event's color (bar look, not yet answered, like Google Calendar): dark enough to
+	// read on the background, or light enough in a dark theme.
+	function eventColoredTextColor(color) {
+		var c = Qt.color(color)
+		var lightness = darkTheme ? Math.max(c.hslLightness, 0.72) : Math.min(c.hslLightness, 0.4)
+		return Qt.hsla(Math.max(0, c.hslHue), c.hslSaturation, lightness, 1)
+	}
 	function eventTintColor(color) {
 		return Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(color, darkTheme ? 0.38 : 0.3))
 	}
