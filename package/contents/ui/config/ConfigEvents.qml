@@ -65,7 +65,7 @@ ConfigPage {
 		property string label
 		property string sfxEnabledKey
 		property string sfxPathKey
-		property string sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
+		property string sfxPathDefaultValue: '/usr/share/sounds/ocean/stereo/message-new-instant.oga'
 		background: null
 		contentItem: RowLayout {
 			spacing: Kirigami.Units.largeSpacing

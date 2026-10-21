@@ -22,6 +22,15 @@ QtObject {
 			logMigration('popupMode year => month')
 		}
 
+		// 1.4: Open-Meteo became the default weather service (was OpenWeatherMap). Keep OpenWeatherMap
+		// for those who set its city but never picked a service (the old default isn't saved).
+		if (plasmoid.configuration.weatherService === 'OpenMeteo'
+			&& !plasmoid.configuration.openMeteoLatitude && !plasmoid.configuration.openMeteoLongitude
+			&& plasmoid.configuration.openWeatherMapCityId > 0) {
+			plasmoid.configuration.weatherService = 'OpenWeatherMap'
+			logMigration('weatherService => OpenWeatherMap (its city is set)')
+		}
+
 		// Modified in: v72
 		if (!plasmoid.configuration.v72Migration) {
 			var oldValue = plasmoid.configuration.enabledCalendarPlugins

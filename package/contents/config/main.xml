@@ -15,13 +15,13 @@
 			<default>true</default>
 		</entry>
 		<entry name="widgetShowTimer" type="bool">
-			<default>true</default>
+			<default>false</default>
 		</entry>
 		<entry name="timerSfxEnabled" type="bool">
 			<default>true</default>
 		</entry>
 		<entry name="timerSfxFilepath" type="string">
-			<default>/usr/share/sounds/freedesktop/stereo/complete.oga</default>
+			<default>/usr/share/sounds/ocean/stereo/alarm-clock-elapsed.oga</default>
 		</entry>
 		<entry name="timerRepeats" type="bool">
 			<default>false</default>
@@ -55,17 +55,17 @@
 			<default>RunCommands</default>
 		</entry>
 		<entry name="clockMouseWheelUp" type="string">
-			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume"</default>
+			<default>dbus-send --session --type=method_call --dest=org.kde.kglobalaccel /component/kmix org.kde.kglobalaccel.Component.invokeShortcut string:increase_volume</default>
 		</entry>
 		<entry name="clockMouseWheelDown" type="string">
-			<default>qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"</default>
+			<default>dbus-send --session --type=method_call --dest=org.kde.kglobalaccel /component/kmix org.kde.kglobalaccel.Component.invokeShortcut string:decrease_volume</default>
 		</entry>
 		<entry name="showBackground" type="bool">
 			<default>true</default>
 		</entry>
 		<entry name="popupMode" type="string">
 			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. week: week view. today: one day. -->
-			<default>classic</default>
+			<default>month</default>
 		</entry>
 		<entry name="showViewTabs" type="bool">
 			<default>true</default>
@@ -171,7 +171,7 @@
 
 	<group name="Events">
 		<entry name="eventsPollInterval" type="uint">
-			<default>20</default>
+			<default>10</default>
 		</entry>
 		<entry name="icalCalendarList" type="string" stringType="base64json">
 			<default></default>
@@ -183,7 +183,7 @@
 			<default>false</default>
 		</entry>
 		<entry name="eventReminderSfxPath" type="string">
-			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
+			<default>/usr/share/sounds/ocean/stereo/message-new-instant.oga</default>
 		</entry>
 		<entry name="eventReminderMinutesBefore" type="int">
 			<default>15</default>
@@ -195,7 +195,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="eventStartingSfxPath" type="string">
-			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
+			<default>/usr/share/sounds/ocean/stereo/message-new-instant.oga</default>
 		</entry>
 		<entry name="meetLinkCommand" type="string">
 			<!-- Command that opens Google Meet links (%u = the link), eg: a Meet web app. Empty: the default browser. -->
@@ -283,7 +283,7 @@
 			<default>true</default>
 		</entry>
 		<entry name="eventStartingCritical" type="bool">
-			<default>true</default>
+			<default>false</default>
 		</entry>
 		<entry name="eventNotificationActions" type="bool">
 			<default>true</default>
@@ -418,7 +418,7 @@
 		</entry>
 		<entry name="weatherService" type="string">
 			<!-- enum: OpenMeteo, OpenWeatherMap, WeatherCanada -->
-			<default>OpenWeatherMap</default>
+			<default>OpenMeteo</default>
 		</entry>
 		<entry name="weatherUnits" type="string">
 			<default>metric</default>

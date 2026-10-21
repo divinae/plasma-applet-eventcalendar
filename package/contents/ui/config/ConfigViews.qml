@@ -276,7 +276,7 @@ ConfigPage {
 						label: ""
 						sfxEnabledKey: 'timerSfxEnabled'
 						sfxPathKey: 'timerSfxFilepath'
-						sfxPathDefaultValue: '/usr/share/sounds/freedesktop/stereo/complete.oga'
+						sfxPathDefaultValue: '/usr/share/sounds/ocean/stereo/alarm-clock-elapsed.oga'
 					}
 				}
 			}
