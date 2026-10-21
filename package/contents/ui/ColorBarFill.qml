@@ -24,17 +24,17 @@ Item {
 	// Only the left part (bar plus the rounding of the left corners): under the right corners it
 	// would show through the fill's anti-aliased edge as a second outline.
 	Rectangle {
+		visible: !colorBarFill.hollow
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		width: Math.min(parent.width, colorBarFill.barWidth + Math.max(colorBarFill.topLeftRadius, colorBarFill.bottomLeftRadius) + 1)
-		color: colorBarFill.hollow ? colorBarFill.fillColor : colorBarFill.barColor
-		border.width: colorBarFill.hollow ? 1 : 0
-		border.color: colorBarFill.barColor
+		color: colorBarFill.barColor
 		topLeftRadius: colorBarFill.topLeftRadius
 		bottomLeftRadius: colorBarFill.bottomLeftRadius
 	}
 	Rectangle {
+		visible: !colorBarFill.hollow
 		anchors.fill: parent
 		anchors.leftMargin: colorBarFill.barWidth
 		color: colorBarFill.fillColor
@@ -42,5 +42,27 @@ Item {
 		border.color: colorBarFill.borderColor
 		topRightRadius: colorBarFill.topRightRadius
 		bottomRightRadius: colorBarFill.bottomRightRadius
+	}
+
+	// Hollow (the inside may be transparent): the whole shape outlined in the bar color, and the
+	// bar's inner edge as a line.
+	Rectangle {
+		visible: colorBarFill.hollow
+		anchors.fill: parent
+		color: colorBarFill.fillColor
+		border.width: 1
+		border.color: colorBarFill.barColor
+		topLeftRadius: colorBarFill.topLeftRadius
+		bottomLeftRadius: colorBarFill.bottomLeftRadius
+		topRightRadius: colorBarFill.topRightRadius
+		bottomRightRadius: colorBarFill.bottomRightRadius
+	}
+	Rectangle {
+		visible: colorBarFill.hollow
+		x: colorBarFill.barWidth
+		y: 1
+		width: 1
+		height: Math.max(0, parent.height - 2)
+		color: colorBarFill.barColor
 	}
 }
