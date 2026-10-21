@@ -16,7 +16,10 @@ Item {
 		font: eventTitlesBadge.titleFont
 	}
 	readonly property int rowHeight: Math.ceil(titleFontMetrics.height) + 4
-	readonly property int availableHeight: height - topOffset - rowSpacing
+	// Clear of the cell's edges and today's frame, like DaysCalendar's bars (eventRowInset).
+	readonly property int sideInset: 3
+	readonly property int bottomInset: 2
+	readonly property int availableHeight: height - topOffset - rowSpacing - bottomInset
 	readonly property int maxRows: Math.max(0, Math.floor((availableHeight + rowSpacing) / (rowHeight + rowSpacing)))
 	readonly property int eventCount: modelEventsCount
 	// Multi-day bars (drawn by DaysCalendar) take the first spanRows rows; spanHiddenCount of them don't fit.
@@ -46,9 +49,9 @@ Item {
 	}
 
 	Column {
-		x: 1
+		x: eventTitlesBadge.sideInset
 		y: eventTitlesBadge.topOffset + eventTitlesBadge.barRows * (eventTitlesBadge.rowHeight + eventTitlesBadge.rowSpacing)
-		width: eventTitlesBadge.width - 2
+		width: eventTitlesBadge.width - 2 * eventTitlesBadge.sideInset
 		spacing: eventTitlesBadge.rowSpacing
 		clip: true
 
