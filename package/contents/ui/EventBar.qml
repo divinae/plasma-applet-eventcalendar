@@ -130,9 +130,11 @@ Rectangle {
 		onDragCanceled: eventBar.dragCanceled()
 	}
 
+	// Title and details set together once hovered: a title set earlier showed on its own first, then
+	// the tooltip was redrawn with the details, like a second tooltip.
 	PlasmaCore.ToolTipArea {
 		anchors.fill: parent
-		mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""
+		mainText: containsMouse && eventBar.eventItem ? eventBar.eventItem.summary : ""
 		subText: containsMouse && eventBar.detailsModel ? eventBar.detailsModel.eventDetailsText(eventBar.eventItem) : ""
 		textFormat: Text.PlainText
 	}
