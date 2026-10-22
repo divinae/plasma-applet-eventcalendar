@@ -863,8 +863,8 @@ Item {
 					}
 					PlasmaCore.ToolTipArea {
 						anchors.fill: parent
-						mainText: containsMouse ? parent.eventItem.summary : "" // With the details, see EventBar
-						subText: containsMouse ? weekView.eventModel.eventDetailsText(parent.eventItem) : ""
+						mainText: parent.eventItem.summary // Not bound to containsMouse, see EventBar
+						subText: weekView.eventModel.eventDetailsText(parent.eventItem)
 						textFormat: Text.PlainText
 					}
 				}
