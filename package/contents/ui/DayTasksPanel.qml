@@ -67,7 +67,9 @@ ColumnLayout {
 				items = items.concat(calendar.items)
 			}
 		}
-		dayTasks.lists = lists
+		if (JSON.stringify(dayTasks.lists) !== JSON.stringify(lists)) {
+			dayTasks.lists = lists // Unchanged: not set again (the list menu would be made again)
+		}
 		hasLists = lists.length > 0
 		var rows = Tasks.dayTaskRows(items, dayText, today)
 		taskRows = rows
@@ -75,6 +77,16 @@ ColumnLayout {
 	}
 	function deferredRebuild() {
 		Qt.callLater(rebuild)
+	}
+	// A change of calendarId concerns the panel: one of the task lists (selected now: maybe since
+	// the last rebuild).
+	function listChanged(calendarId) {
+		var has = function(lists) {
+			return lists.some(function(list) { return list.id === calendarId })
+		}
+		if (has(lists) || (!!eventModel && has(eventModel.getSelectedTaskLists()))) {
+			deferredRebuild()
+		}
 	}
 	Component.onCompleted: rebuild()
 	onDayTextChanged: deferredRebuild()
@@ -87,12 +99,15 @@ ColumnLayout {
 
 	Connections {
 		target: dayTasks.eventModel
-		function onCalendarFetched(calendarId, data) { dayTasks.deferredRebuild() }
+		ignoreUnknownSignals: true // taskListsChanged: EventModel's
+		// Event calendars' changes: not for this panel.
+		function onCalendarFetched(calendarId, data) { dayTasks.listChanged(calendarId) }
 		function onAllDataFetched() { dayTasks.deferredRebuild() }
 		function onDataCleared() { dayTasks.deferredRebuild() }
-		function onEventAdded(calendarId, data) { dayTasks.deferredRebuild() }
-		function onEventRemoved(calendarId, eventId, data) { dayTasks.deferredRebuild() }
-		function onEventUpdated(calendarId, eventId, data) { dayTasks.deferredRebuild() }
+		function onEventAdded(calendarId, data) { dayTasks.listChanged(calendarId) }
+		function onEventRemoved(calendarId, eventId, data) { dayTasks.listChanged(calendarId) }
+		function onEventUpdated(calendarId, eventId, data) { dayTasks.listChanged(calendarId) }
+		function onTaskListsChanged() { dayTasks.deferredRebuild() } // A list renamed, recolored, deleted…
 	}
 
 	// Heading: (fold arrow) "Tasks", the list filter, "+".

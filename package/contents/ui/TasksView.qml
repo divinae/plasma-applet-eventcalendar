@@ -179,7 +179,7 @@ Item {
 			currentFilter = 'all'
 			return
 		}
-		taskAccounts = typeof eventModel.getTaskAccounts === 'function' ? eventModel.getTaskAccounts() : []
+		setIfChanged('taskAccounts', typeof eventModel.getTaskAccounts === 'function' ? eventModel.getTaskAccounts() : [])
 		var selected = eventModel.getSelectedTaskLists()
 		var itemsByList = {}
 		for (var i = 0; i < selected.length; i++) {
@@ -224,11 +224,12 @@ Item {
 			newCards = Tasks.cardRows(newRows, joinAdd)
 		}
 		rememberAddFocus()
-		allLists = selected
-		filterCounts = counts
-		filterEntries = Tasks.filterEntries(selected, counts)
+		// Unchanged: not set again (the menus and the side bar would be made again).
+		setIfChanged('allLists', selected)
+		setIfChanged('filterCounts', counts)
+		setIfChanged('filterEntries', Tasks.filterEntries(selected, counts))
 		currentFilter = filter
-		lists = shown.lists
+		setIfChanged('lists', shown.lists)
 		cards = newCards // Before the rows: their delegates read it
 		rows = newRows
 		keepKeyRow()
@@ -239,6 +240,25 @@ Item {
 	}
 	function deferredRebuild() {
 		Qt.callLater(rebuild)
+	}
+	// Set a property to value only when it's different (by its JSON).
+	function setIfChanged(name, value) {
+		if (JSON.stringify(tasksView[name]) !== JSON.stringify(value)) {
+			tasksView[name] = value
+		}
+	}
+	// A change of calendarId concerns the view: one of the task lists (selected now: maybe since
+	// the last rebuild).
+	function isTaskList(calendarId) {
+		var has = function(lists) {
+			return lists.some(function(list) { return list.id === calendarId })
+		}
+		return has(allLists) || (!!eventModel && has(eventModel.getSelectedTaskLists()))
+	}
+	function listChanged(calendarId) {
+		if (isTaskList(calendarId)) {
+			deferredRebuild()
+		}
 	}
 	// Which "Add a task…" (or rename) field has the focus, to give it back once the rows are made
 	// again.
@@ -272,12 +292,13 @@ Item {
 
 	Connections {
 		target: tasksView.eventModel
-		function onCalendarFetched(calendarId, data) { tasksView.deferredRebuild() }
+		// Event calendars' changes: not for this view.
+		function onCalendarFetched(calendarId, data) { tasksView.listChanged(calendarId) }
 		function onAllDataFetched() { tasksView.deferredRebuild() }
 		function onDataCleared() { tasksView.deferredRebuild() }
-		function onEventAdded(calendarId, data) { tasksView.deferredRebuild() }
-		function onEventRemoved(calendarId, eventId, data) { tasksView.deferredRebuild() }
-		function onEventUpdated(calendarId, eventId, data) { tasksView.deferredRebuild() }
+		function onEventAdded(calendarId, data) { tasksView.listChanged(calendarId) }
+		function onEventRemoved(calendarId, eventId, data) { tasksView.listChanged(calendarId) }
+		function onEventUpdated(calendarId, eventId, data) { tasksView.listChanged(calendarId) }
 		function onTaskListsChanged() { tasksView.deferredRebuild() }
 	}
 
