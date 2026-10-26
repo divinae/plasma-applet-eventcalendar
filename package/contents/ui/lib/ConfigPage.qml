@@ -274,6 +274,8 @@ KCM.SimpleKCM {
 	property var cfg_weatherUnitsDefault
 	property var cfg_meteogramHours
 	property var cfg_meteogramHoursDefault
+	property var cfg_eventCacheEnabled
+	property var cfg_eventCacheEnabledDefault
 	// END AUTO CFG PROPS
 
 	property QtObject configBridge: QtObject {

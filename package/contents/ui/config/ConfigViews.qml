@@ -332,5 +332,17 @@ ConfigPage {
 				to: 3000
 			}
 		}
+
+		//--- Offline start (EventCache.qml)
+		FormCard.FormHeader {
+			title: i18n("Offline")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Keep events and tasks for offline start")
+				description: i18n("The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted.")
+				configKey: 'eventCacheEnabled'
+			}
+		}
 	}
 }

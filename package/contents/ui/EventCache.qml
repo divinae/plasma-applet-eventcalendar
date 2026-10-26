@@ -9,8 +9,19 @@ import "./EventCacheUtil.js" as EventCacheUtil
 // EventCacheUtil.js for what's kept: no descriptions or task notes, no attendee e-mails, never
 // tokens.
 // ~/.cache/plasma-eventcalendar/events.ini: the directory is 0700, the file 0600.
+// Setting eventCacheEnabled off: nothing is read or written, and the file is deleted.
 QtObject {
 	id: eventCache
+
+	readonly property bool enabled: typeof plasmoid === 'undefined' || !plasmoid || !plasmoid.configuration
+		|| plasmoid.configuration.eventCacheEnabled !== false
+	onEnabledChanged: {
+		if (enabled) {
+			makeDir()
+		} else {
+			removeFile()
+		}
+	}
 
 	property var executable: ExecUtil {}
 
@@ -37,6 +48,36 @@ QtObject {
 	property var pendingSnapshot: null
 
 	Component.onCompleted: {
+		if (enabled) {
+			makeDir()
+		} else {
+			removeFile() // Turned off while the widget wasn't running
+		}
+	}
+
+	// Off: the file goes, with what was waiting to be written.
+	function removeFile() {
+		saveTimer.stop()
+		pendingSnapshot = null
+		pendingText = ''
+		// Emptied first: the next write (switched on again) is a change QSettings writes out.
+		try {
+			settings.setValue('json', '')
+			settings.sync()
+		} catch (e) {
+			logger.log('EventCache: could not empty the cache')
+		}
+		executable.execArgv(['rm', '-f', '--', filePath], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			if (exitCode !== 0) {
+				logger.log('EventCache: could not delete the cache file:', exitCode)
+			}
+		})
+	}
+
+	function makeDir() {
+		if (dirReady) {
+			return
+		}
 		executable.execArgv(['install', '-d', '-m', '700', dirPath], function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (exitCode !== 0) {
 				logger.log('EventCache: could not create the cache directory:', exitCode, stderr)
@@ -54,6 +95,9 @@ QtObject {
 	// { savedAt, dateMin, dateMax, calendars: { calendarId: [event] } } or null.
 	// isSelected(calendarId): only calendars that are still selected.
 	function load(isSelected) {
+		if (!enabled) {
+			return null
+		}
 		var text = ''
 		try {
 			text = settings.value('json', '')
@@ -65,6 +109,9 @@ QtObject {
 
 	// Debounced: a refresh can finish several rounds in a row.
 	function scheduleSave(eventsByCalendar, dateMin, dateMax) {
+		if (!enabled) {
+			return
+		}
 		pendingSnapshot = {
 			text: EventCacheUtil.serialize(eventsByCalendar, dateMin, dateMax, new Date()),
 		}
@@ -77,6 +124,9 @@ QtObject {
 		}
 		var text = pendingSnapshot.text
 		pendingSnapshot = null
+		if (!enabled) {
+			return
+		}
 		if (!dirReady) {
 			pendingText = text
 			return
@@ -87,6 +137,9 @@ QtObject {
 	// An account was signed out or removed: its calendars leave the file right away (and a save
 	// that's waiting). accountIds: the accounts still there.
 	function pruneAccounts(accountIds) {
+		if (!enabled) {
+			return
+		}
 		var now = new Date()
 		if (pendingSnapshot) {
 			pendingSnapshot.text = EventCacheUtil.pruneText(pendingSnapshot.text, accountIds, now)

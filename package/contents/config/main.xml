@@ -217,6 +217,10 @@
 		<entry name="eventsPollInterval" type="uint">
 			<default>10</default>
 		</entry>
+		<entry name="eventCacheEnabled" type="bool">
+			<!-- Keep the last loaded events and tasks in ~/.cache/plasma-eventcalendar for an offline start. -->
+			<default>true</default>
+		</entry>
 		<entry name="icalCalendarList" type="string" stringType="base64json">
 			<default></default>
 		</entry>
