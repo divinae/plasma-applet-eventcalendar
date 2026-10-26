@@ -2692,25 +2692,25 @@ msgstr "Помилка отримання погоди."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Не вдалося додати завдання"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Додати завдання…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Додати завдання до %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Список завдань: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Список, до якого потрапляють нові завдання"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2800,19 +2800,20 @@ msgstr "Завтра"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Термін — сьогодні"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Термін — завтра"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr ""
+"Завдання можна переміщувати лише до списку того самого облікового запису"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Не вдалося перемістити завдання"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2827,11 +2828,11 @@ msgstr "Немає відкритих завдань"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "За датою"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "За списком"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2844,19 +2845,19 @@ msgstr "Нове завдання у «%1»"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Цього тижня"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Пізніше"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Без дати"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Виконані"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

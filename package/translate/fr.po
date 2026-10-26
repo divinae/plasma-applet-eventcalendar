@@ -2689,25 +2689,25 @@ msgstr "Erreur lors de la récupération de la météo"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Impossible d'ajouter la tâche"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Ajouter une tâche…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Ajouter une tâche à %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Liste de tâches : %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "La liste qui reçoit les nouvelles tâches"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2800,19 +2800,19 @@ msgstr "Demain"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Échéance aujourd'hui"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Échéance demain"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Les tâches ne peuvent être déplacées que vers une liste du même compte"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Impossible de déplacer la tâche"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2826,11 +2826,11 @@ msgstr "Aucune tâche en cours"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Par date"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Par liste"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2843,19 +2843,19 @@ msgstr "Nouvelle tâche dans %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Cette semaine"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Plus tard"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Sans date"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Terminées"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

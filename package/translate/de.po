@@ -2693,25 +2693,25 @@ msgstr "Fehler beim Abfragen der Wettervorhersage."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Aufgabe konnte nicht hinzugefügt werden"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Aufgabe hinzufügen…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Aufgabe zu %1 hinzufügen"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Aufgabenliste: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Die Liste, in die neue Aufgaben kommen"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2805,19 +2805,19 @@ msgstr "Morgen"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Heute fällig"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Morgen fällig"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Aufgaben können nur in eine Liste desselben Kontos verschoben werden"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Aufgabe konnte nicht verschoben werden"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2831,11 +2831,11 @@ msgstr "Keine offenen Aufgaben"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Nach Datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Nach Liste"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2848,19 +2848,19 @@ msgstr "Neue Aufgabe in %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Diese Woche"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Später"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Ohne Datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Erledigt"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

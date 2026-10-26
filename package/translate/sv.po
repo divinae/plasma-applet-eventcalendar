@@ -2477,25 +2477,25 @@ msgstr "Det gick inte att hämta väder."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Kunde inte lägga till uppgiften"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Lägg till en uppgift…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Lägg till en uppgift i %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Uppgiftslista: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Listan som nya uppgifter hamnar i"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2584,19 +2584,19 @@ msgstr "I morgon"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Förfaller idag"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Förfaller imorgon"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Uppgifter kan bara flyttas till en lista i samma konto"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Kunde inte flytta uppgiften"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2610,11 +2610,11 @@ msgstr "Inga öppna uppgifter"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Efter datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Efter lista"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2627,19 +2627,19 @@ msgstr "Ny uppgift i %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Denna vecka"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Senare"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Inget datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Slutförda"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

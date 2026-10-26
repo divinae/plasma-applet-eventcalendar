@@ -2501,25 +2501,25 @@ msgstr "Błąd pobierania pogody."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Nie udało się dodać zadania"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Dodaj zadanie…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Dodaj zadanie do listy %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Lista zadań: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Lista, do której trafiają nowe zadania"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2608,19 +2608,19 @@ msgstr "Jutro"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Termin: dziś"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Termin: jutro"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Zadania można przenosić tylko do listy z tego samego konta"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Nie udało się przenieść zadania"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2635,11 +2635,11 @@ msgstr "Brak otwartych zadań"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Według daty"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Według listy"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2652,19 +2652,19 @@ msgstr "Nowe zadanie w %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "W tym tygodniu"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Później"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Bez daty"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Ukończone"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

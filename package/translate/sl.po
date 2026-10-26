@@ -2714,25 +2714,25 @@ msgstr "Napaka pri prenosu podatkov o vremenu."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Opravila ni bilo mogoče dodati"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Dodaj opravilo…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Dodaj opravilo na seznam %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Seznam opravil: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Seznam, na katerega gredo nova opravila"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2821,19 +2821,19 @@ msgstr "Jutri"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Rok danes"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Rok jutri"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Opravila lahko premaknete le na seznam istega računa"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Opravila ni bilo mogoče premakniti"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2849,11 +2849,11 @@ msgstr "Ni odprtih opravil"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Po datumu"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Po seznamu"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2866,19 +2866,19 @@ msgstr "Novo opravilo v %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Ta teden"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Pozneje"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Brez datuma"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Dokončano"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

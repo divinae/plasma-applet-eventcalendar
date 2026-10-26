@@ -2668,25 +2668,25 @@ msgstr "Hava durumu alınırken hata oluştu."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Görev eklenemedi"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Görev ekle…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "%1 listesine görev ekle"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Görev listesi: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Yeni görevlerin ekleneceği liste"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2780,19 +2780,19 @@ msgstr "Yarın"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Son tarih bugün"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Son tarih yarın"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Görevler yalnızca aynı hesaptaki bir listeye taşınabilir"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Görev taşınamadı"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2806,11 +2806,11 @@ msgstr "Açık görev yok"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Tarihe göre"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Listeye göre"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2823,19 +2823,19 @@ msgstr "%1 içinde yeni görev"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Bu hafta"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Daha sonra"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Tarih yok"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Tamamlanan"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

@@ -2675,25 +2675,25 @@ msgstr "Erro obtendo dados do clima."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Não foi possível adicionar a tarefa"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Adicionar uma tarefa…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Adicionar uma tarefa a %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Lista de tarefas: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "A lista para onde vão as novas tarefas"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2782,19 +2782,19 @@ msgstr "Amanhã"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Prazo: hoje"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Prazo: amanhã"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "As tarefas só podem ser movidas para uma lista da mesma conta"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Não foi possível mover a tarefa"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2808,11 +2808,11 @@ msgstr "Nenhuma tarefa aberta"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Por data"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Por lista"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2825,19 +2825,19 @@ msgstr "Nova tarefa em %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Esta semana"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Mais tarde"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Sem data"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Concluídas"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

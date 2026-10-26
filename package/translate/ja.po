@@ -2452,25 +2452,25 @@ msgstr "エラー天気を取得できませんでした。"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "タスクを追加できませんでした"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "タスクを追加…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "%1 にタスクを追加"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "タスクリスト: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "新しいタスクの追加先リスト"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2559,19 +2559,19 @@ msgstr "明日"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "期限を今日にする"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "期限を明日にする"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "タスクは同じアカウントのリストにのみ移動できます"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "タスクを移動できませんでした"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2584,11 +2584,11 @@ msgstr "未完了のタスクはありません"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "日付別"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "リスト別"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2601,19 +2601,19 @@ msgstr "%1 に新しいタスク"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "今週"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "それ以降"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "日付なし"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "完了済み"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

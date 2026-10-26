@@ -2693,25 +2693,25 @@ msgstr "Σφάλμα λήψης καιρού."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η προσθήκη της εργασίας"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Προσθήκη εργασίας…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Προσθήκη εργασίας στη λίστα %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Λίστα εργασιών: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Η λίστα στην οποία μπαίνουν οι νέες εργασίες"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2803,19 +2803,20 @@ msgstr "Αύριο"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Προθεσμία σήμερα"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Προθεσμία αύριο"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr ""
+"Οι εργασίες μπορούν να μετακινηθούν μόνο σε λίστα του ίδιου λογαριασμού"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Δεν ήταν δυνατή η μετακίνηση της εργασίας"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2829,11 +2830,11 @@ msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Κατά ημερομηνία"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Κατά λίστα"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2846,19 +2847,19 @@ msgstr "Νέα εργασία στο %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Αυτή την εβδομάδα"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Αργότερα"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Χωρίς ημερομηνία"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Ολοκληρωμένες"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

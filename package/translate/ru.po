@@ -2698,25 +2698,25 @@ msgstr "Ошибка получения погоды."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Не удалось добавить задачу"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Добавить задачу…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Добавить задачу в список «%1»"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Список задач: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Список, в который попадают новые задачи"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2808,19 +2808,19 @@ msgstr "Завтра"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Срок: сегодня"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Срок: завтра"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Задачи можно перемещать только в список той же учетной записи"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Не удалось переместить задачу"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2835,11 +2835,11 @@ msgstr "Нет открытых задач"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "По дате"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "По списку"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2852,19 +2852,19 @@ msgstr "Новая задача в «%1»"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "На этой неделе"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Позже"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Без даты"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Выполненные"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

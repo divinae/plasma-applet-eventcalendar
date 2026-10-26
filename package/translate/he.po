@@ -2691,25 +2691,25 @@ msgstr "שגיאה במשיכת תחזית מזג האוויר."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "לא ניתן להוסיף את המשימה"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "הוספת משימה…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "הוספת משימה אל %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "רשימת משימות: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "הרשימה שאליה נכנסות משימות חדשות"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2798,19 +2798,19 @@ msgstr "מחר"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "יעד: היום"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "יעד: מחר"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "ניתן להעביר משימות רק לרשימה באותו חשבון"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "לא ניתן להעביר את המשימה"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2826,11 +2826,11 @@ msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "לפי תאריך"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "לפי רשימה"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2843,19 +2843,19 @@ msgstr "משימה חדשה ב־%1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "השבוע"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "מאוחר יותר"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "ללא תאריך"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "הושלמו"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

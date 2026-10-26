@@ -2480,25 +2480,25 @@ msgstr "Virhe säätietojen haussa."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Tehtävän lisääminen epäonnistui"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Lisää tehtävä…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Lisää tehtävä luetteloon %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Tehtäväluettelo: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Luettelo, johon uudet tehtävät lisätään"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2587,19 +2587,19 @@ msgstr "Huomenna"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Erääntyy tänään"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Erääntyy huomenna"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Tehtäviä voi siirtää vain saman tilin luetteloon"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Tehtävän siirtäminen epäonnistui"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2613,11 +2613,11 @@ msgstr "Ei avoimia tehtäviä"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Päivämäärän mukaan"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Luettelon mukaan"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2630,19 +2630,19 @@ msgstr "Uusi tehtävä luetteloon %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Tällä viikolla"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Myöhemmin"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Ei päivämäärää"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Valmiit"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

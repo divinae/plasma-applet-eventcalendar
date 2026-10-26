@@ -2679,25 +2679,25 @@ msgstr "De weerinformatie kan niet worden opgevraagd."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Kon de taak niet toevoegen"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Taak toevoegen…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Taak toevoegen aan %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Takenlijst: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "De lijst waarin nieuwe taken komen"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2788,19 +2788,20 @@ msgstr "Morgen"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Uiterlijk vandaag"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Uiterlijk morgen"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr ""
+"Taken kunnen alleen naar een lijst van hetzelfde account worden verplaatst"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Kon de taak niet verplaatsen"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2814,11 +2815,11 @@ msgstr "Geen open taken"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Op datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Op lijst"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2831,19 +2832,19 @@ msgstr "Nieuwe taak in %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Deze week"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Later"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Geen datum"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Voltooid"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

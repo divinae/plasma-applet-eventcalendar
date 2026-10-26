@@ -2478,25 +2478,25 @@ msgstr "Error al buscar el clima."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "No se pudo añadir la tarea"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Añadir una tarea…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Añadir una tarea a %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Lista de tareas: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "La lista a la que van las tareas nuevas"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2585,19 +2585,19 @@ msgstr "Mañana"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Vence hoy"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Vence mañana"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Las tareas solo se pueden mover a una lista de la misma cuenta"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "No se pudo mover la tarea"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2611,11 +2611,11 @@ msgstr "No hay tareas pendientes"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Por fecha"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Por lista"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2628,19 +2628,19 @@ msgstr "Nueva tarea en %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Esta semana"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Más adelante"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Sin fecha"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Completadas"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

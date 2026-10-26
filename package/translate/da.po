@@ -2662,25 +2662,25 @@ msgstr "Fejl ved hentning af vejr."
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
-msgstr ""
+msgstr "Kunne ikke tilføje opgaven"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Add a task…"
-msgstr ""
+msgstr "Tilføj en opgave…"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Add a task to %1"
-msgstr ""
+msgstr "Tilføj en opgave til %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgctxt "%1 = task list name"
 msgid "Task list: %1"
-msgstr ""
+msgstr "Opgaveliste: %1"
 
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "The list new tasks go to"
-msgstr ""
+msgstr "Listen, som nye opgaver tilføjes til"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2769,19 +2769,19 @@ msgstr "I morgen"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
-msgstr ""
+msgstr "Forfalder i dag"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due tomorrow"
-msgstr ""
+msgstr "Forfalder i morgen"
 
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
-msgstr ""
+msgstr "Opgaver kan kun flyttes til en liste på samme konto"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
-msgstr ""
+msgstr "Kunne ikke flytte opgaven"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2795,11 +2795,11 @@ msgstr "Ingen åbne opgaver"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
-msgstr ""
+msgstr "Efter dato"
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
-msgstr ""
+msgstr "Efter liste"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
@@ -2812,19 +2812,19 @@ msgstr "Ny opgave i %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
-msgstr ""
+msgstr "Denne uge"
 
 #: ../contents/ui/TasksView.qml
 msgid "Later"
-msgstr ""
+msgstr "Senere"
 
 #: ../contents/ui/TasksView.qml
 msgid "No date"
-msgstr ""
+msgstr "Ingen dato"
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
+msgstr "Fuldført"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
