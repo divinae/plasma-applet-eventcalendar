@@ -700,9 +700,17 @@ Item {
 		}
 	}
 
+	// The side bar and the task column as one block, centered: on a very wide popup the column
+	// stays next to the side bar instead of far to its right.
 	RowLayout {
-		anchors.fill: parent
+		id: mainRow
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
 		anchors.margins: Kirigami.Units.smallSpacing
+		anchors.horizontalCenter: parent.horizontalCenter
+		width: Math.min(parent.width - Kirigami.Units.smallSpacing * 2, tasksView.showSidebar
+			? tasksView.sidebarWidth + spacing + tasksView.maxColumnWidth + Kirigami.Units.gridUnit
+			: parent.width)
 		spacing: tasksView.islands ? appletConfig.cardGap : Kirigami.Units.smallSpacing
 
 		// The filters, when there's room: a side bar (islands: a card as tall as its entries).
