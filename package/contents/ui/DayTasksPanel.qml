@@ -89,7 +89,7 @@ ColumnLayout {
 		function onEventUpdated(calendarId, eventId, data) { dayTasks.deferredRebuild() }
 	}
 
-	// Heading: (fold arrow) "Tasks", the list filter, the open count, "+".
+	// Heading: (fold arrow) "Tasks", the list filter, "+".
 	RowLayout {
 		Layout.fillWidth: true
 		// Islands: some room between the title and the first task.
@@ -120,18 +120,10 @@ ColumnLayout {
 				onClicked: dayTasks.expanded = !dayTasks.expanded
 			}
 		}
-		PlasmaComponents3.Label {
-			visible: !appletConfig.islands && dayTasks.openCount > 0
-			Layout.leftMargin: Kirigami.Units.smallSpacing
-			text: String(dayTasks.openCount)
-			textFormat: Text.PlainText
-			font.weight: Font.DemiBold
-			opacity: 0.65
-		}
 		Item {
 			Layout.fillWidth: true
 		}
-		// The list filter: all lists or one (several lists only), on the right before the count.
+		// The list filter: all lists or one (several lists only), on the right.
 		PlasmaComponents3.ToolButton {
 			id: listFilterButton
 			visible: dayTasks.lists.length > 1
@@ -167,14 +159,6 @@ ColumnLayout {
 				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
 				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
 			}
-		}
-		PlasmaComponents3.Label {
-			visible: appletConfig.islands && dayTasks.openCount > 0
-			// Lined up with the rows' dates.
-			Layout.rightMargin: Kirigami.Units.smallSpacing * 2
-			text: String(dayTasks.openCount)
-			textFormat: Text.PlainText
-			opacity: 0.65
 		}
 		// Islands: "Add a task…" below is enough.
 		PlasmaComponents3.ToolButton {
