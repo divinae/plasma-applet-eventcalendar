@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 
 // One agenda day: a header (Today / Tomorrow / date, weather, add button), then the event tiles.
 ColumnLayout {
@@ -146,8 +147,12 @@ ColumnLayout {
 			id: tasksRepeater
 			model: agendaItemTasks
 
-			delegate: AgendaTaskItem {
+			// The same row as the Tasks tab and the Day view.
+			delegate: TaskRow {
+				required property int index
 				Layout.fillWidth: true
+				eventItem: agendaItemTasks.get(index)
+				today: Tasks.dayString(timeModel.currentTime)
 			}
 		}
 
