@@ -170,6 +170,14 @@
 			<!-- Tasks view: done tasks at the bottom of each list. -->
 			<default>false</default>
 		</entry>
+		<entry name="tasksGroupBy" type="string">
+			<!-- Tasks view: 'date' (Overdue, Today, Tomorrow, This week, Later, No date) or 'list'. -->
+			<default>date</default>
+		</entry>
+		<entry name="tasksLastListId" type="string">
+			<!-- The task list "Add a task…" last added to, where no list is given (Day view, by date). -->
+			<default></default>
+		</entry>
 	</group>
 
 

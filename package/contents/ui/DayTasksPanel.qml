@@ -8,7 +8,7 @@ import "Tasks.js" as Tasks
 
 // The Day view's tasks (Tasks.dayTasks): due on the shown day, and on today the open overdue and
 // undated ones too, as compact TaskRows under a "Tasks" heading with a "+" for a task due that
-// day. Hidden without task lists. Collapsible: a strip that folds to its heading (above the
+// day, and "Add a task…" below them. Hidden without task lists. Collapsible: a strip that folds to its heading (above the
 // hour grid); otherwise always open (beside the grid, over the weather).
 ColumnLayout {
 	id: dayTasks
@@ -25,6 +25,7 @@ ColumnLayout {
 	readonly property bool open: !collapsible || expanded
 
 	property bool hasLists: false
+	property var lists: []
 	property var tasks: []
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
 
@@ -40,6 +41,7 @@ ColumnLayout {
 				items = items.concat(calendar.items)
 			}
 		}
+		dayTasks.lists = lists
 		hasLists = lists.length > 0
 		tasks = Tasks.dayTasks(items, dayText, today)
 	}
@@ -143,6 +145,16 @@ ColumnLayout {
 				}
 			}
 		}
+	}
+
+	// "Add a task…" due on the shown day, on the last used list (a picker when there are several).
+	QuickAddTaskRow {
+		visible: dayTasks.open
+		Layout.fillWidth: true
+		eventModel: dayTasks.eventModel
+		lists: dayTasks.lists
+		dueDay: dayTasks.dayText
+		compact: true
 	}
 
 	// Apart from what follows (the weather beside the grid, the hours below the strip).
