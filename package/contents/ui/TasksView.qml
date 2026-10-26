@@ -786,7 +786,10 @@ Item {
 							// so the row sits centered.
 							readonly property real cardTopPadding: card && card.start && card.end && row.type === 'add' ? tasksView.cardEndPadding : 0
 							Layout.topMargin: (card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0) + cardTopPadding
-							Layout.bottomMargin: card && card.end ? tasksView.cardEndPadding : 0
+							// Room below a card's last row; none under a lone heading (a folded card, eg: Completed),
+							// which has its own padding around it.
+							readonly property real cardBottomPadding: card && card.end && !(card.start && row.type !== 'add') ? tasksView.cardEndPadding : 0
+							Layout.bottomMargin: cardBottomPadding
 							sourceComponent: row.type === 'group' ? groupComponent
 								: row.type === 'list' ? listComponent
 								: row.type === 'section' ? sectionComponent
@@ -796,7 +799,7 @@ Item {
 							CardSlice {
 								visible: !!rowLoader.card
 								y: -rowLoader.cardTopPadding
-								height: parent.height + rowLoader.cardTopPadding + (rowLoader.card && rowLoader.card.end ? tasksView.cardEndPadding : 0)
+								height: parent.height + rowLoader.cardTopPadding + rowLoader.cardBottomPadding
 								joinTop: !!rowLoader.card && !rowLoader.card.start
 								joinBottom: !!rowLoader.card && !rowLoader.card.end
 								key: rowLoader.card ? rowLoader.card.key : ""
