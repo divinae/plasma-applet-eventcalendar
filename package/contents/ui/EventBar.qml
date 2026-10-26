@@ -51,7 +51,7 @@ Rectangle {
 	signal dropped(bool copy)
 	signal dragCanceled()
 
-	opacity: dragSource && !dragCopy ? (dragPending ? 0 : 0.35) : dimmed ? appletConfig.pastOpacity : 1
+	opacity: (dragSource && !dragCopy ? (dragPending ? 0 : 0.35) : dimmed ? appletConfig.pastOpacity : 1) * eventStyle.doneOpacity
 	radius: cornerRadius
 	topLeftRadius: !cuttable ? undefined : cutLeft || cutTop ? 0 : cornerRadius
 	topRightRadius: !cuttable ? undefined : cutRight || cutTop ? 0 : cornerRadius
@@ -67,7 +67,7 @@ Rectangle {
 	ColorBarFill {
 		visible: eventBar.showBar
 		barColor: eventBar.eventStyle.barColor
-		outlined: eventBar.eventStyle.unconfirmed
+		outlined: eventBar.eventStyle.outlined
 		fillColor: eventBar.eventStyle.fillColor
 		borderColor: eventBar.eventStyle.outlineColor
 		topLeftRadius: eventBar.cuttable && eventBar.cutTop ? 0 : eventBar.cornerRadius
@@ -104,15 +104,20 @@ Rectangle {
 		color: eventBar.eventStyle.textColor
 	}
 
+	// Tasks: the done check before the title, with the same room rule as the question mark.
+	readonly property bool showTaskCheck: showTitle && !cutLeft && eventStyle.isTask
+		&& width >= needsActionIconSize * 3 + 12
+
 	Text {
 		visible: eventBar.showTitle
 		anchors.fill: parent
 		anchors.leftMargin: (eventBar.showBar ? 9 : 4) + (eventBar.showNeedsAction ? needsActionIcon.width + 2 : 0)
+			+ (eventBar.showTaskCheck ? taskCheck.width + 2 : 0)
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
 		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""
 		color: eventBar.eventStyle.textColor
-		font.strikeout: eventBar.eventStyle.declined
+		font.strikeout: eventBar.eventStyle.struckThrough
 		font.family: eventBar.titleFont.family
 		font.pointSize: eventBar.titleFont.pointSize
 		font.bold: eventBar.inProgress // Event in progress
@@ -128,6 +133,17 @@ Rectangle {
 		onDragMoved: function(at, copy) { eventBar.dragMoved(at, copy) }
 		onDropped: function(copy) { eventBar.dropped(copy) }
 		onDragCanceled: eventBar.dragCanceled()
+	}
+
+	// Above the drag area: its click toggles the task, it doesn't open it or start a drag.
+	TaskCheck {
+		id: taskCheck
+		visible: eventBar.showTaskCheck
+		x: eventBar.showBar ? 8 : 3
+		anchors.verticalCenter: parent.verticalCenter
+		size: eventBar.needsActionIconSize
+		eventItem: eventBar.eventItem
+		color: eventBar.eventStyle.textColor
 	}
 
 	// Title and details always set: ToolTipArea's containsMouse turns false once the tooltip opens,

@@ -752,13 +752,15 @@ Item {
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors. With the "bar"
 					// event look, all-day events are filled in their color instead (EventStyle).
-					readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay
+					readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay && !eventStyle.isTask
+					// Bar look: tasks outlined in their color with the stripe, so they differ from all-day events.
+					readonly property bool outlined: eventStyle.unconfirmed || (appletConfig.barEventLook && eventStyle.isTask)
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
 					readonly property bool dragSource: !!weekView.dragState && weekView.dragState.mode === 'days' && weekView.dragState.eventItem === eventItem
-					opacity: dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
-						: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1
+					opacity: (dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
+						: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1) * eventStyle.doneOpacity
 					width: (bar.last - bar.first + 1) * weekView.columnWidth - 4
 					height: weekView.allDayRowHeight
 					// Square ends where the event continues before or after this week.
@@ -771,9 +773,9 @@ Item {
 					bottomLeftRadius: cutLeft ? 0 : cornerRadius
 					topRightRadius: cutRight ? 0 : cornerRadius
 					bottomRightRadius: cutRight ? 0 : cornerRadius
-					color: solid ? eventStyle.fillColor : eventStyle.unconfirmed ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(eventStyle.color, appletConfig.darkTheme ? 0.3 : 0.22)
+					color: solid ? eventStyle.fillColor : outlined ? Kirigami.Theme.backgroundColor : ColorUtil.setAlpha(eventStyle.color, appletConfig.darkTheme ? 0.3 : 0.22)
 					border.width: 1
-					border.color: solid || eventStyle.unconfirmed ? eventStyle.outlineColor : ColorUtil.setAlpha(eventStyle.color, 0.45)
+					border.color: solid || outlined ? eventStyle.outlineColor : ColorUtil.setAlpha(eventStyle.color, 0.45)
 					readonly property color titleColor: solid ? eventStyle.textColor : Kirigami.Theme.textColor
 					clip: true
 					// Maybe, or out of office (hatched like Google Calendar). On the light tint, always in
@@ -807,6 +809,8 @@ Item {
 						return span.allDay ? range + " · " + i18np("%1 day", "%1 days", span.days) : range
 					}
 					Column {
+						// Above the mouse area, for the task check (the labels let clicks through).
+						z: 1
 						anchors.left: parent.left
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter
@@ -816,16 +820,26 @@ Item {
 							id: allDayTitle
 							// Invitation not answered yet: the question mark before the title (Shared.isAwaitingAnswer).
 							readonly property bool awaitingAnswer: Shared.isAwaitingAnswer(parent.parent.eventStyle.response)
+							// Tasks: their done check there instead.
+							readonly property bool isTask: parent.parent.eventStyle.isTask
 							readonly property int iconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, height) / 2)
 							width: parent.width
-							leftPadding: awaitingAnswer ? iconSize + 3 : 0
+							leftPadding: awaitingAnswer || isTask ? iconSize + 3 : 0
 							text: eventItem.summary
 							color: parent.parent.titleColor
 							font.family: appletConfig.eventFont.family
 							font.pointSize: appletConfig.eventFont.pointSize
 							font.weight: Font.DemiBold
-							font.strikeout: eventStyle.declined
+							font.strikeout: eventStyle.struckThrough
 							elide: Text.ElideRight
+							// Takes its own clicks: toggles the task, doesn't open or drag it.
+							TaskCheck {
+								visible: allDayTitle.isTask
+								anchors.verticalCenter: parent.verticalCenter
+								size: allDayTitle.iconSize
+								eventItem: allDayTitle.isTask ? eventItem : null
+								color: allDayTitle.color
+							}
 							Kirigami.Icon {
 								visible: allDayTitle.awaitingAnswer
 								anchors.verticalCenter: parent.verticalCenter
