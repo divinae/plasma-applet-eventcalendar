@@ -389,11 +389,17 @@ CalendarManager {
 		})
 	}
 
-	// Every page of a list, done and hidden tasks too. callback(err, data, xhr): data.items is all of them.
+	// Done tasks shown: those completed in the last 30 days (like TickTick's completedDays).
+	// completedMin only filters done tasks: open ones are always listed.
+	readonly property int completedDays: 30
+
+	// Every page of a list, open tasks and the ones done in the last completedDays days, hidden ones
+	// too. callback(err, data, xhr): data.items is all of them.
 	function fetchTasklistPages(tasklistId, pageToken, allItems, callback) {
 		tasksRequest('GET', taskPath(tasklistId), {
 			showCompleted: true,
 			showHidden: true,
+			completedMin: new Date(Date.now() - completedDays * 86400000).toISOString(),
 			maxResults: 100, // API max. Default 20 means many sequential pages.
 			pageToken: pageToken,
 		}, null, function(err, data, xhr) {
