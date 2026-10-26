@@ -258,19 +258,55 @@ function comparePosition(a, b) {
 	return at < bt ? -1 : at > bt ? 1 : 0
 }
 
+// By due day: the earliest first (overdue ones), undated last; 0 for the same day.
+function compareDue(a, b) {
+	var da = dueDay(a)
+	var db = dueDay(b)
+	if (da === db) {
+		return 0
+	}
+	if (!da || !db) {
+		return da ? -1 : 1
+	}
+	return da < db ? -1 : 1
+}
+
+// By title, ignoring case; 0 for the same title.
+function compareTitle(a, b) {
+	var at = String(a.summary || a.title || '').toLowerCase()
+	var bt = String(b.summary || b.title || '').toLowerCase()
+	return at === bt ? 0 : at.localeCompare(bt) || (at < bt ? -1 : 1)
+}
+
+// The order of open tasks for a sort (Tasks view "Sort by"): 'due' (sortOpenTasks), 'title' (then
+// by due day), 'list' (by the list's rank ra / rb, then in the list's order).
+function compareOpen(a, b, sortBy, ra, rb) {
+	if (sortBy === 'title') {
+		return compareTitle(a, b) || compareDue(a, b) || comparePosition(a, b)
+	}
+	if (sortBy === 'list') {
+		return ((ra || 0) - (rb || 0)) || comparePosition(a, b)
+	}
+	return compareDue(a, b) || comparePosition(a, b)
+}
+
 // Open tasks: by due day (overdue ones are the earliest, so first), undated last; the same due day
-// in the list's order (position). A sorted copy.
-function sortOpenTasks(tasks) {
+// in the list's order (position). sortBy (optional): see compareOpen. A sorted copy.
+function sortOpenTasks(tasks, sortBy) {
 	return (tasks || []).slice().sort(function(a, b) {
-		var da = dueDay(a)
-		var db = dueDay(b)
-		if (da !== db) {
-			if (!da || !db) {
-				return da ? -1 : 1
-			}
-			return da < db ? -1 : 1
-		}
-		return comparePosition(a, b)
+		return compareOpen(a, b, sortBy, 0, 0)
+	})
+}
+
+// Open tasks of several lists, [{ item, list }], sorted (compareOpen; 'list': in the order of
+// lists). A sorted copy.
+function sortOpenEntries(entries, sortBy, lists) {
+	var rank = function(list) {
+		var i = (lists || []).indexOf(list)
+		return i < 0 ? (lists || []).length : i
+	}
+	return (entries || []).slice().sort(function(a, b) {
+		return compareOpen(a.item, b.item, sortBy, rank(a.list), rank(b.list))
 	})
 }
 
@@ -318,7 +354,8 @@ function firstLine(text) {
 //   { type: 'task', key, item, list, done }: open tasks (sortOpenTasks), then the 'add' row, then
 //     with showCompleted the done ones (sortDoneTasks)
 //   { type: 'add', key, list }: the list's quick add ("Add a task…"); all an empty list shows
-function taskRows(lists, itemsByList, showCompleted) {
+// sortBy (optional): the open tasks' order, see compareOpen.
+function taskRows(lists, itemsByList, showCompleted, sortBy) {
 	var groups = []
 	var byGroup = {}
 	;(lists || []).forEach(function(list) {
@@ -349,7 +386,7 @@ function taskRows(lists, itemsByList, showCompleted) {
 				;(isDone(item) ? done : open).push(item)
 			}
 			rows.push({ type: 'list', key: 'list:' + list.id, list: list, openCount: open.length, doneCount: done.length })
-			sortOpenTasks(open).forEach(function(item) {
+			sortOpenTasks(open, sortBy).forEach(function(item) {
 				rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: false })
 			})
 			rows.push({ type: 'add', key: 'add:' + list.id, list: list })
@@ -463,23 +500,45 @@ function dateSections(items, today, firstDayOfWeek) {
 //   { type: 'task', key, item, list, done, section }
 //   { type: 'empty', key }: no open task
 //   { type: 'add', key }: the quick add, after the open tasks
-// then, with showCompleted, the done ones (sortDoneTasks) under a 'done' section.
-function dateRows(lists, itemsByList, today, firstDayOfWeek, showCompleted) {
+// then, with showCompleted, the done ones (sortDoneTasks) under a 'done' section. sortBy
+// (optional): the order within a section, see compareOpen.
+function dateRows(lists, itemsByList, today, firstDayOfWeek, showCompleted, sortBy) {
 	var tasks = listTasks(lists, itemsByList)
 	var rows = []
-	var pushTasks = function(entries, sorted, done, section) {
-		var items = entries.map(function(e) { return e.item })
-		sorted.forEach(function(item) {
-			var list = entries[items.indexOf(item)].list
-			rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: done, section: section })
-		})
-	}
-	var sections = dateSections(tasks.open.map(function(e) { return e.item }), today, firstDayOfWeek)
+	var bySection = {}
+	tasks.open.forEach(function(entry) {
+		var key = dateSection(dueDay(entry.item), today, firstDayOfWeek)
+		;(bySection[key] = bySection[key] || []).push(entry)
+	})
+	var sections = dateSectionOrder.filter(function(key) { return !!bySection[key] })
 	sections.forEach(function(section) {
-		rows.push({ type: 'section', key: 'section:' + section.key, section: section.key, count: section.items.length })
-		pushTasks(tasks.open, section.items, false, section.key)
+		rows.push({ type: 'section', key: 'section:' + section, section: section, count: bySection[section].length })
+		pushOpenRows(rows, sortOpenEntries(bySection[section], sortBy, lists), section)
 	})
 	if (!sections.length) {
+		rows.push({ type: 'empty', key: 'empty' })
+	}
+	rows.push({ type: 'add', key: 'add' })
+	if (showCompleted) {
+		rows = rows.concat(completedRows(lists, itemsByList))
+	}
+	return rows
+}
+
+function pushOpenRows(rows, entries, section) {
+	entries.forEach(function(e) {
+		rows.push({ type: 'task', key: 'task:' + e.list.id + ':' + e.item.id, item: e.item, list: e.list, done: false, section: section })
+	})
+}
+
+// The rows of the Tasks view not grouped (lists, itemsByList: as taskRows): the open tasks of
+// all the lists in one run (sortOpenEntries; section ''), the empty note without any, the quick
+// add, then with showCompleted the done ones as dateRows has them.
+function flatRows(lists, itemsByList, sortBy, showCompleted) {
+	var tasks = listTasks(lists, itemsByList)
+	var rows = []
+	pushOpenRows(rows, sortOpenEntries(tasks.open, sortBy, lists), '')
+	if (!rows.length) {
 		rows.push({ type: 'empty', key: 'empty' })
 	}
 	rows.push({ type: 'add', key: 'add' })
@@ -509,7 +568,7 @@ function completedRows(lists, itemsByList) {
 // { card, start, end, key }: in a card (an account heading isn't), the card's first / last row,
 // and the card's key (its first row's). A section, a list, the empty note and "Completed" start a
 // card; by date the quick add is a card of its own (with the empty note when there's no task),
-// by list it ends its list's card.
+// by list (and not grouped: pass true) it ends its list's card.
 function cardRows(rows, byList) {
 	var out = []
 	var key = ''
@@ -590,4 +649,126 @@ function quickAddList(lists, lastId) {
 		}
 	}
 	return lists.length ? lists[0].id : ''
+}
+
+//--- Smart filters (the Tasks view's side bar, like TickTick's smart lists)
+// 'all', 'today' (due today, and the overdue open ones), 'tomorrow', 'next7' (today to 6 days on,
+// the overdue open ones too), 'overdue', 'nodate', and 'list:<id>' for a task list.
+
+var smartFilters = ['all', 'today', 'tomorrow', 'next7', 'overdue', 'nodate']
+
+// The list id of a 'list:<id>' filter, else ''.
+function filterListId(filter) {
+	var f = String(filter || '')
+	return f.indexOf('list:') === 0 ? f.substring(5) : ''
+}
+
+// The filter to show: filter when it's a smart one or one of lists' ('list:<id>'), else 'all'.
+function validFilter(filter, lists) {
+	if (smartFilters.indexOf(filter) >= 0) {
+		return filter
+	}
+	var id = filterListId(filter)
+	for (var i = 0; id && i < (lists || []).length; i++) {
+		if (lists[i].id === id) {
+			return filter
+		}
+	}
+	return 'all'
+}
+
+// Whether a task is in a smart filter by when it's due (a 'list:' filter: every task). Open tasks
+// by their due day; done ones by their due day, else the day they were completed (never overdue).
+function matchesDate(item, filter, today) {
+	var done = isDone(item)
+	var due = dueDay(item)
+	var day = done ? (due || completedDay(item)) : due
+	switch (filter) {
+		case 'today': return done ? day === today : !!due && due <= today
+		case 'tomorrow': return !!day && day === addDays(today, 1)
+		case 'next7': return !!day && day <= addDays(today, 6) && (!done || day >= today)
+		case 'overdue': return !done && !!due && due < today
+		case 'nodate': return !due
+	}
+	return true
+}
+
+// The tasks of items in filter (non-tasks skipped); a 'list:<id>' filter keeps those of that list
+// (item.calendarId). today: 'YYYY-MM-DD'.
+function filterTasks(items, filter, today) {
+	var listId = filterListId(filter)
+	return (items || []).filter(function(item) {
+		return isTask(item) && (listId ? item.calendarId === listId : matchesDate(item, filter, today))
+	})
+}
+
+// The lists and their tasks in filter, for taskRows / dateRows / flatRows: { lists, itemsByList }.
+// A list filter: that list only; the others: every list, with its tasks in the filter.
+function filterLists(lists, itemsByList, filter, today) {
+	var listId = filterListId(filter)
+	var outLists = []
+	var outItems = {}
+	;(lists || []).forEach(function(list) {
+		if (listId && list.id !== listId) {
+			return
+		}
+		outLists.push(list)
+		var items = (itemsByList && itemsByList[list.id]) || []
+		outItems[list.id] = listId ? items.slice() : items.filter(function(item) {
+			return isTask(item) && matchesDate(item, filter, today)
+		})
+	})
+	return { lists: outLists, itemsByList: outItems }
+}
+
+// The open tasks in each filter: { all, today, tomorrow, next7, overdue, nodate, 'list:<id>' }.
+function filterCounts(lists, itemsByList, today) {
+	var counts = {}
+	smartFilters.forEach(function(f) { counts[f] = 0 })
+	;(lists || []).forEach(function(list) {
+		counts['list:' + list.id] = 0
+	})
+	listTasks(lists, itemsByList).open.forEach(function(e) {
+		smartFilters.forEach(function(f) {
+			if (matchesDate(e.item, f, today)) {
+				counts[f]++
+			}
+		})
+		counts['list:' + e.list.id]++
+	})
+	return counts
+}
+
+// The entries of the filter side bar (and its menu), top to bottom:
+//   { type: 'filter', key, count }: the smart filters
+//   { type: 'separator', key }
+//   { type: 'group', key, text }: an account's heading, only when the lists are from several
+//   { type: 'list', key, list, count }: each list ('list:<id>'), by account as taskRows has them
+// counts: filterCounts.
+function filterEntries(lists, counts) {
+	counts = counts || {}
+	var entries = smartFilters.map(function(f) {
+		return { type: 'filter', key: f, count: counts[f] || 0 }
+	})
+	var listRows = taskRows(lists, {}, false).filter(function(row) {
+		return row.type === 'group' || row.type === 'list'
+	})
+	if (listRows.length) {
+		entries.push({ type: 'separator', key: 'separator' })
+	}
+	listRows.forEach(function(row) {
+		if (row.type === 'group') {
+			entries.push({ type: 'group', key: row.key, text: row.text })
+		} else {
+			entries.push({ type: 'list', key: 'list:' + row.list.id, list: row.list, count: counts['list:' + row.list.id] || 0 })
+		}
+	})
+	return entries
+}
+
+// Where "Add a task…" adds under filter: { listId: the filter's list or '', dueDay: today on
+// Today and Next 7 days, tomorrow on Tomorrow, else '' }.
+function filterQuickAdd(filter, today) {
+	var dueDay = filter === 'today' || filter === 'next7' ? today : filter === 'tomorrow' ? addDays(today, 1) : ''
+	return { listId: filterListId(filter), dueDay: dueDay }
 }

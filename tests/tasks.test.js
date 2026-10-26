@@ -11,7 +11,8 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
-	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList']
+	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
+	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -181,6 +182,106 @@ assert.strictEqual(T.firstLine(undefined), '')
 		['add:t::b', true, false, true, 'list:t::b'],
 	])
 	same(T.collapseRows(rows, true, { 'list:g::a': true }).map(r => r.key), ['group:g', 'list:g::a', 'group:t', 'list:t::b', 'add:t::b'])
+}
+
+// Sort by (sortOpenTasks / taskRows / dateRows / flatRows): due date, title or list order.
+{
+	const a = task({ id: 'a', summary: 'banana', due: '2026-10-27T00:00:00.000Z', position: '2' })
+	const b = task({ id: 'b', summary: 'Apple', position: '3' })
+	const c = task({ id: 'c', summary: 'cherry', due: '2026-10-26T00:00:00.000Z', position: '1' })
+	same(T.sortOpenTasks([a, b, c]).map(t => t.id), ['c', 'a', 'b'], 'due by default')
+	same(T.sortOpenTasks([a, b, c], 'title').map(t => t.id), ['b', 'a', 'c'], 'by title, ignoring case')
+	same(T.sortOpenTasks([a, b, c], 'list').map(t => t.id), ['c', 'a', 'b'], "in the list's order")
+	const lists = [{ id: 'g::a', name: 'A' }, { id: 'g::b', name: 'B' }]
+	const items = { 'g::b': [a, c], 'g::a': [b] }
+	same(T.taskRows(lists, items, false, 'title').filter(r => r.type === 'task').map(r => r.item.id), ['b', 'a', 'c'])
+	same(T.taskRows(lists, items, false, 'list').filter(r => r.type === 'task').map(r => r.item.id), ['b', 'c', 'a'])
+
+	// flatRows: one run of the open tasks of all lists, then the quick add (and the done ones).
+	same(T.flatRows(lists, items, 'due', false).map(r => r.key), ['task:g::b:c', 'task:g::b:a', 'task:g::a:b', 'add'])
+	same(T.flatRows(lists, items, 'title', false).map(r => r.key), ['task:g::a:b', 'task:g::b:a', 'task:g::b:c', 'add'])
+	same(T.flatRows(lists, items, 'list', false).map(r => r.key), ['task:g::a:b', 'task:g::b:c', 'task:g::b:a', 'add'],
+		'by the order of the lists')
+	same(T.flatRows(lists, {}, 'due', false).map(r => r.key), ['empty', 'add'])
+	const done = { 'g::a': [b, task({ id: 'd', status: 'completed' })] }
+	same(T.flatRows(lists, done, 'due', true).map(r => r.key), ['task:g::a:b', 'add', 'section:done', 'task:g::a:d'])
+	assert.strictEqual(T.flatRows(lists, items, 'due', false)[0].section, '')
+	// Not grouped, islands: the tasks and the quick add are one card.
+	same(T.cardRows(T.flatRows(lists, done, 'due', true), true).map(c => [c.start, c.end]),
+		[[true, false], [false, true], [true, false], [false, true]])
+
+	// dateRows: the sort within each section.
+	const same2 = { 'g::a': [task({ id: 'z', summary: 'Zed', due: '2026-10-26T00:00:00.000Z', position: '1' }),
+		task({ id: 'y', summary: 'apple', due: '2026-10-26T00:00:00.000Z', position: '2' })] }
+	same(T.dateRows(lists, same2, '2026-10-26', 1, false).map(r => r.key), ['section:today', 'task:g::a:z', 'task:g::a:y', 'add'])
+	same(T.dateRows(lists, same2, '2026-10-26', 1, false, 'title').map(r => r.key), ['section:today', 'task:g::a:y', 'task:g::a:z', 'add'])
+}
+
+// Smart filters: today is Monday 26 October.
+{
+	const today = '2026-10-26'
+	const due = (id, list, day, more) => task(Object.assign({ id: id, calendarId: list, due: day ? day + 'T00:00:00.000Z' : undefined }, more))
+	const lists = [{ id: 'g::a', name: 'A', group: 'me@g' }, { id: 'g::b', name: 'B', group: 'me@g' }, { id: 't::c', name: 'C', group: 'TickTick' }]
+	const items = {
+		'g::a': [due('old', 'g::a', '2026-10-20'), due('today', 'g::a', today), due('tomorrow', 'g::a', '2026-10-27'),
+			due('sun', 'g::a', '2026-11-01'), due('next-mon', 'g::a', '2026-11-02'), due('none', 'g::a', ''),
+			due('done-today', 'g::a', today, { status: 'completed' }),
+			due('done-old', 'g::a', '2026-10-20', { status: 'completed' }),
+			due('done-undated', 'g::a', '', { status: 'completed', completed: '2026-10-26T09:00:00.000Z' })],
+		'g::b': [due('b-today', 'g::b', today), { kind: 'calendar#event', id: 'e', calendarId: 'g::b' }],
+		't::c': [],
+	}
+	const all = [].concat(items['g::a'], items['g::b'])
+	const ids = (filter) => T.filterTasks(all, filter, today).map(t => t.id)
+	same(ids('all'), ['old', 'today', 'tomorrow', 'sun', 'next-mon', 'none', 'done-today', 'done-old', 'done-undated', 'b-today'])
+	same(ids('today'), ['old', 'today', 'done-today', 'done-undated', 'b-today'], 'overdue open ones too; done ones done today')
+	same(ids('tomorrow'), ['tomorrow'])
+	same(ids('next7'), ['old', 'today', 'tomorrow', 'sun', 'done-today', 'done-undated', 'b-today'], 'today to +6, overdue too')
+	same(ids('overdue'), ['old'], 'open ones only')
+	same(ids('nodate'), ['none', 'done-undated'])
+	same(ids('list:g::b'), ['b-today'])
+	same(T.filterTasks(null, 'all', today), [])
+
+	// filterCounts: open tasks only.
+	same(T.filterCounts(lists, items, today), { all: 7, today: 3, tomorrow: 1, next7: 5, overdue: 1, nodate: 1,
+		'list:g::a': 6, 'list:g::b': 1, 'list:t::c': 0 })
+	same(T.filterCounts([], {}, today), { all: 0, today: 0, tomorrow: 0, next7: 0, overdue: 0, nodate: 0 })
+
+	// filterLists: a list filter keeps that list only; the others keep every list.
+	const one = T.filterLists(lists, items, 'list:g::b', today)
+	same(one.lists.map(l => l.id), ['g::b'])
+	same(Object.keys(one.itemsByList), ['g::b'])
+	const tomorrow = T.filterLists(lists, items, 'tomorrow', today)
+	same(tomorrow.lists.map(l => l.id), ['g::a', 'g::b', 't::c'])
+	same(tomorrow.itemsByList['g::a'].map(t => t.id), ['tomorrow'])
+	same(tomorrow.itemsByList['g::b'], [])
+	same(T.dateRows(tomorrow.lists, tomorrow.itemsByList, today, 1, false).map(r => r.key), ['section:tomorrow', 'task:g::a:tomorrow', 'add'])
+
+	// validFilter: back to 'all' when the list is gone, or for anything unknown.
+	assert.strictEqual(T.validFilter('today', lists), 'today')
+	assert.strictEqual(T.validFilter('list:t::c', lists), 'list:t::c')
+	assert.strictEqual(T.validFilter('list:gone', lists), 'all')
+	assert.strictEqual(T.validFilter('list:', lists), 'all')
+	assert.strictEqual(T.validFilter('', lists), 'all')
+	assert.strictEqual(T.validFilter(undefined, null), 'all')
+	assert.strictEqual(T.filterListId('list:g::a'), 'g::a')
+	assert.strictEqual(T.filterListId('today'), '')
+
+	// filterEntries: the smart filters, then the lists by account (headings with several accounts).
+	const counts = T.filterCounts(lists, items, today)
+	same(T.filterEntries(lists, counts).map(e => e.type + ':' + e.key + (e.count !== undefined ? '=' + e.count : '')), [
+		'filter:all=7', 'filter:today=3', 'filter:tomorrow=1', 'filter:next7=5', 'filter:overdue=1', 'filter:nodate=1',
+		'separator:separator', 'group:group:me@g', 'list:list:g::a=6', 'list:list:g::b=1', 'group:group:TickTick', 'list:list:t::c=0'])
+	same(T.filterEntries(lists.slice(0, 2), counts).filter(e => e.type === 'group'), [], 'one account: no headings')
+	same(T.filterEntries([], {}).map(e => e.key), ['all', 'today', 'tomorrow', 'next7', 'overdue', 'nodate'])
+
+	// filterQuickAdd: the list of a list filter, the due day of Today / Tomorrow / Next 7 days.
+	same(T.filterQuickAdd('list:g::b', today), { listId: 'g::b', dueDay: '' })
+	same(T.filterQuickAdd('today', today), { listId: '', dueDay: today })
+	same(T.filterQuickAdd('tomorrow', today), { listId: '', dueDay: '2026-10-27' })
+	same(T.filterQuickAdd('next7', today), { listId: '', dueDay: today })
+	same(T.filterQuickAdd('overdue', today), { listId: '', dueDay: '' })
+	same(T.filterQuickAdd('all', today), { listId: '', dueDay: '' })
 }
 
 // Drops: date sections that set a due day, lists of the same account only.
