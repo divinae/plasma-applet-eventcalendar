@@ -600,11 +600,11 @@ Item {
 		visible: weekView.weatherBeside
 		shown: weekView.islandsDay
 		// Flat: padding on its left (the popup's edge), the same space on the grid side. Islands: a
-		// card as tall as the grid's, a card gap from it.
+		// card from the top down, a card gap from the grid.
 		x: weekView.islandsDay ? weekView.contentX - weekView.panelGap - weekView.sidePanelWidth
 			: weekView.contentX - weekView.weatherGap * 2 - weekView.sidePanelWidth + Kirigami.Units.largeSpacing * 2
 		// Top aligned with the day header, like the grid, with a little padding (flat).
-		y: weekView.islandsDay ? gridCard.y : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
+		y: weekView.islandsDay ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.islandsDay ? weekView.sidePanelWidth : weekView.sidePanelWidth - Kirigami.Units.largeSpacing * 2
 		height: parent.height - y - (weekView.islandsDay ? 0 : Kirigami.Units.largeSpacing)
 
@@ -630,7 +630,7 @@ Item {
 		visible: weekView.tasksBeside
 		shown: weekView.islandsDay
 		x: weekView.contentX + weekView.contentWidth + (weekView.islandsDay ? weekView.panelGap : weekView.weatherGap * 2)
-		y: weekView.islandsDay ? gridCard.y : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
+		y: weekView.islandsDay ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.islandsDay ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
 		height: implicitHeight
 
