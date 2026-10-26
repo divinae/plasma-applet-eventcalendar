@@ -93,7 +93,7 @@ Item {
 	readonly property bool sidebarFits: width >= Kirigami.Units.gridUnit * 34
 	readonly property bool showSidebar: sidebarFits && !plasmoid.configuration.tasksSidebarCollapsed
 	readonly property real sidebarWidth: Kirigami.Units.gridUnit * 10.5
-	onConfigFilterChanged: rebuild()
+	onConfigFilterChanged: deferredRebuild()
 
 	function setFilter(key) {
 		plasmoid.configuration.tasksFilter = key
@@ -154,7 +154,7 @@ Item {
 		collapsed = next
 		rebuild()
 	}
-	onIslandsChanged: rebuild()
+	onIslandsChanged: deferredRebuild()
 
 	//--- The column
 	readonly property real maxColumnWidth: Kirigami.Units.gridUnit * 28
@@ -259,9 +259,11 @@ Item {
 		}
 	}
 	Component.onCompleted: rebuild()
-	onShowCompletedChanged: rebuild()
-	onGroupByChanged: rebuild()
-	onSortByChanged: rebuild()
+	// Later, not right away: a handler can run before the bindings that depend on the same value
+	// (byList / byDate on groupBy) are updated, and the rows were built for the previous grouping.
+	onShowCompletedChanged: deferredRebuild()
+	onGroupByChanged: deferredRebuild()
+	onSortByChanged: deferredRebuild()
 	onTodayChanged: deferredRebuild()
 	onFirstDayOfWeekChanged: deferredRebuild()
 	onEventModelChanged: deferredRebuild()
