@@ -3,12 +3,14 @@ import QtQuick.Shapes
 import org.kde.kirigami as Kirigami
 
 import "Tasks.js" as Tasks
+import "TaskPending.js" as TaskPending
 
 // A task's done check before its title: an empty circle, or a circle with a tick once done, in the
 // task's text color; with a priority in its color (like TickTick: high red, medium orange, low
 // blue). A click marks it done / not done (eventModel.toggleTask) and is only that: it doesn't open
 // the task or start a drag of it. The check shows the new state at once (pending) and goes back
-// when saving fails; toggled(done) tells (eg: for an undo offer).
+// when saving fails; toggled(done) tells (eg: for an undo offer). The state being saved is kept
+// in TaskPending.js, not here: a check made again meanwhile (rows rebuilt) shows it too.
 // subtaskId: a TickTick checklist item of eventItem instead (eventModel.toggleSubtask), checked
 // while subtaskDone.
 Item {
@@ -20,11 +22,16 @@ Item {
 	property string subtaskId: ""
 	property bool subtaskDone: false
 	// -1: as the task is; 0 / 1: unchecked / checked here, while (or once) it's saved.
-	property int pending: -1
+	property int pending: TaskPending.get(TaskPending.key(eventItem, subtaskId))
 	readonly property bool done: pending >= 0 ? pending === 1 : subtaskId ? subtaskDone : Tasks.isDone(eventItem)
 	readonly property bool canToggle: !!eventItem && eventItem.canEdit !== false
-	onEventItemChanged: pending = -1
-	onSubtaskDoneChanged: pending = -1
+	// The task (or item) changed: as it is, unless a save of it still runs.
+	function syncPending() {
+		pending = TaskPending.get(TaskPending.key(eventItem, subtaskId))
+	}
+	onEventItemChanged: syncPending()
+	onSubtaskIdChanged: syncPending()
+	onSubtaskDoneChanged: syncPending()
 
 	signal toggled(bool done)
 
@@ -37,7 +44,23 @@ Item {
 	readonly property bool hasPriority: priority !== 'none'
 	// The callbacks of a save may come after the row is gone.
 	property var alive: ({ value: true })
-	Component.onDestruction: alive.value = false
+	// A save of this task (or item) failed, maybe started by an earlier check of it: as it is.
+	property var failedListener: null
+	Component.onCompleted: {
+		var check = taskCheck
+		var alive = taskCheck.alive
+		// As it was before: this check (made again meanwhile) may show a copy taken after the click.
+		failedListener = function(key, wasDone) {
+			if (alive.value && key === TaskPending.key(check.eventItem, check.subtaskId)) {
+				check.pending = wasDone ? 1 : 0
+			}
+		}
+		TaskPending.listen(failedListener)
+	}
+	Component.onDestruction: {
+		alive.value = false
+		TaskPending.unlisten(failedListener)
+	}
 
 	implicitWidth: size
 	implicitHeight: size
@@ -60,14 +83,27 @@ Item {
 		if (item.calendarId && item.id && eventModel.eventsByCalendar && eventModel.eventsByCalendar[item.calendarId]) {
 			item = eventModel.getEvent(item.calendarId, item.id) || item
 		}
-		var next = !done
-		var check = taskCheck
-		var alive = taskCheck.alive
+		var wasDone = done
+		var next = !wasDone
+		var store = TaskPending // The callback may run once this check is gone (and its imports)
+		var key = store.key(item, subtaskId)
+		var token = store.start(key, next)
 		pending = next ? 1 : 0
+		// A checklist item: on the loaded task right away, so a quick second tick (its save is
+		// made from the task's checklist) doesn't undo this one.
+		var subtask = null
+		if (subtaskId && Array.isArray(item.subtasks)) {
+			subtask = item.subtasks.filter(function(s) { return s && s.id === subtaskId })[0] || null
+		}
+		var before = subtask ? !!subtask.done : false
+		if (subtask) {
+			subtask.done = next
+		}
 		var saved = function(err) {
-			if (err && alive.value) {
-				check.pending = -1 // Back to what it is
+			if (err && subtask && !!subtask.done === next) {
+				subtask.done = before
 			}
+			store.finish(key, token, !!err, wasDone) // Failed: back to what it was (every check of it)
 		}
 		if (subtaskId) {
 			eventModel.toggleSubtask(item, subtaskId, next, saved)
