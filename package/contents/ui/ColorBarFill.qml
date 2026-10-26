@@ -1,9 +1,11 @@
 import QtQuick
 
-// "Bar" event look (EventStyle.showBar): the event's shape in its full color, covered by its fill
-// except for a bar on the start side, so the bar runs flush along the left edge and follows the
-// rounded corners. Put it first in the event's item, whose own fill and border should match
+// "Bar" event look (EventStyle.showBar): a bar in the event's full color on the start side, cut from
+// the event's rounded shape so it runs flush along the left edge and follows the rounded corners,
+// and the fill right of it. Put it first in the event's item, whose own fill and border should match
 // (fillColor, borderColor) as they show at the right corners.
+// Bar and fill don't overlap: a faded event (past events, dimmed days) gets the opacity on each part
+// and shows no patch where one would show through the other, without a layer of its own.
 Item {
 	id: colorBarFill
 
@@ -20,22 +22,23 @@ Item {
 	property real bottomRightRadius: 0
 
 	anchors.fill: parent
-	// One layer: faded (past events, dimmed days) as a whole. Otherwise each part gets the opacity on
-	// its own and the bar layer shows through the fill as a wider patch.
-	layer.enabled: visible
 
-	// Only the left part (bar plus the rounding of the left corners): under the right corners it
-	// would show through the fill's anti-aliased edge as a second outline.
-	Rectangle {
-		visible: !colorBarFill.outlined
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		width: Math.min(parent.width, colorBarFill.barWidth + Math.max(colorBarFill.topLeftRadius, colorBarFill.bottomLeftRadius) + 1)
-		color: colorBarFill.barColor
-		topLeftRadius: colorBarFill.topLeftRadius
-		bottomLeftRadius: colorBarFill.bottomLeftRadius
+	// The bar: the left slice of the whole rounded shape.
+	Item {
+		width: Math.min(parent.width, colorBarFill.barWidth)
+		height: parent.height
+		clip: true
+		Rectangle {
+			width: colorBarFill.width
+			height: colorBarFill.height
+			color: colorBarFill.barColor
+			topLeftRadius: colorBarFill.topLeftRadius
+			bottomLeftRadius: colorBarFill.bottomLeftRadius
+			topRightRadius: colorBarFill.topRightRadius
+			bottomRightRadius: colorBarFill.bottomRightRadius
+		}
 	}
+
 	Rectangle {
 		visible: !colorBarFill.outlined
 		anchors.fill: parent
@@ -47,28 +50,20 @@ Item {
 		bottomRightRadius: colorBarFill.bottomRightRadius
 	}
 
-	// Outlined (the inside may be transparent): the whole shape outlined in the bar color, and the
-	// bar cut from the same rounded shape, so it follows the left corners.
-	Rectangle {
-		visible: colorBarFill.outlined
-		anchors.fill: parent
-		color: colorBarFill.fillColor
-		border.width: 1
-		border.color: colorBarFill.barColor
-		topLeftRadius: colorBarFill.topLeftRadius
-		bottomLeftRadius: colorBarFill.bottomLeftRadius
-		topRightRadius: colorBarFill.topRightRadius
-		bottomRightRadius: colorBarFill.bottomRightRadius
-	}
+	// Outlined (the inside may be transparent): the rest of the whole shape, outlined in the bar color.
 	Item {
 		visible: colorBarFill.outlined
-		width: colorBarFill.barWidth
+		x: colorBarFill.barWidth
+		width: Math.max(0, parent.width - colorBarFill.barWidth)
 		height: parent.height
 		clip: true
 		Rectangle {
+			x: -colorBarFill.barWidth
 			width: colorBarFill.width
 			height: colorBarFill.height
-			color: colorBarFill.barColor
+			color: colorBarFill.fillColor
+			border.width: 1
+			border.color: colorBarFill.barColor
 			topLeftRadius: colorBarFill.topLeftRadius
 			bottomLeftRadius: colorBarFill.bottomLeftRadius
 			topRightRadius: colorBarFill.topRightRadius
