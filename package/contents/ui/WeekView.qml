@@ -78,6 +78,8 @@ Item {
 	// Islands style: the weather, the hour grid and the tasks are cards (IslandCard), a card gap apart.
 	readonly property bool islandsDay: appletConfig.islands && singleDay
 	readonly property real panelGap: islandsDay ? appletConfig.cardGap : weatherGap * 2 // Between the grid and a panel
+	// Islands: room around the cards (sides, bottom), so their rounded corners and shadows show.
+	readonly property real islandsEdge: islandsDay ? appletConfig.cardGap : 0
 	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
 	readonly property bool weatherBeside: singleDay && showWeather && width >= minDayGridWidth + sidePanelWidth + panelGap
 	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists
@@ -89,7 +91,7 @@ Item {
 		if (!singleDay) {
 			return width
 		}
-		return Math.min(width - leftPanelSpace - rightPanelSpace, Kirigami.Units.gridUnit * 32)
+		return Math.min(width - leftPanelSpace - rightPanelSpace - islandsEdge * 2, Kirigami.Units.gridUnit * 32)
 	}
 	readonly property real contentX: {
 		var total = leftPanelSpace + contentWidth + rightPanelSpace
@@ -606,7 +608,9 @@ Item {
 		// Top aligned with the day header, like the grid, with a little padding (flat).
 		y: weekView.islandsDay ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.islandsDay ? weekView.sidePanelWidth : weekView.sidePanelWidth - Kirigami.Units.largeSpacing * 2
-		height: parent.height - y - (weekView.islandsDay ? 0 : Kirigami.Units.largeSpacing)
+		// Islands: as tall as the weather (at most down to the bottom edge); flat: the whole height.
+		height: weekView.islandsDay ? Math.min(implicitHeight, parent.height - y - weekView.islandsEdge)
+			: parent.height - y - Kirigami.Units.largeSpacing
 
 		DayWeatherPanel {
 			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
@@ -645,7 +649,7 @@ Item {
 	ColumnLayout {
 		x: weekView.contentX
 		width: weekView.contentWidth
-		height: parent.height
+		height: parent.height - weekView.islandsEdge
 		spacing: weekView.islandsDay ? appletConfig.cardGap : Kirigami.Units.smallSpacing
 
 		IslandCard {
