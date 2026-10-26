@@ -75,11 +75,12 @@ Item {
 	// The tasks get more room than the weather: titles are longer than "9°".
 	readonly property real tasksPanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 19, Math.max(Kirigami.Units.gridUnit * 13, width * 0.34)))
 	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
-	// Islands style: the weather, the hour grid and the tasks are cards (IslandCard), a card gap apart.
-	readonly property bool islandsDay: appletConfig.islands && singleDay
-	readonly property real panelGap: islandsDay ? appletConfig.cardGap : weatherGap * 2 // Between the grid and a panel
+	// Islands style: the hour grid (with the day names and the all-day events) is a card
+	// (IslandCard); in the Day view the weather and the tasks are cards too, a card gap apart.
+	readonly property bool islands: appletConfig.islands
+	readonly property real panelGap: islands ? appletConfig.cardGap : weatherGap * 2 // Between the grid and a panel
 	// Islands: room around the cards (sides, bottom), so their rounded corners and shadows show.
-	readonly property real islandsEdge: islandsDay ? appletConfig.cardGap : 0
+	readonly property real islandsEdge: islands ? appletConfig.cardGap : 0
 	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
 	readonly property bool weatherBeside: singleDay && showWeather && width >= minDayGridWidth + sidePanelWidth + panelGap
 	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists
@@ -89,7 +90,7 @@ Item {
 	readonly property real rightPanelSpace: tasksBeside ? tasksPanelWidth + panelGap : 0
 	readonly property real contentWidth: {
 		if (!singleDay) {
-			return width
+			return width - islandsEdge * 2
 		}
 		return Math.min(width - leftPanelSpace - rightPanelSpace - islandsEdge * 2, Kirigami.Units.gridUnit * 32)
 	}
@@ -575,11 +576,12 @@ Item {
 		}
 		Rectangle {
 			// Over the hour grid's card (islands), still faint.
-			z: weekView.islandsDay ? 1 : 0
+			z: weekView.islands ? 1 : 0
 			x: weekView.contentX + gridCard.leftPadding + weekView.gutterWidth + modelData.first * weekView.columnWidth
 			y: gridCard.y + gridCard.topPadding + dayNamesRow.y
 			width: modelData.count * weekView.columnWidth
-			height: weekView.height - y
+			// Down to the bottom of the grid (islands: of its card).
+			height: gridCard.y + gridCard.height - gridCard.bottomPadding - y
 			radius: 6
 			color: Kirigami.Theme.textColor
 			opacity: 0.04
@@ -600,16 +602,16 @@ Item {
 	// Left of the grid: the shown day's weather.
 	IslandCard {
 		visible: weekView.weatherBeside
-		shown: weekView.islandsDay
+		shown: weekView.islands
 		// Flat: padding on its left (the popup's edge), the same space on the grid side. Islands: a
 		// card from the top down, a card gap from the grid.
-		x: weekView.islandsDay ? weekView.contentX - weekView.panelGap - weekView.sidePanelWidth
+		x: weekView.islands ? weekView.contentX - weekView.panelGap - weekView.sidePanelWidth
 			: weekView.contentX - weekView.weatherGap * 2 - weekView.sidePanelWidth + Kirigami.Units.largeSpacing * 2
 		// Top aligned with the day header, like the grid, with a little padding (flat).
-		y: weekView.islandsDay ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
-		width: weekView.islandsDay ? weekView.sidePanelWidth : weekView.sidePanelWidth - Kirigami.Units.largeSpacing * 2
+		y: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
+		width: weekView.islands ? weekView.sidePanelWidth : weekView.sidePanelWidth - Kirigami.Units.largeSpacing * 2
 		// Islands: as tall as the weather (at most down to the bottom edge); flat: the whole height.
-		height: weekView.islandsDay ? Math.min(implicitHeight, parent.height - y - weekView.islandsEdge)
+		height: weekView.islands ? Math.min(implicitHeight, parent.height - y - weekView.islandsEdge)
 			: parent.height - y - Kirigami.Units.largeSpacing
 
 		DayWeatherPanel {
@@ -632,10 +634,10 @@ Item {
 	IslandCard {
 		id: tasksCard
 		visible: weekView.tasksBeside
-		shown: weekView.islandsDay
-		x: weekView.contentX + weekView.contentWidth + (weekView.islandsDay ? weekView.panelGap : weekView.weatherGap * 2)
-		y: weekView.islandsDay ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
-		width: weekView.islandsDay ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
+		shown: weekView.islands
+		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
+		y: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
+		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
 		height: implicitHeight
 
 		DayTasksPanel {
@@ -650,11 +652,11 @@ Item {
 		x: weekView.contentX
 		width: weekView.contentWidth
 		height: parent.height - weekView.islandsEdge
-		spacing: weekView.islandsDay ? appletConfig.cardGap : Kirigami.Units.smallSpacing
+		spacing: weekView.islands ? appletConfig.cardGap : Kirigami.Units.smallSpacing
 
 		IslandCard {
 			visible: weekView.singleDay && weekView.showWeather && !weekView.weatherBeside && weekView.weatherIsSetup
-			shown: weekView.islandsDay
+			shown: weekView.islands
 			Layout.fillWidth: true
 			DayWeatherPanel {
 				compact: true
@@ -664,11 +666,11 @@ Item {
 		// Islands: the day's tasks as a strip above the grid's card, in a card of its own (flat: the
 		// strip is below the all-day events, dayTasksStrip).
 		IslandCard {
-			visible: weekView.islandsDay && dayTasksStrip.wanted && dayTasksStrip.hasLists
-			shown: weekView.islandsDay
+			visible: weekView.islands && dayTasksStrip.wanted && dayTasksStrip.hasLists
+			shown: weekView.islands
 			Layout.fillWidth: true
 			DayTasksPanel {
-				eventModel: weekView.islandsDay ? weekView.eventModel : null
+				eventModel: weekView.islands && weekView.singleDay ? weekView.eventModel : null
 				day: weekView.columnDate(0)
 				collapsible: true
 				expanded: weekView.dayTasksExpanded
@@ -681,7 +683,7 @@ Item {
 		// The hour grid, with the day names / time zones and the all-day events (islands: a card).
 		IslandCard {
 			id: gridCard
-			shown: weekView.islandsDay
+			shown: weekView.islands
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 
@@ -1030,7 +1032,7 @@ Item {
 					Layout.rightMargin: Kirigami.Units.smallSpacing
 					// Also tells whether there are task lists at all (dayHasTaskLists), so it keeps its model.
 					readonly property bool wanted: weekView.singleDay && !weekView.tasksBeside
-					visible: wanted && hasLists && !weekView.islandsDay
+					visible: wanted && hasLists && !weekView.islands
 					eventModel: weekView.singleDay ? weekView.eventModel : null
 					day: weekView.columnDate(0)
 					collapsible: true
