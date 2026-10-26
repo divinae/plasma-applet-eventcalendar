@@ -40,7 +40,8 @@ ConfigPage {
 				text: i18n("View switcher in the header")
 				configKey: 'showViewTabs'
 			}
-			// The views the switcher offers (at least one stays).
+			// The views the switcher offers (at least one calendar view stays: Tasks is only offered
+			// with task lists selected).
 			Repeater {
 				model: [
 					{ mode: 'month', text: i18n("Month") },
@@ -51,7 +52,10 @@ ConfigPage {
 				]
 				FormCard.FormCheckDelegate {
 					readonly property var hidden: page.configBridge.read("hiddenViewTabs", []) || []
-					enabled: showViewTabsSwitch.checked && (!checked || hidden.length < 4)
+					readonly property int calendarViewsShown: ['month', 'week', 'today', 'classic'].filter(function(mode) {
+						return hidden.indexOf(mode) < 0
+					}).length
+					enabled: showViewTabsSwitch.checked && (!checked || modelData.mode === 'tasks' || calendarViewsShown > 1)
 					leftPadding: Kirigami.Units.gridUnit * 2
 					text: modelData.text
 					checked: hidden.indexOf(modelData.mode) < 0
