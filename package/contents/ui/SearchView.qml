@@ -6,9 +6,11 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "EventSearch.js" as EventSearch
+import "Tasks.js" as Tasks
 
 // Search events by title, location and description: the loaded events right away, then Google
-// Calendar a year back and ahead (the server also matches guests and other fields).
+// Calendar a year back and ahead (the server also matches guests and other fields). The loaded
+// tasks that match (title, notes) come first, as task rows (a click opens the task).
 Item {
 	id: searchView
 
@@ -31,6 +33,12 @@ Item {
 		var _ = eventModel.eventsData // Search again when events are refetched.
 		var items = eventModel.eventsData ? eventModel.eventsData.items : []
 		return EventSearch.searchLocal(items, query, timeModel.currentTime, resultLimit)
+	}
+	readonly property int taskLimit: 30
+	readonly property var taskResults: {
+		var _ = eventModel.eventsData // Search again when events are refetched.
+		var items = eventModel.eventsData ? eventModel.eventsData.items : []
+		return EventSearch.searchTasks(items, query, taskLimit)
 	}
 	readonly property var results: {
 		// Google results for an older query: keep the ones that still match while typing on.
@@ -119,13 +127,15 @@ Item {
 			Kirigami.SearchField {
 				id: searchField
 				Layout.fillWidth: true
-				placeholderText: i18n("Search events…")
+				placeholderText: i18n("Search events and tasks…")
 				delaySearch: false
 				autoAccept: false
 				Keys.onEscapePressed: searchView.closeRequested()
-				// Enter opens the first result.
+				// Enter opens the first result (a task first).
 				onAccepted: {
-					if (searchView.results.length > 0) {
+					if (searchView.taskResults.length > 0) {
+						popup.activateEvent(searchView.taskResults[0])
+					} else if (searchView.results.length > 0) {
 						searchView.eventClicked(searchView.results[0])
 					}
 				}
@@ -149,7 +159,7 @@ Item {
 				spacing: 0
 
 				PlasmaComponents3.Label {
-					visible: searchView.results.length === 0
+					visible: searchView.results.length === 0 && searchView.taskResults.length === 0
 					Layout.fillWidth: true
 					Layout.margins: Kirigami.Units.largeSpacing * 2
 					horizontalAlignment: Text.AlignHCenter
@@ -157,13 +167,48 @@ Item {
 					opacity: 0.6
 					text: {
 						if (!searchView.query) {
-							return i18n("Type to search event titles, places and descriptions")
+							return i18n("Type to search events and tasks")
 						}
 						if (searchView.searching || remoteTimer.running) {
 							return i18n("Searching…")
 						}
 						return i18n("No events found")
 					}
+				}
+
+				// Tasks: a heading, then the rows (like the Tasks tab's).
+				PlasmaComponents3.Label {
+					visible: searchView.taskResults.length > 0
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing * 2
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.topMargin: Kirigami.Units.largeSpacing
+					text: i18n("Tasks")
+					textFormat: Text.PlainText
+					font.weight: Font.DemiBold
+					opacity: 0.85
+				}
+				Repeater {
+					model: searchView.taskResults
+					TaskRow {
+						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.smallSpacing
+						Layout.rightMargin: Kirigami.Units.smallSpacing
+						eventItem: modelData
+						today: Tasks.dayString(timeModel.currentTime)
+						showNotes: true
+					}
+				}
+				PlasmaComponents3.Label {
+					visible: searchView.taskResults.length > 0 && searchView.results.length > 0
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing * 2
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.topMargin: Kirigami.Units.largeSpacing
+					text: i18n("Events")
+					textFormat: Text.PlainText
+					font.weight: Font.DemiBold
+					opacity: 0.85
 				}
 
 				Repeater {
