@@ -267,6 +267,7 @@ Item {
 					elide: Text.ElideMiddle
 					font.bold: true
 					text: importView.fileName || i18n("No file chosen")
+					textFormat: Text.PlainText
 				}
 				PlasmaComponents3.ToolButton {
 					icon.name: "document-open"

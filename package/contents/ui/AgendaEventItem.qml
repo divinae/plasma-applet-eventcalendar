@@ -129,6 +129,7 @@ LinkRect {
 						}
 						return model.summary
 					}
+					textFormat: Text.PlainText
 					color: agendaEventItem.tileTextColor
 					font.family: appletConfig.eventFont.family
 					font.pointSize: appletConfig.eventFont.pointSize

@@ -1340,6 +1340,7 @@ Item {
 														}
 														return parts.join(' · ')
 													}
+													textFormat: Text.PlainText // The title as typed
 													color: eventBlock.eventStyle.textColor
 													font.family: appletConfig.eventFont.family
 													font.pointSize: appletConfig.eventFont.pointSize
