@@ -35,13 +35,15 @@ Item {
 		ColumnLayout {
 			id: agendaColumn
 			width: agendaScrollView.viewportWidth
-			spacing: appletConfig.agendaDaySpacing
+			spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 
 			Repeater {
 				id: agendaRepeater
 				model: root.agendaModel
 				delegate: AgendaListItem {
 					width: parent.width
+					// Islands: the day cards as wide as the column (not as their content).
+					Layout.fillWidth: appletConfig.islands
 				}
 			}
 		}
