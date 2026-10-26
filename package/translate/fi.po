@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgstr "Asetuksissa ei ole valittu kalentereita."
 msgid "Show All"
 msgstr "Näytä kaikki"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Peru"
 
@@ -221,7 +221,7 @@ msgstr "Nimi omassa luettelossa"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Vain sinä näet tämän nimen. Muille kalenteri näkyy omalla nimellään."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Väri"
 
@@ -812,6 +812,43 @@ msgstr "API-tunnistetta ei voitu tallentaa järjestelmän avainrenkaaseen: %1"
 msgid "TickTick account added."
 msgstr "TickTick-tili lisätty."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "Luettelon nimeäminen uudelleen epäonnistui"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "Luettelon poistaminen epäonnistui"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "Luettelon luominen epäonnistui"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "Luettelon nimi"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "Nimeä uudelleen"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr "Poistetaanko luettelo ”%1” ja kaikki sen tehtävät? Tätä ei voi kumota."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "Poista"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "Uusi luettelo"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "Lisää"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "Yleiset"
@@ -903,10 +940,6 @@ msgstr "Poista aikavyöhyke"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Lisää aikavyöhyke, esim. America/New_York"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "Lisää"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1248,6 +1281,14 @@ msgstr "Avaa linkki"
 msgid "Edit calendar…"
 msgstr "Muokkaa kalenteria…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "Nimeä luettelo uudelleen…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "Poista luettelo…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1318,10 +1359,6 @@ msgstr "Muokkaa…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "Monista…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "Poista"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2594,6 +2631,14 @@ msgid "Due tomorrow"
 msgstr "Erääntyy huomenna"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "Luettelon värin vaihtaminen epäonnistui"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "Valmiiden tehtävien tyhjentäminen epäonnistui"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Tehtäviä voi siirtää vain saman tilin luetteloon"
 
@@ -2624,9 +2669,86 @@ msgid "Show completed"
 msgstr "Näytä tehdyt"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Hallitse luetteloita"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Uusi tehtävä luetteloon %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "Hallitse: %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Poistetaanko luettelo ”%2” ja sen %1 tehtävä? Tätä ei voi kumota."
+msgstr[1] "Poistetaanko luettelo ”%2” ja sen %1 tehtävää? Tätä ei voi kumota."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Uuden luettelon nimi"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "Tili: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "Tili, johon uusi luettelo luodaan"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "Punainen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "Oranssi"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "Keltainen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "Sininen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "Vihreä"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "Indigo"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "Violetti"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "Harmaa"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Nimeä uudelleen…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Tyhjennä valmiit"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

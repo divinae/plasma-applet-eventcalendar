@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -194,7 +194,7 @@ msgstr "Vis alle"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -245,7 +245,7 @@ msgstr "Navn i min liste"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Kun du ser dette navn. Kalenderen beholder sit navn for andre."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Farve"
 
@@ -932,6 +932,46 @@ msgstr "Kunne ikke gemme API-tokenet i systemets nøglering: %1"
 msgid "TickTick account added."
 msgstr "TickTick-konto tilføjet."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "Kunne ikke omdøbe listen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "Kunne ikke slette listen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "Kunne ikke oprette listen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "Listenavn"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "Omdøb"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr "Slet listen “%1” og alle dens opgaver? Det kan ikke fortrydes."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "Slet"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "Ny liste"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "Tilføj"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "Generelt"
@@ -1041,10 +1081,6 @@ msgstr "Fjern tidszone"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Tilføj en tidszone, f.eks.: America/New_York"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "Tilføj"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1401,6 +1437,14 @@ msgstr "Åbn link"
 msgid "Edit calendar…"
 msgstr "Redigér kalender…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "Omdøb liste…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "Slet liste…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1473,11 +1517,6 @@ msgstr "Redigér…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "Dupliker…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "Slet"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2774,6 +2813,14 @@ msgid "Due tomorrow"
 msgstr "Forfalder i morgen"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "Kunne ikke ændre listens farve"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "Kunne ikke rydde de fuldførte opgaver"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Opgaver kan kun flyttes til en liste på samme konto"
 
@@ -2804,9 +2851,86 @@ msgid "Show completed"
 msgstr "Vis udførte"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Administrer lister"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Ny opgave i %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "Administrer %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Slet listen “%2” og dens %1 opgave? Det kan ikke fortrydes."
+msgstr[1] "Slet listen “%2” og dens %1 opgaver? Det kan ikke fortrydes."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Navn på ny liste"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "Konto: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "Den konto, den nye liste oprettes i"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "Rød"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "Orange"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "Gul"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "Blå"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "Grøn"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "Indigo"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "Lilla"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "Grå"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Omdøb…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Ryd fuldførte"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

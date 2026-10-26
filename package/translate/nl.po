@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -195,7 +195,7 @@ msgstr "Alles tonen"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -247,7 +247,7 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Alleen jij ziet deze naam. Voor anderen houdt de agenda zijn eigen naam."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Kleur"
 
@@ -941,6 +941,48 @@ msgstr "Kan het API-token niet opslaan in de systeemsleutelbos: %1"
 msgid "TickTick account added."
 msgstr "TickTick-account toegevoegd."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "Kan de lijst niet hernoemen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "Kan de lijst niet verwijderen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "Kan de lijst niet aanmaken"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "Lijstnaam"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "Hernoemen"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr ""
+"De lijst ‘%1’ en alle taken erin verwijderen? Dit kan niet ongedaan worden "
+"gemaakt."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "Nieuwe lijst"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "Toevoegen"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "Algemeen"
@@ -1052,10 +1094,6 @@ msgstr "Tijdzone verwijderen"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Tijdzone toevoegen, bijv.: America/New_York"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "Toevoegen"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1414,6 +1452,14 @@ msgstr "Link openen"
 msgid "Edit calendar…"
 msgstr "Agenda aanpassen…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "Lijst hernoemen…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "Lijst verwijderen…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1486,11 +1532,6 @@ msgstr "Aanpassen…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "Dupliceren…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "Verwijderen"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2793,6 +2834,14 @@ msgid "Due tomorrow"
 msgstr "Uiterlijk morgen"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "Kan de kleur van de lijst niet wijzigen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "Kan de voltooide taken niet wissen"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr ""
 "Taken kunnen alleen naar een lijst van hetzelfde account worden verplaatst"
@@ -2824,9 +2873,90 @@ msgid "Show completed"
 msgstr "Afgeronde tonen"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Lijsten beheren"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Nieuwe taak in %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "%1 beheren"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"De lijst ‘%2’ en de %1 taak erin verwijderen? Dit kan niet ongedaan worden "
+"gemaakt."
+msgstr[1] ""
+"De lijst ‘%2’ en de %1 taken erin verwijderen? Dit kan niet ongedaan worden "
+"gemaakt."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Naam nieuwe lijst"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "Account: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "Het account waaraan de nieuwe lijst wordt toegevoegd"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "Rood"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "Oranje"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "Geel"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "Blauw"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "Groen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "Indigo"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "Paars"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "Grijs"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Hernoemen…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Voltooide wissen"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -194,7 +194,7 @@ msgstr "הצגת הכול"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -249,7 +249,7 @@ msgstr "השם ברשימה שלי"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "רק את/ה רואה את השם הזה. עבור אחרים לוח השנה שומר על שמו."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "צבע"
 
@@ -922,6 +922,46 @@ msgstr "לא היה ניתן לשמור את אסימון ה־API במחזיק �
 msgid "TickTick account added."
 msgstr "חשבון TickTick נוסף."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "לא ניתן לשנות את שם הרשימה"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "לא ניתן למחוק את הרשימה"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "לא ניתן ליצור את הרשימה"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "שם הרשימה"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "שינוי שם"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr "למחוק את הרשימה “%1” ואת כל המשימות שבה? לא ניתן לבטל פעולה זו."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "מחיקה"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "רשימה חדשה"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "הוספה"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "כללי"
@@ -1029,10 +1069,6 @@ msgstr "הסרת אזור זמן"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "הוספת אזור זמן, למשל: Asia/Jerusalem"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "הוספה"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1389,6 +1425,14 @@ msgstr "פתיחת הקישור"
 msgid "Edit calendar…"
 msgstr "עריכת לוח שנה…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "שינוי שם הרשימה…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "מחיקת הרשימה…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1461,11 +1505,6 @@ msgstr "עריכה…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "שכפול…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "מחיקה"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2803,6 +2842,14 @@ msgid "Due tomorrow"
 msgstr "יעד: מחר"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "לא ניתן לשנות את צבע הרשימה"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "לא ניתן לנקות את המשימות שהושלמו"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "ניתן להעביר משימות רק לרשימה באותו חשבון"
 
@@ -2835,9 +2882,88 @@ msgid "Show completed"
 msgstr "הצגת משימות שהושלמו"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "ניהול רשימות"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "משימה חדשה ב־%1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "ניהול %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "למחוק את הרשימה “%2” ואת המשימה שבה? לא ניתן לבטל פעולה זו."
+msgstr[1] "למחוק את הרשימה “%2” ואת %1 המשימות שבה? לא ניתן לבטל פעולה זו."
+msgstr[2] "למחוק את הרשימה “%2” ואת %1 המשימות שבה? לא ניתן לבטל פעולה זו."
+msgstr[3] "למחוק את הרשימה “%2” ואת %1 המשימות שבה? לא ניתן לבטל פעולה זו."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "שם הרשימה החדשה"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "חשבון: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "החשבון שאליו תתווסף הרשימה החדשה"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "אדום"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "כתום"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "צהוב"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "כחול"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "ירוק"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "אינדיגו"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "סגול"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "אפור"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "שינוי שם…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "ניקוי משימות שהושלמו"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -195,7 +195,7 @@ msgstr "Prikaži vse"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -250,7 +250,7 @@ msgstr "Ime na mojem seznamu"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "To ime vidite samo vi. Za druge koledar obdrži svoje ime."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Barva"
 
@@ -938,6 +938,47 @@ msgstr "Žetona API ni bilo mogoče shraniti v sistemsko shrambo ključev: %1"
 msgid "TickTick account added."
 msgstr "Račun TickTick je dodan."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "Seznama ni bilo mogoče preimenovati"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "Seznama ni bilo mogoče izbrisati"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "Seznama ni bilo mogoče ustvariti"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "Ime seznama"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "Preimenuj"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr ""
+"Izbrišem seznam »%1« in vsa njegova opravila? Tega ni mogoče razveljaviti."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "Izbriši"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "Nov seznam"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "Dodaj"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "Splošno"
@@ -1048,10 +1089,6 @@ msgstr "Odstrani časovni pas"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Dodajte časovni pas, npr.: America/New_York"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "Dodaj"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1409,6 +1446,14 @@ msgstr "Odpri povezavo"
 msgid "Edit calendar…"
 msgstr "Uredi koledar…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "Preimenuj seznam…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "Izbriši seznam…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1481,11 +1526,6 @@ msgstr "Uredi…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "Podvoji…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "Izbriši"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2826,6 +2866,14 @@ msgid "Due tomorrow"
 msgstr "Rok jutri"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "Barve seznama ni bilo mogoče spremeniti"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "Dokončanih opravil ni bilo mogoče počistiti"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Opravila lahko premaknete le na seznam istega računa"
 
@@ -2858,9 +2906,92 @@ msgid "Show completed"
 msgstr "Prikaži opravljena"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Upravljaj sezname"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Novo opravilo v %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "Upravljaj %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"Izbrišem seznam »%2« in njegovo %1 opravilo? Tega ni mogoče razveljaviti."
+msgstr[1] ""
+"Izbrišem seznam »%2« in njegovi %1 opravili? Tega ni mogoče razveljaviti."
+msgstr[2] ""
+"Izbrišem seznam »%2« in njegova %1 opravila? Tega ni mogoče razveljaviti."
+msgstr[3] ""
+"Izbrišem seznam »%2« in njegovih %1 opravil? Tega ni mogoče razveljaviti."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Ime novega seznama"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "Račun: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "Račun, v katerega gre novi seznam"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "Rdeča"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "Oranžna"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "Rumena"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "Modra"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "Zelena"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "Indigo"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "Vijolična"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "Siva"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Preimenuj…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Počisti dokončana"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

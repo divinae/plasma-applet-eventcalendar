@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -194,7 +194,7 @@ msgstr "모두 표시"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "취소"
 
@@ -244,7 +244,7 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "이 이름은 나에게만 보입니다. 다른 사람에게는 달력의 원래 이름이 표시됩니다."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "색상"
 
@@ -923,6 +923,48 @@ msgstr "시스템 키링에 API 토큰을 저장할 수 없음: %1"
 msgid "TickTick account added."
 msgstr "TickTick 계정을 추가했습니다."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "목록 이름을 바꿀 수 없습니다"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "목록을 삭제할 수 없습니다"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "목록을 만들 수 없습니다"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "목록 이름"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "이름 바꾸기"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr ""
+"“%1” 목록과 그 안의 모든 작업을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니"
+"다."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "삭제"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "새 목록"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "추가"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "일반"
@@ -1031,10 +1073,6 @@ msgstr "시간대 삭제"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "시간대 추가, 예: Asia/Seoul"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "추가"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1392,6 +1430,14 @@ msgstr "링크 열기"
 msgid "Edit calendar…"
 msgstr "달력 편집…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "목록 이름 바꾸기…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "목록 삭제…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1464,11 +1510,6 @@ msgstr "편집…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "복제…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "삭제"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2746,6 +2787,14 @@ msgid "Due tomorrow"
 msgstr "기한을 내일로"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "목록 색상을 바꿀 수 없습니다"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "완료된 작업을 지울 수 없습니다"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "작업은 같은 계정의 목록으로만 이동할 수 있습니다"
 
@@ -2775,9 +2824,86 @@ msgid "Show completed"
 msgstr "완료된 작업 표시"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "목록 관리"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "%1에 새 작업"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "%1 관리"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"“%2” 목록과 작업 %1개를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "새 목록 이름"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "계정: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "새 목록을 추가할 계정"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "빨간색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "주황색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "노란색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "파란색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "초록색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "남색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "보라색"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "회색"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "이름 바꾸기…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "완료된 작업 지우기"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

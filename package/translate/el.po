@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:44+0100\n"
+"POT-Creation-Date: 2026-10-26 10:56+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -196,7 +196,7 @@ msgstr "Εμφάνιση όλων"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -249,7 +249,7 @@ msgstr ""
 "Μόνο εσείς βλέπετε αυτό το όνομα. Για τους άλλους το ημερολόγιο διατηρεί το "
 "όνομά του."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Χρώμα"
 
@@ -949,6 +949,48 @@ msgstr ""
 msgid "TickTick account added."
 msgstr "Ο λογαριασμός TickTick προστέθηκε."
 
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't rename the list"
+msgstr "Δεν ήταν δυνατή η μετονομασία της λίστας"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't delete the list"
+msgstr "Δεν ήταν δυνατή η διαγραφή της λίστας"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "Couldn't create the list"
+msgstr "Δεν ήταν δυνατή η δημιουργία της λίστας"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "List name"
+msgstr "Όνομα λίστας"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Rename"
+msgstr "Μετονομασία"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgctxt "%1 = task list name"
+msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
+msgstr ""
+"Διαγραφή της λίστας «%1» και όλων των εργασιών της; Αυτό δεν μπορεί να "
+"αναιρεθεί."
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+msgid "New list"
+msgstr "Νέα λίστα"
+
+#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+msgid "Add"
+msgstr "Προσθήκη"
+
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "General"
 msgstr "Γενικά"
@@ -1060,10 +1102,6 @@ msgstr "Αφαίρεση ζώνης ώρας"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Add a time zone, eg: America/New_York"
 msgstr "Προσθήκη ζώνης ώρας, π.χ.: America/New_York"
-
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
-msgid "Add"
-msgstr "Προσθήκη"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Zones with the same time as yours are not shown."
@@ -1425,6 +1463,14 @@ msgstr "Άνοιγμα Συνδέσμου"
 msgid "Edit calendar…"
 msgstr "Επεξεργασία ημερολογίου…"
 
+#: ../contents/ui/config/SelectionRow.qml
+msgid "Rename list…"
+msgstr "Μετονομασία λίστας…"
+
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+msgid "Delete list…"
+msgstr "Διαγραφή λίστας…"
+
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
 msgid "d MMM, yyyy"
@@ -1497,11 +1543,6 @@ msgstr "Επεξεργασία…"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Duplicate…"
 msgstr "Αντίγραφο…"
-
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskRow.qml
-msgid "Delete"
-msgstr "Διαγραφή"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
@@ -2808,6 +2849,14 @@ msgid "Due tomorrow"
 msgstr "Προθεσμία αύριο"
 
 #: ../contents/ui/TasksView.qml
+msgid "Couldn't change the list's color"
+msgstr "Δεν ήταν δυνατή η αλλαγή του χρώματος της λίστας"
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't clear the completed tasks"
+msgstr "Δεν ήταν δυνατή η απαλοιφή των ολοκληρωμένων εργασιών"
+
+#: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr ""
 "Οι εργασίες μπορούν να μετακινηθούν μόνο σε λίστα του ίδιου λογαριασμού"
@@ -2839,9 +2888,90 @@ msgid "Show completed"
 msgstr "Εμφάνιση ολοκληρωμένων"
 
 #: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Διαχείριση λιστών"
+
+#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Νέα εργασία στο %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "Manage %1"
+msgstr "Διαχείριση %1"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"Διαγραφή της λίστας «%2» και της %1 εργασίας της; Αυτό δεν μπορεί να "
+"αναιρεθεί."
+msgstr[1] ""
+"Διαγραφή της λίστας «%2» και των %1 εργασιών της; Αυτό δεν μπορεί να "
+"αναιρεθεί."
+
+#: ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Όνομα νέας λίστας"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = account name"
+msgid "Account: %1"
+msgstr "Λογαριασμός: %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "The account the new list goes to"
+msgstr "Ο λογαριασμός στον οποίο θα δημιουργηθεί η νέα λίστα"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Red"
+msgstr "Κόκκινο"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Orange"
+msgstr "Πορτοκαλί"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Yellow"
+msgstr "Κίτρινο"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Blue"
+msgstr "Μπλε"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Green"
+msgstr "Πράσινο"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Indigo"
+msgstr "Λουλακί"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Purple"
+msgstr "Μωβ"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "color"
+msgid "Gray"
+msgstr "Γκρι"
+
+#: ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Μετονομασία…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Απαλοιφή ολοκληρωμένων"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
