@@ -240,9 +240,11 @@ Item {
 	function deferredRebuild() {
 		Qt.callLater(rebuild)
 	}
-	// Which "Add a task…" field has the focus, to give it back once the rows are made again.
+	// Which "Add a task…" (or rename) field has the focus, to give it back once the rows are made
+	// again.
 	function rememberAddFocus() {
 		var item = Window.activeFocusItem
+		renameHadFocus = !!item && item.objectName === "renameListField"
 		var key = ""
 		while (item) {
 			if (item.draftKey !== undefined && item.addDrafts !== undefined) {
@@ -285,6 +287,15 @@ Item {
 	// The list being renamed, and the name typed so far (kept across rebuilds).
 	property string renamingListId: ""
 	property string renameDraft: ""
+	// The rename field was focused (and its text selected) once: a field made again by a rebuild
+	// keeps the cursor (renameCursor) and the focus (renameHadFocus) instead.
+	property bool renameFocused: false
+	property int renameCursor: -1
+	property bool renameHadFocus: false
+	// The popup's editor, details card, search… is open: a field made again doesn't take the focus.
+	function overlayOpen() {
+		return typeof popup !== "undefined" && !!popup && !!popup.anyOverlayOpen
+	}
 	// The list whose delete waits for a confirmation.
 	property string confirmDeleteListId: ""
 	// The list a request runs for.
@@ -335,12 +346,18 @@ Item {
 
 	function startRename(list) {
 		confirmDeleteListId = ""
+		renameFocused = false
+		renameCursor = -1
+		renameHadFocus = false
 		renameDraft = list.name
 		renamingListId = list.id
 	}
 	function cancelRename() {
 		renamingListId = ""
 		renameDraft = ""
+		renameFocused = false
+		renameCursor = -1
+		renameHadFocus = false
 	}
 	function commitRename(list, text) {
 		var title = TaskLists.cleanTitle(text)
@@ -1612,10 +1629,31 @@ Item {
 							bottomPadding: 2
 							font.weight: Font.DemiBold
 							readOnly: listHeader.busy
+							objectName: "renameListField"
 							Accessible.name: i18n("List name")
+							// The first time: focused, the name selected; made again (rebuild): as it was.
+							property bool restored: false
 							Component.onCompleted: {
-								forceActiveFocus()
-								selectAll()
+								if (!tasksView.renameFocused) {
+									tasksView.renameFocused = true
+									if (!tasksView.overlayOpen()) {
+										forceActiveFocus()
+										selectAll()
+									}
+								} else {
+									if (tasksView.renameCursor >= 0) {
+										cursorPosition = Math.min(tasksView.renameCursor, length)
+									}
+									if (tasksView.renameHadFocus && !tasksView.overlayOpen()) {
+										forceActiveFocus()
+									}
+								}
+								restored = true
+							}
+							onCursorPositionChanged: {
+								if (restored) {
+									tasksView.renameCursor = cursorPosition
+								}
 							}
 							onTextEdited: tasksView.renameDraft = text
 							onAccepted: tasksView.commitRename(listHeader.list, text)
@@ -1764,7 +1802,7 @@ Item {
 						}
 					}
 					Component.onCompleted: {
-						if (visible) {
+						if (visible && !tasksView.overlayOpen()) {
 							forceActiveFocus()
 						}
 					}
