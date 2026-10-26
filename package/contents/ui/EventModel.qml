@@ -9,6 +9,7 @@ import "EventCacheUtil.js" as EventCacheUtil
 import "Guests.js" as Guests
 import "Conflicts.js" as Conflicts
 import "EventTypes.js" as EventTypes
+import "TaskLists.js" as TaskLists
 import "Tasks.js" as Tasks
 
 CalendarManager {
@@ -721,6 +722,107 @@ CalendarManager {
 			}
 		}
 		return out
+	}
+
+	//--- Task lists: create, rename, delete, color, clear completed (see TaskLists.js)
+	// Emitted after a list changed (the Tasks view builds its rows again).
+	signal taskListsChanged()
+
+	// The accounts lists can be created in, for a "New list in…" picker:
+	// [{ id (the account prefix of its list ids), label, provider (calendarManagerId) }].
+	function getTaskAccounts() {
+		var out = []
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			if (typeof calendarManager.createTaskList !== 'function' || !calendarManager.accountId) {
+				continue
+			}
+			var provider = String(calendarManager.calendarManagerId)
+			out.push({
+				id: String(calendarManager.accountId),
+				label: String(calendarManager.accountLabel || (provider === 'TickTick' ? "TickTick" : "Google")),
+				provider: provider,
+			})
+		}
+		return out
+	}
+	function taskListAccountManager(accountPrefix) {
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			if (calendarManager.accountId === accountPrefix && typeof calendarManager.createTaskList === 'function') {
+				return calendarManager
+			}
+		}
+		return null
+	}
+
+	// { rename, delete, color, clearCompleted }: what can be done with the list.
+	function taskListCapabilities(listId) {
+		var calendarManager = managerWith(listId, 'taskListCapabilities')
+		return calendarManager ? calendarManager.taskListCapabilities(listId)
+			: { rename: false, delete: false, color: false, clearCompleted: false }
+	}
+	function supportsListEdit(listId) {
+		return TaskLists.hasAny(taskListCapabilities(listId))
+	}
+
+	// done(err, result) once the server answered, always called. removedListId: a deleted list,
+	// unloaded here (its tasks leave the views).
+	function taskListDone(done, removedListId) {
+		return function(err, result) {
+			if (!err) {
+				if (removedListId) {
+					delete eventModel.eventsByCalendar[removedListId]
+					delete eventModel.calendarPluginMap[removedListId]
+					mergeEvents()
+				}
+				taskListsChanged()
+			}
+			if (done) {
+				done(err || null, result || null)
+			}
+		}
+	}
+	// Call fnName(listId, args..., done) on the list's manager, else done(err).
+	function forwardTaskList(fnName, listId, args, done, removedListId) {
+		var calendarManager = managerWith(listId, fnName)
+		if (!calendarManager) {
+			logger.log('Could not ' + fnName + ': not supported')
+			if (done) {
+				done(fnName + ' not supported', null)
+			}
+			return
+		}
+		calendarManager[fnName].apply(calendarManager, [listId].concat(args, [taskListDone(done, removedListId)]))
+	}
+
+	// A new list in an account (accountPrefix: see getTaskAccounts), shown right away.
+	// done(err, list): list is { id, name }.
+	function createTaskList(accountPrefix, title, done) {
+		var calendarManager = taskListAccountManager(accountPrefix)
+		if (!calendarManager) {
+			logger.log('Could not createTaskList: no account')
+			if (done) {
+				done('createTaskList: no account', null)
+			}
+			return
+		}
+		calendarManager.createTaskList(title, taskListDone(done, ''))
+	}
+	function renameTaskList(listId, title, done) {
+		forwardTaskList('renameTaskList', listId, [title], done, '')
+	}
+	// The list and its tasks are deleted.
+	function deleteTaskList(listId, done) {
+		forwardTaskList('deleteTaskList', listId, [], done, listId)
+	}
+	// color: '#rrggbb' (TickTick).
+	function setTaskListColor(listId, color, done) {
+		forwardTaskList('setTaskListColor', listId, [color], done, '')
+	}
+	// The list's completed tasks are cleared (Google).
+	function clearCompleted(listId, done) {
+		forwardTaskList('clearCompleted', listId, [], done, '')
 	}
 
 	// Repeat rules can be edited (Google Calendar).
