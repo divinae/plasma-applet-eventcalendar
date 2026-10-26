@@ -33,13 +33,19 @@ function stringList(value) {
 	return value.map(str).filter(function(item) { return !!item })
 }
 
-// A project as saved: { id, name, color } (color '' when it has none).
+// A project as saved: { id, name, color } (color '' when it has none), and the permission of a
+// shared one ('read', 'comment', 'write'; left out for your own), so read-only ones can't be changed.
 function serializableProject(project) {
-	return {
+	var safe = {
 		id: str(project && project.id),
 		name: str(project && project.name),
 		color: str(project && project.color),
 	}
+	var permission = str(project && project.permission)
+	if (permission) {
+		safe.permission = permission
+	}
+	return safe
 }
 
 // The saved fields of an account, nothing else (no token).

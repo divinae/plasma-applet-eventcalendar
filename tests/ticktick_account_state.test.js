@@ -49,6 +49,11 @@ assert.deepStrictEqual(state.taskProjects([
 	null,
 ]), [{ id: 'a', name: 'A', color: '' }, { id: 'd', name: 'D', color: '' }])
 assert.deepStrictEqual(state.taskProjects(null), [])
+// A shared project keeps its permission (read-only ones can't be renamed or deleted).
+assert.deepStrictEqual(state.taskProjects([{ id: 's', name: 'S', color: '#4ca1ff', permission: 'read' }]),
+	[{ id: 's', name: 'S', color: '#4ca1ff', permission: 'read' }])
+assert.deepStrictEqual(state.serializeAccount({ id: 'x', projectList: [{ id: 's', name: 'S', permission: 'write' }] }).projectList,
+	[{ id: 's', name: 'S', color: '', permission: 'write' }])
 assert.ok(/^tt_/.test(state.generateId()))
 
 // The token stays out of argv, config and logs.
