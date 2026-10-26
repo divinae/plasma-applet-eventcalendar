@@ -421,6 +421,7 @@ Item {
 						text: tasksView.byList ? i18n("Done managing lists") : i18n("Manage lists")
 						onClicked: plasmoid.configuration.tasksGroupBy = tasksView.byList ? 'date' : 'list'
 						Accessible.role: Accessible.CheckBox
+						Accessible.checkable: true
 						Accessible.checked: tasksView.byList
 						Accessible.name: i18n("Manage lists")
 						PlasmaComponents3.ToolTip.text: tasksView.byList ? i18n("Done managing lists (shows the tasks by date)") : i18n("Manage lists (shows the tasks by list)")
@@ -729,9 +730,17 @@ Item {
 								tasksView.cancelRename()
 								event.accepted = true
 							}
-							// Clicking elsewhere leaves the rename (unsaved), like Esc.
-							onActiveFocusChanged: if (!activeFocus && !listHeader.busy) tasksView.cancelRename()
 						}
+					}
+					// Leaves the rename unsaved (like Esc).
+					PlasmaComponents3.ToolButton {
+						visible: listHeader.renaming && !listHeader.busy
+						icon.name: "dialog-cancel"
+						display: QQC2.AbstractButton.IconOnly
+						text: i18n("Cancel")
+						onClicked: tasksView.cancelRename()
+						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.visible: hovered
 					}
 					PlasmaComponents3.BusyIndicator {
 						visible: listHeader.busy
@@ -852,8 +861,6 @@ Item {
 						tasksView.newListDraft = ""
 						event.accepted = true
 					}
-					// Clicking elsewhere with nothing typed closes the field.
-					onActiveFocusChanged: if (!activeFocus && !text.trim() && !newList.busy) tasksView.addingList = false
 					onVisibleChanged: {
 						if (visible) {
 							forceActiveFocus()
@@ -917,6 +924,19 @@ Item {
 					running: visible
 					Layout.preferredWidth: Kirigami.Units.iconSizes.small
 					Layout.preferredHeight: Kirigami.Units.iconSizes.small
+				}
+				// Closes the field unsaved (like Esc).
+				PlasmaComponents3.ToolButton {
+					visible: !newList.busy
+					icon.name: "dialog-cancel"
+					display: QQC2.AbstractButton.IconOnly
+					text: i18n("Cancel")
+					onClicked: {
+						tasksView.addingList = false
+						tasksView.newListDraft = ""
+					}
+					PlasmaComponents3.ToolTip.text: text
+					PlasmaComponents3.ToolTip.visible: hovered
 				}
 			}
 			PlasmaComponents3.Label {
