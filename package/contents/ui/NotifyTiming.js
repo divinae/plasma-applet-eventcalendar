@@ -108,17 +108,24 @@ function taskHasAlert(task) {
 
 // When a task's reminders come: [{ minutes, at (ms) }]: each reminder (minutes before the due
 // moment; negative = after it, eg: -540 on an all-day task = 09:00 that day), else the due time.
+// All-day tasks count in wall-clock time from their day's 00:00, so -540 stays 09:00 on a day the
+// clocks change (DST); timed ones in real minutes before the due moment.
 function taskAlertTimes(task) {
 	if (!taskHasAlert(task)) {
 		return []
 	}
 	var due = taskDueMs(task)
+	var allDay = !/^\d{1,2}:\d{2}$/.test(String((task && task.dueTime) || ''))
+	var day = new Date(due)
 	var reminders = taskReminders(task)
 	if (!reminders.length) {
 		reminders = [0]
 	}
 	return reminders.map(function(minutes) {
-		return { minutes: minutes, at: due - minutes * MINUTE }
+		var at = allDay
+			? new Date(day.getFullYear(), day.getMonth(), day.getDate(), 0, -minutes).getTime()
+			: due - minutes * MINUTE
+		return { minutes: minutes, at: at }
 	})
 }
 

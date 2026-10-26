@@ -4,6 +4,8 @@ const fs = require('fs')
 const path = require('path')
 const vm = require('vm')
 
+process.env.TZ = 'Europe/Warsaw' // The DST cases below are Warsaw's clock changes
+
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/NotifyTiming.js'), 'utf8')
 	.replace(/^\.pragma library\s*$/m, '')
 const T = {}
@@ -91,5 +93,20 @@ assert.strictEqual(T.taskDueState(task({ reminders: [-540] }), at(23, 59)).state
 assert.strictEqual(T.taskDueState(task({ reminders: [-540] }), at(0, 0) + 864e5).state, 'overdue', 'next day')
 assert.strictEqual(T.taskDueState(task({ reminders: [60] }), at(0, 0) - 3600000).state, 'tomorrow', 'reminder the evening before')
 assert.strictEqual(T.taskDueState(task({ due: null }), at(9, 0)).state, 'none')
+
+// All-day tasks on the days the clocks change (Europe/Warsaw): wall-clock time, not 24 h of ms.
+const alertAt = extra => Array.from(T.taskAlertTimes(task(extra)), a => a.at)
+const wall = (y, mo, d, h, mi) => new Date(y, mo, d, h, mi).getTime()
+assert.deepStrictEqual(alertAt({ due: '2026-03-29T00:00:00.000Z', reminders: [-540] }), [wall(2026, 2, 29, 9, 0)], 'spring forward: 09:00')
+assert.strictEqual(new Date(alertAt({ due: '2026-03-29T00:00:00.000Z', reminders: [-540] })[0]).getHours(), 9, 'spring forward: the hour is 9')
+assert.strictEqual(new Date(alertAt({ due: '2026-10-25T00:00:00.000Z', reminders: [-540] })[0]).getHours(), 9, 'fall back: the hour is 9')
+assert.strictEqual(new Date(alertAt({ due: '2026-10-25T00:00:00.000Z', reminders: [-1080] })[0]).getHours(), 18, 'fall back: 18:00')
+assert.strictEqual(new Date(alertAt({ due: '2026-03-29T00:00:00.000Z', reminders: [60] })[0]).getHours(), 23, 'the evening before: 23:00')
+assert.deepStrictEqual(new Date(alertAt({ due: '2026-03-29T00:00:00.000Z', reminders: [0] })[0]).getHours(), 0, 'at the start of the day')
+// Timed tasks stay real minutes before the due moment: 04:00 - 3 h over the 02:00 jump is 00:00.
+assert.deepStrictEqual(alertAt({ due: '2026-03-29T00:00:00.000Z', dueTime: '04:00', reminders: [180] }), [wall(2026, 2, 29, 4, 0) - 180 * 60000])
+assert.strictEqual(new Date(alertAt({ due: '2026-03-29T00:00:00.000Z', dueTime: '04:00', reminders: [180] })[0]).getHours(), 0)
+win = T.checkWindow(wall(2026, 9, 25, 8, 59), wall(2026, 9, 25, 9, 0), MAX)
+assert.deepStrictEqual(tkinds(T.taskDueFor(task({ due: '2026-10-25T00:00:00.000Z', reminders: [-540] }), win)), ['task:-540'], 'fall back: sent at 09:00')
 
 console.log('notify_timing: ok')
