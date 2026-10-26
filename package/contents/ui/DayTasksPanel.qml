@@ -78,13 +78,15 @@ ColumnLayout {
 			PlasmaComponents3.ToolTip.text: text
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
-		// Like the weather panel's section titles.
+		// Islands: like the Tasks tab's card titles (bold, a bit larger, the count on the right).
+		// Flat: like the weather panel's section titles.
 		PlasmaComponents3.Label {
-			Layout.leftMargin: dayTasks.collapsible ? 0 : Kirigami.Units.smallSpacing
+			Layout.leftMargin: dayTasks.collapsible || appletConfig.islands ? 0 : Kirigami.Units.smallSpacing
 			text: i18n("Tasks")
 			textFormat: Text.PlainText
-			font.weight: Font.DemiBold
-			opacity: 0.85
+			font.weight: appletConfig.islands ? Font.Bold : Font.DemiBold
+			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.15 : Kirigami.Theme.defaultFont.pointSize
+			opacity: appletConfig.islands ? 1 : 0.85
 			MouseArea {
 				anchors.fill: parent
 				enabled: dayTasks.collapsible
@@ -92,8 +94,8 @@ ColumnLayout {
 			}
 		}
 		PlasmaComponents3.Label {
+			visible: !appletConfig.islands && dayTasks.openCount > 0
 			Layout.leftMargin: Kirigami.Units.smallSpacing
-			visible: dayTasks.openCount > 0
 			text: String(dayTasks.openCount)
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
@@ -102,7 +104,17 @@ ColumnLayout {
 		Item {
 			Layout.fillWidth: true
 		}
+		PlasmaComponents3.Label {
+			visible: appletConfig.islands && dayTasks.openCount > 0
+			// Lined up with the rows' dates.
+			Layout.rightMargin: Kirigami.Units.smallSpacing * 2
+			text: String(dayTasks.openCount)
+			textFormat: Text.PlainText
+			opacity: 0.65
+		}
+		// Islands: "Add a task…" below is enough.
 		PlasmaComponents3.ToolButton {
+			visible: !appletConfig.islands
 			icon.name: "list-add"
 			icon.width: Kirigami.Units.iconSizes.small
 			icon.height: Kirigami.Units.iconSizes.small
