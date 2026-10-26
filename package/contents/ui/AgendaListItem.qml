@@ -153,6 +153,8 @@ ColumnLayout {
 				Layout.fillWidth: true
 				eventItem: agendaItemTasks.get(index)
 				today: Tasks.dayString(timeModel.currentTime)
+				// One line: the day heading already says when; only an overdue date is shown.
+				compact: true
 			}
 		}
 
