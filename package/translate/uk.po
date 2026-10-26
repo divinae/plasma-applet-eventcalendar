@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:11+0100\n"
+"POT-Creation-Date: 2026-10-26 13:36+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -2998,11 +2998,6 @@ msgstr "Керувати списками"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
-msgid "New task in %1"
-msgstr "Нове завдання у «%1»"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Керувати «%1»"
 
@@ -3072,6 +3067,10 @@ msgstr "Сірий"
 #: ../contents/ui/TasksView.qml
 msgid "Rename…"
 msgstr "Перейменувати…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Показувати в розумних списках"
 
 #: ../contents/ui/TasksView.qml
 msgid "Clear completed"
@@ -3323,6 +3322,10 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgctxt "%1 = task list name"
+#~ msgid "New task in %1"
+#~ msgstr "Нове завдання у «%1»"
 
 #~ msgid "Done managing lists"
 #~ msgstr "Завершити керування списками"

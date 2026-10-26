@@ -257,6 +257,14 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(tomorrow.itemsByList['g::b'], [])
 	same(T.dateRows(tomorrow.lists, tomorrow.itemsByList, today, 1, false).map(r => r.key), ['section:tomorrow', 'task:g::a:tomorrow', 'add'])
 
+	// Lists left out of the smart filters (hidden): only on their own filter, and not counted elsewhere.
+	const hidden = { 'g::b': true }
+	same(T.filterLists(lists, items, 'today', today, hidden).lists.map(l => l.id), ['g::a', 't::c'], 'hidden list not in a smart filter')
+	same(T.filterLists(lists, items, 'list:g::b', today, hidden).lists.map(l => l.id), ['g::b'], 'still on its own')
+	const hiddenCounts = T.filterCounts(lists, items, today, hidden)
+	assert.strictEqual(hiddenCounts.all, 6, 'all without the hidden list')
+	assert.strictEqual(hiddenCounts['list:g::b'], 1, 'its own count kept')
+
 	// validFilter: back to 'all' when the list is gone, or for anything unknown.
 	assert.strictEqual(T.validFilter('today', lists), 'today')
 	assert.strictEqual(T.validFilter('list:t::c', lists), 'list:t::c')

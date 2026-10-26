@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:11+0100\n"
+"POT-Creation-Date: 2026-10-26 13:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2750,11 +2750,6 @@ msgstr "リストを管理"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
-msgid "New task in %1"
-msgstr "%1 に新しいタスク"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 を管理"
 
@@ -2820,6 +2815,10 @@ msgstr "グレー"
 #: ../contents/ui/TasksView.qml
 msgid "Rename…"
 msgstr "名前を変更…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "スマートリストに表示"
 
 #: ../contents/ui/TasksView.qml
 msgid "Clear completed"
@@ -3058,6 +3057,10 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "%1 = task list name"
+#~ msgid "New task in %1"
+#~ msgstr "%1 に新しいタスク"
 
 #~ msgid "Done managing lists"
 #~ msgstr "リストの管理を終了"

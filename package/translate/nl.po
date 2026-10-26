@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:11+0100\n"
+"POT-Creation-Date: 2026-10-26 13:36+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -2987,11 +2987,6 @@ msgstr "Lijsten beheren"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
-msgid "New task in %1"
-msgstr "Nieuwe taak in %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 beheren"
 
@@ -3062,6 +3057,10 @@ msgstr "Grijs"
 #: ../contents/ui/TasksView.qml
 msgid "Rename…"
 msgstr "Hernoemen…"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Tonen in slimme lijsten"
 
 #: ../contents/ui/TasksView.qml
 msgid "Clear completed"
@@ -3307,6 +3306,10 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgctxt "%1 = task list name"
+#~ msgid "New task in %1"
+#~ msgstr "Nieuwe taak in %1"
 
 #~ msgid "Done managing lists"
 #~ msgstr "Klaar met lijsten beheren"

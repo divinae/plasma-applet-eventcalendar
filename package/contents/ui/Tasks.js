@@ -704,12 +704,13 @@ function filterTasks(items, filter, today) {
 
 // The lists and their tasks in filter, for taskRows / dateRows / flatRows: { lists, itemsByList }.
 // A list filter: that list only; the others: every list, with its tasks in the filter.
-function filterLists(lists, itemsByList, filter, today) {
+// hidden: { listId: true } for lists left out of the smart filters (shown only on their own).
+function filterLists(lists, itemsByList, filter, today, hidden) {
 	var listId = filterListId(filter)
 	var outLists = []
 	var outItems = {}
 	;(lists || []).forEach(function(list) {
-		if (listId && list.id !== listId) {
+		if (listId ? list.id !== listId : !!(hidden && hidden[list.id])) {
 			return
 		}
 		outLists.push(list)
@@ -722,7 +723,8 @@ function filterLists(lists, itemsByList, filter, today) {
 }
 
 // The open tasks in each filter: { all, today, tomorrow, next7, overdue, nodate, 'list:<id>' }.
-function filterCounts(lists, itemsByList, today) {
+// hidden: as filterLists (those lists count only in their own filter).
+function filterCounts(lists, itemsByList, today, hidden) {
 	var counts = {}
 	smartFilters.forEach(function(f) { counts[f] = 0 })
 	;(lists || []).forEach(function(list) {
@@ -730,7 +732,7 @@ function filterCounts(lists, itemsByList, today) {
 	})
 	listTasks(lists, itemsByList).open.forEach(function(e) {
 		smartFilters.forEach(function(f) {
-			if (matchesDate(e.item, f, today)) {
+			if (!(hidden && hidden[e.list.id]) && matchesDate(e.item, f, today)) {
 				counts[f]++
 			}
 		})

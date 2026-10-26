@@ -57,6 +57,22 @@ Item {
 	//--- Smart filters (Tasks.js): All, Today, Tomorrow, Next 7 days, Overdue, No date, each list.
 	// A side bar when there's room, else a menu on the header's title.
 	readonly property string configFilter: String(plasmoid.configuration.tasksFilter || 'all')
+	// Lists left out of the smart filters ({ id: true }), Settings key tasksSmartHiddenLists.
+	readonly property var smartHidden: {
+		var map = {}
+		Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).forEach(function(id) { map[id] = true })
+		return map
+	}
+	onSmartHiddenChanged: deferredRebuild()
+	function setShownInSmartLists(list, shown) {
+		var ids = Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).filter(function(id) {
+			return id !== list.id
+		})
+		if (!shown) {
+			ids.push(list.id)
+		}
+		plasmoid.configuration.tasksSmartHiddenLists = ids
+	}
 	// The filter shown: configFilter, 'all' while its list is missing (Tasks.validFilter).
 	property string currentFilter: 'all'
 	property var filterCounts: ({}) // Open tasks by filter (Tasks.filterCounts)
@@ -160,9 +176,9 @@ Item {
 			var calendar = eventModel.eventsByCalendar[selected[i].id]
 			itemsByList[selected[i].id] = calendar && calendar.items ? calendar.items : []
 		}
-		var counts = Tasks.filterCounts(selected, itemsByList, today)
+		var counts = Tasks.filterCounts(selected, itemsByList, today, smartHidden)
 		var filter = Tasks.validFilter(configFilter, selected)
-		var shown = Tasks.filterLists(selected, itemsByList, filter, today)
+		var shown = Tasks.filterLists(selected, itemsByList, filter, today, smartHidden)
 		var flick = scrollView.contentItem
 		var y = flick ? flick.contentY : 0
 		// Islands: the done ones in the "Completed" card instead of with the open ones.
@@ -1288,7 +1304,7 @@ Item {
 				width: parent.width
 				height: listRow.height
 				acceptedButtons: Qt.RightButton
-				enabled: listHeader.manageable && !listHeader.renaming && !tasksView.busyListId
+				enabled: !listHeader.renaming && !tasksView.busyListId
 				onClicked: function(mouse) { tasksView.openListMenu(listHeader.list, listRightClick, mouse.x, mouse.y) }
 			}
 			ColumnLayout {
@@ -1382,7 +1398,8 @@ Item {
 					}
 					PlasmaComponents3.ToolButton {
 						id: listMenuButton
-						visible: listHeader.manageable && !listHeader.renaming
+						// Every list: "Show in smart lists"; rename / color / delete when it can be changed.
+						visible: !listHeader.renaming
 						enabled: !tasksView.busyListId
 						icon.name: "overflow-menu"
 						icon.width: Kirigami.Units.iconSizes.small
@@ -1649,6 +1666,14 @@ Item {
 			text: i18n("Rename…")
 			icon.name: "edit-rename"
 			onTriggered: tasksView.startRename(listMenu.list)
+		}
+		// Like TickTick's Someday: the list's tasks only on its own filter, not in All, Today, …
+		PlasmaComponents3.MenuItem {
+			text: i18n("Show in smart lists")
+			icon.name: "view-filter"
+			checkable: true
+			checked: !!listMenu.list && !tasksView.smartHidden[listMenu.list.id]
+			onTriggered: tasksView.setShownInSmartLists(listMenu.list, checked)
 		}
 		PlasmaComponents3.MenuItem {
 			visible: !!listMenu.caps.clearCompleted
