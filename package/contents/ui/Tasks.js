@@ -23,6 +23,12 @@ function isTask(item) {
 	return !!item && item.kind === 'tasks#task'
 }
 
+// The items without tasks: the Month, Week and Day views show events only (tasks have their own
+// view, the agenda and the tooltips keep them).
+function withoutTasks(items) {
+	return (items || []).filter(function(item) { return !isTask(item) })
+}
+
 function isDone(item) {
 	return !!item && item.status === 'completed'
 }

@@ -237,10 +237,8 @@ Item {
 	function rebuild() {
 		// The blocks are recreated: a drag in progress ends, a dropped one shows its saved times.
 		dragState = null
-		// Tasks are in the Agenda (and the Tasks tab), not in the week / day grid.
-		var items = (eventModel && eventModel.eventsData ? eventModel.eventsData.items : []).filter(function(item) {
-			return !Tasks.isTask(item)
-		})
+		// Events only: tasks are in the Tasks view.
+		var items = Tasks.withoutTasks(eventModel && eventModel.eventsData ? eventModel.eventsData.items : [])
 		var result = []
 		for (var i = 0; i < columnCount; i++) {
 			var dayStart = columnDate(i).getTime()
@@ -756,9 +754,8 @@ Item {
 					// Light tint of the event color with a full-color stripe and theme text: reads better
 					// than a solid bar, also with pastel or (dark theme) darkened colors. With the "bar"
 					// event look, all-day events are filled in their color instead (EventStyle).
-					readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay && !eventStyle.isTask
-					// Bar look: tasks outlined in their color with the stripe, so they differ from all-day events.
-					readonly property bool outlined: eventStyle.unconfirmed || (appletConfig.barEventLook && eventStyle.isTask)
+					readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay
+					readonly property bool outlined: eventStyle.unconfirmed
 					x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
 					y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 					// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
@@ -813,8 +810,6 @@ Item {
 						return span.allDay ? range + " · " + i18np("%1 day", "%1 days", span.days) : range
 					}
 					Column {
-						// Above the mouse area, for the task check (the labels let clicks through).
-						z: 1
 						anchors.left: parent.left
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter
@@ -824,12 +819,10 @@ Item {
 							id: allDayTitle
 							// Invitation not answered yet: the question mark before the title (Shared.isAwaitingAnswer).
 							readonly property bool awaitingAnswer: Shared.isAwaitingAnswer(parent.parent.eventStyle.response)
-							// Tasks: their done check there instead.
-							readonly property bool isTask: parent.parent.eventStyle.isTask
 							readonly property int iconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, height) / 2)
 							width: parent.width
 							// Never wider than the label: a padding past its width crashed Qt's text layout.
-							leftPadding: awaitingAnswer || isTask ? Math.min(iconSize + 3, Math.max(0, width - 8)) : 0
+							leftPadding: awaitingAnswer ? Math.min(iconSize + 3, Math.max(0, width - 8)) : 0
 							text: eventItem.summary
 							textFormat: Text.PlainText // User text: never parsed as HTML
 							color: parent.parent.titleColor
@@ -838,14 +831,6 @@ Item {
 							font.weight: Font.DemiBold
 							font.strikeout: eventStyle.struckThrough
 							elide: Text.ElideRight
-							// Takes its own clicks: toggles the task, doesn't open or drag it.
-							TaskCheck {
-								visible: allDayTitle.isTask
-								anchors.verticalCenter: parent.verticalCenter
-								size: allDayTitle.iconSize
-								eventItem: allDayTitle.isTask ? eventItem : null
-								color: allDayTitle.color
-							}
 							Kirigami.Icon {
 								visible: allDayTitle.awaitingAnswer
 								anchors.verticalCenter: parent.verticalCenter

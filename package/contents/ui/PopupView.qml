@@ -715,8 +715,7 @@ MouseArea {
 				if (!(data && data.items)) {
 					return
 				}
-				// Tasks are in the Agenda (and the Tasks tab), not in the month grid.
-				monthView.setEvents((data.items || []).filter(function(item) { return !Tasks.isTask(item) }))
+				monthView.setEvents(data.items) // Leaves the tasks out (they're in the Agenda and the Tasks tab)
 			}
 
 			onDayDoubleClicked: function(dayData) {

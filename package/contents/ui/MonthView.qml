@@ -26,6 +26,7 @@ import org.kde.plasma.core as PlasmaCore
 
 import "EventBuckets.js" as EventBuckets
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 import "WeekDrag.js" as WeekDrag
 
 PinchArea {
@@ -305,7 +306,8 @@ PinchArea {
 		daysRebuilt()
 	}
 
-	// Fill the day cells with events (plain event items, eg: eventModel.eventsData.items).
+	// Fill the day cells with events (plain event items, eg: eventModel.eventsData.items). Tasks are
+	// left out (the Tasks view has them): they take no row and aren't counted in "+N".
 	// Bucket events per visible day in plain JS first, then write each day to the model once.
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/daysmodel.h
 	function setEvents(items) {
@@ -316,6 +318,7 @@ PinchArea {
 		if (spanBarsActive && eventRowCapacity <= 0) {
 			return
 		}
+		items = Tasks.withoutTasks(items)
 		var dayTimes = []
 		for (var i = 0; i < daysModel.count; i++) {
 			var dayData = daysModel.get(i)

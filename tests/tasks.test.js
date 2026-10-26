@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
-	'fromTickTick', 'toTickTick']
+	'fromTickTick', 'toTickTick', 'withoutTasks']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -25,6 +25,10 @@ assert.strictEqual(T.isTask({ kind: 'calendar#event' }), false)
 assert.strictEqual(T.isTask(null), false)
 assert.strictEqual(T.isDone(task({ status: 'completed' })), true)
 assert.strictEqual(T.isDone(task({})), false)
+
+// withoutTasks: the Month / Week / Day views get events only.
+same(T.withoutTasks([task({ id: 't' }), { kind: 'calendar#event', id: 'e' }, { id: 'x' }]).map(i => i.id), ['e', 'x'])
+same(T.withoutTasks(null), [])
 
 // dueDay: the date part, whatever the time zone.
 assert.strictEqual(T.dueDay(task({ due: '2026-10-26T00:00:00.000Z' })), '2026-10-26')
