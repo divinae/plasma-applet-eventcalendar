@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.4.1
+    1.5.0
 
 **License**
 
@@ -60,6 +60,8 @@ Views (switch from the popup's header)
 - Month: event titles in the days, multi-day events as bars across them
 - Week and Day: an hour grid you can scroll through the whole day; drag events to move or resize them; the Day view has a weather panel for the day shown
 - Agenda: upcoming days as event tiles
+- Tasks: your Google Tasks and TickTick lists
+- Islands style (rounded cards, the default) or flat
 - Drag events between days (Ctrl + drag copies), calendar toggles, work week, a second time zone, keyboard navigation
 
 Google Calendar
@@ -72,7 +74,11 @@ Google Calendar
 - Tokens are kept in the system keyring
 
 Tasks
-- Google Tasks and TickTick (or Dida365, with an API token kept in the system keyring): on their due day in every view, check off, add, edit, move between lists, delete with undo
+- Google Tasks and TickTick (or Dida365, with an API token kept in the system keyring) in their own tab: smart filters (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by due date, title, list or priority
+- Add a task with smart recognition: "tomorrow 17:00 !high #Work every week" sets the day, time, priority, list and repeat
+- Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); drag between days, lists and accounts; undo, keyboard, search
+- Manage lists: rename, color, clear completed, delete, hide from the smart lists
+- Task reminders, a morning summary, and the day's tasks in the Day view
 
 Meetings
 - Join buttons for Google Meet, Zoom, Teams and other links; Google Meet links can open in a Meet web app with a chosen Google account
@@ -85,7 +91,7 @@ Notifications (KDE's notification system)
 
 Weather from Open-Meteo (free, no API key), OpenWeatherMap or Weather Canada.
 
-Starts instantly and works offline: the last loaded events are shown right away.
+Starts instantly and works offline: the last loaded events and tasks are shown right away.
 
 Translated into 20 languages.
 
@@ -97,17 +103,38 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.4.1)**
+**Changelog (1.5.0)**
 
 ```
-- The new event look is the default: all-day events filled, timed events a light tint with a color bar ("Filled in the event color" is still in Settings > Views > Event look)
-- Week and day views: the same gap between the color bar and the text as in the other views
+Tasks
+- A Tasks tab for Google Tasks and TickTick: smart filters (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list), by date or by list, sort by due date, title, list or priority
+- Add a task with smart recognition: "Call mom tomorrow 17:00 !high #Work every week" sets the day, time, priority, list and repeat
+- Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); a task's details list its subtasks
+- Drag tasks between days, lists and accounts; undo; keyboard; search finds tasks
+- Manage lists: rename, color, clear completed, delete, hide from the smart lists, new lists
+- Task reminders, a morning summary and tasks in the daily agenda; overdue count in the panel tooltip
+- The Day view shows the day's tasks beside the hour grid; tasks left out of the Month, Week and Agenda views
+
+Views and style
+- Islands style (the default): the views' parts in rounded cards; Flat keeps the old look
+- Choose which view tabs the header shows
+- Month view: events that already ended today are dimmed
+
+Offline
+- Tasks kept for an offline start too; a setting to turn the cache off
+
+Fixes
+- Join only in the notification when a meeting starts
+- No second or empty event tooltip; agenda times no longer cut off
+- Text that looked like HTML no longer can crash Plasma
+- Task reminders on daylight saving days, TickTick task durations, cleared Google tasks stay hidden
+- A locked keyring is retried instead of asking to sign in again
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.4.1-plasma6.0.plasmoid` from the
-  [v1.4.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.4.1),
+- **Product file:** `eventcalendar-v1.5.0-plasma6.0.plasmoid` from the
+  [v1.5.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.5.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`

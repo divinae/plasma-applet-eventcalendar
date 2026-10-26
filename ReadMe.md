@@ -15,7 +15,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days,
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
   the whole day; drag events to move or resize them; the Day view has a weather panel for the day
-  shown) and **Agenda** (a list of upcoming days). Drag events between days (Ctrl + drag copies),
+  shown, and the day's tasks) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
   show or hide calendars from the header, a work week, a second time zone, keyboard navigation.
 - **Islands style** (default, or flat): the month grid, the Week view's grid, the Day view's
   weather, hour grid and tasks, each agenda day and each section of the Tasks tab sit in their own
@@ -28,11 +28,14 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Move events between calendars, busy / free and visibility, the event's time zone, out of office,
   focus time and working locations, attachments, Email Guests, Find a time (free slots for you and
   the guests), import .ics files. Tokens are kept in the system keyring.
-- **Tasks** from Google Tasks and **TickTick** (or Dida365): shown on their due day in every view
-  (undated and, optionally, overdue ones on today), checked off with a click, added from quick add
-  or the editor, edited (title, notes, due date), moved between lists of the same account, deleted
-  with undo. Timed TickTick tasks show their due time. TickTick signs in with an API token, kept in
-  the system keyring.
+- **Tasks** from Google Tasks and **TickTick** (or Dida365) in their own tab: smart filters (All,
+  Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by
+  due date, title, list or priority. **Add a task…** recognizes "tomorrow 17:00 !high #Work every
+  week" as the day, time, priority, list and repeat. Priorities, due times, repeats, reminders,
+  checklists (TickTick) and subtasks (Google); drag tasks between days, lists and accounts; undo,
+  keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
+  lists). Task reminders, a morning summary, and the day's tasks in the Day view. TickTick signs in
+  with an API token, kept in the system keyring.
 - **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
   Day view, the event details, notifications and the panel's right-click menu; Google Meet links
   can open in a Meet web app with a chosen Google account. The panel clock shows the next meeting
@@ -45,8 +48,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   System Settings > Notifications > Event Calendar. Clicking one opens the event in the widget.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap / Weather Canada.
-- **Starts instantly and works offline**: the last loaded events are shown right away and stay
-  visible offline, fetches are retried automatically, and a banner shows when it can't connect.
+- **Starts instantly and works offline**: the last loaded events and tasks are shown right away
+  and stay visible offline (Settings > Views > Offline turns it off), fetches are retried automatically, and a banner shows when it can't connect.
 - Invitations look like in Google Calendar (outlined / striped / struck through), events filled
   in their color or timed ones light with a color bar, icons for what an event has set, adjustable event text size, event locations open in Google Maps, dark theme
   friendly event colors, right-click menus on events, translated into 20 languages.
@@ -69,9 +72,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.4.1-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.5.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.4.1-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.5.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a

@@ -1,3 +1,34 @@
+## v1.5.0 - October 26 2026
+
+### Tasks
+* A **Tasks tab** for Google Tasks and **TickTick** (or Dida365, with an API token kept in the system keyring): smart filters like TickTick's (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list) in a side bar that folds away, grouped by date or by list or not at all, sorted by due date, title, list or priority, with or without notes and completed tasks.
+* **Add a task…** with smart recognition: "Call mom tomorrow 17:00 !high #Work every week" sets the day, time, priority, list and repeat, shown as chips under the field (English and Polish words, your language's day names). Settings > Tasks can turn it off.
+* Priorities, due times, repeats, reminders and a checklist (TickTick); subtasks (Google). A task's details list its subtasks with checks.
+* Drag a task onto another day, list or account; reorder Google tasks; undo after checking off or deleting; keyboard (Up / Down, Space, Enter, E, Delete, N); search finds tasks too.
+* **Manage lists**: a page with every list and its actions — rename, color (TickTick), clear completed (Google), delete, show or hide in the smart lists (like TickTick's Someday) — and new lists per account. Also in Settings > Tasks.
+* Task reminders, a morning summary of the day's tasks and tasks in the daily agenda (Settings > Tasks > Notifications); the panel tooltip shows the number of overdue tasks.
+* The Day view shows the day's tasks beside the hour grid, with a list filter and Add a task. Tasks are no longer drawn in the Month, Week and Agenda views.
+
+### Views and style
+* **Islands style** (the default; Settings > Views > Style): the month grid, the week grid, the Day view's weather, hours and tasks, each agenda day and each Tasks section in its own rounded card. "Flat" keeps the old look.
+* Choose the tabs the header's view switcher shows (Settings > Views).
+* Month view: events that already ended today are dimmed.
+* Event quick add for non-Google calendars recognizes the day and time too.
+
+### Offline
+* Tasks are kept for an offline start like events (no notes or subtasks), and a removed account's events are dropped from the cache right away.
+* Settings > Views > Offline turns the cache off (the stored copy is deleted); `./uninstall` removes it too.
+
+### Fixes
+* Notifications: Join only in the one when a meeting starts, not in the reminder before it.
+* Event tooltips: no second or empty tooltip.
+* Agenda: event times no longer cut off; days as wide as the column in the flat style.
+* The view tabs keep their names when the Day view's title is long, and the switcher is never empty.
+* Event titles, locations and names always shown as plain text (text that looked like HTML could crash Plasma).
+* Task reminders keep their time on daylight saving days; TickTick tasks keep their duration when their day changes.
+* Google Tasks: only the last 30 days of completed tasks are fetched, and cleared ones stay hidden.
+* Keyring: a secret that can't be read yet (a locked keyring) is retried instead of asking you to sign in again.
+
 ## v1.4.1 - October 21 2026
 
 * The new event look (all-day events filled, timed events a light tint with a color bar) is the default; "Filled in the event color" is still in Settings > Views > Event look.
