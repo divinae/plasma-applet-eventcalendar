@@ -34,6 +34,27 @@ Item {
 	property var lists: []
 	property int openCount: 0
 
+	//--- Islands style: each section (by date) or list (by list) is a card that folds to its header,
+	// the done tasks of all lists in a "Completed" card at the end, folded at first.
+	readonly property bool islands: appletConfig.islands
+	property var cards: [] // Tasks.cardRows of rows
+	property var collapsed: ({}) // { cardKey: bool }, for the session
+	readonly property real cardEndPadding: Kirigami.Units.smallSpacing * 2 + 2
+	readonly property real cardTitlePointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.15
+	function isCollapsed(key) {
+		return Object.prototype.hasOwnProperty.call(collapsed, key) ? collapsed[key] : key === 'section:done'
+	}
+	function toggleCollapsed(key) {
+		var next = {}
+		for (var k in collapsed) {
+			next[k] = collapsed[k]
+		}
+		next[key] = !isCollapsed(key)
+		collapsed = next
+		rebuild()
+	}
+	onIslandsChanged: rebuild()
+
 	//--- The column
 	readonly property real maxColumnWidth: Kirigami.Units.gridUnit * 42
 	// The room left and right of everything in the column (TaskRow's own side margin).
@@ -63,17 +84,32 @@ Item {
 		}
 		var flick = scrollView.contentItem
 		var y = flick ? flick.contentY : 0
-		var newRows = byList ? Tasks.taskRows(newLists, itemsByList, showCompleted)
-			: Tasks.dateRows(newLists, itemsByList, today, firstDayOfWeek, showCompleted)
+		// Islands: the done ones in the "Completed" card instead of with "Show completed".
+		var withDone = showCompleted && !islands
+		var newRows = byList ? Tasks.taskRows(newLists, itemsByList, withDone)
+			: Tasks.dateRows(newLists, itemsByList, today, firstDayOfWeek, withDone)
 		var count = 0
 		for (var j = 0; j < newRows.length; j++) {
 			if (newRows[j].type === 'task' && !newRows[j].done) {
 				count++
 			}
 		}
+		var newCards = []
+		if (islands) {
+			newRows = newRows.concat(Tasks.completedRows(newLists, itemsByList))
+			var folded = {}
+			Tasks.cardRows(newRows, byList).forEach(function(card) {
+				if (card.start) {
+					folded[card.key] = isCollapsed(card.key)
+				}
+			})
+			newRows = Tasks.collapseRows(newRows, byList, folded)
+			newCards = Tasks.cardRows(newRows, byList)
+		}
 		rememberAddFocus()
 		openCount = count
 		lists = newLists
+		cards = newCards // Before the rows: their delegates read it
 		rows = newRows
 		// Toggling a task rebuilds the rows: stay where the list was.
 		if (flick) {
@@ -428,8 +464,10 @@ Item {
 						PlasmaComponents3.ToolTip.visible: hovered
 					}
 				}
-				// Show completed: on the soft tint while on, like the grouping's current one.
+				// Show completed: on the soft tint while on, like the grouping's current one. Not in the
+				// islands style: the done ones are in the "Completed" card.
 				Item {
+					visible: !tasksView.islands
 					implicitWidth: completedButton.implicitWidth
 					implicitHeight: completedButton.implicitHeight
 					Rectangle {
@@ -533,30 +571,75 @@ Item {
 				Repeater {
 					model: tasksView.rows
 					Loader {
+						id: rowLoader
 						readonly property var row: modelData
-						// A heading after rows: a thin line above it (not right after an account's).
-						readonly property bool separated: index > 0 && tasksView.rows[index - 1].type !== 'group'
+						// Islands: this row's part of its card (Tasks.cardRows), null outside one.
+						readonly property var card: tasksView.islands && tasksView.cards[index] && tasksView.cards[index].card ? tasksView.cards[index] : null
+						// A heading after rows: a thin line above it (not right after an account's; not
+						// in the islands style, the cards are apart).
+						readonly property bool separated: !tasksView.islands && index > 0 && tasksView.rows[index - 1].type !== 'group'
 						Layout.fillWidth: true
+						// A card gap above a card (less right below an account's heading), room below its last row.
+						Layout.topMargin: card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0
+						Layout.bottomMargin: card && card.end ? tasksView.cardEndPadding : 0
 						sourceComponent: row.type === 'group' ? groupComponent
 							: row.type === 'list' ? listComponent
 							: row.type === 'section' ? sectionComponent
 							: row.type === 'empty' ? emptyComponent
 							: row.type === 'add' ? addComponent
 							: taskComponent
+						CardSlice {
+							visible: !!rowLoader.card
+							height: parent.height + (rowLoader.card && rowLoader.card.end ? tasksView.cardEndPadding : 0)
+							joinTop: !!rowLoader.card && !rowLoader.card.start
+							joinBottom: !!rowLoader.card && !rowLoader.card.end
+							key: rowLoader.card ? rowLoader.card.key : ""
+						}
 					}
 				}
-				// By list: "New list" after the lists.
+				// By list: "New list" after the lists (islands: in a small card).
 				Loader {
+					id: newListLoader
 					Layout.fillWidth: true
+					Layout.topMargin: tasksView.islands ? appletConfig.cardGap : 0
+					Layout.bottomMargin: tasksView.islands ? tasksView.cardEndPadding : 0
 					active: tasksView.byList && tasksView.taskAccounts.length > 0
 					visible: active
 					sourceComponent: newListComponent
+					CardSlice {
+						visible: tasksView.islands
+						height: parent.height + tasksView.cardEndPadding
+					}
 				}
 				Item {
 					implicitHeight: Kirigami.Units.largeSpacing
 				}
 			}
 		}
+	}
+
+	// Islands: a row's part of its card, behind the row. A drop going to the card (its header's
+	// key): tinted, with a border in the accent color (red when it can't).
+	component CardSlice: IslandCard {
+		property string key: ""
+		readonly property bool targeted: !!key && tasksView.dragActive && tasksView.dropKey === key
+		readonly property color dropColor: tasksView.dropRefused ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.highlightColor
+		z: -1
+		width: parent.width
+		padding: 0
+		tint: targeted ? Qt.rgba(dropColor.r, dropColor.g, dropColor.b, 0.15) : "transparent"
+		borderColor: targeted ? dropColor : appletConfig.cardBorderColor
+	}
+
+	// Islands: a card header's fold arrow (the header folds the card).
+	component FoldArrow: Kirigami.Icon {
+		property bool folded: false
+		visible: tasksView.islands
+		Layout.alignment: Qt.AlignVCenter
+		implicitWidth: Kirigami.Units.iconSizes.small
+		implicitHeight: implicitWidth
+		source: folded ? (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right") : "arrow-down"
+		opacity: tasksView.dimOpacity
 	}
 
 	// A heading's thin line above it, apart from the rows before.
@@ -642,12 +725,24 @@ Item {
 			readonly property bool separated: !!parent && parent.separated
 			readonly property real dotSize: Math.round(Kirigami.Units.gridUnit * 0.6)
 			implicitHeight: headerColumn.implicitHeight
+			// Islands: the header of its card, folds it.
+			readonly property bool folded: tasksView.islands && !!row && tasksView.isCollapsed(row.key)
 			DropHighlight {
+				visible: !tasksView.islands
 				x: 0
 				y: listRow.y - Kirigami.Units.smallSpacing
 				width: parent.width
 				height: listRow.height + Kirigami.Units.smallSpacing * 2
 				key: row ? row.key : ""
+			}
+			MouseArea {
+				visible: tasksView.islands && !listHeader.renaming
+				x: 0
+				y: listRow.y
+				width: parent.width
+				height: listRow.height
+				cursorShape: Qt.PointingHandCursor
+				onClicked: tasksView.toggleCollapsed(listHeader.row.key)
 			}
 			// Right click: the list's menu.
 			MouseArea {
@@ -691,7 +786,8 @@ Item {
 						Layout.fillWidth: true
 						text: row ? row.list.name : ""
 						textFormat: Text.PlainText // User text (list name)
-						font.weight: Font.DemiBold
+						font.weight: tasksView.islands ? Font.Bold : Font.DemiBold
+						font.pointSize: tasksView.islands ? tasksView.cardTitlePointSize : Kirigami.Theme.defaultFont.pointSize
 						elide: Text.ElideRight
 					}
 					PlasmaComponents3.Label {
@@ -771,6 +867,12 @@ Item {
 						onClicked: tasksView.openListMenu(listHeader.list, listMenuButton, 0, listMenuButton.height)
 						PlasmaComponents3.ToolTip.text: text
 						PlasmaComponents3.ToolTip.visible: hovered
+					}
+					FoldArrow {
+						visible: tasksView.islands && !listHeader.renaming
+						Layout.leftMargin: Kirigami.Units.smallSpacing
+						Layout.rightMargin: tasksView.sideMargin - Kirigami.Units.smallSpacing
+						folded: listHeader.folded
 					}
 				}
 				// Delete: confirmed here first.
@@ -1037,8 +1139,18 @@ Item {
 			readonly property var row: parent ? parent.row : null
 			readonly property string section: row ? row.section : ""
 			readonly property bool separated: !!parent && parent.separated
+			// Islands: the header of its card, folds it; "Completed" in dim text.
+			readonly property bool done: section === 'done'
+			readonly property bool folded: tasksView.islands && !!row && tasksView.isCollapsed(row.key)
 			implicitHeight: sectionColumn.implicitHeight
+			MouseArea {
+				visible: tasksView.islands
+				anchors.fill: parent
+				cursorShape: Qt.PointingHandCursor
+				onClicked: tasksView.toggleCollapsed(sectionHeader.row.key)
+			}
 			DropHighlight {
+				visible: !tasksView.islands
 				x: 0
 				y: sectionRow.y - Kirigami.Units.smallSpacing
 				width: parent.width
@@ -1078,11 +1190,14 @@ Item {
 							return ""
 						}
 						textFormat: Text.PlainText
-						font.weight: Font.DemiBold
+						font.weight: tasksView.islands && sectionHeader.done ? Font.Normal : tasksView.islands ? Font.Bold : Font.DemiBold
+						font.pointSize: tasksView.islands && !sectionHeader.done ? tasksView.cardTitlePointSize : Kirigami.Theme.defaultFont.pointSize
 						color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+						opacity: tasksView.islands && sectionHeader.done ? tasksView.dimOpacity : 1
 						elide: Text.ElideRight
 					}
 					PlasmaComponents3.Label {
+						visible: !tasksView.islands
 						text: sectionHeader.row ? String(sectionHeader.row.count) : ""
 						textFormat: Text.PlainText
 						color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
@@ -1090,6 +1205,17 @@ Item {
 					}
 					Item {
 						Layout.fillWidth: true
+					}
+					// Islands: the count and the fold arrow on the right.
+					PlasmaComponents3.Label {
+						visible: tasksView.islands
+						text: sectionHeader.row ? String(sectionHeader.row.count) : ""
+						textFormat: Text.PlainText
+						color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+						opacity: tasksView.dimOpacity
+					}
+					FoldArrow {
+						folded: sectionHeader.folded
 					}
 				}
 			}
@@ -1138,7 +1264,7 @@ Item {
 			readonly property var row: parent ? parent.row : null
 			eventItem: row ? row.item : null
 			today: tasksView.today
-			showList: !tasksView.byList && row ? row.list : null
+			showList: row && (!tasksView.byList || row.section === 'done') ? row.list : null
 			sectionDueKind: !tasksView.byList && row && (row.section === 'today' || row.section === 'tomorrow') ? row.section : ""
 			draggable: true
 			opacity: tasksView.dragActive && tasksView.dragRow === row ? 0.4 : 1
