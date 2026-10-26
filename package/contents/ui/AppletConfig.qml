@@ -127,8 +127,9 @@ QtObject {
 		return Shared.isUnconfirmedResponse(response) ? color : eventBorderColor
 	}
 
-	// Settings > Views > Style = "Islands (cards)": the Day view's panels, the agenda days and the
-	// task sections sit in rounded cards (IslandCard); "Flat": one surface.
+	// Settings > Views > Style = "Islands (cards)": the month grid, the Week / Day view's grid, the
+	// Day view's panels, the agenda days and the task sections sit in rounded cards (IslandCard);
+	// "Flat": one surface.
 	readonly property bool islands: plasmoid.configuration.uiStyle !== 'flat'
 	// A card: a bit lighter than the popup (light and dark themes) and nearly opaque, so it adds
 	// contrast on the translucent (blurred) popup background instead of taking it away.
