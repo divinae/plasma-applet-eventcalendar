@@ -132,7 +132,7 @@ ColumnLayout {
 		ColumnLayout {
 			id: taskColumn
 			width: scrollView.availableWidth
-			spacing: 0
+			spacing: 1
 			Repeater {
 				model: dayTasks.tasks
 				TaskRow {

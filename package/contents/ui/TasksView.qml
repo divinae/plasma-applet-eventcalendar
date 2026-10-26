@@ -66,12 +66,13 @@ Item {
 
 	ColumnLayout {
 		anchors.fill: parent
-		spacing: Kirigami.Units.smallSpacing
+		anchors.margins: Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.largeSpacing
 
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.leftMargin: Kirigami.Units.smallSpacing
-			Layout.rightMargin: Kirigami.Units.smallSpacing
+			Layout.leftMargin: Kirigami.Units.largeSpacing
+			Layout.rightMargin: Kirigami.Units.largeSpacing
 			spacing: Kirigami.Units.smallSpacing
 
 			PlasmaComponents3.Label {
@@ -99,7 +100,7 @@ Item {
 			ColumnLayout {
 				id: rowsColumn
 				width: scrollView.availableWidth
-				spacing: 2
+				spacing: 0
 
 				Repeater {
 					model: tasksView.rows
@@ -124,8 +125,9 @@ Item {
 		id: groupComponent
 		Kirigami.Heading {
 			readonly property var row: parent ? parent.row : null
-			topPadding: Kirigami.Units.largeSpacing
-			leftPadding: Kirigami.Units.smallSpacing
+			topPadding: Kirigami.Units.largeSpacing * 2
+			bottomPadding: Kirigami.Units.smallSpacing
+			leftPadding: Kirigami.Units.largeSpacing
 			level: 5
 			text: row ? row.text : ""
 			textFormat: Text.PlainText // User text (account label)
@@ -140,8 +142,10 @@ Item {
 		RowLayout {
 			readonly property var row: parent ? parent.row : null
 			spacing: Kirigami.Units.smallSpacing
+			// A list starts a new block: room above, the dot lined up with the task checks.
 			Item {
-				implicitWidth: Kirigami.Units.smallSpacing
+				implicitWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing + 2
+				implicitHeight: Kirigami.Units.largeSpacing * 2
 			}
 			Rectangle {
 				implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.6)
@@ -152,21 +156,22 @@ Item {
 			PlasmaComponents3.Label {
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
-				Layout.topMargin: Kirigami.Units.smallSpacing
 				text: row ? row.list.name : ""
 				textFormat: Text.PlainText // User text (list name)
 				font.weight: Font.DemiBold
 				elide: Text.ElideRight
 			}
 			PlasmaComponents3.Label {
-				Layout.topMargin: Kirigami.Units.smallSpacing
 				visible: !!row && row.openCount > 0
 				text: row ? String(row.openCount) : ""
 				textFormat: Text.PlainText
 				opacity: 0.6
 			}
 			PlasmaComponents3.ToolButton {
+				Layout.rightMargin: Kirigami.Units.smallSpacing
 				icon.name: "list-add"
+				icon.width: Kirigami.Units.iconSizes.small
+				icon.height: Kirigami.Units.iconSizes.small
 				display: QQC2.AbstractButton.IconOnly
 				text: row ? i18nc("%1 = task list name", "New task in %1", row.list.name) : ""
 				onClicked: popup.newTask(null, "", row.list.id)
@@ -180,8 +185,9 @@ Item {
 		id: emptyComponent
 		PlasmaComponents3.Label {
 			readonly property var row: parent ? parent.row : null
-			leftPadding: Kirigami.Units.largeSpacing
-			bottomPadding: Kirigami.Units.smallSpacing
+			leftPadding: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
+			topPadding: Kirigami.Units.smallSpacing
+			bottomPadding: Kirigami.Units.smallSpacing * 2
 			text: i18n("No open tasks")
 			textFormat: Text.PlainText
 			opacity: 0.6

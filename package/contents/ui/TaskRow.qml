@@ -46,6 +46,8 @@ LinkRect {
 		return ""
 	}
 	readonly property string notesLine: compact || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")
+	// The due date and notes: a bit smaller than the title, larger than the views' small font.
+	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
 
 	activeFocusOnTab: true
@@ -63,17 +65,19 @@ LinkRect {
 	radius: 6
 	backgroundColor: "transparent"
 	backgroundHoverColor: appletConfig.agendaHoverBackground
-	implicitWidth: contents.implicitWidth + Kirigami.Units.smallSpacing * 2
-	implicitHeight: contents.implicitHeight + (compact ? Kirigami.Units.smallSpacing : Kirigami.Units.smallSpacing * 2)
+	// Room around the text: a list to read and click, not packed rows.
+	readonly property real verticalPadding: compact ? Kirigami.Units.smallSpacing + 1 : Kirigami.Units.smallSpacing * 2
+	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing * 2
+	implicitHeight: contents.implicitHeight + verticalPadding * 2
 
 	RowLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: Kirigami.Units.smallSpacing
-		anchors.rightMargin: Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.smallSpacing + 2
+		anchors.leftMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
+		anchors.rightMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
+		spacing: Kirigami.Units.largeSpacing
 		opacity: taskRow.eventStyle.doneOpacity
 
 		TaskCheck {
@@ -113,7 +117,7 @@ LinkRect {
 					text: taskRow.dueDateText
 					textFormat: Text.PlainText
 					color: Kirigami.Theme.negativeTextColor
-					font: appletConfig.eventSmallFont
+					font: taskRow.detailFont
 				}
 			}
 
@@ -127,7 +131,7 @@ LinkRect {
 					textFormat: Text.PlainText
 					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
 					opacity: taskRow.overdue ? 1 : 0.7
-					font: appletConfig.eventSmallFont
+					font: taskRow.detailFont
 				}
 				PlasmaComponents3.Label {
 					visible: !!text
@@ -137,7 +141,7 @@ LinkRect {
 					textFormat: Text.PlainText // User text: never parsed as HTML
 					color: Kirigami.Theme.textColor
 					opacity: 0.6
-					font: appletConfig.eventSmallFont
+					font: taskRow.detailFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap
 					maximumLineCount: 1
