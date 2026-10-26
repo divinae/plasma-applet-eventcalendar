@@ -229,7 +229,7 @@ Item {
 				Layout.minimumWidth: 0
 				text: tasksView.openCount > 0 ? i18np("%1 open task", "%1 open tasks", tasksView.openCount) : i18n("No open tasks")
 				textFormat: Text.PlainText
-				opacity: 0.7
+				opacity: 0.85
 				elide: Text.ElideRight
 			}
 			// By date / by list.
@@ -307,7 +307,7 @@ Item {
 		y: tasksView.mapFromItem(null, tasksView.dragAt.x, tasksView.dragAt.y).y - tasksView.dragGrabY
 		z: 10
 		width: tasksView.dragWidth
-		opacity: 0.75
+		opacity: 0.85
 		sourceComponent: TaskRow {
 			eventItem: tasksView.dragRow ? tasksView.dragRow.item : null
 			today: tasksView.today
@@ -342,7 +342,7 @@ Item {
 			level: 5
 			text: row ? row.text : ""
 			textFormat: Text.PlainText // User text (account label)
-			opacity: 0.7
+			opacity: 0.85
 			elide: Text.ElideRight
 		}
 	}
@@ -372,7 +372,7 @@ Item {
 					implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.6)
 					implicitHeight: implicitWidth
 					radius: width / 2
-					color: appletConfig.eventColor(row && row.list.color ? row.list.color : null)
+					color: appletConfig.eventColoredTextColor(appletConfig.eventColor(row && row.list.color ? row.list.color : null))
 				}
 				PlasmaComponents3.Label {
 					Layout.fillWidth: true
@@ -386,7 +386,7 @@ Item {
 					visible: !!row && row.openCount > 0
 					text: row ? String(row.openCount) : ""
 					textFormat: Text.PlainText
-					opacity: 0.6
+					opacity: 0.75
 				}
 				PlasmaComponents3.ToolButton {
 					Layout.rightMargin: Kirigami.Units.smallSpacing
@@ -453,7 +453,7 @@ Item {
 					Layout.minimumWidth: 0
 					text: row ? String(row.count) : ""
 					textFormat: Text.PlainText
-					opacity: 0.6
+					opacity: 0.75
 				}
 			}
 		}
@@ -468,7 +468,7 @@ Item {
 			bottomPadding: Kirigami.Units.smallSpacing
 			text: i18n("No open tasks")
 			textFormat: Text.PlainText
-			opacity: 0.6
+			opacity: 0.75
 			font.italic: true
 		}
 	}

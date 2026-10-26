@@ -37,8 +37,9 @@ LinkRect {
 	readonly property EventStyle eventStyle: EventStyle {
 		eventItem: taskRow.eventItem
 	}
-	// The list's color, made darker when pale (light theme) so the check stands out.
-	readonly property color listColor: appletConfig.eventBarColor(eventStyle.color)
+	// The list's color, dark enough (light theme) or light enough (dark theme) to read on the
+	// popup's translucent background, like colored text.
+	readonly property color listColor: appletConfig.eventColoredTextColor(eventStyle.color)
 	readonly property bool overdue: due.kind === 'overdue' && !eventStyle.done
 	readonly property var due: {
 		var parts = today.split('-')
@@ -233,7 +234,7 @@ LinkRect {
 						text: taskRow.showList ? taskRow.showList.name || "" : ""
 						textFormat: Text.PlainText // User text (list name)
 						color: Kirigami.Theme.textColor
-						opacity: 0.7
+						opacity: 0.85
 						font: taskRow.detailFont
 						elide: Text.ElideRight
 					}
@@ -251,7 +252,7 @@ LinkRect {
 					text: taskRow.notesLine
 					textFormat: Text.PlainText // User text: never parsed as HTML
 					color: Kirigami.Theme.textColor
-					opacity: 0.6
+					opacity: 0.75
 					font: taskRow.detailFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap

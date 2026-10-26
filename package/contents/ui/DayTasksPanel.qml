@@ -83,7 +83,7 @@ ColumnLayout {
 			text: i18n("Tasks")
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
-			opacity: 0.7
+			opacity: 0.85
 			MouseArea {
 				anchors.fill: parent
 				enabled: dayTasks.collapsible
@@ -96,7 +96,7 @@ ColumnLayout {
 			text: String(dayTasks.openCount)
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
-			opacity: 0.45
+			opacity: 0.65
 		}
 		Item {
 			Layout.fillWidth: true
@@ -119,7 +119,7 @@ ColumnLayout {
 		Layout.leftMargin: Kirigami.Units.smallSpacing
 		text: i18n("No tasks")
 		textFormat: Text.PlainText
-		opacity: 0.6
+		opacity: 0.75
 		elide: Text.ElideRight
 	}
 
@@ -157,8 +157,10 @@ ColumnLayout {
 		compact: true
 	}
 
-	// Apart from what follows (the weather beside the grid, the hours below the strip).
+	// Apart from what follows (the hours below the strip).
+	property bool showSeparator: true
 	Kirigami.Separator {
+		visible: dayTasks.showSeparator
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.smallSpacing
 		Layout.bottomMargin: Kirigami.Units.smallSpacing

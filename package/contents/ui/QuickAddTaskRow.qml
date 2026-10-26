@@ -129,7 +129,7 @@ Item {
 					source: "list-add"
 					color: Kirigami.Theme.textColor
 					isMask: true
-					opacity: field.activeFocus ? 0.8 : 0.5
+					opacity: field.activeFocus ? 0.9 : 0.7
 				}
 				PlasmaComponents3.BusyIndicator {
 					anchors.centerIn: parent
@@ -183,7 +183,7 @@ Item {
 						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.5)
 						implicitHeight: implicitWidth
 						radius: width / 2
-						color: appletConfig.eventColor(quickAdd.targetList && quickAdd.targetList.color ? quickAdd.targetList.color : null)
+						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(quickAdd.targetList && quickAdd.targetList.color ? quickAdd.targetList.color : null))
 					}
 					PlasmaComponents3.Label {
 						Layout.fillWidth: true
@@ -191,14 +191,14 @@ Item {
 						text: pickerButton.text
 						textFormat: Text.PlainText // User text (list name)
 						font: quickAdd.detailFont
-						opacity: 0.7
+						opacity: 0.85
 						elide: Text.ElideRight
 					}
 					Kirigami.Icon {
 						implicitWidth: Kirigami.Units.iconSizes.small / 2 + 4
 						implicitHeight: implicitWidth
 						source: "arrow-down"
-						opacity: 0.6
+						opacity: 0.75
 					}
 				}
 				onClicked: listMenu.popup(pickerButton, 0, pickerButton.height)
@@ -235,7 +235,7 @@ Item {
 						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.5)
 						implicitHeight: implicitWidth
 						radius: width / 2
-						color: appletConfig.eventColor(listMenuItem.list.color || null)
+						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(listMenuItem.list.color || null))
 					}
 					PlasmaComponents3.Label {
 						Layout.fillWidth: true

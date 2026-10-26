@@ -19,7 +19,7 @@ Rectangle {
 	implicitWidth: label.implicitWidth + Kirigami.Units.smallSpacing * 3
 	implicitHeight: label.implicitHeight + 2
 	radius: height / 2
-	color: Qt.rgba(tint.r, tint.g, tint.b, kind === 'overdue' || kind === 'today' ? 0.18 : 0.09)
+	color: Qt.rgba(tint.r, tint.g, tint.b, kind === 'overdue' || kind === 'today' ? 0.24 : 0.15)
 
 	PlasmaComponents3.Label {
 		id: label
@@ -28,6 +28,6 @@ Rectangle {
 		textFormat: Text.PlainText
 		font: chip.font
 		color: chip.kind === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
-		opacity: chip.kind === 'overdue' || chip.kind === 'today' ? 1 : 0.75
+		opacity: chip.kind === 'overdue' || chip.kind === 'today' ? 1 : 0.9
 	}
 }

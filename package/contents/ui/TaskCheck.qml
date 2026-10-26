@@ -48,7 +48,7 @@ Item {
 		radius: width / 2
 		color: mouseArea.containsMouse && taskCheck.canToggle
 			? Qt.rgba(taskCheck.color.r, taskCheck.color.g, taskCheck.color.b, 0.2) : "transparent"
-		border.width: Math.max(1, Math.round(taskCheck.size / 12))
+		border.width: Math.max(2, Math.round(taskCheck.size / 9))
 		border.color: taskCheck.visualFocus ? Kirigami.Theme.focusColor : taskCheck.color
 	}
 

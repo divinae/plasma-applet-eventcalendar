@@ -67,21 +67,28 @@ Item {
 	signal weatherRetryRequested()
 	readonly property bool showWeather: Object.keys(weatherByDay).length > 0 || weatherIsSetup
 
-	// Day view: the day grid (capped width) with the weather panel beside it, both centered.
-	// Too narrow for both: the panel becomes a compact row above the grid.
-	readonly property real weatherPanelWidth: Kirigami.Units.gridUnit * 13
-	readonly property real weatherGap: Kirigami.Units.gridUnit * 1.5 // Each side of the space between day and weather
-	readonly property bool weatherBeside: singleDay && showWeather && width >= Kirigami.Units.gridUnit * 36
+	// Day view: the weather on the left of the day grid (capped width) and the day's tasks on its
+	// right, all centered. Not enough room: the tasks become a strip above the grid, then the
+	// weather a compact row above it.
+	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 13, Math.max(Kirigami.Units.gridUnit * 10, width * 0.25)))
+	readonly property real weatherPanelWidth: sidePanelWidth
+	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
+	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
+	readonly property bool weatherBeside: singleDay && showWeather && width >= minDayGridWidth + sidePanelWidth + weatherGap * 2
+	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists
+	readonly property bool tasksBeside: singleDay && dayHasTaskLists
+		&& width >= minDayGridWidth + sidePanelWidth * (weatherBeside ? 2 : 1) + weatherGap * (weatherBeside ? 4 : 2)
+	readonly property real leftPanelSpace: weatherBeside ? sidePanelWidth + weatherGap * 2 : 0
+	readonly property real rightPanelSpace: tasksBeside ? sidePanelWidth + weatherGap * 2 : 0
 	readonly property real contentWidth: {
 		if (!singleDay) {
 			return width
 		}
-		var room = weatherBeside ? width - weatherPanelWidth - weatherGap * 2 : width
-		return Math.min(room, Kirigami.Units.gridUnit * 32)
+		return Math.min(width - leftPanelSpace - rightPanelSpace, Kirigami.Units.gridUnit * 32)
 	}
 	readonly property real contentX: {
-		var total = contentWidth + (weatherBeside ? weatherPanelWidth + weatherGap * 2 : 0)
-		return Math.round((width - total) / 2)
+		var total = leftPanelSpace + contentWidth + rightPanelSpace
+		return Math.round((width - total) / 2) + leftPanelSpace
 	}
 	readonly property date todayStart: Shared.startOfDay(currentTime)
 	function dayWeather(d) {
@@ -581,39 +588,38 @@ Item {
 		today: weekView.dayWeather(weekView.weekStart)
 	}
 
-	// Beside the grid: the day's tasks above the weather.
-	ColumnLayout {
+	// Left of the grid: the shown day's weather.
+	DayWeatherPanel {
 		visible: weekView.weatherBeside
-		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
+		x: weekView.contentX - weekView.weatherGap * 2 - weekView.sidePanelWidth
 		// Top aligned with the day header, like the grid, with a little padding.
 		y: dayNamesRow.y + Kirigami.Units.largeSpacing
-		width: weekView.weatherPanelWidth - Kirigami.Units.largeSpacing
+		width: weekView.sidePanelWidth - Kirigami.Units.largeSpacing
 		height: parent.height - y - Kirigami.Units.largeSpacing
-		spacing: Kirigami.Units.largeSpacing
-
-		DayTasksPanel {
-			Layout.fillWidth: true
-			eventModel: weekView.weatherBeside ? weekView.eventModel : null
-			day: weekView.columnDate(0)
-			maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, weekView.height * 0.35)
-		}
-
-		DayWeatherPanel {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
-			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
-			nextDays: {
-				var list = []
-				for (var i = 1; i <= 4; i++) {
-					var d = weekView.dayWeather(weekView.dayDate(i))
-					if (d) {
-						list.push(d)
-					}
+		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
+		hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
+		nextDays: {
+			var list = []
+			for (var i = 1; i <= 4; i++) {
+				var d = weekView.dayWeather(weekView.dayDate(i))
+				if (d) {
+					list.push(d)
 				}
-				return list
 			}
+			return list
 		}
+	}
+
+	// Right of the grid: the day's tasks.
+	DayTasksPanel {
+		visible: weekView.tasksBeside
+		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
+		y: dayNamesRow.y + Kirigami.Units.largeSpacing
+		width: weekView.sidePanelWidth - Kirigami.Units.largeSpacing
+		eventModel: weekView.singleDay ? weekView.eventModel : null
+		day: weekView.columnDate(0)
+		showSeparator: false
+		maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, parent.height - y - Kirigami.Units.gridUnit * 5)
 	}
 
 	ColumnLayout {
@@ -968,9 +974,10 @@ Item {
 			Layout.fillWidth: true
 			Layout.leftMargin: Kirigami.Units.smallSpacing
 			Layout.rightMargin: Kirigami.Units.smallSpacing
-			readonly property bool wanted: weekView.singleDay && !weekView.weatherBeside
+			// Also tells whether there are task lists at all (dayHasTaskLists), so it keeps its model.
+			readonly property bool wanted: weekView.singleDay && !weekView.tasksBeside
 			visible: wanted && hasLists
-			eventModel: wanted ? weekView.eventModel : null
+			eventModel: weekView.singleDay ? weekView.eventModel : null
 			day: weekView.columnDate(0)
 			collapsible: true
 			expanded: weekView.dayTasksExpanded
