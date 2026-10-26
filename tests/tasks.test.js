@@ -10,7 +10,8 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
-	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks']
+	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
+	'nextWeekStart', 'dateSections', 'dateRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -76,12 +77,14 @@ assert.strictEqual(T.firstLine(undefined), '')
 		'g::b': [task({ id: '4', status: 'completed' })],
 	}
 	const rows = T.taskRows(lists, items, false)
-	same(rows.map(r => r.key), ['group:Work', 'list:g::a', 'task:g::a:2', 'task:g::a:1', 'list:g::b', 'empty:g::b',
-		'group:TickTick', 'list:t::x', 'empty:t::x'])
+	same(rows.map(r => r.key), ['group:Work', 'list:g::a', 'task:g::a:2', 'task:g::a:1', 'add:g::a', 'list:g::b', 'add:g::b',
+		'group:TickTick', 'list:t::x', 'add:t::x'])
 	assert.strictEqual(rows[1].openCount, 2)
 	assert.strictEqual(rows[1].doneCount, 1)
 	const withDone = T.taskRows(lists, items, true)
 	same(withDone.filter(r => r.type === 'task').map(r => r.item.id + (r.done ? '+' : '')), ['2', '1', '3+', '4+'])
+	same(withDone.slice(1, 6).map(r => r.key), ['list:g::a', 'task:g::a:2', 'task:g::a:1', 'add:g::a', 'task:g::a:3'],
+		'the quick add after the open tasks, before the done ones')
 	same(T.taskRows([lists[0]], items, false).filter(r => r.type === 'group'), [], 'one account: no heading')
 }
 
@@ -102,6 +105,69 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(T.dayTasks(items, '2026-10-20', '2026-10-26').map(t => t.id), ['overdue'], 'its own day too')
 	same(T.dayTasks(null, '2026-10-26', '2026-10-26'), [])
 }
+
+// dateSections: Monday 26 October; "this week" is the rest of the week (Monday-first: to Sunday 1
+// November; Sunday-first: to Saturday 31 October).
+{
+	const due = (id, day, more) => task(Object.assign({ id: id, due: day ? day + 'T00:00:00.000Z' : undefined }, more))
+	const items = [
+		due('none-b', '', { position: '2' }), due('later', '2026-11-05'), due('sun', '2026-11-01'),
+		due('wed', '2026-10-28'), due('tomorrow', '2026-10-27'), due('today', '2026-10-26'),
+		due('old', '2026-10-01'), due('overdue', '2026-10-25'), due('none-a', '', { position: '1' }),
+		due('done', '2026-10-26', { status: 'completed' }), { kind: 'calendar#event', id: 'e' },
+	]
+	const keys = s => s.map(x => x.key + ':' + x.items.map(t => t.id).join(','))
+	same(keys(T.dateSections(items, '2026-10-26', 1)), ['overdue:old,overdue', 'today:today', 'tomorrow:tomorrow',
+		'week:wed,sun', 'later:later', 'nodate:none-a,none-b'])
+	same(keys(T.dateSections(items, '2026-10-26', 0)).slice(3, 5), ['week:wed', 'later:sun,later'], 'Sunday-first')
+	// On the week's last day "tomorrow" is next week: no "this week".
+	same(keys(T.dateSections(items, '2026-11-01', 1)).map(k => k.split(':')[0]), ['overdue', 'today', 'later', 'nodate'])
+	same(T.dateSections([due('x', '2026-10-30')], '2026-10-26', 1).map(s => s.key), ['week'], 'empty sections left out')
+	same(T.dateSections(null, '2026-10-26', 1), [])
+	assert.strictEqual(T.nextWeekStart('2026-10-26', 1), '2026-11-02')
+	assert.strictEqual(T.nextWeekStart('2026-11-01', 0), '2026-11-08', 'a week day is never its own next week')
+	assert.strictEqual(T.nextWeekStart('2026-10-31', 6), '2026-11-07')
+}
+
+// dateRows: sections with each task's list, the quick add after the open tasks, done ones last.
+{
+	const lists = [{ id: 'g::a', name: 'A' }, { id: 'g::b', name: 'B' }]
+	const items = {
+		'g::a': [task({ id: '1', due: '2026-10-26T00:00:00.000Z' }), task({ id: '2' }), task({ id: '2' }),
+			task({ id: '3', status: 'completed', completed: '2026-10-20T10:00:00.000Z' })],
+		'g::b': [task({ id: '4', due: '2026-10-20T00:00:00.000Z' }), { kind: 'calendar#event', id: 'e' },
+			task({ id: '5', status: 'completed', completed: '2026-10-25T10:00:00.000Z' })],
+	}
+	same(T.dateRows(lists, items, '2026-10-26', 1, false).map(r => r.key), ['section:overdue', 'task:g::b:4',
+		'section:today', 'task:g::a:1', 'section:nodate', 'task:g::a:2', 'add'])
+	const withDone = T.dateRows(lists, items, '2026-10-26', 1, true)
+	same(withDone.slice(-3).map(r => r.key), ['section:done', 'task:g::b:5', 'task:g::a:3'])
+	assert.strictEqual(withDone[1].list.name, 'B')
+	assert.strictEqual(withDone[1].section, 'overdue')
+	assert.strictEqual(withDone[0].count, 1)
+	same(T.dateRows(lists, {}, '2026-10-26', 1, true).map(r => r.key), ['empty', 'add'])
+}
+
+// Drops: date sections that set a due day, lists of the same account only.
+assert.strictEqual(T.sectionDueDay('today', '2026-10-31'), '2026-10-31')
+assert.strictEqual(T.sectionDueDay('tomorrow', '2026-10-31'), '2026-11-01')
+assert.strictEqual(T.sectionDueDay('nodate', '2026-10-31'), '')
+assert.strictEqual(T.sectionDueDay('week', '2026-10-31'), null)
+assert.strictEqual(T.sectionDueDay('overdue', '2026-10-31'), null)
+assert.strictEqual(T.listAccount('google1::abc'), 'google1')
+assert.strictEqual(T.listAccount('abc'), '')
+assert.strictEqual(T.listDrop('g1::a', 'g1::b'), 'move')
+assert.strictEqual(T.listDrop('g1::a', 'g1::a'), 'none')
+assert.strictEqual(T.listDrop('g1::a', 'tt::b'), 'refuse')
+assert.strictEqual(T.listDrop('a', 'b'), 'refuse', 'no account: no move')
+
+// Quick add
+same(T.quickAddBody('  Buy milk ', ''), { title: 'Buy milk' })
+same(T.quickAddBody('Buy milk', '2026-10-27'), { title: 'Buy milk', due: '2026-10-27T00:00:00.000Z' })
+assert.strictEqual(T.quickAddBody('   ', '2026-10-27'), null)
+assert.strictEqual(T.quickAddList([{ id: 'a' }, { id: 'b' }], 'b'), 'b')
+assert.strictEqual(T.quickAddList([{ id: 'a' }, { id: 'b' }], 'gone'), 'a')
+assert.strictEqual(T.quickAddList([], 'b'), '')
 
 // dueDay: the date part, whatever the time zone.
 assert.strictEqual(T.dueDay(task({ due: '2026-10-26T00:00:00.000Z' })), '2026-10-26')

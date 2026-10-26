@@ -315,9 +315,9 @@ function firstLine(text) {
 // repeated ids are skipped). Rows:
 //   { type: 'group', key, text }: only when the lists are from more than one account
 //   { type: 'list', key, list, openCount, doneCount }
-//   { type: 'task', key, item, list, done }: open tasks (sortOpenTasks), then with showCompleted
-//     the done ones (sortDoneTasks)
-//   { type: 'empty', key, list }: the list has no open task
+//   { type: 'task', key, item, list, done }: open tasks (sortOpenTasks), then the 'add' row, then
+//     with showCompleted the done ones (sortDoneTasks)
+//   { type: 'add', key, list }: the list's quick add ("Add a task…"); all an empty list shows
 function taskRows(lists, itemsByList, showCompleted) {
 	var groups = []
 	var byGroup = {}
@@ -352,9 +352,7 @@ function taskRows(lists, itemsByList, showCompleted) {
 			sortOpenTasks(open).forEach(function(item) {
 				rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: false })
 			})
-			if (!open.length) {
-				rows.push({ type: 'empty', key: 'empty:' + list.id, list: list })
-			}
+			rows.push({ type: 'add', key: 'add:' + list.id, list: list })
 			if (showCompleted) {
 				sortDoneTasks(done).forEach(function(item) {
 					rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: true })
@@ -386,4 +384,160 @@ function dayTasks(items, day, today) {
 		;(isDone(item) ? done : open).push(item)
 	}
 	return sortOpenTasks(open).concat(sortDoneTasks(done))
+}
+
+//--- Tasks view by date
+
+// The tasks of the lists, each once: { open: [{ item, list }], done: [{ item, list }] }.
+// lists, itemsByList: as taskRows.
+function listTasks(lists, itemsByList) {
+	var open = []
+	var done = []
+	;(lists || []).forEach(function(list) {
+		var seen = {}
+		var items = (itemsByList && itemsByList[list.id]) || []
+		for (var i = 0; i < items.length; i++) {
+			var item = items[i]
+			if (!isTask(item) || seen[item.id]) {
+				continue
+			}
+			seen[item.id] = true
+			;(isDone(item) ? done : open).push({ item: item, list: list })
+		}
+	})
+	return { open: open, done: done }
+}
+
+// The first day of the week after today's ('YYYY-MM-DD'), weeks starting on firstDayOfWeek
+// (0 = Sunday … 6 = Saturday).
+function nextWeekStart(today, firstDayOfWeek) {
+	var parts = today.split('-')
+	var weekday = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12).getDay()
+	var first = ((Number(firstDayOfWeek) || 0) % 7 + 7) % 7
+	return addDays(today, ((first - weekday + 7) % 7) || 7)
+}
+
+// The section of an open task due on day ('' when undated): 'overdue', 'today', 'tomorrow',
+// 'week' (the rest of this week), 'later' or 'nodate'.
+function dateSection(day, today, firstDayOfWeek) {
+	if (!day) {
+		return 'nodate'
+	}
+	if (day < today) {
+		return 'overdue'
+	}
+	if (day === today) {
+		return 'today'
+	}
+	if (day === addDays(today, 1)) {
+		return 'tomorrow'
+	}
+	return day < nextWeekStart(today, firstDayOfWeek) ? 'week' : 'later'
+}
+
+var dateSectionOrder = ['overdue', 'today', 'tomorrow', 'week', 'later', 'nodate']
+
+// The open tasks by when they're due: [{ key, items }], keys in dateSectionOrder, empty sections
+// left out, each sorted (sortOpenTasks). items: tasks (done ones and non-tasks skipped); today:
+// 'YYYY-MM-DD'; firstDayOfWeek: 0 = Sunday … 6 = Saturday.
+function dateSections(items, today, firstDayOfWeek) {
+	var byKey = {}
+	;(items || []).forEach(function(item) {
+		if (!isTask(item) || isDone(item)) {
+			return
+		}
+		var key = dateSection(dueDay(item), today, firstDayOfWeek)
+		;(byKey[key] = byKey[key] || []).push(item)
+	})
+	return dateSectionOrder.filter(function(key) {
+		return !!byKey[key]
+	}).map(function(key) {
+		return { key: key, items: sortOpenTasks(byKey[key]) }
+	})
+}
+
+// The rows of the Tasks view by date, top to bottom (lists, itemsByList: as taskRows):
+//   { type: 'section', key, section, count }: a dateSections section, 'done' for the done ones
+//   { type: 'task', key, item, list, done, section }
+//   { type: 'empty', key }: no open task
+//   { type: 'add', key }: the quick add, after the open tasks
+// then, with showCompleted, the done ones (sortDoneTasks) under a 'done' section.
+function dateRows(lists, itemsByList, today, firstDayOfWeek, showCompleted) {
+	var tasks = listTasks(lists, itemsByList)
+	var rows = []
+	var pushTasks = function(entries, sorted, done, section) {
+		var items = entries.map(function(e) { return e.item })
+		sorted.forEach(function(item) {
+			var list = entries[items.indexOf(item)].list
+			rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: done, section: section })
+		})
+	}
+	var sections = dateSections(tasks.open.map(function(e) { return e.item }), today, firstDayOfWeek)
+	sections.forEach(function(section) {
+		rows.push({ type: 'section', key: 'section:' + section.key, section: section.key, count: section.items.length })
+		pushTasks(tasks.open, section.items, false, section.key)
+	})
+	if (!sections.length) {
+		rows.push({ type: 'empty', key: 'empty' })
+	}
+	rows.push({ type: 'add', key: 'add' })
+	if (showCompleted && tasks.done.length) {
+		rows.push({ type: 'section', key: 'section:done', section: 'done', count: tasks.done.length })
+		pushTasks(tasks.done, sortDoneTasks(tasks.done.map(function(e) { return e.item })), true, 'done')
+	}
+	return rows
+}
+
+// The due day a task gets when dropped on a date section: today, tomorrow, '' (no date), or null
+// when the section takes no drops.
+function sectionDueDay(section, today) {
+	switch (section) {
+		case 'today': return today
+		case 'tomorrow': return addDays(today, 1)
+		case 'nodate': return ''
+	}
+	return null
+}
+
+// The account of a list id (the part before '::'), '' without one.
+function listAccount(listId) {
+	var id = String(listId || '')
+	var i = id.indexOf('::')
+	return i > 0 ? id.substring(0, i) : ''
+}
+
+// What dropping a task of list fromId on list toId does: 'move' (to another list of the same
+// account), 'none' (its own list) or 'refuse' (another account).
+function listDrop(fromId, toId) {
+	if (!fromId || !toId || fromId === toId) {
+		return 'none'
+	}
+	var account = listAccount(fromId)
+	return account && account === listAccount(toId) ? 'move' : 'refuse'
+}
+
+//--- Quick add ("Add a task…" rows)
+
+// The body of a task typed in a quick add row: { title, due? }, or null without a title.
+function quickAddBody(title, day) {
+	var text = String(title || '').trim()
+	if (!text) {
+		return null
+	}
+	var body = { title: text }
+	if (day) {
+		body.due = dueValue(day)
+	}
+	return body
+}
+
+// The list a quick add without its own list adds to: lastId when it's one of lists, else the first.
+function quickAddList(lists, lastId) {
+	lists = lists || []
+	for (var i = 0; i < lists.length; i++) {
+		if (lists[i].id === lastId) {
+			return lastId
+		}
+	}
+	return lists.length ? lists[0].id : ''
 }
