@@ -29,20 +29,27 @@ Item {
 	// Lined up with compact TaskRows (Day view).
 	property bool compact: false
 
-	// The Tasks view makes its rows again on every change: the text typed so far and the focus
-	// are kept in addDrafts ({ key: { text, focused } }, owned by the view) under draftKey.
+	// The Tasks view makes its rows again on every change: the text typed so far, the focus and a
+	// save that runs are kept in addDrafts ({ key: { text, focused, saving, row } }, owned by the
+	// view) under draftKey. A row made again while saving stays read-only until the save answers,
+	// and shows how it went.
 	property string draftKey: ""
 	property var addDrafts: null
+	// The callbacks of a save may come after the row is gone.
+	property var alive: ({ value: true })
 	Component.onCompleted: {
 		var draft = addDrafts && draftKey ? addDrafts[draftKey] : null
 		if (draft) {
 			field.text = draft.text || ""
 			ignored = draft.ignored || []
+			saving = !!draft.saving
+			draft.row = { item: quickAdd, alive: quickAdd.alive }
 			if (draft.focused) {
 				field.forceActiveFocus()
 			}
 		}
 	}
+	Component.onDestruction: alive.value = false
 	function saveDraft() {
 		if (addDrafts && draftKey) {
 			var draft = addDrafts[draftKey] || {}
@@ -206,25 +213,38 @@ Item {
 		}
 		saving = true
 		errorText = ""
-		var row = quickAdd
+		var self = { item: quickAdd, alive: quickAdd.alive }
 		var drafts = addDrafts
 		var key = draftKey
+		if (drafts && key) {
+			saveDraft()
+			drafts[key].saving = true
+			drafts[key].row = self
+		}
+		var config = plasmoid.configuration
+		var errorMessage = i18n("Couldn't add the task")
 		eventModel.createEventFromData(target, body, function(err, item) {
-			if (!err) {
-				// Not the one '#Name' picked: the picker stays as it was.
-				if (!fromText) {
-					plasmoid.configuration.tasksLastListId = target
-				}
-				if (drafts && key && drafts[key]) {
-					drafts[key].text = ""
+			var draft = drafts && key ? drafts[key] : null
+			if (draft) {
+				draft.saving = false
+				if (!err) {
+					draft.text = ""
+					draft.ignored = []
 				}
 			}
-			if (!row) {
-				return // Gone meanwhile (rows made again)
+			// Not the one '#Name' picked: the picker stays as it was.
+			if (!err && !fromText) {
+				config.tasksLastListId = target
 			}
+			// This row, else the one made again meanwhile (rows rebuilt), if any.
+			var current = self.alive.value ? self : draft && draft.row && draft.row.alive.value ? draft.row : null
+			if (!current) {
+				return
+			}
+			var row = current.item
 			row.saving = false
 			if (err) {
-				row.errorText = i18n("Couldn't add the task")
+				row.errorText = errorMessage
 				row.restartErrorTimer()
 				return
 			}
