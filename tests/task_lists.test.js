@@ -5,7 +5,7 @@ const vm = require('vm')
 
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/TaskLists.js'), 'utf8')
 	.replace(/^\.pragma library\s*$/m, '')
-const names = ['swatches', 'isEditableRole', 'capabilities', 'hasAny', 'cleanTitle', 'hexColor',
+const names = ['swatches', 'isEditableRole', 'tickTickRole','capabilities', 'hasAny', 'cleanTitle', 'hexColor',
 	'withAdded', 'withChanged', 'withRemoved', 'taskCount']
 const L = {}
 vm.runInNewContext(source + '\nObject.assign(out, { ' + names.join(', ') + ' })', { out: L })
@@ -28,6 +28,11 @@ assert.strictEqual(L.hasAny(null), false)
 assert.strictEqual(L.hasAny({ clearCompleted: true }), true)
 assert.strictEqual(L.isEditableRole('writer'), true)
 assert.strictEqual(L.isEditableRole('reader'), false)
+assert.strictEqual(L.tickTickRole(''), 'owner')
+assert.strictEqual(L.tickTickRole(undefined), 'owner')
+assert.strictEqual(L.tickTickRole('write'), 'writer')
+assert.strictEqual(L.tickTickRole('read'), 'reader')
+assert.strictEqual(L.tickTickRole('comment'), 'reader')
 
 //--- Titles and colors
 assert.strictEqual(L.cleanTitle('  Groceries \n list '), 'Groceries list')

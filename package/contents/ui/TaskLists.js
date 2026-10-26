@@ -32,6 +32,12 @@ function capabilities(provider, rawId, accessRole) {
 	return none
 }
 
+// The access role of a TickTick project: your own have no permission, shared ones 'write' (can
+// be changed) or 'read' / 'comment' (read-only).
+function tickTickRole(permission) {
+	return !permission ? 'owner' : permission === 'write' ? 'writer' : 'reader'
+}
+
 function hasAny(caps) {
 	return !!caps && (!!caps.rename || !!caps.delete || !!caps.color || !!caps.clearCompleted)
 }

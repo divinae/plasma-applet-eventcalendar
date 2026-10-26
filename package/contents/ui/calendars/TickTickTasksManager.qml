@@ -80,8 +80,7 @@ CalendarManager {
 			id: scopedProjectId(project.id),
 			summary: label + " - " + project.name,
 			backgroundColor: project.color || Kirigami.Theme.highlightColor.toString(),
-			// Shared projects have a permission: 'write', else read-only ('read', 'comment').
-			accessRole: !project.permission ? 'owner' : project.permission === 'write' ? 'writer' : 'reader',
+			accessRole: TaskLists.tickTickRole(project.permission),
 			isTasklist: true,
 		}
 	}
