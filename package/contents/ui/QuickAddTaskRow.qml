@@ -343,8 +343,9 @@ Item {
 				visible: quickAdd.showPicker
 				Layout.maximumWidth: Kirigami.Units.gridUnit * 8
 				flat: true
-				text: quickAdd.targetList ? quickAdd.targetList.name : ""
-				Accessible.name: i18nc("%1 = task list name", "Task list: %1", text)
+				readonly property string label: quickAdd.targetList ? quickAdd.targetList.name : ""
+				text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the list's name
+				Accessible.name: i18nc("%1 = task list name", "Task list: %1", label)
 				PlasmaComponents3.ToolTip.text: i18n("The list new tasks go to")
 				PlasmaComponents3.ToolTip.visible: hovered
 				contentItem: RowLayout {
@@ -358,7 +359,7 @@ Item {
 					PlasmaComponents3.Label {
 						Layout.fillWidth: true
 						Layout.minimumWidth: 0
-						text: pickerButton.text
+						text: pickerButton.label
 						textFormat: Text.PlainText // User text (list name)
 						font: quickAdd.detailFont
 						opacity: 0.85
@@ -493,7 +494,8 @@ Item {
 			delegate: PlasmaComponents3.MenuItem {
 				id: listMenuItem
 				readonly property var list: modelData
-				text: list.name // Shown by the plain text label below
+				text: list.name.replace(/&/g, "&&") // No mnemonic; shown by the plain text label below
+				Accessible.name: list.name
 				readonly property bool current: list.id === quickAdd.targetListId
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing

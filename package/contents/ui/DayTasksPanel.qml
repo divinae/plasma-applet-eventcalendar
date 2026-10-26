@@ -135,11 +135,30 @@ ColumnLayout {
 			visible: dayTasks.lists.length > 1
 			Layout.minimumWidth: 0
 			Layout.maximumWidth: Kirigami.Units.gridUnit * 9
-			text: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
+			readonly property string label: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
+			text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the list's name
+			Accessible.name: label
 			icon.name: "view-filter"
 			icon.width: Kirigami.Units.iconSizes.small
 			icon.height: Kirigami.Units.iconSizes.small
 			display: QQC2.AbstractButton.TextBesideIcon
+			// The list's name as plain text (never HTML).
+			contentItem: RowLayout {
+				spacing: listFilterButton.spacing
+				Kirigami.Icon {
+					Layout.alignment: Qt.AlignVCenter
+					implicitWidth: listFilterButton.icon.width
+					implicitHeight: listFilterButton.icon.height
+					source: listFilterButton.icon.name
+				}
+				PlasmaComponents3.Label {
+					Layout.fillWidth: true
+					Layout.minimumWidth: 0
+					text: listFilterButton.label
+					textFormat: Text.PlainText // User text (list name)
+					elide: Text.ElideRight
+				}
+			}
 			onClicked: listFilterMenu.popup(listFilterButton, 0, listFilterButton.height)
 			PlasmaComponents3.ToolTip.text: i18n("Task list shown")
 			PlasmaComponents3.ToolTip.visible: hovered
@@ -155,9 +174,9 @@ ColumnLayout {
 			PlasmaComponents3.MenuSeparator {}
 			Instantiator {
 				model: dayTasks.lists
-				delegate: PlasmaComponents3.MenuItem {
+				delegate: PlainMenuItem {
 					required property var modelData
-					text: modelData.name
+					label: modelData.name
 					checkable: true
 					checked: dayTasks.filterListId === modelData.id
 					onTriggered: plasmoid.configuration.dayTasksListId = modelData.id

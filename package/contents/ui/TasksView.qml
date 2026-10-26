@@ -861,8 +861,9 @@ Item {
 						Layout.minimumWidth: 0
 						Layout.maximumWidth: implicitWidth
 						Layout.fillWidth: true
-						text: tasksView.filterName(tasksView.currentFilter)
-						Accessible.name: i18nc("%1 = tasks filter or list name", "Show: %1", text)
+						readonly property string label: tasksView.filterName(tasksView.currentFilter)
+						text: label.replace(/&/g, "&&") // No mnemonic from a "&" in a list's name
+						Accessible.name: i18nc("%1 = tasks filter or list name", "Show: %1", label)
 						Accessible.description: i18np("%1 open task", "%1 open tasks", tasksView.currentCount)
 						contentItem: RowLayout {
 							spacing: Kirigami.Units.smallSpacing
@@ -874,7 +875,7 @@ Item {
 								level: 2
 								font.weight: Font.Bold
 								font.pointSize: tasksView.titlePointSize
-								text: filterButton.text
+								text: filterButton.label
 								textFormat: Text.PlainText // User text (list name)
 								elide: Text.ElideRight
 							}
@@ -1239,7 +1240,9 @@ Item {
 				readonly property bool isEntry: entry.type === 'filter' || isList
 				readonly property bool current: isEntry && entry.key === tasksView.currentFilter
 				enabled: isEntry
-				text: isList ? entry.list.name : entry.type === 'group' ? entry.text : isEntry ? tasksView.filterName(entry.key) : ""
+				readonly property string label: isList ? entry.list.name : entry.type === 'group' ? entry.text : isEntry ? tasksView.filterName(entry.key) : ""
+				text: label.replace(/&/g, "&&") // No mnemonic from a "&" in a list's name
+				Accessible.name: label
 				leftPadding: Kirigami.Units.smallSpacing * 2
 				rightPadding: Kirigami.Units.smallSpacing * 2
 				topPadding: entry.type === 'separator' ? 0 : entry.type === 'group' ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.smallSpacing + 2
@@ -1283,7 +1286,7 @@ Item {
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true
 							Layout.minimumWidth: 0
-							text: filterItem.text
+							text: filterItem.label
 							textFormat: Text.PlainText // User text (list name, account label)
 							font.weight: filterItem.current ? Font.DemiBold : Font.Normal
 							opacity: filterItem.entry.type === 'group' ? tasksView.dimOpacity : 1
@@ -1647,9 +1650,11 @@ Item {
 						icon.width: Kirigami.Units.iconSizes.small
 						icon.height: Kirigami.Units.iconSizes.small
 						display: QQC2.AbstractButton.IconOnly
-						text: row ? i18nc("%1 = task list name", "Manage %1", row.list.name) : ""
+						readonly property string label: row ? i18nc("%1 = task list name", "Manage %1", row.list.name) : ""
+						text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the list's name
+						Accessible.name: label
 						onClicked: tasksView.openListMenu(listHeader.list, listMenuButton, 0, listMenuButton.height)
-						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.text: label
 						PlasmaComponents3.ToolTip.visible: hovered
 					}
 					FoldArrow {
@@ -1775,8 +1780,9 @@ Item {
 					Layout.column: newList.stacked ? 0 : 1
 					Layout.columnSpan: newList.stacked ? 3 : 1
 					Layout.maximumWidth: newList.stacked ? -1 : Kirigami.Units.gridUnit * 9
-					text: account ? account.label : ""
-					Accessible.name: i18nc("%1 = account name", "Account: %1", text)
+					readonly property string label: account ? account.label : ""
+					text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the account's name
+					Accessible.name: i18nc("%1 = account name", "Account: %1", label)
 					PlasmaComponents3.ToolTip.text: i18n("The account the new list goes to")
 					PlasmaComponents3.ToolTip.visible: hovered
 					contentItem: RowLayout {
@@ -1784,7 +1790,7 @@ Item {
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true
 							Layout.minimumWidth: 0
-							text: accountButton.text
+							text: accountButton.label
 							textFormat: Text.PlainText // User text (account label)
 							opacity: 0.85
 							elide: Text.ElideRight
@@ -1801,8 +1807,8 @@ Item {
 						id: accountMenu
 						Instantiator {
 							model: tasksView.taskAccounts
-							delegate: PlasmaComponents3.MenuItem {
-								text: modelData.label
+							delegate: PlainMenuItem {
+								label: modelData.label
 								checkable: true
 								checked: !!accountButton.account && accountButton.account.id === modelData.id
 								onTriggered: {

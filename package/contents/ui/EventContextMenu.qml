@@ -64,8 +64,8 @@ PlasmaComponents3.Menu {
 		icon.name: "go-jump"
 		Repeater {
 			model: eventMenu.taskLists
-			PlasmaComponents3.MenuItem {
-				text: modelData.summary
+			PlainMenuItem {
+				label: modelData.summary
 				onTriggered: eventMenu.moveTask(modelData.id)
 			}
 		}
@@ -197,18 +197,18 @@ PlasmaComponents3.Menu {
 		enabled: eventMenu.canEdit
 		title: i18n("Delete")
 		icon.name: "edit-delete"
-		PlasmaComponents3.MenuItem {
-			text: !eventMenu.eventItem ? ""
+		PlainMenuItem {
+			label: !eventMenu.eventItem ? ""
 				: eventMenu.isRecurring ? i18nc("%1 = event title", "Delete Only This Occurrence of “%1”", eventMenu.eventItem.summary)
 				: i18nc("%1 = event title", "Delete “%1”", eventMenu.eventItem.summary)
 			icon.name: "edit-delete"
 			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, false)
 		}
 		// Repeating events: the whole series, by its id.
-		PlasmaComponents3.MenuItem {
+		PlainMenuItem {
 			visible: eventMenu.isRecurring
 			height: visible ? implicitHeight : 0
-			text: eventMenu.eventItem ? i18nc("%1 = event title", "Delete All Events of “%1”", eventMenu.eventItem.summary) : ""
+			label: eventMenu.eventItem ? i18nc("%1 = event title", "Delete All Events of “%1”", eventMenu.eventItem.summary) : ""
 			icon.name: "edit-delete"
 			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, true)
 		}
