@@ -176,6 +176,18 @@ Item {
 					elide: Text.ElideRight
 					text: eventText
 				}
+
+				PlasmaComponents3.Label {
+					id: tooltipOverdueTasks
+					readonly property string tasksText: typeof upcomingEvents !== "undefined" ? upcomingEvents.tooltipTasksText : ""
+					visible: !!tasksText
+					Layout.topMargin: tooltipNowEvent.visible || tooltipNextEvent.visible ? 0 : Kirigami.Units.smallSpacing
+					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
+					Layout.maximumWidth: preferredTextWidth
+					elide: Text.ElideRight
+					textFormat: Text.PlainText
+					text: tasksText
+				}
 			}
 		}
 

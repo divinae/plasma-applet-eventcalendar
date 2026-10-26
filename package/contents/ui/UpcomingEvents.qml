@@ -706,6 +706,20 @@ CalendarManager {
 				Qt.formatTime(current.endDateTime, appletConfig.timeFormat))
 			: ""
 		tooltipNextText = next ? i18nc("%1 = event title, %2 = when", "Next: %1, %2", next.summary, formatTooltipStart(next, now)) : ""
+		updateTooltipTasks()
+	}
+
+	// Tooltip: "3 overdue tasks", of the task lists not hidden in the popup.
+	property string tooltipTasksText: ""
+	function updateTooltipTasks() {
+		var items = []
+		for (var calendarId in eventsByCalendar) {
+			if (!Shared.isHiddenCalendar(calendarId, plasmoid.configuration.hiddenCalendarIds)) {
+				items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
+			}
+		}
+		var count = DailyAgenda.overdueTaskCount(items, timeModel.currentTime)
+		tooltipTasksText = count > 0 ? i18np("%1 overdue task", "%1 overdue tasks", count) : ""
 	}
 
 	function joinNextEvent() {
