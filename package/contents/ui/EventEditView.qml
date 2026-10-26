@@ -13,6 +13,7 @@ import "Recurrence.js" as Recurrence
 import "Reminders.js" as Reminders
 import "SeriesEdit.js" as SeriesEdit
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "code/ColorIdMap.js" as ColorIdMap
 import "code/GooglePalette.js" as GooglePalette
@@ -28,7 +29,74 @@ Rectangle {
 	property var initialStart: null // New events: exact start time (eg: clicked week view slot)
 	property string initialTitle: "" // New events: title typed so far (eg: in quick add)
 	property var templateEvent: null // New events: a copy of this event (Duplicate)
+	property bool newTask: false // New: a task (due on initialDate), on a task list
+	property string initialCalendarId: "" // New: on this calendar / task list
 	readonly property bool isNew: !eventItem
+
+	//--- Tasks: title, notes, due day (or none) and the task list; nothing else of an event.
+	readonly property bool editingTask: !isNew && Tasks.isTask(eventItem)
+	// Editing a task, or a new one on a task list.
+	readonly property bool taskMode: editingTask || (isNew && calendarSelector.selectedIsTasklist)
+	property bool taskHasDue: true
+	property var taskDue: new Date()
+	function fillTask(item) {
+		titleField.text = item.summary || item.title || ""
+		descriptionField.text = item.notes || ""
+		var day = Tasks.dueDay(item)
+		taskHasDue = !!day
+		if (day) {
+			var parts = day.split('-')
+			taskDue = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+		}
+	}
+	function saveTask(title) {
+		var listId = calendarSelector.selectedCalendarId
+		var dueDay = taskHasDue ? Shared.localeDateString(taskDue) : ''
+		if (isNew) {
+			var notes = descriptionField.text
+			var fields = { dueDay: dueDay }
+			if (notes.trim()) {
+				fields.notes = notes
+			}
+			eventModel.createEventFromData(listId, Object.assign({ title: title }, Tasks.editBody(fields)), null)
+			return
+		}
+		// Only what changed.
+		var changes = {}
+		if (title !== (eventItem.summary || eventItem.title || "")) {
+			changes.title = title
+		}
+		if (descriptionField.text !== (eventItem.notes || "")) {
+			changes.notes = descriptionField.text
+		}
+		if (dueDay !== Tasks.dueDay(eventItem)) {
+			changes.dueDay = dueDay
+		}
+		var body = Tasks.editBody(changes)
+		var hasChanges = Object.keys(body).length > 0
+		if (!moving) {
+			if (hasChanges) {
+				eventModel.setEventProperties(eventItem.calendarId, eventItem.id, body)
+			}
+			return
+		}
+		// Another list of the account: move, then the changes on the moved task (as afterMove).
+		var model = eventModel
+		var appLogic = logic
+		var taskId = eventItem.id
+		model.moveEvent(eventItem.calendarId, taskId, listId, function(err, moved) {
+			if (err) {
+				return
+			}
+			if (hasChanges) {
+				model.setEventProperties(listId, moved && moved.id || taskId, body, {
+					done: function() { appLogic.update() },
+				})
+			} else {
+				appLogic.update()
+			}
+		})
+	}
 	// Rows below a row with an icon line up with its text.
 	readonly property real indent: Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
 	signal closeRequested()
@@ -52,7 +120,7 @@ Rectangle {
 	property var endDate: null // Last day, inclusive
 	property int endCount: 10
 	property string lastStartDay: ""
-	readonly property bool supportsRecurrence: !!calendarSelector.selectedCalendarId
+	readonly property bool supportsRecurrence: !taskMode && !!calendarSelector.selectedCalendarId
 		&& eventModel.supportsRecurrence(calendarSelector.selectedCalendarId)
 	readonly property bool canEditRepeat: supportsRecurrence && !seriesLoading && (!isOccurrence || editSeries)
 
@@ -625,6 +693,11 @@ Rectangle {
 			titleField.forceActiveFocus()
 			return
 		}
+		if (taskMode) {
+			saveTask(summary)
+			closeRequested()
+			return
+		}
 		var notice = guestNoticeNeeded()
 		if (notice && !sendUpdatesChoice) {
 			guestNotice = notice
@@ -824,23 +897,56 @@ Rectangle {
 		}
 	}
 
+	// Task lists as calendars for the selector (eventModel.getTaskLists gives id, summary and color).
+	function taskListEntries(lists, label) {
+		return lists.map(function(list) {
+			return {
+				id: list.id,
+				summary: label ? i18nc("%1 = task list name", "%1 (tasks)", list.summary) : list.summary,
+				backgroundColor: list.backgroundColor,
+				accessRole: 'owner',
+				isTasklist: true,
+			}
+		})
+	}
+
 	Component.onCompleted: {
 		var calendarList = eventModel.getCalendarList().filter(function(c) { return !c.isTasklist })
-		// An existing event can only move within its account (populate keeps the writable ones).
-		if (eventItem) {
+		var startId = initialCalendarId || plasmoid.configuration.agendaNewEventLastCalendarId
+		if (editingTask) {
+			// The task lists of its account (moving within the account).
+			var account = accountPrefix.slice(0, -2)
+			calendarList = taskListEntries(account ? eventModel.getTaskLists(account) : [], false)
+			if (!calendarList.some(function(c) { return c.id === eventItem.calendarId })) {
+				calendarList.unshift({ id: eventItem.calendarId, summary: i18n("Task list"), accessRole: 'owner', isTasklist: true })
+			}
+		} else if (eventItem) {
+			// An existing event can only move within its account (populate keeps the writable ones).
 			var prefix = accountPrefix
 			calendarList = calendarList.filter(function(c) {
 				return c.id === eventItem.calendarId || (prefix !== '' && String(c.id).indexOf(prefix) === 0)
 			})
+		} else if (newTask) {
+			calendarList = taskListEntries(eventModel.getTaskLists(), false)
+		} else if (!templateEvent) {
+			// New event: the task lists too, after the calendars (picking one makes it a task).
+			calendarList = calendarList.concat(taskListEntries(eventModel.getTaskLists(), true))
+			var isCalendar = calendarList.some(function(c) { return c.id === startId && !c.isTasklist })
+			if (!isCalendar && startId !== initialCalendarId) {
+				startId = "" // The last one used was a task list: events first
+			}
 		}
-		var initialCalendarId = eventItem ? eventItem.calendarId : plasmoid.configuration.agendaNewEventLastCalendarId
+		var initialId = eventItem ? eventItem.calendarId : startId
 		// Duplicate: on the same calendar when it's one we can write to.
 		if (templateEvent && calendarList.some(function(c) { return c.id === templateEvent.calendarId })) {
-			initialCalendarId = templateEvent.calendarId
+			initialId = templateEvent.calendarId
 		}
-		calendarSelector.populate(calendarList, initialCalendarId)
+		calendarSelector.populate(calendarList, initialId)
+		taskDue = new Date(initialDate)
 
-		if (eventItem) {
+		if (editingTask) {
+			fillTask(eventItem)
+		} else if (eventItem) {
 			fillFrom(eventItem, false)
 		} else if (templateEvent) {
 			fillFrom(templateEvent, true)
@@ -872,7 +978,8 @@ Rectangle {
 			id: actionsRow
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
-			title: form.isNew ? i18n("New Event") : i18n("Edit Event")
+			title: form.taskMode ? (form.isNew ? i18n("New Task") : i18n("Edit Task"))
+				: form.isNew ? i18n("New Event") : i18n("Edit Event")
 			actionText: i18n("Save")
 			actionIcon: "document-save"
 			actionEnabled: titleField.text.trim().length > 0 && !!calendarSelector.selectedCalendarId
@@ -954,6 +1061,34 @@ Rectangle {
 					Layout.fillWidth: true
 					// Existing events: move to another calendar of the same account (see canMove).
 					enabled: form.isNew || form.canMove
+				}
+
+				// Tasks: the due day, or none (Google Tasks keep no time).
+				RowLayout {
+					visible: form.taskMode
+					Layout.fillWidth: true
+					RowIcon {
+						source: "view-calendar-day"
+					}
+					DateSelector {
+						visible: form.taskHasDue
+						Layout.fillWidth: true
+						dateFormat: i18nc("event editor date format", "d MMM, yyyy")
+						dateTime: form.taskDue
+						onDateTimeShifted: function(oldDateTime, deltaDateTime, newDateTime) {
+							form.taskDue = newDateTime
+						}
+						Accessible.name: i18n("Due date")
+					}
+					Item {
+						visible: !form.taskHasDue
+						Layout.fillWidth: true
+					}
+					PlasmaComponents3.Switch {
+						text: i18n("No due date")
+						checked: !form.taskHasDue
+						onToggled: form.taskHasDue = !checked
+					}
 				}
 
 				// Event type (new events on a primary Google calendar).
@@ -1081,12 +1216,13 @@ Rectangle {
 
 				PlasmaComponents3.CheckBox {
 					id: allDayCheckBox
-					visible: !form.isSpecialType
+					visible: !form.isSpecialType && !form.taskMode
 					text: i18n("All day")
 				}
 
 				DurationSelector {
 					id: durationSelector
+					visible: !form.taskMode
 					Layout.fillWidth: true
 					showTime: !allDayCheckBox.checked
 				}
@@ -1311,7 +1447,7 @@ Rectangle {
 
 				PlasmaComponents3.TextField {
 					id: locationField
-					visible: !form.isSpecialType
+					visible: !form.isSpecialType && !form.taskMode
 					Layout.fillWidth: true
 					placeholderText: i18n("Location")
 				}
@@ -1601,7 +1737,7 @@ Rectangle {
 					id: descriptionField
 					Layout.fillWidth: true
 					Layout.preferredHeight: Kirigami.Units.gridUnit * 5
-					placeholderText: i18n("Description")
+					placeholderText: form.taskMode ? i18n("Notes") : i18n("Description")
 					wrapMode: TextEdit.Wrap
 				}
 			}

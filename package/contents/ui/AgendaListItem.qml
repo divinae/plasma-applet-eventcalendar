@@ -85,15 +85,36 @@ ColumnLayout {
 			}
 		}
 
+		// New event (the inline form), or with task lists, a choice of event or task.
 		PlasmaComponents3.ToolButton {
+			id: addButton
 			icon.name: "list-add"
 			display: QQC2.AbstractButton.IconOnly
 			text: i18n("New Event")
 			Layout.preferredHeight: Kirigami.Units.iconSizes.medium
 			Layout.preferredWidth: Layout.preferredHeight
-			onClicked: newEventForm.active = !newEventForm.active
+			onClicked: {
+				if (!newEventForm.active && popup.hasTaskLists()) {
+					addMenu.popup(addButton, 0, addButton.height)
+				} else {
+					newEventForm.active = !newEventForm.active
+				}
+			}
 			PlasmaComponents3.ToolTip.text: text
-			PlasmaComponents3.ToolTip.visible: hovered
+			PlasmaComponents3.ToolTip.visible: hovered && !addMenu.visible
+		}
+		PlasmaComponents3.Menu {
+			id: addMenu
+			PlasmaComponents3.MenuItem {
+				text: i18n("New Event")
+				icon.name: "view-calendar-day"
+				onTriggered: newEventForm.active = true
+			}
+			PlasmaComponents3.MenuItem {
+				text: i18n("New Task…")
+				icon.name: "view-task-add"
+				onTriggered: popup.newTask(agendaListItem.agendaItemDate, "")
+			}
 		}
 	}
 

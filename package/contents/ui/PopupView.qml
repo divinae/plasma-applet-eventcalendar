@@ -5,6 +5,7 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "lib"
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 import "Undo.js" as Undo
 import "KeyNav.js" as KeyNav
 import "./weather/WeatherApi.js" as WeatherApi
@@ -161,17 +162,28 @@ MouseArea {
 		if (undoable && !eventItem.recurringEventId) {
 			copy = Undo.restoreCopy(eventModel.getEvent(calendarId, eventId) || eventItem)
 		}
+		var deletedText = Tasks.isTask(eventItem) ? i18n("Task deleted") : i18n("Event deleted")
 		eventModel.deleteEvent(calendarId, eventId, function(err) {
 			if (!err && undoable) {
-				offerUndo(i18n("Event deleted"), function() {
+				offerUndo(deletedText, function() {
 					eventModel.restoreEvent(calendarId, eventId, copy, restored)
 				})
 			}
 		})
 	}
 
+	// Month and agenda delegates hand over ListModel copies (nested arrays become models): the
+	// original event object when it's loaded.
+	function originalEvent(eventItem) {
+		var original = null
+		if (eventItem && eventItem.calendarId && eventItem.id && eventModel.eventsByCalendar[eventItem.calendarId]) {
+			original = eventModel.getEvent(eventItem.calendarId, eventItem.id)
+		}
+		return original || eventItem
+	}
+
 	function showEventMenu(eventItem, item, x, y) {
-		eventContextMenu.openFor(eventItem, item, x, y)
+		eventContextMenu.openFor(originalEvent(eventItem), item, x, y)
 	}
 
 	function activateEvent(eventItem) {
@@ -184,13 +196,7 @@ MouseArea {
 			}
 			return
 		}
-		// Month and agenda delegates hand over ListModel copies (nested arrays become models);
-		// show the original event object.
-		var original = null
-		if (eventItem.calendarId && eventItem.id && eventModel.eventsByCalendar[eventItem.calendarId]) {
-			original = eventModel.getEvent(eventItem.calendarId, eventItem.id)
-		}
-		detailsEvent = original || eventItem
+		detailsEvent = originalEvent(eventItem)
 	}
 	function closeEventDetails() {
 		detailsEvent = null
@@ -247,21 +253,38 @@ MouseArea {
 	property var editorStart: null
 	property string editorTitle: ""
 	property var editorTemplate: null // Duplicate: the new event starts as a copy of this one
-	function newEvent(date, startTime, title) {
+	property bool editorTask: false // New task (due on editorDate) instead of an event
+	property string editorCalendarId: "" // New event / task: on this calendar / task list
+	function newEvent(date, startTime, title, calendarId) {
 		editorEvent = null
 		editorTemplate = null
+		editorTask = false
+		editorCalendarId = calendarId || ""
 		editorDate = date || selectedDate || new Date()
 		editorStart = startTime || null
 		editorTitle = title || ""
 		editorOpen = true
 	}
+	// A new task due on date (the editor in task mode), on calendarId when that's a task list.
+	function newTask(date, title, calendarId) {
+		newEvent(date, null, title, calendarId)
+		editorTask = true
+	}
+	// Any task list to add tasks to.
+	function hasTaskLists() {
+		return eventModel.getCalendarList().some(function(c) { return c.isTasklist })
+	}
 	function editEvent(eventItem) {
-		editorEvent = eventItem
+		editorEvent = originalEvent(eventItem)
 		editorTemplate = null
+		editorTask = false
+		editorCalendarId = ""
 		editorOpen = true
 	}
 	function duplicateEvent(eventItem) {
 		editorEvent = null
+		editorTask = false
+		editorCalendarId = ""
 		editorTemplate = eventItem
 		editorDate = eventItem.startDateTime || new Date()
 		editorStart = null
@@ -495,9 +518,17 @@ MouseArea {
 				QuickAddView {
 					date: popup.selectedDate
 					onCloseRequested: popup.closeQuickAdd()
-					onMoreOptionsRequested: function(title) {
+					onMoreOptionsRequested: function(title, calendarId, isTasklist) {
 						popup.closeQuickAdd()
-						popup.newEvent(popup.selectedDate, null, title)
+						if (isTasklist) {
+							popup.newTask(popup.selectedDate, title, calendarId)
+						} else {
+							popup.newEvent(popup.selectedDate, null, title, calendarId)
+						}
+					}
+					onNewTaskRequested: function(title) {
+						popup.closeQuickAdd()
+						popup.newTask(popup.selectedDate, title)
 					}
 				}
 			}
@@ -534,6 +565,8 @@ MouseArea {
 					initialStart: popup.editorStart
 					initialTitle: popup.editorTitle
 					templateEvent: popup.editorTemplate
+					newTask: popup.editorTask
+					initialCalendarId: popup.editorCalendarId
 					onCloseRequested: popup.closeEditor()
 				}
 			}
