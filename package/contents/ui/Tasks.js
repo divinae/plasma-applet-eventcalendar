@@ -293,6 +293,66 @@ function editBody(changes) {
 	return body
 }
 
+// The editor's changes to item (null: a new task), for editBody. form: { title, notes, dueDay
+// ('YYYY-MM-DD' | ''), dueTime ('HH:mm' | ''), priority, repeatRule (left out: not changed),
+// reminders: [minutes], subtasks: [{ id, title, done }] }; caps (capabilities): only what the
+// task's provider has. A new task: its title, due day, and what isn't empty; an existing one:
+// only what differs. No time or repeat without a due day; checklist items without a title are
+// left out.
+function editorChanges(item, form, caps) {
+	caps = caps || {}
+	form = form || {}
+	var isNew = !item
+	var out = {}
+	var title = String(form.title || '')
+	if (isNew || title !== String(item.summary || item.title || '')) {
+		out.title = title
+	}
+	var notes = String(form.notes || '')
+	if (isNew ? !!notes.trim() : notes !== String(item.notes || '')) {
+		out.notes = notes
+	}
+	var day = form.dueDay || ''
+	if (isNew || day !== dueDay(item)) {
+		out.dueDay = day
+	}
+	if (caps.dueTime) {
+		var time = day ? cleanTime(form.dueTime) : ''
+		if (isNew ? !!time : time !== dueTimeOf(item)) {
+			out.dueTime = time
+		}
+	}
+	if (caps.priority) {
+		var priority = priorityOf(form.priority)
+		if (isNew ? priority > 0 : priority !== priorityOf(item)) {
+			out.priority = priority
+		}
+	}
+	if (caps.repeat && typeof form.repeatRule === 'string') {
+		var rule = day ? cleanRepeatRule(form.repeatRule) : ''
+		if (isNew ? !!rule : rule !== cleanRepeatRule(item.repeatRule)) {
+			out.repeatRule = rule
+		}
+	}
+	if (caps.reminders) {
+		var reminders = cleanReminders(form.reminders)
+		if (isNew ? reminders.length > 0 : JSON.stringify(reminders) !== JSON.stringify(cleanReminders(item.reminders))) {
+			out.reminders = reminders
+		}
+	}
+	if (caps.subtasks) {
+		var subtasks = cleanSubtasks(form.subtasks).filter(function(s) {
+			return !!s.title.trim()
+		}).map(function(s) {
+			return { id: s.id, title: s.title.trim(), done: s.done }
+		})
+		if (isNew ? subtasks.length > 0 : JSON.stringify(subtasks) !== JSON.stringify(cleanSubtasks(item.subtasks))) {
+			out.subtasks = subtasks
+		}
+	}
+	return out
+}
+
 // The fields Google Tasks doesn't have (no time, priority, repeat, reminders or checklist).
 var NOT_GOOGLE_FIELDS = ['dueTime', 'priority', 'repeatRule', 'reminders', 'subtasks']
 

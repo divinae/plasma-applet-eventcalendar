@@ -750,6 +750,13 @@ CalendarManager {
 		toggleTask(subtask, done, cb)
 	}
 
+	// What the editor can set on a task of the list: { dueTime, priority, repeat, reminders,
+	// subtasks } (Tasks.capabilities: TickTick all, Google none).
+	function taskCapabilities(listId) {
+		var calendarManager = getCalendarManager(listId)
+		return Tasks.capabilities(calendarManager ? String(calendarManager.calendarManagerId) : '')
+	}
+
 	// Tasks can be put in another order within the list (Google; TickTick's API can't).
 	function supportsReorder(listId) {
 		return !!managerWith(listId, 'reorderTask')

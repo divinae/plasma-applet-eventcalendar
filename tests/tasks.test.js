@@ -13,7 +13,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
 	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
-	'priorityOf', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
+	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -625,6 +625,31 @@ same(T.capabilities('GoogleTasks'), { dueTime: false, priority: false, repeat: f
 	assert.strictEqual(T.reorderPrevious(byList, 3, 1, true), '')
 	assert.strictEqual(T.reorderPrevious(byList, 1, 3, false), 'z')
 	assert.strictEqual(T.reorderPrevious(byList, 1, 3, true), 'y')
+}
+
+// editorChanges: only what the provider has; a new task's non-empty fields, an existing one's changes.
+{
+	const all = T.capabilities('TickTick')
+	const none = T.capabilities('GoogleTasks')
+	const form = { title: 'Buy milk', notes: '', dueDay: '2026-10-28', dueTime: '09:30', priority: 3, repeatRule: 'RRULE:FREQ=DAILY',
+		reminders: [15, 0], subtasks: [{ id: '', title: ' Oat ', done: false }, { id: '', title: '  ', done: false }] }
+	same(T.editorChanges(null, form, all), { title: 'Buy milk', dueDay: '2026-10-28', dueTime: '09:30', priority: 3,
+		repeatRule: 'RRULE:FREQ=DAILY', reminders: [15, 0], subtasks: [{ id: '', title: 'Oat', done: false }] })
+	same(T.editorChanges(null, form, none), { title: 'Buy milk', dueDay: '2026-10-28' }, 'Google: none of the TickTick fields')
+	same(T.editorChanges(null, { title: 'x', dueDay: '', dueTime: '09:30', repeatRule: 'RRULE:FREQ=DAILY', priority: 0 }, all),
+		{ title: 'x', dueDay: '' }, 'no time or repeat without a day')
+	const item = task({ title: 'Buy milk', summary: 'Buy milk', notes: 'n', due: '2026-10-28T00:00:00.000Z', dueTime: '09:30', priority: 3,
+		repeatRule: 'RRULE:FREQ=DAILY;INTERVAL=1', reminders: [15], subtasks: [{ id: 'a', title: 'Oat', done: false }] })
+	const unchanged = { title: 'Buy milk', notes: 'n', dueDay: '2026-10-28', dueTime: '09:30', priority: 3, reminders: [15],
+		subtasks: [{ id: 'a', title: 'Oat', done: false }] }
+	same(T.editorChanges(item, unchanged, all), {}, 'nothing changed (repeat left out: not touched)')
+	same(T.editorChanges(item, Object.assign({}, unchanged, { dueTime: '' }), all), { dueTime: '' }, 'all-day now')
+	same(T.editorChanges(item, Object.assign({}, unchanged, { dueDay: '2026-10-29' }), all), { dueDay: '2026-10-29' }, 'day only: keeps its time')
+	same(T.editorChanges(item, Object.assign({}, unchanged, { repeatRule: '' }), all), { repeatRule: '' }, 'no repeat')
+	same(T.editorChanges(item, Object.assign({}, unchanged, { priority: 5, reminders: [], subtasks: [{ id: 'a', title: 'Oat', done: true }] }), all),
+		{ priority: 5, reminders: [], subtasks: [{ id: 'a', title: 'Oat', done: true }] })
+	same(T.editorChanges(item, Object.assign({}, unchanged, { title: 'Buy oat milk', priority: 5 }), none), { title: 'Buy oat milk' })
+	same(T.editorChanges(item, Object.assign({}, unchanged, { dueDay: '' }), all), { dueDay: '', dueTime: '' }, 'undated: no time')
 }
 
 console.log('PASS tasks')
