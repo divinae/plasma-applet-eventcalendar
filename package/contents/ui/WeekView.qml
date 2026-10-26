@@ -8,6 +8,7 @@ import "EventBuckets.js" as EventBuckets
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
@@ -236,7 +237,10 @@ Item {
 	function rebuild() {
 		// The blocks are recreated: a drag in progress ends, a dropped one shows its saved times.
 		dragState = null
-		var items = eventModel && eventModel.eventsData ? eventModel.eventsData.items : []
+		// Tasks are in the Agenda (and the Tasks tab), not in the week / day grid.
+		var items = (eventModel && eventModel.eventsData ? eventModel.eventsData.items : []).filter(function(item) {
+			return !Tasks.isTask(item)
+		})
 		var result = []
 		for (var i = 0; i < columnCount; i++) {
 			var dayStart = columnDate(i).getTime()
@@ -824,7 +828,8 @@ Item {
 							readonly property bool isTask: parent.parent.eventStyle.isTask
 							readonly property int iconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, height) / 2)
 							width: parent.width
-							leftPadding: awaitingAnswer || isTask ? iconSize + 3 : 0
+							// Never wider than the label: a padding past its width crashed Qt's text layout.
+							leftPadding: awaitingAnswer || isTask ? Math.min(iconSize + 3, Math.max(0, width - 8)) : 0
 							text: eventItem.summary
 							textFormat: Text.PlainText // User text: never parsed as HTML
 							color: parent.parent.titleColor
