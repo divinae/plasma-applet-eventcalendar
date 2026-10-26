@@ -1049,8 +1049,10 @@ Item {
 					Layout.fillHeight: true
 					clip: true
 
-					// Frame around the day columns (not the hour labels), with rounded corners.
+					// Frame around the day columns (not the hour labels), with rounded corners. Not in the
+					// islands style: the card is the frame (a second border inside it stuck out).
 					Rectangle {
+						visible: !weekView.islands
 						z: 1
 						x: weekView.gutterWidth
 						width: weekView.columnWidth * weekView.columnCount
