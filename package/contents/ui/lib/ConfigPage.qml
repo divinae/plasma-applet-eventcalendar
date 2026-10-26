@@ -104,6 +104,8 @@ KCM.SimpleKCM {
 	property var cfg_tasksShowDetailsDefault
 	property var cfg_tasksLastListId
 	property var cfg_tasksLastListIdDefault
+	property var cfg_tasksSmartQuickAdd
+	property var cfg_tasksSmartQuickAddDefault
 	property var cfg_eventsPollInterval
 	property var cfg_eventsPollIntervalDefault
 	property var cfg_icalCalendarList

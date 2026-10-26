@@ -390,6 +390,12 @@ ConfigPage {
 				description: i18n("Open tasks due on an earlier day are shown on today, in every view.")
 				configKey: 'agendaPlaceOverdueTasksOnToday'
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Smart recognition in Add a task")
+				description: i18n("Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set the new task's day, time, priority, list and repeat.")
+				configKey: 'tasksSmartQuickAdd'
+			}
 		}
 
 		//--- Notifications (UpcomingEvents.qml)

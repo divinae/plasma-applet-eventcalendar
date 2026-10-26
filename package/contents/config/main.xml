@@ -202,6 +202,10 @@
 			<!-- Tasks view: the first line of the notes, and each task's list. -->
 			<default>true</default>
 		</entry>
+		<entry name="tasksSmartQuickAdd" type="bool">
+			<!-- "Add a task…" recognizes the day, time, priority (!high), list (#Name) and repeat in the text. -->
+			<default>true</default>
+		</entry>
 		<entry name="tasksLastListId" type="string">
 			<!-- The task list "Add a task…" last added to, where no list is given (Day view, by date). -->
 			<default></default>
