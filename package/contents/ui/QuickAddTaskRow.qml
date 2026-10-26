@@ -112,7 +112,8 @@ Item {
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.leftMargin: quickAdd.sideMargin
-		anchors.rightMargin: quickAdd.sideMargin
+		// The picker's arrow at the column's right edge, where the rows' chips end.
+		anchors.rightMargin: quickAdd.showPicker ? Math.max(0, quickAdd.sideMargin - pickerButton.rightPadding) : quickAdd.sideMargin
 		spacing: 0
 
 		RowLayout {
@@ -148,6 +149,8 @@ Item {
 				rightPadding: 0
 				background: Item {}
 				placeholderText: i18n("Add a task…")
+				// Clear on the popup's translucent background too.
+				placeholderTextColor: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.7)
 				font.family: appletConfig.eventFont.family
 				font.pointSize: appletConfig.eventFont.pointSize
 				readOnly: quickAdd.saving
