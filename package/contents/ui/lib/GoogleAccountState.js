@@ -78,6 +78,21 @@ function primitiveStringList(value) {
 	return list
 }
 
+// { listId: ms } of positive numbers only (eg: tasklistClearedAt), else {}.
+function primitiveNumberMap(value) {
+	var map = {}
+	if (!value || typeof value !== "object" || Array.isArray(value)) {
+		return map
+	}
+	for (var key in value) {
+		var n = primitiveNumber(value[key])
+		if (key && n > 0) {
+			map[String(key)] = n
+		}
+	}
+	return map
+}
+
 function copyStringField(source, target, key) {
 	var value = source && primitiveString(source[key])
 	if (value) {
@@ -142,6 +157,8 @@ function serializeAccountForConfig(account) {
 		calendarSelectionInitialized: !!(account && account.calendarSelectionInitialized === true),
 		tasklistList: serializableList(account && account.tasklistList, serializableTasklist),
 		tasklistIdList: primitiveStringList(account && account.tasklistIdList),
+		// When each task list was last cleared ("Clear completed"): { rawListId: ms }.
+		tasklistClearedAt: primitiveNumberMap(account && account.tasklistClearedAt),
 	}
 }
 
@@ -153,5 +170,6 @@ if (typeof module !== "undefined") {
 		shouldApplyStoredRefreshToken: shouldApplyStoredRefreshToken,
 		shouldApplyStoredSessionClientSecret: shouldApplyStoredSessionClientSecret,
 		serializeAccountForConfig: serializeAccountForConfig,
+		primitiveNumberMap: primitiveNumberMap,
 	}
 }

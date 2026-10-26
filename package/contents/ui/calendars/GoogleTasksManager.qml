@@ -300,7 +300,7 @@ CalendarManager {
 	}
 	function fetchGoogleAccountTasks_done(results) {
 		for (var i = 0; i < results.length; i++) {
-			var eventList = parseTasklistAsEvents(results[i].data)
+			var eventList = parseTasklistAsEvents(results[i].data, unscopedTasklistId(results[i].scopedTasklistId))
 			setCalendarData(results[i].scopedTasklistId, eventList)
 		}
 		googleTasksManager.asyncRequestsDone += 1
@@ -318,9 +318,18 @@ CalendarManager {
 		})
 	}
 
-	function parseTasklistAsEvents(tasklistData) {
+	// The time the list (raw id) was last cleared (ms), see clearCompleted; 0 when never.
+	function tasklistClearedAt(rawTasklistId) {
+		var account = getAccount()
+		var map = account && account.tasklistClearedAt
+		return map && typeof map === 'object' ? Number(map[rawTasklistId]) || 0 : 0
+	}
+
+	// rawTasklistId: the list's tasks that "Clear completed" took out are left out.
+	function parseTasklistAsEvents(tasklistData, rawTasklistId) {
 		var eventList = []
 		var items = (tasklistData && tasklistData.items) || [] // Google leaves items out of empty lists
+		items = Tasks.withoutCleared(items, rawTasklistId ? tasklistClearedAt(rawTasklistId) : 0)
 		for (var i = 0; i < items.length; i++) {
 			eventList.push(parseTaskAsEventData(items[i]))
 		}
@@ -756,16 +765,48 @@ CalendarManager {
 		})
 	}
 
-	// Google marks the list's completed tasks hidden (lists/{id}/clear); they leave the view.
-	// done(err)
+	// Google marks the list's completed tasks hidden (lists/{id}/clear); they leave the view, all in
+	// one change (calendarFetched). The list is fetched with showHidden, so the time of the clear is
+	// kept in the account (tasklistClearedAt, by raw list id) and the cleared tasks stay out of later
+	// fetches (Tasks.isClearedTask). done(err)
 	function clearCompleted(calendarId, done) {
 		var rawId = unscopedTasklistId(calendarId)
-		tasklistRequest('clearCompleted', 'POST', '/lists/' + encodeURIComponent(rawId) + '/clear', "", done, function() {
-			var completed = eventItems(calendarId).filter(function(item) { return Tasks.isDone(item) })
-			for (var i = 0; i < completed.length; i++) {
-				removeEvent(calendarId, completed[i].id)
+		tasksRequest('POST', '/lists/' + encodeURIComponent(rawId) + '/clear', null, "", function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'clearCompleted_err', xhr ? xhr.status : 'no token')
+			} else {
+				var dateHeader = ''
+				try {
+					dateHeader = xhr && typeof xhr.getResponseHeader === 'function' ? String(xhr.getResponseHeader('Date') || '') : ''
+				} catch (e) {
+					dateHeader = ''
+				}
+				storeTasklistClearedAt(rawId, Tasks.clearedAt(dateHeader, Date.now()))
+				var calendar = eventsByCalendar[calendarId]
+				if (calendar && calendar.items) {
+					calendar.items = calendar.items.filter(function(item) { return !Tasks.isDone(item) })
+					calendarFetched(calendarId, calendar)
+				}
 			}
-			return null
+			if (done) {
+				done(err || null, null)
+			}
 		})
+	}
+	function storeTasklistClearedAt(rawTasklistId, ms) {
+		var account = getAccount()
+		if (!account || typeof accountsStore.updateAccount !== 'function') {
+			return
+		}
+		var map = {}
+		var current = account.tasklistClearedAt && typeof account.tasklistClearedAt === 'object' ? account.tasklistClearedAt : {}
+		var listIds = Array.isArray(account.tasklistList) ? account.tasklistList.map(function(t) { return t.id }) : []
+		for (var key in current) {
+			if (listIds.indexOf(key) >= 0) { // Lists that are gone drop out
+				map[key] = current[key]
+			}
+		}
+		map[rawTasklistId] = ms
+		accountsStore.updateAccount(accountId, { tasklistClearedAt: map })
 	}
 }

@@ -868,13 +868,16 @@ CalendarManager {
 	}
 
 	// done(err, result) once the server answered, always called. removedListId: a deleted list,
-	// unloaded here (its tasks leave the views).
-	function taskListDone(done, removedListId) {
+	// unloaded here (its tasks leave the views). merge: the list's tasks changed (the views are
+	// built again once).
+	function taskListDone(done, removedListId, merge) {
 		return function(err, result) {
 			if (!err) {
 				if (removedListId) {
 					delete eventModel.eventsByCalendar[removedListId]
 					delete eventModel.calendarPluginMap[removedListId]
+				}
+				if (removedListId || merge) {
 					mergeEvents()
 				}
 				taskListsChanged()
@@ -885,7 +888,7 @@ CalendarManager {
 		}
 	}
 	// Call fnName(listId, args..., done) on the list's manager, else done(err).
-	function forwardTaskList(fnName, listId, args, done, removedListId) {
+	function forwardTaskList(fnName, listId, args, done, removedListId, merge) {
 		var calendarManager = managerWith(listId, fnName)
 		if (!calendarManager) {
 			logger.log('Could not ' + fnName + ': not supported')
@@ -894,7 +897,7 @@ CalendarManager {
 			}
 			return
 		}
-		calendarManager[fnName].apply(calendarManager, [listId].concat(args, [taskListDone(done, removedListId)]))
+		calendarManager[fnName].apply(calendarManager, [listId].concat(args, [taskListDone(done, removedListId, merge)]))
 	}
 
 	// A new list in an account (accountPrefix: see getTaskAccounts), shown right away.
@@ -921,9 +924,9 @@ CalendarManager {
 	function setTaskListColor(listId, color, done) {
 		forwardTaskList('setTaskListColor', listId, [color], done, '')
 	}
-	// The list's completed tasks are cleared (Google).
+	// The list's completed tasks are cleared (Google): they leave the views in one rebuild.
 	function clearCompleted(listId, done) {
-		forwardTaskList('clearCompleted', listId, [], done, '')
+		forwardTaskList('clearCompleted', listId, [], done, '', true)
 	}
 
 	// Repeat rules can be edited (Google Calendar).

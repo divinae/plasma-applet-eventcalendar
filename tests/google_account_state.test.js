@@ -136,6 +136,7 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 		calendarSelectionInitialized: true,
 		tasklistList: [tasklist],
 		tasklistIdList: ['tasks-1'],
+		tasklistClearedAt: { 'tasks-1': 1793000000000, junk: 'x', neg: -1, obj: { a: 1 }, str: '1793000000001' },
 	})
 
 	assert.doesNotThrow(() => JSON.stringify(serialized))
@@ -162,6 +163,10 @@ function testSerializesAccountWithoutRecursiveApiPayloadsOrSecrets() {
 		id: 'tasks-1',
 		title: 'Tasks',
 	}])
+	// Clear completed watermarks: positive numbers only.
+	assert.deepStrictEqual(serialized.tasklistClearedAt, { 'tasks-1': 1793000000000, str: 1793000000001 })
+	assert.deepStrictEqual(state.serializeAccountForConfig({ id: 'a' }).tasklistClearedAt, {})
+	assert.deepStrictEqual(state.serializeAccountForConfig({ id: 'a', tasklistClearedAt: [5] }).tasklistClearedAt, {})
 }
 
 testPreservesRuntimeCredentialsForSameAccount()

@@ -13,7 +13,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
 	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
-	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
+	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -455,6 +455,31 @@ same(T.toTickTick(T.toggleBody(false), null, null), { status: 0 })
 same(T.toTickTick(T.restoreBody({ title: 'R', notes: 'x', due: '2026-10-27T00:00:00.000Z', isCompleted: false }), null, null),
 	{ title: 'R', content: 'x', isAllDay: true, dueDate: '2026-10-26T23:00:00+0000', startDate: '2026-10-26T23:00:00+0000', status: 0 })
 
+
+// Clear completed (Google): done + hidden + completed at or before the list's watermark.
+{
+	const mark = Date.parse('2026-10-26T10:00:00.000Z')
+	const cleared = task({ id: 'c', status: 'completed', hidden: true, completed: '2026-10-26T09:59:59.000Z' })
+	const atMark = task({ id: 'm', status: 'completed', hidden: true, completed: '2026-10-26T10:00:00.000Z' })
+	const after = task({ id: 'a', status: 'completed', hidden: true, completed: '2026-10-26T10:00:01.000Z' })
+	const visibleDone = task({ id: 'v', status: 'completed', completed: '2026-10-25T09:00:00.000Z' })
+	const open = task({ id: 'o', hidden: true })
+	const noTime = task({ id: 'n', status: 'completed', hidden: true })
+	assert.strictEqual(T.isClearedTask(cleared, mark), true)
+	assert.strictEqual(T.isClearedTask(atMark, mark), true, 'at the watermark')
+	assert.strictEqual(T.isClearedTask(after, mark), false, 'done after the clear')
+	assert.strictEqual(T.isClearedTask(visibleDone, mark), false, 'not hidden')
+	assert.strictEqual(T.isClearedTask(open, mark), false, 'open')
+	assert.strictEqual(T.isClearedTask(noTime, mark), false, 'no completed time')
+	assert.strictEqual(T.isClearedTask(cleared, 0), false, 'never cleared')
+	assert.strictEqual(T.isClearedTask(cleared, undefined), false)
+	same(T.withoutCleared([cleared, atMark, after, visibleDone, open, noTime], mark).map(t => t.id), ['a', 'v', 'o', 'n'])
+	same(T.withoutCleared(null, mark), [])
+	// The watermark: the server's Date header (to the end of its second), else now.
+	assert.strictEqual(T.clearedAt('Mon, 26 Oct 2026 10:00:00 GMT', 5), mark + 999)
+	assert.strictEqual(T.clearedAt('', 5), 5)
+	assert.strictEqual(T.clearedAt('garbage', 5), 5)
+}
 
 //--- Priority, reminders, repeat, subtasks
 

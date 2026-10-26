@@ -204,6 +204,7 @@ Item {
 		normalized.calendarSelectionInitialized = account.calendarSelectionInitialized === true
 		normalized.tasklistList = Array.isArray(account.tasklistList) ? account.tasklistList : []
 		normalized.tasklistIdList = ensureStringArray(account.tasklistIdList)
+		normalized.tasklistClearedAt = GoogleAccountState.primitiveNumberMap(account.tasklistClearedAt)
 		return normalized
 	}
 

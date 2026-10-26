@@ -93,6 +93,31 @@ function toggleBody(done, now) {
 	}
 }
 
+// A Google task that "Clear completed" (lists/{id}/clear) took out of the list: done, hidden, and
+// completed at or before the clear (clearedAtMs, the list's watermark; 0 / missing: none). The
+// list is fetched with showHidden (tasks done in Google's apps come back hidden), so these come
+// back too and are left out here.
+function isClearedTask(item, clearedAtMs) {
+	var watermark = Number(clearedAtMs)
+	if (!item || !(watermark > 0) || !isDone(item) || item.hidden !== true) {
+		return false
+	}
+	var completedMs = Date.parse(item.completed || '')
+	return !isNaN(completedMs) && completedMs <= watermark
+}
+
+// items without the cleared ones (isClearedTask).
+function withoutCleared(items, clearedAtMs) {
+	return (items || []).filter(function(item) { return !isClearedTask(item, clearedAtMs) })
+}
+
+// The time a list was cleared (ms), for isClearedTask: the server's Date header (whole seconds,
+// so the end of that second) when it sent one, else now (nowMs).
+function clearedAt(dateHeader, nowMs) {
+	var serverMs = Date.parse(dateHeader || '')
+	return isNaN(serverMs) ? nowMs : serverMs + 999
+}
+
 // Google's due value for a day ('YYYY-MM-DD'), null for '' (no due date).
 function dueValue(day) {
 	return day ? day + 'T00:00:00.000Z' : null
