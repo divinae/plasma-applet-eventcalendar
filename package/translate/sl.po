@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:41+0100\n"
+"POT-Creation-Date: 2026-10-26 09:58+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -41,7 +41,8 @@ msgstr "iCalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Googlov koledar"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr "Opravila"
 
@@ -89,20 +90,20 @@ msgid "No events"
 msgstr "Ni dogodkov"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Task"
 msgstr "Opravilo"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Done"
 msgstr "Opravljeno"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Ni opravljeno"
 
@@ -116,7 +117,7 @@ msgstr "Rok: %1"
 msgid "Overdue"
 msgstr "Zapadlo"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"
 msgid "Overdue · due %1"
 msgstr "Zapadlo · rok %1"
@@ -1446,6 +1447,23 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d. MMM yyyy"
 
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Hide tasks"
+msgstr "Skrij opravila"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Show tasks"
+msgstr "Prikaži opravila"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "Novo opravilo"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "No tasks"
+msgstr "Ni opravil"
+
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "do"
@@ -1780,10 +1798,6 @@ msgstr "%1 (opravila)"
 #: ../contents/ui/EventEditView.qml
 msgid "Task list"
 msgstr "Seznam opravil"
-
-#: ../contents/ui/EventEditView.qml
-msgid "New Task"
-msgstr "Novo opravilo"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Task"
@@ -2617,7 +2631,7 @@ msgstr "Prejšnji teden"
 msgid "Previous Month"
 msgstr "Prejšnji mesec"
 
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
 msgid "Today"
 msgstr "Danes"
 
@@ -2775,6 +2789,31 @@ msgstr "Iskanje v Googlovem koledarju ni uspelo"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Iskanje v Googlovem koledarju…"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Tomorrow"
+msgstr "Jutri"
+
+#: ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 odprto opravilo"
+msgstr[1] "%1 odprti opravili"
+msgstr[2] "%1 odprta opravila"
+msgstr[3] "%1 odprtih opravil"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Ni odprtih opravil"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Prikaži opravljena"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "New task in %1"
+msgstr "Novo opravilo v %1"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

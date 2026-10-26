@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:41+0100\n"
+"POT-Creation-Date: 2026-10-26 09:58+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,7 +40,8 @@ msgstr "iCalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google 캘린더"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr "할 일"
 
@@ -88,20 +89,20 @@ msgid "No events"
 msgstr "이벤트 없음"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d일"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Task"
 msgstr "작업"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Done"
 msgstr "완료"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "완료 안 됨"
 
@@ -115,7 +116,7 @@ msgstr "기한 %1"
 msgid "Overdue"
 msgstr "기한 지남"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"
 msgid "Overdue · due %1"
 msgstr "기한 지남 · 기한 %1"
@@ -1429,6 +1430,23 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "yyyy년 MMM d일"
 
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Hide tasks"
+msgstr "작업 숨기기"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Show tasks"
+msgstr "작업 표시"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "새 작업"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "No tasks"
+msgstr "작업 없음"
+
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "~"
@@ -1757,10 +1775,6 @@ msgstr "%1 (작업)"
 #: ../contents/ui/EventEditView.qml
 msgid "Task list"
 msgstr "작업 목록"
-
-#: ../contents/ui/EventEditView.qml
-msgid "New Task"
-msgstr "새 작업"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Task"
@@ -2539,7 +2553,7 @@ msgstr "이전 주"
 msgid "Previous Month"
 msgstr "이전 달"
 
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
 msgid "Today"
 msgstr "오늘"
 
@@ -2695,6 +2709,28 @@ msgstr "Google 캘린더를 검색할 수 없음"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Google 캘린더 검색 중…"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Tomorrow"
+msgstr "내일"
+
+#: ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "열린 작업 %1개"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "열린 작업 없음"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "완료된 작업 표시"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "New task in %1"
+msgstr "%1에 새 작업"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

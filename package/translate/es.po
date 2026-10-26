@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:41+0100\n"
+"POT-Creation-Date: 2026-10-26 09:58+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Calendario de Google"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr "Tareas"
 
@@ -84,20 +84,20 @@ msgstr "Nueva tarea…"
 msgid "No events"
 msgstr "Sin eventos"
 
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Task"
 msgstr "Tarea"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Done"
 msgstr "Completada"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Sin completar"
 
@@ -110,7 +110,7 @@ msgstr "Vence %1"
 msgid "Overdue"
 msgstr "Vencida"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"
 msgid "Overdue · due %1"
 msgstr "Vencida · vence %1"
@@ -1282,6 +1282,22 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d MMM, yyyy"
 
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Hide tasks"
+msgstr "Ocultar tareas"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Show tasks"
+msgstr "Mostrar tareas"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "Nueva tarea"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "No tasks"
+msgstr "Sin tareas"
+
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "a"
@@ -1605,10 +1621,6 @@ msgstr "%1 (tareas)"
 #: ../contents/ui/EventEditView.qml
 msgid "Task list"
 msgstr "Lista de tareas"
-
-#: ../contents/ui/EventEditView.qml
-msgid "New Task"
-msgstr "Nueva tarea"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Task"
@@ -2390,7 +2402,7 @@ msgstr "Semana anterior"
 msgid "Previous Month"
 msgstr "Mes anterior"
 
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
 msgid "Today"
 msgstr "Hoy"
 
@@ -2544,6 +2556,29 @@ msgstr "No se pudo buscar en Google Calendar"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Buscando en Google Calendar…"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Tomorrow"
+msgstr "Mañana"
+
+#: ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 tarea pendiente"
+msgstr[1] "%1 tareas pendientes"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "No hay tareas pendientes"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Mostrar completadas"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "New task in %1"
+msgstr "Nueva tarea en %1"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:41+0100\n"
+"POT-Creation-Date: 2026-10-26 09:58+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -41,7 +41,8 @@ msgstr "iCalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Календар Google"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr "Завдання"
 
@@ -89,20 +90,20 @@ msgid "No events"
 msgstr "Немає подій"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "d MMM"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Task"
 msgstr "Завдання"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Done"
 msgstr "Виконано"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Не виконано"
 
@@ -116,7 +117,7 @@ msgstr "Термін: %1"
 msgid "Overdue"
 msgstr "Прострочено"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"
 msgid "Overdue · due %1"
 msgstr "Прострочено · термін %1"
@@ -1446,6 +1447,23 @@ msgctxt "event editor date format"
 msgid "d MMM, yyyy"
 msgstr "d MMM yyyy"
 
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Hide tasks"
+msgstr "Сховати завдання"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Show tasks"
+msgstr "Показати завдання"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "Нове завдання"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "No tasks"
+msgstr "Немає завдань"
+
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
 msgstr "до"
@@ -1778,10 +1796,6 @@ msgstr "%1 (завдання)"
 #: ../contents/ui/EventEditView.qml
 msgid "Task list"
 msgstr "Список завдань"
-
-#: ../contents/ui/EventEditView.qml
-msgid "New Task"
-msgstr "Нове завдання"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Task"
@@ -2597,7 +2611,7 @@ msgstr "Попередній тиждень"
 msgid "Previous Month"
 msgstr "Попередній місяць"
 
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
 msgid "Today"
 msgstr "Сьогодні"
 
@@ -2754,6 +2768,30 @@ msgstr "Не вдалося виконати пошук у Календарі Go
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Пошук у Календарі Google…"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Tomorrow"
+msgstr "Завтра"
+
+#: ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 відкрите завдання"
+msgstr[1] "%1 відкриті завдання"
+msgstr[2] "%1 відкритих завдань"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Немає відкритих завдань"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Показати виконані"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "%1 = task list name"
+msgid "New task in %1"
+msgstr "Нове завдання у «%1»"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
