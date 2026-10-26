@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:51+0100\n"
+"POT-Creation-Date: 2026-10-26 12:02+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -1079,8 +1079,8 @@ msgid "Style"
 msgstr "Estilo"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
-msgstr "Islas: los paneles de la vista de día, los días de la agenda y las secciones de tareas van cada uno en una tarjeta redondeada."
+msgid "Islands: the calendar grids, the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+msgstr "Islas: las cuadrículas del calendario, los paneles de la vista de día, los días de la agenda y las secciones de tareas van cada uno en una tarjeta redondeada."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands (cards)"
@@ -3017,6 +3017,9 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lugar de trabajo: %1"
+
+#~ msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+#~ msgstr "Islas: los paneles de la vista de día, los días de la agenda y las secciones de tareas van cada uno en una tarjeta redondeada."
 
 #~ msgid "Due %1"
 #~ msgstr "Vence %1"
