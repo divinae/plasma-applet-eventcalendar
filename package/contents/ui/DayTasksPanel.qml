@@ -10,7 +10,8 @@ import "Tasks.js" as Tasks
 // too (undated ones are only in the Tasks tab), as compact TaskRows under a "Tasks" heading with a
 // "+" for a task due that day, and "Add a task…" below them. Hidden without task lists.
 // Collapsible: a strip that folds to its heading (above the hour grid); otherwise always open
-// (beside the grid, right of it).
+// (beside the grid, right of it). Subtasks (Google) are indented under their parent; checking a
+// task offers "Completed · Undo" below the list for a few seconds.
 ColumnLayout {
 	id: dayTasks
 
@@ -42,6 +43,9 @@ ColumnLayout {
 		return null
 	}
 	property var tasks: []
+	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }]
+	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
+	property var expandedSubtasks: ({})
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
 
 	visible: hasLists
@@ -65,7 +69,9 @@ ColumnLayout {
 		}
 		dayTasks.lists = lists
 		hasLists = lists.length > 0
-		tasks = Tasks.dayTasks(items, dayText, today)
+		var rows = Tasks.dayTaskRows(items, dayText, today)
+		taskRows = rows
+		tasks = rows.map(function(row) { return row.item })
 	}
 	function deferredRebuild() {
 		Qt.callLater(rebuild)
@@ -197,15 +203,29 @@ ColumnLayout {
 			width: scrollView.availableWidth
 			spacing: 1
 			Repeater {
-				model: dayTasks.tasks
+				model: dayTasks.taskRows
 				TaskRow {
 					Layout.fillWidth: true
-					eventItem: modelData
+					eventItem: modelData.item
+					depth: modelData.depth
 					today: dayTasks.today
 					compact: true
+					expandedStore: dayTasks.expandedSubtasks
+					onCheckToggled: function(item, done) {
+						if (done) {
+							undoBar.offer(item)
+						}
+					}
 				}
 			}
 		}
+	}
+
+	TaskUndoBar {
+		id: undoBar
+		Layout.alignment: Qt.AlignHCenter
+		Layout.preferredHeight: shown ? implicitHeight : 0
+		eventModel: dayTasks.eventModel
 	}
 
 	// "Add a task…" due on the shown day, on the last used list (a picker when there are several).

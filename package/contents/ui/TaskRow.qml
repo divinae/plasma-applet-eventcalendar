@@ -14,6 +14,9 @@ import "Tasks.js" as Tasks
 // keyboard focus): buttons for due today / tomorrow, edit and delete, in place of the list and chip.
 // With draggable, press and drag past the start drag distance drags it (dragStarted, dragMoved,
 // dropped, dragCanceled; points in scene coordinates); the click that ends a drag isn't a click.
+// The check's color is the task's priority (TaskCheck); when it's due has its time ("Today 14:00").
+// A subtask (Google: a task with a parent) is indented by depth. TickTick's checklist: "2/5" with
+// a chevron, which shows the items below the title, each with a small check of its own.
 LinkRect {
 	id: taskRow
 
@@ -31,6 +34,27 @@ LinkRect {
 	// The hover buttons.
 	property bool actionsEnabled: true
 	property bool draggable: false
+	// A subtask's level (Tasks.subtaskTree): indented by as much as a check and its gap per level.
+	property int depth: 0
+	// The keyboard's current task (Tasks tab): the hover background.
+	property bool highlighted: false
+	// The tasks whose checklist is open ({ 'listId:taskId': true }), kept by the view across
+	// rebuilds; null: on this row only.
+	property var expandedStore: null
+	property bool subtasksOpen: !!expandedStore && !!eventItem && !!expandedStore[expandKey]
+	readonly property string expandKey: eventItem ? (eventItem.calendarId || "") + ":" + (eventItem.id || "") : ""
+	function toggleSubtasks() {
+		subtasksOpen = !subtasksOpen
+		if (expandedStore && expandKey) {
+			if (subtasksOpen) {
+				expandedStore[expandKey] = true
+			} else {
+				delete expandedStore[expandKey]
+			}
+		}
+	}
+	// The check was clicked (or Space): done is the new state.
+	signal checkToggled(var item, bool done)
 
 	signal dragStarted(point at)
 	signal dragMoved(point at)
@@ -43,7 +67,10 @@ LinkRect {
 	// The list's color, dark enough (light theme) or light enough (dark theme) to read on the
 	// popup's translucent background, like colored text.
 	readonly property color listColor: appletConfig.eventColoredTextColor(eventStyle.color)
-	readonly property bool overdue: due.kind === 'overdue' && !eventStyle.done
+	// Done, also while a click on the check is being saved.
+	readonly property bool done: taskCheck.done
+	readonly property real doneOpacity: done ? 0.55 : 1
+	readonly property bool overdue: due.kind === 'overdue' && !done
 	readonly property var due: {
 		var parts = today.split('-')
 		return Tasks.dueInfo(eventItem, new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12))
@@ -56,27 +83,51 @@ LinkRect {
 		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
 		return Qt.formatDate(date, i18nc("short month+date format", "MMM d"))
 	}
-	readonly property string dueText: {
+	// The time it's due ("14:00" / "2:00 PM"), '' when all-day.
+	readonly property string timeText: {
+		var time = Tasks.dueTimeOf(eventItem)
+		if (!time) {
+			return ""
+		}
+		return Qt.formatTime(new Date(2000, 0, 1, Number(time.substring(0, 2)), Number(time.substring(3, 5))), appletConfig.timeFormat)
+	}
+	// "Today", "Tomorrow" or the date, with the time when it has one ("Today 14:00", "Oct 28 14:00").
+	function withTime(dayText) {
+		if (!timeText) {
+			return dayText
+		}
+		return dayText ? i18nc("task due: %1 = day (Today, Oct 28), %2 = time", "%1 %2", dayText, timeText) : timeText
+	}
+	readonly property string dayText: {
 		switch (due.kind) {
 			case 'today': return i18n("Today")
 			case 'tomorrow': return i18n("Tomorrow")
-			case 'overdue': return i18nc("%1 = short date", "Overdue · due %1", dueDateText)
+			case 'overdue':
 			case 'date': return dueDateText
 		}
 		return ""
 	}
-	readonly property string chipText: due.kind === 'overdue' ? dueDateText : dueText
-	readonly property bool showChip: !!chipText && due.kind !== sectionDueKind
+	readonly property string dueText: due.kind === 'overdue' ? i18nc("%1 = short date", "Overdue · due %1", withTime(dueDateText)) : withTime(dayText)
+	// The day left out when the section says it (Today, Tomorrow); compact (the Day view's day): the
+	// time only, the date when overdue.
+	readonly property string chipText: compact ? (overdue ? withTime(dueDateText) : timeText)
+		: withTime(due.kind === sectionDueKind ? "" : dayText)
+	readonly property bool showChip: !!chipText
 	readonly property string notesLine: compact || !showNotes || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")
 	// The due date and notes: a bit smaller than the title, larger than the views' small font.
 	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
 	readonly property bool canEdit: !!eventItem && eventItem.canEdit !== false
+	// TickTick's checklist items ([{ id, title, done }]) and how many are done.
+	readonly property var subtaskItems: eventItem && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
+	readonly property var progress: Tasks.subtaskProgress(eventItem)
 
 	activeFocusOnTab: true
 	Accessible.role: Accessible.Button
 	Accessible.name: title || i18n("Task")
-	Accessible.description: [eventStyle.done ? i18n("Done") : i18n("Not done"), dueText].filter(function(t) { return !!t }).join(". ")
+	Accessible.description: [done ? i18n("Done") : i18n("Not done"), dueText,
+		progress.total ? i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", progress.done, progress.total) : ""]
+		.filter(function(t) { return !!t }).join(". ")
 	Accessible.onPressAction: open()
 	Keys.onReturnPressed: open()
 	Keys.onEnterPressed: open()
@@ -84,6 +135,10 @@ LinkRect {
 	Keys.onDeletePressed: remove()
 	function open() {
 		popup.activateEvent(eventItem)
+	}
+	// Check / uncheck, as a click on the check (the keyboard's Space).
+	function toggleDone() {
+		taskCheck.toggle()
 	}
 
 	//--- Hover buttons
@@ -107,7 +162,7 @@ LinkRect {
 		id: rowHover
 	}
 	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || todayButton.activeFocus
-		|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus
+		|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus || subtasksButton.activeFocus
 	readonly property bool showActions: actionsEnabled && canEdit && !dragging
 		&& (hovered || rowHover.hovered || focusInside)
 
@@ -160,28 +215,30 @@ LinkRect {
 	backgroundColor: "transparent"
 	backgroundHoverColor: appletConfig.agendaHoverBackground
 	// The hover background also while it has the keyboard focus.
-	color: clickable && (hovered || focusInside) ? backgroundHoverColor : backgroundColor
+	color: clickable && (hovered || focusInside || highlighted) ? backgroundHoverColor : backgroundColor
 	// Room around the text: comfortable to read and click, one line per task.
 	readonly property real verticalPadding: compact ? Kirigami.Units.smallSpacing + 1 : Kirigami.Units.smallSpacing + 2
 	// The left and right room inside the row (its hover background is the full width).
 	readonly property real sideMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
 	// Secondary text: dimmed, still clear on the popup's translucent background.
 	readonly property real dimOpacity: 0.8
-	implicitWidth: contents.implicitWidth + sideMargin * 2
+	// A subtask: its check under the parent's title.
+	readonly property real indent: depth * (taskCheck.size + Kirigami.Units.largeSpacing)
+	implicitWidth: contents.implicitWidth + sideMargin * 2 + indent
 	implicitHeight: contents.implicitHeight + verticalPadding * 2
 
 	// The islands style (like TickTick): a square check, when it's due as accent-colored text (a
 	// repeat icon below it), and the list's color as a thin stripe along the left edge (by date: in
 	// place of the list's name, which is in the tooltip).
 	property bool cardStyle: appletConfig.islands
-	readonly property bool repeats: !!eventItem && (!!eventItem.recurringEventId || !!eventItem.repeatFlag)
-	readonly property string dueTextShort: due.kind === 'overdue' ? dueDateText : dueText
-	readonly property bool showDueText: cardStyle && !!dueTextShort && (compact ? overdue : true)
+	readonly property bool repeats: !!eventItem && (!!eventItem.recurringEventId || !!eventItem.repeatFlag || !!eventItem.repeatRule)
+	readonly property string dueTextShort: chipText
+	readonly property bool showDueText: cardStyle && !!dueTextShort
 	readonly property bool showStripe: cardStyle && (compact || !!showList)
 
 	// The list (by date) and when it's due, at the right end of the title's line.
 	readonly property bool showListName: !cardStyle && !compact && !!showList
-	readonly property bool showDueChip: !cardStyle && (compact ? overdue : showChip)
+	readonly property bool showDueChip: !cardStyle && showChip
 	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact)
 
 	Rectangle {
@@ -192,7 +249,7 @@ LinkRect {
 		height: parent.height - y * 2
 		radius: taskRow.compact ? 1.5 : 0
 		color: appletConfig.eventBarColor(taskRow.eventStyle.color)
-		opacity: taskRow.eventStyle.doneOpacity
+		opacity: taskRow.doneOpacity
 	}
 	PlasmaComponents3.ToolTip.text: cardStyle && showList ? (showList.name || "") : ""
 	PlasmaComponents3.ToolTip.visible: cardStyle && !!showList && !!showList.name && rowHover.hovered && !dragging
@@ -203,7 +260,7 @@ LinkRect {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: taskRow.sideMargin
+		anchors.leftMargin: taskRow.sideMargin + taskRow.indent
 		anchors.rightMargin: taskRow.sideMargin
 		spacing: Kirigami.Units.largeSpacing
 
@@ -216,7 +273,8 @@ LinkRect {
 			color: taskRow.listColor
 			square: taskRow.cardStyle
 			overdue: taskRow.overdue
-			opacity: taskRow.eventStyle.doneOpacity
+			opacity: taskRow.doneOpacity
+			onToggled: function(done) { taskRow.checkToggled(taskRow.eventItem, done) }
 		}
 
 		ColumnLayout {
@@ -224,7 +282,6 @@ LinkRect {
 			Layout.minimumWidth: 0
 			Layout.alignment: Qt.AlignTop
 			spacing: 1
-			opacity: taskRow.eventStyle.doneOpacity
 
 			PlasmaComponents3.Label {
 				id: titleLabel
@@ -233,9 +290,10 @@ LinkRect {
 				text: taskRow.title
 				textFormat: Text.PlainText // User text: never parsed as HTML
 				color: Kirigami.Theme.textColor
+				opacity: taskRow.doneOpacity
 				font.family: appletConfig.eventFont.family
 				font.pointSize: appletConfig.eventFont.pointSize
-				font.strikeout: taskRow.eventStyle.struckThrough
+				font.strikeout: taskRow.done
 				elide: Text.ElideRight
 				maximumLineCount: 1
 				wrapMode: Text.NoWrap
@@ -248,11 +306,95 @@ LinkRect {
 				text: taskRow.notesLine
 				textFormat: Text.PlainText // User text: never parsed as HTML
 				color: Kirigami.Theme.textColor
-				opacity: 0.75
+				opacity: 0.75 * taskRow.doneOpacity
 				font: taskRow.detailFont
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
 				maximumLineCount: 1
+			}
+			// The checklist (open): each item with a small check, lined up with the title.
+			Repeater {
+				model: taskRow.subtasksOpen ? taskRow.subtaskItems : []
+				RowLayout {
+					id: subtaskRow
+					readonly property var subtask: modelData
+					Layout.fillWidth: true
+					Layout.minimumWidth: 0
+					Layout.topMargin: index === 0 ? 3 : 0
+					Layout.preferredHeight: subtaskLabel.implicitHeight + 4
+					spacing: Kirigami.Units.smallSpacing * 2
+					TaskCheck {
+						id: subtaskCheck
+						Layout.alignment: Qt.AlignVCenter
+						size: 2 * Math.round(subtaskLabel.implicitHeight / 2)
+						eventItem: taskRow.eventItem
+						subtaskId: subtaskRow.subtask.id
+						subtaskDone: subtaskRow.subtask.done
+						color: taskRow.listColor
+						square: taskRow.cardStyle
+						opacity: taskRow.doneOpacity
+					}
+					PlasmaComponents3.Label {
+						id: subtaskLabel
+						Layout.fillWidth: true
+						Layout.minimumWidth: 0
+						text: subtaskRow.subtask.title
+						textFormat: Text.PlainText // User text: never parsed as HTML
+						color: Kirigami.Theme.textColor
+						opacity: (subtaskCheck.done ? 0.55 : 0.9) * taskRow.doneOpacity
+						font.family: taskRow.detailFont.family
+						font.pointSize: taskRow.detailFont.pointSize
+						font.strikeout: subtaskCheck.done
+						elide: Text.ElideRight
+						wrapMode: Text.NoWrap
+						maximumLineCount: 1
+					}
+				}
+			}
+		}
+
+		// TickTick's checklist: "2/5" and a chevron, opens the items below the title. Always shown
+		// (also with the hover buttons).
+		QQC2.AbstractButton {
+			id: subtasksButton
+			visible: taskRow.progress.total > 0
+			Layout.alignment: Qt.AlignTop
+			Layout.preferredHeight: titleLabel.implicitHeight
+			hoverEnabled: true
+			leftPadding: Kirigami.Units.smallSpacing
+			rightPadding: Kirigami.Units.smallSpacing
+			topPadding: 0
+			bottomPadding: 0
+			implicitWidth: implicitContentWidth + leftPadding + rightPadding
+			text: i18nc("checklist items done: %1 of %2", "%1/%2", taskRow.progress.done, taskRow.progress.total)
+			Accessible.name: taskRow.subtasksOpen ? i18n("Hide subtasks") : i18n("Show subtasks")
+			Accessible.description: i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", taskRow.progress.done, taskRow.progress.total)
+			onClicked: taskRow.toggleSubtasks()
+			background: Rectangle {
+				radius: height / 2
+				color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b,
+					subtasksButton.hovered || subtasksButton.visualFocus ? 0.12 : 0)
+			}
+			contentItem: Row {
+				spacing: 2
+				opacity: taskRow.doneOpacity
+				Kirigami.Icon {
+					anchors.verticalCenter: parent.verticalCenter
+					width: Math.round(Kirigami.Units.iconSizes.small * 0.75)
+					height: width
+					source: taskRow.subtasksOpen ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
+					color: Kirigami.Theme.textColor
+					isMask: true
+					opacity: 0.7
+				}
+				PlasmaComponents3.Label {
+					anchors.verticalCenter: parent.verticalCenter
+					text: subtasksButton.text
+					textFormat: Text.PlainText
+					font: taskRow.detailFont
+					color: Kirigami.Theme.textColor
+					opacity: 0.75
+				}
 			}
 		}
 
@@ -264,7 +406,7 @@ LinkRect {
 			// Islands: as tall as the date and the repeat icon below it.
 			Layout.preferredHeight: taskRow.cardStyle ? -1 : titleLabel.implicitHeight
 			spacing: Kirigami.Units.smallSpacing * 2
-			opacity: taskRow.eventStyle.doneOpacity
+			opacity: taskRow.doneOpacity
 			// A Row (not a layout): exactly as wide as the dot and the name.
 			Row {
 				visible: taskRow.showListName
@@ -333,14 +475,14 @@ LinkRect {
 				spacing: 0
 				TaskRowButton {
 					id: todayButton
-					visible: !taskRow.eventStyle.done && taskRow.due.kind !== 'today'
+					visible: !taskRow.done && taskRow.due.kind !== 'today'
 					icon.name: "go-jump-today"
 					text: i18n("Due today")
 					onClicked: taskRow.setDue(taskRow.today)
 				}
 				TaskRowButton {
 					id: tomorrowButton
-					visible: !taskRow.eventStyle.done && taskRow.due.kind !== 'tomorrow'
+					visible: !taskRow.done && taskRow.due.kind !== 'tomorrow'
 					icon.name: "go-next"
 					text: i18n("Due tomorrow")
 					onClicked: taskRow.setDue(Tasks.addDays(taskRow.today, 1))
