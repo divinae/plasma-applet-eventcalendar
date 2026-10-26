@@ -895,7 +895,7 @@ Item {
 							spacing: 0
 							Repeater {
 								model: [
-									{ key: 'date', icon: "view-calendar-list", text: i18n("By date") },
+									{ key: 'date', icon: "view-calendar-day", text: i18n("By date") },
 									{ key: 'list', icon: "view-list-tree", text: i18n("By list") },
 								]
 								Item {
