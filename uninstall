@@ -71,6 +71,15 @@ if [ -f "$NOTIFYRC" ]; then
     rm -f -- "$NOTIFYRC"
 fi
 
+# Event cache: the last loaded events and tasks, for an offline start (EventCache.qml)
+if [ -n "${XDG_CACHE_HOME:-}" ] || [ -n "${HOME:-}" ]; then
+    EVENT_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/plasma-eventcalendar"
+    if [ -d "$EVENT_CACHE_DIR" ]; then
+        log "Removing event cache: $EVENT_CACHE_DIR"
+        rm -rf -- "$EVENT_CACHE_DIR"
+    fi
+fi
+
 # Remove package
 INSTALL_DIR="$HOME/.local/share/plasma/plasmoids/$packageName"
 if [ -d "$INSTALL_DIR" ]; then
