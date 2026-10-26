@@ -79,8 +79,9 @@ Item {
 	// (IslandCard); in the Day view the weather and the tasks are cards too, a card gap apart.
 	readonly property bool islands: appletConfig.islands
 	readonly property real panelGap: islands ? appletConfig.cardGap : weatherGap * 2 // Between the grid and a panel
-	// Islands: room around the cards (sides, bottom), so their rounded corners and shadows show.
-	readonly property real islandsEdge: islands ? appletConfig.cardGap : 0
+	// Islands: no extra room at the popup's edges, its own padding is the margin (one more card gap
+	// doubled it); the shadows fit in that padding.
+	readonly property real islandsEdge: 0
 	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
 	readonly property bool weatherBeside: singleDay && showWeather && width >= minDayGridWidth + sidePanelWidth + panelGap
 	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists

@@ -466,10 +466,8 @@ PinchArea {
 	IslandCard {
 		id: gridCard
 		shown: root.islands
+		// Edge to edge: the popup's own padding is the margin (a card margin on top of it doubled it).
 		anchors.fill: parent
-		anchors.leftMargin: root.islands ? appletConfig.cardGap : 0
-		anchors.rightMargin: anchors.leftMargin
-		anchors.bottomMargin: anchors.leftMargin
 
 		// Sized by the card (its content).
 		QQC2.StackView {
