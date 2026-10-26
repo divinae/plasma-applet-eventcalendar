@@ -173,10 +173,11 @@ CalendarManager {
 					setCalendarData(scopedId, parseProjectAsEvents(results[i].data))
 				}
 			}
-			tickTickManager.asyncRequestsDone += 1
+			// The error first: a network error counts for this fetch round (Logic's offline banner).
 			if (firstError) {
 				reportError('fetchAccountTasks', firstError.err, firstError.data, firstError.xhr)
 			}
+			tickTickManager.asyncRequestsDone += 1
 		})
 	}
 
