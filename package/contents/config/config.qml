@@ -42,6 +42,11 @@ ConfigModel {
 		source: "config/ConfigGoogleCalendar.qml"
 	}
 	ConfigCategory {
+		name: i18n("Tasks")
+		icon: "view-task"
+		source: "config/ConfigTasks.qml"
+	}
+	ConfigCategory {
 		name: i18n("Weather")
 		icon: "weather-clear"
 		source: "config/ConfigWeather.qml"

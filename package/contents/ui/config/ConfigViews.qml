@@ -218,12 +218,6 @@ ConfigPage {
 				]
 			}
 			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				text: i18n("Overdue tasks on today")
-				description: i18n("Open tasks due on an earlier day are shown on today, in every view.")
-				configKey: 'agendaPlaceOverdueTasksOnToday'
-			}
-			FormCard.FormDelegateSeparator {}
 			FormConfigCombo {
 				text: i18n("Double-clicking a day")
 				configKey: 'monthDayDoubleClick'

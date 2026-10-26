@@ -42,7 +42,7 @@ ConfigPage {
 		return account.label || i18n("Google Account %1", index + 1)
 	}
 
-	//--- Calendar / task list selection, per account
+	//--- Calendar selection, per account (task lists: the Tasks page)
 	function primaryCalendarId(account) {
 		var list = Shared.toArray(account.calendarList)
 		for (var i = 0; i < list.length; i++) {
@@ -68,19 +68,6 @@ ConfigPage {
 			ids.push(calendar.id)
 		}
 		googleLoginManager.setCalendarIdList(ids, account.id)
-		markDirty()
-	}
-	function isTasklistShown(account, tasklist) {
-		return Shared.toArray(account.tasklistIdList).indexOf(tasklist.id) >= 0
-	}
-	function setTasklistShown(account, tasklist, shown) {
-		var ids = Shared.toArray(account.tasklistIdList).filter(function(id) {
-			return id !== tasklist.id
-		})
-		if (shown) {
-			ids.push(tasklist.id)
-		}
-		googleLoginManager.setTasklistIdList(ids, account.id)
 		markDirty()
 	}
 
@@ -276,7 +263,6 @@ ConfigPage {
 					}
 					return (a.summaryOverride || a.summary || '').toLowerCase().localeCompare((b.summaryOverride || b.summary || '').toLowerCase())
 				}) : []
-				readonly property var tasklists: account ? page.sortArr(Shared.toArray(account.tasklistList), "title") : []
 				readonly property bool needsRelog: googleLoginManager.accountNeedsRelog(account)
 				property bool confirmRemove: false
 				Layout.fillWidth: true
@@ -365,28 +351,13 @@ ConfigPage {
 						}
 					}
 
-					// Task lists
-					FormCard.FormDelegateSeparator {
-						visible: accountSection.tasklists.length > 0
-					}
-					FormCard.FormTextDelegate {
-						visible: accountSection.tasklists.length > 0
-						text: i18n("Task Lists")
-						font.weight: Font.DemiBold
-					}
-					Repeater {
-						model: accountSection.tasklists.length
-						SelectionRow {
-							readonly property var tasklist: accountSection.tasklists[index]
-							Layout.fillWidth: true
-							name: tasklist ? tasklist.title : ""
-							iconSource: Qt.resolvedUrl("../../icons/google_tasks_96px.png")
-							checked: tasklist ? page.isTasklistShown(accountSection.account, tasklist) : false
-							onToggled: page.setTasklistShown(accountSection.account, tasklist, checked)
-						}
-					}
 				}
 			}
+		}
+
+		FormCard.FormSectionText {
+			visible: googleLoginManager.isLoggedIn
+			text: i18n("Task lists are chosen on the Tasks page.")
 		}
 
 		// Sign in / add another account
