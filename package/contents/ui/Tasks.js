@@ -354,7 +354,8 @@ function editorChanges(item, form, caps) {
 }
 
 // The fields Google Tasks doesn't have (no time, priority, repeat, reminders or checklist).
-var NOT_GOOGLE_FIELDS = ['dueTime', 'priority', 'repeatRule', 'reminders', 'subtasks']
+// parentId: Google sets a parent with tasks.insert's parent param instead.
+var NOT_GOOGLE_FIELDS = ['dueTime', 'priority', 'repeatRule', 'reminders', 'subtasks', 'parentId']
 
 // A copy of body (editBody, restoreBody, toggleBody) without NOT_GOOGLE_FIELDS: what goes to Google.
 function googleBody(body) {
@@ -368,7 +369,8 @@ function googleBody(body) {
 }
 
 // The body to create a deleted task again from its undo copy (Undo.restoreCopy): title, notes,
-// due and done state. The copy has no status (a server field): isCompleted / completed tell.
+// due and done state, and the parent task (parentId) of a subtask. The copy has no status (a server
+// field): isCompleted / completed tell.
 function restoreBody(copy) {
 	var body = { title: copy.title || copy._summary || copy.summary || '' }
 	if (copy.notes) {
@@ -395,6 +397,10 @@ function restoreBody(copy) {
 	}
 	if (cleanReminders(copy.reminders).length) {
 		body.reminders = cleanReminders(copy.reminders)
+	}
+	var parentId = copy.parentId || copy.parent
+	if (parentId) {
+		body.parentId = String(parentId)
 	}
 	if (cleanSubtasks(copy.subtasks).length) {
 		body.subtasks = cleanSubtasks(copy.subtasks).map(function(s) {

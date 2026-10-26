@@ -552,21 +552,54 @@ CalendarManager {
 	}
 
 	// Undo a delete (see EventModel.restoreEvent): the Open API can't bring a deleted task back,
-	// so copy (Undo.restoreCopy) is created again: title, notes, due and done state.
-	// done(err): optional, always called.
+	// so copy (Undo.restoreCopy) is created again: title, notes, due and done state. A subtask goes
+	// back under its parent when that is loaded (parentId through an update: create doesn't take
+	// it); if that fails it stays top-level. done(err): optional, always called.
 	function restoreEvent(calendarId, eventId, copy, done) {
-		if (!copy) {
-			logger.log(calendarManagerId, 'restoreEvent', 'no copy')
-			if (done) {
-				done('restoreEvent: no copy')
-			}
-			return
-		}
-		createEventFromData(calendarId, Tasks.restoreBody(copy), function(err, item) {
+		var finish = function(err) {
 			if (done) {
 				done(err || null)
 			}
+		}
+		if (!copy) {
+			logger.log(calendarManagerId, 'restoreEvent', 'no copy')
+			finish('restoreEvent: no copy')
+			return
+		}
+		var body = Tasks.restoreBody(copy)
+		createEventFromData(calendarId, body, function(err, item) {
+			var parent = !err && item && body.parentId ? getEvent(calendarId, body.parentId) : null
+			if (!parent) {
+				finish(err)
+				return
+			}
+			setParent(calendarId, item, String(parent.id), function() {
+				finish(null)
+			})
 		}, null)
+	}
+
+	// Make a loaded task a subtask of parentId (POST /task/{id} with parentId). cb(): always called;
+	// a failure is logged (HTTP status only) and leaves the task as it was.
+	function setParent(calendarId, item, parentId, cb) {
+		var projectId = item.projectId || apiProjectId(calendarId)
+		var body = { id: item.id, projectId: projectId, parentId: parentId }
+		session.request('POST', '/task/' + encodeURIComponent(item.id), body, function(err, data, xhr) {
+			if (err) {
+				logger.log(calendarManagerId, 'setParent_err', xhr ? xhr.status : 'no token')
+				cb()
+				return
+			}
+			var current = getEvent(calendarId, item.id)
+			if (current) {
+				// The server copy says whether it took the parent; else what was sent.
+				var raw = data && typeof data === 'object' && data.id ? data : rawWith(current, { parentId: parentId })
+				Shared.merge(current, parseTaskAsEventData(raw))
+				parseSingleEvent(calendarId, current)
+				eventUpdated(calendarId, current.id, current)
+			}
+			cb()
+		})
 	}
 
 	//--- Move to another project

@@ -512,6 +512,13 @@ same(T.googleBody(T.editBody({ title: 'A', dueDay: '2026-11-01', dueTime: '10:00
 	{ title: 'A', due: '2026-11-01T00:00:00.000Z' })
 same(T.googleBody(T.toggleBody(false)), { status: 'needsAction', completed: null })
 
+// restoreBody keeps the parent of a subtask (TickTick parentId, Google parent); Google gets it as a
+// query param, never in the body.
+same(T.restoreBody({ title: 'S', parentId: 'p1' }).parentId, 'p1')
+same(T.restoreBody({ title: 'S', parent: 'g1', parentId: '' }).parentId, 'g1')
+assert.strictEqual('parentId' in T.restoreBody({ title: 'S', parentId: '' }), false)
+same(T.googleBody(T.restoreBody({ title: 'S', parentId: 'p1' })), { title: 'S', status: 'needsAction' })
+same(T.toTickTick(T.restoreBody({ title: 'S', parentId: 'p1' }), null, null), { title: 'S', status: 0 })
 // restoreBody keeps TickTick's fields when the copy has them (subtasks as new items).
 same(T.restoreBody({ title: 'R', due: '2026-11-01T00:00:00.000Z', dueTime: '10:00', priority: 3, repeatRule: 'RRULE:FREQ=WEEKLY', reminders: [0], subtasks: [{ id: 'old', title: 'S', done: true }] }),
 	{ title: 'R', due: '2026-11-01T00:00:00.000Z', status: 'needsAction', dueTime: '10:00', priority: 3, repeatRule: 'RRULE:FREQ=WEEKLY', reminders: [0], subtasks: [{ id: '', title: 'S', done: true }] })

@@ -502,7 +502,8 @@ CalendarManager {
 
 	// Undo a delete (see EventModel.restoreEvent): Google keeps a deleted task, so it's marked
 	// not deleted again (same id, position and parent). If that fails, copy (Undo.restoreCopy) is
-	// created again: title, notes, due and done state. done(err): optional, always called.
+	// created again: title, notes, due and done state, under its parent when that is loaded.
+	// done(err): optional, always called.
 	function restoreEvent(calendarId, eventId, copy, done) {
 		var finish = function(err, item) {
 			if (done) {
@@ -514,7 +515,9 @@ CalendarManager {
 				addTaskItem(calendarId, parseTaskItem(calendarId, data))
 				finish(null)
 			} else if (copy) {
-				createEventFromData(calendarId, Tasks.restoreBody(copy), finish, null)
+				var body = Tasks.restoreBody(copy)
+				var params = body.parentId && getEvent(calendarId, body.parentId) ? { parent: body.parentId } : null
+				createEventFromData(calendarId, body, finish, params)
 			} else {
 				reportError('restoreEvent', err || 'still deleted', data, xhr)
 				finish(err || 'restoreEvent: still deleted')
