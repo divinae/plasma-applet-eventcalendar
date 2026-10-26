@@ -56,7 +56,7 @@ Item {
 	onIslandsChanged: rebuild()
 
 	//--- The column
-	readonly property real maxColumnWidth: Kirigami.Units.gridUnit * 42
+	readonly property real maxColumnWidth: Kirigami.Units.gridUnit * 28
 	// The room left and right of everything in the column (TaskRow's own side margin).
 	readonly property real sideMargin: Kirigami.Units.largeSpacing
 	// TaskRow's check, and where its title starts: list dots and the empty note line up with them.
