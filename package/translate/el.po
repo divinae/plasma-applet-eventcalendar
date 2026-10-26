@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:58+0100\n"
+"POT-Creation-Date: 2026-10-26 10:21+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -113,6 +113,7 @@ msgid "Due %1"
 msgstr "Προθεσμία %1"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Overdue"
 msgstr "Εκπρόθεσμο"
 
@@ -1532,6 +1533,7 @@ msgid "Duplicate…"
 msgstr "Αντίγραφο…"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TaskRow.qml
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -1644,7 +1646,7 @@ msgstr "Άνοιγμα στο TickTick"
 msgid "Open in Google Tasks"
 msgstr "Άνοιγμα στο Google Tasks"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
 msgid "Edit"
 msgstr "Επεξεργασία"
 
@@ -2613,6 +2615,7 @@ msgid "Previous Month"
 msgstr "Προηγούμενος μήνας"
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Σήμερα"
 
@@ -2687,6 +2690,28 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "Σφάλμα λήψης καιρού."
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Couldn't add the task"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Add a task…"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Add a task to %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Task list: %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "The list new tasks go to"
+msgstr ""
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2772,9 +2797,25 @@ msgstr "Αδυναμία αναζήτησης στο Ημερολόγιο Google
 msgid "Searching Google Calendar…"
 msgstr "Αναζήτηση στο Ημερολόγιο Google…"
 
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "Αύριο"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due today"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due tomorrow"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Tasks can only move to a list of the same account"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2787,6 +2828,14 @@ msgid "No open tasks"
 msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/TasksView.qml
+msgid "By date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "By list"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
 msgid "Show completed"
 msgstr "Εμφάνιση ολοκληρωμένων"
 
@@ -2794,6 +2843,22 @@ msgstr "Εμφάνιση ολοκληρωμένων"
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Νέα εργασία στο %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "This week"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Later"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "No date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Completed"
+msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

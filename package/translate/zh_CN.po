@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:58+0100\n"
+"POT-Creation-Date: 2026-10-26 10:21+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -113,6 +113,7 @@ msgid "Due %1"
 msgstr "截止 %1"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Overdue"
 msgstr "已逾期"
 
@@ -1473,6 +1474,7 @@ msgid "Duplicate…"
 msgstr "复制…"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TaskRow.qml
 msgid "Delete"
 msgstr "删除"
 
@@ -1584,7 +1586,7 @@ msgstr "在 TickTick 中打开"
 msgid "Open in Google Tasks"
 msgstr "在 Google 任务中打开"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
 msgid "Edit"
 msgstr "编辑"
 
@@ -2522,6 +2524,7 @@ msgid "Previous Month"
 msgstr "上个月"
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "今天"
 
@@ -2592,6 +2595,28 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "获取天气时出错。"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Couldn't add the task"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Add a task…"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Add a task to %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Task list: %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "The list new tasks go to"
+msgstr ""
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2674,9 +2699,25 @@ msgstr "无法查找 Google 日历"
 msgid "Searching Google Calendar…"
 msgstr "正在查找 Google 日历…"
 
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "明天"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due today"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due tomorrow"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Tasks can only move to a list of the same account"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2688,6 +2729,14 @@ msgid "No open tasks"
 msgstr "没有未完成的任务"
 
 #: ../contents/ui/TasksView.qml
+msgid "By date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "By list"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
 msgid "Show completed"
 msgstr "显示已完成"
 
@@ -2695,6 +2744,22 @@ msgstr "显示已完成"
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "在 %1 中新建任务"
+
+#: ../contents/ui/TasksView.qml
+msgid "This week"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Later"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "No date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Completed"
+msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:58+0100\n"
+"POT-Creation-Date: 2026-10-26 10:21+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -106,7 +106,7 @@ msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "Vence %1"
 
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
 msgid "Overdue"
 msgstr "Vencida"
 
@@ -1348,7 +1348,7 @@ msgstr "Editar…"
 msgid "Duplicate…"
 msgstr "Duplicar…"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -1456,7 +1456,7 @@ msgstr "Abrir en TickTick"
 msgid "Open in Google Tasks"
 msgstr "Abrir en Google Tasks"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
 msgid "Edit"
 msgstr "Editar"
 
@@ -2402,7 +2402,7 @@ msgstr "Semana anterior"
 msgid "Previous Month"
 msgstr "Mes anterior"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Hoy"
 
@@ -2475,6 +2475,28 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "Error al buscar el clima."
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Couldn't add the task"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Add a task…"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Add a task to %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Task list: %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "The list new tasks go to"
+msgstr ""
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2557,9 +2579,25 @@ msgstr "No se pudo buscar en Google Calendar"
 msgid "Searching Google Calendar…"
 msgstr "Buscando en Google Calendar…"
 
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "Mañana"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due today"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due tomorrow"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Tasks can only move to a list of the same account"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2572,6 +2610,14 @@ msgid "No open tasks"
 msgstr "No hay tareas pendientes"
 
 #: ../contents/ui/TasksView.qml
+msgid "By date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "By list"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
 msgid "Show completed"
 msgstr "Mostrar completadas"
 
@@ -2579,6 +2625,22 @@ msgstr "Mostrar completadas"
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "Nueva tarea en %1"
+
+#: ../contents/ui/TasksView.qml
+msgid "This week"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Later"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "No date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Completed"
+msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

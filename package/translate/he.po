@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:58+0100\n"
+"POT-Creation-Date: 2026-10-26 10:21+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -114,6 +114,7 @@ msgid "Due %1"
 msgstr "יעד: %1"
 
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Overdue"
 msgstr "באיחור"
 
@@ -1496,6 +1497,7 @@ msgid "Duplicate…"
 msgstr "שכפול…"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/TaskRow.qml
 msgid "Delete"
 msgstr "מחיקה"
 
@@ -1610,7 +1612,7 @@ msgstr "פתיחה ב־TickTick"
 msgid "Open in Google Tasks"
 msgstr "פתיחה ב־Google Tasks"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
 msgid "Edit"
 msgstr "עריכה"
 
@@ -2609,6 +2611,7 @@ msgid "Previous Month"
 msgstr "החודש הקודם"
 
 #: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "היום"
 
@@ -2685,6 +2688,28 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "שגיאה במשיכת תחזית מזג האוויר."
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Couldn't add the task"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Add a task…"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Add a task to %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = task list name"
+msgid "Task list: %1"
+msgstr ""
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "The list new tasks go to"
+msgstr ""
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
@@ -2767,9 +2792,25 @@ msgstr "לא ניתן לחפש ב־Google Calendar"
 msgid "Searching Google Calendar…"
 msgstr "מחפש ב־Google Calendar…"
 
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "מחר"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due today"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Due tomorrow"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Tasks can only move to a list of the same account"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
@@ -2784,6 +2825,14 @@ msgid "No open tasks"
 msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/TasksView.qml
+msgid "By date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "By list"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
 msgid "Show completed"
 msgstr "הצגת משימות שהושלמו"
 
@@ -2791,6 +2840,22 @@ msgstr "הצגת משימות שהושלמו"
 msgctxt "%1 = task list name"
 msgid "New task in %1"
 msgstr "משימה חדשה ב־%1"
+
+#: ../contents/ui/TasksView.qml
+msgid "This week"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Later"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "No date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Completed"
+msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

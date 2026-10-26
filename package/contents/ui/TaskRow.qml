@@ -216,20 +216,20 @@ LinkRect {
 				Layout.fillWidth: true
 				spacing: Kirigami.Units.smallSpacing * 2
 				// Its list (by date).
-				RowLayout {
+				// A Row (not a layout): exactly as wide as the dot and the name, so the chip follows it.
+				Row {
 					visible: !!taskRow.showList
-					Layout.fillWidth: false
-					Layout.maximumWidth: Kirigami.Units.gridUnit * 8
+					Layout.preferredWidth: implicitWidth
 					spacing: Kirigami.Units.smallSpacing
 					Rectangle {
-						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.45)
-						implicitHeight: implicitWidth
+						anchors.verticalCenter: parent.verticalCenter
+						width: Math.round(Kirigami.Units.gridUnit * 0.45)
+						height: width
 						radius: width / 2
 						color: taskRow.listColor
 					}
 					PlasmaComponents3.Label {
-						Layout.minimumWidth: 0
-						Layout.maximumWidth: Kirigami.Units.gridUnit * 7
+						width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 7)
 						text: taskRow.showList ? taskRow.showList.name || "" : ""
 						textFormat: Text.PlainText // User text (list name)
 						color: Kirigami.Theme.textColor
