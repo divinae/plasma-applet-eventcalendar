@@ -7,10 +7,11 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Tasks.js" as Tasks
 
 // A task as a list row (Tasks view, Day view), like a to-do app rather than an event tile: its done
-// check in the list's color, the title in the theme's text color, when it's due (a chip, red when
-// overdue), its list (Tasks view by date) and the first line of its notes. Click opens it, right
-// click the shared event menu; the check marks it done / not done. Done ones are dimmed and struck
-// through. Hovered (or with the keyboard focus): buttons for due today / tomorrow, edit and delete.
+// check in the list's color, the title in the theme's text color on one line, and at the right end
+// of that line its list (Tasks view by date) and when it's due (a chip, red when overdue); a second
+// line only for the first line of its notes. Click opens it, right click the shared event menu;
+// the check marks it done / not done. Done ones are dimmed and struck through. Hovered (or with the
+// keyboard focus): buttons for due today / tomorrow, edit and delete, in place of the list and chip.
 // With draggable, press and drag past the start drag distance drags it (dragStarted, dragMoved,
 // dropped, dragCanceled; points in scene coordinates); the click that ends a drag isn't a click.
 LinkRect {
@@ -19,7 +20,7 @@ LinkRect {
 	property var eventItem: null
 	// Today, 'YYYY-MM-DD': for "Today", "Tomorrow" and "Overdue".
 	property string today: Tasks.dayString(new Date())
-	// One line: the due date after the title (only when overdue), no notes (Day view).
+	// Tighter, no notes, the due date only when overdue (Day view, Agenda).
 	property bool compact: false
 	// The task's list ({ name, color }), shown before the due date (Tasks view by date), or null.
 	property var showList: null
@@ -156,18 +157,29 @@ LinkRect {
 	radius: 6
 	backgroundColor: "transparent"
 	backgroundHoverColor: appletConfig.agendaHoverBackground
-	// Room around the text: a list to read and click, not packed rows.
-	readonly property real verticalPadding: compact ? Kirigami.Units.smallSpacing + 1 : Kirigami.Units.smallSpacing * 2
-	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing * 2
+	// The hover background also while it has the keyboard focus.
+	color: clickable && (hovered || focusInside) ? backgroundHoverColor : backgroundColor
+	// Room around the text: comfortable to read and click, one line per task.
+	readonly property real verticalPadding: compact ? Kirigami.Units.smallSpacing + 1 : Kirigami.Units.smallSpacing + 2
+	// The left and right room inside the row (its hover background is the full width).
+	readonly property real sideMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
+	// Secondary text: dimmed, still clear on the popup's translucent background.
+	readonly property real dimOpacity: 0.8
+	implicitWidth: contents.implicitWidth + sideMargin * 2
 	implicitHeight: contents.implicitHeight + verticalPadding * 2
+
+	// The list (by date) and when it's due, at the right end of the title's line.
+	readonly property bool showListName: !compact && !!showList
+	readonly property bool showDueChip: compact ? overdue : showChip
+	readonly property bool showInfo: showListName || showDueChip
 
 	RowLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
-		anchors.rightMargin: compact ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.largeSpacing
+		anchors.leftMargin: taskRow.sideMargin
+		anchors.rightMargin: taskRow.sideMargin
 		spacing: Kirigami.Units.largeSpacing
 
 		TaskCheck {
@@ -183,94 +195,85 @@ LinkRect {
 		ColumnLayout {
 			Layout.fillWidth: true
 			Layout.minimumWidth: 0
-			spacing: 2
+			Layout.alignment: Qt.AlignTop
+			spacing: 1
 			opacity: taskRow.eventStyle.doneOpacity
 
-			RowLayout {
+			PlasmaComponents3.Label {
+				id: titleLabel
 				Layout.fillWidth: true
-				spacing: Kirigami.Units.smallSpacing
-				PlasmaComponents3.Label {
-					id: titleLabel
-					Layout.fillWidth: true
-					Layout.minimumWidth: 0
-					text: taskRow.title
-					textFormat: Text.PlainText // User text: never parsed as HTML
-					color: Kirigami.Theme.textColor
-					font.family: appletConfig.eventFont.family
-					font.pointSize: appletConfig.eventFont.pointSize
-					font.strikeout: taskRow.eventStyle.struckThrough
-					elide: Text.ElideRight
-					maximumLineCount: taskRow.compact ? 1 : 2
-					wrapMode: taskRow.compact ? Text.NoWrap : Text.Wrap
-				}
-				// Compact: the date after the title when it's overdue (the rest are due on this day).
-				TaskDueChip {
-					visible: taskRow.compact && taskRow.overdue
-					text: taskRow.dueDateText
-					kind: 'overdue'
-					font: taskRow.detailFont
-				}
+				Layout.minimumWidth: 0
+				text: taskRow.title
+				textFormat: Text.PlainText // User text: never parsed as HTML
+				color: Kirigami.Theme.textColor
+				font.family: appletConfig.eventFont.family
+				font.pointSize: appletConfig.eventFont.pointSize
+				font.strikeout: taskRow.eventStyle.struckThrough
+				elide: Text.ElideRight
+				maximumLineCount: 1
+				wrapMode: Text.NoWrap
 			}
-
-			RowLayout {
-				visible: !taskRow.compact && (!!taskRow.showList || taskRow.showChip || !!taskRow.notesLine)
+			// The first line of the notes.
+			PlasmaComponents3.Label {
+				visible: !!text
 				Layout.fillWidth: true
-				spacing: Kirigami.Units.smallSpacing * 2
-				// Its list (by date).
-				// A Row (not a layout): exactly as wide as the dot and the name, so the chip follows it.
-				Row {
-					visible: !!taskRow.showList
-					Layout.preferredWidth: implicitWidth
-					spacing: Kirigami.Units.smallSpacing
-					Rectangle {
-						anchors.verticalCenter: parent.verticalCenter
-						width: Math.round(Kirigami.Units.gridUnit * 0.45)
-						height: width
-						radius: width / 2
-						color: taskRow.listColor
-					}
-					PlasmaComponents3.Label {
-						width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 7)
-						text: taskRow.showList ? taskRow.showList.name || "" : ""
-						textFormat: Text.PlainText // User text (list name)
-						color: Kirigami.Theme.textColor
-						opacity: 0.85
-						font: taskRow.detailFont
-						elide: Text.ElideRight
-					}
-				}
-				TaskDueChip {
-					visible: taskRow.showChip
-					text: taskRow.chipText
-					kind: taskRow.overdue ? 'overdue' : taskRow.due.kind
-					font: taskRow.detailFont
-				}
-				PlasmaComponents3.Label {
-					visible: !!text
-					Layout.fillWidth: true
-					Layout.minimumWidth: 0
-					text: taskRow.notesLine
-					textFormat: Text.PlainText // User text: never parsed as HTML
-					color: Kirigami.Theme.textColor
-					opacity: 0.75
-					font: taskRow.detailFont
-					elide: Text.ElideRight
-					wrapMode: Text.NoWrap
-					maximumLineCount: 1
-				}
-				Item {
-					visible: !taskRow.notesLine
-					Layout.fillWidth: true
-				}
+				Layout.minimumWidth: 0
+				text: taskRow.notesLine
+				textFormat: Text.PlainText // User text: never parsed as HTML
+				color: Kirigami.Theme.textColor
+				opacity: 0.75
+				font: taskRow.detailFont
+				elide: Text.ElideRight
+				wrapMode: Text.NoWrap
+				maximumLineCount: 1
 			}
 		}
 
-		// The hover buttons: room is only taken while they show, never height.
+		// Its list (by date) and the due chip, on the title's line. The hover buttons show in
+		// their place.
+		RowLayout {
+			visible: taskRow.showInfo && !taskRow.showActions
+			Layout.alignment: Qt.AlignTop
+			Layout.preferredHeight: titleLabel.implicitHeight
+			spacing: Kirigami.Units.smallSpacing * 2
+			opacity: taskRow.eventStyle.doneOpacity
+			// A Row (not a layout): exactly as wide as the dot and the name.
+			Row {
+				visible: taskRow.showListName
+				Layout.alignment: Qt.AlignVCenter
+				spacing: Kirigami.Units.smallSpacing
+				Rectangle {
+					anchors.verticalCenter: parent.verticalCenter
+					width: Math.round(Kirigami.Units.gridUnit * 0.45)
+					height: width
+					radius: width / 2
+					color: taskRow.listColor
+				}
+				PlasmaComponents3.Label {
+					width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 6)
+					text: taskRow.showList ? taskRow.showList.name || "" : ""
+					textFormat: Text.PlainText // User text (list name)
+					color: Kirigami.Theme.textColor
+					opacity: taskRow.dimOpacity
+					font: taskRow.detailFont
+					elide: Text.ElideRight
+				}
+			}
+			TaskDueChip {
+				visible: taskRow.showDueChip
+				Layout.alignment: Qt.AlignVCenter
+				text: taskRow.chipText
+				kind: taskRow.overdue ? 'overdue' : taskRow.due.kind
+				font: taskRow.detailFont
+			}
+		}
+
+		// The hover buttons, centered on the title's line: they take no height.
 		Item {
 			visible: taskRow.showActions
-			Layout.fillHeight: true
+			Layout.alignment: Qt.AlignTop
 			implicitWidth: actions.implicitWidth
-			implicitHeight: 0
+			implicitHeight: titleLabel.implicitHeight
 			Row {
 				id: actions
 				anchors.right: parent.right
