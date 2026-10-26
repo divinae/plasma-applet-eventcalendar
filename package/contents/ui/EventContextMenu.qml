@@ -39,24 +39,17 @@ PlasmaComponents3.Menu {
 
 	//--- Tasks
 	function toggleDone() {
-		if (typeof eventModel.toggleTask === "function") {
-			eventModel.toggleTask(eventItem, !isDone)
-		} else {
-			eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.toggleBody(!isDone))
-		}
+		eventModel.toggleTask(eventItem, !isDone)
 	}
 	// The other task lists of the task's account: [{ id, summary }].
 	property var taskLists: []
 	function otherTaskLists(item) {
 		var id = String(item.calendarId || "")
 		var i = id.indexOf('::')
-		var prefix = i > 0 ? id.slice(0, i + 2) : ''
-		if (!prefix || !eventModel.supportsMove(id)) {
+		if (i <= 0 || !eventModel.supportsMove(id)) {
 			return []
 		}
-		var lists = typeof eventModel.getTaskLists === "function" ? eventModel.getTaskLists(prefix)
-			: eventModel.getCalendarList().filter(function(c) { return c.isTasklist && String(c.id).indexOf(prefix) === 0 })
-		return lists.filter(function(list) { return list.id !== id })
+		return eventModel.getTaskLists(id.slice(0, i)).filter(function(list) { return list.id !== id })
 	}
 	function moveTask(listId) {
 		var appLogic = logic

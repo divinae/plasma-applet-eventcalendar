@@ -37,11 +37,7 @@ Item {
 		if (item.calendarId && item.id && eventModel.eventsByCalendar && eventModel.eventsByCalendar[item.calendarId]) {
 			item = eventModel.getEvent(item.calendarId, item.id) || item
 		}
-		if (typeof eventModel.toggleTask === "function") {
-			eventModel.toggleTask(item, !done)
-		} else {
-			eventModel.setEventProperties(item.calendarId, item.id, Tasks.toggleBody(!done))
-		}
+		eventModel.toggleTask(item, !done)
 	}
 
 	Rectangle {

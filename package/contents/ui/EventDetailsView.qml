@@ -73,11 +73,7 @@ Rectangle {
 		return isOverdue ? text + " · " + i18n("Overdue") : text
 	}
 	function toggleDone() {
-		if (typeof eventModel.toggleTask === "function") {
-			eventModel.toggleTask(eventItem, !isDone)
-		} else {
-			eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.toggleBody(!isDone))
-		}
+		eventModel.toggleTask(eventItem, !isDone)
 	}
 
 	onEventItemChanged: {
