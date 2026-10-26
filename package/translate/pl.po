@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -36,7 +36,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Kalendarz Google"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Zadania"
 
@@ -2675,8 +2675,24 @@ msgstr[1] "%1 otwarte zadania"
 msgstr[2] "%1 otwartych zadań"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Brak otwartych zadań"
+msgid "Manage lists"
+msgstr "Zarządzaj listami"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Zarządzaj listami (pokazuje zadania według list)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Pokaż wykonane"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Ukryj wykonane zadania"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Pokaż wykonane zadania"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2685,14 +2701,6 @@ msgstr "Według daty"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Według listy"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Pokaż wykonane"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Zarządzaj listami"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2788,6 +2796,10 @@ msgstr "Bez daty"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Ukończone"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Brak otwartych zadań"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

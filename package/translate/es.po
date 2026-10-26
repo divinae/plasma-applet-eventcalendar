@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Calendario de Google"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Tareas"
 
@@ -2651,8 +2651,24 @@ msgstr[0] "%1 tarea pendiente"
 msgstr[1] "%1 tareas pendientes"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "No hay tareas pendientes"
+msgid "Manage lists"
+msgstr "Gestionar listas"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Gestionar listas (muestra las tareas por lista)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Mostrar completadas"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Ocultar tareas completadas"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Mostrar tareas completadas"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2661,14 +2677,6 @@ msgstr "Por fecha"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Por lista"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Mostrar completadas"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Gestionar listas"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2763,6 +2771,10 @@ msgstr "Sin fecha"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Completadas"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "No hay tareas pendientes"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

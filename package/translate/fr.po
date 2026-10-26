@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -42,6 +42,7 @@ msgstr "Google Calendar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Tâches"
 
@@ -2868,8 +2869,24 @@ msgstr[0] "%1 tâche en cours"
 msgstr[1] "%1 tâches en cours"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Aucune tâche en cours"
+msgid "Manage lists"
+msgstr "Gérer les listes"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Gérer les listes (affiche les tâches par liste)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Afficher les tâches terminées"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Masquer les tâches terminées"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Afficher les tâches terminées"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2878,14 +2895,6 @@ msgstr "Par date"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Par liste"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Afficher les tâches terminées"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Gérer les listes"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2982,6 +2991,10 @@ msgstr "Sans date"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Terminées"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Aucune tâche en cours"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

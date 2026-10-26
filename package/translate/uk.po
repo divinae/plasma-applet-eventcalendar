@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -43,6 +43,7 @@ msgstr "Календар Google"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Завдання"
 
@@ -2868,8 +2869,24 @@ msgstr[1] "%1 відкриті завдання"
 msgstr[2] "%1 відкритих завдань"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Немає відкритих завдань"
+msgid "Manage lists"
+msgstr "Керувати списками"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Керувати списками (показує завдання за списками)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Показати виконані"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Сховати виконані завдання"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Показати виконані завдання"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2878,14 +2895,6 @@ msgstr "За датою"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "За списком"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Показати виконані"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Керувати списками"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2983,6 +2992,10 @@ msgstr "Без дати"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Виконані"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Немає відкритих завдань"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

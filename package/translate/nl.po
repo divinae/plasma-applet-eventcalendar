@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -42,6 +42,7 @@ msgstr "Google Agenda"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Taken"
 
@@ -2857,8 +2858,24 @@ msgstr[0] "%1 open taak"
 msgstr[1] "%1 open taken"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Geen open taken"
+msgid "Manage lists"
+msgstr "Lijsten beheren"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Lijsten beheren (toont de taken per lijst)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Afgeronde tonen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Afgeronde taken verbergen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Afgeronde taken tonen"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2867,14 +2884,6 @@ msgstr "Op datum"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Op lijst"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Afgeronde tonen"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Lijsten beheren"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2973,6 +2982,10 @@ msgstr "Geen datum"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Voltooid"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Geen open taken"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

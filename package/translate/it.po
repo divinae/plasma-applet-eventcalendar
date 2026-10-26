@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Attività"
 
@@ -2650,8 +2650,24 @@ msgstr[0] "%1 attività aperta"
 msgstr[1] "%1 attività aperte"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Nessuna attività aperta"
+msgid "Manage lists"
+msgstr "Gestisci elenchi"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Gestisci elenchi (mostra le attività per elenco)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Mostra completate"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Nascondi attività completate"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Mostra attività completate"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2660,14 +2676,6 @@ msgstr "Per data"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Per elenco"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Mostra completate"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Gestisci elenchi"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2762,6 +2770,10 @@ msgstr "Senza data"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Completate"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Nessuna attività aperta"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

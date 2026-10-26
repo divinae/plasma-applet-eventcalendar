@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -43,6 +43,7 @@ msgstr "Google Calendar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "משימות"
 
@@ -2866,8 +2867,24 @@ msgstr[2] "%1 משימות פתוחות"
 msgstr[3] "%1 משימות פתוחות"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "אין משימות פתוחות"
+msgid "Manage lists"
+msgstr "ניהול רשימות"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "ניהול רשימות (מציג את המשימות לפי רשימה)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "הצגת משימות שהושלמו"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "הסתרת משימות שהושלמו"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "הצגת משימות שהושלמו"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2876,14 +2893,6 @@ msgstr "לפי תאריך"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "לפי רשימה"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "הצגת משימות שהושלמו"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "ניהול רשימות"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2980,6 +2989,10 @@ msgstr "ללא תאריך"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "הושלמו"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

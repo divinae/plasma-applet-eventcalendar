@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Uppgifter"
 
@@ -2650,8 +2650,24 @@ msgstr[0] "%1 öppen uppgift"
 msgstr[1] "%1 öppna uppgifter"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Inga öppna uppgifter"
+msgid "Manage lists"
+msgstr "Hantera listor"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Hantera listor (visar uppgifterna per lista)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Visa slutförda"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Dölj slutförda uppgifter"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Visa slutförda uppgifter"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2660,14 +2676,6 @@ msgstr "Efter datum"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Efter lista"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Visa slutförda"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Hantera listor"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2762,6 +2770,10 @@ msgstr "Inget datum"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Slutförda"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Inga öppna uppgifter"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

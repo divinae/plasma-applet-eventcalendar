@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -43,6 +43,7 @@ msgstr "Google Kalender"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Aufgaben"
 
@@ -2873,8 +2874,24 @@ msgstr[0] "%1 offene Aufgabe"
 msgstr[1] "%1 offene Aufgaben"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Keine offenen Aufgaben"
+msgid "Manage lists"
+msgstr "Listen verwalten"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Listen verwalten (zeigt die Aufgaben nach Liste)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Erledigte anzeigen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Erledigte Aufgaben ausblenden"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Erledigte Aufgaben anzeigen"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2883,14 +2900,6 @@ msgstr "Nach Datum"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Nach Liste"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Erledigte anzeigen"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Listen verwalten"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2989,6 +2998,10 @@ msgstr "Ohne Datum"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Erledigt"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Keine offenen Aufgaben"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

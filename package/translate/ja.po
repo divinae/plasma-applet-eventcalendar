@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "タスク"
 
@@ -2624,8 +2624,24 @@ msgid_plural "%1 open tasks"
 msgstr[0] "未完了のタスク %1 件"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "未完了のタスクはありません"
+msgid "Manage lists"
+msgstr "リストを管理"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "リストを管理 (タスクをリスト別に表示)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "完了済みを表示"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "完了したタスクを隠す"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "完了したタスクを表示"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2634,14 +2650,6 @@ msgstr "日付別"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "リスト別"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "完了済みを表示"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "リストを管理"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2735,6 +2743,10 @@ msgstr "日付なし"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "完了済み"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "未完了のタスクはありません"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

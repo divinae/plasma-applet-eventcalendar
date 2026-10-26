@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google-kalenteri"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Tehtävät"
 
@@ -2653,8 +2653,24 @@ msgstr[0] "%1 avoin tehtävä"
 msgstr[1] "%1 avointa tehtävää"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Ei avoimia tehtäviä"
+msgid "Manage lists"
+msgstr "Hallitse luetteloita"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Hallitse luetteloita (näyttää tehtävät luetteloittain)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Näytä tehdyt"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Piilota tehdyt tehtävät"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Näytä tehdyt tehtävät"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2663,14 +2679,6 @@ msgstr "Päivämäärän mukaan"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Luettelon mukaan"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Näytä tehdyt"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Hallitse luetteloita"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2765,6 +2773,10 @@ msgstr "Ei päivämäärää"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Valmiit"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Ei avoimia tehtäviä"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

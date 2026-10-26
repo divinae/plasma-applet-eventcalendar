@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,6 +42,7 @@ msgstr "Google 캘린더"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "할 일"
 
@@ -2808,8 +2809,24 @@ msgid_plural "%1 open tasks"
 msgstr[0] "열린 작업 %1개"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "열린 작업 없음"
+msgid "Manage lists"
+msgstr "목록 관리"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "목록 관리 (작업을 목록별로 표시)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "완료된 작업 표시"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "완료된 작업 숨기기"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "완료된 작업 표시"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2818,14 +2835,6 @@ msgstr "날짜별"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "목록별"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "완료된 작업 표시"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "목록 관리"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2920,6 +2929,10 @@ msgstr "날짜 없음"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "완료됨"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "열린 작업 없음"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

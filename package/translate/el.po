@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -42,6 +42,7 @@ msgstr "Ημερολόγιο Google"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Εργασίες"
 
@@ -2872,8 +2873,24 @@ msgstr[0] "%1 ανοιχτή εργασία"
 msgstr[1] "%1 ανοιχτές εργασίες"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Καμία ανοιχτή εργασία"
+msgid "Manage lists"
+msgstr "Διαχείριση λιστών"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Διαχείριση λιστών (εμφανίζει τις εργασίες ανά λίστα)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Εμφάνιση ολοκληρωμένων"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Απόκρυψη ολοκληρωμένων εργασιών"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Εμφάνιση ολοκληρωμένων εργασιών"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2882,14 +2899,6 @@ msgstr "Κατά ημερομηνία"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Κατά λίστα"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Εμφάνιση ολοκληρωμένων"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Διαχείριση λιστών"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2988,6 +2997,10 @@ msgstr "Χωρίς ημερομηνία"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Ολοκληρωμένες"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,6 +42,7 @@ msgstr "Google Takvim"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -2846,8 +2847,24 @@ msgstr[0] "%1 açık görev"
 msgstr[1] "%1 açık görev"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Açık görev yok"
+msgid "Manage lists"
+msgstr "Listeleri yönet"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "Listeleri Yönet (görevleri listeye göre gösterir)"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Tamamlananları göster"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "Tamamlanan görevleri gizle"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "Tamamlanan görevleri göster"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2856,14 +2873,6 @@ msgstr "Tarihe göre"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Listeye göre"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Tamamlananları göster"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Listeleri yönet"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2958,6 +2967,10 @@ msgstr "Tarih yok"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Tamamlanan"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Açık görev yok"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"

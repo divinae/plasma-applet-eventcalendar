@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:56+0100\n"
+"POT-Creation-Date: 2026-10-26 11:12+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -42,6 +42,7 @@ msgstr "Google 日历"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "任务"
 
@@ -2770,8 +2771,24 @@ msgid_plural "%1 open tasks"
 msgstr[0] "%1 个未完成的任务"
 
 #: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "没有未完成的任务"
+msgid "Manage lists"
+msgstr "管理列表"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists (shows the tasks by list)"
+msgstr "管理列表（按列表显示任务）"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "显示已完成"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed tasks"
+msgstr "隐藏已完成的任务"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed tasks"
+msgstr "显示已完成的任务"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2780,14 +2797,6 @@ msgstr "按日期"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "按列表"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "显示已完成"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "管理列表"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2881,6 +2890,10 @@ msgstr "无日期"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "已完成"
+
+#: ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "没有未完成的任务"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
