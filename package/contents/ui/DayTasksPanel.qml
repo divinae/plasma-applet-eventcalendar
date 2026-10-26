@@ -75,11 +75,13 @@ ColumnLayout {
 			PlasmaComponents3.ToolTip.text: text
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
+		// Like the weather panel's section titles.
 		PlasmaComponents3.Label {
 			Layout.leftMargin: dayTasks.collapsible ? 0 : Kirigami.Units.smallSpacing
 			text: i18n("Tasks")
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
+			opacity: 0.7
 			MouseArea {
 				anchors.fill: parent
 				enabled: dayTasks.collapsible
@@ -91,13 +93,16 @@ ColumnLayout {
 			visible: dayTasks.openCount > 0
 			text: String(dayTasks.openCount)
 			textFormat: Text.PlainText
-			opacity: 0.6
+			font.weight: Font.DemiBold
+			opacity: 0.45
 		}
 		Item {
 			Layout.fillWidth: true
 		}
 		PlasmaComponents3.ToolButton {
 			icon.name: "list-add"
+			icon.width: Kirigami.Units.iconSizes.small
+			icon.height: Kirigami.Units.iconSizes.small
 			display: QQC2.AbstractButton.IconOnly
 			text: i18n("New Task")
 			onClicked: popup.newTask(dayTasks.day, "", "")
@@ -127,7 +132,7 @@ ColumnLayout {
 		ColumnLayout {
 			id: taskColumn
 			width: scrollView.availableWidth
-			spacing: 2
+			spacing: 0
 			Repeater {
 				model: dayTasks.tasks
 				TaskRow {
@@ -138,5 +143,12 @@ ColumnLayout {
 				}
 			}
 		}
+	}
+
+	// Apart from what follows (the weather beside the grid, the hours below the strip).
+	Kirigami.Separator {
+		Layout.fillWidth: true
+		Layout.topMargin: Kirigami.Units.smallSpacing
+		Layout.bottomMargin: Kirigami.Units.smallSpacing
 	}
 }

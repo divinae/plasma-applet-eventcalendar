@@ -5,22 +5,25 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "Tasks.js" as Tasks
 
-// A task as a row (Tasks view, Day view): a tile in its list's color like the agenda's (EventStyle,
-// both event looks), its done check, title, when it's due and the first line of its notes. Click
-// opens it, right click the shared event menu; the check marks it done / not done.
+// A task as a list row (Tasks view, Day view), like a to-do app rather than an event tile: its done
+// check in the list's color, the title in the theme's text color, when it's due (red when overdue)
+// and the first line of its notes. Click opens it, right click the shared event menu; the check
+// marks it done / not done. Done ones are dimmed and struck through.
 LinkRect {
 	id: taskRow
 
 	property var eventItem: null
 	// Today, 'YYYY-MM-DD': for "Today", "Tomorrow" and "Overdue".
 	property string today: Tasks.dayString(new Date())
-	// Smaller: no notes line (Day view).
+	// One line: the due date after the title (only when overdue), no notes (Day view).
 	property bool compact: false
 
 	readonly property EventStyle eventStyle: EventStyle {
 		eventItem: taskRow.eventItem
 	}
-	readonly property color tileTextColor: eventStyle.textColor
+	// The list's color, made darker when pale (light theme) so the check stands out.
+	readonly property color listColor: appletConfig.eventBarColor(eventStyle.color)
+	readonly property bool overdue: due.kind === 'overdue' && !eventStyle.done
 	readonly property var due: {
 		var parts = today.split('-')
 		return Tasks.dueInfo(eventItem, new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12))
@@ -57,35 +60,21 @@ LinkRect {
 		popup.activateEvent(eventItem)
 	}
 
-	radius: 8
-	border.width: 1
-	border.color: eventStyle.showBar ? "transparent" : eventStyle.outlineColor // ColorBarFill draws it
-	backgroundColor: eventStyle.fillColor
-	backgroundHoverColor: eventStyle.outlined ? appletConfig.agendaHoverBackground : Qt.darker(eventStyle.fillColor, 1.08)
-	opacity: eventStyle.doneOpacity
-	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
-	implicitHeight: contents.implicitHeight + (compact ? 4 : Kirigami.Units.smallSpacing * 2) + 2
-
-	ColorBarFill {
-		visible: taskRow.eventStyle.showBar
-		barColor: taskRow.eventStyle.barColor
-		outlined: taskRow.eventStyle.outlined
-		fillColor: taskRow.color // With the hover color
-		borderColor: taskRow.eventStyle.outlineColor
-		topLeftRadius: taskRow.radius
-		bottomLeftRadius: taskRow.radius
-		topRightRadius: taskRow.radius
-		bottomRightRadius: taskRow.radius
-	}
+	radius: 6
+	backgroundColor: "transparent"
+	backgroundHoverColor: appletConfig.agendaHoverBackground
+	implicitWidth: contents.implicitWidth + Kirigami.Units.smallSpacing * 2
+	implicitHeight: contents.implicitHeight + (compact ? Kirigami.Units.smallSpacing : Kirigami.Units.smallSpacing * 2)
 
 	RowLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: Kirigami.Units.largeSpacing + (taskRow.eventStyle.showBar ? 4 : 0) - 2
+		anchors.leftMargin: Kirigami.Units.smallSpacing
 		anchors.rightMargin: Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.smallSpacing + 2
+		opacity: taskRow.eventStyle.doneOpacity
 
 		TaskCheck {
 			id: taskCheck
@@ -93,13 +82,13 @@ LinkRect {
 			Layout.topMargin: Math.max(0, (titleLabel.implicitHeight - height) / 2)
 			size: 2 * Math.round(Math.min(Kirigami.Units.iconSizes.small * 1.1, titleLabel.implicitHeight) / 2)
 			eventItem: taskRow.eventItem
-			color: taskRow.tileTextColor
+			color: taskRow.listColor
 		}
 
 		ColumnLayout {
 			Layout.fillWidth: true
 			Layout.minimumWidth: 0
-			spacing: 0
+			spacing: 1
 
 			RowLayout {
 				Layout.fillWidth: true
@@ -110,7 +99,7 @@ LinkRect {
 					Layout.minimumWidth: 0
 					text: taskRow.title
 					textFormat: Text.PlainText // User text: never parsed as HTML
-					color: taskRow.tileTextColor
+					color: Kirigami.Theme.textColor
 					font.family: appletConfig.eventFont.family
 					font.pointSize: appletConfig.eventFont.pointSize
 					font.strikeout: taskRow.eventStyle.struckThrough
@@ -118,12 +107,12 @@ LinkRect {
 					maximumLineCount: taskRow.compact ? 1 : 2
 					wrapMode: taskRow.compact ? Text.NoWrap : Text.Wrap
 				}
-				// Compact: when it's due after the title (overdue ones only, the rest are on this day).
+				// Compact: the date after the title when it's overdue (the rest are due on this day).
 				PlasmaComponents3.Label {
-					visible: taskRow.compact && taskRow.due.kind === 'overdue'
+					visible: taskRow.compact && taskRow.overdue
 					text: taskRow.dueDateText
 					textFormat: Text.PlainText
-					color: taskRow.eventStyle.outlined ? Kirigami.Theme.negativeTextColor : taskRow.tileTextColor
+					color: Kirigami.Theme.negativeTextColor
 					font: appletConfig.eventSmallFont
 				}
 			}
@@ -136,9 +125,8 @@ LinkRect {
 					visible: !!text
 					text: taskRow.dueText
 					textFormat: Text.PlainText
-					// Overdue in red on the background (outlined tiles); on a filled tile in its text color.
-					color: taskRow.due.kind === 'overdue' && taskRow.eventStyle.outlined ? Kirigami.Theme.negativeTextColor : taskRow.tileTextColor
-					opacity: taskRow.due.kind === 'overdue' ? 1 : 0.8
+					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+					opacity: taskRow.overdue ? 1 : 0.7
 					font: appletConfig.eventSmallFont
 				}
 				PlasmaComponents3.Label {
@@ -147,8 +135,8 @@ LinkRect {
 					Layout.minimumWidth: 0
 					text: taskRow.notesLine
 					textFormat: Text.PlainText // User text: never parsed as HTML
-					color: taskRow.tileTextColor
-					opacity: 0.65
+					color: Kirigami.Theme.textColor
+					opacity: 0.6
 					font: appletConfig.eventSmallFont
 					elide: Text.ElideRight
 					wrapMode: Text.NoWrap

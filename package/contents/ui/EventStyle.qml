@@ -42,7 +42,8 @@ QtObject {
 		: outlined ? "transparent" : appletConfig.eventFillColor(color, response)
 	// Bar look: not yet answered (not maybe) has its title in the event color (on the background, outlined), so
 	// it stands apart from the tinted events.
-	readonly property color textColor: showBar ? (outlined && !tentative ? appletConfig.eventColoredTextColor(barColor) : Kirigami.Theme.textColor) : appletConfig.eventTextColor(color, response)
+	// Tasks keep the theme text: a pale list color made their titles hard to read.
+	readonly property color textColor: showBar ? (outlined && !tentative && !isTask ? appletConfig.eventColoredTextColor(barColor) : Kirigami.Theme.textColor) : appletConfig.eventTextColor(color, response)
 	readonly property color outlineColor: tinted && !declined ? appletConfig.eventTintOutlineColor(barColor) : outlined && isTask ? barColor : appletConfig.eventOutlineColor(barColor, response)
 	// Maybe: stripes in the event color; out of office: in the text color.
 	readonly property color stripeColor: tentative ? barColor : textColor
