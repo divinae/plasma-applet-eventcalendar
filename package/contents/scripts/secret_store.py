@@ -186,11 +186,59 @@ def store_secret(attributes: list[tuple[str, str]], label: str, value: str) -> t
     return False, message
 
 
+def lookup_status_with_secret_tool(attributes: list[tuple[str, str]]) -> tuple[str, str, str]:
+    """("found", value, "") / ("missing", "", "") / ("error", "", message) / ("unavailable", "", "").
+
+    secret-tool exits 1 without a message when there is no such item; a message means it could
+    not ask the Secret Service (no D-Bus session yet, locked and dismissed, ...)."""
+    secret_tool = secret_tool_path()
+    if not secret_tool:
+        return "unavailable", "", ""
+    cmd = [secret_tool, "lookup"] + flatten_attributes(attributes)
+    try:
+        proc = subprocess.run(cmd, text=True, capture_output=True, timeout=30)
+    except (OSError, subprocess.SubprocessError) as exc:
+        return "error", "", "secret-tool failed: {}".format(type(exc).__name__)
+    if proc.returncode == 0:
+        return "found", proc.stdout.rstrip("\n"), ""
+    if (proc.stderr or "").strip():
+        return "error", "", "secret-tool lookup failed."
+    return "missing", "", ""
+
+
+def lookup_status_with_kwallet(attributes: list[tuple[str, str]]) -> tuple[str, str, str]:
+    """Like lookup_status_with_secret_tool: no open wallet is an error (it may be locked)."""
+    kwallet_query = kwallet_query_path()
+    if not kwallet_query:
+        return "unavailable", "", ""
+    wallet_name = detect_kwallet_name(kwallet_query)
+    if not wallet_name:
+        return "error", "", "No supported KWallet is available or unlocked."
+    found, value = lookup_with_kwallet(attributes)
+    return ("found", value, "") if found else ("missing", "", "")
+
+
+def lookup_secret_detailed(attributes: list[tuple[str, str]]) -> tuple[bool, str, str]:
+    """(found, value, error): error is "" when a backend answered that there is no such secret
+    (a definite not-found), else why it couldn't be read (try again later)."""
+    errors = []
+    missing = False
+    for lookup in (lookup_status_with_secret_tool, lookup_status_with_kwallet):
+        status, value, error = lookup(attributes)
+        if status == "found":
+            return True, value, ""
+        if status == "missing":
+            missing = True
+        elif status == "error":
+            errors.append(error)
+    if missing:
+        return False, "", ""
+    return False, "", " ".join(errors) or "Secret storage backend unavailable."
+
+
 def lookup_secret(attributes: list[tuple[str, str]]) -> tuple[bool, str]:
-    found, value = lookup_with_secret_tool(attributes)
-    if found:
-        return True, value
-    return lookup_with_kwallet(attributes)
+    found, value, _ = lookup_secret_detailed(attributes)
+    return found, value
 
 
 def clear_secret(attributes: list[tuple[str, str]]) -> bool:
@@ -299,8 +347,11 @@ class ReadOnceHandler(OnceHandler):
     def do_GET(self) -> None:
         if not self._authorized("/read"):
             return
-        found, value = lookup_secret(self.server.attributes)
-        self._send_json(200, {"found": found, "value": value if found else ""})
+        found, value, error = lookup_secret_detailed(self.server.attributes)
+        payload = {"found": found, "value": value if found else ""}
+        if not found and error:
+            payload["error"] = error  # Not a definite not-found: the caller tries again later
+        self._send_json(200, payload)
         self._finish(0)
 
 

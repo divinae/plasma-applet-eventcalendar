@@ -131,7 +131,9 @@ Item {
 		})
 	}
 
-	// callback(err, value): value is "" when there's none (or the keyring can't be read).
+	// callback(err, value), always called once: value "" and err null when the keyring answered
+	// that there's no such secret (a definite not-found); err when it couldn't be read (the helper
+	// timed out, the keyring is locked or not up yet, ...): try again later.
 	function load(accountId, key, callback) {
 		if (!accountId || !scope) {
 			callback(null, "")
@@ -143,7 +145,8 @@ Item {
 		})
 		waitForReadyFile(readyFile, function(err, payload) {
 			if (err) {
-				callback(null, "")
+				logger.debug("load", key, "helper not ready")
+				callback("The secret storage helper did not start.", "")
 				return
 			}
 			Requests.getJSON({
@@ -154,7 +157,15 @@ Item {
 			}, function(readErr, data, xhr) {
 				var value = (!readErr && data && data.found && data.value) ? String(data.value) : ""
 				logger.debug("load", key, "status", xhr ? xhr.status : 0, "length", value.length)
-				callback(null, value)
+				if (value) {
+					callback(null, value)
+				} else if (readErr || !data || typeof data !== "object") {
+					callback("Could not read the secret.", "")
+				} else if (errorOf(data)) {
+					callback(errorOf(data), "")
+				} else {
+					callback(null, "") // Not found
+				}
 			})
 		})
 	}

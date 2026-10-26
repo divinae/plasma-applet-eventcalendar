@@ -40,8 +40,53 @@ class SecretStoreTests(unittest.TestCase):
         self.assertEqual(stdout.getvalue(), "")
         self.assertNotIn("stored-refresh-token", stderr.getvalue())
 
+    def read_once_payload(self):
+        server = self.secret_store.OnceServer(
+            ("127.0.0.1", 0),
+            self.secret_store.ReadOnceHandler,
+            attributes=[("app", "test")],
+            secret_token="test-token",
+        )
+        server.timeout = 2
+        thread = threading.Thread(target=server.handle_request)
+        thread.start()
+        try:
+            request = urllib.request.Request(
+                "http://127.0.0.1:{}/read".format(server.server_address[1]),
+                headers={"Authorization": "Bearer test-token"},
+            )
+            with urllib.request.urlopen(request, timeout=2) as response:
+                return json.loads(response.read().decode("utf-8"))
+        finally:
+            thread.join(timeout=2)
+            server.server_close()
+
+    def test_read_once_tells_not_found_from_errors(self):
+        self.secret_store.lookup_secret_detailed = lambda attributes: (False, "", "")
+        self.assertEqual(self.read_once_payload(), {"found": False, "value": ""})
+        self.secret_store.lookup_secret_detailed = lambda attributes: (False, "", "No supported KWallet is available or unlocked.")
+        self.assertEqual(self.read_once_payload(), {"found": False, "value": "", "error": "No supported KWallet is available or unlocked."})
+
+    def test_lookup_detailed_combines_backends(self):
+        store = self.secret_store
+
+        def with_backends(secret_tool, kwallet):
+            store.lookup_status_with_secret_tool = lambda attributes: secret_tool
+            store.lookup_status_with_kwallet = lambda attributes: kwallet
+            return store.lookup_secret_detailed([("app", "test")])
+
+        self.assertEqual(with_backends(("found", "v", ""), ("error", "", "x")), (True, "v", ""))
+        self.assertEqual(with_backends(("error", "", "dbus"), ("found", "w", "")), (True, "w", ""))
+        self.assertEqual(with_backends(("missing", "", ""), ("error", "", "locked")), (False, "", ""))
+        self.assertEqual(with_backends(("unavailable", "", ""), ("missing", "", "")), (False, "", ""))
+        self.assertEqual(with_backends(("error", "", "dbus"), ("error", "", "locked")), (False, "", "dbus locked"))
+        found, value, error = with_backends(("unavailable", "", ""), ("unavailable", "", ""))
+        self.assertFalse(found)
+        self.assertTrue(error)
+        self.assertEqual(store.lookup_secret([("app", "test")]), (False, ""))
+
     def test_read_once_requires_authorization_and_returns_secret_as_json(self):
-        self.secret_store.lookup_secret = lambda attributes: (True, "stored-refresh-token")
+        self.secret_store.lookup_secret_detailed = lambda attributes: (True, "stored-refresh-token", "")
         server = self.secret_store.OnceServer(
             ("127.0.0.1", 0),
             self.secret_store.ReadOnceHandler,
