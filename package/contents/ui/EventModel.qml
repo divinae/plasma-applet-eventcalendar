@@ -695,6 +695,34 @@ CalendarManager {
 		})
 	}
 
+	// The task lists selected in settings (their tasks are loaded), for the Tasks view:
+	// [{ id, name, color, group }], group: the account label (else the service's name).
+	function getSelectedTaskLists() {
+		var out = []
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			var label = String(calendarManager.accountLabel || "")
+			var group = label || (calendarManager.calendarManagerId === 'TickTick' ? "TickTick" : "Google")
+			var list = calendarManager.getCalendarList()
+			for (var j = 0; j < list.length; j++) {
+				var calendar = list[j]
+				if (!calendar || !calendar.id || calendar.isTasklist !== true) {
+					continue
+				}
+				var selected = typeof calendarManager.isTasklistSelected === 'function' ? calendarManager.isTasklistSelected(calendar.id)
+					: typeof calendarManager.isProjectSelected === 'function' ? calendarManager.isProjectSelected(calendar.id)
+					: !!eventModel.eventsByCalendar[calendar.id]
+				if (!selected) {
+					continue
+				}
+				var entry = selectedCalendarEntry(calendar.id, calendar, label)
+				entry.group = group
+				out.push(entry)
+			}
+		}
+		return out
+	}
+
 	// Repeat rules can be edited (Google Calendar).
 	function supportsRecurrence(calendarId) {
 		return !!managerWith(calendarId, 'updateEventFromServer')

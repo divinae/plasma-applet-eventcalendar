@@ -31,6 +31,7 @@ Rectangle {
 	property var templateEvent: null // New events: a copy of this event (Duplicate)
 	property bool newTask: false // New: a task (due on initialDate), on a task list
 	property string initialCalendarId: "" // New: on this calendar / task list
+	property bool initialNoDue: false // New task: without a due date
 	readonly property bool isNew: !eventItem
 
 	//--- Tasks: title, notes, due day (or none) and the task list; nothing else of an event.
@@ -943,7 +944,7 @@ Rectangle {
 		}
 		calendarSelector.populate(calendarList, initialId)
 		taskDue = new Date(initialDate)
-
+		taskHasDue = !initialNoDue
 		if (editingTask) {
 			fillTask(eventItem)
 		} else if (eventItem) {

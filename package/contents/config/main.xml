@@ -166,6 +166,10 @@
 		<entry name="agendaPlaceOverdueTasksOnToday" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="tasksShowCompleted" type="bool">
+			<!-- Tasks view: done tasks at the bottom of each list. -->
+			<default>false</default>
+		</entry>
 	</group>
 
 
