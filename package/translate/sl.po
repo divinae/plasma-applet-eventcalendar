@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:12+0100\n"
+"POT-Creation-Date: 2026-10-26 09:34+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -40,6 +40,10 @@ msgstr "iCalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Googlov koledar"
+
+#: ../contents/config/config.qml
+msgid "Tasks"
+msgstr "Opravila"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 msgid "Weather"
@@ -130,18 +134,21 @@ msgid "[No Calendars]"
 msgstr "[Ni koledarjev]"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "HTTP napaka %1: %2"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Ni povezave"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "Ponovni poizkus kmalu."
 
@@ -154,6 +161,7 @@ msgstr ""
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "Preveč spletnih poizvedb. Ponovni poizkus kmalu."
 
@@ -192,6 +200,14 @@ msgstr "Opravila"
 msgid "Other"
 msgstr "Drugo"
 
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "TickTick: sign in again"
+msgstr "TickTick: ponovno se prijavite"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Connect the account again with a new API token in the Tasks settings."
+msgstr "Račun znova povežite z novim žetonom API v nastavitvah opravil."
+
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigICal.qml
@@ -208,7 +224,8 @@ msgstr "Prikaži vse"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/ImportView.qml
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -656,6 +673,7 @@ msgid "Google Account"
 msgstr "Googlov račun"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Googlov račun %1"
 
@@ -721,10 +739,12 @@ msgid "Reload calendars and task lists"
 msgstr "Znova naloži koledarje in sezname opravil"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Odstrani račun"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Odstrani"
 
@@ -747,8 +767,8 @@ msgid "No calendars loaded yet. Use the reload button."
 msgstr "Koledarji še niso naloženi. Uporabite gumb za ponovno nalaganje."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task Lists"
-msgstr "Seznami opravil"
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Sezname opravil izberete na strani Opravila."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -919,6 +939,129 @@ msgstr "Brskaj"
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick did not accept the API token. Check it and try again."
+msgstr "TickTick ni sprejel žetona API. Preverite ga in poskusite znova."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not connect to TickTick. Check your connection and try again."
+msgstr "Povezava s TickTick ni uspela. Preverite povezavo in poskusite znova."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick error: %1"
+msgstr "Napaka TickTick: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connecting to TickTick…"
+msgstr "Povezovanje s TickTick…"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "Prejeto"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not store the API token in the system keyring: %1"
+msgstr "Žetona API ni bilo mogoče shraniti v sistemsko shrambo ključev: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick account added."
+msgstr "Račun TickTick je dodan."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Splošno"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Overdue tasks on today"
+msgstr "Zapadla opravila na današnjem dnevu"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Odprta opravila z rokom na enega od prejšnjih dni so v vseh pogledih "
+"prikazana na današnjem dnevu."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Tasks"
+msgstr "Googlova opravila"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Sign in on the Google Calendar page to choose the Google task lists shown "
+"here."
+msgstr ""
+"Prijavite se na strani Googlov koledar, da izberete Googlove sezname "
+"opravil, prikazane tukaj."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task Lists"
+msgstr "Seznami opravil"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr ""
+"Seznami opravil še niso naloženi. Račun znova naložite na strani Googlov "
+"koledar."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick"
+msgstr "TickTick"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Reload projects"
+msgstr "Znova naloži projekte"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"This account's API token is not in the system keyring. Remove the account "
+"and connect it again."
+msgstr ""
+"Žetona API tega računa ni v sistemski shrambi ključev. Odstranite račun in "
+"ga znova povežite."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No projects loaded yet. Use the reload button."
+msgstr "Projekti še niso naloženi. Uporabite gumb za ponovno nalaganje."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Strežnik"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick (ticktick.com)"
+msgstr "TickTick (ticktick.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Dida365 (dida365.com)"
+msgstr "Dida365 (dida365.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "API token"
+msgstr "Žeton API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Paste the API token"
+msgstr "Prilepite žeton API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect Another Account"
+msgstr "Poveži drug račun"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Poveži"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Create an API token on the TickTick website: Settings > Account > API Token "
+"(on dida365.com for Dida365). The token is kept in the system keyring "
+"(KWallet or Secret Service), not in the widget's settings."
+msgstr ""
+"Žeton API ustvarite na spletnem mestu TickTick: Settings > Account > API "
+"Token (za Dida365 na dida365.com). Žeton se hrani v sistemski shrambi "
+"ključev (KWallet ali Secret Service), ne v nastavitvah gradnika."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1123,16 +1266,6 @@ msgstr "Prikaži (prečrtano)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "Skrij"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Overdue tasks on today"
-msgstr "Zapadla opravila na današnjem dnevu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr ""
-"Odprta opravila z rokom na enega od prejšnjih dni so v vseh pogledih "
-"prikazana na današnjem dnevu."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
@@ -1386,6 +1519,11 @@ msgstr "Izbriši vse dogodke »%1«"
 msgid "No due date"
 msgstr "Brez roka"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 is a date, %2 a time"
+msgid "%1, %2"
+msgstr "%1, %2"
+
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = date"
 msgid "Due %1"
@@ -1467,6 +1605,10 @@ msgstr "Vse dogodke"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Izbriše vse ponovitve tega ponavljajočega se dogodka."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in TickTick"
+msgstr "Odpri v TickTick"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Tasks"
@@ -2994,9 +3136,6 @@ msgstr "Delovna lokacija: %1"
 #~ msgid "%1 · %2"
 #~ msgstr "%1 · %2"
 
-#~ msgid "General"
-#~ msgstr "Splošno"
-
 #~ msgid "Layout"
 #~ msgstr "Postavitev"
 
@@ -3285,9 +3424,6 @@ msgstr "Delovna lokacija: %1"
 
 #~ msgid "To sync with Google Calendar"
 #~ msgstr "Za uskladitev z Googlovim koledarjem"
-
-#~ msgid "Tasks"
-#~ msgstr "Opravila"
 
 #~ msgid "Calendar to the left of the Agenda (Two Columns)"
 #~ msgstr "Koledar na levi od dnevnega reda (dva stolpca)"

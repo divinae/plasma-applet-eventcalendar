@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:12+0100\n"
+"POT-Creation-Date: 2026-10-26 09:34+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -34,6 +34,10 @@ msgstr "ICalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Calendário Google"
+
+#: ../contents/config/config.qml
+msgid "Tasks"
+msgstr "Tarefas"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 msgid "Weather"
@@ -121,15 +125,15 @@ msgstr "(Sem título)"
 msgid "[No Calendars]"
 msgstr "[Não há calendários]"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Erro HTTP %1: %2"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Não foi possível conectar"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "Tentaremos novamente em breve."
 
@@ -137,7 +141,7 @@ msgstr "Tentaremos novamente em breve."
 msgid "Widget has been updated. Please logout and login to Google Calendar again."
 msgstr "O aplicativo foi atualizado. Saia e volte a entrar no calendário Google novamente."
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "Muitos pedidos da internet. Tentaremos novamente em breve."
 
@@ -173,6 +177,14 @@ msgstr "A fazer"
 msgid "Other"
 msgstr "Outro"
 
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "TickTick: sign in again"
+msgstr "TickTick: inicie sessão novamente"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Connect the account again with a new API token in the Tasks settings."
+msgstr "Volte a ligar a conta com um novo token de API nas definições de Tarefas."
+
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
 msgid "Calendars"
 msgstr "Calendários"
@@ -185,7 +197,7 @@ msgstr "Nenhum calendário selecionado na configuração."
 msgid "Show All"
 msgstr "Mostrar todos"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -581,7 +593,7 @@ msgstr "As janelas e os sons de cada tipo de notificação também podem ser def
 msgid "Google Account"
 msgstr "Conta Google"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Conta Google %1"
 
@@ -637,11 +649,11 @@ msgstr "Iniciar sessão novamente"
 msgid "Reload calendars and task lists"
 msgstr "Recarregar calendários e listas de tarefas"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Remover conta"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Remover"
 
@@ -658,8 +670,8 @@ msgid "No calendars loaded yet. Use the reload button."
 msgstr "Ainda não foram carregados calendários. Utilize o botão de recarregar."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task Lists"
-msgstr "Listas de tarefas"
+msgid "Task lists are chosen on the Tasks page."
+msgstr "As listas de tarefas são escolhidas na página Tarefas."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -796,6 +808,110 @@ msgstr "Navegar"
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick did not accept the API token. Check it and try again."
+msgstr "O TickTick não aceitou o token de API. Verifique-o e tente novamente."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not connect to TickTick. Check your connection and try again."
+msgstr "Não foi possível ligar ao TickTick. Verifique a sua ligação e tente novamente."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick error: %1"
+msgstr "Erro do TickTick: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connecting to TickTick…"
+msgstr "A ligar ao TickTick…"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "Caixa de entrada"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not store the API token in the system keyring: %1"
+msgstr "Não foi possível guardar o token de API no porta-chaves do sistema: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick account added."
+msgstr "Conta TickTick adicionada."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Geral"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Overdue tasks on today"
+msgstr "Tarefas em atraso no dia de hoje"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "As tarefas por concluir com prazo num dia anterior são mostradas no dia de hoje, em todas as vistas."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Tasks"
+msgstr "Google Tarefas"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Sign in on the Google Calendar page to choose the Google task lists shown here."
+msgstr "Inicie sessão na página Calendário Google para escolher as listas de tarefas Google mostradas aqui."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task Lists"
+msgstr "Listas de tarefas"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr "Ainda não foram carregadas listas de tarefas. Recarregue a conta na página Calendário Google."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick"
+msgstr "TickTick"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Reload projects"
+msgstr "Recarregar projetos"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "This account's API token is not in the system keyring. Remove the account and connect it again."
+msgstr "O token de API desta conta não está no porta-chaves do sistema. Remova a conta e volte a ligá-la."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No projects loaded yet. Use the reload button."
+msgstr "Ainda não foram carregados projetos. Utilize o botão de recarregar."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Servidor"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick (ticktick.com)"
+msgstr "TickTick (ticktick.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Dida365 (dida365.com)"
+msgstr "Dida365 (dida365.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "API token"
+msgstr "Token de API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Paste the API token"
+msgstr "Cole o token de API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect Another Account"
+msgstr "Ligar outra conta"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Ligar"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
+msgstr "Crie um token de API no site do TickTick: Settings > Account > API Token (em dida365.com para o Dida365). O token é guardado no porta-chaves do sistema (KWallet ou Secret Service), não nas definições do widget."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -992,14 +1108,6 @@ msgstr "Mostrar (riscados)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "Ocultar"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Overdue tasks on today"
-msgstr "Tarefas em atraso no dia de hoje"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr "As tarefas por concluir com prazo num dia anterior são mostradas no dia de hoje, em todas as vistas."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
@@ -1243,6 +1351,11 @@ msgstr "Remover todos os eventos de “%1”"
 msgid "No due date"
 msgstr "Sem prazo"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 is a date, %2 a time"
+msgid "%1, %2"
+msgstr "%1, %2"
+
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = date"
 msgid "Due %1"
@@ -1319,6 +1432,10 @@ msgstr "Todos os eventos"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Remove todas as ocorrências deste evento recorrente."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in TickTick"
+msgstr "Abrir no TickTick"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Tasks"
@@ -2764,9 +2881,6 @@ msgstr "Local de trabalho: %1"
 #~ msgid "%1 · %2"
 #~ msgstr "%1 · %2"
 
-#~ msgid "General"
-#~ msgstr "Geral"
-
 #~ msgid "Layout"
 #~ msgstr "Esquema"
 
@@ -3052,9 +3166,6 @@ msgstr "Local de trabalho: %1"
 
 #~ msgid "To sync with Google Calendar"
 #~ msgstr "Sincronizar com o calendário Google"
-
-#~ msgid "Tasks"
-#~ msgstr "Obrigado"
 
 #~ msgid "Calendar to the left of the Agenda (Two Columns)"
 #~ msgstr "Calendário à esquerda da Agenda (duas colunas)"

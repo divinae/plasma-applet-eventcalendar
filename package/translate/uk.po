@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:12+0100\n"
+"POT-Creation-Date: 2026-10-26 09:34+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -40,6 +40,10 @@ msgstr "iCalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Календар Google"
+
+#: ../contents/config/config.qml
+msgid "Tasks"
+msgstr "Завдання"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 msgid "Weather"
@@ -130,18 +134,21 @@ msgid "[No Calendars]"
 msgstr "[Без календарів]"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Помилка HTTP %1: %2"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Не вдалося з'єднатися"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "Невдовзі буде виконано повторну спробу."
 
@@ -154,6 +161,7 @@ msgstr ""
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "Забагато вебзапитів. Невдовзі буде виконано повторну спробу."
 
@@ -192,6 +200,16 @@ msgstr "Завдання"
 msgid "Other"
 msgstr "Інше"
 
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "TickTick: sign in again"
+msgstr "TickTick: увійдіть знову"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Connect the account again with a new API token in the Tasks settings."
+msgstr ""
+"Знову під'єднайте обліковий запис із новим токеном API у налаштуваннях "
+"завдань."
+
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigICal.qml
@@ -208,7 +226,8 @@ msgstr "Показати всі"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/ImportView.qml
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -654,6 +673,7 @@ msgid "Google Account"
 msgstr "Обліковий запис Google"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Обліковий запис Google %1"
 
@@ -719,10 +739,12 @@ msgid "Reload calendars and task lists"
 msgstr "Перезавантажити календарі та списки завдань"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Вилучити обліковий запис"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -746,8 +768,8 @@ msgid "No calendars loaded yet. Use the reload button."
 msgstr "Календарі ще не завантажено. Скористайтеся кнопкою перезавантаження."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task Lists"
-msgstr "Списки завдань"
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Списки завдань вибираються на сторінці «Завдання»."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -917,6 +939,130 @@ msgstr "Перегляд"
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick did not accept the API token. Check it and try again."
+msgstr "TickTick не прийняв токен API. Перевірте його і повторіть спробу."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not connect to TickTick. Check your connection and try again."
+msgstr ""
+"Не вдалося з'єднатися з TickTick. Перевірте з'єднання і повторіть спробу."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick error: %1"
+msgstr "Помилка TickTick: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connecting to TickTick…"
+msgstr "З'єднання з TickTick…"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "Вхідні"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not store the API token in the system keyring: %1"
+msgstr "Не вдалося зберегти токен API у системному сховищі ключів: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick account added."
+msgstr "Обліковий запис TickTick додано."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Загальний"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Overdue tasks on today"
+msgstr "Прострочені завдання на сьогоднішньому дні"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Відкриті завдання з терміном на один із попередніх днів показуються на "
+"сьогоднішньому дні в усіх режимах перегляду."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Tasks"
+msgstr "Google Завдання"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Sign in on the Google Calendar page to choose the Google task lists shown "
+"here."
+msgstr ""
+"Увійдіть на сторінці «Календар Google», щоб вибрати списки завдань Google, "
+"які буде показано тут."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task Lists"
+msgstr "Списки завдань"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr ""
+"Списки завдань ще не завантажено. Перезавантажте обліковий запис на сторінці "
+"«Календар Google»."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick"
+msgstr "TickTick"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Reload projects"
+msgstr "Перезавантажити проєкти"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"This account's API token is not in the system keyring. Remove the account "
+"and connect it again."
+msgstr ""
+"Токена API цього облікового запису немає в системному сховищі ключів. "
+"Вилучіть обліковий запис і під'єднайте його знову."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No projects loaded yet. Use the reload button."
+msgstr "Проєкти ще не завантажено. Скористайтеся кнопкою перезавантаження."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Сервер"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick (ticktick.com)"
+msgstr "TickTick (ticktick.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Dida365 (dida365.com)"
+msgstr "Dida365 (dida365.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "API token"
+msgstr "Токен API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Paste the API token"
+msgstr "Вставте токен API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect Another Account"
+msgstr "Під'єднати інший обліковий запис"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Під'єднати"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Create an API token on the TickTick website: Settings > Account > API Token "
+"(on dida365.com for Dida365). The token is kept in the system keyring "
+"(KWallet or Secret Service), not in the widget's settings."
+msgstr ""
+"Створіть токен API на сайті TickTick: Settings > Account > API Token (для "
+"Dida365 — на dida365.com). Токен зберігається в системному сховищі ключів "
+"(KWallet або Secret Service), а не в налаштуваннях віджета."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1120,16 +1266,6 @@ msgstr "Показувати (закресленими)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "Ховати"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Overdue tasks on today"
-msgstr "Прострочені завдання на сьогоднішньому дні"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr ""
-"Відкриті завдання з терміном на один із попередніх днів показуються на "
-"сьогоднішньому дні в усіх режимах перегляду."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
@@ -1383,6 +1519,11 @@ msgstr "Вилучити всі події «%1»"
 msgid "No due date"
 msgstr "Без терміну"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 is a date, %2 a time"
+msgid "%1, %2"
+msgstr "%1, %2"
+
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = date"
 msgid "Due %1"
@@ -1463,6 +1604,10 @@ msgstr "Усі події"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Вилучає всі повторення цієї повторюваної події."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in TickTick"
+msgstr "Відкрити в TickTick"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Tasks"
@@ -2967,9 +3112,6 @@ msgstr "Місце роботи: %1"
 #~ msgctxt "%1 = event title, %2 = 5m / now"
 #~ msgid "%1 · %2"
 #~ msgstr "%1 · %2"
-
-#~ msgid "General"
-#~ msgstr "Загальний"
 
 #~ msgid "Timezones"
 #~ msgstr "Часові зони"

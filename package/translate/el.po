@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:12+0100\n"
+"POT-Creation-Date: 2026-10-26 09:34+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -39,6 +39,10 @@ msgstr "ICalendar (*.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Ημερολόγιο Google"
+
+#: ../contents/config/config.qml
+msgid "Tasks"
+msgstr "Εργασίες"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 msgid "Weather"
@@ -129,18 +133,21 @@ msgid "[No Calendars]"
 msgstr "[Χωρίς Ημερολόγια]"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Σφάλμα HTTP %1: %2"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Αδυναμία σύνδεσης"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "Θα γίνει νέα προσπάθεια σύντομα."
 
@@ -154,6 +161,7 @@ msgstr ""
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "Πάρα πολλά αιτήματα ιστού. Θα γίνει νέα προσπάθεια σύντομα."
 
@@ -192,6 +200,15 @@ msgstr "Εργασίες"
 msgid "Other"
 msgstr "Άλλο"
 
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "TickTick: sign in again"
+msgstr "TickTick: επανασύνδεση"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Connect the account again with a new API token in the Tasks settings."
+msgstr ""
+"Συνδέστε ξανά τον λογαριασμό με νέο διακριτικό API στις ρυθμίσεις Εργασιών."
+
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigICal.qml
@@ -208,7 +225,8 @@ msgstr "Εμφάνιση όλων"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/ImportView.qml
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -656,6 +674,7 @@ msgid "Google Account"
 msgstr "Λογαριασμός Google"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Λογαριασμός Google %1"
 
@@ -722,10 +741,12 @@ msgid "Reload calendars and task lists"
 msgstr "Επαναφόρτωση ημερολογίων και λιστών εργασιών"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Αφαίρεση λογαριασμού"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -749,8 +770,8 @@ msgstr ""
 "Δεν έχουν φορτωθεί ημερολόγια ακόμη. Χρησιμοποιήστε το κουμπί επαναφόρτωσης."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task Lists"
-msgstr "Λίστες εργασιών"
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Οι λίστες εργασιών επιλέγονται στη σελίδα Εργασίες."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -926,6 +947,133 @@ msgstr "Πλοήγηση"
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick did not accept the API token. Check it and try again."
+msgstr ""
+"Το TickTick δεν αποδέχτηκε το διακριτικό API. Ελέγξτε το και δοκιμάστε ξανά."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not connect to TickTick. Check your connection and try again."
+msgstr ""
+"Αδυναμία σύνδεσης στο TickTick. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick error: %1"
+msgstr "Σφάλμα TickTick: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connecting to TickTick…"
+msgstr "Σύνδεση στο TickTick…"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "Εισερχόμενα"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not store the API token in the system keyring: %1"
+msgstr ""
+"Αδυναμία αποθήκευσης του διακριτικού API στην κλειδοθήκη του συστήματος: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick account added."
+msgstr "Ο λογαριασμός TickTick προστέθηκε."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Γενικά"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Overdue tasks on today"
+msgstr "Εκπρόθεσμες εργασίες στη σημερινή ημέρα"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Οι ανοιχτές εργασίες με προθεσμία σε προηγούμενη ημέρα εμφανίζονται στη "
+"σημερινή ημέρα, σε κάθε προβολή."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Tasks"
+msgstr "Google Tasks"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Sign in on the Google Calendar page to choose the Google task lists shown "
+"here."
+msgstr ""
+"Συνδεθείτε στη σελίδα Ημερολόγιο Google για να επιλέξετε τις λίστες εργασιών "
+"Google που εμφανίζονται εδώ."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task Lists"
+msgstr "Λίστες εργασιών"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr ""
+"Δεν έχουν φορτωθεί λίστες εργασιών ακόμη. Επαναφορτώστε τον λογαριασμό στη "
+"σελίδα Ημερολόγιο Google."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick"
+msgstr "TickTick"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Reload projects"
+msgstr "Επαναφόρτωση έργων"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"This account's API token is not in the system keyring. Remove the account "
+"and connect it again."
+msgstr ""
+"Το διακριτικό API αυτού του λογαριασμού δεν βρίσκεται στην κλειδοθήκη του "
+"συστήματος. Αφαιρέστε τον λογαριασμό και συνδέστε τον ξανά."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No projects loaded yet. Use the reload button."
+msgstr "Δεν έχουν φορτωθεί έργα ακόμη. Χρησιμοποιήστε το κουμπί επαναφόρτωσης."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Διακομιστής"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick (ticktick.com)"
+msgstr "TickTick (ticktick.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Dida365 (dida365.com)"
+msgstr "Dida365 (dida365.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "API token"
+msgstr "Διακριτικό API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Paste the API token"
+msgstr "Επικολλήστε το διακριτικό API"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect Another Account"
+msgstr "Σύνδεση άλλου λογαριασμού"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Σύνδεση"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Create an API token on the TickTick website: Settings > Account > API Token "
+"(on dida365.com for Dida365). The token is kept in the system keyring "
+"(KWallet or Secret Service), not in the widget's settings."
+msgstr ""
+"Δημιουργήστε ένα διακριτικό API στον ιστότοπο του TickTick: Settings > "
+"Account > API Token (στο dida365.com για το Dida365). Το διακριτικό "
+"φυλάσσεται στην κλειδοθήκη του συστήματος (KWallet ή Secret Service), όχι "
+"στις ρυθμίσεις του γραφικού στοιχείου."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1134,16 +1282,6 @@ msgstr "Εμφάνιση (διαγραμμένα)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "Απόκρυψη"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Overdue tasks on today"
-msgstr "Εκπρόθεσμες εργασίες στη σημερινή ημέρα"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr ""
-"Οι ανοιχτές εργασίες με προθεσμία σε προηγούμενη ημέρα εμφανίζονται στη "
-"σημερινή ημέρα, σε κάθε προβολή."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
@@ -1397,6 +1535,11 @@ msgstr "Διαγραφή όλων των συμβάντων του «%1»"
 msgid "No due date"
 msgstr "Χωρίς προθεσμία"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 is a date, %2 a time"
+msgid "%1, %2"
+msgstr "%1, %2"
+
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = date"
 msgid "Due %1"
@@ -1476,6 +1619,10 @@ msgstr "Όλα τα συμβάντα"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Διαγράφει όλες τις επαναλήψεις αυτού του επαναλαμβανόμενου συμβάντος."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in TickTick"
+msgstr "Άνοιγμα στο TickTick"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Tasks"
@@ -2967,9 +3114,6 @@ msgstr "Τοποθεσία εργασίας: %1"
 #~ msgctxt "%1 = event title, %2 = 5m / now"
 #~ msgid "%1 · %2"
 #~ msgstr "%1 · %2"
-
-#~ msgid "General"
-#~ msgstr "Γενικά"
 
 #~ msgid "Timezones"
 #~ msgstr "Ζώνες 'Ωρας"

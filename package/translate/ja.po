@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:12+0100\n"
+"POT-Creation-Date: 2026-10-26 09:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -36,6 +36,10 @@ msgstr "ICalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Google Calendar"
+
+#: ../contents/config/config.qml
+msgid "Tasks"
+msgstr "タスク"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 msgid "Weather"
@@ -123,15 +127,15 @@ msgstr "(無題)"
 msgid "[No Calendars]"
 msgstr "[カレンダーはありません]"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "HTTP エラー %1: %2"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "接続できませんでした"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "まもなく再試行します。"
 
@@ -139,7 +143,7 @@ msgstr "まもなく再試行します。"
 msgid "Widget has been updated. Please logout and login to Google Calendar again."
 msgstr "ウィジェットが更新されました。Google Calendar からログアウトして、もう一度ログインしてください。"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "Web リクエストが多すぎます。まもなく再試行します。"
 
@@ -175,6 +179,14 @@ msgstr "ToDo"
 msgid "Other"
 msgstr "その他"
 
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "TickTick: sign in again"
+msgstr "TickTick: 再度サインインしてください"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Connect the account again with a new API token in the Tasks settings."
+msgstr "タスクの設定で新しい API トークンを使ってアカウントを再接続してください。"
+
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
 msgid "Calendars"
 msgstr "カレンダー"
@@ -187,7 +199,7 @@ msgstr "設定でカレンダーが選択されていません。"
 msgid "Show All"
 msgstr "すべて表示"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -580,7 +592,7 @@ msgstr "通知の種類ごとのポップアップとサウンドは、システ
 msgid "Google Account"
 msgstr "Google アカウント"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Google アカウント %1"
 
@@ -636,11 +648,11 @@ msgstr "再度サインイン"
 msgid "Reload calendars and task lists"
 msgstr "カレンダーとタスクリストを再読み込み"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "アカウントを削除"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "削除"
 
@@ -657,8 +669,8 @@ msgid "No calendars loaded yet. Use the reload button."
 msgstr "カレンダーはまだ読み込まれていません。再読み込みボタンを使用してください。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task Lists"
-msgstr "タスクリスト"
+msgid "Task lists are chosen on the Tasks page."
+msgstr "タスクリストはタスクのページで選択します。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -795,6 +807,110 @@ msgstr "ブラウズ"
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick did not accept the API token. Check it and try again."
+msgstr "TickTick が API トークンを受け付けませんでした。確認してもう一度お試しください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not connect to TickTick. Check your connection and try again."
+msgstr "TickTick に接続できませんでした。接続を確認してもう一度お試しください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick error: %1"
+msgstr "TickTick エラー: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connecting to TickTick…"
+msgstr "TickTick に接続しています…"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "インボックス"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Could not store the API token in the system keyring: %1"
+msgstr "API トークンをシステムのキーリングに保存できませんでした: %1"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick account added."
+msgstr "TickTick アカウントを追加しました。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "一般"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Overdue tasks on today"
+msgstr "期限切れのタスクを今日に表示"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "期限が過ぎた未完了のタスクを、すべてのビューで今日に表示します。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Tasks"
+msgstr "Google Tasks"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Sign in on the Google Calendar page to choose the Google task lists shown here."
+msgstr "ここに表示する Google のタスクリストを選択するには、Google Calendar のページでサインインしてください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task Lists"
+msgstr "タスクリスト"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr "タスクリストはまだ読み込まれていません。Google Calendar のページでアカウントを再読み込みしてください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick"
+msgstr "TickTick"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Reload projects"
+msgstr "プロジェクトを再読み込み"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "This account's API token is not in the system keyring. Remove the account and connect it again."
+msgstr "このアカウントの API トークンがシステムのキーリングにありません。アカウントを削除して再接続してください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "No projects loaded yet. Use the reload button."
+msgstr "プロジェクトはまだ読み込まれていません。再読み込みボタンを使用してください。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "サーバー"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "TickTick (ticktick.com)"
+msgstr "TickTick (ticktick.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Dida365 (dida365.com)"
+msgstr "Dida365 (dida365.com)"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "API token"
+msgstr "API トークン"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Paste the API token"
+msgstr "API トークンを貼り付け"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect Another Account"
+msgstr "別のアカウントを接続"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "接続"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
+msgstr "TickTick の Web サイトで API トークンを作成してください: 設定 > アカウント > API トークン (Dida365 の場合は dida365.com)。トークンはウィジェットの設定ではなく、システムのキーリング (KWallet または Secret Service) に保存されます。"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -991,14 +1107,6 @@ msgstr "表示 (取り消し線付き)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "非表示"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Overdue tasks on today"
-msgstr "期限切れのタスクを今日に表示"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr "期限が過ぎた未完了のタスクを、すべてのビューで今日に表示します。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
@@ -1242,6 +1350,11 @@ msgstr "「%1」のすべてのイベントを削除"
 msgid "No due date"
 msgstr "期限なし"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 is a date, %2 a time"
+msgid "%1, %2"
+msgstr "%1 %2"
+
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = date"
 msgid "Due %1"
@@ -1317,6 +1430,10 @@ msgstr "すべてのイベント"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "この繰り返しイベントのすべての回を削除します。"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in TickTick"
+msgstr "TickTick で開く"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Tasks"
@@ -2736,9 +2853,6 @@ msgstr "勤務場所: %1"
 #~ msgid "%1 · %2"
 #~ msgstr "%1 · %2"
 
-#~ msgid "General"
-#~ msgstr "一般"
-
 #~ msgid "Layout"
 #~ msgstr "レイアウト"
 
@@ -2995,9 +3109,6 @@ msgstr "勤務場所: %1"
 
 #~ msgid "To sync with Google Calendar"
 #~ msgstr "Google Calendarと同期します"
-
-#~ msgid "Tasks"
-#~ msgstr "タスク"
 
 #~ msgid "Calendar to the left of the Agenda (Two Columns)"
 #~ msgstr "カレンダーの右側に予定を配置（2列）"
