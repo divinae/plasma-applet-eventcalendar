@@ -118,10 +118,12 @@ function summarizeTasks(items, now, maxItems, withAlerts) {
 			return
 		}
 		seen[key] = true
-		list.push({ day: day, overdue: overdue, priority: Tasks.priorityOf(item), title: String(item.summary || item.title || '') })
+		list.push({ day: day, overdue: overdue, priority: Tasks.priorityOf(item), order: list.length, title: String(item.summary || item.title || '') })
 	})
 	list.sort(function(a, b) {
-		return a.day < b.day ? -1 : a.day > b.day ? 1 : b.priority - a.priority
+		return a.day < b.day ? -1 : a.day > b.day ? 1
+			: b.priority !== a.priority ? b.priority - a.priority
+			: a.order - b.order // Array.sort isn't stable everywhere
 	})
 	var overdueCount = list.filter(function(t) { return t.overdue }).length
 	var limit = maxItems > 0 ? maxItems : 3
