@@ -310,6 +310,14 @@
 	</group>
 
 
+	<group name="TickTick">
+		<!-- TickTick accounts: id, label, server, projectList, projectIdList. The API tokens are in
+		the system keyring (secret_store.py, scope ticktick-account), never here. -->
+		<entry name="tickTickAccounts" type="string" stringType="base64json">
+			<default></default>
+		</entry>
+	</group>
+
 	<group name="Google Calendar">
 		<entry name="googleAccounts" type="string" stringType="base64json">
 			<default></default>

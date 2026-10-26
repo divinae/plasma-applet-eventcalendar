@@ -186,6 +186,8 @@ KCM.SimpleKCM {
 	property var cfg_enabledCalendarPluginsDefault
 	property var cfg_enabledCalendarPluginsAllowEmpty
 	property var cfg_enabledCalendarPluginsAllowEmptyDefault
+	property var cfg_tickTickAccounts
+	property var cfg_tickTickAccountsDefault
 	property var cfg_googleAccounts
 	property var cfg_googleAccountsDefault
 	property var cfg_googleActiveAccountId

@@ -254,6 +254,48 @@ CalendarManager {
 		}
 	}
 
+	//--- TickTick: one session and tasks manager per account with a token (from the keyring).
+	TickTickAccountsStore {
+		id: tickTickAccountsStore
+	}
+
+	Repeater {
+		id: tickTickAccountsRepeater
+		model: tickTickAccountsStore.fetchableAccounts
+		delegate: Item {
+			id: tickTickAccountItem
+			property string accountId: modelData.id
+
+			TickTickApiSession {
+				id: tickTickApiSession
+				server: modelData.server
+				token: modelData.token
+			}
+			TickTickTasksManager {
+				id: tickTickTasksManager
+				session: tickTickApiSession
+				accountsStore: tickTickAccountsStore
+				accountId: tickTickAccountItem.accountId
+				accountLabel: modelData.label || "TickTick"
+			}
+
+			Component.onCompleted: {
+				eventModel.bindSignals(tickTickTasksManager)
+			}
+			Component.onDestruction: {
+				eventModel.unbindSignals(tickTickTasksManager)
+			}
+		}
+	}
+
+	Connections {
+		target: tickTickAccountsStore
+		function onFetchableAccountsChanged() {
+			eventModel.clear()
+			deferredUpdate.restart()
+		}
+	}
+
 	PlasmaCalendarManager {
 		id: plasmaCalendarManager
 	}
@@ -394,6 +436,11 @@ CalendarManager {
 		var dueDay = Tasks.dueDay(task)
 		if (dueDay) {
 			var due = Qt.formatDateTime(new Date(dueDay + ' 00:00:00'), i18nc("short month+date format", "MMM d"))
+			if (task.dueTime) { // Timed TickTick tasks
+				var parts = String(task.dueTime).split(':')
+				var time = new Date(2000, 0, 1, Number(parts[0]), Number(parts[1]))
+				due = i18nc("%1 is a date, %2 a time", "%1, %2", due, Qt.formatTime(time, appletConfig.timeFormat))
+			}
 			lines.push(i18nc("%1 is a date", "Due %1", due))
 		} else {
 			lines.push(i18n("No due date"))

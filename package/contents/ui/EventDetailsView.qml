@@ -69,7 +69,13 @@ Rectangle {
 		}
 		var parts = day.split('-')
 		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
-		var text = i18nc("%1 = date", "Due %1", Qt.formatDate(date, Qt.locale().dateFormat(Locale.LongFormat)))
+		var dateText = Qt.formatDate(date, Qt.locale().dateFormat(Locale.LongFormat))
+		if (eventItem.dueTime) { // Timed TickTick tasks
+			var time = eventItem.dueTime.split(':')
+			dateText = i18nc("%1 is a date, %2 a time", "%1, %2", dateText,
+				Qt.formatTime(new Date(2000, 0, 1, Number(time[0]), Number(time[1])), appletConfig.timeFormat))
+		}
+		var text = i18nc("%1 = date", "Due %1", dateText)
 		return isOverdue ? text + " · " + i18n("Overdue") : text
 	}
 	function toggleDone() {
@@ -199,7 +205,9 @@ Rectangle {
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
 				icon.name: "globe" // Native action icon (internet-web-browser is a colored app icon)
-				text: details.isTask ? i18n("Open in Google Tasks") : i18n("Open in Google Calendar")
+				text: details.isTask
+					? (details.eventItem && details.eventItem.calendarManagerId === "TickTick" ? i18n("Open in TickTick") : i18n("Open in Google Tasks"))
+					: i18n("Open in Google Calendar")
 				display: QQC2.AbstractButton.IconOnly
 				onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
 				PlasmaComponents3.ToolTip.text: text
