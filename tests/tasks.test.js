@@ -13,7 +13,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
 	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
-	'priorityOf', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
+	'priorityOf', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -550,5 +550,81 @@ for (const minutes of [15, 0, -540, 2340, 1441, 30]) {
 }
 // Without the new fields toTickTick is as before (no priority / items / reminders sent).
 same(T.toTickTick(T.editBody({ title: 'Plain' }), { priority: 5, items: [{ id: 'a' }] }, null), { title: 'Plain' })
+
+// priorityKey: the check's color.
+same(['x', 0, 1, 2, 3, 4, 5, 9].map(T.priorityKey), ['none', 'none', 'low', 'low', 'medium', 'medium', 'high', 'high'])
+assert.strictEqual(T.priorityKey(task({ priority: 5 })), 'high')
+assert.strictEqual(T.priorityKey(null), 'none')
+
+// dueTimeOf: only with a due day.
+assert.strictEqual(T.dueTimeOf(task({ due: '2026-10-28T00:00:00.000Z', dueTime: '9:05' })), '09:05')
+assert.strictEqual(T.dueTimeOf(task({ dueTime: '09:05' })), '', 'undated: no time')
+assert.strictEqual(T.dueTimeOf(task({ due: '2026-10-28T00:00:00.000Z', dueTime: '' })), '')
+assert.strictEqual(T.dueTimeOf(task({ due: '2026-10-28T00:00:00.000Z', dueTime: '25:00' })), '')
+
+// subtaskProgress
+same(T.subtaskProgress(task({ subtasks: [{ id: 'a', done: true }, { id: 'b' }, null, { id: 'c', done: 1 }] })), { done: 2, total: 3 })
+same(T.subtaskProgress(task({})), { done: 0, total: 0 })
+
+// capabilities: TickTick has them all, Google none.
+same(T.capabilities('TickTick'), { dueTime: true, priority: true, repeat: true, reminders: true, subtasks: true })
+same(T.capabilities('GoogleTasks'), { dueTime: false, priority: false, repeat: false, reminders: false, subtasks: false })
+
+// Subtasks in the rows: right under their parent, indented.
+{
+	const lists = [{ id: 'g::a', name: 'A', group: 'G' }]
+	const items = { 'g::a': [
+		task({ id: 'kid', parentId: 'p', due: '2026-10-26T00:00:00.000Z', position: '1' }),
+		task({ id: 'other', due: '2026-10-26T00:00:00.000Z', position: '0' }),
+		task({ id: 'p', due: '2026-10-26T00:00:00.000Z', position: '2' }),
+	] }
+	same(T.taskRows(lists, items, false, 'due').filter(r => r.type === 'task').map(r => r.item.id + r.depth), ['other0', 'p0', 'kid1'])
+	same(T.dateRows(lists, items, '2026-10-26', 1, false).filter(r => r.type === 'task').map(r => r.item.id + r.depth), ['other0', 'p0', 'kid1'])
+	same(T.flatRows(lists, items, 'title', false).filter(r => r.type === 'task').map(r => r.item.id + r.depth), ['other0', 'p0', 'kid1'])
+	// A parent in another section: its subtask is a top level task there.
+	const split = { 'g::a': [task({ id: 'p', due: '2026-10-27T00:00:00.000Z' }), task({ id: 'kid', parentId: 'p', due: '2026-10-26T00:00:00.000Z' })] }
+	same(T.dateRows(lists, split, '2026-10-26', 1, false).filter(r => r.type === 'task').map(r => r.item.id + r.depth), ['kid0', 'p0'])
+	// dayTaskRows: open ones (with subtasks under them), then the done ones.
+	const day = [
+		task({ id: 'kid', parentId: 'p', due: '2026-10-26T00:00:00.000Z', position: '1' }),
+		task({ id: 'p', due: '2026-10-26T00:00:00.000Z', position: '2' }),
+		task({ id: 'done', due: '2026-10-26T00:00:00.000Z', status: 'completed' }),
+		task({ id: 'b', due: '2026-10-26T00:00:00.000Z', position: '0' }),
+	]
+	same(T.dayTaskRows(day, '2026-10-26', '2026-10-26').map(r => r.item.id + r.depth), ['b0', 'p0', 'kid1', 'done0'])
+}
+
+// reorderPrevious: the task a dropped one goes after, within its list (and section), else null.
+{
+	const A = { id: 'g::a' }
+	const B = { id: 'g::b' }
+	const row = (id, list, section, done) => ({ type: 'task', key: 'task:' + list.id + ':' + id, item: { id: id }, list: list, section: section, done: !!done })
+	const rows = [
+		{ type: 'section', key: 'section:today', section: 'today' },
+		row('a1', A, 'today'), row('a2', A, 'today'), row('b1', B, 'today'), row('a3', A, 'today'),
+		{ type: 'section', key: 'section:week', section: 'week' },
+		row('a4', A, 'week'),
+		row('a5', A, 'today', true),
+	]
+	assert.strictEqual(T.reorderPrevious(rows, 1, 2, false), 'a2', 'a1 below a2')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 2, true), null, 'a1 above a2: where it is')
+	assert.strictEqual(T.reorderPrevious(rows, 2, 1, true), '', 'a2 above a1: first')
+	assert.strictEqual(T.reorderPrevious(rows, 2, 1, false), null, 'a2 below a1: where it is')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 4, false), 'a3')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 4, true), 'a2', 'above a3: after a2 (another list\'s task between them)')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 3, false), null, 'another list')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 6, false), null, 'another section')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 0, false), null, 'a header')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 1, false), null, 'itself')
+	assert.strictEqual(T.reorderPrevious(rows, 1, 7, false), null, 'a done one')
+	assert.strictEqual(T.reorderPrevious(rows, 7, 1, false), null, 'a done one dragged')
+	assert.strictEqual(T.reorderPrevious(null, 0, 1, false), null)
+	// By list: no sections.
+	const byList = [{ type: 'list', key: 'list:g::a', list: A }, row('x', A), row('y', A), row('z', A)]
+	byList.forEach(r => { delete r.section })
+	assert.strictEqual(T.reorderPrevious(byList, 3, 1, true), '')
+	assert.strictEqual(T.reorderPrevious(byList, 1, 3, false), 'z')
+	assert.strictEqual(T.reorderPrevious(byList, 1, 3, true), 'y')
+}
 
 console.log('PASS tasks')

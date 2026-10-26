@@ -54,11 +54,27 @@ assert.deepStrictEqual(act(0x34, Modifier.Keypad, 'week'), { type: 'view', mode:
 assert.deepStrictEqual(act(0x35, 0, 'month'), { type: 'view', mode: 'tasks' }) // 5: Tasks
 assert.strictEqual(K.actionFor(0x36, 0, 'month'), null) // 6: no view
 
-// Tasks: no days; arrows, pages and "today" are left to the list. New, search and views stay.
-for (const key of [Key.Left, Key.Right, Key.Up, Key.Down, Key.PageUp, Key.PageDown, Key.T, Key.Home, Key.Return]) {
+// Tasks: no days; left / right, pages and "today" are left to the list. New, search and views stay.
+for (const key of [Key.Left, Key.Right, Key.PageUp, Key.PageDown, Key.T, Key.Home]) {
 	assert.strictEqual(K.actionFor(key, 0, 'tasks'), null, 'tasks ' + key)
 }
 assert.deepStrictEqual(act(Key.N, 0, 'tasks'), { type: 'new' })
+// Tasks: Up / Down move the highlighted task; Enter, Space, E and Delete act on it.
+assert.deepStrictEqual(act(Key.Up, 0, 'tasks'), { type: 'taskMove', delta: -1 })
+assert.deepStrictEqual(act(Key.Down, 0, 'tasks'), { type: 'taskMove', delta: 1 })
+assert.deepStrictEqual(act(Key.Return, 0, 'tasks'), { type: 'taskOpen' })
+assert.deepStrictEqual(act(Key.Enter, Modifier.Keypad, 'tasks'), { type: 'taskOpen' })
+assert.deepStrictEqual(act(Key.Space, 0, 'tasks'), { type: 'taskToggle' })
+assert.deepStrictEqual(act(Key.E, 0, 'tasks'), { type: 'taskEdit' })
+assert.deepStrictEqual(act(Key.Delete, 0, 'tasks'), { type: 'taskDelete' })
+assert.strictEqual(K.actionFor(Key.E, Modifier.Shift, 'tasks'), null)
+assert.strictEqual(K.actionFor(Key.Delete, Modifier.Control, 'tasks'), null)
+// Elsewhere they aren't shortcuts.
+for (const mode of ['month', 'week', 'today', 'classic']) {
+	for (const key of [Key.Space, Key.E, Key.Delete]) {
+		assert.strictEqual(K.actionFor(key, 0, mode), null, mode + ' ' + key)
+	}
+}
 assert.deepStrictEqual(act(Key.Slash, 0, 'tasks'), { type: 'search' })
 assert.deepStrictEqual(act(0x31, 0, 'tasks'), { type: 'view', mode: 'month' })
 

@@ -8,6 +8,7 @@ var Key = {
 	Tab: 0x01000001,
 	Return: 0x01000004,
 	Enter: 0x01000005,
+	Delete: 0x01000007,
 	Home: 0x01000010,
 	Left: 0x01000012,
 	Up: 0x01000013,
@@ -15,8 +16,10 @@ var Key = {
 	Down: 0x01000015,
 	PageUp: 0x01000016,
 	PageDown: 0x01000017,
+	Space: 0x20,
 	Slash: 0x2f,
 	Digit1: 0x31,
+	E: 0x45,
 	F: 0x46,
 	N: 0x4e,
 	T: 0x54,
@@ -40,6 +43,8 @@ var VIEW_MODES = ['month', 'week', 'today', 'classic', 'tasks']
 //   { type: 'new' }: new event on the selected day
 //   { type: 'search' }, { type: 'today' }
 //   { type: 'view', mode: 'month' }: switch the view
+//   Tasks tab: { type: 'taskMove', delta: -1 | 1 } (Up / Down: the highlighted task), 'taskOpen'
+//   (Enter), 'taskToggle' (Space), 'taskEdit' (E), 'taskDelete' (Delete); N ('new') is "Add a task…"
 // null: not a shortcut, the key goes on to Plasma (eg: Esc closes the popup).
 function actionFor(key, modifiers, mode) {
 	var mods = (modifiers || 0) & ~Modifier.Keypad
@@ -59,6 +64,18 @@ function actionFor(key, modifiers, mode) {
 	var shift = (mods & Modifier.Shift) !== 0
 	if (shift) {
 		return null
+	}
+
+	if (mode === 'tasks') {
+		switch (key) {
+			case Key.Up: return { type: 'taskMove', delta: -1 }
+			case Key.Down: return { type: 'taskMove', delta: 1 }
+			case Key.Return:
+			case Key.Enter: return { type: 'taskOpen' }
+			case Key.Space: return { type: 'taskToggle' }
+			case Key.E: return { type: 'taskEdit' }
+			case Key.Delete: return { type: 'taskDelete' }
+		}
 	}
 
 	var grid = mode === 'month'

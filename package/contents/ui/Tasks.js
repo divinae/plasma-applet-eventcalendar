@@ -157,6 +157,37 @@ function cleanRepeatRule(rule) {
 	return typeof rule === 'string' ? rule.trim() : ''
 }
 
+// The priority's name: 'high', 'medium', 'low' or 'none' (the check's color, like TickTick).
+function priorityKey(itemOrValue) {
+	switch (priorityOf(itemOrValue)) {
+		case PRIORITY_HIGH: return 'high'
+		case PRIORITY_MEDIUM: return 'medium'
+		case PRIORITY_LOW: return 'low'
+	}
+	return 'none'
+}
+
+// The time a task is due ('HH:mm'), '' when all-day or undated.
+function dueTimeOf(item) {
+	return dueDay(item) ? cleanTime(item && item.dueTime) : ''
+}
+
+// A task's checklist progress: { done, total } (TickTick's checklist items).
+function subtaskProgress(item) {
+	var list = cleanSubtasks(item && item.subtasks)
+	return {
+		done: list.filter(function(s) { return s.done }).length,
+		total: list.length,
+	}
+}
+
+// What the editor can set on a task of a provider ('TickTick', 'GoogleTasks', …): { dueTime,
+// priority, repeat, reminders, subtasks }. Google Tasks has none of them.
+function capabilities(provider) {
+	var all = provider === 'TickTick'
+	return { dueTime: all, priority: all, repeat: all, reminders: all, subtasks: all }
+}
+
 // The tasks of one list in subtask order: each task followed by its subtasks (parentId, or
 // Google's parent), at any depth. Rows: [{ item, depth }] (0 for a top level task). Siblings keep
 // the order of items; a task whose parent isn't in items (or a loop) is a top level one.
@@ -703,8 +734,9 @@ function taskRows(lists, itemsByList, showCompleted, sortBy) {
 				;(isDone(item) ? done : open).push(item)
 			}
 			rows.push({ type: 'list', key: 'list:' + list.id, list: list, openCount: open.length, doneCount: done.length })
-			sortOpenTasks(open, sortBy).forEach(function(item) {
-				rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: false })
+			subtaskTree(sortOpenTasks(open, sortBy)).forEach(function(node) {
+				var item = node.item
+				rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: false, depth: node.depth })
 			})
 			rows.push({ type: 'add', key: 'add:' + list.id, list: list })
 			if (showCompleted) {
@@ -740,6 +772,14 @@ function dayTasks(items, day, today) {
 		;(isDone(item) ? done : open).push(item)
 	}
 	return sortOpenTasks(open).concat(sortDoneTasks(done))
+}
+
+// dayTasks as rows, [{ item, depth }]: each task's subtasks (Google: parentId) right under it, the
+// open ones and the done ones apart.
+function dayTaskRows(items, day, today) {
+	var tasks = dayTasks(items, day, today)
+	return subtaskTree(tasks.filter(function(t) { return !isDone(t) }))
+		.concat(subtaskTree(tasks.filter(isDone)))
 }
 
 //--- Tasks view by date
@@ -842,9 +882,13 @@ function dateRows(lists, itemsByList, today, firstDayOfWeek, showCompleted, sort
 	return rows
 }
 
+// Open rows of entries ([{ item, list }], sorted), each task's subtasks (Google: parentId) right
+// under it, indented by depth, when they're in the same run.
 function pushOpenRows(rows, entries, section) {
-	entries.forEach(function(e) {
-		rows.push({ type: 'task', key: 'task:' + e.list.id + ':' + e.item.id, item: e.item, list: e.list, done: false, section: section })
+	var items = entries.map(function(e) { return e.item })
+	subtaskTree(items).forEach(function(node) {
+		var e = entries[items.indexOf(node.item)]
+		rows.push({ type: 'task', key: 'task:' + e.list.id + ':' + e.item.id, item: e.item, list: e.list, done: false, section: section, depth: node.depth })
 	})
 }
 
@@ -940,6 +984,47 @@ function listDrop(fromId, toId) {
 	}
 	var account = listAccount(fromId)
 	return account && account === listAccount(toId) ? 'move' : 'refuse'
+}
+
+//--- Reorder (Google lists): drag a task between the rows of its list
+
+// Whether row b is a task row that a task of row a can be put next to: an open task of the same
+// list, in the same section (by date).
+function sameRun(a, b) {
+	return !!a && !!b && b.type === 'task' && !b.done && !a.done && !!a.list && !!b.list
+		&& a.list.id === b.list.id && (a.section || '') === (b.section || '')
+}
+
+// The task of dragged's list right before rows[index] in its section (other lists' tasks and
+// dragged skipped): its id, '' at the start of the section.
+function previousInRun(rows, index, dragged) {
+	for (var i = index - 1; i >= 0; i--) {
+		var row = rows[i]
+		if (row.type !== 'task' || row.done || (row.section || '') !== (dragged.section || '')) {
+			return ''
+		}
+		if (row !== dragged && row.key !== dragged.key && sameRun(dragged, row)) {
+			return String(row.item.id)
+		}
+	}
+	return ''
+}
+
+// Dropping the dragged task row (rows[dragIndex]) above (above: true) or below rows[targetIndex]:
+// the id of the task it goes after ('' : first), or null when that's not a reorder (another list
+// or section, a header, itself, or where it already is).
+function reorderPrevious(rows, dragIndex, targetIndex, above) {
+	rows = rows || []
+	var dragged = rows[dragIndex]
+	var target = rows[targetIndex]
+	if (!dragged || dragged.type !== 'task' || dragIndex === targetIndex || !sameRun(dragged, target)) {
+		return null
+	}
+	var previous = above ? previousInRun(rows, targetIndex, dragged) : String(target.item.id)
+	if (previous === previousInRun(rows, dragIndex, dragged)) {
+		return null // Where it already is
+	}
+	return previous
 }
 
 //--- Quick add ("Add a task…" rows)

@@ -71,6 +71,11 @@ function merge(local, extra, now, limit) {
 	return sortResults(list, now).slice(0, limit || 100)
 }
 
+function isTask(item) {
+	return !!item && item.kind === 'tasks#task'
+}
+
+// The loaded events (not tasks: searchTasks) that match the query.
 function searchLocal(items, query, now, limit) {
 	var queryTokens = tokens(query)
 	if (!queryTokens.length) {
@@ -78,11 +83,51 @@ function searchLocal(items, query, now, limit) {
 	}
 	var found = []
 	for (var i = 0; i < (items || []).length; i++) {
-		if (matches(items[i], queryTokens)) {
+		if (!isTask(items[i]) && matches(items[i], queryTokens)) {
 			found.push(items[i])
 		}
 	}
 	return merge(found, [], now, limit)
+}
+
+// Every word of the query in a task's title or notes.
+function matchesTask(item, queryTokens) {
+	var haystack = normalize([item.summary || item.title, item.notes || item.description].join(' '))
+	for (var i = 0; i < queryTokens.length; i++) {
+		if (haystack.indexOf(queryTokens[i]) < 0) {
+			return false
+		}
+	}
+	return queryTokens.length > 0
+}
+
+// The loaded tasks that match the query (title, notes), each once: open ones first, the earliest
+// due first (undated after the dated ones), then the done ones; at most limit.
+function searchTasks(items, query, limit) {
+	var queryTokens = tokens(query)
+	if (!queryTokens.length) {
+		return []
+	}
+	var seen = {}
+	var found = []
+	for (var i = 0; i < (items || []).length; i++) {
+		var item = items[i]
+		if (!isTask(item) || seen[key(item)] || !matchesTask(item, queryTokens)) {
+			continue
+		}
+		seen[key(item)] = true
+		found.push(item)
+	}
+	var rank = function(item) {
+		var due = typeof item.due === 'string' ? item.due.substring(0, 10) : ''
+		return (item.status === 'completed' ? '2' : due ? '0' : '1') + due
+	}
+	found.sort(function(a, b) {
+		var ra = rank(a)
+		var rb = rank(b)
+		return ra < rb ? -1 : ra > rb ? 1 : 0
+	})
+	return found.slice(0, limit || 100)
 }
 
 if (typeof module !== 'undefined') {
@@ -93,5 +138,6 @@ if (typeof module !== 'undefined') {
 		sortResults: sortResults,
 		merge: merge,
 		searchLocal: searchLocal,
+		searchTasks: searchTasks,
 	}
 }

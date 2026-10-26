@@ -43,4 +43,25 @@ const sameIdOtherCalendar = Object.assign({}, items[1], { calendarId: 'other' })
 assert.strictEqual(S.merge([items[1]], [sameIdOtherCalendar], now, 10).length, 2, 'dedupe is per calendar')
 assert.strictEqual(S.merge(items, [], now, 2).length, 2, 'limit')
 
+// Tasks: not with the events; searchTasks finds them by title and notes, open ones first.
+{
+	const task = (id, summary, extra) => Object.assign({ kind: 'tasks#task', id, calendarId: 'list', summary, status: 'needsAction',
+		startDateTime: new Date(2026, 9, 16), endDateTime: new Date(2026, 9, 17) }, extra || {})
+	const tasks = [
+		task('t1', 'Pay the dentist', { due: '2026-10-20T00:00:00.000Z' }),
+		task('t2', 'Groceries', { notes: 'Milk for the DENTIST visit' }),
+		task('t3', 'Dentist bill', { status: 'completed' }),
+		task('t4', 'Book dentist', { due: '2026-10-18T00:00:00.000Z' }),
+		task('t1', 'Pay the dentist', { due: '2026-10-20T00:00:00.000Z' }),
+		task('t5', 'Unrelated'),
+	]
+	const all = items.concat(tasks)
+	assert.deepStrictEqual(ids(S.searchLocal(all, 'dentist', now)), ['4'], 'events only')
+	assert.deepStrictEqual(ids(S.searchTasks(all, 'dentist')), ['t4', 't1', 't2', 't3'], 'tasks: due first, undated, done last; each once')
+	assert.deepStrictEqual(ids(S.searchTasks(all, 'milk visit')), ['t2'], 'notes')
+	assert.deepStrictEqual(ids(S.searchTasks(all, 'dentist', 2)), ['t4', 't1'], 'limit')
+	assert.deepStrictEqual(ids(S.searchTasks(all, '  ')), [])
+	assert.deepStrictEqual(ids(S.searchTasks(null, 'x')), [])
+}
+
 console.log('event_search ok')
