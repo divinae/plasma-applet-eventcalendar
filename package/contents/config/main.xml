@@ -171,12 +171,24 @@
 			<default>true</default>
 		</entry>
 		<entry name="tasksShowCompleted" type="bool">
-			<!-- Tasks view: done tasks at the bottom of each list. -->
+			<!-- Tasks view: the done tasks (at the bottom of each list; islands: the Completed card). -->
 			<default>false</default>
 		</entry>
 		<entry name="tasksGroupBy" type="string">
-			<!-- Tasks view: 'date' (Overdue, Today, Tomorrow, This week, Later, No date) or 'list'. -->
+			<!-- Tasks view: 'date' (Overdue, Today, Tomorrow, This week, Later, No date), 'list' or 'none'. -->
 			<default>date</default>
+		</entry>
+		<entry name="tasksFilter" type="string">
+			<!-- Tasks view: the tasks shown: 'all', 'today', 'tomorrow', 'next7', 'overdue', 'nodate' or 'list:<id>'. -->
+			<default>all</default>
+		</entry>
+		<entry name="tasksSortBy" type="string">
+			<!-- Tasks view: the order within a section: 'due', 'title' or 'list'. -->
+			<default>due</default>
+		</entry>
+		<entry name="tasksShowDetails" type="bool">
+			<!-- Tasks view: the first line of the notes, and each task's list. -->
+			<default>true</default>
 		</entry>
 		<entry name="tasksLastListId" type="string">
 			<!-- The task list "Add a task…" last added to, where no list is given (Day view, by date). -->

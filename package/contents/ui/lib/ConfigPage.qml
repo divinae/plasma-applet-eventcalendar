@@ -90,6 +90,12 @@ KCM.SimpleKCM {
 	property var cfg_tasksShowCompletedDefault
 	property var cfg_tasksGroupBy
 	property var cfg_tasksGroupByDefault
+	property var cfg_tasksFilter
+	property var cfg_tasksFilterDefault
+	property var cfg_tasksSortBy
+	property var cfg_tasksSortByDefault
+	property var cfg_tasksShowDetails
+	property var cfg_tasksShowDetailsDefault
 	property var cfg_tasksLastListId
 	property var cfg_tasksLastListIdDefault
 	property var cfg_eventsPollInterval
