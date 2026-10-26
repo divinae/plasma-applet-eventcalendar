@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3026,6 +3026,14 @@ msgstr "ניתן להעביר משימות רק לרשימה באותו חשבו
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "לא ניתן להעביר את המשימה"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "הסתרת מסננים"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "הצגת מסננים"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"

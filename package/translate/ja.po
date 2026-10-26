@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2773,6 +2773,14 @@ msgstr "タスクは同じアカウントのリストにのみ移動できます
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "タスクを移動できませんでした"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "フィルターを隠す"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "フィルターを表示"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"

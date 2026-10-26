@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -2800,6 +2800,14 @@ msgstr "Las tareas solo se pueden mover a una lista de la misma cuenta"
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "No se pudo mover la tarea"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "Ocultar filtros"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "Mostrar filtros"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"

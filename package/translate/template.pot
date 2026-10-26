@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2805,6 +2805,14 @@ msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml

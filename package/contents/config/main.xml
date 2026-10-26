@@ -178,6 +178,10 @@
 			<!-- Tasks view: lists left out of the smart filters (All, Today, ...), shown only on their own (like TickTick's "Someday"). -->
 			<default></default>
 		</entry>
+		<entry name="tasksSidebarCollapsed" type="bool">
+			<!-- Tasks view: the filters' side bar folded away (the header's filter button instead). -->
+			<default>false</default>
+		</entry>
 		<entry name="tasksShowCompleted" type="bool">
 			<!-- Tasks view: the done tasks (at the bottom of each list; islands: the Completed card). -->
 			<default>true</default>

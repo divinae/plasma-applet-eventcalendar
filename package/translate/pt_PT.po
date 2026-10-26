@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -2797,6 +2797,14 @@ msgstr "As tarefas só podem ser movidas para uma lista da mesma conta"
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Não foi possível mover a tarefa"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "Ocultar filtros"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "Mostrar filtros"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"

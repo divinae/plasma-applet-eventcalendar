@@ -88,7 +88,9 @@ Item {
 	readonly property string currentListId: Tasks.filterListId(currentFilter)
 	// Where "Add a task…" adds without a list of its own: the filter's list and due day.
 	readonly property var quickAddTarget: Tasks.filterQuickAdd(currentFilter, today)
-	readonly property bool showSidebar: width >= Kirigami.Units.gridUnit * 34
+	// Room for the filters' side bar; folded away with the header's button (tasksSidebarCollapsed).
+	readonly property bool sidebarFits: width >= Kirigami.Units.gridUnit * 34
+	readonly property bool showSidebar: sidebarFits && !plasmoid.configuration.tasksSidebarCollapsed
 	readonly property real sidebarWidth: Kirigami.Units.gridUnit * 10.5
 	onConfigFilterChanged: rebuild()
 
@@ -786,15 +788,28 @@ Item {
 					x: rowsColumn.x
 					width: rowsColumn.width
 					spacing: Kirigami.Units.smallSpacing
-					readonly property real titleWidth: tasksView.showSidebar ? titleRow.implicitWidth : filterButton.implicitWidth
+					readonly property real titleWidth: (tasksView.showSidebar ? titleRow.implicitWidth : filterButton.implicitWidth)
+						+ (sidebarToggle.visible ? sidebarToggle.implicitWidth + spacing : 0)
 					// By date / by list: only with room for it (else in the "⋯" menu only).
 					readonly property bool groupingFits: width - tasksView.sideMargin * 2 - titleWidth - moreButton.implicitWidth
 						- spacing * 3 >= groupingControl.implicitWidth
 
+					// Fold / unfold the filters' side bar (only with room for it).
+					PlasmaComponents3.ToolButton {
+						id: sidebarToggle
+						visible: tasksView.sidebarFits
+						Layout.leftMargin: tasksView.sideMargin - Kirigami.Units.smallSpacing
+						icon.name: tasksView.showSidebar ? "sidebar-collapse-left" : "sidebar-expand-left"
+						display: QQC2.AbstractButton.IconOnly
+						text: tasksView.showSidebar ? i18n("Hide filters") : i18n("Show filters")
+						onClicked: plasmoid.configuration.tasksSidebarCollapsed = tasksView.showSidebar
+						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.visible: hovered
+					}
 					RowLayout {
 						id: titleRow
 						visible: tasksView.showSidebar
-						Layout.leftMargin: tasksView.sideMargin
+						Layout.leftMargin: sidebarToggle.visible ? 0 : tasksView.sideMargin
 						Layout.minimumWidth: 0
 						Layout.maximumWidth: implicitWidth
 						Layout.fillWidth: true
@@ -822,7 +837,7 @@ Item {
 					PlasmaComponents3.ToolButton {
 						id: filterButton
 						visible: !tasksView.showSidebar
-						Layout.leftMargin: Math.max(0, tasksView.sideMargin - leftPadding)
+						Layout.leftMargin: sidebarToggle.visible ? 0 : Math.max(0, tasksView.sideMargin - leftPadding)
 						Layout.minimumWidth: 0
 						Layout.maximumWidth: implicitWidth
 						Layout.fillWidth: true

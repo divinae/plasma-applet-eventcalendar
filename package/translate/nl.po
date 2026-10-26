@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -3020,6 +3020,14 @@ msgstr ""
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Kon de taak niet verplaatsen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "Filters verbergen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "Filters tonen"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"

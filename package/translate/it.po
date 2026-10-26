@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:13+0100\n"
+"POT-Creation-Date: 2026-10-26 14:35+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -2799,6 +2799,14 @@ msgstr "Le attività possono essere spostate solo in un elenco dello stesso acco
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Impossibile spostare l'attività"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide filters"
+msgstr "Nascondi filtri"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show filters"
+msgstr "Mostra filtri"
 
 #: ../contents/ui/TasksView.qml
 msgid "%1 open task"
