@@ -1,6 +1,7 @@
 import QtQuick
 
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 
 ListModel {
 	id: agendaModel
@@ -205,9 +206,9 @@ ListModel {
 		}
 		var generation = ++agendaModel.parseGeneration
 		// Copy: items is shared with the month view and reminders. Don't sort or rewrite it in place.
-		var items = data.items.slice()
-		// Tasks are already on the day they're shown on (overdue ones on today with
-		// agendaPlaceOverdueTasksOnToday): see Tasks.placementDay, used when they're parsed.
+		// Events only: tasks are in the Tasks tab and the Day view. (A new array: items is shared with
+		// the month view and reminders, so it isn't sorted or rewritten in place.)
+		var items = Tasks.withoutTasks(data.items)
 
 		// Sort by start time if event, or position if tasks
 		items.sort(function(a,b) {
