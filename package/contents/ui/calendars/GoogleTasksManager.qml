@@ -290,6 +290,10 @@ CalendarManager {
 				}
 			})
 		}, function(err, isNetworkError) {
+			if (generation !== googleTasksManager.fetchGeneration) {
+				logger.debug('fetchGoogleAccountTasks', 'dropping stale auth failure')
+				return
+			}
 			restorePrevious(tasklistIdList)
 			handleAuthError(err, true, isNetworkError)
 		})
