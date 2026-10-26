@@ -9,6 +9,7 @@ import "EventCacheUtil.js" as EventCacheUtil
 import "Guests.js" as Guests
 import "Conflicts.js" as Conflicts
 import "EventTypes.js" as EventTypes
+import "Tasks.js" as Tasks
 
 CalendarManager {
 	id: eventModel
@@ -257,6 +258,14 @@ CalendarManager {
 		id: plasmaCalendarManager
 	}
 
+	// Tasks are placed on their day when parsed (Tasks.placementDay): place them again.
+	Connections {
+		target: plasmoid.configuration
+		function onAgendaPlaceOverdueTasksOnTodayChanged() {
+			deferredUpdate.restart()
+		}
+	}
+
 	//---
 	property var deferredUpdate: Timer {
 		id: deferredUpdate
@@ -356,6 +365,9 @@ CalendarManager {
 		if (!eventItem) {
 			return ''
 		}
+		if (Tasks.isTask(eventItem)) {
+			return taskDetailsText(eventItem)
+		}
 		var lines = []
 		lines.push(LocaleFuncs.formatEventDuration(eventItem, {
 			relativeDate: timeModel.currentTime,
@@ -372,6 +384,28 @@ CalendarManager {
 		if (description) {
 			lines.push('')
 			lines.push(description.length > 300 ? description.substr(0, 300) + '…' : description)
+		}
+		return lines.join('\n')
+	}
+
+	// Tooltip text for a task: due date, list, start of the notes.
+	function taskDetailsText(task) {
+		var lines = []
+		var dueDay = Tasks.dueDay(task)
+		if (dueDay) {
+			var due = Qt.formatDateTime(new Date(dueDay + ' 00:00:00'), i18nc("short month+date format", "MMM d"))
+			lines.push(i18nc("%1 is a date", "Due %1", due))
+		} else {
+			lines.push(i18n("No due date"))
+		}
+		var list = getCalendar(task.calendarId)
+		if (list && list.summary) {
+			lines.push(list.summary)
+		}
+		var notes = Shared.plainText(task.notes || task.description)
+		if (notes) {
+			lines.push('')
+			lines.push(notes.length > 300 ? notes.substr(0, 300) + '…' : notes)
 		}
 		return lines.join('\n')
 	}
@@ -570,7 +604,8 @@ CalendarManager {
 		return Guests.knownGuests(eventModel.eventsData.items)
 	}
 
-	// options: optional { params } with query params for the update (Google).
+	// options: optional { params } with query params for the update (Google Calendar), or
+	// { done(err, item) } for tasks.
 	function setEventProperties(calendarId, eventId, args, options) {
 		var calendarManager = managerWith(calendarId, 'setEventProperties')
 		if (calendarManager) {
@@ -578,6 +613,35 @@ CalendarManager {
 		} else {
 			logger.log('Could not setEventProperties: no calendar manager')
 		}
+	}
+
+	//--- Tasks (see Tasks.js)
+	function isTask(item) {
+		return Tasks.isTask(item)
+	}
+
+	// Check (done) or uncheck a task. cb(err, item): optional, always called once saved or failed.
+	function toggleTask(item, done, cb) {
+		if (!Tasks.isTask(item) || !managerWith(item.calendarId, 'setEventProperties')) {
+			if (cb) {
+				cb('toggleTask: not a task', null)
+			}
+			return
+		}
+		setEventProperties(item.calendarId, item.id, Tasks.toggleBody(done), { done: cb })
+	}
+
+	// The task lists tasks can be added to or moved to: [{ id, summary, backgroundColor }].
+	// accountPrefix: optional, only that account's lists (the part of the ids before '::').
+	function getTaskLists(accountPrefix) {
+		var prefix = accountPrefix ? accountPrefix + '::' : ''
+		return getCalendarList().filter(function(c) {
+			return c.isTasklist === true
+				&& (!c.accessRole || c.accessRole === 'owner' || c.accessRole === 'writer')
+				&& (!prefix || String(c.id).indexOf(prefix) === 0)
+		}).map(function(c) {
+			return { id: c.id, summary: c.summary, backgroundColor: c.backgroundColor }
+		})
 	}
 
 	// Repeat rules can be edited (Google Calendar).
