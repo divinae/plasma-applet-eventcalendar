@@ -401,15 +401,31 @@ Item {
 					elide: Text.ElideRight
 					Accessible.name: i18np("%1 open task", "%1 open tasks", tasksView.openCount)
 				}
-				PlasmaComponents3.ToolButton {
-					visible: !tasksView.byList && tasksView.taskAccounts.length > 0
-					icon.name: "configure"
-					display: QQC2.AbstractButton.IconOnly
-					text: i18n("Manage lists")
-					onClicked: plasmoid.configuration.tasksGroupBy = 'list'
-					Accessible.name: text
-					PlasmaComponents3.ToolTip.text: i18n("Manage lists (shows the tasks by list)")
-					PlasmaComponents3.ToolTip.visible: hovered
+				// Manage lists: a toggle (by list, where the list menus are), on the soft tint while on;
+				// clicked again it goes back to by date.
+				Item {
+					visible: tasksView.taskAccounts.length > 0
+					implicitWidth: manageButton.implicitWidth
+					implicitHeight: manageButton.implicitHeight
+					Rectangle {
+						anchors.fill: parent
+						radius: Kirigami.Units.cornerRadius
+						color: Kirigami.Theme.highlightColor
+						opacity: tasksView.byList ? 0.18 : 0
+					}
+					PlasmaComponents3.ToolButton {
+						id: manageButton
+						anchors.fill: parent
+						icon.name: "configure"
+						display: QQC2.AbstractButton.IconOnly
+						text: tasksView.byList ? i18n("Done managing lists") : i18n("Manage lists")
+						onClicked: plasmoid.configuration.tasksGroupBy = tasksView.byList ? 'date' : 'list'
+						Accessible.role: Accessible.CheckBox
+						Accessible.checked: tasksView.byList
+						Accessible.name: i18n("Manage lists")
+						PlasmaComponents3.ToolTip.text: tasksView.byList ? i18n("Done managing lists (shows the tasks by date)") : i18n("Manage lists (shows the tasks by list)")
+						PlasmaComponents3.ToolTip.visible: hovered
+					}
 				}
 				// Show completed: on the soft tint while on, like the grouping's current one.
 				Item {
@@ -713,6 +729,8 @@ Item {
 								tasksView.cancelRename()
 								event.accepted = true
 							}
+							// Clicking elsewhere leaves the rename (unsaved), like Esc.
+							onActiveFocusChanged: if (!activeFocus && !listHeader.busy) tasksView.cancelRename()
 						}
 					}
 					PlasmaComponents3.BusyIndicator {
@@ -834,6 +852,8 @@ Item {
 						tasksView.newListDraft = ""
 						event.accepted = true
 					}
+					// Clicking elsewhere with nothing typed closes the field.
+					onActiveFocusChanged: if (!activeFocus && !text.trim() && !newList.busy) tasksView.addingList = false
 					onVisibleChanged: {
 						if (visible) {
 							forceActiveFocus()

@@ -6,10 +6,11 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "Tasks.js" as Tasks
 
-// The Day view's tasks (Tasks.dayTasks): due on the shown day, and on today the open overdue and
-// undated ones too, as compact TaskRows under a "Tasks" heading with a "+" for a task due that
-// day, and "Add a task…" below them. Hidden without task lists. Collapsible: a strip that folds to its heading (above the
-// hour grid); otherwise always open (beside the grid, over the weather).
+// The Day view's tasks (Tasks.dayTasks): due on the shown day, and on today the open overdue ones
+// too (undated ones are only in the Tasks tab), as compact TaskRows under a "Tasks" heading with a
+// "+" for a task due that day, and "Add a task…" below them. Hidden without task lists.
+// Collapsible: a strip that folds to its heading (above the hour grid); otherwise always open
+// (beside the grid, right of it).
 ColumnLayout {
 	id: dayTasks
 

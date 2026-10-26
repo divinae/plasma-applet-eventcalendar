@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:12+0100\n"
+"POT-Creation-Date: 2026-10-26 11:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2624,8 +2624,16 @@ msgid_plural "%1 open tasks"
 msgstr[0] "未完了のタスク %1 件"
 
 #: ../contents/ui/TasksView.qml
+msgid "Done managing lists"
+msgstr "リストの管理を終了"
+
+#: ../contents/ui/TasksView.qml
 msgid "Manage lists"
 msgstr "リストを管理"
+
+#: ../contents/ui/TasksView.qml
+msgid "Done managing lists (shows the tasks by date)"
+msgstr "リストの管理を終了 (タスクを日付別に表示)"
 
 #: ../contents/ui/TasksView.qml
 msgid "Manage lists (shows the tasks by list)"

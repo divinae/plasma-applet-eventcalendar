@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:12+0100\n"
+"POT-Creation-Date: 2026-10-26 11:16+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -2836,8 +2836,16 @@ msgstr[0] "%1 åben opgave"
 msgstr[1] "%1 åbne opgaver"
 
 #: ../contents/ui/TasksView.qml
+msgid "Done managing lists"
+msgstr "Færdig med lister"
+
+#: ../contents/ui/TasksView.qml
 msgid "Manage lists"
 msgstr "Administrer lister"
+
+#: ../contents/ui/TasksView.qml
+msgid "Done managing lists (shows the tasks by date)"
+msgstr "Færdig med lister (viser opgaverne efter dato)"
 
 #: ../contents/ui/TasksView.qml
 msgid "Manage lists (shows the tasks by list)"

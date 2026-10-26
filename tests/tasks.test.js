@@ -88,7 +88,7 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(T.taskRows([lists[0]], items, false).filter(r => r.type === 'group'), [], 'one account: no heading')
 }
 
-// dayTasks: due that day; on today also open overdue and undated ones; done after open.
+// dayTasks: dated tasks only: due that day; on today also the open overdue ones; done after open.
 {
 	const items = [
 		task({ id: 'today', calendarId: 'l', due: '2026-10-26T00:00:00.000Z' }),
@@ -100,7 +100,7 @@ assert.strictEqual(T.firstLine(undefined), '')
 		task({ id: 'today', calendarId: 'l', due: '2026-10-26T00:00:00.000Z' }),
 		{ kind: 'calendar#event', id: 'e', calendarId: 'c' },
 	]
-	same(T.dayTasks(items, '2026-10-26', '2026-10-26').map(t => t.id), ['overdue', 'today', 'undated', 'done-today'])
+	same(T.dayTasks(items, '2026-10-26', '2026-10-26').map(t => t.id), ['overdue', 'today', 'done-today'], 'no undated')
 	same(T.dayTasks(items, '2026-10-27', '2026-10-26').map(t => t.id), ['tomorrow'])
 	same(T.dayTasks(items, '2026-10-20', '2026-10-26').map(t => t.id), ['overdue'], 'its own day too')
 	same(T.dayTasks(null, '2026-10-26', '2026-10-26'), [])

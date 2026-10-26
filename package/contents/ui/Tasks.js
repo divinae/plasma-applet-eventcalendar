@@ -363,8 +363,8 @@ function taskRows(lists, itemsByList, showCompleted) {
 	return rows
 }
 
-// The Day view's tasks for day ('YYYY-MM-DD'): those due that day, and on today (today:
-// 'YYYY-MM-DD') also the open overdue and undated ones. Open first (sortOpenTasks), then done
+// The Day view's tasks for day ('YYYY-MM-DD'): dated ones only, due that day, and on today
+// (today: 'YYYY-MM-DD') also the open overdue ones. Open first (sortOpenTasks), then done
 // (sortDoneTasks); non-tasks and repeated ids skipped.
 function dayTasks(items, day, today) {
 	var open = []
@@ -376,7 +376,9 @@ function dayTasks(items, day, today) {
 			continue
 		}
 		var due = dueDay(item)
-		var shown = due === day || (day === today && !isDone(item) && (!due || due < today))
+		// Dated tasks only (undated ones are in the Tasks tab): due that day, and on today the open
+		// overdue ones.
+		var shown = !!due && (due === day || (day === today && !isDone(item) && due < today))
 		if (!shown) {
 			continue
 		}

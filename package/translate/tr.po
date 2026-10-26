@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:12+0100\n"
+"POT-Creation-Date: 2026-10-26 11:16+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2847,8 +2847,16 @@ msgstr[0] "%1 açık görev"
 msgstr[1] "%1 açık görev"
 
 #: ../contents/ui/TasksView.qml
+msgid "Done managing lists"
+msgstr "Liste Yönetimini Bitir"
+
+#: ../contents/ui/TasksView.qml
 msgid "Manage lists"
 msgstr "Listeleri yönet"
+
+#: ../contents/ui/TasksView.qml
+msgid "Done managing lists (shows the tasks by date)"
+msgstr "Liste yönetimini bitir (görevleri tarihe göre gösterir)"
 
 #: ../contents/ui/TasksView.qml
 msgid "Manage lists (shows the tasks by list)"
