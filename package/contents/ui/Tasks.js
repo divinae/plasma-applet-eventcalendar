@@ -483,11 +483,59 @@ function dateRows(lists, itemsByList, today, firstDayOfWeek, showCompleted) {
 		rows.push({ type: 'empty', key: 'empty' })
 	}
 	rows.push({ type: 'add', key: 'add' })
-	if (showCompleted && tasks.done.length) {
-		rows.push({ type: 'section', key: 'section:done', section: 'done', count: tasks.done.length })
-		pushTasks(tasks.done, sortDoneTasks(tasks.done.map(function(e) { return e.item })), true, 'done')
+	if (showCompleted) {
+		rows = rows.concat(completedRows(lists, itemsByList))
 	}
 	return rows
+}
+
+// The done tasks of all the lists (sortDoneTasks) under a 'done' section, as dateRows has them
+// with showCompleted; [] without done ones. The islands style's "Completed" card, both groupings.
+function completedRows(lists, itemsByList) {
+	var done = listTasks(lists, itemsByList).done
+	if (!done.length) {
+		return []
+	}
+	var items = done.map(function(e) { return e.item })
+	var rows = [{ type: 'section', key: 'section:done', section: 'done', count: done.length }]
+	sortDoneTasks(items).forEach(function(item) {
+		var list = done[items.indexOf(item)].list
+		rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: true, section: 'done' })
+	})
+	return rows
+}
+
+// The islands style's cards over rows (taskRows / dateRows / completedRows): for each row
+// { card, start, end, key }: in a card (an account heading isn't), the card's first / last row,
+// and the card's key (its first row's). A section, a list, the empty note and "Completed" start a
+// card; by date the quick add is a card of its own (with the empty note when there's no task),
+// by list it ends its list's card.
+function cardRows(rows, byList) {
+	var out = []
+	var key = ''
+	for (var i = 0; i < (rows || []).length; i++) {
+		var row = rows[i]
+		var card = row.type !== 'group'
+		var start = card && (i === 0 || rows[i - 1].type === 'group' || row.type === 'section' || row.type === 'list'
+			|| row.type === 'empty' || (row.type === 'add' && !byList && rows[i - 1].type !== 'empty'))
+		if (start) {
+			key = row.key
+		}
+		out.push({ card: card, start: start, end: false, key: card ? key : '' })
+	}
+	for (var j = 0; j < out.length; j++) {
+		out[j].end = out[j].card && (j === out.length - 1 || !out[j + 1].card || out[j + 1].start)
+	}
+	return out
+}
+
+// rows without those of collapsed cards (collapsed: { cardKey: true }), each card's first row
+// (its header) kept.
+function collapseRows(rows, byList, collapsed) {
+	var cards = cardRows(rows, byList)
+	return (rows || []).filter(function(row, i) {
+		return !cards[i].card || cards[i].start || !(collapsed && collapsed[cards[i].key])
+	})
 }
 
 // The due day a task gets when dropped on a date section: today, tomorrow, '' (no date), or null

@@ -11,7 +11,7 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
-	'nextWeekStart', 'dateSections', 'dateRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList']
+	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -146,6 +146,41 @@ assert.strictEqual(T.firstLine(undefined), '')
 	assert.strictEqual(withDone[1].section, 'overdue')
 	assert.strictEqual(withDone[0].count, 1)
 	same(T.dateRows(lists, {}, '2026-10-26', 1, true).map(r => r.key), ['empty', 'add'])
+
+	// completedRows: the done ones of all lists, the same rows as dateRows' with showCompleted.
+	same(plain(T.completedRows(lists, items)), plain(withDone.slice(-3)))
+	same(T.completedRows(lists, {}), [])
+
+	// cardRows: by date a card per section, the quick add a card of its own, then "Completed".
+	const cardSummary = (rows, byList) => T.cardRows(rows, byList).map((c, i) =>
+		(c.card ? (c.start ? '[' : '') + rows[i].key + (c.end ? ']' : '') : rows[i].key) + (c.card ? '@' + c.key : ''))
+	same(cardSummary(withDone, false), ['[section:overdue@section:overdue', 'task:g::b:4]@section:overdue',
+		'[section:today@section:today', 'task:g::a:1]@section:today', '[section:nodate@section:nodate', 'task:g::a:2]@section:nodate',
+		'[add]@add', '[section:done@section:done', 'task:g::b:5@section:done', 'task:g::a:3]@section:done'])
+	// No open task: the empty note and the quick add share a card.
+	same(cardSummary(T.dateRows(lists, {}, '2026-10-26', 1, false), false), ['[empty@empty', 'add]@empty'])
+	// collapseRows: a collapsed card keeps its header.
+	same(T.collapseRows(withDone, false, { 'section:today': true, 'section:done': true }).map(r => r.key), ['section:overdue',
+		'task:g::b:4', 'section:today', 'section:nodate', 'task:g::a:2', 'add', 'section:done'])
+	same(T.collapseRows(withDone, false, {}).length, withDone.length)
+}
+
+// cardRows by list: an account heading outside the cards, a list with its quick add and done ones.
+{
+	const lists = [{ id: 'g::a', name: 'A', group: 'g' }, { id: 't::b', name: 'B', group: 't' }]
+	const items = { 'g::a': [task({ id: '1' }), task({ id: '2', status: 'completed' })], 't::b': [] }
+	const rows = T.taskRows(lists, items, true)
+	same(T.cardRows(rows, true).map((c, i) => [rows[i].key, c.card, c.start, c.end, c.key]), [
+		['group:g', false, false, false, ''],
+		['list:g::a', true, true, false, 'list:g::a'],
+		['task:g::a:1', true, false, false, 'list:g::a'],
+		['add:g::a', true, false, false, 'list:g::a'],
+		['task:g::a:2', true, false, true, 'list:g::a'],
+		['group:t', false, false, false, ''],
+		['list:t::b', true, true, false, 'list:t::b'],
+		['add:t::b', true, false, true, 'list:t::b'],
+	])
+	same(T.collapseRows(rows, true, { 'list:g::a': true }).map(r => r.key), ['group:g', 'list:g::a', 'group:t', 'list:t::b', 'add:t::b'])
 }
 
 // Drops: date sections that set a due day, lists of the same account only.
