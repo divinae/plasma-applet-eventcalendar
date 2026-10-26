@@ -354,7 +354,8 @@ CalendarManager {
 		return false
 	}
 
-	// A cached task as the tasks managers parse it: placed on its day again, no notes.
+	// A cached task as the tasks managers parse it: placed on its day again, no notes; its reminders
+	// (minutes, EventCacheUtil.pickTask) back as reminders.
 	function parseCachedTask(calendarId, item) {
 		var now = new Date()
 		var day = Tasks.placementDay(item, now, !!plasmoid.configuration.agendaPlaceOverdueTasksOnToday)
@@ -369,7 +370,10 @@ CalendarManager {
 		item.dueTime = item.dueTime || ''
 		item.parentId = item.parentId || ''
 		item.repeatRule = item.repeatRule || ''
-		item.reminders = []
+		item.reminders = Shared.toArray(item.reminderMinutes).filter(function(minutes) {
+			return typeof minutes === 'number' && isFinite(minutes)
+		})
+		delete item.reminderMinutes
 		item.subtasks = []
 		var dueDay = Tasks.dueDay(item)
 		if (dueDay) {

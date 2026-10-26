@@ -107,7 +107,21 @@ function pickEvent(event) {
 	return picked
 }
 
-// The cached copy of one task (whitelisted fields only): no notes, no checklist, no reminders.
+// A task's reminders (minutes before due) as stored: whole numbers only, no repeats, at most 20.
+function taskReminderMinutes(list) {
+	var out = []
+	var items = toList(list)
+	for (var i = 0; i < items.length && out.length < 20; i++) {
+		var minutes = items[i]
+		if (typeof minutes === 'number' && isFinite(minutes) && out.indexOf(Math.round(minutes)) < 0) {
+			out.push(Math.round(minutes))
+		}
+	}
+	return out
+}
+
+// The cached copy of one task (whitelisted fields only): no notes, no checklist. Its reminders as
+// minutes only (reminderMinutes, from task.reminders), so a task started offline still reminds.
 var TASK_TEXT_FIELDS = ['due', 'dueTime', 'status', 'completed', 'parentId', 'repeatRule', 'projectId', 'backgroundColor']
 
 function pickTask(task) {
@@ -129,6 +143,11 @@ function pickTask(task) {
 	var priority = Number(task.priority)
 	if (isFinite(priority) && priority > 0) {
 		picked.priority = priority
+	}
+	// task.reminders when loaded; reminderMinutes when read back from the file.
+	var reminders = taskReminderMinutes(task.reminders !== undefined ? task.reminders : task.reminderMinutes)
+	if (reminders.length) {
+		picked.reminderMinutes = reminders
 	}
 	// Not the whole task: changing it must start from the server copy (the tasks managers).
 	picked.fromCache = true

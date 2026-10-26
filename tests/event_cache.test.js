@@ -97,13 +97,13 @@ function testWhitelist() {
 	}
 	const data = JSON.parse(text)
 	assert.deepStrictEqual(Object.keys(data.calendars), ['acc_1::work@example.test', 'acc_1::tasks1'])
-	// Tasks are cached too (whitelisted: no notes, checklist, reminders or links).
+	// Tasks are cached too (whitelisted: no notes, checklist or links; reminders as minutes only).
 	assert.deepStrictEqual(data.calendars['acc_1::tasks1'], [{
 		kind: 'tasks#task', id: 't1', title: 'Buy milk', summary: 'Buy milk',
 		start: { date: '2026-10-16' }, end: { date: '2026-10-17' },
 		due: '2026-10-16T00:00:00.000Z', dueTime: '14:30', status: 'needsAction', parentId: 'p0',
 		repeatRule: 'RRULE:FREQ=DAILY;INTERVAL=1', projectId: 'proj1', backgroundColor: '#00ff00',
-		priority: 5, fromCache: true,
+		priority: 5, reminderMinutes: [15, 0], fromCache: true,
 	}])
 	const event = data.calendars['acc_1::work@example.test'][0]
 	assert.deepStrictEqual(Object.keys(event).sort(), [
@@ -185,6 +185,18 @@ function testTasks() {
 	assert.strictEqual(read.accessToken, undefined)
 	assert.strictEqual(read.repeatRule, undefined, 'repeatRule: a string only')
 	assert.strictEqual(read.title, 'Buy milk')
+	assert.deepStrictEqual(read.reminderMinutes, [15, 0], 'reminders: minutes kept')
+
+	// Reminder minutes: numbers only, both ways (a tampered file can't put text in).
+	const junk = cache.pickTask(fullTask({ reminders: [15, '30', null, { m: 1 }, 15, -540.4, Infinity, 'TRIGGER:-PT5M'] }))
+	assert.deepStrictEqual(junk.reminderMinutes, [15, -540])
+	assert.ok(!('reminderMinutes' in cache.pickTask(fullTask({ reminders: [] }))))
+	const roundTrip = cache.deserialize(cache.serialize({ 'tt::p1': { items: [fullTask({ reminders: [-540] })] } }, 0, 0, NOW), NOW)
+	assert.deepStrictEqual(roundTrip.calendars['tt::p1'][0].reminderMinutes, [-540])
+	const tamperedMinutes = JSON.stringify({ version: cache.VERSION, savedAt: NOW.getTime(), calendars: {
+		'tt::p1': [Object.assign(cache.pickTask(fullTask()), { reminderMinutes: ['evil', 5, { x: 1 }] })],
+	} })
+	assert.deepStrictEqual(cache.deserialize(tamperedMinutes, NOW).calendars['tt::p1'][0].reminderMinutes, [5])
 }
 
 function testRejectsOldBrokenOrForeign() {
