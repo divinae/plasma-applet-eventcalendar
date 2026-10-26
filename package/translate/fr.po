@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:35+0100\n"
+"POT-Creation-Date: 2026-10-26 14:40+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -3030,6 +3030,11 @@ msgstr "Les tâches ne peuvent être déplacées que vers une liste du même com
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Impossible de déplacer la tâche"
+
+#: ../contents/ui/TasksView.qml
+msgid "The task was copied but couldn't be removed from its old list"
+msgstr ""
+"La tâche a été copiée mais n'a pas pu être retirée de son ancienne liste"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"

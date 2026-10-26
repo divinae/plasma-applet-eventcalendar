@@ -1043,7 +1043,11 @@ function listDrop(fromId, toId) {
 		return 'none'
 	}
 	var account = listAccount(fromId)
-	return account && account === listAccount(toId) ? 'move' : 'refuse'
+	// Another account (eg: Google → TickTick): copied there, then deleted here.
+	if (!account || !listAccount(toId)) {
+		return 'refuse'
+	}
+	return account === listAccount(toId) ? 'move' : 'transfer'
 }
 
 //--- Reorder (Google lists): drag a task between the rows of its list

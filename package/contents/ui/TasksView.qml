@@ -11,7 +11,8 @@ import "Tasks.js" as Tasks
 // date; Tasks.dateRows) or by list (every selected task list as a section, grouped by account when
 // there are several; Tasks.taskRows), the done ones with "Show completed". "Add a task…" rows add
 // without the editor: at the bottom of each list, or of the open tasks by date (undated, on a
-// picked list). A task can be dragged onto a list (same account: moved) or onto Today, Tomorrow
+// picked list). A task can be dragged onto a list (same account: moved; another: copied there and
+// deleted here) or onto Today, Tomorrow
 // or No date (its due day changes).
 // By list, the lists can be managed (TaskLists.js): a list header's "⋯" menu (or right click) has
 // Rename (inline), Color (TickTick), Clear completed (Google) and Delete (confirmed inline), and
@@ -594,7 +595,7 @@ Item {
 				if (listDrop !== 'none') {
 					key = 'side:' + entry.key
 					refused = listDrop === 'refuse'
-					action = refused ? null : { kind: 'move', listId: entry.list.id }
+					action = refused ? null : { kind: listDrop, listId: entry.list.id }
 				}
 			} else if (entry && dragRow && entry.type === 'filter') {
 				var dueDay = Tasks.sectionDueDay(entry.key, today)
@@ -629,7 +630,7 @@ Item {
 				if (drop !== 'none') {
 					key = 'list:' + target.list.id
 					refused = drop === 'refuse'
-					action = refused ? null : { kind: 'move', listId: target.list.id }
+					action = refused ? null : { kind: drop, listId: target.list.id }
 				}
 			} else if (byDate && target.section) {
 				var day = Tasks.sectionDueDay(target.section, today)
@@ -670,6 +671,23 @@ Item {
 				if (err) {
 					reorderView.showNotice(i18n("Couldn't move the task"))
 				}
+			})
+		} else if (action.kind === 'transfer') {
+			// Another account: the task is made there (title, notes, due day / time, priority,
+			// repeat, reminders, subtasks as far as that list takes them), then deleted here.
+			var transferView = tasksView
+			var fromList = row.list.id
+			eventModel.createEventFromData(action.listId, Tasks.restoreBody(item), function(err) {
+				if (err) {
+					transferView.showNotice(i18n("Couldn't move the task"))
+					return
+				}
+				eventModel.deleteEvent(fromList, item.id, function(delErr) {
+					if (delErr) {
+						transferView.showNotice(i18n("The task was copied but couldn't be removed from its old list"))
+					}
+					logic.update()
+				})
 			})
 		} else if (action.kind === 'move') {
 			var view = tasksView

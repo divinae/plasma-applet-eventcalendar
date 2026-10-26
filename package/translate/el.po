@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:35+0100\n"
+"POT-Creation-Date: 2026-10-26 14:40+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -3035,6 +3035,11 @@ msgstr ""
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Δεν ήταν δυνατή η μετακίνηση της εργασίας"
+
+#: ../contents/ui/TasksView.qml
+msgid "The task was copied but couldn't be removed from its old list"
+msgstr ""
+"Η εργασία αντιγράφηκε αλλά δεν ήταν δυνατή η αφαίρεσή της από την παλιά λίστα"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"

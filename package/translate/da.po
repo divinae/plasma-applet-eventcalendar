@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:35+0100\n"
+"POT-Creation-Date: 2026-10-26 14:40+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -2996,6 +2996,10 @@ msgstr "Opgaver kan kun flyttes til en liste på samme konto"
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Kunne ikke flytte opgaven"
+
+#: ../contents/ui/TasksView.qml
+msgid "The task was copied but couldn't be removed from its old list"
+msgstr "Opgaven blev kopieret, men kunne ikke fjernes fra sin gamle liste"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"

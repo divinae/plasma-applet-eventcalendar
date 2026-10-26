@@ -303,7 +303,7 @@ assert.strictEqual(T.listAccount('google1::abc'), 'google1')
 assert.strictEqual(T.listAccount('abc'), '')
 assert.strictEqual(T.listDrop('g1::a', 'g1::b'), 'move')
 assert.strictEqual(T.listDrop('g1::a', 'g1::a'), 'none')
-assert.strictEqual(T.listDrop('g1::a', 'tt::b'), 'refuse')
+assert.strictEqual(T.listDrop('g1::a', 'tt::b'), 'transfer', 'another account: copied and deleted')
 assert.strictEqual(T.listDrop('a', 'b'), 'refuse', 'no account: no move')
 
 // Quick add

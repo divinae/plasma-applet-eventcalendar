@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:35+0100\n"
+"POT-Creation-Date: 2026-10-26 14:40+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2968,6 +2968,10 @@ msgstr "작업은 같은 계정의 목록으로만 이동할 수 있습니다"
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "작업을 이동할 수 없음"
+
+#: ../contents/ui/TasksView.qml
+msgid "The task was copied but couldn't be removed from its old list"
+msgstr "작업이 복사되었지만 이전 목록에서 제거하지 못했습니다"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"

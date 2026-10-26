@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:35+0100\n"
+"POT-Creation-Date: 2026-10-26 14:40+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -2929,6 +2929,10 @@ msgstr "任务只能移动到同一账户的列表中"
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "无法移动任务"
+
+#: ../contents/ui/TasksView.qml
+msgid "The task was copied but couldn't be removed from its old list"
+msgstr "任务已复制，但无法从原列表中移除"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"
