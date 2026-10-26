@@ -1,6 +1,6 @@
 .pragma library
 
-// Tasks (Google Tasks today, other providers later): event-shaped items with
+// Tasks (Google Tasks, TickTick): event-shaped items with
 // kind === 'tasks#task'. Raw fields kept on the item: due, status, completed, notes, position,
 // parent. Days are 'YYYY-MM-DD' strings in local time.
 
@@ -118,4 +118,119 @@ function restoreBody(copy) {
 		body.completed = copy.completed
 	}
 	return body
+}
+
+//--- TickTick (https://developer.ticktick.com/docs/openapi.md)
+// TickTick tasks are shown with the Google fields above (due, status, completed, notes), made
+// from TickTick's own (dueDate / startDate, isAllDay, timeZone, status 0 / 2, content) by
+// fromTickTick, and changes in Google shape go back as TickTick fields with toTickTick.
+
+// UTC ms of a TickTick date ('yyyy-MM-ddTHH:mm:ss+0000', also 'Z', '+00:00', milliseconds), or NaN.
+function parseTickTickDate(text) {
+	var m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(?:\.(\d+))?(Z|[+-]\d{2}:?\d{2})?$/.exec(String(text || ''))
+	if (!m) {
+		return NaN
+	}
+	var ms = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6] || 0),
+		m[7] ? Number((m[7] + '00').substring(0, 3)) : 0)
+	var zone = m[8] || 'Z'
+	if (zone !== 'Z') {
+		var sign = zone.charAt(0) === '-' ? -1 : 1
+		var digits = zone.substring(1).replace(':', '')
+		ms -= sign * (Number(digits.substring(0, 2)) * 60 + Number(digits.substring(2, 4))) * 60000
+	}
+	return ms
+}
+
+// TickTick's format of an instant (UTC ms): 'yyyy-MM-ddTHH:mm:ss+0000'.
+function formatTickTickDate(ms) {
+	var d = new Date(ms)
+	return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1) + '-' + pad2(d.getUTCDate())
+		+ 'T' + pad2(d.getUTCHours()) + ':' + pad2(d.getUTCMinutes()) + ':' + pad2(d.getUTCSeconds()) + '+0000'
+}
+
+// The due day and time of a TickTick task: { day: 'YYYY-MM-DD' | '', time: 'HH:mm' | '' }.
+// All-day: the day in the task's time zone (wallClock(zone, utcMs) -> { year, month (0-11), day }
+// or null, eg: TimeZone.wallClock; optional), else in local time; no time. Timed: local day and time.
+function tickTickDue(task, wallClock) {
+	var ms = parseTickTickDate(task && (task.dueDate || task.startDate))
+	if (isNaN(ms)) {
+		return { day: '', time: '' }
+	}
+	if (task.isAllDay !== false) {
+		var w = task.timeZone && wallClock ? wallClock(task.timeZone, ms) : null
+		if (w) {
+			return { day: w.year + '-' + pad2(w.month + 1) + '-' + pad2(w.day), time: '' }
+		}
+		return { day: dayString(new Date(ms)), time: '' }
+	}
+	var d = new Date(ms)
+	return { day: dayString(d), time: pad2(d.getHours()) + ':' + pad2(d.getMinutes()) }
+}
+
+// The Google-shaped fields of a TickTick task: { title, notes, due, dueTime, status, completed },
+// due null when undated, completed null when not done. wallClock: see tickTickDue.
+function fromTickTick(task, wallClock) {
+	var due = tickTickDue(task, wallClock)
+	var done = !!task && task.status === 2
+	var completedMs = parseTickTickDate(task && task.completedTime)
+	return {
+		title: (task && task.title) || '',
+		notes: (task && task.content) || '',
+		due: dueValue(due.day),
+		dueTime: due.time,
+		status: done ? 'completed' : 'needsAction',
+		completed: done && !isNaN(completedMs) ? new Date(completedMs).toISOString() : null,
+	}
+}
+
+// The TickTick fields for a Google-shaped body (editBody, toggleBody, restoreBody): only what it
+// changes. task: the task's TickTick fields (dueDate, isAllDay, timeZone), or null for a new one.
+// A timed task keeps its time on another day; other due days are all-day, at the start of the
+// day in the task's time zone (toUtc(zone, year, month (0-11), day, h, m, s) -> UTC ms or null,
+// eg: TimeZone.toUtc; optional), else in local time. A due of null clears the dates.
+function toTickTick(body, task, toUtc) {
+	var out = {}
+	body = body || {}
+	if (typeof body.title !== 'undefined') {
+		out.title = body.title || ''
+	}
+	if (typeof body.notes !== 'undefined') {
+		out.content = body.notes || ''
+	}
+	if (typeof body.due !== 'undefined') {
+		var day = dueDay(body)
+		if (!day) {
+			out.dueDate = null
+			out.startDate = null
+		} else {
+			var parts = day.split('-')
+			var y = Number(parts[0]), mo = Number(parts[1]) - 1, d = Number(parts[2])
+			var current = parseTickTickDate(task && (task.dueDate || task.startDate))
+			var ms = null
+			if (task && task.isAllDay === false && !isNaN(current)) {
+				var time = new Date(current)
+				ms = new Date(y, mo, d, time.getHours(), time.getMinutes()).getTime()
+				out.isAllDay = false
+			} else {
+				if (task && task.timeZone && toUtc) {
+					ms = toUtc(task.timeZone, y, mo, d, 0, 0, 0)
+				}
+				if (ms === null || typeof ms === 'undefined' || isNaN(ms)) {
+					ms = new Date(y, mo, d).getTime()
+				}
+				out.isAllDay = true
+			}
+			out.dueDate = formatTickTickDate(ms)
+			out.startDate = out.dueDate
+		}
+	}
+	if (typeof body.status !== 'undefined') {
+		out.status = body.status === 'completed' ? 2 : 0
+		var completedMs = parseTickTickDate(body.completed)
+		if (out.status === 2 && !isNaN(completedMs)) {
+			out.completedTime = formatTickTickDate(completedMs)
+		}
+	}
+	return out
 }
