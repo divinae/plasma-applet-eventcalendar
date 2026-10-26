@@ -11,6 +11,7 @@ import "MeetingLink.js" as MeetingLink
 import "Responses.js" as Responses
 import "Guests.js" as Guests
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "lib/ColorUtil.js" as ColorUtil
 import "code/GooglePalette.js" as GooglePalette
@@ -56,6 +57,29 @@ Rectangle {
 	property bool showAllGuests: false
 	property bool confirmingDelete: false
 	readonly property bool isRecurring: !!(eventItem && eventItem.recurringEventId)
+
+	//--- Tasks: done / not done, the due day, the list and the notes (no time, guests or place).
+	readonly property bool isTask: Tasks.isTask(eventItem)
+	readonly property bool isDone: isTask && Tasks.isDone(eventItem)
+	readonly property bool isOverdue: isTask && Tasks.isOverdue(eventItem, timeModel.currentTime)
+	readonly property string dueText: {
+		var day = isTask ? Tasks.dueDay(eventItem) : ""
+		if (!day) {
+			return i18n("No due date")
+		}
+		var parts = day.split('-')
+		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+		var text = i18nc("%1 = date", "Due %1", Qt.formatDate(date, Qt.locale().dateFormat(Locale.LongFormat)))
+		return isOverdue ? text + " · " + i18n("Overdue") : text
+	}
+	function toggleDone() {
+		if (typeof eventModel.toggleTask === "function") {
+			eventModel.toggleTask(eventItem, !isDone)
+		} else {
+			eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.toggleBody(!isDone))
+		}
+	}
+
 	onEventItemChanged: {
 		confirmingDelete = false
 		showAllGuests = false
@@ -147,7 +171,7 @@ Rectangle {
 
 			PlasmaComponents3.Label {
 				visible: details.confirmingDelete
-				text: details.isRecurring ? i18n("Delete:") : i18n("Delete this event?")
+				text: details.isRecurring ? i18n("Delete:") : details.isTask ? i18n("Delete this task?") : i18n("Delete this event?")
 			}
 			PlasmaComponents3.Button {
 				visible: details.confirmingDelete
@@ -179,7 +203,7 @@ Rectangle {
 			PlasmaComponents3.ToolButton {
 				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
 				icon.name: "globe" // Native action icon (internet-web-browser is a colored app icon)
-				text: i18n("Open in Google Calendar")
+				text: details.isTask ? i18n("Open in Google Tasks") : i18n("Open in Google Calendar")
 				display: QQC2.AbstractButton.IconOnly
 				onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
 				PlasmaComponents3.ToolTip.text: text
@@ -192,7 +216,7 @@ Rectangle {
 				onClicked: details.editRequested()
 			}
 			PlasmaComponents3.ToolButton {
-				visible: !details.confirmingDelete && !!details.eventItem
+				visible: !details.confirmingDelete && !!details.eventItem && !details.isTask
 				icon.name: "edit-copy"
 				text: i18n("Duplicate")
 				display: QQC2.AbstractButton.IconOnly
@@ -245,6 +269,8 @@ Rectangle {
 								level: 2
 								wrapMode: Text.Wrap
 								text: details.eventItem ? details.eventItem.summary : ""
+								font.strikeout: details.isDone
+								opacity: details.isDone ? 0.7 : 1
 							}
 							// Private event (Google visibility): only you see its details.
 							Kirigami.Icon {
@@ -272,6 +298,9 @@ Rectangle {
 								if (!details.eventItem) {
 									return ""
 								}
+								if (details.isTask) {
+									return details.dueText
+								}
 								var when = LocaleFuncs.formatEventDuration(details.eventItem, {
 									relativeDate: timeModel.currentTime,
 									clock24h: appletConfig.clock24h,
@@ -284,7 +313,8 @@ Rectangle {
 								}
 								return when
 							}
-							opacity: 0.8
+							color: details.isOverdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+							opacity: details.isOverdue ? 1 : 0.8
 						}
 						// The event's own time zone, when its clock differs from the local one.
 						PlasmaComponents3.Label {
@@ -310,9 +340,18 @@ Rectangle {
 					}
 				}
 
+				// Tasks: done / not done.
+				PlasmaComponents3.Button {
+					visible: details.isTask && !!(details.eventItem && details.eventItem.canEdit !== false)
+					Layout.leftMargin: Kirigami.Units.largeSpacing
+					icon.name: details.isDone ? "edit-undo" : "checkmark"
+					text: details.isDone ? i18n("Mark as not done") : i18n("Mark as done")
+					onClicked: details.toggleDone()
+				}
+
 				// Join
 				PlasmaComponents3.Button {
-					visible: !!details.meetingLink
+					visible: !!details.meetingLink && !details.isTask
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					icon.name: "call-start"
 					text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
@@ -321,7 +360,7 @@ Rectangle {
 
 				// RSVP
 				RowLayout {
-					visible: details.canRespond
+					visible: details.canRespond && !details.isTask
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					Layout.rightMargin: Kirigami.Units.largeSpacing
@@ -416,7 +455,7 @@ Rectangle {
 					PlasmaComponents3.Label {
 						id: locationLabel
 						readonly property string location: details.eventItem && details.eventItem.location ? details.eventItem.location : ""
-						visible: !!location
+						visible: !!location && !details.isTask
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
 						textFormat: Text.StyledText
@@ -536,7 +575,7 @@ Rectangle {
 
 				// Guests
 				ColumnLayout {
-					visible: details.attendees.length > 0
+					visible: details.attendees.length > 0 && !details.isTask
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					Layout.rightMargin: Kirigami.Units.largeSpacing
@@ -618,7 +657,10 @@ Rectangle {
 				// Description
 				PlasmaComponents3.Label {
 					id: descriptionLabel
-					readonly property string description: details.eventItem && details.eventItem.description ? details.eventItem.description : ""
+					// Tasks: their notes.
+					readonly property string description: !details.eventItem ? ""
+						: details.eventItem.description ? details.eventItem.description
+						: details.isTask && details.eventItem.notes ? details.eventItem.notes : ""
 					visible: !!description
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
