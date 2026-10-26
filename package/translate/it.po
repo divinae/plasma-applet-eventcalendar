@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -71,19 +71,15 @@ msgstr "Domani · %1"
 msgid "New Event"
 msgstr "Nuovo evento"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "Nuova attività…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Nessun evento"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "Scadenza %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "Scaduto"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "d MMM"
@@ -92,21 +88,26 @@ msgstr "d MMM"
 msgid "Task"
 msgstr "Attività"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "Completata"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "Non completata"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "Scadenza %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "Modifica"
+msgid "Overdue"
+msgstr "Scaduto"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "Elimina evento"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "Conferma eliminazione"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "Modifica nel browser"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Scaduta · scadenza %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -995,6 +996,14 @@ msgid "Hide"
 msgstr "Nascondi"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "Attività scadute su oggi"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "Le attività aperte con scadenza in un giorno precedente vengono mostrate su oggi, in tutte le viste."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Doppio clic su un giorno"
 
@@ -1167,30 +1176,22 @@ msgstr "d MMM yyyy"
 msgid "to"
 msgstr "fino al"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "Titolo evento"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "Aggiungi descrizione"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "Aggiungi data scadenza"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Salva"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Cancella"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "Sposta nell'elenco"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Rispondi"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "Segna come non completata"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "Segna come completata"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1239,6 +1240,15 @@ msgstr "Elimina «%1»"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Elimina tutti gli eventi di «%1»"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "Nessuna scadenza"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Scadenza %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1293,6 +1303,10 @@ msgid "Delete:"
 msgstr "Elimina:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Eliminare questa attività?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Eliminare questo evento?"
 
@@ -1307,6 +1321,14 @@ msgstr "Tutti gli eventi"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Elimina tutte le occorrenze di questo evento ricorrente."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Apri in Google Tasks"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "Modifica"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1328,6 +1350,14 @@ msgstr "Si ripete"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 ora di %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Segna come non completata"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Segna come completata"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1453,6 +1483,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "Tu"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (attività)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "Elenco attività"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "Nuova attività"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "Modifica attività"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Modifica evento"
@@ -1486,6 +1533,10 @@ msgstr "Modifica:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "Titolo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Data di scadenza"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1803,8 +1854,17 @@ msgid "Find a Time"
 msgstr "Trova un orario"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "Note"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Descrizione"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "Scadenza %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2251,6 +2311,10 @@ msgid "Repeating event deleted"
 msgstr "Evento ricorrente eliminato"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "Attività eliminata"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Evento eliminato"
 
@@ -2304,6 +2368,11 @@ msgstr "Aggiunta rapida"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "Pranzo con Anna domani 13:00"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "L'attività scade il %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2375,6 +2444,10 @@ msgstr "Ricerca in Google Calendar…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Avvia"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Cancella"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2585,6 +2658,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "Elimina evento"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "Conferma eliminazione"
+
+#~ msgid "Edit in browser"
+#~ msgstr "Modifica nel browser"
+
+#~ msgid "Event Title"
+#~ msgstr "Titolo evento"
+
+#~ msgid "Add description"
+#~ msgstr "Aggiungi descrizione"
+
+#~ msgid "Add due date"
+#~ msgstr "Aggiungi data scadenza"
+
+#~ msgid "&Save"
+#~ msgstr "&Salva"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "Errore nello scaricamento del calendario: %1"

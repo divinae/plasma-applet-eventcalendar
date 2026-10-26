@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -76,19 +76,16 @@ msgstr "מחר · %1"
 msgid "New Event"
 msgstr "אירוע חדש"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "משימה חדשה…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "אין אירועים"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "יעד: %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "באיחור"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "d ב־MMM"
@@ -97,21 +94,26 @@ msgstr "d ב־MMM"
 msgid "Task"
 msgstr "משימה"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "הושלמה"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "לא הושלמה"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "יעד: %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "עריכה"
+msgid "Overdue"
+msgstr "באיחור"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "מחיקת האירוע"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "אישור מחיקה"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "עריכה בדפדפן"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "באיחור · יעד: %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1106,6 +1108,14 @@ msgid "Hide"
 msgstr "הסתרה"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "משימות באיחור מוצגות בהיום"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "משימות פתוחות שהיעד שלהן ביום קודם מוצגות ביום הנוכחי, בכל התצוגות."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "לחיצה כפולה על יום"
 
@@ -1286,30 +1296,22 @@ msgstr "d ב־MMM, yyyy"
 msgid "to"
 msgstr "עד"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "כותרת האירוע"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "הוספת תיאור"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "הוספת תאריך יעד"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&שמירה"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "בי_טול"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "העברה לרשימה"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "מענה"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "סימון כלא הושלמה"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "סימון כהושלמה"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1359,6 +1361,16 @@ msgstr "מחיקת “%1”"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "מחיקת כל האירועים של “%1”"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "אין תאריך יעד"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "יעד: %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -1418,6 +1430,10 @@ msgid "Delete:"
 msgstr "מחיקה:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "למחוק את המשימה הזו?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "למחוק את האירוע הזה?"
 
@@ -1432,6 +1448,14 @@ msgstr "כל האירועים"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "מוחק את כל המופעים של האירוע החוזר הזה."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "פתיחה ב־Google Tasks"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "עריכה"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1454,6 +1478,14 @@ msgstr "חוזר"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 לפי שעון %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "סימון כלא הושלמה"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "סימון כהושלמה"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1581,6 +1613,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "את/ה"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (משימות)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "רשימת משימות"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "משימה חדשה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "עריכת משימה"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "עריכת אירוע"
@@ -1614,6 +1663,10 @@ msgstr "שינוי:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "כותרת"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "תאריך יעד"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1949,8 +2002,17 @@ msgid "Find a Time"
 msgstr "מציאת זמן"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "הערות"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "תיאור"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "יעד: %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2428,6 +2490,10 @@ msgid "Repeating event deleted"
 msgstr "האירוע החוזר נמחק"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "המשימה נמחקה"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "האירוע נמחק"
 
@@ -2485,6 +2551,11 @@ msgstr "הוספה מהירה"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "ארוחת צהריים עם אנה מחר 13:00"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "תאריך היעד של המשימה הוא %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2556,6 +2627,10 @@ msgstr "מחפש ב־Google Calendar…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "ה&תחלה"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "בי_טול"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2775,3 +2850,24 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "מחיקת האירוע"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "אישור מחיקה"
+
+#~ msgid "Edit in browser"
+#~ msgstr "עריכה בדפדפן"
+
+#~ msgid "Event Title"
+#~ msgstr "כותרת האירוע"
+
+#~ msgid "Add description"
+#~ msgstr "הוספת תיאור"
+
+#~ msgid "Add due date"
+#~ msgstr "הוספת תאריך יעד"
+
+#~ msgid "&Save"
+#~ msgstr "&שמירה"

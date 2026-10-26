@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -78,19 +78,16 @@ msgstr "Завтра · %1"
 msgid "New Event"
 msgstr "Новое событие"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "Новая задача…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Нет событий"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "Срок: %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "Просрочено"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -99,21 +96,26 @@ msgstr "MMM d"
 msgid "Task"
 msgstr "Задача"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "Выполнено"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "Не выполнено"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "Срок: %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "Редактировать"
+msgid "Overdue"
+msgstr "Просрочено"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "Удалить событие"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "Подтвердить удаление"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "Редактировать в браузере"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Просрочено · срок: %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1126,6 +1128,16 @@ msgid "Hide"
 msgstr "Скрывать"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "Просроченные задачи на сегодня"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Невыполненные задачи со сроком в прошлом показываются на сегодняшнем дне во "
+"всех представлениях."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Двойной щелчок по дню"
 
@@ -1306,30 +1318,22 @@ msgstr "d MMM, yyyy"
 msgid "to"
 msgstr "до"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "Название мероприятия"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "Добавить описание"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "Добавить дату окончания"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Сохранить"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Отменить"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "Переместить в список"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Ответить"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "Отметить как невыполненную"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "Отметить как выполненную"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1379,6 +1383,16 @@ msgstr "Удалить «%1»"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Удалить все события «%1»"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "Без срока"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Срок: %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -1437,6 +1451,10 @@ msgid "Delete:"
 msgstr "Удалить:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Удалить эту задачу?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Удалить это событие?"
 
@@ -1451,6 +1469,14 @@ msgstr "Все события"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Удаляет все повторения этого события."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Открыть в Google задачах"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "Редактировать"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1473,6 +1499,14 @@ msgstr "Повторяется"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, время: %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Отметить как невыполненную"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Отметить как выполненную"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1599,6 +1633,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "Вы"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (задачи)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "Список задач"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "Новая задача"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "Редактировать задачу"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Редактировать событие"
@@ -1632,6 +1683,10 @@ msgstr "Изменить:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "Название"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Срок"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1958,8 +2013,17 @@ msgid "Find a Time"
 msgstr "Найти время"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "Заметки"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Описание"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "Срок: %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2431,6 +2495,10 @@ msgid "Repeating event deleted"
 msgstr "Повторяющееся событие удалено"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "Задача удалена"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Событие удалено"
 
@@ -2486,6 +2554,11 @@ msgstr "Быстрое добавление"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "Обед с Анной завтра 13:00"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "Срок задачи: %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2560,6 +2633,10 @@ msgstr "Поиск в Google календаре…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Пуск"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Отменить"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2781,6 +2858,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Место работы: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "Удалить событие"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "Подтвердить удаление"
+
+#~ msgid "Edit in browser"
+#~ msgstr "Редактировать в браузере"
+
+#~ msgid "Event Title"
+#~ msgstr "Название мероприятия"
+
+#~ msgid "Add description"
+#~ msgstr "Добавить описание"
+
+#~ msgid "Add due date"
+#~ msgstr "Добавить дату окончания"
+
+#~ msgid "&Save"
+#~ msgstr "&Сохранить"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "Ошибка получения календаря: %1"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -76,19 +76,16 @@ msgstr "Jutri · %1"
 msgid "New Event"
 msgstr "Nov dogodek"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "Novo opravilo…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Ni dogodkov"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "Rok: %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "Zapadlo"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -97,21 +94,26 @@ msgstr "MMM d"
 msgid "Task"
 msgstr "Opravilo"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "Opravljeno"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "Ni opravljeno"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "Rok: %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "Uredi"
+msgid "Overdue"
+msgstr "Zapadlo"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "Izbriši dogodek"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "Potrdi izbris"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "Uredi v brskalniku"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Zapadlo · rok %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1123,6 +1125,16 @@ msgid "Hide"
 msgstr "Skrij"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "Zapadla opravila na današnjem dnevu"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Odprta opravila z rokom na enega od prejšnjih dni so v vseh pogledih "
+"prikazana na današnjem dnevu."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Dvoklik na dan"
 
@@ -1303,30 +1315,22 @@ msgstr "d. MMM yyyy"
 msgid "to"
 msgstr "do"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "Ime dogodka"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "Dodaj opis"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "Dodaj rok"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Shrani"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Prekliči"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "Premakni na seznam"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Odgovori"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "Označi kot neopravljeno"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "Označi kot opravljeno"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1376,6 +1380,16 @@ msgstr "Izbriši »%1«"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Izbriši vse dogodke »%1«"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "Brez roka"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Rok: %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -1435,6 +1449,10 @@ msgid "Delete:"
 msgstr "Izbriši:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Izbrišem to opravilo?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Izbrišem ta dogodek?"
 
@@ -1449,6 +1467,14 @@ msgstr "Vse dogodke"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Izbriše vse ponovitve tega ponavljajočega se dogodka."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Odpri v Googlovih opravilih"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "Uredi"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1471,6 +1497,14 @@ msgstr "Ponavljanje"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, čas %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Označi kot neopravljeno"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Označi kot opravljeno"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1598,6 +1632,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "Vi"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (opravila)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "Seznam opravil"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "Novo opravilo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "Uredi opravilo"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Uredi dogodek"
@@ -1631,6 +1682,10 @@ msgstr "Spremeni:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "Naslov"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Rok"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1966,8 +2021,17 @@ msgid "Find a Time"
 msgstr "Najdi termin"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "Opombe"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Opis"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "Rok: %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2448,6 +2512,10 @@ msgid "Repeating event deleted"
 msgstr "Ponavljajoči se dogodek izbrisan"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "Opravilo izbrisano"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Dogodek izbrisan"
 
@@ -2505,6 +2573,11 @@ msgstr "Hitro dodajanje"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "Kosilo z Ano jutri ob 13:00"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "Rok opravila je %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2576,6 +2649,10 @@ msgstr "Iskanje v Googlovem koledarju…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Začni"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Prekliči"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2796,6 +2873,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "Izbriši dogodek"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "Potrdi izbris"
+
+#~ msgid "Edit in browser"
+#~ msgstr "Uredi v brskalniku"
+
+#~ msgid "Event Title"
+#~ msgstr "Ime dogodka"
+
+#~ msgid "Add description"
+#~ msgstr "Dodaj opis"
+
+#~ msgid "Add due date"
+#~ msgstr "Dodaj rok"
+
+#~ msgid "&Save"
+#~ msgstr "&Shrani"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "Napaka pri pridobivanju koledarja: %1"

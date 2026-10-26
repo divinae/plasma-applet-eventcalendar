@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -71,19 +71,15 @@ msgstr "明日 · %1"
 msgid "New Event"
 msgstr "新しいイベント"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "新しいタスク…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "イベントはありません"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "期限 %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "期限切れ"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "M月 d日"
@@ -92,21 +88,26 @@ msgstr "M月 d日"
 msgid "Task"
 msgstr "タスク"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "完了"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "未完了"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "期限 %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "編集"
+msgid "Overdue"
+msgstr "期限切れ"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "イベントを削除"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "削除を確認"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "ブラウザーで編集"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "期限切れ · 期限 %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -992,6 +993,14 @@ msgid "Hide"
 msgstr "非表示"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "期限切れのタスクを今日に表示"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "期限が過ぎた未完了のタスクを、すべてのビューで今日に表示します。"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "日をダブルクリックしたとき"
 
@@ -1164,30 +1173,22 @@ msgstr "M月 d日, yyyy"
 msgid "to"
 msgstr "から"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "イベントタイトル"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "概要を追加"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "期限を追加"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "＆保存"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "＆キャンセル"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "リストに移動"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "返信"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "未完了にする"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "完了にする"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1236,6 +1237,15 @@ msgstr "「%1」を削除"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "「%1」のすべてのイベントを削除"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "期限なし"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "期限 %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1289,6 +1299,10 @@ msgid "Delete:"
 msgstr "削除対象:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "このタスクを削除しますか？"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "このイベントを削除しますか？"
 
@@ -1303,6 +1317,14 @@ msgstr "すべてのイベント"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "この繰り返しイベントのすべての回を削除します。"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Google Tasks で開く"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "編集"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1324,6 +1346,14 @@ msgstr "繰り返し"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 (%2 時間、%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "未完了にする"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "完了にする"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1448,6 +1478,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "あなた"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (タスク)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "タスクリスト"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "新しいタスク"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "タスクを編集"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "イベントを編集"
@@ -1481,6 +1528,10 @@ msgstr "変更対象:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "タイトル"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "期限"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1789,8 +1840,17 @@ msgid "Find a Time"
 msgstr "時間を探す"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "メモ"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "説明"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "期限 %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2228,6 +2288,10 @@ msgid "Repeating event deleted"
 msgstr "繰り返しイベントを削除しました"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "タスクを削除しました"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "イベントを削除しました"
 
@@ -2279,6 +2343,11 @@ msgstr "クイック追加"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "明日 13:00 アンナとランチ"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "このタスクの期限は %1 です。"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2350,6 +2419,10 @@ msgstr "Google Calendar を検索中…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "＆スタート"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "＆キャンセル"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2556,6 +2629,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "イベントを削除"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "削除を確認"
+
+#~ msgid "Edit in browser"
+#~ msgstr "ブラウザーで編集"
+
+#~ msgid "Event Title"
+#~ msgstr "イベントタイトル"
+
+#~ msgid "Add description"
+#~ msgstr "概要を追加"
+
+#~ msgid "Add due date"
+#~ msgstr "期限を追加"
+
+#~ msgid "&Save"
+#~ msgstr "＆保存"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "カレンダーの取得エラー: %1"

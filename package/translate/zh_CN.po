@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -75,19 +75,16 @@ msgstr "明天 · %1"
 msgid "New Event"
 msgstr "新建事件"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "新建任务…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "没有事件"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "截止 %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "已逾期"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "M月d日"
@@ -96,21 +93,26 @@ msgstr "M月d日"
 msgid "Task"
 msgstr "任务"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "已完成"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "未完成"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "截止 %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "编辑"
+msgid "Overdue"
+msgstr "已逾期"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "删除事件"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "确认删除"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "在浏览器中编辑"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "已逾期 · 截止 %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1088,6 +1090,14 @@ msgid "Hide"
 msgstr "隐藏"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "在今天显示逾期任务"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "截止日期在之前某天的未完成任务会在所有视图中显示在今天。"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "双击某天时"
 
@@ -1268,30 +1278,22 @@ msgstr "yyyy年M月d日"
 msgid "to"
 msgstr "至"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "事件标题"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "添加描述"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "添加截止日期"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "保存"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "取消"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "移至列表"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "回复"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "标记为未完成"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "标记为已完成"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1341,6 +1343,16 @@ msgstr "删除“%1”"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "删除“%1”的所有事件"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "无截止日期"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "截止 %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -1397,6 +1409,10 @@ msgid "Delete:"
 msgstr "删除："
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "删除此任务？"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "删除此事件？"
 
@@ -1411,6 +1427,14 @@ msgstr "所有事件"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "删除此重复事件的所有重复项。"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "在 Google 任务中打开"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "编辑"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1433,6 +1457,14 @@ msgstr "重复"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%2时间 %1（%3）"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "标记为未完成"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "标记为已完成"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1557,6 +1589,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "您"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1（任务）"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "任务列表"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "新建任务"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "编辑任务"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "编辑事件"
@@ -1590,6 +1639,10 @@ msgstr "更改："
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "标题"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "截止日期"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1898,8 +1951,17 @@ msgid "Find a Time"
 msgstr "查找时间"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "备注"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "描述"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "截止 %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2346,6 +2408,10 @@ msgid "Repeating event deleted"
 msgstr "重复事件已删除"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "任务已删除"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "事件已删除"
 
@@ -2397,6 +2463,11 @@ msgstr "快速添加"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "明天 13:00 和 Anna 吃午饭"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "此任务截止于 %1。"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2468,6 +2539,10 @@ msgstr "正在查找 Google 日历…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "开始(&S)"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "取消"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2675,6 +2750,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Delete Event"
+#~ msgstr "删除事件"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "确认删除"
+
+#~ msgid "Edit in browser"
+#~ msgstr "在浏览器中编辑"
+
+#~ msgid "Event Title"
+#~ msgstr "事件标题"
+
+#~ msgid "Add description"
+#~ msgstr "添加描述"
+
+#~ msgid "Add due date"
+#~ msgstr "添加截止日期"
+
+#~ msgid "&Save"
+#~ msgstr "保存"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "获取日历出错：%1"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -75,19 +75,16 @@ msgstr "Yarın · %1"
 msgid "New Event"
 msgstr "Yeni Etkinlik"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "Yeni Görev…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Etkinlik yok"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "Son tarih %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "Gecikmiş"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
+#: ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -96,21 +93,26 @@ msgstr "MMM d"
 msgid "Task"
 msgstr "Görev"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "Tamamlandı"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "Tamamlanmadı"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "Son tarih %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "Düzenle"
+msgid "Overdue"
+msgstr "Gecikmiş"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "Etkinliği Sil"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "Silmeyi Onayla"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "Tarayıcıda düzenle"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Gecikmiş · son tarih %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1119,6 +1121,16 @@ msgid "Hide"
 msgstr "Gizle"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "Gecikmiş görevleri bugünde göster"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr ""
+"Son tarihi daha önceki bir gün olan açık görevler, tüm görünümlerde bugünde "
+"gösterilir."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Bir güne çift tıklayınca"
 
@@ -1299,30 +1311,22 @@ msgstr "d MMM yyyy"
 msgid "to"
 msgstr "dan"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "Etkinlik Başlığı"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "Açıklama ekle"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "Bitiş tarihi ekle"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "Kaydet"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "İptal"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "Listeye Taşı"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Yanıtla"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "Tamamlanmadı Olarak İşaretle"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "Tamamlandı Olarak İşaretle"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1372,6 +1376,16 @@ msgstr "“%1” Sil"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Tüm “%1” Etkinliklerini Sil"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "Son tarih yok"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Son tarih %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -1429,6 +1443,10 @@ msgid "Delete:"
 msgstr "Sil:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Bu görev silinsin mi?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Bu etkinlik silinsin mi?"
 
@@ -1443,6 +1461,14 @@ msgstr "Tüm Etkinlikler"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Bu yinelenen etkinliğin tüm tekrarlarını siler."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Google Görevler'de Aç"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "Düzenle"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1465,6 +1491,14 @@ msgstr "Tekrarlanır"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 %2 saatiyle (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Tamamlanmadı olarak işaretle"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Tamamlandı olarak işaretle"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1590,6 +1624,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "Siz"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (görevler)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "Görev listesi"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "Yeni Görev"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "Görevi Düzenle"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Etkinliği Düzenle"
@@ -1623,6 +1674,10 @@ msgstr "Değiştir:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "Başlık"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Son tarih"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1940,8 +1995,17 @@ msgid "Find a Time"
 msgstr "Zaman Bul"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "Notlar"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Açıklama"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "Son tarih %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2405,6 +2469,10 @@ msgid "Repeating event deleted"
 msgstr "Yinelenen etkinlik silindi"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "Görev silindi"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Etkinlik silindi"
 
@@ -2458,6 +2526,11 @@ msgstr "Hızlı Ekle"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "Yarın 13:00'te Anna ile öğle yemeği"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "Görevin son tarihi %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2534,6 +2607,10 @@ msgstr "Google Takvim'de aranıyor…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Başlat"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "İptal"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2749,6 +2826,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "Etkinliği Sil"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "Silmeyi Onayla"
+
+#~ msgid "Edit in browser"
+#~ msgstr "Tarayıcıda düzenle"
+
+#~ msgid "Event Title"
+#~ msgstr "Etkinlik Başlığı"
+
+#~ msgid "Add description"
+#~ msgstr "Açıklama ekle"
+
+#~ msgid "Add due date"
+#~ msgstr "Bitiş tarihi ekle"
+
+#~ msgid "&Save"
+#~ msgstr "Kaydet"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "Takvim alınırken hata: %1"

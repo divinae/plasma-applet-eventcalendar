@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 08:51+0100\n"
+"POT-Creation-Date: 2026-10-26 09:12+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,19 +74,15 @@ msgstr "Huomenna · %1"
 msgid "New Event"
 msgstr "Uusi tapahtuma"
 
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+msgid "New Task…"
+msgstr "Uusi tehtävä…"
+
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Ei tapahtumia"
 
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Due %1"
-msgstr "Erääntyy %1"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Overdue"
-msgstr "Myöhässä"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM-d"
@@ -95,21 +91,26 @@ msgstr "MMM-d"
 msgid "Task"
 msgstr "Tehtävä"
 
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Done"
+msgstr "Tehty"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Not done"
+msgstr "Ei tehty"
+
+#: ../contents/ui/AgendaTaskItem.qml
+msgid "Due %1"
+msgstr "Erääntyy %1"
+
 #: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-msgid "Edit"
-msgstr "Muokkaa"
+msgid "Overdue"
+msgstr "Myöhässä"
 
 #: ../contents/ui/AgendaTaskItem.qml
-msgid "Delete Event"
-msgstr "Poista tapahtuma"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Confirm Deletion"
-msgstr "Vahvista poisto"
-
-#: ../contents/ui/AgendaTaskItem.qml
-msgid "Edit in browser"
-msgstr "Muokkaa selaimessa"
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Myöhässä · erääntyi %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -998,6 +999,14 @@ msgid "Hide"
 msgstr "Piilota"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Overdue tasks on today"
+msgstr "Myöhässä olevat tehtävät tänään"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Open tasks due on an earlier day are shown on today, in every view."
+msgstr "Aiempana päivänä erääntyneet avoimet tehtävät näytetään tänään kaikissa näkymissä."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Double-clicking a day"
 msgstr "Päivän kaksoisnapsautus"
 
@@ -1170,30 +1179,22 @@ msgstr "d MMM, yyyy"
 msgid "to"
 msgstr "->"
 
-#: ../contents/ui/EditTaskForm.qml
-msgid "Event Title"
-msgstr "Tapahtuman otsikko"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add description"
-msgstr "Lisää kuvaus"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "Add due date"
-msgstr "Lisää eräpäivä"
-
-#: ../contents/ui/EditTaskForm.qml
-msgid "&Save"
-msgstr "&Talleta"
-
-#: ../contents/ui/EditTaskForm.qml ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Keskeytä"
+#: ../contents/ui/EventContextMenu.qml
+msgid "Move to List"
+msgstr "Siirrä luetteloon"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
 msgstr "Vastaa"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not Done"
+msgstr "Merkitse tekemättömäksi"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Done"
+msgstr "Merkitse tehdyksi"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
@@ -1242,6 +1243,15 @@ msgstr "Poista ”%1”"
 msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Poista kaikki tapahtumat ”%1”"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventModel.qml
+msgid "No due date"
+msgstr "Ei eräpäivää"
+
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Erääntyy %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1296,6 +1306,10 @@ msgid "Delete:"
 msgstr "Poista:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Poistetaanko tämä tehtävä?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Poistetaanko tämä tapahtuma?"
 
@@ -1310,6 +1324,14 @@ msgstr "Kaikki tapahtumat"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Deletes every occurrence of this repeating event."
 msgstr "Poistaa tämän toistuvan tapahtuman kaikki kerrat."
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Open in Google Tasks"
+msgstr "Avaa Google Tasksissa"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Edit"
+msgstr "Muokkaa"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Duplicate"
@@ -1331,6 +1353,14 @@ msgstr "Toistuu"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, aikavyöhyke %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Merkitse tekemättömäksi"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Merkitse tehdyksi"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1456,6 +1486,23 @@ msgctxt "you, in Find a time"
 msgid "You"
 msgstr "Sinä"
 
+#: ../contents/ui/EventEditView.qml ../contents/ui/QuickAddView.qml
+msgctxt "%1 = task list name"
+msgid "%1 (tasks)"
+msgstr "%1 (tehtävät)"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Task list"
+msgstr "Tehtäväluettelo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "New Task"
+msgstr "Uusi tehtävä"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Edit Task"
+msgstr "Muokkaa tehtävää"
+
 #: ../contents/ui/EventEditView.qml
 msgid "Edit Event"
 msgstr "Muokkaa tapahtumaa"
@@ -1489,6 +1536,10 @@ msgstr "Muuta:"
 #: ../contents/ui/EventEditView.qml
 msgid "Title"
 msgstr "Otsikko"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Eräpäivä"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -1806,8 +1857,17 @@ msgid "Find a Time"
 msgstr "Etsi aika"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Notes"
+msgstr "Muistiinpanot"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Description"
 msgstr "Kuvaus"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 is a date"
+msgid "Due %1"
+msgstr "Erääntyy %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2254,6 +2314,10 @@ msgid "Repeating event deleted"
 msgstr "Toistuva tapahtuma poistettu"
 
 #: ../contents/ui/PopupView.qml
+msgid "Task deleted"
+msgstr "Tehtävä poistettu"
+
+#: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Tapahtuma poistettu"
 
@@ -2307,6 +2371,11 @@ msgstr "Pikalisäys"
 msgctxt "quick add example"
 msgid "Lunch with Anna tomorrow 13:00"
 msgstr "Lounas Annan kanssa huomenna 13:00"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The task is due on %1."
+msgstr "Tehtävä erääntyy %1."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2378,6 +2447,10 @@ msgstr "Etsitään Google-kalenterista…"
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Aloita"
+
+#: ../contents/ui/TimerInputView.qml
+msgid "&Cancel"
+msgstr "&Keskeytä"
 
 #: ../contents/ui/TimerModel.qml
 msgid "Timer"
@@ -2588,6 +2661,27 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Delete Event"
+#~ msgstr "Poista tapahtuma"
+
+#~ msgid "Confirm Deletion"
+#~ msgstr "Vahvista poisto"
+
+#~ msgid "Edit in browser"
+#~ msgstr "Muokkaa selaimessa"
+
+#~ msgid "Event Title"
+#~ msgstr "Tapahtuman otsikko"
+
+#~ msgid "Add description"
+#~ msgstr "Lisää kuvaus"
+
+#~ msgid "Add due date"
+#~ msgstr "Lisää eräpäivä"
+
+#~ msgid "&Save"
+#~ msgstr "&Talleta"
 
 #~ msgid "Error fetching calendar: %1"
 #~ msgstr "Virhe kalenteria noudettaessa: %1"
