@@ -483,7 +483,7 @@ ConfigPage {
 
 			ColumnLayout {
 				id: tickTickSection
-				readonly property var account: tickTickStore.accounts[index] || null
+				readonly property var account: (tickTickStore.accountsRevision, tickTickStore.accounts[index] || null)
 				readonly property var projects: account ? Shared.toArray(account.projectList) : []
 				property bool confirmRemove: false
 				// Managing the lists (see ManagedListRow, NewListRows).
@@ -542,7 +542,8 @@ ConfigPage {
 						}
 					}
 					FormCard.AbstractFormDelegate {
-						visible: tickTickStore.secretsLoaded && !!tickTickSection.account && !tickTickSection.account.token
+						// Only when the keyring answered it has no token (not while it can't be read).
+						visible: !!tickTickSection.account && !tickTickSection.account.token && !!tickTickStore.tokenNotFound[tickTickSection.account.id]
 						background: null
 						contentItem: Kirigami.InlineMessage {
 							visible: true

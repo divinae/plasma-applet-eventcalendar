@@ -8,6 +8,10 @@ import "TickTickAccountState.js" as TickTickAccountState
 // projectIdList, see TickTickAccountState.serializeAccount). Each account's API token is in the
 // system keyring only (KeyringSecret, scope ticktick-account, key token), read once on load and
 // kept in memory (account.token): never in config, logs or the event cache.
+// accounts is only replaced when its ids or tokens change (the widget then makes a manager per
+// fetchable account again); other changes (label, projects) are made in place, with accountUpdated.
+// A token the keyring couldn't read (an error, not a definite not-found) is tried again later
+// (retryDelays); tokenNotFound has the accounts whose token is definitely not there.
 Item {
 	id: store
 	visible: false
@@ -22,7 +26,19 @@ Item {
 
 	property var accountsConfigValue: ""
 	property var accounts: []
+	// false while tokens are read from the keyring, and while a read that failed waits to be retried.
 	property bool secretsLoaded: true
+	// { accountId: true }: the keyring answered it has no token for the account.
+	property var tokenNotFound: ({})
+	// Waits before reading tokens again after a keyring error: then every 5 minutes.
+	readonly property var retryDelays: [5000, 15000, 60000, 300000]
+	property int retryCount: 0
+	property bool tokensLoading: false
+	property bool tokensReloadPending: false
+	property bool accountsLoaded: false
+	// Bumped when an account changes in place, for bindings on accounts[i] (the settings page).
+	property int accountsRevision: 0
+	property var loadedConfigValue: null
 	// The accounts with a token: those the widget fetches.
 	readonly property var fetchableAccounts: accounts.filter(function(account) { return !!account.token })
 
@@ -40,12 +56,18 @@ Item {
 		debugEnabled: store.debugEnabled
 	}
 
+	Timer {
+		id: retryTimer
+		repeat: false
+		onTriggered: store.loadMissingTokens()
+	}
+
 	Component.onCompleted: {
 		if (!configBridge) {
 			configBridge = ConfigUtils.findBridge(store)
 		}
 		syncFromConfig()
-		loadAccounts()
+		loadAccounts() // A no-op when the config value was loaded already (loadAccounts)
 	}
 
 	Connections {
@@ -114,8 +136,26 @@ Item {
 		}
 	}
 
+	function hasSameAccountIds(listA, listB) {
+		if (listA.length !== listB.length) {
+			return false
+		}
+		for (var i = 0; i < listA.length; i++) {
+			if (listA[i].id !== listB[i].id || listA[i].token !== listB[i].token) {
+				return false
+			}
+		}
+		return true
+	}
+
 	// Accounts from config, keeping the tokens already read; the missing ones from the keyring.
+	// The same config value isn't loaded twice (startup, the config bridge, our own serialize).
 	function loadAccounts() {
+		if (accountsLoaded && loadedConfigValue === accountsConfigValue) {
+			return
+		}
+		accountsLoaded = true
+		loadedConfigValue = accountsConfigValue
 		var parsed = parseAccounts(accountsConfigValue)
 		var next = []
 		for (var i = 0; i < parsed.length; i++) {
@@ -124,36 +164,97 @@ Item {
 				next.push(account)
 			}
 		}
-		accounts = next
+		if (hasSameAccountIds(accounts, next)) {
+			// Same accounts and tokens: changed in place, the managers stay.
+			var changed = []
+			for (var j = 0; j < next.length; j++) {
+				var before = JSON.stringify(TickTickAccountState.serializeAccount(accounts[j]))
+				if (before !== JSON.stringify(TickTickAccountState.serializeAccount(next[j]))) {
+					accounts[j] = next[j]
+					changed.push(next[j].id)
+				}
+			}
+			if (changed.length) {
+				accountsRevision += 1
+			}
+			changed.forEach(function(accountId) { accountUpdated(accountId) })
+		} else {
+			accounts = next
+		}
 		loadMissingTokens()
 	}
 
+	// Read the tokens of the accounts without one (except definite not-founds) from the keyring.
+	// When some couldn't be read, secretsLoaded stays false and it's tried again (retryDelays).
 	function loadMissingTokens() {
 		if (!loadTokens) {
 			return
 		}
-		var missing = accounts.filter(function(account) { return !account.token }).map(function(account) {
+		if (tokensLoading) {
+			tokensReloadPending = true
+			return
+		}
+		var missing = accounts.filter(function(account) {
+			return !account.token && !tokenNotFound[account.id]
+		}).map(function(account) {
 			return account.id
 		})
 		if (!missing.length) {
+			retryTimer.stop()
+			retryCount = 0
 			secretsLoaded = true
 			return
 		}
 		secretsLoaded = false
+		tokensLoading = true
+		retryTimer.stop()
 		var pending = missing.length
 		var found = {}
+		var notFound = []
+		var failed = 0
 		missing.forEach(function(accountId) {
 			keyring.load(accountId, secretKey, function(err, token) {
 				if (token) {
 					found[accountId] = token
+				} else if (err) {
+					failed += 1
+				} else {
+					notFound.push(accountId)
 				}
 				pending -= 1
-				if (pending === 0) {
-					applyTokens(found)
+				if (pending > 0) {
+					return
+				}
+				tokensLoading = false
+				if (notFound.length) {
+					var nextNotFound = {}
+					for (var id in tokenNotFound) {
+						nextNotFound[id] = true
+					}
+					notFound.forEach(function(notFoundId) { nextNotFound[notFoundId] = true })
+					tokenNotFound = nextNotFound
+				}
+				applyTokens(found)
+				if (failed) {
+					scheduleRetry(failed)
+				} else if (tokensReloadPending) {
+					tokensReloadPending = false
+					loadMissingTokens()
+				} else {
+					retryCount = 0
 					secretsLoaded = true
 				}
 			})
 		})
+	}
+
+	function scheduleRetry(failed) {
+		tokensReloadPending = false
+		var delay = retryDelays[Math.min(retryCount, retryDelays.length - 1)]
+		retryCount += 1
+		logger.log("Could not read " + failed + " TickTick token(s) from the keyring, trying again in " + Math.round(delay / 1000) + " s")
+		retryTimer.interval = delay
+		retryTimer.restart()
 	}
 
 	function applyTokens(found) {
@@ -232,7 +333,8 @@ Item {
 		})
 	}
 
-	// patch: saved fields (label, projectList, projectIdList); never a token.
+	// patch: saved fields (label, projectList, projectIdList); never a token. Changed in place
+	// (accountUpdated): the account's manager stays.
 	function updateAccount(accountId, patch) {
 		var index = getAccountIndex(accountId)
 		if (index < 0) {
@@ -244,9 +346,8 @@ Item {
 				copy[key] = patch[key]
 			}
 		}
-		var next = accounts.slice()
-		next[index] = TickTickAccountState.normalizeAccount(copy, [copy])
-		accounts = next
+		accounts[index] = TickTickAccountState.normalizeAccount(copy, [copy])
+		accountsRevision += 1
 		serialize()
 		accountUpdated(accountId)
 	}
@@ -267,6 +368,15 @@ Item {
 		var next = accounts.slice()
 		next.splice(index, 1)
 		accounts = next
+		if (tokenNotFound[accountId]) {
+			var notFound = {}
+			for (var id in tokenNotFound) {
+				if (id !== accountId) {
+					notFound[id] = true
+				}
+			}
+			tokenNotFound = notFound
+		}
 		serialize()
 		keyring.clear(accountId, secretKey, function(err) {
 			if (err) {

@@ -266,6 +266,7 @@ CalendarManager {
 		delegate: Item {
 			id: tickTickAccountItem
 			property string accountId: modelData.id
+			property string accountLabel: modelData.label || "TickTick"
 
 			TickTickApiSession {
 				id: tickTickApiSession
@@ -277,7 +278,18 @@ CalendarManager {
 				session: tickTickApiSession
 				accountsStore: tickTickAccountsStore
 				accountId: tickTickAccountItem.accountId
-				accountLabel: modelData.label || "TickTick"
+				accountLabel: tickTickAccountItem.accountLabel
+			}
+
+			// Label and projects change in place (TickTickAccountsStore.updateAccount): the manager stays.
+			Connections {
+				target: tickTickAccountsStore
+				function onAccountUpdated(updatedId) {
+					if (updatedId === tickTickAccountItem.accountId) {
+						var account = tickTickAccountsStore.getAccount(updatedId)
+						tickTickAccountItem.accountLabel = account && account.label ? account.label : "TickTick"
+					}
+				}
 			}
 
 			Component.onCompleted: {
@@ -291,8 +303,13 @@ CalendarManager {
 
 	Connections {
 		target: tickTickAccountsStore
+		// Accounts or tokens changed: the managers were made again.
 		function onFetchableAccountsChanged() {
 			eventModel.clear()
+			deferredUpdate.restart()
+		}
+		// A label or the projects changed: fetch again, keeping what's shown meanwhile.
+		function onAccountUpdated(accountId) {
 			deferredUpdate.restart()
 		}
 	}
