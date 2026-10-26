@@ -228,7 +228,7 @@ LinkRect {
 	implicitHeight: contents.implicitHeight + verticalPadding * 2
 
 	// The islands style (like TickTick): a square check, when it's due as accent-colored text (a
-	// repeat icon below it), and the list's color as a thin stripe along the left edge (by date: in
+	// repeat icon before it), and the list's color as a thin stripe along the left edge (by date: in
 	// place of the list's name, which is in the tooltip).
 	property bool cardStyle: appletConfig.islands
 	readonly property bool repeats: !!eventItem && (!!eventItem.recurringEventId || !!eventItem.repeatFlag || !!eventItem.repeatRule)
@@ -403,8 +403,7 @@ LinkRect {
 		RowLayout {
 			visible: taskRow.showInfo && !taskRow.showActions
 			Layout.alignment: Qt.AlignTop
-			// Islands: as tall as the date and the repeat icon below it.
-			Layout.preferredHeight: taskRow.cardStyle ? -1 : titleLabel.implicitHeight
+			Layout.preferredHeight: titleLabel.implicitHeight
 			spacing: Kirigami.Units.smallSpacing * 2
 			opacity: taskRow.doneOpacity
 			// A Row (not a layout): exactly as wide as the dot and the name.
@@ -436,21 +435,14 @@ LinkRect {
 				kind: taskRow.overdue ? 'overdue' : taskRow.due.kind
 				font: taskRow.detailFont
 			}
-			// Islands: when it's due as text, a repeat icon below it.
-			Column {
+			// Islands: the repeat icon and the date as text, on the title's line (one line, so the row
+			// keeps its height when the hover buttons take their place).
+			Row {
 				visible: taskRow.cardStyle
-				Layout.alignment: Qt.AlignTop
-				spacing: 0
-				PlasmaComponents3.Label {
-					anchors.right: parent.right
-					visible: taskRow.showDueText
-					text: taskRow.dueTextShort
-					textFormat: Text.PlainText
-					font: taskRow.detailFont
-					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.linkColor
-				}
+				Layout.alignment: Qt.AlignVCenter
+				spacing: Kirigami.Units.smallSpacing
 				Kirigami.Icon {
-					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
 					visible: taskRow.repeats && !taskRow.compact
 					width: Kirigami.Units.iconSizes.small * 0.75
 					height: width
@@ -458,6 +450,14 @@ LinkRect {
 					color: Kirigami.Theme.textColor
 					isMask: true
 					opacity: 0.6
+				}
+				PlasmaComponents3.Label {
+					anchors.verticalCenter: parent.verticalCenter
+					visible: taskRow.showDueText
+					text: taskRow.dueTextShort
+					textFormat: Text.PlainText
+					font: taskRow.detailFont
+					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.linkColor
 				}
 			}
 		}
