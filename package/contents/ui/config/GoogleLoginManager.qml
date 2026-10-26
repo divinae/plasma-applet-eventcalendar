@@ -685,7 +685,10 @@ Item {
 		GoogleApiSession {}
 	}
 	property var apiSessions: ({})
-	function withAccountToken(accountId, callback) {
+	// The accounts store, for managers that change an account (eg: its task lists).
+	readonly property var store: accountsStore
+	// The account's API session (GoogleApiSession), made once.
+	function apiSessionFor(accountId) {
 		var apiSession = apiSessions[accountId]
 		if (!apiSession) {
 			apiSession = apiSessionComponent.createObject(session, {
@@ -694,6 +697,10 @@ Item {
 			})
 			apiSessions[accountId] = apiSession
 		}
+		return apiSession
+	}
+	function withAccountToken(accountId, callback) {
+		var apiSession = apiSessionFor(accountId)
 		apiSession.checkAccessToken(function(err) {
 			var account = accountsStore.getAccount(accountId)
 			if (!err && !(account && account.accessToken)) {

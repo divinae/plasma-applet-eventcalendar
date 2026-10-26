@@ -16,8 +16,13 @@ FormCard.FormCheckDelegate {
 	property url iconSource
 	property bool readOnly: false
 	property bool editable: false
+	// Task lists: rename and delete buttons.
+	property bool canRename: false
+	property bool canDelete: false
 
 	signal editRequested()
+	signal renameRequested()
+	signal deleteRequested()
 
 	text: name
 
@@ -61,6 +66,26 @@ FormCard.FormCheckDelegate {
 				display: AbstractButton.IconOnly
 				text: i18n("Edit calendar…")
 				onClicked: row.editRequested()
+				ToolTip.text: text
+				ToolTip.visible: hovered
+				ToolTip.delay: Kirigami.Units.toolTipDelay
+			}
+			ToolButton {
+				visible: row.canRename
+				icon.name: "edit-rename"
+				display: AbstractButton.IconOnly
+				text: i18n("Rename list…")
+				onClicked: row.renameRequested()
+				ToolTip.text: text
+				ToolTip.visible: hovered
+				ToolTip.delay: Kirigami.Units.toolTipDelay
+			}
+			ToolButton {
+				visible: row.canDelete
+				icon.name: "edit-delete"
+				display: AbstractButton.IconOnly
+				text: i18n("Delete list…")
+				onClicked: row.deleteRequested()
 				ToolTip.text: text
 				ToolTip.visible: hovered
 				ToolTip.delay: Kirigami.Units.toolTipDelay
