@@ -696,7 +696,15 @@ CalendarManager {
 				changes.completedTime = Tasks.formatTickTickDate(Date.now())
 			}
 			session.request('POST', projectTaskPath(projectId, eventId) + '/complete', null, function(err, data, xhr) {
-				saved(err, null, xhr, rawWith(event, changes))
+				if (err) {
+					saved(err, data, xhr, null)
+					return
+				}
+				// The server copy: a repeating task stays open, on its next due day. Else what was sent.
+				session.request('GET', projectTaskPath(projectId, eventId), null, function(getErr, getData, getXhr) {
+					var serverCopy = !getErr && getData && typeof getData === 'object' && getData.id ? getData : null
+					saved(null, serverCopy, xhr, rawWith(event, changes))
+				})
 			})
 			return
 		}
