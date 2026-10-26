@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:16+0100\n"
+"POT-Creation-Date: 2026-10-26 13:11+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1485,6 +1485,14 @@ msgstr "Сховати завдання"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "Show tasks"
 msgstr "Показати завдання"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All lists"
+msgstr "Усі списки"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Task list shown"
+msgstr "Показаний список завдань"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/PopupHeader.qml

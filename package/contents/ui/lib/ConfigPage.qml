@@ -86,6 +86,8 @@ KCM.SimpleKCM {
 	property var cfg_agendaCondensedAllDayEventDefault
 	property var cfg_agendaPlaceOverdueTasksOnToday
 	property var cfg_agendaPlaceOverdueTasksOnTodayDefault
+	property var cfg_dayTasksListId
+	property var cfg_dayTasksListIdDefault
 	property var cfg_tasksShowCompleted
 	property var cfg_tasksShowCompletedDefault
 	property var cfg_tasksGroupBy

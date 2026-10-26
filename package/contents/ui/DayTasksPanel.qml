@@ -27,6 +27,20 @@ ColumnLayout {
 
 	property bool hasLists: false
 	property var lists: []
+	// The list filter (heading's list picker, dayTasksListId): one list's id, or "" for all. A list
+	// that's gone counts as all.
+	readonly property string filterListId: {
+		var id = String(plasmoid.configuration.dayTasksListId || "")
+		return lists.some(function(list) { return list.id === id }) ? id : ""
+	}
+	readonly property var filterList: {
+		for (var i = 0; i < lists.length; i++) {
+			if (lists[i].id === filterListId) {
+				return lists[i]
+			}
+		}
+		return null
+	}
 	property var tasks: []
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
 
@@ -35,8 +49,15 @@ ColumnLayout {
 
 	function rebuild() {
 		var lists = eventModel ? eventModel.getSelectedTaskLists() : []
+		var shownId = String(plasmoid.configuration.dayTasksListId || "")
+		if (!lists.some(function(list) { return list.id === shownId })) {
+			shownId = ""
+		}
 		var items = []
 		for (var i = 0; i < lists.length; i++) {
+			if (shownId && lists[i].id !== shownId) {
+				continue
+			}
 			var calendar = eventModel.eventsByCalendar[lists[i].id]
 			if (calendar && calendar.items) {
 				items = items.concat(calendar.items)
@@ -53,6 +74,10 @@ ColumnLayout {
 	onDayTextChanged: deferredRebuild()
 	onTodayChanged: deferredRebuild()
 	onEventModelChanged: deferredRebuild()
+	Connections {
+		target: plasmoid.configuration
+		function onDayTasksListIdChanged() { dayTasks.deferredRebuild() }
+	}
 
 	Connections {
 		target: dayTasks.eventModel
@@ -64,9 +89,11 @@ ColumnLayout {
 		function onEventUpdated(calendarId, eventId, data) { dayTasks.deferredRebuild() }
 	}
 
-	// Heading: (fold arrow) "Tasks", the open count, "+".
+	// Heading: (fold arrow) "Tasks", the list filter, the open count, "+".
 	RowLayout {
 		Layout.fillWidth: true
+		// Islands: some room between the title and the first task.
+		Layout.bottomMargin: appletConfig.islands ? Kirigami.Units.smallSpacing : 0
 		spacing: 0
 
 		PlasmaComponents3.ToolButton {
@@ -84,8 +111,8 @@ ColumnLayout {
 			Layout.leftMargin: dayTasks.collapsible || appletConfig.islands ? 0 : Kirigami.Units.smallSpacing
 			text: i18n("Tasks")
 			textFormat: Text.PlainText
-			font.weight: appletConfig.islands ? Font.Bold : Font.DemiBold
-			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.15 : Kirigami.Theme.defaultFont.pointSize
+			font.weight: Font.DemiBold
+			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.05 : Kirigami.Theme.defaultFont.pointSize
 			opacity: appletConfig.islands ? 1 : 0.85
 			MouseArea {
 				anchors.fill: parent
@@ -100,6 +127,44 @@ ColumnLayout {
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
 			opacity: 0.65
+		}
+		// The list filter: all lists or one (several lists only).
+		PlasmaComponents3.ToolButton {
+			id: listFilterButton
+			visible: dayTasks.lists.length > 1
+			Layout.leftMargin: Kirigami.Units.smallSpacing
+			Layout.minimumWidth: 0
+			Layout.maximumWidth: Kirigami.Units.gridUnit * 9
+			text: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
+			icon.name: "view-filter"
+			icon.width: Kirigami.Units.iconSizes.small
+			icon.height: Kirigami.Units.iconSizes.small
+			display: QQC2.AbstractButton.TextBesideIcon
+			onClicked: listFilterMenu.popup(listFilterButton, 0, listFilterButton.height)
+			PlasmaComponents3.ToolTip.text: i18n("Task list shown")
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
+		PlasmaComponents3.Menu {
+			id: listFilterMenu
+			PlasmaComponents3.MenuItem {
+				text: i18n("All lists")
+				checkable: true
+				checked: !dayTasks.filterListId
+				onTriggered: plasmoid.configuration.dayTasksListId = ""
+			}
+			PlasmaComponents3.MenuSeparator {}
+			Instantiator {
+				model: dayTasks.lists
+				delegate: PlasmaComponents3.MenuItem {
+					required property var modelData
+					text: modelData.name
+					checkable: true
+					checked: dayTasks.filterListId === modelData.id
+					onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
+				}
+				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
+				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
+			}
 		}
 		Item {
 			Layout.fillWidth: true
@@ -166,6 +231,8 @@ ColumnLayout {
 		Layout.fillWidth: true
 		eventModel: dayTasks.eventModel
 		lists: dayTasks.lists
+		// The filtered list, if any: new tasks go there.
+		listId: dayTasks.filterListId
 		dueDay: dayTasks.dayText
 		compact: true
 	}

@@ -170,6 +170,10 @@
 		<entry name="agendaPlaceOverdueTasksOnToday" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="dayTasksListId" type="string">
+			<!-- Day view: the task list shown ("" = all selected lists). -->
+			<default></default>
+		</entry>
 		<entry name="tasksShowCompleted" type="bool">
 			<!-- Tasks view: the done tasks (at the bottom of each list; islands: the Completed card). -->
 			<default>true</default>
