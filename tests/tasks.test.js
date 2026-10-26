@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
-	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows']
+	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -83,6 +83,24 @@ assert.strictEqual(T.firstLine(undefined), '')
 	const withDone = T.taskRows(lists, items, true)
 	same(withDone.filter(r => r.type === 'task').map(r => r.item.id + (r.done ? '+' : '')), ['2', '1', '3+', '4+'])
 	same(T.taskRows([lists[0]], items, false).filter(r => r.type === 'group'), [], 'one account: no heading')
+}
+
+// dayTasks: due that day; on today also open overdue and undated ones; done after open.
+{
+	const items = [
+		task({ id: 'today', calendarId: 'l', due: '2026-10-26T00:00:00.000Z' }),
+		task({ id: 'overdue', calendarId: 'l', due: '2026-10-20T00:00:00.000Z' }),
+		task({ id: 'undated', calendarId: 'l' }),
+		task({ id: 'done-today', calendarId: 'l', due: '2026-10-26T00:00:00.000Z', status: 'completed' }),
+		task({ id: 'done-undated', calendarId: 'l', status: 'completed' }),
+		task({ id: 'tomorrow', calendarId: 'l', due: '2026-10-27T00:00:00.000Z' }),
+		task({ id: 'today', calendarId: 'l', due: '2026-10-26T00:00:00.000Z' }),
+		{ kind: 'calendar#event', id: 'e', calendarId: 'c' },
+	]
+	same(T.dayTasks(items, '2026-10-26', '2026-10-26').map(t => t.id), ['overdue', 'today', 'undated', 'done-today'])
+	same(T.dayTasks(items, '2026-10-27', '2026-10-26').map(t => t.id), ['tomorrow'])
+	same(T.dayTasks(items, '2026-10-20', '2026-10-26').map(t => t.id), ['overdue'], 'its own day too')
+	same(T.dayTasks(null, '2026-10-26', '2026-10-26'), [])
 }
 
 // dueDay: the date part, whatever the time zone.

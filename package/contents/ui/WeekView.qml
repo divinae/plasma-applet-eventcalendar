@@ -40,6 +40,8 @@ Item {
 	// 7: week view. 1: today / day view (the same hour grid with one wide column).
 	property int dayCount: 7
 	readonly property bool singleDay: dayCount === 1
+	// Day view: the tasks strip above the hour grid is open (this session).
+	property bool dayTasksExpanded: true
 	// Week view without the weekend (the locale's working days). Still whole weeks: navigation and
 	// weekStart (the first day of week setting) stay the same, only the columns change.
 	property bool workWeek: false
@@ -579,24 +581,38 @@ Item {
 		today: weekView.dayWeather(weekView.weekStart)
 	}
 
-	DayWeatherPanel {
+	// Beside the grid: the day's tasks above the weather.
+	ColumnLayout {
 		visible: weekView.weatherBeside
 		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
 		// Top aligned with the day header, like the grid, with a little padding.
 		y: dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.weatherPanelWidth - Kirigami.Units.largeSpacing
 		height: parent.height - y - Kirigami.Units.largeSpacing
-		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
-		hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
-		nextDays: {
-			var list = []
-			for (var i = 1; i <= 4; i++) {
-				var d = weekView.dayWeather(weekView.dayDate(i))
-				if (d) {
-					list.push(d)
+		spacing: Kirigami.Units.largeSpacing
+
+		DayTasksPanel {
+			Layout.fillWidth: true
+			eventModel: weekView.weatherBeside ? weekView.eventModel : null
+			day: weekView.columnDate(0)
+			maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, weekView.height * 0.35)
+		}
+
+		DayWeatherPanel {
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
+			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
+			nextDays: {
+				var list = []
+				for (var i = 1; i <= 4; i++) {
+					var d = weekView.dayWeather(weekView.dayDate(i))
+					if (d) {
+						list.push(d)
+					}
 				}
+				return list
 			}
-			return list
 		}
 	}
 
@@ -944,6 +960,22 @@ Item {
 					opacity: 0.7
 				}
 			}
+		}
+
+		// Day view without the weather beside: the day's tasks as a strip that folds away.
+		DayTasksPanel {
+			id: dayTasksStrip
+			Layout.fillWidth: true
+			Layout.leftMargin: Kirigami.Units.smallSpacing
+			Layout.rightMargin: Kirigami.Units.smallSpacing
+			readonly property bool wanted: weekView.singleDay && !weekView.weatherBeside
+			visible: wanted && hasLists
+			eventModel: wanted ? weekView.eventModel : null
+			day: weekView.columnDate(0)
+			collapsible: true
+			expanded: weekView.dayTasksExpanded
+			onExpandedChanged: weekView.dayTasksExpanded = expanded
+			maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, weekView.height * 0.3)
 		}
 
 		// Hour grid
