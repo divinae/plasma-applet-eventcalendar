@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 
 import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
+import "../TaskLists.js" as TaskLists
 import "../Tasks.js" as Tasks
 import "../lib"
 import "../lib/Async.js" as Async
@@ -33,7 +34,10 @@ CalendarManager {
 	Logger {
 		id: logger
 		name: 'eventcalendar-google-tasks'
-		showDebug: plasmoid.configuration.debugging
+		// The settings page uses this manager too, where there may be no plasmoid.
+		showDebug: typeof plasmoid !== "undefined" && plasmoid && plasmoid.configuration
+			? !!plasmoid.configuration.debugging
+			: false
 	}
 
 	function getAccount() {
@@ -580,6 +584,113 @@ CalendarManager {
 			if (done) {
 				done(null, current)
 			}
+		})
+	}
+
+	//--- Task lists (users/@me/lists): create, rename, delete, clear completed
+	// https://developers.google.com/tasks/reference/rest/v1/tasklists
+	// After a change the account's stored lists (tasklistList, tasklistIdList) are updated, so the
+	// settings and the views show it: a new list is shown, a deleted one leaves the selection.
+	// done(err, ...) is optional and always called. Only the HTTP status is logged.
+
+	// { rename, delete, color, clearCompleted } for a list of this account (TaskLists.capabilities).
+	function taskListCapabilities(calendarId) {
+		var calendar = getCalendar(calendarId)
+		return TaskLists.capabilities(calendarManagerId, unscopedTasklistId(calendarId), calendar ? calendar.accessRole : 'none')
+	}
+
+	function storedTasklists() {
+		var account = getAccount()
+		return {
+			lists: account && Array.isArray(account.tasklistList) ? account.tasklistList : [],
+			ids: account && Array.isArray(account.tasklistIdList) ? account.tasklistIdList : [],
+		}
+	}
+	// next: { lists, ids } (TaskLists.withAdded / withChanged / withRemoved).
+	function storeTasklists(next) {
+		if (getAccount() && typeof accountsStore.updateAccount === 'function') {
+			accountsStore.updateAccount(accountId, { tasklistList: next.lists, tasklistIdList: next.ids })
+		}
+	}
+
+	// One task list request. onSuccess(data) gives what done gets after err (null).
+	function tasklistRequest(what, method, path, body, done, onSuccess) {
+		tasksRequest(method, path, null, body, function(err, data, xhr) {
+			var result = null
+			if (err) {
+				logger.log(calendarManagerId, what + '_err', xhr ? xhr.status : 'no token')
+			} else {
+				result = onSuccess(data)
+			}
+			if (done) {
+				done(err || null, result)
+			}
+		})
+	}
+	function tasklistPath(rawTasklistId) {
+		return '/users/@me/lists/' + encodeURIComponent(rawTasklistId)
+	}
+
+	// done(err, list): list is { id (scoped), name }.
+	function createTaskList(title, done) {
+		var name = TaskLists.cleanTitle(title)
+		if (!name) {
+			if (done) {
+				done('createTaskList: no title', null)
+			}
+			return
+		}
+		tasklistRequest('createTaskList', 'POST', '/users/@me/lists', { title: name }, done, function(data) {
+			var rawId = data && data.id ? String(data.id) : ''
+			var created = String(data && data.title || name)
+			if (!rawId) {
+				return null
+			}
+			var stored = storedTasklists()
+			storeTasklists(TaskLists.withAdded(stored.lists, stored.ids, { id: rawId, title: created }))
+			return { id: scopedTasklistId(rawId), name: created }
+		})
+	}
+
+	// done(err)
+	function renameTaskList(calendarId, title, done) {
+		var name = TaskLists.cleanTitle(title)
+		if (!name) {
+			if (done) {
+				done('renameTaskList: no title', null)
+			}
+			return
+		}
+		var rawId = unscopedTasklistId(calendarId)
+		tasklistRequest('renameTaskList', 'PATCH', tasklistPath(rawId), { title: name }, done, function(data) {
+			var stored = storedTasklists()
+			storeTasklists(TaskLists.withChanged(stored.lists, stored.ids, rawId, { title: String(data && data.title || name) }))
+			return null
+		})
+	}
+
+	// The list and its tasks are gone: unloaded here, and it leaves the selection. done(err)
+	function deleteTaskList(calendarId, done) {
+		var rawId = unscopedTasklistId(calendarId)
+		tasklistRequest('deleteTaskList', 'DELETE', tasklistPath(rawId), "", done, function() {
+			delete eventsByCalendar[calendarId]
+			delete previousEventsByCalendar[calendarId]
+			var stored = storedTasklists()
+			storeTasklists(TaskLists.withRemoved(stored.lists, stored.ids, rawId))
+			return null
+		})
+	}
+
+	// Google marks the list's completed tasks hidden (lists/{id}/clear); they leave the view.
+	// done(err)
+	function clearCompleted(calendarId, done) {
+		var rawId = unscopedTasklistId(calendarId)
+		tasklistRequest('clearCompleted', 'POST', '/lists/' + encodeURIComponent(rawId) + '/clear', "", done, function() {
+			var completed = eventItems(calendarId).filter(function(item) { return Tasks.isDone(item) })
+			for (var i = 0; i < completed.length; i++) {
+				removeEvent(calendarId, completed[i].id)
+			}
+			return null
 		})
 	}
 }

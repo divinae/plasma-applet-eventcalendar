@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 
 import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
+import "../TaskLists.js" as TaskLists
 import "../Tasks.js" as Tasks
 import "../TimeZone.js" as TimeZone
 import "../lib"
@@ -79,7 +80,8 @@ CalendarManager {
 			id: scopedProjectId(project.id),
 			summary: label + " - " + project.name,
 			backgroundColor: project.color || Kirigami.Theme.highlightColor.toString(),
-			accessRole: 'owner',
+			// Shared projects have a permission: 'write', else read-only ('read', 'comment').
+			accessRole: !project.permission ? 'owner' : project.permission === 'write' ? 'writer' : 'reader',
 			isTasklist: true,
 		}
 	}
@@ -557,6 +559,137 @@ CalendarManager {
 		}
 		session.request('POST', '/task/' + encodeURIComponent(eventId), body, function(err, data, xhr) {
 			saved(err, data, xhr, rawWith(event, body))
+		})
+	}
+
+	//--- Task lists (projects): create, rename, recolor, delete
+	// After a change the account's stored projects (projectList, projectIdList) are updated, so the
+	// settings and the views show it: a new project is shown, a deleted one leaves the selection.
+	// The Inbox can't be changed. No "clear completed": the API lists open tasks only.
+	// done(err, ...) is optional and always called. Only the HTTP status is logged.
+
+	// { rename, delete, color, clearCompleted } for a project of this account (TaskLists.capabilities).
+	function taskListCapabilities(calendarId) {
+		var calendar = getCalendar(calendarId)
+		return TaskLists.capabilities(calendarManagerId, unscopedProjectId(calendarId), calendar ? calendar.accessRole : 'none')
+	}
+
+	function storedProjects() {
+		var account = getAccount()
+		return {
+			lists: account && Array.isArray(account.projectList) ? account.projectList : [],
+			ids: account && Array.isArray(account.projectIdList) ? account.projectIdList : [],
+		}
+	}
+	// next: { lists, ids } (TaskLists.withAdded / withChanged / withRemoved).
+	function storeProjects(next) {
+		if (getAccount() && typeof accountsStore.updateAccount === 'function') {
+			accountsStore.updateAccount(accountId, { projectList: next.lists, projectIdList: next.ids })
+		}
+	}
+
+	// One project request. onSuccess(data) gives what done gets after err (null).
+	function projectRequest(what, method, path, body, done, onSuccess) {
+		session.request(method, path, body, function(err, data, xhr) {
+			var result = null
+			if (err) {
+				logger.log(calendarManagerId, what + '_err', xhr ? xhr.status : 'no token')
+			} else {
+				result = onSuccess(data)
+			}
+			if (done) {
+				done(err || null, result)
+			}
+		})
+	}
+	// Refuse a change the project can't have (the Inbox, read-only): done(err), no request.
+	function refuse(what, calendarId, capability, done) {
+		if (taskListCapabilities(calendarId)[capability]) {
+			return false
+		}
+		logger.log(calendarManagerId, what, 'not allowed')
+		if (done) {
+			done(what + ': not allowed', null)
+		}
+		return true
+	}
+	function projectPath(rawId) {
+		return '/project/' + encodeURIComponent(rawId)
+	}
+
+	// done(err, list): list is { id (scoped), name }.
+	function createTaskList(title, done) {
+		var name = TaskLists.cleanTitle(title)
+		if (!name) {
+			if (done) {
+				done('createTaskList: no title', null)
+			}
+			return
+		}
+		projectRequest('createTaskList', 'POST', '/project', { name: name }, done, function(data) {
+			var rawId = data && data.id ? String(data.id) : ''
+			if (!rawId) {
+				return null
+			}
+			var project = TickTickAccountState.taskProjects([data])[0] || { id: rawId, name: name, color: '' }
+			var stored = storedProjects()
+			storeProjects(TaskLists.withAdded(stored.lists, stored.ids, project))
+			return { id: scopedProjectId(rawId), name: project.name || name }
+		})
+	}
+
+	// done(err)
+	function renameTaskList(calendarId, title, done) {
+		var name = TaskLists.cleanTitle(title)
+		if (!name) {
+			if (done) {
+				done('renameTaskList: no title', null)
+			}
+			return
+		}
+		if (refuse('renameTaskList', calendarId, 'rename', done)) {
+			return
+		}
+		var rawId = unscopedProjectId(calendarId)
+		projectRequest('renameTaskList', 'POST', projectPath(rawId), { name: name }, done, function(data) {
+			var stored = storedProjects()
+			storeProjects(TaskLists.withChanged(stored.lists, stored.ids, rawId, { name: String(data && data.name || name) }))
+			return null
+		})
+	}
+
+	// color: '#rrggbb'. done(err)
+	function setTaskListColor(calendarId, color, done) {
+		var hex = TaskLists.hexColor(color)
+		if (!hex) {
+			if (done) {
+				done('setTaskListColor: not a color', null)
+			}
+			return
+		}
+		if (refuse('setTaskListColor', calendarId, 'color', done)) {
+			return
+		}
+		var rawId = unscopedProjectId(calendarId)
+		projectRequest('setTaskListColor', 'POST', projectPath(rawId), { color: hex }, done, function() {
+			var stored = storedProjects()
+			storeProjects(TaskLists.withChanged(stored.lists, stored.ids, rawId, { color: hex }))
+			return null
+		})
+	}
+
+	// The project and its tasks are gone: unloaded here, and it leaves the selection. done(err)
+	function deleteTaskList(calendarId, done) {
+		if (refuse('deleteTaskList', calendarId, 'delete', done)) {
+			return
+		}
+		var rawId = unscopedProjectId(calendarId)
+		projectRequest('deleteTaskList', 'DELETE', projectPath(rawId), null, done, function() {
+			delete eventsByCalendar[calendarId]
+			delete previousEventsByCalendar[calendarId]
+			var stored = storedProjects()
+			storeProjects(TaskLists.withRemoved(stored.lists, stored.ids, rawId))
+			return null
 		})
 	}
 }
