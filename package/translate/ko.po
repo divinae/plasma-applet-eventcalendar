@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:40+0100\n"
+"POT-Creation-Date: 2026-10-26 15:03+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -980,6 +980,18 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "기한이 이전 날짜인 미완료 작업을 모든 보기에서 오늘에 표시합니다."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Smart recognition in Add a task"
+msgstr "작업 추가에서 스마트 인식"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
+"the new task's day, time, priority, list and repeat."
+msgstr ""
+"\"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" 같은 단어로 새 작"
+"업의 날짜, 시간, 우선순위, 목록, 반복을 설정합니다."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
 msgstr "알림"
 
@@ -1344,6 +1356,24 @@ msgstr "타이머 소리"
 msgid "Meteogram / timer height"
 msgstr "기상 그래프 / 타이머 높이"
 
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Offline"
+msgstr "오프라인"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Keep events and tasks for offline start"
+msgstr "오프라인 시작을 위해 일정과 작업 보관"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"마지막으로 불러온 일정과 작업(설명과 메모 제외)은 ~/.cache/plasma-"
+"eventcalendar에 저장되어 첫 새로 고침까지 표시됩니다. 끔: 아무것도 저장되지 "
+"않으며 저장된 사본은 삭제됩니다."
+
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "원본"
@@ -1700,6 +1730,7 @@ msgid "All day"
 msgstr "종일"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Repeats"
 msgstr "반복"
 
@@ -2009,6 +2040,7 @@ msgid "Does not repeat"
 msgstr "반복 안 함"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Daily"
 msgstr "매일"
 
@@ -2265,7 +2297,7 @@ msgid "Description"
 msgstr "설명"
 
 #: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d일"
@@ -2375,7 +2407,7 @@ msgid "Every %1 week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "%1주마다"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Weekly"
 msgstr "매주"
 
@@ -2389,7 +2421,7 @@ msgid "Every %1 month"
 msgid_plural "Every %1 months"
 msgstr[0] "%1개월마다"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Monthly"
 msgstr "매월"
 
@@ -2398,7 +2430,7 @@ msgid "Every %1 year"
 msgid_plural "Every %1 years"
 msgstr[0] "%1년마다"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Yearly"
 msgstr "매년"
 
@@ -2691,8 +2723,8 @@ msgstr "이전 주"
 msgid "Previous Month"
 msgstr "이전 달"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "오늘"
 
@@ -2764,6 +2796,57 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "날씨 확인에 실패하였습니다."
 
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Tomorrow"
+msgstr "내일"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday, %2 = short date"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "높은 우선순위"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "중간 우선순위"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "낮은 우선순위"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every weekday"
+msgstr "평일마다"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday"
+msgid "Every %1"
+msgstr "매주 %1"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] "%1일마다"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "%1주마다"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] "%1개월마다"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] "%1년마다"
+
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
 msgstr "작업을 추가할 수 없음"
@@ -2786,6 +2869,24 @@ msgstr "작업 목록: %1"
 msgid "The list new tasks go to"
 msgstr "새 작업이 추가될 목록"
 
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = recognized day, time, …"
+msgid "%1 (not supported by Google Tasks)"
+msgstr "%1(Google Tasks에서 지원하지 않음)"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Not supported by Google Tasks"
+msgstr "Google Tasks에서 지원하지 않음"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = the recognized words"
+msgid "Keep \"%1\" in the title"
+msgstr "제목에 \"%1\" 유지"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Keep these words in the title"
+msgstr "제목에 이 단어 유지"
+
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
 msgstr "빠른 추가"
@@ -2799,6 +2900,16 @@ msgstr "내일 13:00 안나와 점심"
 msgctxt "%1 = date"
 msgid "The task is due on %1."
 msgstr "이 작업의 기한은 %1입니다."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date, %2 = time"
+msgid "The event is added on %1 at %2."
+msgstr "일정이 %1 %2에 추가됩니다."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The event is added on %1, all day."
+msgstr "일정이 %1에 종일로 추가됩니다."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2875,10 +2986,6 @@ msgstr "Google 캘린더 검색 중…"
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Tomorrow"
-msgstr "내일"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"

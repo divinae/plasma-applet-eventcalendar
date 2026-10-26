@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:40+0100\n"
+"POT-Creation-Date: 2026-10-26 15:03+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -1006,6 +1006,19 @@ msgstr ""
 "aujourd'hui, dans toutes les vues."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Smart recognition in Add a task"
+msgstr "Reconnaissance intelligente dans Ajouter une tâche"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
+"the new task's day, time, priority, list and repeat."
+msgstr ""
+"Des mots comme \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" "
+"définissent le jour, l'heure, la priorité, la liste et la répétition de la "
+"nouvelle tâche."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -1377,6 +1390,25 @@ msgstr "Son de la minuterie"
 msgid "Meteogram / timer height"
 msgstr "Hauteur du météogramme / de la minuterie"
 
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Offline"
+msgstr "Hors ligne"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Conserver événements et tâches pour un démarrage hors ligne"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Les derniers événements et tâches chargés (sans descriptions ni notes) sont "
+"stockés dans ~/.cache/plasma-eventcalendar et affichés jusqu'à la première "
+"actualisation. Désactivé : rien n'est stocké et la copie stockée est "
+"supprimée."
+
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Source"
@@ -1734,6 +1766,7 @@ msgid "All day"
 msgstr "Toute la journée"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Repeats"
 msgstr "Se répète"
 
@@ -2045,6 +2078,7 @@ msgid "Does not repeat"
 msgstr "Ne se répète pas"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Daily"
 msgstr "Tous les jours"
 
@@ -2310,7 +2344,7 @@ msgid "Description"
 msgstr "Description"
 
 #: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -2428,7 +2462,7 @@ msgid_plural "Every %1 weeks"
 msgstr[0] "Toutes les %1 semaine"
 msgstr[1] "Toutes les %1 semaines"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Weekly"
 msgstr "Toutes les semaines"
 
@@ -2443,7 +2477,7 @@ msgid_plural "Every %1 months"
 msgstr[0] "Tous les %1 mois"
 msgstr[1] "Tous les %1 mois"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Monthly"
 msgstr "Tous les mois"
 
@@ -2453,7 +2487,7 @@ msgid_plural "Every %1 years"
 msgstr[0] "Tous les %1 an"
 msgstr[1] "Tous les %1 ans"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Yearly"
 msgstr "Tous les ans"
 
@@ -2752,8 +2786,8 @@ msgstr "Semaine précédente"
 msgid "Previous Month"
 msgstr "Mois précédent"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Aujourd'hui"
 
@@ -2827,6 +2861,61 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "Erreur lors de la récupération de la météo"
 
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Tomorrow"
+msgstr "Demain"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday, %2 = short date"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Priorité haute"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Priorité moyenne"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Priorité basse"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every weekday"
+msgstr "Chaque jour ouvré"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday"
+msgid "Every %1"
+msgstr "Chaque %1"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] "Chaque jour"
+msgstr[1] "Tous les %1 jours"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "Chaque semaine"
+msgstr[1] "Toutes les %1 semaines"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] "Chaque mois"
+msgstr[1] "Tous les %1 mois"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] "Chaque année"
+msgstr[1] "Tous les %1 ans"
+
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
 msgstr "Impossible d'ajouter la tâche"
@@ -2849,6 +2938,24 @@ msgstr "Liste de tâches : %1"
 msgid "The list new tasks go to"
 msgstr "La liste qui reçoit les nouvelles tâches"
 
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = recognized day, time, …"
+msgid "%1 (not supported by Google Tasks)"
+msgstr "%1 (non pris en charge par Google Tasks)"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Not supported by Google Tasks"
+msgstr "Non pris en charge par Google Tasks"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = the recognized words"
+msgid "Keep \"%1\" in the title"
+msgstr "Garder « %1 » dans le titre"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Keep these words in the title"
+msgstr "Garder ces mots dans le titre"
+
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
 msgstr "Ajout rapide"
@@ -2862,6 +2969,16 @@ msgstr "Déjeuner avec Anna demain 13:00"
 msgctxt "%1 = date"
 msgid "The task is due on %1."
 msgstr "La tâche arrive à échéance le %1."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date, %2 = time"
+msgid "The event is added on %1 at %2."
+msgstr "L'événement est ajouté le %1 à %2."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The event is added on %1, all day."
+msgstr "L'événement est ajouté le %1, toute la journée."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2937,10 +3054,6 @@ msgstr "Recherche dans Google Calendar…"
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Tomorrow"
-msgstr "Demain"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"

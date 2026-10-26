@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:40+0100\n"
+"POT-Creation-Date: 2026-10-26 15:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -856,6 +856,14 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "期限が過ぎた未完了のタスクを、すべてのビューで今日に表示します。"
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Smart recognition in Add a task"
+msgstr "「タスクを追加」でのスマート認識"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set the new task's day, time, priority, list and repeat."
+msgstr "\"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" のような語で、新しいタスクの日付、時刻、優先度、リスト、繰り返しを設定します。"
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
 msgstr "通知"
 
@@ -1186,6 +1194,18 @@ msgstr "タイマーの音"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meteogram / timer height"
 msgstr "メテオグラム / タイマーの高さ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Offline"
+msgstr "オフライン"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Keep events and tasks for offline start"
+msgstr "オフライン起動用にイベントとタスクを保持"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
+msgstr "最後に読み込んだイベントとタスク（説明やメモを除く）は ~/.cache/plasma-eventcalendar に保存され、最初の更新まで表示されます。オフ: 何も保存されず、保存済みのコピーは削除されます。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
@@ -1526,7 +1546,7 @@ msgstr "非公開の予定"
 msgid "All day"
 msgstr "終日"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Repeats"
 msgstr "繰り返し"
 
@@ -1835,7 +1855,7 @@ msgstr "タイムゾーン"
 msgid "Does not repeat"
 msgstr "繰り返さない"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Daily"
 msgstr "毎日"
 
@@ -2090,7 +2110,7 @@ msgstr "メモ"
 msgid "Description"
 msgstr "説明"
 
-#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "M月 d日"
@@ -2198,7 +2218,7 @@ msgid "Every %1 week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "%1 週間ごと"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Weekly"
 msgstr "毎週"
 
@@ -2212,7 +2232,7 @@ msgid "Every %1 month"
 msgid_plural "Every %1 months"
 msgstr[0] "%1 か月ごと"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Monthly"
 msgstr "毎月"
 
@@ -2221,7 +2241,7 @@ msgid "Every %1 year"
 msgid_plural "Every %1 years"
 msgstr[0] "%1 年ごと"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Yearly"
 msgstr "毎年"
 
@@ -2501,7 +2521,7 @@ msgstr "前の週"
 msgid "Previous Month"
 msgstr "前の月"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "今日"
 
@@ -2573,6 +2593,56 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "エラー天気を取得できませんでした。"
 
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+msgid "Tomorrow"
+msgstr "明日"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday, %2 = short date"
+msgid "%1, %2"
+msgstr "%1、%2"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "優先度: 高"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "優先度: 中"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "優先度: 低"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every weekday"
+msgstr "平日毎日"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday"
+msgid "Every %1"
+msgstr "毎週%1"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] "%1日ごと"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "%1週間ごと"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] "%1か月ごと"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] "%1年ごと"
+
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
 msgstr "タスクを追加できませんでした"
@@ -2595,6 +2665,24 @@ msgstr "タスクリスト: %1"
 msgid "The list new tasks go to"
 msgstr "新しいタスクの追加先リスト"
 
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = recognized day, time, …"
+msgid "%1 (not supported by Google Tasks)"
+msgstr "%1（Google Tasks では非対応）"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Not supported by Google Tasks"
+msgstr "Google Tasks では非対応"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = the recognized words"
+msgid "Keep \"%1\" in the title"
+msgstr "「%1」をタイトルに残す"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Keep these words in the title"
+msgstr "これらの語をタイトルに残す"
+
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
 msgstr "クイック追加"
@@ -2608,6 +2696,16 @@ msgstr "明日 13:00 アンナとランチ"
 msgctxt "%1 = date"
 msgid "The task is due on %1."
 msgstr "このタスクの期限は %1 です。"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date, %2 = time"
+msgid "The event is added on %1 at %2."
+msgstr "イベントは %1 の %2 に追加されます。"
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The event is added on %1, all day."
+msgstr "イベントは %1 に終日で追加されます。"
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2680,10 +2778,6 @@ msgstr "Google Calendar を検索中…"
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Tomorrow"
-msgstr "明日"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:40+0100\n"
+"POT-Creation-Date: 2026-10-26 15:03+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -996,6 +996,18 @@ msgstr ""
 "prikazana na današnjem dnevu."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Smart recognition in Add a task"
+msgstr "Pametno prepoznavanje v Dodaj opravilo"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
+"the new task's day, time, priority, list and repeat."
+msgstr ""
+"Besede, kot so \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\", "
+"nastavijo dan, uro, prednost, seznam in ponavljanje novega opravila."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
 msgstr "Obvestila"
 
@@ -1360,6 +1372,24 @@ msgstr "Zvok odštevalnika"
 msgid "Meteogram / timer height"
 msgstr "Višina meteograma / odštevalnika"
 
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Offline"
+msgstr "Brez povezave"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Ohrani dogodke in opravila za zagon brez povezave"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Nazadnje naloženi dogodki in opravila (brez opisov ali opomb) so shranjeni v "
+"~/.cache/plasma-eventcalendar in prikazani do prve osvežitve. Izklopljeno: "
+"nič se ne shrani, shranjena kopija pa se izbriše."
+
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Vir"
@@ -1719,6 +1749,7 @@ msgid "All day"
 msgstr "Ves dan"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Repeats"
 msgstr "Ponavljanje"
 
@@ -2034,6 +2065,7 @@ msgid "Does not repeat"
 msgstr "Se ne ponavlja"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Daily"
 msgstr "Dnevno"
 
@@ -2317,7 +2349,7 @@ msgid "Description"
 msgstr "Opis"
 
 #: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -2433,7 +2465,7 @@ msgstr[1] "Vsaka %1 tedna"
 msgstr[2] "Vsake %1 tedne"
 msgstr[3] "Vsakih %1 tednov"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Weekly"
 msgstr "Tedensko"
 
@@ -2450,7 +2482,7 @@ msgstr[1] "Vsaka %1 meseca"
 msgstr[2] "Vsake %1 mesece"
 msgstr[3] "Vsakih %1 mesecev"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Monthly"
 msgstr "Mesečno"
 
@@ -2462,7 +2494,7 @@ msgstr[1] "Vsaki %1 leti"
 msgstr[2] "Vsaka %1 leta"
 msgstr[3] "Vsakih %1 let"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Yearly"
 msgstr "Letno"
 
@@ -2771,8 +2803,8 @@ msgstr "Prejšnji teden"
 msgid "Previous Month"
 msgstr "Prejšnji mesec"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Danes"
 
@@ -2850,6 +2882,69 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "Napaka pri prenosu podatkov o vremenu."
 
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Tomorrow"
+msgstr "Jutri"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday, %2 = short date"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Visoka prednost"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Srednja prednost"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Nizka prednost"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every weekday"
+msgstr "Vsak delovni dan"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday"
+msgid "Every %1"
+msgstr "Tedensko (%1)"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] "Vsak dan"
+msgstr[1] "Vsaka %1 dneva"
+msgstr[2] "Vsake %1 dni"
+msgstr[3] "Vsakih %1 dni"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "Vsak teden"
+msgstr[1] "Vsaka %1 tedna"
+msgstr[2] "Vsake %1 tedne"
+msgstr[3] "Vsakih %1 tednov"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] "Vsak mesec"
+msgstr[1] "Vsaka %1 meseca"
+msgstr[2] "Vsake %1 mesece"
+msgstr[3] "Vsakih %1 mesecev"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] "Vsako leto"
+msgstr[1] "Vsaki %1 leti"
+msgstr[2] "Vsaka %1 leta"
+msgstr[3] "Vsakih %1 let"
+
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
 msgstr "Opravila ni bilo mogoče dodati"
@@ -2872,6 +2967,24 @@ msgstr "Seznam opravil: %1"
 msgid "The list new tasks go to"
 msgstr "Seznam, na katerega gredo nova opravila"
 
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = recognized day, time, …"
+msgid "%1 (not supported by Google Tasks)"
+msgstr "%1 (Google Tasks ne podpira)"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Not supported by Google Tasks"
+msgstr "Google Tasks ne podpira"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = the recognized words"
+msgid "Keep \"%1\" in the title"
+msgstr "Ohrani »%1« v naslovu"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Keep these words in the title"
+msgstr "Ohrani te besede v naslovu"
+
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
 msgstr "Hitro dodajanje"
@@ -2885,6 +2998,16 @@ msgstr "Kosilo z Ano jutri ob 13:00"
 msgctxt "%1 = date"
 msgid "The task is due on %1."
 msgstr "Rok opravila je %1."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date, %2 = time"
+msgid "The event is added on %1 at %2."
+msgstr "Dogodek bo dodan %1 ob %2."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The event is added on %1, all day."
+msgstr "Dogodek bo dodan %1, ves dan."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2957,10 +3080,6 @@ msgstr "Iskanje v Googlovem koledarju…"
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Tomorrow"
-msgstr "Jutri"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 14:40+0100\n"
+"POT-Creation-Date: 2026-10-26 15:03+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -991,6 +991,18 @@ msgstr ""
 "gösterilir."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Smart recognition in Add a task"
+msgstr "Görev ekle'de akıllı tanıma"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
+"the new task's day, time, priority, list and repeat."
+msgstr ""
+"\"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" gibi sözcükler "
+"yeni görevin gününü, saatini, önceliğini, listesini ve tekrarını belirler."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
 msgstr "Bildirimler"
 
@@ -1356,6 +1368,24 @@ msgstr "Zamanlayıcı sesi"
 msgid "Meteogram / timer height"
 msgstr "Meteogram / zamanlayıcı yüksekliği"
 
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Offline"
+msgstr "Çevrimdışı"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Çevrimdışı başlatma için etkinlikleri ve görevleri sakla"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Son yüklenen etkinlikler ve görevler (açıklamalar ve notlar hariç) ~/.cache/"
+"plasma-eventcalendar içinde saklanır ve ilk yenilemeye kadar gösterilir. "
+"Kapalı: hiçbir şey saklanmaz ve saklanan kopya silinir."
+
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Kaynak"
@@ -1713,6 +1743,7 @@ msgid "All day"
 msgstr "Tüm gün"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Repeats"
 msgstr "Tekrarlanır"
 
@@ -2024,6 +2055,7 @@ msgid "Does not repeat"
 msgstr "Tekrarlanmaz"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Daily"
 msgstr "Her gün"
 
@@ -2289,7 +2321,7 @@ msgid "Description"
 msgstr "Açıklama"
 
 #: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
-#: ../contents/ui/TaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
@@ -2402,7 +2434,7 @@ msgid_plural "Every %1 weeks"
 msgstr[0] "%1 haftada bir"
 msgstr[1] "%1 haftada bir"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Weekly"
 msgstr "Her hafta"
 
@@ -2417,7 +2449,7 @@ msgid_plural "Every %1 months"
 msgstr[0] "%1 ayda bir"
 msgstr[1] "%1 ayda bir"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Monthly"
 msgstr "Her ay"
 
@@ -2427,7 +2459,7 @@ msgid_plural "Every %1 years"
 msgstr[0] "%1 yılda bir"
 msgstr[1] "%1 yılda bir"
 
-#: ../contents/ui/ImportView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
 msgid "Yearly"
 msgstr "Her yıl"
 
@@ -2726,8 +2758,8 @@ msgstr "Önceki Hafta"
 msgid "Previous Month"
 msgstr "Önceki Ay"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Bugün"
 
@@ -2801,6 +2833,61 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "Hava durumu alınırken hata oluştu."
 
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Tomorrow"
+msgstr "Yarın"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday, %2 = short date"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Yüksek öncelik"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Orta öncelik"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Düşük öncelik"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every weekday"
+msgstr "Her iş günü"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = weekday"
+msgid "Every %1"
+msgstr "Her %1"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every day"
+msgid_plural "Every %1 days"
+msgstr[0] "Her gün"
+msgstr[1] "Her %1 günde bir"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every week"
+msgid_plural "Every %1 weeks"
+msgstr[0] "Her hafta"
+msgstr[1] "Her %1 haftada bir"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every month"
+msgid_plural "Every %1 months"
+msgstr[0] "Her ay"
+msgstr[1] "Her %1 ayda bir"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Every year"
+msgid_plural "Every %1 years"
+msgstr[0] "Her yıl"
+msgstr[1] "Her %1 yılda bir"
+
 #: ../contents/ui/QuickAddTaskRow.qml
 msgid "Couldn't add the task"
 msgstr "Görev eklenemedi"
@@ -2823,6 +2910,24 @@ msgstr "Görev listesi: %1"
 msgid "The list new tasks go to"
 msgstr "Yeni görevlerin ekleneceği liste"
 
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = recognized day, time, …"
+msgid "%1 (not supported by Google Tasks)"
+msgstr "%1 (Google Tasks desteklemiyor)"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Not supported by Google Tasks"
+msgstr "Google Tasks desteklemiyor"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgctxt "%1 = the recognized words"
+msgid "Keep \"%1\" in the title"
+msgstr "\"%1\" başlıkta kalsın"
+
+#: ../contents/ui/QuickAddTaskRow.qml
+msgid "Keep these words in the title"
+msgstr "Bu sözcükler başlıkta kalsın"
+
 #: ../contents/ui/QuickAddView.qml
 msgid "Quick Add"
 msgstr "Hızlı Ekle"
@@ -2836,6 +2941,16 @@ msgstr "Yarın 13:00'te Anna ile öğle yemeği"
 msgctxt "%1 = date"
 msgid "The task is due on %1."
 msgstr "Görevin son tarihi %1."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date, %2 = time"
+msgid "The event is added on %1 at %2."
+msgstr "Etkinlik %1 tarihinde %2 saatinde eklenir."
+
+#: ../contents/ui/QuickAddView.qml
+msgctxt "%1 = date"
+msgid "The event is added on %1, all day."
+msgstr "Etkinlik %1 tarihinde tüm gün olarak eklenir."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
@@ -2912,10 +3027,6 @@ msgstr "Google Takvim'de aranıyor…"
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Tomorrow"
-msgstr "Yarın"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "%1 = short date"
