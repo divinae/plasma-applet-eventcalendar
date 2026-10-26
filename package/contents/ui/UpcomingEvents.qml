@@ -89,12 +89,13 @@ CalendarManager {
 		return bodyText
 	}
 
-	// Sends a notification with Join (/ RSVP / Snooze) actions.
+	// Sends a notification with Join (event starting) / RSVP / Snooze actions.
 	function notifyEvent(eventItem, args) {
 		var meetingLink = MeetingLink.find(eventItem)
 		var actions = []
 		if (plasmoid.configuration.eventNotificationActions) {
-			if (meetingLink) {
+			// Join only when the meeting starts: not on a reminder (minutes before) or an invitation.
+			if (meetingLink && args.event === 'eventStarting') {
 				actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
 			}
 		}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-21 10:11+0200\n"
+"POT-Creation-Date: 2026-10-26 08:51+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -564,6 +564,10 @@ msgstr "Kaikki tapahtumailmoitukset"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "\"Join meeting\" button"
 msgstr "\"Liity kokoukseen\" -painike"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "In the notification when a meeting starts."
+msgstr "Ilmoituksessa, kun kokous alkaa."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"

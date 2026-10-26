@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-21 10:11+0200\n"
+"POT-Creation-Date: 2026-10-26 08:51+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -630,6 +630,10 @@ msgstr "Все уведомления о событиях"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "\"Join meeting\" button"
 msgstr "Кнопка «Подключиться к встрече»"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "In the notification when a meeting starts."
+msgstr "В уведомлении о начале встречи."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"

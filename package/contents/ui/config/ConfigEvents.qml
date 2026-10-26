@@ -416,6 +416,7 @@ ConfigPage {
 		FormCard.FormCard {
 			FormConfigSwitch {
 				text: i18n("\"Join meeting\" button")
+				description: i18n("In the notification when a meeting starts.")
 				configKey: 'eventNotificationActions'
 			}
 			FormCard.FormDelegateSeparator {}
