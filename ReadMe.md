@@ -25,6 +25,11 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Move events between calendars, busy / free and visibility, the event's time zone, out of office,
   focus time and working locations, attachments, Email Guests, Find a time (free slots for you and
   the guests), import .ics files. Tokens are kept in the system keyring.
+- **Tasks** from Google Tasks and **TickTick** (or Dida365): shown on their due day in every view
+  (undated and, optionally, overdue ones on today), checked off with a click, added from quick add
+  or the editor, edited (title, notes, due date), moved between lists of the same account, deleted
+  with undo. Timed TickTick tasks show their due time. TickTick signs in with an API token, kept in
+  the system keyring.
 - **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
   Day view, the event details, notifications and the panel's right-click menu; Google Meet links
   can open in a Meet web app with a chosen Google account. The panel clock shows the next meeting
@@ -101,9 +106,13 @@ Optional:
 
 1. Right click the widget > Configure Event Calendar.
 2. **Google Calendar**: Sign in with Google. Your browser opens; after you allow access, the
-   widget picks it up. Then choose the calendars and task lists to show for each account.
-3. **Weather**: search for your city (Open-Meteo).
-4. **Views**: choose the default view, the popup size and the hours shown in the week view.
+   widget picks it up. Then choose the calendars to show for each account.
+3. **Tasks**: choose the Google task lists to show. For **TickTick**, create an API token on the
+   TickTick website (Settings > Account > API Token; dida365.com for Dida365), pick the server,
+   paste the token and Connect, then choose the projects to show. TickTick's Open API only lists
+   open tasks: a task you check off goes away at the next refresh.
+4. **Weather**: search for your city (Open-Meteo).
+5. **Views**: choose the default view, the popup size and the hours shown in the week view.
 
 Plasma 5 is not supported; use the original [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar) there.
 

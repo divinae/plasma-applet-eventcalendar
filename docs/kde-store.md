@@ -71,6 +71,9 @@ Google Calendar
 - Rename and recolor calendars
 - Tokens are kept in the system keyring
 
+Tasks
+- Google Tasks and TickTick (or Dida365, with an API token kept in the system keyring): on their due day in every view, check off, add, edit, move between lists, delete with undo
+
 Meetings
 - Join buttons for Google Meet, Zoom, Teams and other links; Google Meet links can open in a Meet web app with a chosen Google account
 - The panel clock shows the next meeting ("in 5 min" / "12 min left"); a meeting that ended early can be marked as ended
@@ -86,7 +89,7 @@ Starts instantly and works offline: the last loaded events are shown right away.
 
 Translated into 20 languages.
 
-Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files.
+Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google and TickTick sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files.
 
 Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
