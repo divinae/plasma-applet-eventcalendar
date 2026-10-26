@@ -126,6 +126,7 @@ Dialog {
 
 				Label {
 					text: name
+					textFormat: Text.PlainText // User text: never parsed as HTML
 					elide: Text.ElideRight
 					Layout.preferredWidth: Kirigami.Units.gridUnit * 10
 				}

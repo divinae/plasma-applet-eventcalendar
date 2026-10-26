@@ -613,6 +613,7 @@ Item {
 			anchors.rightMargin: copyBadge.visible ? copyBadge.width + 2 : 1
 			verticalAlignment: Text.AlignVCenter
 			text: dragTargetGhost.info ? dragTargetGhost.info.eventItem.summary : ""
+			textFormat: Text.PlainText // User text: never parsed as HTML
 			color: Shared.contrastTextColor(dragTargetGhost.barColor)
 			font.family: appletConfig.eventFont.family
 			font.pointSize: appletConfig.eventFont.pointSize

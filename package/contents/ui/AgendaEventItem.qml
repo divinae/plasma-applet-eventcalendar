@@ -186,6 +186,7 @@ LinkRect {
 			visible: showProperty
 			Layout.topMargin: Kirigami.Units.smallSpacing
 			text: Shared.renderText(model.description)
+			textFormat: Text.StyledText // renderText: escaped text and links only
 			color: agendaEventItem.tileTextColor
 			opacity: 0.8
 			font.family: appletConfig.eventFont.family

@@ -256,6 +256,7 @@ Rectangle {
 						verticalAlignment: Text.AlignVCenter
 						elide: Text.ElideRight
 						text: personRow.modelData.name
+						textFormat: Text.PlainText // User text: never parsed as HTML
 						PlasmaComponents3.ToolTip.text: personRow.modelData.email || ""
 						PlasmaComponents3.ToolTip.visible: nameHover.hovered && !!personRow.modelData.email
 						HoverHandler {

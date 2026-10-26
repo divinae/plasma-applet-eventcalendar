@@ -331,6 +331,7 @@ Item {
 									Layout.fillWidth: true
 									wrapMode: Text.Wrap
 									text: eventRow.item.summary || i18n("(No title)")
+									textFormat: Text.PlainText // User text: never parsed as HTML
 								}
 								PlasmaComponents3.Label {
 									Layout.fillWidth: true

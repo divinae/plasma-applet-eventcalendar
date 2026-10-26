@@ -826,6 +826,7 @@ Item {
 							width: parent.width
 							leftPadding: awaitingAnswer || isTask ? iconSize + 3 : 0
 							text: eventItem.summary
+							textFormat: Text.PlainText // User text: never parsed as HTML
 							color: parent.parent.titleColor
 							font.family: appletConfig.eventFont.family
 							font.pointSize: appletConfig.eventFont.pointSize
@@ -912,6 +913,7 @@ Item {
 					PlasmaComponents3.Label {
 						width: parent.width
 						text: allDayDragPreview.info ? allDayDragPreview.info.eventItem.summary : ""
+						textFormat: Text.PlainText // User text: never parsed as HTML
 						font.family: appletConfig.eventFont.family
 						font.pointSize: appletConfig.eventFont.pointSize
 						font.weight: Font.DemiBold
@@ -1079,6 +1081,7 @@ Item {
 							PlasmaComponents3.Label {
 								width: parent.width
 								text: dragPreview.info ? (parent.oneLine ? parent.timeText + ' · ' : '') + dragPreview.info.eventItem.summary : ""
+								textFormat: Text.PlainText // User text: never parsed as HTML
 								color: Shared.contrastTextColor(dragPreview.barColor)
 								elide: Text.ElideRight
 							}

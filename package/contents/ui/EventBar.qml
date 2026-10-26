@@ -116,6 +116,7 @@ Rectangle {
 		anchors.rightMargin: 1
 		verticalAlignment: Text.AlignVCenter
 		text: eventBar.showTitle && eventBar.eventItem ? eventBar.eventItem.summary : ""
+		textFormat: Text.PlainText // User text: never parsed as HTML
 		color: eventBar.eventStyle.textColor
 		font.strikeout: eventBar.eventStyle.struckThrough
 		font.family: eventBar.titleFont.family

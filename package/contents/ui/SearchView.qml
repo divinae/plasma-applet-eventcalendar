@@ -221,6 +221,7 @@ Item {
 								Layout.fillWidth: true
 								wrapMode: Text.Wrap
 								text: eventRow.eventItem.summary
+								textFormat: Text.PlainText // User text: never parsed as HTML
 								color: eventRow.textColor
 								font.strikeout: eventRow.eventStyle.declined
 							}

@@ -136,6 +136,7 @@ ColumnLayout {
 			Layout.fillWidth: true
 			elide: Text.ElideRight
 			text: panel.locationName
+			textFormat: Text.PlainText // User text: never parsed as HTML
 			font.weight: Font.Bold
 		}
 		PlasmaComponents3.BusyIndicator {
@@ -182,6 +183,7 @@ ColumnLayout {
 				Layout.fillWidth: true
 				elide: Text.ElideRight
 				text: panel.current ? panel.current.text : panel.showDaySummary ? (panel.today.text || panel.today.description || "") : ""
+				textFormat: Text.PlainText // User text: never parsed as HTML
 				opacity: 0.8
 			}
 		}

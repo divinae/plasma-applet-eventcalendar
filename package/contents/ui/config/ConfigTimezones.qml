@@ -120,6 +120,7 @@ ConfigPage {
 								Label {
 									Layout.fillWidth: true
 									text: prettyZoneName(model.zoneId)
+									textFormat: Text.PlainText // User text: never parsed as HTML
 									elide: Text.ElideRight
 								}
 								Label {

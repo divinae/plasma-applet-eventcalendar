@@ -130,6 +130,7 @@ PlasmaComponents3.ToolButton {
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true
 							text: modelData.name
+							textFormat: Text.PlainText // User text: never parsed as HTML
 							elide: Text.ElideRight
 							opacity: calendarRow.shown ? 1 : 0.6
 							MouseArea {

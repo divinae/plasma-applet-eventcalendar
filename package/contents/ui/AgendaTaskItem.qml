@@ -117,6 +117,7 @@ LinkRect {
 				id: taskTitle
 				Layout.fillWidth: true
 				text: model.summary || model.title || ""
+				textFormat: Text.PlainText // User text: never parsed as HTML
 				color: agendaTaskItem.tileTextColor
 				font.family: appletConfig.eventFont.family
 				font.pointSize: appletConfig.eventFont.pointSize
@@ -146,6 +147,7 @@ LinkRect {
 				Layout.topMargin: Kirigami.Units.smallSpacing
 				Layout.fillWidth: true
 				text: Shared.renderText(agendaTaskItem.notes)
+				textFormat: Text.StyledText // renderText: escaped text and links only
 				color: agendaTaskItem.tileTextColor
 				opacity: 0.8
 				font.family: appletConfig.eventFont.family

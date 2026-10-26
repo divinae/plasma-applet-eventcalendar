@@ -273,6 +273,7 @@ Rectangle {
 								level: 2
 								wrapMode: Text.Wrap
 								text: details.eventItem ? details.eventItem.summary : ""
+								textFormat: Text.PlainText // User text: never parsed as HTML
 								font.strikeout: details.isDone
 								opacity: details.isDone ? 0.7 : 1
 							}
@@ -446,6 +447,7 @@ Rectangle {
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
 						text: i18nc("%1 = titles of other events at the same time", "Overlaps with: %1", titles.join(", "))
+						textFormat: Text.PlainText // User text: never parsed as HTML
 					}
 
 					// Location
@@ -488,6 +490,7 @@ Rectangle {
 						Layout.fillWidth: true
 						wrapMode: Text.Wrap
 						text: extraRooms.map(function(r) { return r.displayName || r.email }).join(", ")
+						textFormat: Text.PlainText // User text: never parsed as HTML
 					}
 
 					// Calendar
@@ -558,6 +561,7 @@ Rectangle {
 									Layout.fillWidth: true
 									elide: Text.ElideMiddle
 									text: modelData.title
+									textFormat: Text.PlainText // User text: never parsed as HTML
 									color: Kirigami.Theme.linkColor
 									font.underline: attachmentMouse.containsMouse
 									MouseArea {
