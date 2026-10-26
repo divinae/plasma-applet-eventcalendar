@@ -474,10 +474,16 @@ CalendarManager {
 	}
 
 	//--- CalendarManager: Event
-	function createEvent(calendarId, date, text) {
-		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
+	// The calendar new events start in (agendaNewEventRememberCalendar); not a task list, so a new
+	// task doesn't make events default to it.
+	function rememberNewEventCalendar(calendarId) {
+		var calendar = getCalendar(calendarId)
+		if (plasmoid.configuration.agendaNewEventRememberCalendar && !(calendar && calendar.isTasklist)) {
 			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
 		}
+	}
+	function createEvent(calendarId, date, text) {
+		rememberNewEventCalendar(calendarId)
 
 		var calendarManager = managerWith(calendarId, 'createEvent')
 		if (calendarManager) {
@@ -508,9 +514,7 @@ CalendarManager {
 
 	// params: optional query params (Google), eg: { sendUpdates: 'all', conferenceDataVersion: 1 }.
 	function createEventFromData(calendarId, eventData, done, params) {
-		if (plasmoid.configuration.agendaNewEventRememberCalendar) {
-			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
-		}
+		rememberNewEventCalendar(calendarId)
 		var calendarManager = managerWith(calendarId, 'createEventFromData')
 		if (calendarManager) {
 			calendarManager.createEventFromData(calendarId, eventData, done, params)
