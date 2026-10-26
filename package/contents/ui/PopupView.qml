@@ -644,15 +644,15 @@ MouseArea {
 		}
 	}
 
-	// The task lists: a list like the agenda, capped in width and centered.
+	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
 		active: popup.tasksMode
 		visible: active
 		anchors.top: widgetGrid.top
 		anchors.bottom: widgetGrid.bottom
-		anchors.horizontalCenter: widgetGrid.horizontalCenter
-		width: Math.min(widgetGrid.width, popup.agendaMaxWidth)
+		anchors.left: widgetGrid.left
+		anchors.right: widgetGrid.right
 		sourceComponent: TasksView {
 			eventModel: popup.eventModel
 		}

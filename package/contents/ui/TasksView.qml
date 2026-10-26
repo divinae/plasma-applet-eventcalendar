@@ -15,7 +15,9 @@ import "Tasks.js" as Tasks
 // or No date (its due day changes).
 // By list, the lists can be managed (TaskLists.js): a list header's "⋯" menu (or right click) has
 // Rename (inline), Color (TickTick), Clear completed (Google) and Delete (confirmed inline), and
-// "New list" at the end makes one. By date, "Manage lists" switches to by list.
+// "New list" at the end makes one. By date, "Manage lists" (header) switches to by list.
+// Header, sections, rows and "Add a task…" are one column, centered, at most maxColumnWidth wide,
+// all with the same side margins (sideMargin, like TaskRow's).
 Item {
 	id: tasksView
 
@@ -31,6 +33,16 @@ Item {
 	property var rows: []
 	property var lists: []
 	property int openCount: 0
+
+	//--- The column
+	readonly property real maxColumnWidth: Kirigami.Units.gridUnit * 42
+	// The room left and right of everything in the column (TaskRow's own side margin).
+	readonly property real sideMargin: Kirigami.Units.largeSpacing
+	// TaskRow's check, and where its title starts: list dots and the empty note line up with them.
+	readonly property real checkSize: 2 * Math.round(Kirigami.Units.iconSizes.small * 1.1 / 2)
+	readonly property real titleX: sideMargin + checkSize + Kirigami.Units.largeSpacing
+	// Secondary text (counts, account names): dimmed, still clear on a translucent background.
+	readonly property real dimOpacity: 0.75
 
 	// "Add a task…" text and focus by row key, across rebuilds (they make the rows again).
 	property var addDrafts: ({})
@@ -358,43 +370,120 @@ Item {
 	ColumnLayout {
 		anchors.fill: parent
 		anchors.margins: Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.largeSpacing
+		spacing: Kirigami.Units.smallSpacing
 
-		RowLayout {
+		// "Tasks" and the open count; Manage lists (by date), Show completed, by date / by list.
+		Item {
 			Layout.fillWidth: true
-			Layout.leftMargin: Kirigami.Units.largeSpacing
-			Layout.rightMargin: Kirigami.Units.largeSpacing
-			spacing: Kirigami.Units.smallSpacing
+			implicitHeight: headerRow.implicitHeight
+			RowLayout {
+				id: headerRow
+				x: rowsColumn.x
+				width: rowsColumn.width
+				spacing: Kirigami.Units.smallSpacing
+				// Too narrow for the names of the grouping: icons (names in the tooltips).
+				readonly property bool compact: width < Kirigami.Units.gridUnit * 24
 
-			PlasmaComponents3.Label {
-				Layout.fillWidth: true
-				Layout.minimumWidth: 0
-				text: tasksView.openCount > 0 ? i18np("%1 open task", "%1 open tasks", tasksView.openCount) : i18n("No open tasks")
-				textFormat: Text.PlainText
-				opacity: 0.85
-				elide: Text.ElideRight
-			}
-			// By date / by list.
-			Row {
-				spacing: 0
-				PlasmaComponents3.ToolButton {
-					text: i18n("By date")
-					checkable: true
-					checked: !tasksView.byList
-					onClicked: plasmoid.configuration.tasksGroupBy = 'date'
+				Kirigami.Heading {
+					Layout.leftMargin: tasksView.sideMargin
+					Layout.alignment: Qt.AlignBaseline
+					level: 3
+					text: i18n("Tasks")
+					textFormat: Text.PlainText
+				}
+				PlasmaComponents3.Label {
+					Layout.alignment: Qt.AlignBaseline
+					Layout.fillWidth: true
+					Layout.minimumWidth: 0
+					text: tasksView.openCount > 0 ? String(tasksView.openCount) : ""
+					textFormat: Text.PlainText
+					opacity: tasksView.dimOpacity
+					elide: Text.ElideRight
+					Accessible.name: i18np("%1 open task", "%1 open tasks", tasksView.openCount)
 				}
 				PlasmaComponents3.ToolButton {
-					text: i18n("By list")
-					checkable: true
-					checked: tasksView.byList
+					visible: !tasksView.byList && tasksView.taskAccounts.length > 0
+					icon.name: "configure"
+					display: QQC2.AbstractButton.IconOnly
+					text: i18n("Manage lists")
 					onClicked: plasmoid.configuration.tasksGroupBy = 'list'
+					Accessible.name: text
+					PlasmaComponents3.ToolTip.text: i18n("Manage lists (shows the tasks by list)")
+					PlasmaComponents3.ToolTip.visible: hovered
 				}
-			}
-			PlasmaComponents3.Switch {
-				Layout.leftMargin: Kirigami.Units.smallSpacing
-				text: i18n("Show completed")
-				checked: tasksView.showCompleted
-				onToggled: plasmoid.configuration.tasksShowCompleted = checked
+				// Show completed: on the soft tint while on, like the grouping's current one.
+				Item {
+					implicitWidth: completedButton.implicitWidth
+					implicitHeight: completedButton.implicitHeight
+					Rectangle {
+						anchors.fill: parent
+						radius: Kirigami.Units.cornerRadius
+						color: Kirigami.Theme.highlightColor
+						opacity: tasksView.showCompleted ? 0.18 : 0
+					}
+					PlasmaComponents3.ToolButton {
+						id: completedButton
+						anchors.fill: parent
+						icon.name: "task-complete"
+						display: QQC2.AbstractButton.IconOnly
+						text: i18n("Show completed")
+						onClicked: plasmoid.configuration.tasksShowCompleted = !tasksView.showCompleted
+						Accessible.role: Accessible.CheckBox
+						Accessible.checkable: true
+						Accessible.checked: tasksView.showCompleted
+						Accessible.name: text
+						PlasmaComponents3.ToolTip.text: tasksView.showCompleted ? i18n("Hide completed tasks") : i18n("Show completed tasks")
+						PlasmaComponents3.ToolTip.visible: hovered
+					}
+				}
+				// By date / by list: a segmented control, the current one on a soft tint (like the
+				// popup's view switcher).
+				Rectangle {
+					Layout.rightMargin: tasksView.sideMargin
+					implicitWidth: groupingRow.implicitWidth + 4
+					implicitHeight: groupingRow.implicitHeight + 4
+					radius: Kirigami.Units.cornerRadius + 2
+					color: "transparent"
+					border.width: 1
+					border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.2)
+					Row {
+						id: groupingRow
+						anchors.centerIn: parent
+						spacing: 0
+						Repeater {
+							model: [
+								{ key: 'date', icon: "view-calendar-list", text: i18n("By date") },
+								{ key: 'list', icon: "view-list-tree", text: i18n("By list") },
+							]
+							Item {
+								readonly property bool current: (modelData.key === 'list') === tasksView.byList
+								implicitWidth: groupingButton.implicitWidth
+								implicitHeight: groupingButton.implicitHeight
+								Rectangle {
+									anchors.fill: parent
+									radius: Kirigami.Units.cornerRadius
+									color: Kirigami.Theme.highlightColor
+									opacity: parent.current ? 0.18 : 0
+								}
+								PlasmaComponents3.ToolButton {
+									id: groupingButton
+									anchors.fill: parent
+									icon.name: modelData.icon
+									text: modelData.text
+									display: headerRow.compact ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+									// Not checkable: the style's checked look changes the size.
+									onClicked: plasmoid.configuration.tasksGroupBy = modelData.key
+									Accessible.role: Accessible.RadioButton
+									Accessible.checkable: true
+									Accessible.checked: parent.current
+									Accessible.name: modelData.text
+									PlasmaComponents3.ToolTip.text: modelData.text
+									PlasmaComponents3.ToolTip.visible: headerRow.compact && hovered
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -402,8 +491,8 @@ Item {
 			visible: !!tasksView.notice
 			Layout.fillWidth: true
 			Layout.minimumWidth: 0
-			Layout.leftMargin: Kirigami.Units.largeSpacing
-			Layout.rightMargin: Kirigami.Units.largeSpacing
+			Layout.leftMargin: rowsColumn.x + tasksView.sideMargin
+			Layout.rightMargin: rowsColumn.x + tasksView.sideMargin
 			text: tasksView.notice
 			textFormat: Text.PlainText
 			color: Kirigami.Theme.negativeTextColor
@@ -417,15 +506,19 @@ Item {
 			contentWidth: availableWidth
 			QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 
+			// The column, centered (the scroll bar stays at the view's edge).
 			ColumnLayout {
 				id: rowsColumn
-				width: scrollView.availableWidth
+				x: Math.round((scrollView.availableWidth - width) / 2)
+				width: Math.min(scrollView.availableWidth, tasksView.maxColumnWidth)
 				spacing: 0
 
 				Repeater {
 					model: tasksView.rows
 					Loader {
 						readonly property var row: modelData
+						// A heading after rows: a thin line above it (not right after an account's).
+						readonly property bool separated: index > 0 && tasksView.rows[index - 1].type !== 'group'
 						Layout.fillWidth: true
 						sourceComponent: row.type === 'group' ? groupComponent
 							: row.type === 'list' ? listComponent
@@ -442,23 +535,20 @@ Item {
 					visible: active
 					sourceComponent: newListComponent
 				}
-				// By date: the lists are managed by list.
-				PlasmaComponents3.ToolButton {
-					visible: !tasksView.byList && tasksView.taskAccounts.length > 0
-					Layout.topMargin: Kirigami.Units.largeSpacing
-					Layout.leftMargin: Kirigami.Units.smallSpacing
-					icon.name: "view-list-details"
-					icon.width: Kirigami.Units.iconSizes.small
-					icon.height: Kirigami.Units.iconSizes.small
-					text: i18n("Manage lists")
-					opacity: hovered ? 1 : 0.75
-					onClicked: plasmoid.configuration.tasksGroupBy = 'list'
-				}
 				Item {
-					implicitHeight: Kirigami.Units.smallSpacing
+					implicitHeight: Kirigami.Units.largeSpacing
 				}
 			}
 		}
+	}
+
+	// A heading's thin line above it, apart from the rows before.
+	component SectionSeparator: Kirigami.Separator {
+		Layout.fillWidth: true
+		Layout.leftMargin: tasksView.sideMargin
+		Layout.rightMargin: tasksView.sideMargin
+		Layout.topMargin: Kirigami.Units.largeSpacing
+		opacity: 0.6
 	}
 
 	// The dragged task, under the pointer.
@@ -495,16 +585,25 @@ Item {
 	// An account's heading (several accounts only).
 	Component {
 		id: groupComponent
-		Kirigami.Heading {
+		ColumnLayout {
 			readonly property var row: parent ? parent.row : null
-			topPadding: Kirigami.Units.largeSpacing * 2
-			bottomPadding: Kirigami.Units.smallSpacing
-			leftPadding: Kirigami.Units.largeSpacing
-			level: 5
-			text: row ? row.text : ""
-			textFormat: Text.PlainText // User text (account label)
-			opacity: 0.85
-			elide: Text.ElideRight
+			readonly property bool separated: !!parent && parent.separated
+			spacing: 0
+			SectionSeparator {
+				visible: parent.separated
+			}
+			Kirigami.Heading {
+				Layout.fillWidth: true
+				Layout.minimumWidth: 0
+				Layout.leftMargin: tasksView.sideMargin
+				Layout.rightMargin: tasksView.sideMargin
+				Layout.topMargin: Kirigami.Units.largeSpacing
+				level: 5
+				text: parent.row ? parent.row.text : ""
+				textFormat: Text.PlainText // User text (account label)
+				opacity: tasksView.dimOpacity
+				elide: Text.ElideRight
+			}
 		}
 	}
 
@@ -523,12 +622,14 @@ Item {
 			readonly property bool confirming: !!listId && tasksView.confirmDeleteListId === listId
 			readonly property bool busy: !!listId && tasksView.busyListId === listId
 			readonly property string errorText: tasksView.listErrors[listId] || ""
+			readonly property bool separated: !!parent && parent.separated
+			readonly property real dotSize: Math.round(Kirigami.Units.gridUnit * 0.6)
 			implicitHeight: headerColumn.implicitHeight
 			DropHighlight {
 				x: 0
-				y: listRow.y + Kirigami.Units.largeSpacing
+				y: listRow.y - Kirigami.Units.smallSpacing
 				width: parent.width
-				height: listRow.height - Kirigami.Units.largeSpacing
+				height: listRow.height + Kirigami.Units.smallSpacing * 2
 				key: row ? row.key : ""
 			}
 			// Right click: the list's menu.
@@ -547,29 +648,46 @@ Item {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				spacing: 0
+				SectionSeparator {
+					visible: listHeader.separated
+				}
 				RowLayout {
 					id: listRow
 					Layout.fillWidth: true
-					spacing: Kirigami.Units.smallSpacing
-					// A list starts a new block: room above, the dot lined up with the task checks.
-					Item {
-						implicitWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing + 2
-						implicitHeight: Kirigami.Units.largeSpacing * 2
-					}
+					Layout.topMargin: Kirigami.Units.largeSpacing
+					Layout.bottomMargin: 2
+					Layout.rightMargin: Kirigami.Units.smallSpacing
+					spacing: 0
+					// The dot lined up with the task checks, the name with their titles.
 					Rectangle {
-						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.6)
+						Layout.leftMargin: tasksView.sideMargin + (tasksView.checkSize - listHeader.dotSize) / 2
+						Layout.rightMargin: tasksView.titleX - tasksView.sideMargin - (tasksView.checkSize + listHeader.dotSize) / 2
+						implicitWidth: listHeader.dotSize
 						implicitHeight: implicitWidth
 						radius: width / 2
 						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(row && row.list.color ? row.list.color : null))
 					}
 					PlasmaComponents3.Label {
 						visible: !listHeader.renaming
-						Layout.fillWidth: true
 						Layout.minimumWidth: 0
+						Layout.maximumWidth: Math.ceil(implicitWidth)
+						Layout.fillWidth: true
 						text: row ? row.list.name : ""
 						textFormat: Text.PlainText // User text (list name)
 						font.weight: Font.DemiBold
 						elide: Text.ElideRight
+					}
+					PlasmaComponents3.Label {
+						visible: !listHeader.renaming && !!row && row.openCount > 0
+						Layout.leftMargin: Kirigami.Units.smallSpacing
+						text: row ? String(row.openCount) : ""
+						textFormat: Text.PlainText
+						opacity: tasksView.dimOpacity
+					}
+					Item {
+						visible: !listHeader.renaming
+						Layout.fillWidth: true
+						Layout.minimumWidth: Kirigami.Units.smallSpacing
 					}
 					// Rename: Enter saves, Esc cancels.
 					Loader {
@@ -603,15 +721,8 @@ Item {
 						Layout.preferredWidth: Kirigami.Units.iconSizes.small
 						Layout.preferredHeight: Kirigami.Units.iconSizes.small
 					}
-					PlasmaComponents3.Label {
-						visible: !listHeader.renaming && !!row && row.openCount > 0
-						text: row ? String(row.openCount) : ""
-						textFormat: Text.PlainText
-						opacity: 0.75
-					}
 					PlasmaComponents3.ToolButton {
 						visible: !listHeader.renaming
-						Layout.rightMargin: listHeader.manageable ? 0 : Kirigami.Units.smallSpacing
 						icon.name: "list-add"
 						icon.width: Kirigami.Units.iconSizes.small
 						icon.height: Kirigami.Units.iconSizes.small
@@ -624,7 +735,6 @@ Item {
 					PlasmaComponents3.ToolButton {
 						id: listMenuButton
 						visible: listHeader.manageable && !listHeader.renaming
-						Layout.rightMargin: Kirigami.Units.smallSpacing
 						enabled: !tasksView.busyListId
 						icon.name: "overflow-menu"
 						icon.width: Kirigami.Units.iconSizes.small
@@ -640,8 +750,8 @@ Item {
 				ColumnLayout {
 					visible: listHeader.confirming
 					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
-					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.leftMargin: tasksView.titleX
+					Layout.rightMargin: tasksView.sideMargin
 					Layout.topMargin: Kirigami.Units.smallSpacing
 					spacing: Kirigami.Units.smallSpacing
 					PlasmaComponents3.Label {
@@ -668,8 +778,8 @@ Item {
 					visible: !!listHeader.errorText
 					Layout.fillWidth: true
 					Layout.minimumWidth: 0
-					Layout.leftMargin: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
-					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.leftMargin: tasksView.titleX
+					Layout.rightMargin: tasksView.sideMargin
 					text: listHeader.errorText
 					textFormat: Text.PlainText
 					color: Kirigami.Theme.negativeTextColor
@@ -691,12 +801,13 @@ Item {
 			PlasmaComponents3.ToolButton {
 				visible: !tasksView.addingList
 				Layout.topMargin: Kirigami.Units.largeSpacing
-				Layout.leftMargin: Kirigami.Units.smallSpacing
+				// Its "+" where the checks are.
+				Layout.leftMargin: Math.max(0, tasksView.sideMargin + (tasksView.checkSize - icon.width) / 2 - leftPadding)
 				icon.name: "list-add"
 				icon.width: Kirigami.Units.iconSizes.small
 				icon.height: Kirigami.Units.iconSizes.small
 				text: i18n("New list")
-				opacity: hovered ? 1 : 0.75
+				opacity: hovered ? 1 : 0.8
 				onClicked: {
 					tasksView.cancelRename()
 					tasksView.addingList = true
@@ -706,8 +817,8 @@ Item {
 				visible: tasksView.addingList
 				Layout.fillWidth: true
 				Layout.topMargin: Kirigami.Units.largeSpacing
-				Layout.leftMargin: Kirigami.Units.largeSpacing
-				Layout.rightMargin: Kirigami.Units.largeSpacing
+				Layout.leftMargin: tasksView.sideMargin
+				Layout.rightMargin: tasksView.sideMargin
 				spacing: Kirigami.Units.smallSpacing
 				PlasmaComponents3.TextField {
 					id: newListField
@@ -792,8 +903,8 @@ Item {
 				visible: !!newList.errorText
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
-				Layout.leftMargin: Kirigami.Units.largeSpacing
-				Layout.rightMargin: Kirigami.Units.largeSpacing
+				Layout.leftMargin: tasksView.sideMargin
+				Layout.rightMargin: tasksView.sideMargin
 				text: newList.errorText
 				textFormat: Text.PlainText
 				color: Kirigami.Theme.negativeTextColor
@@ -878,73 +989,92 @@ Item {
 		}
 	}
 
-	// A date section (by date): its name and count.
+	// A date section (by date): a thin line above (not the first), its name and count.
 	Component {
 		id: sectionComponent
 		Item {
 			id: sectionHeader
 			readonly property var row: parent ? parent.row : null
 			readonly property string section: row ? row.section : ""
-			implicitHeight: sectionRow.implicitHeight
+			readonly property bool separated: !!parent && parent.separated
+			implicitHeight: sectionColumn.implicitHeight
 			DropHighlight {
-				anchors.fill: parent
-				anchors.topMargin: Kirigami.Units.largeSpacing
+				x: 0
+				y: sectionRow.y - Kirigami.Units.smallSpacing
+				width: parent.width
+				height: sectionRow.height + Kirigami.Units.smallSpacing * 2
 				key: row ? row.key : ""
 			}
-			RowLayout {
-				id: sectionRow
+			ColumnLayout {
+				id: sectionColumn
 				anchors.left: parent.left
 				anchors.right: parent.right
-				spacing: Kirigami.Units.smallSpacing
-				Item {
-					implicitWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing
-					implicitHeight: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small + Kirigami.Units.smallSpacing
+				spacing: 0
+				SectionSeparator {
+					visible: sectionHeader.separated
 				}
-				PlasmaComponents3.Label {
-					Layout.alignment: Qt.AlignBottom
-					Layout.bottomMargin: Kirigami.Units.smallSpacing
-					Layout.minimumWidth: 0
-					text: {
-						switch (sectionHeader.section) {
-							case 'overdue': return i18n("Overdue")
-							case 'today': return i18n("Today")
-							case 'tomorrow': return i18n("Tomorrow")
-							case 'week': return i18n("This week")
-							case 'later': return i18n("Later")
-							case 'nodate': return i18n("No date")
-							case 'done': return i18n("Completed")
-						}
-						return ""
-					}
-					textFormat: Text.PlainText
-					font.weight: Font.DemiBold
-					color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
-					elide: Text.ElideRight
-				}
-				PlasmaComponents3.Label {
-					Layout.alignment: Qt.AlignBottom
-					Layout.bottomMargin: Kirigami.Units.smallSpacing
+				RowLayout {
+					id: sectionRow
 					Layout.fillWidth: true
-					Layout.minimumWidth: 0
-					text: row ? String(row.count) : ""
-					textFormat: Text.PlainText
-					opacity: 0.75
+					Layout.leftMargin: tasksView.sideMargin
+					Layout.rightMargin: tasksView.sideMargin
+					Layout.topMargin: Kirigami.Units.largeSpacing
+					Layout.bottomMargin: Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Label {
+						Layout.minimumWidth: 0
+						Layout.maximumWidth: Math.ceil(implicitWidth)
+						Layout.fillWidth: true
+						text: {
+							switch (sectionHeader.section) {
+								case 'overdue': return i18n("Overdue")
+								case 'today': return i18n("Today")
+								case 'tomorrow': return i18n("Tomorrow")
+								case 'week': return i18n("This week")
+								case 'later': return i18n("Later")
+								case 'nodate': return i18n("No date")
+								case 'done': return i18n("Completed")
+							}
+							return ""
+						}
+						textFormat: Text.PlainText
+						font.weight: Font.DemiBold
+						color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+						elide: Text.ElideRight
+					}
+					PlasmaComponents3.Label {
+						text: sectionHeader.row ? String(sectionHeader.row.count) : ""
+						textFormat: Text.PlainText
+						color: sectionHeader.section === 'overdue' ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+						opacity: tasksView.dimOpacity
+					}
+					Item {
+						Layout.fillWidth: true
+					}
 				}
 			}
 		}
 	}
 
+	// A list without open tasks: a note lined up with the titles.
 	Component {
 		id: emptyComponent
-		PlasmaComponents3.Label {
+		Item {
 			readonly property var row: parent ? parent.row : null
-			leftPadding: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
-			topPadding: Kirigami.Units.largeSpacing
-			bottomPadding: Kirigami.Units.smallSpacing
-			text: i18n("No open tasks")
-			textFormat: Text.PlainText
-			opacity: 0.75
-			font.italic: true
+			implicitHeight: emptyLabel.implicitHeight + Kirigami.Units.smallSpacing * 2
+			PlasmaComponents3.Label {
+				id: emptyLabel
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.leftMargin: tasksView.titleX
+				anchors.rightMargin: tasksView.sideMargin
+				anchors.verticalCenter: parent.verticalCenter
+				text: i18n("No open tasks")
+				textFormat: Text.PlainText
+				opacity: tasksView.dimOpacity
+				font.italic: true
+				elide: Text.ElideRight
+			}
 		}
 	}
 
