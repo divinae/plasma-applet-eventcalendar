@@ -683,6 +683,44 @@ CalendarManager {
 		setEventProperties(item.calendarId, item.id, Tasks.toggleBody(done), { done: cb })
 	}
 
+	// Check (done) or uncheck a subtask of a task: a TickTick checklist item (subtaskId: its id in
+	// item.subtasks), else a task of the same list (Google: subtasks are tasks with a parent).
+	// cb(err, item): optional, always called; item is the task that was saved.
+	function toggleSubtask(item, subtaskId, done, cb) {
+		var calendarManager = Tasks.isTask(item) ? managerWith(item.calendarId, 'toggleSubtask') : null
+		if (calendarManager) {
+			calendarManager.toggleSubtask(item.calendarId, item.id, subtaskId, done, cb)
+			return
+		}
+		var subtask = Tasks.isTask(item) ? getEvent(item.calendarId, subtaskId) : null
+		if (!subtask) {
+			if (cb) {
+				cb('toggleSubtask: no such subtask', null)
+			}
+			return
+		}
+		toggleTask(subtask, done, cb)
+	}
+
+	// Tasks can be put in another order within the list (Google; TickTick's API can't).
+	function supportsReorder(listId) {
+		return !!managerWith(listId, 'reorderTask')
+	}
+
+	// Put a task right after previousTaskId ('' : first) in its list, among its siblings (see
+	// GoogleTasksManager.reorderTask). cb(err, item): optional, always called.
+	function reorderTask(item, previousTaskId, cb) {
+		var calendarManager = Tasks.isTask(item) ? managerWith(item.calendarId, 'reorderTask') : null
+		if (!calendarManager) {
+			logger.log('Could not reorderTask: not supported')
+			if (cb) {
+				cb('reorderTask not supported', null)
+			}
+			return
+		}
+		calendarManager.reorderTask(item.calendarId, item.id, previousTaskId || '', cb)
+	}
+
 	// The task lists tasks can be added to or moved to: [{ id, summary, backgroundColor }].
 	// accountPrefix: optional, only that account's lists (the part of the ids before '::').
 	function getTaskLists(accountPrefix) {
