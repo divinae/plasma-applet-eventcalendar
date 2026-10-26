@@ -24,6 +24,8 @@ LinkRect {
 	property bool compact: false
 	// The task's list ({ name, color }), shown before the due date (Tasks view by date), or null.
 	property var showList: null
+	// The first line of the notes below the title (Tasks view: "Show details").
+	property bool showNotes: true
 	// A due kind ('today', 'tomorrow') the row's section already says: no chip for it.
 	property string sectionDueKind: ""
 	// The hover buttons.
@@ -65,7 +67,7 @@ LinkRect {
 	}
 	readonly property string chipText: due.kind === 'overdue' ? dueDateText : dueText
 	readonly property bool showChip: !!chipText && due.kind !== sectionDueKind
-	readonly property string notesLine: compact || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")
+	readonly property string notesLine: compact || !showNotes || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")
 	// The due date and notes: a bit smaller than the title, larger than the views' small font.
 	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
