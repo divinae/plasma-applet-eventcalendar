@@ -173,6 +173,14 @@ Item {
 		// One "Add a task…" for the whole view, at the top (not one per list): on the filter's list, or
 		// a picked one.
 		newRows = [{ type: 'add', key: 'add' }].concat(newRows.filter(function(row) { return row.type !== 'add' }))
+		// By list: a list with nothing to show (no open tasks; no done ones shown with them) is left out.
+		newRows = newRows.filter(function(row) {
+			return row.type !== 'list' || row.openCount > 0 || (withDone && row.doneCount > 0)
+		})
+		// …and an account's heading with none of its lists left.
+		newRows = newRows.filter(function(row, i, all) {
+			return row.type !== 'group' || (i + 1 < all.length && all[i + 1].type === 'list')
+		})
 		var newCards = []
 		if (islands) {
 			// Not grouped: the tasks and the quick add are one card, as a list's (byList).
@@ -1368,17 +1376,6 @@ Item {
 						running: visible
 						Layout.preferredWidth: Kirigami.Units.iconSizes.small
 						Layout.preferredHeight: Kirigami.Units.iconSizes.small
-					}
-					PlasmaComponents3.ToolButton {
-						visible: !listHeader.renaming
-						icon.name: "list-add"
-						icon.width: Kirigami.Units.iconSizes.small
-						icon.height: Kirigami.Units.iconSizes.small
-						display: QQC2.AbstractButton.IconOnly
-						text: row ? i18nc("%1 = task list name", "New task in %1", row.list.name) : ""
-						onClicked: popup.newTask(null, "", row.list.id)
-						PlasmaComponents3.ToolTip.text: text
-						PlasmaComponents3.ToolTip.visible: hovered
 					}
 					PlasmaComponents3.ToolButton {
 						id: listMenuButton
