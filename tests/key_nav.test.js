@@ -51,7 +51,16 @@ for (const mode of ['month', 'week', 'today', 'classic']) {
 assert.deepStrictEqual(['1', '2', '3', '4'].map(c => act(c.charCodeAt(0), 0, 'month').mode),
 	['month', 'week', 'today', 'classic'])
 assert.deepStrictEqual(act(0x34, Modifier.Keypad, 'week'), { type: 'view', mode: 'classic' }) // Keypad 4
-assert.strictEqual(K.actionFor(0x35, 0, 'month'), null) // 5: no view
+assert.deepStrictEqual(act(0x35, 0, 'month'), { type: 'view', mode: 'tasks' }) // 5: Tasks
+assert.strictEqual(K.actionFor(0x36, 0, 'month'), null) // 6: no view
+
+// Tasks: no days; arrows, pages and "today" are left to the list. New, search and views stay.
+for (const key of [Key.Left, Key.Right, Key.Up, Key.Down, Key.PageUp, Key.PageDown, Key.T, Key.Home, Key.Return]) {
+	assert.strictEqual(K.actionFor(key, 0, 'tasks'), null, 'tasks ' + key)
+}
+assert.deepStrictEqual(act(Key.N, 0, 'tasks'), { type: 'new' })
+assert.deepStrictEqual(act(Key.Slash, 0, 'tasks'), { type: 'search' })
+assert.deepStrictEqual(act(0x31, 0, 'tasks'), { type: 'view', mode: 'month' })
 
 // Modifiers: not ours (Ctrl+N, Alt+Left, Shift+T, Meta+1, Ctrl+Shift+F).
 assert.strictEqual(K.actionFor(Key.N, Modifier.Control, 'month'), null)

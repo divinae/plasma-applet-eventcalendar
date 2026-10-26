@@ -15,6 +15,12 @@ PlasmaExtras.PlasmoidHeading {
 	// month view.
 	property Item weekViewItem
 	property bool showViewTabs: true
+	// The view shown ('month', 'week', 'today', 'classic', 'tasks').
+	property string currentMode: plasmoid.configuration.popupMode
+	// The Tasks tab (task lists selected).
+	property bool showTasksTab: false
+	// The Tasks view: no dates to go through, the title is "Tasks".
+	property bool tasksMode: false
 	property bool showPinButton: true
 	property bool refreshing: false
 
@@ -32,12 +38,18 @@ PlasmaExtras.PlasmoidHeading {
 		readonly property bool compactTabs: header.showViewTabs
 			&& width < Math.max(fullTabsMeasure.implicitWidth, rightGroup.implicitWidth) * 2 + centerGroup.implicitWidth + Kirigami.Units.largeSpacing * 2
 
-		readonly property var viewTabs: [
-			{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
-			{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
-			{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
-			{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
-		]
+		readonly property var viewTabs: {
+			var tabs = [
+				{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+				{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+				{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
+				{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
+			]
+			if (header.showTasksTab) {
+				tabs.push({ mode: 'tasks', icon: "view-calendar-tasks", text: i18n("Tasks") })
+			}
+			return tabs
+		}
 		// The view switcher's width with names, measured off screen.
 		Row {
 			id: fullTabsMeasure
@@ -67,7 +79,7 @@ PlasmaExtras.PlasmoidHeading {
 				Repeater {
 					model: topBar.viewTabs
 					Item {
-						readonly property bool current: plasmoid.configuration.popupMode === modelData.mode
+						readonly property bool current: header.currentMode === modelData.mode
 						implicitWidth: viewButton.implicitWidth
 						implicitHeight: viewButton.implicitHeight
 
@@ -114,29 +126,34 @@ PlasmaExtras.PlasmoidHeading {
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
 				font.capitalization: Font.Capitalize
-				text: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+				text: header.tasksMode ? i18n("Tasks")
+					: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
 				MouseArea {
 					anchors.fill: parent
-					enabled: !header.weekViewItem
+					enabled: !header.weekViewItem && !header.tasksMode
 					onClicked: header.monthViewItem.titleClicked() // Year / decade view
 				}
 			}
 			Item {
+				visible: !header.tasksMode
 				implicitWidth: Kirigami.Units.smallSpacing
 			}
 			PlasmaComponents3.ToolButton {
+				visible: !header.tasksMode
 				icon.name: "go-previous"
 				onClicked: header.weekViewItem ? header.weekViewItem.goPrevious() : header.monthViewItem.goPrevious()
 				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
+				visible: !header.tasksMode
 				icon.name: "go-jump-today"
 				onClicked: header.weekViewItem ? header.weekViewItem.goToday() : header.monthViewItem.resetToToday()
 				PlasmaComponents3.ToolTip.text: i18n("Today")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
+				visible: !header.tasksMode
 				icon.name: "go-next"
 				onClicked: header.weekViewItem ? header.weekViewItem.goNext() : header.monthViewItem.goNext()
 				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
@@ -161,7 +178,7 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				icon.name: "list-add"
 				onClicked: header.newEventClicked()
-				PlasmaComponents3.ToolTip.text: i18n("New Event")
+				PlasmaComponents3.ToolTip.text: header.tasksMode ? i18n("New Task") : i18n("New Event")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			Item {

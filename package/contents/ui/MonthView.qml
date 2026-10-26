@@ -82,6 +82,8 @@ PinchArea {
 	// Opt-in (the popup): with event titles, multi-day events as bars across the days instead of
 	// their title in every day. The owner fills spanBars and the reservedRows / hiddenSpanCount
 	// roles (EventBuckets.layoutMonth) and fills again when eventRowCapacity changes.
+	// Event titles in the day cells (the popup's month view), else the monthEventBadgeType setting.
+	property bool eventTitles: plasmoid.configuration.popupMode === 'month'
 	property bool spanBarsEnabled: false
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
 	property var spanBars: []
@@ -536,7 +538,7 @@ PinchArea {
 			spanBars: root.spanBarsActive ? root.spanBars : []
 			eventDragEnabled: root.eventDragEnabled
 			eventDrag: root.eventDragState
-			eventBadgeType: plasmoid.configuration.popupMode === 'month' ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
+			eventBadgeType: root.eventTitles ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
 
 			headerModel: calendarBackend.days
 			gridModel: daysModel

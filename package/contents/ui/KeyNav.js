@@ -30,8 +30,8 @@ var Modifier = {
 	Keypad: 0x20000000,
 }
 
-// The view tabs in header order: the number keys 1-4 pick them.
-var VIEW_MODES = ['month', 'week', 'today', 'classic']
+// The view tabs in header order: the number keys 1-5 pick them (Tasks: when shown).
+var VIEW_MODES = ['month', 'week', 'today', 'classic', 'tasks']
 
 // Actions:
 //   { type: 'previous' } / { type: 'next' }: the previous / next month, week or day
@@ -63,19 +63,21 @@ function actionFor(key, modifiers, mode) {
 
 	var grid = mode === 'month'
 	var agenda = mode === 'classic'
+	// Tasks: no days to move through; the arrows scroll the list.
+	var dated = mode !== 'tasks'
 	switch (key) {
 		case Key.Left:
-			return grid || agenda ? { type: 'move', days: -1 } : { type: 'previous' }
+			return !dated ? null : grid || agenda ? { type: 'move', days: -1 } : { type: 'previous' }
 		case Key.Right:
-			return grid || agenda ? { type: 'move', days: 1 } : { type: 'next' }
+			return !dated ? null : grid || agenda ? { type: 'move', days: 1 } : { type: 'next' }
 		case Key.Up:
 			return grid ? { type: 'move', days: -7 } : null
 		case Key.Down:
 			return grid ? { type: 'move', days: 7 } : null
 		case Key.PageUp:
-			return { type: 'previous' }
+			return dated ? { type: 'previous' } : null
 		case Key.PageDown:
-			return { type: 'next' }
+			return dated ? { type: 'next' } : null
 		case Key.Return:
 		case Key.Enter:
 			return grid ? { type: 'open' } : null
@@ -83,7 +85,7 @@ function actionFor(key, modifiers, mode) {
 			return { type: 'new' }
 		case Key.T:
 		case Key.Home:
-			return { type: 'today' }
+			return dated ? { type: 'today' } : null
 	}
 	var digit = key - Key.Digit1
 	if (digit >= 0 && digit < VIEW_MODES.length) {

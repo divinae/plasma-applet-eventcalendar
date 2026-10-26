@@ -30,6 +30,8 @@ ConfigPage {
 					{ value: 'week', text: i18n("Week") },
 					{ value: 'today', text: i18nc("calendar view showing one day", "Day") },
 					{ value: 'classic', text: i18n("Agenda") },
+					// Shown when task lists are selected (Tasks settings), else the month.
+					{ value: 'tasks', text: i18n("Tasks") },
 				]
 			}
 			FormCard.FormDelegateSeparator {}
