@@ -2059,6 +2059,7 @@ Item {
 			// Without a list of its own: the filter's list and due day (Today, Tomorrow, Next 7 days).
 			listId: row && row.list ? row.list.id : tasksView.quickAddTarget.listId
 			lists: row && row.list ? [row.list] : tasksView.lists
+			parseLists: tasksView.allLists
 			dueDay: tasksView.quickAddTarget.dueDay
 			draftKey: row ? row.key : ""
 			addDrafts: tasksView.addDrafts
