@@ -18,6 +18,8 @@ Rectangle {
 	// Not Item.enabled: that would also disable children, eg: an inline edit form.
 	property bool clickable: true
 	readonly property alias hovered: mouseArea.containsMouse
+	// For press-and-drag on top of the clicks (TaskRow).
+	readonly property alias linkMouseArea: mouseArea
 
 	signal clicked(var mouse)
 	signal leftClicked(var mouse)
