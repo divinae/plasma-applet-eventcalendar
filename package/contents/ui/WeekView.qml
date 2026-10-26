@@ -593,10 +593,11 @@ Item {
 	// Left of the grid: the shown day's weather.
 	DayWeatherPanel {
 		visible: weekView.weatherBeside
-		x: weekView.contentX - weekView.weatherGap * 2 - weekView.sidePanelWidth
+		// Padding on its left (the popup's edge), the same space on the grid side.
+		x: weekView.contentX - weekView.weatherGap * 2 - weekView.sidePanelWidth + Kirigami.Units.largeSpacing * 2
 		// Top aligned with the day header, like the grid, with a little padding.
 		y: dayNamesRow.y + Kirigami.Units.largeSpacing
-		width: weekView.sidePanelWidth - Kirigami.Units.largeSpacing
+		width: weekView.sidePanelWidth - Kirigami.Units.largeSpacing * 2
 		height: parent.height - y - Kirigami.Units.largeSpacing
 		locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 		hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
