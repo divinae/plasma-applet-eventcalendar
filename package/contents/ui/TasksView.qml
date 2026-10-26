@@ -4,6 +4,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "TaskLists.js" as TaskLists
 import "Tasks.js" as Tasks
 
 // The Tasks tab, by date (tasksGroupBy 'date': Overdue, Today, Tomorrow, This week, Later, No
@@ -12,6 +13,9 @@ import "Tasks.js" as Tasks
 // without the editor: at the bottom of each list, or of the open tasks by date (undated, on a
 // picked list). A task can be dragged onto a list (same account: moved) or onto Today, Tomorrow
 // or No date (its due day changes).
+// By list, the lists can be managed (TaskLists.js): a list header's "⋯" menu (or right click) has
+// Rename (inline), Color (TickTick), Clear completed (Google) and Delete (confirmed inline), and
+// "New list" at the end makes one. By date, "Manage lists" switches to by list.
 Item {
 	id: tasksView
 
@@ -38,6 +42,7 @@ Item {
 			openCount = 0
 			return
 		}
+		taskAccounts = typeof eventModel.getTaskAccounts === 'function' ? eventModel.getTaskAccounts() : []
 		var newLists = eventModel.getSelectedTaskLists()
 		var itemsByList = {}
 		for (var i = 0; i < newLists.length; i++) {
@@ -99,6 +104,143 @@ Item {
 		function onEventAdded(calendarId, data) { tasksView.deferredRebuild() }
 		function onEventRemoved(calendarId, eventId, data) { tasksView.deferredRebuild() }
 		function onEventUpdated(calendarId, eventId, data) { tasksView.deferredRebuild() }
+		function onTaskListsChanged() { tasksView.deferredRebuild() }
+	}
+
+	//--- Managing the lists (by list)
+	// The accounts lists can be made in: [{ id, label, provider }] (EventModel.getTaskAccounts).
+	property var taskAccounts: []
+	// The list being renamed, and the name typed so far (kept across rebuilds).
+	property string renamingListId: ""
+	property string renameDraft: ""
+	// The list whose delete waits for a confirmation.
+	property string confirmDeleteListId: ""
+	// The list a request runs for.
+	property string busyListId: ""
+	// What went wrong, by list id ('' for "New list").
+	property var listErrors: ({})
+
+	function listCaps(listId) {
+		return eventModel && typeof eventModel.taskListCapabilities === 'function'
+			? eventModel.taskListCapabilities(listId)
+			: { rename: false, delete: false, color: false, clearCompleted: false }
+	}
+	function setListError(listId, text) {
+		var next = {}
+		for (var key in listErrors) {
+			next[key] = listErrors[key]
+		}
+		if (text) {
+			next[listId] = text
+			listErrorTimer.restart()
+		} else {
+			delete next[listId]
+		}
+		listErrors = next
+	}
+	Timer {
+		id: listErrorTimer
+		interval: 6000
+		onTriggered: tasksView.listErrors = ({})
+	}
+	// Run a list request: busy meanwhile, the error inline when it fails.
+	function runListAction(listId, errorText, start, onDone) {
+		if (busyListId || !eventModel) {
+			return
+		}
+		setListError(listId, "")
+		busyListId = listId || "new"
+		var view = tasksView
+		start(function(err, result) {
+			view.busyListId = ""
+			if (err) {
+				view.setListError(listId, errorText)
+			} else if (onDone) {
+				onDone(result)
+			}
+		})
+	}
+
+	function startRename(list) {
+		confirmDeleteListId = ""
+		renameDraft = list.name
+		renamingListId = list.id
+	}
+	function cancelRename() {
+		renamingListId = ""
+		renameDraft = ""
+	}
+	function commitRename(list, text) {
+		var title = TaskLists.cleanTitle(text)
+		if (!title || title === list.name) {
+			cancelRename()
+			return
+		}
+		runListAction(list.id, i18n("Couldn't rename the list"), function(done) {
+			eventModel.renameTaskList(list.id, title, done)
+		}, function() {
+			tasksView.cancelRename()
+		})
+	}
+	function askDelete(list) {
+		cancelRename()
+		confirmDeleteListId = list.id
+	}
+	function deleteList(list) {
+		confirmDeleteListId = ""
+		runListAction(list.id, i18n("Couldn't delete the list"), function(done) {
+			eventModel.deleteTaskList(list.id, done)
+		}, null)
+	}
+	function setListColor(list, color) {
+		runListAction(list.id, i18n("Couldn't change the list's color"), function(done) {
+			eventModel.setTaskListColor(list.id, color, done)
+		}, null)
+	}
+	function clearCompleted(list) {
+		runListAction(list.id, i18n("Couldn't clear the completed tasks"), function(done) {
+			eventModel.clearCompleted(list.id, done)
+		}, null)
+	}
+	// The tasks a delete takes with it (those loaded: TickTick loads open tasks only).
+	function listTaskCount(listId) {
+		var calendar = eventModel ? eventModel.eventsByCalendar[listId] : null
+		return TaskLists.taskCount(calendar && calendar.items)
+	}
+
+	// "New list": the field is open, the account it goes to, the name typed so far.
+	property bool addingList: false
+	property string newListAccount: ""
+	property string newListDraft: ""
+	// The account "New list" goes to: the picked one, else the first.
+	function newListAccountEntry() {
+		for (var i = 0; i < taskAccounts.length; i++) {
+			if (taskAccounts[i].id === newListAccount) {
+				return taskAccounts[i]
+			}
+		}
+		return taskAccounts.length ? taskAccounts[0] : null
+	}
+	function createList(text) {
+		var title = TaskLists.cleanTitle(text)
+		var entry = newListAccountEntry()
+		var account = entry ? entry.id : ""
+		if (!title || !account) {
+			return
+		}
+		runListAction("", i18n("Couldn't create the list"), function(done) {
+			eventModel.createTaskList(account, title, done)
+		}, function() {
+			tasksView.newListDraft = ""
+			tasksView.addingList = false
+		})
+	}
+
+	function openListMenu(list, parentItem, x, y) {
+		listMenu.list = list
+		listMenu.caps = listCaps(list.id)
+		listMenu.showColorMenu(listMenu.caps.color)
+		listMenu.popup(parentItem, x, y)
 	}
 
 	//--- A short note (eg: a drop that can't be done)
@@ -293,6 +435,25 @@ Item {
 							: taskComponent
 					}
 				}
+				// By list: "New list" after the lists.
+				Loader {
+					Layout.fillWidth: true
+					active: tasksView.byList && tasksView.taskAccounts.length > 0
+					visible: active
+					sourceComponent: newListComponent
+				}
+				// By date: the lists are managed by list.
+				PlasmaComponents3.ToolButton {
+					visible: !tasksView.byList && tasksView.taskAccounts.length > 0
+					Layout.topMargin: Kirigami.Units.largeSpacing
+					Layout.leftMargin: Kirigami.Units.smallSpacing
+					icon.name: "view-list-details"
+					icon.width: Kirigami.Units.iconSizes.small
+					icon.height: Kirigami.Units.iconSizes.small
+					text: i18n("Manage lists")
+					opacity: hovered ? 1 : 0.75
+					onClicked: plasmoid.configuration.tasksGroupBy = 'list'
+				}
 				Item {
 					implicitHeight: Kirigami.Units.smallSpacing
 				}
@@ -347,59 +508,373 @@ Item {
 		}
 	}
 
-	// A list: its color, name, open count and "+" (the editor).
+	// A list: its color, name, open count, "+" (the editor) and "⋯" (the list's menu). Renaming,
+	// its name is a field; a delete waits for the confirmation below it.
 	Component {
 		id: listComponent
 		Item {
+			id: listHeader
 			readonly property var row: parent ? parent.row : null
-			implicitHeight: listRow.implicitHeight
+			readonly property var list: row ? row.list : null
+			readonly property string listId: list ? list.id : ""
+			readonly property var caps: tasksView.listCaps(listId)
+			readonly property bool manageable: TaskLists.hasAny(caps)
+			readonly property bool renaming: !!listId && tasksView.renamingListId === listId
+			readonly property bool confirming: !!listId && tasksView.confirmDeleteListId === listId
+			readonly property bool busy: !!listId && tasksView.busyListId === listId
+			readonly property string errorText: tasksView.listErrors[listId] || ""
+			implicitHeight: headerColumn.implicitHeight
 			DropHighlight {
-				anchors.fill: parent
-				anchors.topMargin: Kirigami.Units.largeSpacing
+				x: 0
+				y: listRow.y + Kirigami.Units.largeSpacing
+				width: parent.width
+				height: listRow.height - Kirigami.Units.largeSpacing
 				key: row ? row.key : ""
 			}
-			RowLayout {
-				id: listRow
+			// Right click: the list's menu.
+			MouseArea {
+				id: listRightClick
+				x: 0
+				y: listRow.y
+				width: parent.width
+				height: listRow.height
+				acceptedButtons: Qt.RightButton
+				enabled: listHeader.manageable && !listHeader.renaming && !tasksView.busyListId
+				onClicked: function(mouse) { tasksView.openListMenu(listHeader.list, listRightClick, mouse.x, mouse.y) }
+			}
+			ColumnLayout {
+				id: headerColumn
 				anchors.left: parent.left
 				anchors.right: parent.right
-				spacing: Kirigami.Units.smallSpacing
-				// A list starts a new block: room above, the dot lined up with the task checks.
-				Item {
-					implicitWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing + 2
-					implicitHeight: Kirigami.Units.largeSpacing * 2
+				spacing: 0
+				RowLayout {
+					id: listRow
+					Layout.fillWidth: true
+					spacing: Kirigami.Units.smallSpacing
+					// A list starts a new block: room above, the dot lined up with the task checks.
+					Item {
+						implicitWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing + 2
+						implicitHeight: Kirigami.Units.largeSpacing * 2
+					}
+					Rectangle {
+						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.6)
+						implicitHeight: implicitWidth
+						radius: width / 2
+						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(row && row.list.color ? row.list.color : null))
+					}
+					PlasmaComponents3.Label {
+						visible: !listHeader.renaming
+						Layout.fillWidth: true
+						Layout.minimumWidth: 0
+						text: row ? row.list.name : ""
+						textFormat: Text.PlainText // User text (list name)
+						font.weight: Font.DemiBold
+						elide: Text.ElideRight
+					}
+					// Rename: Enter saves, Esc cancels.
+					Loader {
+						active: listHeader.renaming
+						visible: active
+						Layout.fillWidth: true
+						Layout.rightMargin: Kirigami.Units.smallSpacing
+						Layout.minimumWidth: 0
+						sourceComponent: PlasmaComponents3.TextField {
+							text: tasksView.renameDraft
+							topPadding: 2
+							bottomPadding: 2
+							font.weight: Font.DemiBold
+							readOnly: listHeader.busy
+							Accessible.name: i18n("List name")
+							Component.onCompleted: {
+								forceActiveFocus()
+								selectAll()
+							}
+							onTextEdited: tasksView.renameDraft = text
+							onAccepted: tasksView.commitRename(listHeader.list, text)
+							Keys.onEscapePressed: function(event) {
+								tasksView.cancelRename()
+								event.accepted = true
+							}
+						}
+					}
+					PlasmaComponents3.BusyIndicator {
+						visible: listHeader.busy
+						running: visible
+						Layout.preferredWidth: Kirigami.Units.iconSizes.small
+						Layout.preferredHeight: Kirigami.Units.iconSizes.small
+					}
+					PlasmaComponents3.Label {
+						visible: !listHeader.renaming && !!row && row.openCount > 0
+						text: row ? String(row.openCount) : ""
+						textFormat: Text.PlainText
+						opacity: 0.75
+					}
+					PlasmaComponents3.ToolButton {
+						visible: !listHeader.renaming
+						Layout.rightMargin: listHeader.manageable ? 0 : Kirigami.Units.smallSpacing
+						icon.name: "list-add"
+						icon.width: Kirigami.Units.iconSizes.small
+						icon.height: Kirigami.Units.iconSizes.small
+						display: QQC2.AbstractButton.IconOnly
+						text: row ? i18nc("%1 = task list name", "New task in %1", row.list.name) : ""
+						onClicked: popup.newTask(null, "", row.list.id)
+						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.visible: hovered
+					}
+					PlasmaComponents3.ToolButton {
+						id: listMenuButton
+						visible: listHeader.manageable && !listHeader.renaming
+						Layout.rightMargin: Kirigami.Units.smallSpacing
+						enabled: !tasksView.busyListId
+						icon.name: "overflow-menu"
+						icon.width: Kirigami.Units.iconSizes.small
+						icon.height: Kirigami.Units.iconSizes.small
+						display: QQC2.AbstractButton.IconOnly
+						text: row ? i18nc("%1 = task list name", "Manage %1", row.list.name) : ""
+						onClicked: tasksView.openListMenu(listHeader.list, listMenuButton, 0, listMenuButton.height)
+						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.visible: hovered
+					}
 				}
-				Rectangle {
-					implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.6)
-					implicitHeight: implicitWidth
-					radius: width / 2
-					color: appletConfig.eventColoredTextColor(appletConfig.eventColor(row && row.list.color ? row.list.color : null))
+				// Delete: confirmed here first.
+				ColumnLayout {
+					visible: listHeader.confirming
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.topMargin: Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						Layout.minimumWidth: 0
+						text: listHeader.confirming ? i18ncp("%2 = task list name", "Delete the list \"%2\" and its %1 task? This can't be undone.", "Delete the list \"%2\" and its %1 tasks? This can't be undone.", tasksView.listTaskCount(listHeader.listId), listHeader.list.name) : ""
+						textFormat: Text.PlainText // User text (list name)
+						wrapMode: Text.Wrap
+					}
+					RowLayout {
+						spacing: Kirigami.Units.smallSpacing
+						PlasmaComponents3.Button {
+							icon.name: "edit-delete"
+							text: i18n("Delete")
+							onClicked: tasksView.deleteList(listHeader.list)
+						}
+						PlasmaComponents3.Button {
+							text: i18n("Cancel")
+							onClicked: tasksView.confirmDeleteListId = ""
+						}
+					}
 				}
 				PlasmaComponents3.Label {
+					visible: !!listHeader.errorText
 					Layout.fillWidth: true
 					Layout.minimumWidth: 0
-					text: row ? row.list.name : ""
-					textFormat: Text.PlainText // User text (list name)
-					font.weight: Font.DemiBold
+					Layout.leftMargin: Kirigami.Units.largeSpacing * 2 + Kirigami.Units.iconSizes.small
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					text: listHeader.errorText
+					textFormat: Text.PlainText
+					color: Kirigami.Theme.negativeTextColor
 					elide: Text.ElideRight
 				}
-				PlasmaComponents3.Label {
-					visible: !!row && row.openCount > 0
-					text: row ? String(row.openCount) : ""
-					textFormat: Text.PlainText
-					opacity: 0.75
-				}
-				PlasmaComponents3.ToolButton {
-					Layout.rightMargin: Kirigami.Units.smallSpacing
-					icon.name: "list-add"
-					icon.width: Kirigami.Units.iconSizes.small
-					icon.height: Kirigami.Units.iconSizes.small
-					display: QQC2.AbstractButton.IconOnly
-					text: row ? i18nc("%1 = task list name", "New task in %1", row.list.name) : ""
-					onClicked: popup.newTask(null, "", row.list.id)
-					PlasmaComponents3.ToolTip.text: text
-					PlasmaComponents3.ToolTip.visible: hovered
+			}
+		}
+	}
+
+	// "New list" (by list): a button, then a field (and the account it goes to, when there are
+	// several). Enter makes the list, Esc closes the field.
+	Component {
+		id: newListComponent
+		ColumnLayout {
+			id: newList
+			readonly property bool busy: tasksView.busyListId === "new"
+			readonly property string errorText: tasksView.listErrors[""] || ""
+			spacing: 0
+			PlasmaComponents3.ToolButton {
+				visible: !tasksView.addingList
+				Layout.topMargin: Kirigami.Units.largeSpacing
+				Layout.leftMargin: Kirigami.Units.smallSpacing
+				icon.name: "list-add"
+				icon.width: Kirigami.Units.iconSizes.small
+				icon.height: Kirigami.Units.iconSizes.small
+				text: i18n("New list")
+				opacity: hovered ? 1 : 0.75
+				onClicked: {
+					tasksView.cancelRename()
+					tasksView.addingList = true
 				}
 			}
+			RowLayout {
+				visible: tasksView.addingList
+				Layout.fillWidth: true
+				Layout.topMargin: Kirigami.Units.largeSpacing
+				Layout.leftMargin: Kirigami.Units.largeSpacing
+				Layout.rightMargin: Kirigami.Units.largeSpacing
+				spacing: Kirigami.Units.smallSpacing
+				PlasmaComponents3.TextField {
+					id: newListField
+					Layout.fillWidth: true
+					Layout.minimumWidth: 0
+					placeholderText: i18n("New list name")
+					text: tasksView.newListDraft
+					readOnly: newList.busy
+					onTextEdited: tasksView.newListDraft = text
+					onAccepted: tasksView.createList(text)
+					Keys.onEscapePressed: function(event) {
+						tasksView.addingList = false
+						tasksView.newListDraft = ""
+						event.accepted = true
+					}
+					onVisibleChanged: {
+						if (visible) {
+							forceActiveFocus()
+						}
+					}
+					Component.onCompleted: {
+						if (visible) {
+							forceActiveFocus()
+						}
+					}
+				}
+				// The account it goes to, when there's a choice.
+				// Like the list picker of "Add a task…": the account's name and an arrow.
+				PlasmaComponents3.ToolButton {
+					id: accountButton
+					readonly property var account: tasksView.newListAccountEntry()
+					visible: tasksView.taskAccounts.length > 1
+					Layout.maximumWidth: Kirigami.Units.gridUnit * 9
+					text: account ? account.label : ""
+					Accessible.name: i18nc("%1 = account name", "Account: %1", text)
+					PlasmaComponents3.ToolTip.text: i18n("The account the new list goes to")
+					PlasmaComponents3.ToolTip.visible: hovered
+					contentItem: RowLayout {
+						spacing: Kirigami.Units.smallSpacing
+						PlasmaComponents3.Label {
+							Layout.fillWidth: true
+							Layout.minimumWidth: 0
+							text: accountButton.text
+							textFormat: Text.PlainText // User text (account label)
+							opacity: 0.85
+							elide: Text.ElideRight
+						}
+						Kirigami.Icon {
+							implicitWidth: Kirigami.Units.iconSizes.small / 2 + 4
+							implicitHeight: implicitWidth
+							source: "arrow-down"
+							opacity: 0.75
+						}
+					}
+					onClicked: accountMenu.popup(accountButton, 0, accountButton.height)
+					PlasmaComponents3.Menu {
+						id: accountMenu
+						Instantiator {
+							model: tasksView.taskAccounts
+							delegate: PlasmaComponents3.MenuItem {
+								text: modelData.label
+								checkable: true
+								checked: !!accountButton.account && accountButton.account.id === modelData.id
+								onTriggered: {
+									tasksView.newListAccount = modelData.id
+									newListField.forceActiveFocus()
+								}
+							}
+							onObjectAdded: function(index, object) { accountMenu.insertItem(index, object) }
+							onObjectRemoved: function(index, object) { accountMenu.removeItem(object) }
+						}
+					}
+				}
+				PlasmaComponents3.BusyIndicator {
+					visible: newList.busy
+					running: visible
+					Layout.preferredWidth: Kirigami.Units.iconSizes.small
+					Layout.preferredHeight: Kirigami.Units.iconSizes.small
+				}
+			}
+			PlasmaComponents3.Label {
+				visible: !!newList.errorText
+				Layout.fillWidth: true
+				Layout.minimumWidth: 0
+				Layout.leftMargin: Kirigami.Units.largeSpacing
+				Layout.rightMargin: Kirigami.Units.largeSpacing
+				text: newList.errorText
+				textFormat: Text.PlainText
+				color: Kirigami.Theme.negativeTextColor
+				elide: Text.ElideRight
+			}
+		}
+	}
+
+	// A list's menu ("⋯" or right click on its header).
+	PlasmaComponents3.Menu {
+		id: listMenu
+		property var list: null
+		property var caps: ({})
+
+		// A submenu can't be hidden, so Color is only inserted for lists that have one (TickTick).
+		readonly property int colorMenuIndex: 1 // After Rename
+		function showColorMenu(show) {
+			var shown = listMenu.itemAt(colorMenuIndex) && listMenu.itemAt(colorMenuIndex).subMenu === colorMenu
+			if (show && !shown) {
+				listMenu.insertMenu(colorMenuIndex, colorMenu)
+			} else if (!show && shown) {
+				listMenu.takeMenu(colorMenuIndex)
+			}
+		}
+		property PlasmaComponents3.Menu colorMenu: PlasmaComponents3.Menu {
+			title: i18n("Color")
+			icon.name: "color-management"
+			Repeater {
+				model: TaskLists.swatches
+				PlasmaComponents3.MenuItem {
+					id: swatchItem
+					readonly property string swatch: modelData
+					readonly property bool current: !!listMenu.list && TaskLists.hexColor(listMenu.list.color) === swatch
+					text: [i18nc("color", "Red"), i18nc("color", "Orange"), i18nc("color", "Yellow"), i18nc("color", "Blue"),
+						i18nc("color", "Green"), i18nc("color", "Indigo"), i18nc("color", "Purple"), i18nc("color", "Gray")][index] || swatch
+					contentItem: RowLayout {
+						spacing: Kirigami.Units.smallSpacing
+						Rectangle {
+							implicitWidth: Kirigami.Units.iconSizes.small
+							implicitHeight: implicitWidth
+							radius: width / 2
+							color: swatchItem.swatch
+							border.width: swatchItem.current ? 2 : 0
+							border.color: Kirigami.Theme.textColor
+						}
+						PlasmaComponents3.Label {
+							Layout.fillWidth: true
+							text: swatchItem.text
+							textFormat: Text.PlainText
+							font.weight: swatchItem.current ? Font.DemiBold : Font.Normal
+						}
+					}
+					onTriggered: tasksView.setListColor(listMenu.list, swatch)
+				}
+			}
+		}
+
+		PlasmaComponents3.MenuItem {
+			visible: !!listMenu.caps.rename
+			height: visible ? implicitHeight : 0
+			text: i18n("Rename…")
+			icon.name: "edit-rename"
+			onTriggered: tasksView.startRename(listMenu.list)
+		}
+		PlasmaComponents3.MenuItem {
+			visible: !!listMenu.caps.clearCompleted
+			height: visible ? implicitHeight : 0
+			text: i18n("Clear completed")
+			icon.name: "edit-clear-history"
+			onTriggered: tasksView.clearCompleted(listMenu.list)
+		}
+		PlasmaComponents3.MenuSeparator {
+			visible: !!listMenu.caps.delete
+			height: visible ? implicitHeight : 0
+		}
+		PlasmaComponents3.MenuItem {
+			visible: !!listMenu.caps.delete
+			height: visible ? implicitHeight : 0
+			text: i18n("Delete list…")
+			icon.name: "edit-delete"
+			onTriggered: tasksView.askDelete(listMenu.list)
 		}
 	}
 
