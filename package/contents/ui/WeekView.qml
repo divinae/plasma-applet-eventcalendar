@@ -72,14 +72,16 @@ Item {
 	// weather a compact row above it.
 	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 13, Math.max(Kirigami.Units.gridUnit * 10, width * 0.25)))
 	readonly property real weatherPanelWidth: sidePanelWidth
+	// The tasks get more room than the weather: titles are longer than "9°".
+	readonly property real tasksPanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 19, Math.max(Kirigami.Units.gridUnit * 13, width * 0.34)))
 	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
 	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
 	readonly property bool weatherBeside: singleDay && showWeather && width >= minDayGridWidth + sidePanelWidth + weatherGap * 2
 	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists
 	readonly property bool tasksBeside: singleDay && dayHasTaskLists
-		&& width >= minDayGridWidth + sidePanelWidth * (weatherBeside ? 2 : 1) + weatherGap * (weatherBeside ? 4 : 2)
+		&& width >= minDayGridWidth + tasksPanelWidth + (weatherBeside ? sidePanelWidth + weatherGap * 4 : weatherGap * 2)
 	readonly property real leftPanelSpace: weatherBeside ? sidePanelWidth + weatherGap * 2 : 0
-	readonly property real rightPanelSpace: tasksBeside ? sidePanelWidth + weatherGap * 2 : 0
+	readonly property real rightPanelSpace: tasksBeside ? tasksPanelWidth + weatherGap * 2 : 0
 	readonly property real contentWidth: {
 		if (!singleDay) {
 			return width
@@ -615,7 +617,7 @@ Item {
 		visible: weekView.tasksBeside
 		x: weekView.contentX + weekView.contentWidth + weekView.weatherGap * 2
 		y: dayNamesRow.y + Kirigami.Units.largeSpacing
-		width: weekView.sidePanelWidth - Kirigami.Units.largeSpacing
+		width: weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
 		eventModel: weekView.singleDay ? weekView.eventModel : null
 		day: weekView.columnDate(0)
 		showSeparator: false
