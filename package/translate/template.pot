@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,8 @@ msgstr ""
 msgid "Not done"
 msgstr ""
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr ""
 
@@ -1363,14 +1364,9 @@ msgstr ""
 msgid "No due date"
 msgstr ""
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
-msgstr ""
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
 msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
@@ -1989,11 +1985,6 @@ msgid "Description"
 msgstr ""
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr ""
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr ""
@@ -2258,11 +2249,6 @@ msgstr ""
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
-msgstr ""
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
 msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js

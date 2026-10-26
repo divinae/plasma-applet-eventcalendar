@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -100,7 +100,8 @@ msgstr "Klar"
 msgid "Not done"
 msgstr "Inte klar"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "Förfaller %1"
 
@@ -1353,15 +1354,10 @@ msgstr "Ta bort alla händelser i ”%1”"
 msgid "No due date"
 msgstr "Inget förfallodatum"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Förfaller %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1979,11 +1975,6 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr "Förfaller %1"
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr "Hemma"
@@ -2249,11 +2240,6 @@ msgstr "h AP"
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
 msgstr "h:mm AP"
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
-msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
 msgid "All Day"
@@ -2775,6 +2761,17 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Due %1"
+#~ msgstr "Förfaller %1"
+
+#~ msgctxt "%1 is a date, %2 a time"
+#~ msgid "%1, %2"
+#~ msgstr "%1, %2"
+
+#~ msgctxt "%1 is a date"
+#~ msgid "Due %1"
+#~ msgstr "Förfaller %1"
 
 #~ msgid "Delete Event"
 #~ msgstr "Ta bort händelse"

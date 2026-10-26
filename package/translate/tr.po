@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -105,7 +105,9 @@ msgstr "Tamamlandı"
 msgid "Not done"
 msgstr "Tamamlanmadı"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "Son tarih %1"
 
@@ -1517,14 +1519,10 @@ msgid "No due date"
 msgstr "Son tarih yok"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Son tarih %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -2146,11 +2144,6 @@ msgid "Description"
 msgstr "Açıklama"
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr "Son tarih %1"
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr "Ev"
@@ -2427,11 +2420,6 @@ msgstr "h AP"
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
 msgstr "h:mm AP"
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
-msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
 msgid "All Day"
@@ -2969,6 +2957,17 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Due %1"
+#~ msgstr "Son tarih %1"
+
+#~ msgctxt "%1 is a date, %2 a time"
+#~ msgid "%1, %2"
+#~ msgstr "%1, %2"
+
+#~ msgctxt "%1 is a date"
+#~ msgid "Due %1"
+#~ msgstr "Son tarih %1"
 
 #~ msgid "Delete Event"
 #~ msgstr "Etkinliği Sil"

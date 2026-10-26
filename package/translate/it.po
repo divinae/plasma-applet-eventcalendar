@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -100,7 +100,8 @@ msgstr "Completata"
 msgid "Not done"
 msgstr "Non completata"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "Scadenza %1"
 
@@ -913,7 +914,7 @@ msgstr "Collega"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
-msgstr "Crea un token API sul sito di TickTick: Impostazioni > Account > Token API (su dida365.com per Dida365). Il token è conservato nel portachiavi di sistema (KWallet o Secret Service), non nelle impostazioni dell'oggetto."
+msgstr "Crea un token API sul sito di TickTick: Settings > Account > API Token (su dida365.com per Dida365). Il token è conservato nel portachiavi di sistema (KWallet o Secret Service), non nelle impostazioni dell'oggetto."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1353,15 +1354,10 @@ msgstr "Elimina tutti gli eventi di «%1»"
 msgid "No due date"
 msgstr "Nessuna scadenza"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Scadenza %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1979,11 +1975,6 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr "Scadenza %1"
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr "Casa"
@@ -2249,11 +2240,6 @@ msgstr "h AP"
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
 msgstr "h:mm AP"
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
-msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
 msgid "All Day"
@@ -2775,6 +2761,17 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Due %1"
+#~ msgstr "Scadenza %1"
+
+#~ msgctxt "%1 is a date, %2 a time"
+#~ msgid "%1, %2"
+#~ msgstr "%1, %2"
+
+#~ msgctxt "%1 is a date"
+#~ msgid "Due %1"
+#~ msgstr "Scadenza %1"
 
 #~ msgid "Delete Event"
 #~ msgstr "Elimina evento"

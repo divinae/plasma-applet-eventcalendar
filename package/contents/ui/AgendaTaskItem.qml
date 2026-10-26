@@ -59,7 +59,7 @@ LinkRect {
 		var parts = []
 		parts.push(eventStyle.done ? i18n("Done") : i18n("Not done"))
 		if (dueText) {
-			parts.push(i18n("Due %1", dueText))
+			parts.push(i18nc("%1 = date", "Due %1", dueText))
 		}
 		if (taskIsOverdue) {
 			parts.push(i18n("Overdue"))

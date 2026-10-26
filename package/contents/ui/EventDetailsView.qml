@@ -72,7 +72,7 @@ Rectangle {
 		var dateText = Qt.formatDate(date, Qt.locale().dateFormat(Locale.LongFormat))
 		if (eventItem.dueTime) { // Timed TickTick tasks
 			var time = eventItem.dueTime.split(':')
-			dateText = i18nc("%1 is a date, %2 a time", "%1, %2", dateText,
+			dateText = i18nc("date (%1) with time (%2)", "%1, %2", dateText,
 				Qt.formatTime(new Date(2000, 0, 1, Number(time[0]), Number(time[1])), appletConfig.timeFormat))
 		}
 		var text = i18nc("%1 = date", "Due %1", dateText)

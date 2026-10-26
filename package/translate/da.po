@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -105,7 +105,9 @@ msgstr "Udført"
 msgid "Not done"
 msgstr "Ikke udført"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "Forfalder %1"
 
@@ -1512,14 +1514,10 @@ msgid "No due date"
 msgstr "Ingen forfaldsdato"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Forfalder %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
@@ -2141,11 +2139,6 @@ msgid "Description"
 msgstr "Beskrivelse"
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr "Forfalder %1"
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr "Hjemme"
@@ -2421,11 +2414,6 @@ msgstr "t AP"
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
 msgstr "t.mm AP"
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
-msgstr "%1, %2"
 
 #: ../contents/ui/LocaleFuncs.js
 msgid "All Day"
@@ -2954,6 +2942,17 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Due %1"
+#~ msgstr "Forfalder %1"
+
+#~ msgctxt "%1 is a date, %2 a time"
+#~ msgid "%1, %2"
+#~ msgstr "%1, %2"
+
+#~ msgctxt "%1 is a date"
+#~ msgid "Due %1"
+#~ msgstr "Forfalder %1"
 
 #~ msgid "Delete Event"
 #~ msgstr "Slet begivenhed"

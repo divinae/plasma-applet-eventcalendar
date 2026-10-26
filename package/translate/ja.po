@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 09:34+0100\n"
+"POT-Creation-Date: 2026-10-26 09:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -100,7 +100,8 @@ msgstr "完了"
 msgid "Not done"
 msgstr "未完了"
 
-#: ../contents/ui/AgendaTaskItem.qml
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
 msgid "Due %1"
 msgstr "期限 %1"
 
@@ -910,7 +911,7 @@ msgstr "接続"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
-msgstr "TickTick の Web サイトで API トークンを作成してください: 設定 > アカウント > API トークン (Dida365 の場合は dida365.com)。トークンはウィジェットの設定ではなく、システムのキーリング (KWallet または Secret Service) に保存されます。"
+msgstr "TickTick の Web サイトで API トークンを作成してください: Settings > Account > API Token (Dida365 の場合は dida365.com)。トークンはウィジェットの設定ではなく、システムのキーリング (KWallet または Secret Service) に保存されます。"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1350,15 +1351,10 @@ msgstr "「%1」のすべてのイベントを削除"
 msgid "No due date"
 msgstr "期限なし"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 is a date, %2 a time"
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1 %2"
-
-#: ../contents/ui/EventDetailsView.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "期限 %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
@@ -1965,11 +1961,6 @@ msgid "Description"
 msgstr "説明"
 
 #: ../contents/ui/EventModel.qml
-msgctxt "%1 is a date"
-msgid "Due %1"
-msgstr "期限 %1"
-
-#: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
 msgstr "自宅"
@@ -2226,11 +2217,6 @@ msgstr "AP h時"
 msgctxt "event time (12 hour clock)"
 msgid "h:mm AP"
 msgstr "AP h:mm"
-
-#: ../contents/ui/LocaleFuncs.js
-msgctxt "date (%1) with time (%2)"
-msgid "%1, %2"
-msgstr "%1 %2"
 
 #: ../contents/ui/LocaleFuncs.js
 msgid "All Day"
@@ -2746,6 +2732,17 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Due %1"
+#~ msgstr "期限 %1"
+
+#~ msgctxt "%1 is a date, %2 a time"
+#~ msgid "%1, %2"
+#~ msgstr "%1 %2"
+
+#~ msgctxt "%1 is a date"
+#~ msgid "Due %1"
+#~ msgstr "期限 %1"
 
 #~ msgid "Delete Event"
 #~ msgstr "イベントを削除"

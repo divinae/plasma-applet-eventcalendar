@@ -439,9 +439,9 @@ CalendarManager {
 			if (task.dueTime) { // Timed TickTick tasks
 				var parts = String(task.dueTime).split(':')
 				var time = new Date(2000, 0, 1, Number(parts[0]), Number(parts[1]))
-				due = i18nc("%1 is a date, %2 a time", "%1, %2", due, Qt.formatTime(time, appletConfig.timeFormat))
+				due = i18nc("date (%1) with time (%2)", "%1, %2", due, Qt.formatTime(time, appletConfig.timeFormat))
 			}
-			lines.push(i18nc("%1 is a date", "Due %1", due))
+			lines.push(i18nc("%1 = date", "Due %1", due))
 		} else {
 			lines.push(i18n("No due date"))
 		}
