@@ -210,6 +210,16 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigCombo {
+				text: i18n("Style")
+				description: i18n("Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card.")
+				configKey: 'uiStyle'
+				model: [
+					{ value: 'islands', text: i18n("Islands (cards)") },
+					{ value: 'flat', text: i18n("Flat") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
 				text: i18n("Event look")
 				configKey: 'eventLook'
 				model: [

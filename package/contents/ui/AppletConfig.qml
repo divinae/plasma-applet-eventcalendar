@@ -127,6 +127,17 @@ QtObject {
 		return Shared.isUnconfirmedResponse(response) ? color : eventBorderColor
 	}
 
+	// Settings > Views > Style = "Islands (cards)": the Day view's panels, the agenda days and the
+	// task sections sit in rounded cards (IslandCard); "Flat": one surface.
+	readonly property bool islands: plasmoid.configuration.uiStyle !== 'flat'
+	// A card: a bit lighter than the popup (light and dark themes) and nearly opaque, so it adds
+	// contrast on the translucent (blurred) popup background instead of taking it away.
+	readonly property color cardColor: ColorUtil.setAlpha(ColorUtil.lerp(Kirigami.Theme.backgroundColor, Qt.rgba(1, 1, 1, 1), darkTheme ? 0.94 : 0.5), 0.88)
+	readonly property color cardBorderColor: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.10)
+	readonly property real cardRadius: Math.round(Kirigami.Units.gridUnit * 0.9)
+	readonly property real cardPadding: Kirigami.Units.largeSpacing
+	readonly property real cardGap: Kirigami.Units.smallSpacing * 2
+
 	property color alternateBackgroundColor: {
 		var textColor = Kirigami.Theme.textColor
 		var bgColor = Kirigami.Theme.buttonBackgroundColor

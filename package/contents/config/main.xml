@@ -396,6 +396,10 @@
 			<!-- solid: events filled in their color; bar: all-day events solid, timed events a light tint with a bar in their color -->
 			<default>bar</default>
 		</entry>
+		<entry name="uiStyle" type="string">
+			<!-- islands: the Day view's panels, the agenda days and the task sections in their own rounded cards; flat: one surface -->
+			<default>islands</default>
+		</entry>
 		<entry name="googleColorPalette" type="string">
 			<!-- current: Google Calendar's current colors; classic: the old palette the API returns; system: nearest colors of the Plasma color scheme -->
 			<default>current</default>
