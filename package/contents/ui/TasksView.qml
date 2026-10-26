@@ -25,6 +25,11 @@ import "Tasks.js" as Tasks
 // adds to its list / on its day.
 // Header, sections, rows and "Add a task…" are one column, centered, at most maxColumnWidth wide,
 // all with the same side margins (sideMargin, like TaskRow's).
+// Subtasks (Google: tasks with a parent) are indented under their parent; checking a task offers
+// "Completed · Undo" for a few seconds. Google lists: a task dragged between the rows of its list
+// (by list; by date within its section) is put there (a line shows where; EventModel.reorderTask).
+// Keyboard (PopupView, KeyNav.js): Up / Down highlight a task, Space checks it, Enter opens it,
+// E edits it, Delete deletes it (with undo); N goes to "Add a task…".
 Item {
 	id: tasksView
 
@@ -37,11 +42,13 @@ Item {
 	}
 	readonly property bool byList: groupBy === 'list'
 	readonly property bool byDate: groupBy === 'date'
-	// The order within a section: 'due', 'title' or 'list' (Tasks.compareOpen).
+	// The order within a section: 'due', 'title', 'list' or 'priority' (Tasks.compareOpen).
 	readonly property string sortBy: {
 		var setting = plasmoid.configuration.tasksSortBy
-		return setting === 'title' || setting === 'list' ? setting : 'due'
+		return setting === 'title' || setting === 'list' || setting === 'priority' ? setting : 'due'
 	}
+	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
+	property var expandedSubtasks: ({})
 	// The notes line and each task's list (name, islands: stripe).
 	readonly property bool showDetails: plasmoid.configuration.tasksShowDetails !== false
 	readonly property string today: Tasks.dayString(timeModel.currentTime)
@@ -221,6 +228,7 @@ Item {
 		lists = shown.lists
 		cards = newCards // Before the rows: their delegates read it
 		rows = newRows
+		keepKeyRow()
 		// Toggling a task rebuilds the rows: stay where the list was.
 		if (flick) {
 			flick.contentY = Math.max(0, Math.min(y, flick.contentHeight - flick.height))
@@ -407,6 +415,118 @@ Item {
 		listMenu.popup(parentItem, x, y)
 	}
 
+	//--- Keyboard: the highlighted task (keyRowKey), see KeyNav.js
+	property string keyRowKey: ""
+	property int keyRowIndex: -1 // Among the task rows: where to go on when the task leaves the view
+	function taskRowKeys() {
+		return rows.filter(function(row) { return row.type === 'task' }).map(function(row) { return row.key })
+	}
+	function keepKeyRow() {
+		if (!keyRowKey) {
+			return
+		}
+		var keys = taskRowKeys()
+		if (keys.indexOf(keyRowKey) >= 0) {
+			keyRowIndex = keys.indexOf(keyRowKey)
+		} else {
+			keyRowKey = keys.length ? keys[Math.max(0, Math.min(keyRowIndex, keys.length - 1))] : ""
+		}
+	}
+	function moveKeyRow(delta) {
+		var keys = taskRowKeys()
+		if (!keys.length) {
+			return
+		}
+		var i = keys.indexOf(keyRowKey)
+		i = i < 0 ? (delta > 0 ? 0 : keys.length - 1) : Math.max(0, Math.min(keys.length - 1, i + delta))
+		keyRowKey = keys[i]
+		keyRowIndex = i
+		Qt.callLater(scrollToKeyRow)
+	}
+	// The delegate of the row with key (a TaskRow, "Add a task…", …), or null.
+	function rowItem(key) {
+		for (var i = 0; i < rowsColumn.children.length; i++) {
+			var loader = rowsColumn.children[i]
+			if (loader.row && loader.row.key === key) {
+				return loader
+			}
+		}
+		return null
+	}
+	function scrollToKeyRow() {
+		var loader = rowItem(keyRowKey)
+		var flick = scrollView.contentItem
+		if (!loader || !flick) {
+			return
+		}
+		var y = loader.mapToItem(rowsColumn, 0, 0).y + rowsColumn.y
+		if (y < flick.contentY) {
+			flick.contentY = Math.max(0, y - Kirigami.Units.smallSpacing)
+		} else if (y + loader.height > flick.contentY + flick.height) {
+			flick.contentY = Math.min(Math.max(0, flick.contentHeight - flick.height), y + loader.height - flick.height + Kirigami.Units.smallSpacing)
+		}
+	}
+	// The highlighted task's row data and delegate (TaskRow), or null.
+	function keyRow() {
+		for (var i = 0; i < rows.length; i++) {
+			if (rows[i].key === keyRowKey) {
+				return rows[i]
+			}
+		}
+		return null
+	}
+	// action: 'open', 'toggle', 'edit', 'delete'. True when there was a task for it.
+	function keyAction(action) {
+		var row = keyRow()
+		if (!row) {
+			moveKeyRow(1) // First press: highlight the first task
+			return taskRowKeys().length > 0
+		}
+		var loader = rowItem(row.key)
+		var taskRow = loader ? loader.item : null
+		switch (action) {
+			case 'open':
+				popup.activateEvent(row.item)
+				break
+			case 'toggle':
+				if (taskRow && typeof taskRow.toggleDone === 'function') {
+					taskRow.toggleDone()
+				}
+				break
+			case 'edit':
+				if (row.item.canEdit !== false) {
+					popup.editEvent(row.item)
+				}
+				break
+			case 'delete':
+				if (row.item.canEdit !== false) {
+					popup.deleteWithUndo(row.item, false)
+				}
+				break
+		}
+		return true
+	}
+	// "N": the "Add a task…" field.
+	function focusQuickAdd() {
+		var loader = rowItem('add')
+		if (loader && loader.item && typeof loader.item.focusField === 'function') {
+			var flick = scrollView.contentItem
+			if (flick) {
+				flick.contentY = 0
+			}
+			loader.item.focusField()
+			return true
+		}
+		return false
+	}
+
+	//--- "Completed · Undo" after a task was checked
+	function offerCompletedUndo(item, done) {
+		if (done) {
+			undoBar.offer(item)
+		}
+	}
+
 	//--- A short note (eg: a drop that can't be done)
 	property string notice: ""
 	function showNotice(text) {
@@ -427,7 +547,25 @@ Item {
 	property point dragAt
 	property string dropKey: "" // The header the drop goes to
 	property bool dropRefused: false
-	property var dropAction: null // { kind: 'move', listId } | { kind: 'due', day }
+	property var dropAction: null // { kind: 'move', listId } | { kind: 'due', day } | { kind: 'reorder', previous }
+	property bool reorderAbove: false // A reorder: the line above the row under the pointer (else below)
+	// A task can be put between the rows of its list: Google lists, in the list's order (by due date
+	// only among tasks due the same day).
+	function canReorder(target) {
+		if (!eventModel || typeof eventModel.supportsReorder !== 'function' || !dragRow || !target || target.type !== 'task'
+			|| !eventModel.supportsReorder(dragRow.list.id)) {
+			return false
+		}
+		return sortBy === 'list' || (sortBy === 'due' && Tasks.dueDay(target.item) === Tasks.dueDay(dragRow.item))
+	}
+	function rowIndex(key) {
+		for (var i = 0; i < rows.length; i++) {
+			if (rows[i].key === key) {
+				return i
+			}
+		}
+		return -1
+	}
 	readonly property bool dragActive: !!dragRow
 
 	function startDrag(row, rowItem, at) {
@@ -471,6 +609,18 @@ Item {
 		var p = rowsColumn.mapFromItem(null, at.x, at.y)
 		var loader = rowsColumn.childAt(Math.max(0, Math.min(p.x, rowsColumn.width - 1)), p.y)
 		var target = loader ? loader.row : null
+		// Between the rows of its own list: a reorder (the line above or below the row).
+		if (target && dragRow && canReorder(target)) {
+			var above = loader.mapFromItem(null, at.x, at.y).y < loader.height / 2
+			var previous = Tasks.reorderPrevious(rows, rowIndex(dragRow.key), rowIndex(target.key), above)
+			if (previous !== null) {
+				dropKey = 'reorder:' + target.key
+				dropRefused = false
+				reorderAbove = above
+				dropAction = { kind: 'reorder', previous: previous }
+				return
+			}
+		}
 		if (target && dragRow) {
 			if (byList && target.list) {
 				var drop = Tasks.listDrop(dragRow.list.id, target.list.id)
@@ -512,6 +662,13 @@ Item {
 		var item = row.item
 		if (action.kind === 'due') {
 			eventModel.setEventProperties(row.list.id, item.id, Tasks.editBody({ dueDay: action.day }), {})
+		} else if (action.kind === 'reorder') {
+			var reorderView = tasksView
+			eventModel.reorderTask(item, action.previous, function(err) {
+				if (err) {
+					reorderView.showNotice(i18n("Couldn't move the task"))
+				}
+			})
 		} else if (action.kind === 'move') {
 			var view = tasksView
 			eventModel.moveEvent(row.list.id, item.id, action.listId, function(err) {
@@ -819,6 +976,32 @@ Item {
 								joinTop: !!rowLoader.card && !rowLoader.card.start
 								joinBottom: !!rowLoader.card && !rowLoader.card.end
 								key: rowLoader.card ? rowLoader.card.key : ""
+							}
+							// A reorder: a line where the task goes, a dot at its start (like TickTick).
+							Item {
+								visible: tasksView.dragActive && tasksView.dropKey === 'reorder:' + (rowLoader.row ? rowLoader.row.key : "")
+								z: 5
+								x: tasksView.sideMargin + (rowLoader.row && rowLoader.row.depth ? rowLoader.row.depth * (tasksView.checkSize + Kirigami.Units.largeSpacing) : 0)
+								width: parent.width - x - tasksView.sideMargin
+								height: 6
+								y: (tasksView.reorderAbove ? 0 : parent.height) - height / 2
+								Rectangle {
+									anchors.left: parent.left
+									anchors.right: parent.right
+									anchors.verticalCenter: parent.verticalCenter
+									height: 2
+									radius: 1
+									color: Kirigami.Theme.highlightColor
+								}
+								Rectangle {
+									anchors.verticalCenter: parent.verticalCenter
+									width: parent.height
+									height: width
+									radius: width / 2
+									color: Kirigami.Theme.backgroundColor
+									border.width: 2
+									border.color: Kirigami.Theme.highlightColor
+								}
 							}
 						}
 					}
@@ -1147,6 +1330,11 @@ Item {
 				current: tasksView.sortBy === 'list'
 				onTriggered: plasmoid.configuration.tasksSortBy = 'list'
 			}
+			ChoiceItem {
+				text: i18nc("sort tasks by", "Priority")
+				current: tasksView.sortBy === 'priority'
+				onTriggered: plasmoid.configuration.tasksSortBy = 'priority'
+			}
 		}
 		PlasmaComponents3.MenuSeparator {}
 		ChoiceItem {
@@ -1200,6 +1388,17 @@ Item {
 				}
 			})
 		}
+	}
+
+	// "Completed · Undo", at the bottom of the tasks' column.
+	TaskUndoBar {
+		id: undoBar
+		z: 9
+		eventModel: tasksView.eventModel
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.horizontalCenterOffset: tasksView.showSidebar ? tasksView.sidebarWidth / 2 : 0
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: Kirigami.Units.largeSpacing
 	}
 
 	// The dragged task, under the pointer.
@@ -1833,6 +2032,10 @@ Item {
 			showList: row && (!tasksView.byList || row.section === 'done') ? tasksView.taskRowList(row) : null
 			showNotes: tasksView.showDetails
 			sectionDueKind: tasksView.byDate && row && (row.section === 'today' || row.section === 'tomorrow') ? row.section : ""
+			depth: row && row.depth ? row.depth : 0
+			expandedStore: tasksView.expandedSubtasks
+			highlighted: !!row && tasksView.keyRowKey === row.key
+			onCheckToggled: function(item, done) { tasksView.offerCompletedUndo(item, done) }
 			draggable: true
 			opacity: tasksView.dragActive && tasksView.dragRow === row ? 0.4 : 1
 			onDragStarted: function(at) { tasksView.startDrag(taskDelegate.row, taskDelegate, at) }

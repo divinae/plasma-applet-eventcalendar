@@ -857,7 +857,8 @@ MouseArea {
 	}
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
-	// their keys; Esc is left to the cards and to Plasma (closes the popup).
+	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
+	// Enter, Space, E and Delete act on its highlighted task, N goes to "Add a task…".
 	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen
 	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : tasksMode ? 'tasks' : 'classic'
 	// Take the keys when the popup opens and when the last card closes (its focus is gone).
@@ -911,7 +912,9 @@ MouseArea {
 				return true
 			case 'new':
 				if (tasksMode) {
-					newTask(null)
+					if (!(tasksViewLoader.item && tasksViewLoader.item.focusQuickAdd())) {
+						newTask(null)
+					}
 					return true
 				}
 				var day = keyDate()
@@ -923,6 +926,18 @@ MouseArea {
 			case 'search':
 				openSearch()
 				return true
+			case 'taskMove':
+				if (tasksViewLoader.item) {
+					tasksViewLoader.item.moveKeyRow(action.delta)
+					return true
+				}
+				return false
+			case 'taskOpen':
+			case 'taskToggle':
+			case 'taskEdit':
+			case 'taskDelete':
+				var actionName = { taskOpen: 'open', taskToggle: 'toggle', taskEdit: 'edit', taskDelete: 'delete' }[action.type]
+				return !!tasksViewLoader.item && tasksViewLoader.item.keyAction(actionName)
 			case 'view':
 				if (!viewOffered(action.mode)) {
 					return false

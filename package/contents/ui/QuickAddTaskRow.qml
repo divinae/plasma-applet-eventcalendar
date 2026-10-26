@@ -63,6 +63,10 @@ Item {
 	implicitWidth: layout.implicitWidth + sideMargin * 2
 	implicitHeight: layout.implicitHeight + (compact ? 2 : Kirigami.Units.smallSpacing * 2)
 
+	// The keyboard ("N" in the Tasks tab).
+	function focusField() {
+		field.forceActiveFocus()
+	}
 	function add() {
 		var body = Tasks.quickAddBody(field.text, dueDay)
 		var target = targetListId
@@ -165,6 +169,10 @@ Item {
 						quickAdd.errorText = ""
 					} else {
 						focus = false
+						// Back to the popup's keys (the Tasks tab's Up / Down, …).
+						if (typeof popup !== "undefined" && popup && typeof popup.focusForKeys === "function") {
+							popup.focusForKeys()
+						}
 					}
 					event.accepted = true
 				}
