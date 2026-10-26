@@ -126,7 +126,7 @@ ColumnLayout {
 			model: agendaItemTasks
 
 			delegate: AgendaTaskItem {
-				width: parent.width
+				Layout.fillWidth: true
 			}
 		}
 

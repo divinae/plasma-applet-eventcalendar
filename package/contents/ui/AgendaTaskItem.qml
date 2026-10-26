@@ -1,27 +1,65 @@
 import QtQuick
-import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
-import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
+import "Tasks.js" as Tasks
 
+// A task in the agenda: a tile like the events (EventStyle: outlined with a bar in the bar look,
+// filled in the solid look), with its done check before the title. Click opens it, right click the
+// shared event menu; the check marks it done / not done.
 LinkRect {
 	id: agendaTaskItem
 	readonly property int taskItemIndex: index
 	Layout.fillWidth: true
-	implicitWidth: contents.implicitWidth // Not childrenRect: the contents follow the width (binding loop)
-	implicitHeight: contents.implicitHeight
 
-	readonly property bool taskIsOverdue: !!model.due && !model.isCompleted && model.dueEndTime < timeModel.currentTime
+	readonly property EventStyle eventStyle: EventStyle {
+		eventItem: model
+	}
+	readonly property color tileTextColor: eventStyle.textColor
+	readonly property bool taskIsOverdue: Tasks.isOverdue(model, timeModel.currentTime)
+	readonly property string dueDay: Tasks.dueDay(model)
+	readonly property string dueText: {
+		if (!dueDay) {
+			return ""
+		}
+		var parts = dueDay.split('-')
+		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+		return Qt.formatDate(date, i18nc("short month+date format", "MMM d"))
+	}
+	readonly property string notes: model.notes || model.description || ""
 
-	property alias isEditing: editTaskForm.active
-	clickable: !isEditing
-	function taskAccessibleDescription() {
+	// Keyboard and screen readers: the tile is a button that opens the task.
+	activeFocusOnTab: clickable
+	Accessible.role: Accessible.Button
+	Accessible.name: model.summary || model.title || i18n("Task")
+	Accessible.description: accessibleDescription()
+	Accessible.focusable: activeFocusOnTab
+	Accessible.focused: activeFocus
+	Accessible.onPressAction: activateTask()
+	Keys.onReturnPressed: function(event) {
+		activateTask()
+		event.accepted = true
+	}
+	Keys.onEnterPressed: function(event) {
+		activateTask()
+		event.accepted = true
+	}
+	Keys.onSpacePressed: function(event) {
+		taskCheck.toggle()
+		event.accepted = true
+	}
+	function activateTask() {
+		if (clickable) {
+			popup.activateEvent(tasks.get(taskItemIndex))
+		}
+	}
+	function accessibleDescription() {
 		var parts = []
-		if (eventTimestamp) {
-			parts.push(i18n("Due %1", eventTimestamp))
+		parts.push(eventStyle.done ? i18n("Done") : i18n("Not done"))
+		if (dueText) {
+			parts.push(i18n("Due %1", dueText))
 		}
 		if (taskIsOverdue) {
 			parts.push(i18n("Overdue"))
@@ -29,119 +67,93 @@ LinkRect {
 		return parts.join(". ")
 	}
 
-	readonly property string eventTimestamp: {
-		if (model.due) {
-			var dueDateTime = model.dueDateTime
-			if (!(dueDateTime instanceof Date)) {
-				dueDateTime = new Date(dueDateTime)
-			}
-			if (!(dueDateTime instanceof Date) || isNaN(dueDateTime.getTime())) {
-				return ''
-			}
-			if (model.due.indexOf('T00:00:00.000Z') !== -1) {
-				// Due at end of day
-				var shortDateFormat = i18nc("short month+date format", "MMM d")
-				return Qt.formatDateTime(dueDateTime, shortDateFormat)
-			} else {
-				// Due at specific time
-				return LocaleFuncs.formatEventDateTime(dueDateTime, {
-					clock24h: appletConfig.clock24h,
-				})
-			}
-		} else {
-			return ''
-		}
+	radius: 8
+	border.width: 1
+	border.color: eventStyle.showBar ? "transparent" : eventStyle.outlineColor // ColorBarFill draws it
+	backgroundColor: eventStyle.fillColor
+	backgroundHoverColor: eventStyle.outlined ? appletConfig.agendaHoverBackground : Qt.darker(eventStyle.fillColor, 1.08)
+	opacity: eventStyle.doneOpacity
+	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
+	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
+
+	ColorBarFill {
+		visible: agendaTaskItem.eventStyle.showBar
+		barColor: agendaTaskItem.eventStyle.barColor
+		outlined: agendaTaskItem.eventStyle.outlined
+		fillColor: agendaTaskItem.color // With the hover color
+		borderColor: agendaTaskItem.eventStyle.outlineColor
+		topLeftRadius: agendaTaskItem.radius
+		bottomLeftRadius: agendaTaskItem.radius
+		topRightRadius: agendaTaskItem.radius
+		bottomRightRadius: agendaTaskItem.radius
 	}
 
-	//---
 	RowLayout {
 		id: contents
 		anchors.left: parent.left
 		anchors.right: parent.right
-		spacing: 4 * Screen.devicePixelRatio
+		anchors.top: parent.top
+		anchors.leftMargin: Kirigami.Units.largeSpacing + (agendaTaskItem.eventStyle.showBar ? 4 : 0) - 2
+		anchors.rightMargin: Kirigami.Units.smallSpacing
+		anchors.topMargin: Kirigami.Units.smallSpacing + 1
+		spacing: Kirigami.Units.smallSpacing
 
-		PlasmaComponents3.CheckBox {
-			id: taskCheckBox
+		TaskCheck {
+			id: taskCheck
 			Layout.alignment: Qt.AlignTop
-			visible: !editTaskForm.visible
-			checked: model.isCompleted
-			activeFocusOnTab: visible && enabled
-			Accessible.name: model.title || i18n("Task")
-			Accessible.description: agendaTaskItem.taskAccessibleDescription()
-			Accessible.checkable: true
-			Accessible.checked: checked
-
-			onToggled: {
-				var task = tasks.get(taskItemIndex)
-				var args = {
-					status: checked ? 'completed' : 'needsAction'
-				}
-				eventModel.setEventProperties(task.calendarId, task.id, args)
-			}
+			Layout.topMargin: Math.max(0, (taskTitle.implicitHeight - height) / 2)
+			size: 2 * Math.round(Math.min(Kirigami.Units.iconSizes.small * 1.1, taskTitle.implicitHeight) / 2)
+			eventItem: model
+			color: agendaTaskItem.tileTextColor
 		}
 
 		ColumnLayout {
-			id: taskColumn
-			Layout.alignment: Qt.AlignTop
 			Layout.fillWidth: true
+			Layout.alignment: Qt.AlignTop
 			spacing: 0
 
 			PlasmaComponents3.Label {
 				id: taskTitle
-				text: model.title
-				color: Kirigami.Theme.textColor
+				Layout.fillWidth: true
+				text: model.summary || model.title || ""
+				color: agendaTaskItem.tileTextColor
 				font.family: appletConfig.eventFont.family
 				font.pointSize: appletConfig.eventFont.pointSize
-				visible: !editTaskForm.visible
-				Layout.fillWidth: true
-
-				// The Following doesn't seem to be applicable anymore (left comment just in case).
-				// Wrapping causes reflow, which causes scroll to selection to miss the selected date
-				// since it reflows after updateUI/scrollToDate is done.
+				font.strikeout: agendaTaskItem.eventStyle.struckThrough
 				wrapMode: Text.Wrap
 			}
 
+			// Overdue (shown on today): when it was due. On its own day the header says it.
 			RowLayout {
-				id: taskDue
-				readonly property bool showProperty: !!model.due
-				visible: showProperty && !editTaskForm.visible
+				visible: agendaTaskItem.taskIsOverdue
+				Layout.fillWidth: true
 				spacing: Kirigami.Units.smallSpacing
-
-				Kirigami.Icon {
-					source: "view-task"
-					Layout.preferredHeight: taskDueLabel.implicitHeight
-					Layout.preferredWidth: taskDueLabel.implicitHeight
-				}
 				PlasmaComponents3.Label {
-					id: taskDueLabel
-					text: eventTimestamp
-					color: taskIsOverdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
-					opacity: taskIsOverdue ? 1 : 0.75
-					font.family: appletConfig.eventFont.family
-					font.pointSize: appletConfig.eventFont.pointSize
-					font.weight: taskIsOverdue ? Font.Bold : Font.Normal
+					Layout.fillWidth: true
+					text: i18nc("%1 = short date", "Overdue · due %1", agendaTaskItem.dueText)
+					// Red on the background (outlined tiles); on a filled tile in its text color.
+					color: agendaTaskItem.eventStyle.outlined ? Kirigami.Theme.negativeTextColor : agendaTaskItem.tileTextColor
+					font: appletConfig.eventSmallFont
+					elide: Text.ElideRight
 				}
-			}
-
-			Item {
-				id: taskNoteSpacing
-				visible: taskNotes.visible
-				implicitHeight: 4 * Screen.devicePixelRatio
 			}
 
 			PlasmaComponents3.Label {
 				id: taskNotes
-				readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
-				visible: showProperty && !editTaskForm.visible
-				text: Shared.renderText(model.notes)
-				color: Kirigami.Theme.textColor
-				opacity: 0.75
+				readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && !!text
+				visible: showProperty
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				Layout.fillWidth: true
+				text: Shared.renderText(agendaTaskItem.notes)
+				color: agendaTaskItem.tileTextColor
+				opacity: 0.8
 				font.family: appletConfig.eventFont.family
 				font.pointSize: appletConfig.eventFont.pointSize
-				Layout.fillWidth: true
-				wrapMode: Text.Wrap // See warning at taskTitle.wrapMode
-
-				linkColor: Kirigami.Theme.highlightColor
+				wrapMode: Text.Wrap
+				maximumLineCount: plasmoid.configuration.agendaMaxDescriptionLines
+				elide: Text.ElideRight
+				linkColor: agendaTaskItem.tileTextColor
 				onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 				MouseArea {
 					anchors.fill: parent
@@ -149,55 +161,16 @@ LinkRect {
 					cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
 				}
 			}
-
-			Item {
-				id: taskEditorSpacing
-				visible: editTaskForm.visible
-				implicitHeight: 4 * Screen.devicePixelRatio
-			}
-
-			EditTaskForm {
-				id: editTaskForm
-				Layout.fillWidth: true
-			}
-
-		} // taskColumn
+		}
 	}
 
-	onLoadContextMenu: function(contextMenu) {
-		var menuItem
-		var task = tasks.get(taskItemIndex)
+	onLeftClicked: activateTask()
 
-		menuItem = contextMenu.newMenuItem()
-		menuItem.text = i18n("Edit")
-		menuItem.icon.name = "edit-rename"
-		menuItem.enabled = task.canEdit
-		menuItem.clicked.connect(function() {
-			editTaskForm.active = !editTaskForm.active
-			agendaScrollView.positionViewAtTask(agendaItemIndex, taskItemIndex)
-		})
-		contextMenu.addMenuItem(menuItem)
-
-		var deleteMenu = contextMenu.newSubMenu()
-		deleteMenu.title = i18n("Delete Event")
-		deleteMenu.icon.name = "delete"
-		menuItem = deleteMenu.newMenuItem()
-		menuItem.text = i18n("Confirm Deletion")
-		menuItem.icon.name = "delete"
-		menuItem.enabled = task.canEdit
-		menuItem.clicked.connect(function() {
-			logger.debug('eventModel.deleteTask', task.calendarId, task.id)
-			eventModel.deleteEvent(task.calendarId, task.id)
-		})
-		deleteMenu.addMenuItem(menuItem)
-
-		menuItem = contextMenu.newMenuItem()
-		menuItem.text = i18n("Edit in browser")
-		menuItem.icon.name = "internet-web-browser"
-		menuItem.enabled = !!task.htmlLink
-		menuItem.clicked.connect(function() {
-			Shared.openExternalUrl(task.htmlLink)
-		})
-		contextMenu.addMenuItem(menuItem)
+	// Right click: the shared event menu (LinkRect's own menu is skipped once the click is accepted).
+	onClicked: function(mouse) {
+		if (mouse.button === Qt.RightButton) {
+			mouse.accepted = true
+			popup.showEventMenu(tasks.get(taskItemIndex), agendaTaskItem, mouse.x, mouse.y)
+		}
 	}
 }
