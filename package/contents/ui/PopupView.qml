@@ -740,6 +740,7 @@ MouseArea {
 			id: monthView
 			visible: showCalendar
 			showHeader: false
+			islands: appletConfig.islands
 			borderOpacity: appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: true

@@ -63,6 +63,10 @@ PinchArea {
 
 	property int borderWidth: 1
 	property real borderOpacity: 0.4
+	// Islands style (the popup): the grid, with the weekday names and the week numbers, sits in a
+	// card (IslandCard), a card gap from the sides and the bottom. The card edge stands in for the
+	// grid's outer frame.
+	property bool islands: false
 	property int headingFontLevel: 1
 
 	property int columns: calendarBackend.days
@@ -459,108 +463,116 @@ PinchArea {
 		}
 	}
 
-	QQC2.StackView {
-		id: stack
-
+	IslandCard {
+		id: gridCard
+		shown: root.islands
 		anchors.fill: parent
+		anchors.leftMargin: root.islands ? appletConfig.cardGap : 0
+		anchors.rightMargin: anchors.leftMargin
+		anchors.bottomMargin: anchors.leftMargin
 
-		pushEnter: Transition {
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "opacity"
-				from: 0
-				to: 1
-			}
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "transformScale"
-				from: 1.5
-				to: 1
-			}
-		}
-		pushExit: Transition {
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "opacity"
-				from: 1
-				to: 0
-			}
-		}
+		// Sized by the card (its content).
+		QQC2.StackView {
+			id: stack
 
-		popEnter: Transition {
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "opacity"
-				from: 0
-				to: 1
+			pushEnter: Transition {
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "opacity"
+					from: 0
+					to: 1
+				}
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "transformScale"
+					from: 1.5
+					to: 1
+				}
 			}
-		}
-		popExit: Transition {
-			id: popExit
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "opacity"
-				from: 1
-				to: 0
+			pushExit: Transition {
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "opacity"
+					from: 1
+					to: 0
+				}
 			}
-			NumberAnimation {
-				duration: Kirigami.Units.longDuration
-				property: "transformScale"
-				// so no matter how much you scaled, it would still fly towards you
-				to: popExit.ViewTransition.item.transformScale * 1.5
-			}
-		}
 
-		initialItem: DaysCalendar {
-			id: mainDaysCalendar
-			title: {
-				var dateFormat, text
-				if (calendarBackend.displayedDate.getFullYear() === today.getFullYear()) {
-					if (showTodaysDate && calendarBackend.displayedDate.getMonth() === today.getMonth()) {
-						dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
-						text = Qt.formatDateTime(today, dateFormat)
-						return text
+			popEnter: Transition {
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "opacity"
+					from: 0
+					to: 1
+				}
+			}
+			popExit: Transition {
+				id: popExit
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "opacity"
+					from: 1
+					to: 0
+				}
+				NumberAnimation {
+					duration: Kirigami.Units.longDuration
+					property: "transformScale"
+					// so no matter how much you scaled, it would still fly towards you
+					to: popExit.ViewTransition.item.transformScale * 1.5
+				}
+			}
+
+			initialItem: DaysCalendar {
+				id: mainDaysCalendar
+				title: {
+					var dateFormat, text
+					if (calendarBackend.displayedDate.getFullYear() === today.getFullYear()) {
+						if (showTodaysDate && calendarBackend.displayedDate.getMonth() === today.getMonth()) {
+							dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
+							text = Qt.formatDateTime(today, dateFormat)
+							return text
+						} else {
+							dateFormat = i18nc("calendar title format for other months of current year", "MMMM")
+						}
 					} else {
-						dateFormat = i18nc("calendar title format for other months of current year", "MMMM")
+						dateFormat = i18nc("calendar title format for months not from current year", "MMMM, yyyy")
 					}
-				} else {
-					dateFormat = i18nc("calendar title format for months not from current year", "MMMM, yyyy")
+
+					text = Qt.formatDateTime(calendarBackend.displayedDate, dateFormat)
+					return text
 				}
 
-				text = Qt.formatDateTime(calendarBackend.displayedDate, dateFormat)
-				return text
-			}
+				columns: calendarBackend.days
+				rows: calendarBackend.weeks
 
-			columns: calendarBackend.days
-			rows: calendarBackend.weeks
+				showWeekNumbers: root.showWeekNumbers
+				spanBars: root.spanBarsActive ? root.spanBars : []
+				eventDragEnabled: root.eventDragEnabled
+				eventDrag: root.eventDragState
+				eventBadgeType: root.eventTitles ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
 
-			showWeekNumbers: root.showWeekNumbers
-			spanBars: root.spanBarsActive ? root.spanBars : []
-			eventDragEnabled: root.eventDragEnabled
-			eventDrag: root.eventDragState
-			eventBadgeType: root.eventTitles ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
+				headerModel: calendarBackend.days
+				gridModel: daysModel
 
-			headerModel: calendarBackend.days
-			gridModel: daysModel
+				dateMatchingPrecision: PlasmaCalendar.Calendar.MatchYearMonthAndDay
 
-			dateMatchingPrecision: PlasmaCalendar.Calendar.MatchYearMonthAndDay
+				previousLabel: i18nd("libplasma5", "Previous Month")
+				nextLabel: i18nd("libplasma5", "Next Month")
 
-			previousLabel: i18nd("libplasma5", "Previous Month")
-			nextLabel: i18nd("libplasma5", "Next Month")
-
-			onPrevious: calendarBackend.previousMonth()
-			onNext: calendarBackend.nextMonth()
-			onHeaderClicked: {
-				stack.push(yearOverview)
-			}
-			onActivated: function(index, date, item) {
-				root.date = date
-				var dt = new Date(date.yearNumber, date.monthNumber - 1, date.dayNumber)
-				root.setSelectedDate(dt)
-				root.dateClicked(dt)
-			}
-			onDoubleClicked: function(index, date, item) {
-				root.dayDoubleClicked(date)
+				onPrevious: calendarBackend.previousMonth()
+				onNext: calendarBackend.nextMonth()
+				onHeaderClicked: {
+					stack.push(yearOverview)
+				}
+				onActivated: function(index, date, item) {
+					root.date = date
+					var dt = new Date(date.yearNumber, date.monthNumber - 1, date.dayNumber)
+					root.setSelectedDate(dt)
+					root.dateClicked(dt)
+				}
+				onDoubleClicked: function(index, date, item) {
+					root.dayDoubleClicked(date)
+				}
 			}
 		}
 	}

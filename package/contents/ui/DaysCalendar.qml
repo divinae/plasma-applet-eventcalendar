@@ -257,9 +257,11 @@ Item {
 		}
 	}
 
-	// Outer frame of the grid (below the weekday names), with rounded corners.
+	// Outer frame of the grid (below the weekday names), with rounded corners. Islands: the card's
+	// edge instead.
 	Rectangle {
 		id: gridFrame
+		visible: !root.islands
 		readonly property int frameTop: daysCalendar.headerModel ? root.borderWidth + daysCalendar.headerHeight : 0
 		x: canvas.x
 		y: canvas.y + frameTop
