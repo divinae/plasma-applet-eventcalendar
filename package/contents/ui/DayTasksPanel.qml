@@ -128,11 +128,13 @@ ColumnLayout {
 			font.weight: Font.DemiBold
 			opacity: 0.65
 		}
-		// The list filter: all lists or one (several lists only).
+		Item {
+			Layout.fillWidth: true
+		}
+		// The list filter: all lists or one (several lists only), on the right before the count.
 		PlasmaComponents3.ToolButton {
 			id: listFilterButton
 			visible: dayTasks.lists.length > 1
-			Layout.leftMargin: Kirigami.Units.smallSpacing
 			Layout.minimumWidth: 0
 			Layout.maximumWidth: Kirigami.Units.gridUnit * 9
 			text: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
@@ -165,9 +167,6 @@ ColumnLayout {
 				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
 				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
 			}
-		}
-		Item {
-			Layout.fillWidth: true
 		}
 		PlasmaComponents3.Label {
 			visible: appletConfig.islands && dayTasks.openCount > 0
