@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -196,7 +196,8 @@ msgstr "Vis alle"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -247,12 +248,13 @@ msgstr "Navn i min liste"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Kun du ser dette navn. Kalenderen beholder sit navn for andre."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Farve"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Gem"
 
@@ -946,7 +948,8 @@ msgstr "Kunne ikke slette listen"
 msgid "Couldn't create the list"
 msgstr "Kunne ikke oprette listen"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Listenavn"
 
@@ -960,12 +963,13 @@ msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Slet listen “%1” og alle dens opgaver? Det kan ikke fortrydes."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Slet"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Ny liste"
 
@@ -1518,7 +1522,8 @@ msgstr "Redigér kalender…"
 msgid "Rename list…"
 msgstr "Omdøb liste…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Slet liste…"
 
@@ -1548,7 +1553,7 @@ msgstr "Viste opgaveliste"
 msgid "New Task"
 msgstr "Ny opgave"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Ingen opgaver"
 
@@ -1685,7 +1690,7 @@ msgid "Reminders: %1 before"
 msgstr "Påmindelser: %1 før"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Tilbage"
 
@@ -1810,6 +1815,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Vis 1 mere"
 msgstr[1] "Vis alle %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 af %2 delopgaver udført"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Delopgaver"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2293,10 +2307,6 @@ msgid "Find a Time"
 msgstr "Find et tidspunkt"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Delopgaver"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Delopgave"
 
@@ -2717,6 +2727,43 @@ msgstr "Kopiér dato og tid"
 msgid "Date and Time Formats…"
 msgstr "Dato- og tidsformater…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Administrer lister"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 åben opgave"
+msgstr[1] "%1 åbne opgaver"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Vis i smarte lister"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Omdøb…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Ryd fuldførte"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Slet listen “%2” og dens %1 opgave? Det kan ikke fortrydes."
+msgstr[1] "Slet listen “%2” og dens %1 opgaver? Det kan ikke fortrydes."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Navn på ny liste"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Opret"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3038,11 +3085,6 @@ msgstr "Ikke udført"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%1 af %2 delopgaver udført"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3121,12 +3163,6 @@ msgid "Show filters"
 msgstr "Vis filtre"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 åben opgave"
-msgstr[1] "%1 åbne opgaver"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Vis: %1"
@@ -3199,24 +3235,9 @@ msgid "Show completed"
 msgstr "Vis udførte"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Administrer lister"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Administrer %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "Slet listen “%2” og dens %1 opgave? Det kan ikke fortrydes."
-msgstr[1] "Slet listen “%2” og dens %1 opgaver? Det kan ikke fortrydes."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Navn på ny liste"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3266,18 +3287,6 @@ msgstr "Lilla"
 msgctxt "color"
 msgid "Gray"
 msgstr "Grå"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Omdøb…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Vis i smarte lister"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Ryd fuldførte"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

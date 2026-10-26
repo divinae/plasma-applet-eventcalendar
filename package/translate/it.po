@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -169,7 +169,7 @@ msgstr "Nessun calendario selezionato nelle impostazioni."
 msgid "Show All"
 msgstr "Mostra tutti"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -218,11 +218,11 @@ msgstr "Nome nel mio elenco"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Solo tu vedi questo nome. Per gli altri il calendario mantiene il suo nome."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Colore"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Salva"
 
@@ -821,7 +821,7 @@ msgstr "Impossibile eliminare l'elenco"
 msgid "Couldn't create the list"
 msgstr "Impossibile creare l'elenco"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Nome dell'elenco"
 
@@ -834,11 +834,11 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Eliminare l'elenco «%1» e tutte le sue attività? L'operazione non può essere annullata."
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Elimina"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Nuovo elenco"
 
@@ -1338,7 +1338,7 @@ msgstr "Modifica calendario…"
 msgid "Rename list…"
 msgstr "Rinomina elenco…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Elimina elenco…"
 
@@ -1367,7 +1367,7 @@ msgstr "Elenco attività mostrato"
 msgid "New Task"
 msgstr "Nuova attività"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Nessuna attività"
 
@@ -1498,7 +1498,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Promemoria: %1 prima"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Indietro"
 
@@ -1621,6 +1621,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Mostra ancora 1"
 msgstr[1] "Mostra tutti i %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 di %2 sottoattività completate"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Sottoattività"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2102,10 +2111,6 @@ msgid "Find a Time"
 msgstr "Trova un orario"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Sottoattività"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Sottoattività"
 
@@ -2509,6 +2514,43 @@ msgstr "Copia data e ora"
 msgid "Date and Time Formats…"
 msgstr "Formati di data e ora…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Gestisci elenchi"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 attività aperta"
+msgstr[1] "%1 attività aperte"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Mostra negli elenchi intelligenti"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Rinomina…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Cancella completate"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Eliminare l'elenco «%2» e la sua %1 attività? L'operazione non può essere annullata."
+msgstr[1] "Eliminare l'elenco «%2» e le sue %1 attività? L'operazione non può essere annullata."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Nome del nuovo elenco"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Crea"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2828,11 +2870,6 @@ msgstr "Non completata"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%1 di %2 sottoattività completate"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -2911,12 +2948,6 @@ msgid "Show filters"
 msgstr "Mostra filtri"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 attività aperta"
-msgstr[1] "%1 attività aperte"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Mostra: %1"
@@ -2989,24 +3020,9 @@ msgid "Show completed"
 msgstr "Mostra completate"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Gestisci elenchi"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Gestisci %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "Eliminare l'elenco «%2» e la sua %1 attività? L'operazione non può essere annullata."
-msgstr[1] "Eliminare l'elenco «%2» e le sue %1 attività? L'operazione non può essere annullata."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Nome del nuovo elenco"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3056,18 +3072,6 @@ msgstr "Viola"
 msgctxt "color"
 msgid "Gray"
 msgstr "Grigio"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Rinomina…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Mostra negli elenchi intelligenti"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Cancella completate"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

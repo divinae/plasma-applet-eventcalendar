@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -168,7 +168,7 @@ msgstr "Nie wybrano kalendarzy w ustawieniach."
 msgid "Show All"
 msgstr "Pokaż wszystkie"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -219,11 +219,11 @@ msgstr "Nazwa na mojej liście"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Tylko Ty widzisz tę nazwę. Dla innych kalendarz zachowuje swoją nazwę."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Kolor"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Zapisz"
 
@@ -823,7 +823,7 @@ msgstr "Nie udało się usunąć listy"
 msgid "Couldn't create the list"
 msgstr "Nie udało się utworzyć listy"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Nazwa listy"
 
@@ -836,11 +836,11 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Usunąć listę „%1” i wszystkie jej zadania? Tej operacji nie można cofnąć."
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Usuń"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Nowa lista"
 
@@ -1340,7 +1340,7 @@ msgstr "Edytuj kalendarz…"
 msgid "Rename list…"
 msgstr "Zmień nazwę listy…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Usuń listę…"
 
@@ -1369,7 +1369,7 @@ msgstr "Pokazywana lista zadań"
 msgid "New Task"
 msgstr "Nowe zadanie"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Brak zadań"
 
@@ -1501,7 +1501,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Przypomnienia: %1 przed"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Wstecz"
 
@@ -1625,6 +1625,15 @@ msgid_plural "Show all %1"
 msgstr[0] "Pokaż jeszcze %1"
 msgstr[1] "Pokaż wszystkie %1"
 msgstr[2] "Pokaż wszystkie %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "Wykonano %1 z %2 podzadań"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Podzadania"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2116,10 +2125,6 @@ msgid "Find a Time"
 msgstr "Znajdź termin"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Podzadania"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Podzadanie"
 
@@ -2532,6 +2537,45 @@ msgstr "Kopiuj datę i godzinę"
 msgid "Date and Time Formats…"
 msgstr "Formaty daty i godziny…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Zarządzaj listami"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 otwarte zadanie"
+msgstr[1] "%1 otwarte zadania"
+msgstr[2] "%1 otwartych zadań"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Pokazuj w listach inteligentnych"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Zmień nazwę…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Wyczyść ukończone"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Usunąć listę „%2” i jej %1 zadanie? Tej operacji nie można cofnąć."
+msgstr[1] "Usunąć listę „%2” i jej %1 zadania? Tej operacji nie można cofnąć."
+msgstr[2] "Usunąć listę „%2” i jej %1 zadań? Tej operacji nie można cofnąć."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Nazwa nowej listy"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Utwórz"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2857,11 +2901,6 @@ msgstr "Niewykonane"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "Wykonano %1 z %2 podzadań"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -2940,13 +2979,6 @@ msgid "Show filters"
 msgstr "Pokaż filtry"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 otwarte zadanie"
-msgstr[1] "%1 otwarte zadania"
-msgstr[2] "%1 otwartych zadań"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Pokaż: %1"
@@ -3019,25 +3051,9 @@ msgid "Show completed"
 msgstr "Pokaż wykonane"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Zarządzaj listami"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Zarządzaj: %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "Usunąć listę „%2” i jej %1 zadanie? Tej operacji nie można cofnąć."
-msgstr[1] "Usunąć listę „%2” i jej %1 zadania? Tej operacji nie można cofnąć."
-msgstr[2] "Usunąć listę „%2” i jej %1 zadań? Tej operacji nie można cofnąć."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Nazwa nowej listy"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3087,18 +3103,6 @@ msgstr "Fioletowy"
 msgctxt "color"
 msgid "Gray"
 msgstr "Szary"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Zmień nazwę…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Pokazuj w listach inteligentnych"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Wyczyść ukończone"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

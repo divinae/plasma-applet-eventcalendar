@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgid "Show All"
 msgstr ""
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr ""
 
@@ -220,11 +220,11 @@ msgstr ""
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr ""
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr ""
 
@@ -829,7 +829,7 @@ msgstr ""
 msgid "Couldn't create the list"
 msgstr ""
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr ""
 
@@ -842,11 +842,12 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr ""
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr ""
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr ""
 
@@ -1349,7 +1350,7 @@ msgstr ""
 msgid "Rename list…"
 msgstr ""
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr ""
 
@@ -1378,7 +1379,7 @@ msgstr ""
 msgid "New Task"
 msgstr ""
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr ""
 
@@ -1509,7 +1510,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr ""
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr ""
 
@@ -1632,6 +1633,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr ""
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2113,10 +2123,6 @@ msgid "Find a Time"
 msgstr ""
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr ""
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr ""
 
@@ -2520,6 +2526,43 @@ msgstr ""
 msgid "Date and Time Formats…"
 msgstr ""
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr ""
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr ""
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2836,11 +2879,6 @@ msgstr ""
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr ""
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr ""
 
@@ -2919,12 +2957,6 @@ msgid "Show filters"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr ""
@@ -2997,23 +3029,8 @@ msgid "Show completed"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
@@ -3063,18 +3080,6 @@ msgstr ""
 #: ../contents/ui/TasksView.qml
 msgctxt "color"
 msgid "Gray"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgstr "Asetuksissa ei ole valittu kalentereita."
 msgid "Show All"
 msgstr "Näytä kaikki"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Peru"
 
@@ -221,11 +221,11 @@ msgstr "Nimi omassa luettelossa"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Vain sinä näet tämän nimen. Muille kalenteri näkyy omalla nimellään."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Väri"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Tallenna"
 
@@ -824,7 +824,7 @@ msgstr "Luettelon poistaminen epäonnistui"
 msgid "Couldn't create the list"
 msgstr "Luettelon luominen epäonnistui"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Luettelon nimi"
 
@@ -837,11 +837,11 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Poistetaanko luettelo ”%1” ja kaikki sen tehtävät? Tätä ei voi kumota."
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Poista"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Uusi luettelo"
 
@@ -1341,7 +1341,7 @@ msgstr "Muokkaa kalenteria…"
 msgid "Rename list…"
 msgstr "Nimeä luettelo uudelleen…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Poista luettelo…"
 
@@ -1370,7 +1370,7 @@ msgstr "Näytettävä tehtäväluettelo"
 msgid "New Task"
 msgstr "Uusi tehtävä"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Ei tehtäviä"
 
@@ -1501,7 +1501,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Muistutukset: %1 ennen"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Takaisin"
 
@@ -1624,6 +1624,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Näytä 1 lisää"
 msgstr[1] "Näytä kaikki %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1/%2 alitehtävää tehty"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Alitehtävät"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2105,10 +2114,6 @@ msgid "Find a Time"
 msgstr "Etsi aika"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Alitehtävät"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Alitehtävä"
 
@@ -2512,6 +2517,43 @@ msgstr "Kopioi päiväys ja aika"
 msgid "Date and Time Formats…"
 msgstr "Päiväys- ja aikamuodot…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Hallitse luetteloita"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 avoin tehtävä"
+msgstr[1] "%1 avointa tehtävää"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Näytä älyluetteloissa"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Nimeä uudelleen…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Tyhjennä valmiit"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Poistetaanko luettelo ”%2” ja sen %1 tehtävä? Tätä ei voi kumota."
+msgstr[1] "Poistetaanko luettelo ”%2” ja sen %1 tehtävää? Tätä ei voi kumota."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Uuden luettelon nimi"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Luo"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2831,11 +2873,6 @@ msgstr "Ei tehty"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%1/%2 alitehtävää tehty"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -2914,12 +2951,6 @@ msgid "Show filters"
 msgstr "Näytä suodattimet"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 avoin tehtävä"
-msgstr[1] "%1 avointa tehtävää"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Näytä: %1"
@@ -2992,24 +3023,9 @@ msgid "Show completed"
 msgstr "Näytä tehdyt"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Hallitse luetteloita"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Hallitse: %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "Poistetaanko luettelo ”%2” ja sen %1 tehtävä? Tätä ei voi kumota."
-msgstr[1] "Poistetaanko luettelo ”%2” ja sen %1 tehtävää? Tätä ei voi kumota."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Uuden luettelon nimi"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3059,18 +3075,6 @@ msgstr "Violetti"
 msgctxt "color"
 msgid "Gray"
 msgstr "Harmaa"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Nimeä uudelleen…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Näytä älyluetteloissa"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Tyhjennä valmiit"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

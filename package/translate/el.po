@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -198,7 +198,8 @@ msgstr "Εμφάνιση όλων"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -251,12 +252,13 @@ msgstr ""
 "Μόνο εσείς βλέπετε αυτό το όνομα. Για τους άλλους το ημερολόγιο διατηρεί το "
 "όνομά του."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Χρώμα"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -963,7 +965,8 @@ msgstr "Δεν ήταν δυνατή η διαγραφή της λίστας"
 msgid "Couldn't create the list"
 msgstr "Δεν ήταν δυνατή η δημιουργία της λίστας"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Όνομα λίστας"
 
@@ -979,12 +982,13 @@ msgstr ""
 "αναιρεθεί."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Νέα λίστα"
 
@@ -1548,7 +1552,8 @@ msgstr "Επεξεργασία ημερολογίου…"
 msgid "Rename list…"
 msgstr "Μετονομασία λίστας…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Διαγραφή λίστας…"
 
@@ -1578,7 +1583,7 @@ msgstr "Εμφανιζόμενη λίστα εργασιών"
 msgid "New Task"
 msgstr "Νέα εργασία"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Καμία εργασία"
 
@@ -1715,7 +1720,7 @@ msgid "Reminders: %1 before"
 msgstr "Υπενθυμίσεις: %1 πριν"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Πίσω"
 
@@ -1840,6 +1845,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Εμφάνιση %1 ακόμη"
 msgstr[1] "Εμφάνιση όλων (%1)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 από %2 υποεργασίες ολοκληρώθηκαν"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Υποεργασίες"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2323,10 +2337,6 @@ msgid "Find a Time"
 msgstr "Εύρεση ώρας"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Υποεργασίες"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Υποεργασία"
 
@@ -2752,6 +2762,47 @@ msgstr "Αντιγραφή ημερομηνίας και ώρας"
 msgid "Date and Time Formats…"
 msgstr "Μορφές ημερομηνίας και ώρας…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Διαχείριση λιστών"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 ανοιχτή εργασία"
+msgstr[1] "%1 ανοιχτές εργασίες"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Εμφάνιση στις έξυπνες λίστες"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Μετονομασία…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Απαλοιφή ολοκληρωμένων"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"Διαγραφή της λίστας «%2» και της %1 εργασίας της; Αυτό δεν μπορεί να "
+"αναιρεθεί."
+msgstr[1] ""
+"Διαγραφή της λίστας «%2» και των %1 εργασιών της; Αυτό δεν μπορεί να "
+"αναιρεθεί."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Όνομα νέας λίστας"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Δημιουργία"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3077,11 +3128,6 @@ msgstr "Μη ολοκληρωμένη"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%1 από %2 υποεργασίες ολοκληρώθηκαν"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3162,12 +3208,6 @@ msgid "Show filters"
 msgstr "Εμφάνιση φίλτρων"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 ανοιχτή εργασία"
-msgstr[1] "%1 ανοιχτές εργασίες"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Εμφάνιση: %1"
@@ -3240,28 +3280,9 @@ msgid "Show completed"
 msgstr "Εμφάνιση ολοκληρωμένων"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Διαχείριση λιστών"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Διαχείριση %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-"Διαγραφή της λίστας «%2» και της %1 εργασίας της; Αυτό δεν μπορεί να "
-"αναιρεθεί."
-msgstr[1] ""
-"Διαγραφή της λίστας «%2» και των %1 εργασιών της; Αυτό δεν μπορεί να "
-"αναιρεθεί."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Όνομα νέας λίστας"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3311,18 +3332,6 @@ msgstr "Μωβ"
 msgctxt "color"
 msgid "Gray"
 msgstr "Γκρι"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Μετονομασία…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Εμφάνιση στις έξυπνες λίστες"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Απαλοιφή ολοκληρωμένων"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

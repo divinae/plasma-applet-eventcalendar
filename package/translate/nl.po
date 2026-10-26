@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -197,7 +197,8 @@ msgstr "Alles tonen"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -249,12 +250,13 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Alleen jij ziet deze naam. Voor anderen houdt de agenda zijn eigen naam."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Kleur"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Opslaan"
 
@@ -955,7 +957,8 @@ msgstr "Kan de lijst niet verwijderen"
 msgid "Couldn't create the list"
 msgstr "Kan de lijst niet aanmaken"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Lijstnaam"
 
@@ -971,12 +974,13 @@ msgstr ""
 "gemaakt."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Nieuwe lijst"
 
@@ -1536,7 +1540,8 @@ msgstr "Agenda aanpassen…"
 msgid "Rename list…"
 msgstr "Lijst hernoemen…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Lijst verwijderen…"
 
@@ -1566,7 +1571,7 @@ msgstr "Getoonde takenlijst"
 msgid "New Task"
 msgstr "Nieuwe taak"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Geen taken"
 
@@ -1703,7 +1708,7 @@ msgid "Reminders: %1 before"
 msgstr "Herinneringen: %1 vooraf"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Terug"
 
@@ -1828,6 +1833,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "Nog 1 tonen"
 msgstr[1] "Alle %1 tonen"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 van %2 subtaken afgerond"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Subtaken"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2311,10 +2325,6 @@ msgid "Find a Time"
 msgstr "Tijd zoeken"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Subtaken"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Subtaak"
 
@@ -2739,6 +2749,47 @@ msgstr "Datum en tijd kopiëren"
 msgid "Date and Time Formats…"
 msgstr "Datum- en tijdnotatie…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Lijsten beheren"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 open taak"
+msgstr[1] "%1 open taken"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Tonen in slimme lijsten"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Hernoemen…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Voltooide wissen"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"De lijst ‘%2’ en de %1 taak erin verwijderen? Dit kan niet ongedaan worden "
+"gemaakt."
+msgstr[1] ""
+"De lijst ‘%2’ en de %1 taken erin verwijderen? Dit kan niet ongedaan worden "
+"gemaakt."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Naam nieuwe lijst"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Aanmaken"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3062,11 +3113,6 @@ msgstr "Niet afgerond"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%1 van %2 subtaken afgerond"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3147,12 +3193,6 @@ msgid "Show filters"
 msgstr "Filters tonen"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 open taak"
-msgstr[1] "%1 open taken"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Tonen: %1"
@@ -3225,28 +3265,9 @@ msgid "Show completed"
 msgstr "Afgeronde tonen"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Lijsten beheren"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 beheren"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-"De lijst ‘%2’ en de %1 taak erin verwijderen? Dit kan niet ongedaan worden "
-"gemaakt."
-msgstr[1] ""
-"De lijst ‘%2’ en de %1 taken erin verwijderen? Dit kan niet ongedaan worden "
-"gemaakt."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Naam nieuwe lijst"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3296,18 +3317,6 @@ msgstr "Paars"
 msgctxt "color"
 msgid "Gray"
 msgstr "Grijs"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Hernoemen…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Tonen in slimme lijsten"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Voltooide wissen"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

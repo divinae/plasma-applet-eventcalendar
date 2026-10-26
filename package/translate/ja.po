@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -169,7 +169,7 @@ msgstr "設定でカレンダーが選択されていません。"
 msgid "Show All"
 msgstr "すべて表示"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -216,11 +216,11 @@ msgstr "自分のリストでの名前"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "この名前はあなたにだけ表示されます。他のユーザーには元のカレンダー名が表示されます。"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "色"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "保存"
 
@@ -818,7 +818,7 @@ msgstr "リストを削除できませんでした"
 msgid "Couldn't create the list"
 msgstr "リストを作成できませんでした"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "リスト名"
 
@@ -831,11 +831,11 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "リスト「%1」とそのすべてのタスクを削除しますか？この操作は元に戻せません。"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "削除"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "新しいリスト"
 
@@ -1335,7 +1335,7 @@ msgstr "カレンダーを編集…"
 msgid "Rename list…"
 msgstr "リストの名前を変更…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "リストを削除…"
 
@@ -1364,7 +1364,7 @@ msgstr "表示するタスクリスト"
 msgid "New Task"
 msgstr "新しいタスク"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "タスクなし"
 
@@ -1494,7 +1494,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "リマインダー: %1 前"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "戻る"
 
@@ -1616,6 +1616,15 @@ msgstr "表示を減らす"
 msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "すべて表示 (%1)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "サブタスク %2 件中 %1 件完了"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "サブタスク"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2087,10 +2096,6 @@ msgid "Find a Time"
 msgstr "時間を探す"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "サブタスク"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "サブタスク"
 
@@ -2485,6 +2490,41 @@ msgstr "日付と時刻をコピー"
 msgid "Date and Time Formats…"
 msgstr "日付と時刻の書式…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "リストを管理"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "未完了のタスク %1 件"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "スマートリストに表示"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "名前を変更…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "完了済みを消去"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "リスト「%2」と %1 件のタスクを削除しますか？この操作は元に戻せません。"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "新しいリストの名前"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "作成"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2798,11 +2838,6 @@ msgstr "未完了"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "サブタスク %2 件中 %1 件完了"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -2881,11 +2916,6 @@ msgid "Show filters"
 msgstr "フィルターを表示"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "未完了のタスク %1 件"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "表示: %1"
@@ -2958,23 +2988,9 @@ msgid "Show completed"
 msgstr "完了済みを表示"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "リストを管理"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 を管理"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "リスト「%2」と %1 件のタスクを削除しますか？この操作は元に戻せません。"
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "新しいリストの名前"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3024,18 +3040,6 @@ msgstr "紫"
 msgctxt "color"
 msgid "Gray"
 msgstr "グレー"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "名前を変更…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "スマートリストに表示"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "完了済みを消去"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

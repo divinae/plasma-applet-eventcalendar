@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -196,7 +196,8 @@ msgstr "모두 표시"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "취소"
 
@@ -246,12 +247,13 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "이 이름은 나에게만 보입니다. 다른 사람에게는 달력의 원래 이름이 표시됩니다."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "색상"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "저장"
 
@@ -937,7 +939,8 @@ msgstr "목록을 삭제할 수 없습니다"
 msgid "Couldn't create the list"
 msgstr "목록을 만들 수 없습니다"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "목록 이름"
 
@@ -953,12 +956,13 @@ msgstr ""
 "다."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "삭제"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "새 목록"
 
@@ -1510,7 +1514,8 @@ msgstr "달력 편집…"
 msgid "Rename list…"
 msgstr "목록 이름 바꾸기…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "목록 삭제…"
 
@@ -1540,7 +1545,7 @@ msgstr "표시할 작업 목록"
 msgid "New Task"
 msgstr "새 작업"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "작업 없음"
 
@@ -1676,7 +1681,7 @@ msgid "Reminders: %1 before"
 msgstr "미리 알림: %1 전"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "뒤로"
 
@@ -1800,6 +1805,15 @@ msgstr "간단히 보기"
 msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "모두 표시(%1)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "하위 작업 %2개 중 %1개 완료"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "하위 작업"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2273,10 +2287,6 @@ msgid "Find a Time"
 msgstr "시간 찾기"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "하위 작업"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "하위 작업"
 
@@ -2687,6 +2697,42 @@ msgstr "날짜 및 시간 복사"
 msgid "Date and Time Formats…"
 msgstr "날짜 및 시간 형식…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "목록 관리"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "열린 작업 %1개"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "스마트 목록에 표시"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "이름 바꾸기…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "완료된 작업 지우기"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"“%2” 목록과 작업 %1개를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "새 목록 이름"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "만들기"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3006,11 +3052,6 @@ msgstr "완료 안 됨"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "하위 작업 %2개 중 %1개 완료"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3089,11 +3130,6 @@ msgid "Show filters"
 msgstr "필터 표시"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "열린 작업 %1개"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "표시: %1"
@@ -3166,24 +3202,9 @@ msgid "Show completed"
 msgstr "완료된 작업 표시"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "목록 관리"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 관리"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-"“%2” 목록과 작업 %1개를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "새 목록 이름"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3233,18 +3254,6 @@ msgstr "보라색"
 msgctxt "color"
 msgid "Gray"
 msgstr "회색"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "이름 바꾸기…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "스마트 목록에 표시"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "완료된 작업 지우기"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

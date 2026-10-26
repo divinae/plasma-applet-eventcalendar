@@ -16,7 +16,8 @@ import "Tasks.js" as Tasks
 // or No date (its due day changes).
 // By list, the lists can be managed (TaskLists.js): a list header's "⋯" menu (or right click) has
 // Rename (inline), Color (TickTick), Clear completed (Google) and Delete (confirmed inline), and
-// "New list" at the end makes one. "Manage lists" (the header's "⋯" menu) switches to by list.
+// "New list" at the end makes one. "Manage lists" (the header's "⋯" menu) opens a page of its own
+// (ManageListsView, managing) with every list and its actions.
 // Not grouped (tasksGroupBy 'none'): one run of tasks (Tasks.flatRows). The header's "⋯" menu also
 // has the sort (tasksSortBy: due date, title, list order), "Show details" (notes, list) and
 // "Show / Hide completed".
@@ -302,7 +303,9 @@ Item {
 		function onTaskListsChanged() { tasksView.deferredRebuild() }
 	}
 
-	//--- Managing the lists (by list)
+	//--- Managing the lists (by list, and the "Manage lists" page)
+	// The "Manage lists" page is shown instead of the tasks.
+	property bool managing: false
 	// The accounts lists can be made in: [{ id, label, provider }] (EventModel.getTaskAccounts).
 	property var taskAccounts: []
 	// The list being renamed, and the name typed so far (kept across rebuilds).
@@ -451,6 +454,11 @@ Item {
 		return showDetails && !currentListId ? row.list : null
 	}
 
+	// The list's colors on their own ("Manage lists": its dot).
+	function openColorMenu(list, parentItem, x, y) {
+		listMenu.list = list
+		listMenu.colorMenu.popup(parentItem, x, y)
+	}
 	function openListMenu(list, parentItem, x, y) {
 		listMenu.list = list
 		listMenu.caps = listCaps(list.id)
@@ -764,6 +772,7 @@ Item {
 	// stays next to the side bar instead of far to its right.
 	RowLayout {
 		id: mainRow
+		visible: !tasksView.managing
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.margins: Kirigami.Units.smallSpacing
@@ -1437,21 +1446,15 @@ Item {
 			visible: tasksView.taskAccounts.length > 0
 			height: visible ? implicitHeight : 0
 		}
-		// By list, with all the lists: where the list menus are. Again: back to by date.
-		ChoiceItem {
+		PlasmaComponents3.MenuItem {
 			visible: tasksView.taskAccounts.length > 0
 			height: visible ? implicitHeight : 0
 			text: i18n("Manage lists")
-			toggle: true
 			icon.name: "configure"
-			current: tasksView.byList
 			onTriggered: {
-				if (tasksView.byList) {
-					plasmoid.configuration.tasksGroupBy = 'date'
-				} else {
-					plasmoid.configuration.tasksGroupBy = 'list'
-					tasksView.setFilter('all')
-				}
+				tasksView.cancelRename()
+				tasksView.addingList = false
+				tasksView.managing = true
 			}
 		}
 	}
@@ -1471,6 +1474,16 @@ Item {
 					flick.contentY = Math.max(0, flick.contentHeight - flick.height)
 				}
 			})
+		}
+	}
+
+	Loader {
+		active: tasksView.managing
+		visible: active
+		anchors.fill: parent
+		anchors.margins: Kirigami.Units.smallSpacing
+		sourceComponent: ManageListsView {
+			view: tasksView
 		}
 	}
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -197,7 +197,8 @@ msgstr "Prikaži vse"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -252,12 +253,13 @@ msgstr "Ime na mojem seznamu"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "To ime vidite samo vi. Za druge koledar obdrži svoje ime."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Barva"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Shrani"
 
@@ -952,7 +954,8 @@ msgstr "Seznama ni bilo mogoče izbrisati"
 msgid "Couldn't create the list"
 msgstr "Seznama ni bilo mogoče ustvariti"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Ime seznama"
 
@@ -967,12 +970,13 @@ msgstr ""
 "Izbrišem seznam »%1« in vsa njegova opravila? Tega ni mogoče razveljaviti."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Nov seznam"
 
@@ -1526,7 +1530,8 @@ msgstr "Uredi koledar…"
 msgid "Rename list…"
 msgstr "Preimenuj seznam…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Izbriši seznam…"
 
@@ -1556,7 +1561,7 @@ msgstr "Prikazani seznam opravil"
 msgid "New Task"
 msgstr "Novo opravilo"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Ni opravil"
 
@@ -1695,7 +1700,7 @@ msgid "Reminders: %1 before"
 msgstr "Opomniki: %1 prej"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Nazaj"
 
@@ -1822,6 +1827,15 @@ msgstr[0] "Prikaži še %1"
 msgstr[1] "Prikaži vse %1"
 msgstr[2] "Prikaži vse %1"
 msgstr[3] "Prikaži vseh %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "Opravljenih %1 od %2 podopravil"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Podopravila"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2325,10 +2339,6 @@ msgid "Find a Time"
 msgstr "Najdi termin"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Podopravila"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Podopravilo"
 
@@ -2767,6 +2777,51 @@ msgstr "Kopiraj datum in čas"
 msgid "Date and Time Formats…"
 msgstr "Oblike datuma in časa…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Upravljaj sezname"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 odprto opravilo"
+msgstr[1] "%1 odprti opravili"
+msgstr[2] "%1 odprta opravila"
+msgstr[3] "%1 odprtih opravil"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Prikaži v pametnih seznamih"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Preimenuj…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Počisti dokončana"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] ""
+"Izbrišem seznam »%2« in njegovo %1 opravilo? Tega ni mogoče razveljaviti."
+msgstr[1] ""
+"Izbrišem seznam »%2« in njegovi %1 opravili? Tega ni mogoče razveljaviti."
+msgstr[2] ""
+"Izbrišem seznam »%2« in njegova %1 opravila? Tega ni mogoče razveljaviti."
+msgstr[3] ""
+"Izbrišem seznam »%2« in njegovih %1 opravil? Tega ni mogoče razveljaviti."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Ime novega seznama"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Ustvari"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3100,11 +3155,6 @@ msgstr "Ni opravljeno"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "Opravljenih %1 od %2 podopravil"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3185,14 +3235,6 @@ msgid "Show filters"
 msgstr "Prikaži filtre"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 odprto opravilo"
-msgstr[1] "%1 odprti opravili"
-msgstr[2] "%1 odprta opravila"
-msgstr[3] "%1 odprtih opravil"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Prikaži: %1"
@@ -3265,30 +3307,9 @@ msgid "Show completed"
 msgstr "Prikaži opravljena"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Upravljaj sezname"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Upravljaj %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-"Izbrišem seznam »%2« in njegovo %1 opravilo? Tega ni mogoče razveljaviti."
-msgstr[1] ""
-"Izbrišem seznam »%2« in njegovi %1 opravili? Tega ni mogoče razveljaviti."
-msgstr[2] ""
-"Izbrišem seznam »%2« in njegova %1 opravila? Tega ni mogoče razveljaviti."
-msgstr[3] ""
-"Izbrišem seznam »%2« in njegovih %1 opravil? Tega ni mogoče razveljaviti."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Ime novega seznama"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3338,18 +3359,6 @@ msgstr "Vijolična"
 msgctxt "color"
 msgid "Gray"
 msgstr "Siva"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Preimenuj…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Prikaži v pametnih seznamih"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Počisti dokončana"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

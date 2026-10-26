@@ -62,6 +62,34 @@ Rectangle {
 	readonly property bool isTask: Tasks.isTask(eventItem)
 	readonly property bool isDone: isTask && Tasks.isDone(eventItem)
 	readonly property bool isOverdue: isTask && Tasks.isOverdue(eventItem, timeModel.currentTime)
+	// Tasks: TickTick's checklist ({ id, title, done }), Google's subtasks (the list's tasks with
+	// this one as their parent, made again when the list changes).
+	readonly property var checklist: isTask && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
+	property int listRevision: 0
+	readonly property var childTasks: {
+		listRevision // Depends on it
+		if (!isTask || !eventItem.id || typeof eventModel === "undefined" || !eventModel) {
+			return []
+		}
+		var calendar = eventModel.eventsByCalendar[eventItem.calendarId]
+		var items = calendar && calendar.items ? calendar.items : []
+		return items.filter(function(item) {
+			return Tasks.isTask(item) && item.parentId === eventItem.id
+		})
+	}
+	Connections {
+		target: details.isTask && typeof eventModel !== "undefined" ? eventModel : null
+		ignoreUnknownSignals: true
+		function onCalendarFetched(calendarId, data) { details.listChanged(calendarId) }
+		function onEventAdded(calendarId, data) { details.listChanged(calendarId) }
+		function onEventRemoved(calendarId, eventId, data) { details.listChanged(calendarId) }
+		function onEventUpdated(calendarId, eventId, data) { details.listChanged(calendarId) }
+	}
+	function listChanged(calendarId) {
+		if (eventItem && calendarId === eventItem.calendarId) {
+			listRevision++
+		}
+	}
 	readonly property string dueText: {
 		var day = isTask ? Tasks.dueDay(eventItem) : ""
 		if (!day) {
@@ -655,6 +683,69 @@ Rectangle {
 						text: details.showAllGuests ? i18n("Show less") : i18np("Show 1 more", "Show all %1", details.attendees.length)
 						icon.name: details.showAllGuests ? "go-up" : "go-down"
 						onClicked: details.showAllGuests = !details.showAllGuests
+					}
+				}
+
+				Kirigami.Separator {
+					visible: subtasksColumn.visible
+					Layout.fillWidth: true
+				}
+
+				// Tasks: the subtasks, each with its check (Google's: a task row, opens it).
+				ColumnLayout {
+					id: subtasksColumn
+					visible: details.checklist.length > 0 || details.childTasks.length > 0
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					spacing: 2
+					PlasmaComponents3.Label {
+						readonly property var progress: Tasks.subtaskProgress(details.eventItem)
+						Layout.fillWidth: true
+						text: details.checklist.length > 0
+							? i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", progress.done, progress.total)
+							: i18n("Subtasks")
+						textFormat: Text.PlainText
+						font.weight: Font.DemiBold
+						opacity: 0.8
+					}
+					Repeater {
+						model: details.checklist
+						RowLayout {
+							id: checklistRow
+							readonly property var subtask: modelData
+							Layout.fillWidth: true
+							spacing: Kirigami.Units.smallSpacing * 2
+							TaskCheck {
+								id: checklistCheck
+								Layout.alignment: Qt.AlignVCenter
+								size: 2 * Math.round(checklistLabel.implicitHeight / 2)
+								eventItem: details.eventItem
+								subtaskId: checklistRow.subtask.id
+								subtaskDone: !!checklistRow.subtask.done
+								color: details.eventColor
+							}
+							PlasmaComponents3.Label {
+								id: checklistLabel
+								Layout.fillWidth: true
+								Layout.minimumWidth: 0
+								text: checklistRow.subtask.title
+								textFormat: Text.PlainText // User text: never parsed as HTML
+								opacity: checklistCheck.done ? 0.55 : 1
+								font.strikeout: checklistCheck.done
+								wrapMode: Text.Wrap
+							}
+						}
+					}
+					Repeater {
+						model: details.childTasks
+						TaskRow {
+							Layout.fillWidth: true
+							eventItem: modelData
+							today: Tasks.dayString(timeModel.currentTime)
+							compact: true
+							actionsEnabled: false
+						}
 					}
 				}
 

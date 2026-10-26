@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -195,7 +195,8 @@ msgstr "全部显示"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "取消"
 
@@ -244,12 +245,13 @@ msgstr "我的列表中的名称"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "只有您能看到此名称。其他人看到的仍是日历原名称。"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "颜色"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "保存"
 
@@ -919,7 +921,8 @@ msgstr "无法删除列表"
 msgid "Couldn't create the list"
 msgstr "无法创建列表"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "列表名称"
 
@@ -933,12 +936,13 @@ msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "删除列表“%1”及其所有任务？此操作无法撤销。"
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "删除"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "新建列表"
 
@@ -1480,7 +1484,8 @@ msgstr "编辑日历…"
 msgid "Rename list…"
 msgstr "重命名列表…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "删除列表…"
 
@@ -1510,7 +1515,7 @@ msgstr "显示的任务列表"
 msgid "New Task"
 msgstr "新建任务"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "没有任务"
 
@@ -1646,7 +1651,7 @@ msgid "Reminders: %1 before"
 msgstr "提醒：提前 %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "返回"
 
@@ -1770,6 +1775,15 @@ msgstr "收起"
 msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "全部显示（%1）"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "已完成 %1/%2 个子任务"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "子任务"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2243,10 +2257,6 @@ msgid "Find a Time"
 msgstr "查找时间"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "子任务"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "子任务"
 
@@ -2651,6 +2661,41 @@ msgstr "复制日期和时间"
 msgid "Date and Time Formats…"
 msgstr "日期和时间格式…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "管理列表"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 个未完成的任务"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "在智能列表中显示"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "重命名…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "清除已完成"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "删除列表“%2”及其 %1 个任务？此操作无法撤销。"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "新列表名称"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "创建"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2966,11 +3011,6 @@ msgstr "未完成"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "已完成 %1/%2 个子任务"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3049,11 +3089,6 @@ msgid "Show filters"
 msgstr "显示筛选器"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 个未完成的任务"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "显示：%1"
@@ -3126,23 +3161,9 @@ msgid "Show completed"
 msgstr "显示已完成"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "管理列表"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "管理 %1"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "删除列表“%2”及其 %1 个任务？此操作无法撤销。"
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "新列表名称"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3192,18 +3213,6 @@ msgstr "紫色"
 msgctxt "color"
 msgid "Gray"
 msgstr "灰色"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "重命名…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "在智能列表中显示"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "清除已完成"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

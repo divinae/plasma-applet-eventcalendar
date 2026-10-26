@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -198,7 +198,8 @@ msgstr "Tümünü Göster"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "İptal"
 
@@ -250,12 +251,13 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Bu adı yalnızca siz görürsünüz. Takvim, diğerleri için kendi adını korur."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Renk"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Kaydet"
 
@@ -948,7 +950,8 @@ msgstr "Liste silinemedi"
 msgid "Couldn't create the list"
 msgstr "Liste oluşturulamadı"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Liste adı"
 
@@ -962,12 +965,13 @@ msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "“%1” listesi ve tüm görevleri silinsin mi? Bu işlem geri alınamaz."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Sil"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Yeni liste"
 
@@ -1522,7 +1526,8 @@ msgstr "Takvimi düzenle…"
 msgid "Rename list…"
 msgstr "Listeyi Yeniden Adlandır…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Listeyi Sil…"
 
@@ -1552,7 +1557,7 @@ msgstr "Gösterilen görev listesi"
 msgid "New Task"
 msgstr "Yeni Görev"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Görev yok"
 
@@ -1689,7 +1694,7 @@ msgid "Reminders: %1 before"
 msgstr "Anımsatıcılar: %1 önce"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Geri"
 
@@ -1814,6 +1819,15 @@ msgid "Show 1 more"
 msgid_plural "Show all %1"
 msgstr[0] "1 tane daha göster"
 msgstr[1] "Tümünü göster (%1)"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%2 alt görevden %1 tanesi tamamlandı"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Alt görevler"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2297,10 +2311,6 @@ msgid "Find a Time"
 msgstr "Zaman Bul"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Alt görevler"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Alt görev"
 
@@ -2722,6 +2732,43 @@ msgstr "Tarih ve Saati Kopyala"
 msgid "Date and Time Formats…"
 msgstr "Tarih ve Saat Biçimleri…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Listeleri yönet"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 açık görev"
+msgstr[1] "%1 açık görev"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Akıllı listelerde göster"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Yeniden Adlandır…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Tamamlananları Temizle"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "“%2” listesi ve %1 görevi silinsin mi? Bu işlem geri alınamaz."
+msgstr[1] "“%2” listesi ve %1 görevi silinsin mi? Bu işlem geri alınamaz."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Yeni liste adı"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Oluştur"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3047,11 +3094,6 @@ msgstr "Tamamlanmadı"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "%2 alt görevden %1 tanesi tamamlandı"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3130,12 +3172,6 @@ msgid "Show filters"
 msgstr "Filtreleri göster"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 açık görev"
-msgstr[1] "%1 açık görev"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Göster: %1"
@@ -3208,24 +3244,9 @@ msgid "Show completed"
 msgstr "Tamamlananları göster"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Listeleri yönet"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "%1 listesini yönet"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "“%2” listesi ve %1 görevi silinsin mi? Bu işlem geri alınamaz."
-msgstr[1] "“%2” listesi ve %1 görevi silinsin mi? Bu işlem geri alınamaz."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Yeni liste adı"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3275,18 +3296,6 @@ msgstr "Mor"
 msgctxt "color"
 msgid "Gray"
 msgstr "Gri"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Yeniden Adlandır…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Akıllı listelerde göster"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Tamamlananları Temizle"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"

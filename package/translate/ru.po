@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:03+0100\n"
+"POT-Creation-Date: 2026-10-26 15:18+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -201,7 +201,8 @@ msgstr "Показать все"
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -256,12 +257,13 @@ msgstr ""
 "Это название видите только вы. Для остальных у календаря остается прежнее "
 "название."
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Цвет"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Сохранить"
 
@@ -959,7 +961,8 @@ msgstr "Не удалось удалить список"
 msgid "Couldn't create the list"
 msgstr "Не удалось создать список"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Название списка"
 
@@ -973,12 +976,13 @@ msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Удалить список «%1» и все его задачи? Это действие нельзя отменить."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Удалить"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Новый список"
 
@@ -1533,7 +1537,8 @@ msgstr "Редактировать календарь…"
 msgid "Rename list…"
 msgstr "Переименовать список…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Удалить список…"
 
@@ -1563,7 +1568,7 @@ msgstr "Показываемый список задач"
 msgid "New Task"
 msgstr "Новая задача"
 
-#: ../contents/ui/DayTasksPanel.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
 msgid "No tasks"
 msgstr "Нет задач"
 
@@ -1701,7 +1706,7 @@ msgid "Reminders: %1 before"
 msgstr "Напоминания: за %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Назад"
 
@@ -1827,6 +1832,15 @@ msgid_plural "Show all %1"
 msgstr[0] "Показать еще %1"
 msgstr[1] "Показать все %1"
 msgstr[2] "Показать все %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "Выполнено подзадач: %1 из %2"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Подзадачи"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2320,10 +2334,6 @@ msgid "Find a Time"
 msgstr "Найти время"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Subtasks"
-msgstr "Подзадачи"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Subtask"
 msgstr "Подзадача"
 
@@ -2753,6 +2763,45 @@ msgstr "Копировать дату и время"
 msgid "Date and Time Formats…"
 msgstr "Форматы даты и времени…"
 
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Управление списками"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "%1 open task"
+msgid_plural "%1 open tasks"
+msgstr[0] "%1 открытая задача"
+msgstr[1] "%1 открытые задачи"
+msgstr[2] "%1 открытых задач"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Show in smart lists"
+msgstr "Показывать в умных списках"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Rename…"
+msgstr "Переименовать…"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Clear completed"
+msgstr "Очистить выполненные"
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgctxt "%2 = task list name"
+msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
+msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
+msgstr[0] "Удалить список «%2» и его %1 задачу? Это действие нельзя отменить."
+msgstr[1] "Удалить список «%2» и его %1 задачи? Это действие нельзя отменить."
+msgstr[2] "Удалить список «%2» и его %1 задач? Это действие нельзя отменить."
+
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "New list name"
+msgstr "Название нового списка"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "Create"
+msgstr "Создать"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3083,11 +3132,6 @@ msgstr "Не выполнено"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "checklist items done: %1 of %2"
-msgid "%1 of %2 subtasks done"
-msgstr "Выполнено подзадач: %1 из %2"
-
-#: ../contents/ui/TaskRow.qml
-msgctxt "checklist items done: %1 of %2"
 msgid "%1/%2"
 msgstr "%1/%2"
 
@@ -3166,13 +3210,6 @@ msgid "Show filters"
 msgstr "Показать фильтры"
 
 #: ../contents/ui/TasksView.qml
-msgid "%1 open task"
-msgid_plural "%1 open tasks"
-msgstr[0] "%1 открытая задача"
-msgstr[1] "%1 открытые задачи"
-msgstr[2] "%1 открытых задач"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = tasks filter or list name"
 msgid "Show: %1"
 msgstr "Показать: %1"
@@ -3245,25 +3282,9 @@ msgid "Show completed"
 msgstr "Показать выполненные"
 
 #: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Управление списками"
-
-#: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
 msgid "Manage %1"
 msgstr "Управление «%1»"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "%2 = task list name"
-msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
-msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] "Удалить список «%2» и его %1 задачу? Это действие нельзя отменить."
-msgstr[1] "Удалить список «%2» и его %1 задачи? Это действие нельзя отменить."
-msgstr[2] "Удалить список «%2» и его %1 задач? Это действие нельзя отменить."
-
-#: ../contents/ui/TasksView.qml
-msgid "New list name"
-msgstr "Название нового списка"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = account name"
@@ -3313,18 +3334,6 @@ msgstr "Фиолетовый"
 msgctxt "color"
 msgid "Gray"
 msgstr "Серый"
-
-#: ../contents/ui/TasksView.qml
-msgid "Rename…"
-msgstr "Переименовать…"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show in smart lists"
-msgstr "Показывать в умных списках"
-
-#: ../contents/ui/TasksView.qml
-msgid "Clear completed"
-msgstr "Очистить выполненные"
 
 #: ../contents/ui/TasksView.qml
 msgid "This week"
