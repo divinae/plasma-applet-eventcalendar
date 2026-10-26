@@ -21,6 +21,7 @@ Item {
 	//--- Main
 	Component.onCompleted: {
 		lastGoogleSelectionSignature = googleSelectionSignature()
+		lastCacheAccountIds = cacheAccountIds()
 		showCachedEvents()
 		pollTimer.start()
 	}
@@ -36,6 +37,24 @@ Item {
 		logger.debug('showCachedEvents', Object.keys(cached.calendars).length, 'calendars from', new Date(cached.savedAt))
 		eventModel.showCachedEvents(cached.calendars)
 		if (popup) popup.updateUI()
+	}
+
+	// Ids of the Google and TickTick accounts in config.
+	property var lastCacheAccountIds: []
+	function cacheAccountIds() {
+		return parseGoogleAccounts().concat(parseTickTickAccounts()).map(function(account) {
+			return account && account.id ? String(account.id) : ''
+		}).filter(function(id) { return !!id })
+	}
+	// An account was removed (signed out): its calendars leave the cache file right away, not
+	// with the next refresh.
+	function pruneCacheOfGoneAccounts() {
+		var ids = cacheAccountIds()
+		var gone = lastCacheAccountIds.some(function(id) { return ids.indexOf(id) < 0 })
+		lastCacheAccountIds = ids
+		if (gone) {
+			eventCache.pruneAccounts(ids)
+		}
 	}
 
 	//--- Update
@@ -225,6 +244,7 @@ Item {
 		//--- Events
 		function onEnabledCalendarPluginsChanged() { logic.updateEvents() }
 		function onGoogleAccountsChanged() {
+			logic.pruneCacheOfGoneAccounts()
 			// Token refreshes rewrite googleAccounts too. Only refetch when the selection changes.
 			var signature = logic.googleSelectionSignature()
 			if (signature !== logic.lastGoogleSelectionSignature) {
@@ -233,6 +253,7 @@ Item {
 			}
 		}
 		function onGoogleActiveAccountIdChanged() { logic.updateEvents() }
+		function onTickTickAccountsChanged() { logic.pruneCacheOfGoneAccounts() }
 		function onGoogleEventClickActionChanged() { logic.updateEvents() }
 		function onGoogleColorPaletteChanged() {
 			// Recolor right away (system palette is applied at display time anyway).

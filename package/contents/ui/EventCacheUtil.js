@@ -220,6 +220,33 @@ function deserialize(text, now, isSelected) {
 	return { savedAt: data.savedAt, dateMin: data.dateMin, dateMax: data.dateMax, calendars: calendars }
 }
 
+// The account of a scoped calendar id ('account::calendar'), '' when it has none.
+function accountOf(calendarId) {
+	var index = typeof calendarId === 'string' ? calendarId.indexOf('::') : -1
+	return index > 0 ? calendarId.slice(0, index) : ''
+}
+
+// Cache text without the calendars of accounts that are gone (accountIds: the ones still there):
+// '' when nothing is left or the text can't be read (missing, broken, too old). The rest is kept
+// as it was (savedAt too).
+function pruneText(text, accountIds, now) {
+	var keep = {}
+	toList(accountIds).forEach(function(id) {
+		if (id) {
+			keep[String(id)] = true
+		}
+	})
+	var cached = deserialize(text, now, function(calendarId) { return !!keep[accountOf(calendarId)] })
+	if (!cached || !Object.keys(cached.calendars).length) {
+		return ''
+	}
+	var byCalendar = {}
+	for (var calendarId in cached.calendars) {
+		byCalendar[calendarId] = { items: cached.calendars[calendarId] }
+	}
+	return serialize(byCalendar, cached.dateMin, cached.dateMax, new Date(cached.savedAt))
+}
+
 // Scoped ids ("account::calendar") of the calendars and task lists selected in the account
 // settings: Google (calendarIdList, tasklistIdList) and TickTick (projectIdList) accounts.
 function selectedCalendarIds(accounts) {
@@ -265,5 +292,7 @@ if (typeof module !== 'undefined') {
 		serialize: serialize,
 		deserialize: deserialize,
 		selectedCalendarIds: selectedCalendarIds,
+		accountOf: accountOf,
+		pruneText: pruneText,
 	}
 }

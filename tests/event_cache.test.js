@@ -235,7 +235,30 @@ function testSelectedCalendarIds() {
 	assert.deepStrictEqual(Object.keys(ids).sort(), ['acc_1::L1', 'acc_1::me@example.test', 'acc_1::primary', 'acc_1::team@group.test', 'tt_1::inbox', 'tt_1::p1'])
 }
 
+function testPruneText() {
+	const calendars = sampleCalendars()
+	calendars['acc_2::tasks9'] = { items: [fullTask({ id: 'other' })] }
+	const text = cache.serialize(calendars, new Date(2026, 9, 1), new Date(2026, 10, 1), NOW)
+	const later = new Date(NOW.getTime() + 60000)
+	// acc_1 signed out: only acc_2 is left, the rest as it was.
+	const pruned = cache.pruneText(text, ['acc_2'], later)
+	const data = JSON.parse(pruned)
+	assert.deepStrictEqual(Object.keys(data.calendars), ['acc_2::tasks9'])
+	assert.strictEqual(data.savedAt, NOW.getTime(), 'savedAt kept')
+	assert.strictEqual(data.dateMin, new Date(2026, 9, 1).getTime())
+	assert.deepStrictEqual(data.calendars['acc_2::tasks9'], JSON.parse(text).calendars['acc_2::tasks9'], 'items unchanged')
+	// Everyone kept: the same text.
+	assert.deepStrictEqual(JSON.parse(cache.pruneText(text, ['acc_1', 'acc_2'], later)), JSON.parse(text))
+	// No account left, nothing cached, a broken file: ''.
+	assert.strictEqual(cache.pruneText(text, [], later), '')
+	assert.strictEqual(cache.pruneText('', ['acc_1'], later), '')
+	assert.strictEqual(cache.pruneText('{broken', ['acc_1'], later), '')
+	assert.strictEqual(cache.accountOf('acc_1::x::y'), 'acc_1')
+	assert.strictEqual(cache.accountOf('plasma_Holidays'), '')
+}
+
 testWhitelist()
+testPruneText()
 testSummaryUsesRawTitle()
 testEventTypes()
 testRoundTripAndSelection()

@@ -84,6 +84,36 @@ QtObject {
 		write(text)
 	}
 
+	// An account was signed out or removed: its calendars leave the file right away (and a save
+	// that's waiting). accountIds: the accounts still there.
+	function pruneAccounts(accountIds) {
+		var now = new Date()
+		if (pendingSnapshot) {
+			pendingSnapshot.text = EventCacheUtil.pruneText(pendingSnapshot.text, accountIds, now)
+		}
+		if (pendingText) {
+			pendingText = EventCacheUtil.pruneText(pendingText, accountIds, now)
+		}
+		var text = ''
+		try {
+			text = String(settings.value('json', '') || '')
+		} catch (e) {
+			text = ''
+		}
+		if (!text) {
+			return
+		}
+		var next = EventCacheUtil.pruneText(text, accountIds, now)
+		if (next === text) {
+			return
+		}
+		if (dirReady) {
+			write(next)
+		} else if (!pendingText) {
+			pendingText = next
+		}
+	}
+
 	function write(text) {
 		settings.setValue('json', text)
 		settings.sync()
