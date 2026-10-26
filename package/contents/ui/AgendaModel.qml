@@ -206,31 +206,8 @@ ListModel {
 		var generation = ++agendaModel.parseGeneration
 		// Copy: items is shared with the month view and reminders. Don't sort or rewrite it in place.
 		var items = data.items.slice()
-
-		if (plasmoid.configuration.agendaPlaceOverdueTasksOnToday) {
-			for (var i = 0; i < items.length; i++) {
-				var eventItem = items[i]
-				if (eventItem.kind === 'tasks#task'
-					&& eventItem.due
-					&& !eventItem.isCompleted
-				) {
-					var now = new Date(timeModel.currentTime)
-					var taskIsOverdue = eventItem.dueEndTime < now
-					if (taskIsOverdue) {
-						eventItem = Object.assign({}, eventItem)
-						eventItem.start = {
-							date: Shared.localeDateString(now),
-						}
-						eventItem.end = {
-							date: Shared.localeDateString(now),
-						}
-						eventItem.startDateTime = now
-						eventItem.endDateTime = now
-						items[i] = eventItem
-					}
-				}
-			}
-		}
+		// Tasks are already on the day they're shown on (overdue ones on today with
+		// agendaPlaceOverdueTasksOnToday): see Tasks.placementDay, used when they're parsed.
 
 		// Sort by start time if event, or position if tasks
 		items.sort(function(a,b) {
