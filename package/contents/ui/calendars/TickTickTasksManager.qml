@@ -15,10 +15,13 @@ import "../lib/TickTickAccountState.js" as TickTickAccountState
 // Same contract as GoogleTasksManager, so the task UI works unchanged: projects are task lists
 // (ids accountId::projectId, the Inbox is accountId::inbox), and tasks are event-shaped items
 // (kind 'tasks#task') with the Google fields the UI reads (title, notes, due, status, completed,
-// see Tasks.fromTickTick), plus dueTime ('HH:mm') for timed tasks and the TickTick fields
-// needed to change them in item.tickTick. Changes come in Google shape (Tasks.editBody,
-// toggleBody, restoreBody) and go to TickTick as Tasks.toTickTick gives them.
-// The API lists only open tasks: done ones show until the next fetch.
+// see Tasks.fromTickTick), the provider-neutral ones (dueTime, reminders, priority, repeatRule,
+// parentId, subtasks; see Tasks.js) and the TickTick fields needed to change them in
+// item.tickTick. Changes come in Google shape (Tasks.editBody, toggleBody, restoreBody) and go
+// to TickTick as Tasks.toTickTick gives them.
+// A project's data lists only open tasks: the ones done in the last completedDays days come from
+// /task/completed (at most 200 per account), skipped quietly when that fails.
+// The API can't reorder tasks (no reorderTask).
 CalendarManager {
 	id: tickTickManager
 
@@ -31,6 +34,9 @@ CalendarManager {
 
 	// The Inbox's real project id ('inbox123...'), learned from its tasks; 'inbox' works in paths.
 	property string inboxProjectId: ""
+
+	// Done tasks shown: those completed in the last 30 days.
+	readonly property int completedDays: 30
 
 	Logger {
 		id: logger
@@ -165,20 +171,106 @@ CalendarManager {
 				return
 			}
 			var firstError = null
+			var fetched = []
 			for (var i = 0; i < results.length; i++) {
-				var scopedId = scopedProjectId(projectIdList[i])
 				if (results[i].err) {
-					restorePreviousCalendar(scopedId)
 					firstError = firstError || results[i].err
 				} else {
-					setCalendarData(scopedId, parseProjectAsEvents(results[i].data))
+					fetched.push(projectIdList[i])
 				}
 			}
-			// The error first: a network error counts for this fetch round (Logic's offline banner).
-			if (firstError) {
-				reportError('fetchAccountTasks', firstError.err, firstError.data, firstError.xhr)
+			var finish = function(completedByProject) {
+				if (generation !== tickTickManager.fetchGeneration) {
+					logger.debug('fetchAccountTasks', 'dropping stale response')
+					return
+				}
+				for (var j = 0; j < results.length; j++) {
+					var scopedId = scopedProjectId(projectIdList[j])
+					if (results[j].err) {
+						restorePreviousCalendar(scopedId)
+					} else {
+						var data = results[j].data || {}
+						var openTasks = Array.isArray(data.tasks) ? data.tasks : []
+						setCalendarData(scopedId, parseProjectAsEvents({
+							tasks: mergeTasks(openTasks, completedByProject[projectIdList[j]] || []),
+						}))
+					}
+				}
+				// The error first: a network error counts for this fetch round (Logic's offline banner).
+				if (firstError) {
+					reportError('fetchAccountTasks', firstError.err, firstError.data, firstError.xhr)
+				}
+				tickTickManager.asyncRequestsDone += 1
 			}
-			tickTickManager.asyncRequestsDone += 1
+			// The Inbox's real id, for the completed tasks request.
+			for (var r = 0; r < results.length && !tickTickManager.inboxProjectId; r++) {
+				var tasks = results[r].data && Array.isArray(results[r].data.tasks) ? results[r].data.tasks : []
+				for (var t = 0; t < tasks.length; t++) {
+					if (tasks[t] && String(tasks[t].projectId || '').indexOf('inbox') === 0) {
+						tickTickManager.inboxProjectId = String(tasks[t].projectId)
+						break
+					}
+				}
+			}
+			// No completed tasks when every project failed (offline, signed out).
+			if (!fetched.length) {
+				finish({})
+				return
+			}
+			fetchCompletedTasks(fetched, new Date(), finish)
+		})
+	}
+
+	// The open tasks, then the done ones not among them (by id).
+	function mergeTasks(openTasks, doneTasks) {
+		var seen = {}
+		var out = []
+		openTasks.concat(doneTasks).forEach(function(task) {
+			var id = task && task.id ? String(task.id) : ''
+			if (id && !seen[id]) {
+				seen[id] = true
+				out.push(task)
+			}
+		})
+		return out
+	}
+
+	// The raw (unscoped) project id of a task's projectId: 'inbox' for the Inbox's real id.
+	function rawProjectIdOf(projectId) {
+		var id = String(projectId || '')
+		return id.indexOf('inbox') === 0 ? 'inbox' : id
+	}
+
+	// The tasks of the projects (raw ids) completed in the last completedDays days, by raw project
+	// id: callback({ rawId: [tasks] }), always called; {} when the request fails (logged: the HTTP
+	// status only). now: a Date.
+	function fetchCompletedTasks(projectIdList, now, callback) {
+		var ids = projectIdList.map(function(rawId) {
+			return rawId === 'inbox' ? (inboxProjectId || 'inbox') : rawId
+		})
+		var body = {
+			projectIds: ids,
+			startDate: Tasks.formatTickTickDate(now.getTime() - completedDays * 86400000),
+			endDate: Tasks.formatTickTickDate(now.getTime()),
+		}
+		session.request('POST', '/task/completed', body, function(err, data, xhr) {
+			var byProject = {}
+			if (err || !Array.isArray(data)) {
+				logger.log(calendarManagerId, 'fetchCompletedTasks_err', xhr ? xhr.status : 'no token')
+				callback(byProject)
+				return
+			}
+			for (var i = 0; i < data.length; i++) {
+				var task = data[i]
+				if (!task || !task.id || task.status !== 2) {
+					continue
+				}
+				var rawId = rawProjectIdOf(task.projectId)
+				if (projectIdList.indexOf(rawId) >= 0) {
+					(byProject[rawId] = byProject[rawId] || []).push(task)
+				}
+			}
+			callback(byProject)
 		})
 	}
 
@@ -239,7 +331,13 @@ CalendarManager {
 			title: fields.title,
 			notes: fields.notes,
 			status: fields.status,
-			// What's needed to change the task (Tasks.toTickTick) and nothing that's shown.
+			dueTime: fields.dueTime,
+			reminders: fields.reminders,
+			priority: fields.priority,
+			repeatRule: fields.repeatRule,
+			parentId: fields.parentId,
+			subtasks: fields.subtasks,
+			// What's needed to change the task (Tasks.toTickTick, rawWith).
 			tickTick: {
 				projectId: raw.projectId || '',
 				dueDate: raw.dueDate || '',
@@ -249,13 +347,15 @@ CalendarManager {
 				status: raw.status || 0,
 				completedTime: raw.completedTime || '',
 				sortOrder: raw.sortOrder,
+				reminders: Array.isArray(raw.reminders) ? raw.reminders.slice() : [],
+				priority: raw.priority || 0,
+				repeatFlag: raw.repeatFlag || '',
+				parentId: raw.parentId || '',
+				items: Array.isArray(raw.items) ? raw.items.map(checklistItem) : [],
 			},
 		}
 		if (fields.due) {
 			eventData.due = fields.due
-		}
-		if (fields.dueTime) {
-			eventData.dueTime = fields.dueTime
 		}
 		if (fields.completed) {
 			eventData.completed = fields.completed
@@ -291,6 +391,23 @@ CalendarManager {
 			date: Tasks.addDays(day, 1),
 		}
 		return eventData
+	}
+
+	// The fields of a checklist item that are kept to send it back (Tasks.tickTickItems).
+	function checklistItem(item) {
+		var out = {}
+		var keys = ['id', 'title', 'status', 'sortOrder', 'completedTime', 'isAllDay', 'startDate', 'timeZone']
+		for (var i = 0; i < keys.length; i++) {
+			if (item && typeof item[keys[i]] !== 'undefined' && item[keys[i]] !== null) {
+				out[keys[i]] = item[keys[i]]
+			}
+		}
+		return out
+	}
+
+	// Tasks.toTickTick's options: the wall clock, and the local zone for a new timed task.
+	function tickTickOptions() {
+		return { wallClock: TimeZone.wallClock, timeZone: TimeZone.guessLocal(Date.now()) }
 	}
 
 	// A task of this account parsed as an item of calendarId (scoped project id).
@@ -342,11 +459,12 @@ CalendarManager {
 		createEventFromData(calendarId, body, null, null)
 	}
 
-	// Create a task from a Google-shaped body: { title, notes?, due?, status? } (see Tasks.editBody).
+	// Create a task from a body: { title, notes?, due?, status?, dueTime?, priority?, repeatRule?,
+	// reminders?, subtasks? } (see Tasks.editBody).
 	// done(err, item): optional, always called; item is the new task as shown, or null.
 	// params: ignored (Google's parent / previous).
 	function createEventFromData(calendarId, body, done, params) {
-		var fields = Tasks.toTickTick(body, null, TimeZone.toUtc)
+		var fields = Tasks.toTickTick(body, null, TimeZone.toUtc, tickTickOptions())
 		var wantsDone = fields.status === 2
 		delete fields.status
 		delete fields.completedTime
@@ -502,8 +620,8 @@ CalendarManager {
 	}
 
 	//--- Update
-	// args: Google-shaped changes (title, notes, due, status, completed), sent as TickTick fields
-	// (id, projectId and what changed). Done (status 'completed' alone) uses the complete
+	// args: Google-shaped changes (title, notes, due, status, completed; dueTime, priority,
+	// repeatRule, reminders, subtasks), sent as TickTick fields (id, projectId and what changed). Done (status 'completed' alone) uses the complete
 	// endpoint. options: optional { done(err, item) }, always called once the server answered.
 	function setEventProperties(calendarId, eventId, args, options) {
 		var done = options && options.done
@@ -515,7 +633,7 @@ CalendarManager {
 			}
 			return
 		}
-		var changes = Tasks.toTickTick(args, event.tickTick, TimeZone.toUtc)
+		var changes = Tasks.toTickTick(args, event.tickTick, TimeZone.toUtc, tickTickOptions())
 		var projectId = event.projectId || apiProjectId(calendarId)
 		var onlyCompletes = changes.status === 2 && Object.keys(changes).every(function(key) {
 			return key === 'status' || key === 'completedTime'
@@ -559,6 +677,36 @@ CalendarManager {
 		session.request('POST', '/task/' + encodeURIComponent(eventId), body, function(err, data, xhr) {
 			saved(err, data, xhr, rawWith(event, body))
 		})
+	}
+
+	//--- Subtasks (checklist items)
+	// Check (done) or uncheck one checklist item of a task: its items go back with that item's
+	// status changed (0 / 1) through the task update. cb(err, item): optional, always called;
+	// item is the task as saved.
+	function toggleSubtask(listId, taskId, subtaskId, done, cb) {
+		var finish = function(err, item) {
+			if (cb) {
+				cb(err || null, item || null)
+			}
+		}
+		var event = getEvent(listId, taskId)
+		var subtasks = event && Array.isArray(event.subtasks) ? event.subtasks : []
+		var found = false
+		var next = subtasks.map(function(s) {
+			var copy = { id: s.id, title: s.title, done: !!s.done }
+			if (s.id === subtaskId) {
+				copy.done = !!done
+				found = true
+			}
+			return copy
+		})
+		if (!event || !found) {
+			var why = event ? 'no such subtask' : 'task not loaded'
+			logger.log(calendarManagerId, 'toggleSubtask', why)
+			finish('toggleSubtask: ' + why, null)
+			return
+		}
+		setEventProperties(listId, taskId, { subtasks: next }, { done: finish })
 	}
 
 	//--- Task lists (projects): create, rename, recolor, delete
