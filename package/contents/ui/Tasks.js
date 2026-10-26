@@ -3,6 +3,13 @@
 // Tasks (Google Tasks, TickTick): event-shaped items with
 // kind === 'tasks#task'. Raw fields kept on the item: due, status, completed, notes, position,
 // parent. Days are 'YYYY-MM-DD' strings in local time.
+// Provider-neutral fields (both managers set them; Google has only parentId):
+//   dueTime: 'HH:mm' or '' (all-day / undated)
+//   reminders: [minutes before due] (negative: after it, eg: 9:00 on an all-day task's day)
+//   priority: 0 none, 1 low, 3 medium, 5 high (see priorityOf)
+//   repeatRule: an RRULE string ('RRULE:FREQ=DAILY;INTERVAL=1') or ''
+//   parentId: the parent task's id (Google subtasks) or ''
+//   subtasks: checklist items [{ id, title, done }] (TickTick)
 
 function pad2(n) {
 	return (n < 10 ? '0' : '') + n
@@ -91,7 +98,140 @@ function dueValue(day) {
 	return day ? day + 'T00:00:00.000Z' : null
 }
 
-// A Google body with only the given changes: { title?, notes?, dueDay?: 'YYYY-MM-DD' | '' }.
+//--- Priority, reminders, subtasks
+
+var PRIORITY_NONE = 0
+var PRIORITY_LOW = 1
+var PRIORITY_MEDIUM = 3
+var PRIORITY_HIGH = 5
+
+// The priority of an item (or a raw value): 0, 1, 3 or 5; anything else is rounded down to one
+// of them (2 -> 1, 4 -> 3, over 5 -> 5), not a number -> 0.
+function priorityOf(itemOrValue) {
+	var value = itemOrValue !== null && typeof itemOrValue === 'object' ? itemOrValue.priority : itemOrValue
+	var n = Number(value)
+	if (!isFinite(n) || n < 1) {
+		return PRIORITY_NONE
+	}
+	return n >= 5 ? PRIORITY_HIGH : n >= 3 ? PRIORITY_MEDIUM : PRIORITY_LOW
+}
+
+// 'HH:mm' when text is a time of day, else ''.
+function cleanTime(text) {
+	var m = /^(\d{1,2}):(\d{2})$/.exec(String(text || ''))
+	if (!m || Number(m[1]) > 23 || Number(m[2]) > 59) {
+		return ''
+	}
+	return pad2(Number(m[1])) + ':' + m[2]
+}
+
+// Reminders as whole minutes before due (numbers only), in the given order, repeats left out.
+function cleanReminders(list) {
+	var out = []
+	var arr = list && typeof list.length === 'number' && typeof list !== 'string' ? list : []
+	for (var i = 0; i < arr.length; i++) {
+		var n = Number(arr[i])
+		if (arr[i] !== null && arr[i] !== '' && isFinite(n) && out.indexOf(Math.round(n)) < 0) {
+			out.push(Math.round(n))
+		}
+	}
+	return out
+}
+
+// Subtasks as [{ id, title, done }] (id '' for a new one).
+function cleanSubtasks(list) {
+	var arr = list && typeof list.length === 'number' && typeof list !== 'string' ? list : []
+	var out = []
+	for (var i = 0; i < arr.length; i++) {
+		var s = arr[i]
+		if (!s || typeof s !== 'object') {
+			continue
+		}
+		out.push({ id: String(s.id || ''), title: String(s.title || ''), done: !!s.done })
+	}
+	return out
+}
+
+// An RRULE string, or '' (anything not text).
+function cleanRepeatRule(rule) {
+	return typeof rule === 'string' ? rule.trim() : ''
+}
+
+// The tasks of one list in subtask order: each task followed by its subtasks (parentId, or
+// Google's parent), at any depth. Rows: [{ item, depth }] (0 for a top level task). Siblings keep
+// the order of items; a task whose parent isn't in items (or a loop) is a top level one.
+function subtaskTree(items) {
+	items = items || []
+	var byId = {}
+	for (var i = 0; i < items.length; i++) {
+		if (items[i] && items[i].id) {
+			byId[items[i].id] = items[i]
+		}
+	}
+	var parentOf = function(item) {
+		var parent = item && (item.parentId || item.parent)
+		return parent && byId[parent] && parent !== item.id ? String(parent) : ''
+	}
+	// Top level: no known parent, or a loop of parents.
+	var isRoot = function(item) {
+		var seen = {}
+		var current = item
+		while (current) {
+			if (seen[current.id]) {
+				return current === item // In a loop: only the item that closes it is a root
+			}
+			seen[current.id] = true
+			var parent = parentOf(current)
+			if (!parent) {
+				return current === item
+			}
+			current = byId[parent]
+		}
+		return true
+	}
+	var children = {}
+	for (var j = 0; j < items.length; j++) {
+		var parent = parentOf(items[j])
+		if (parent) {
+			(children[parent] = children[parent] || []).push(items[j])
+		}
+	}
+	var rows = []
+	var placed = {}
+	var place = function(item, depth) {
+		if (!item || placed[item.id]) {
+			return
+		}
+		placed[item.id] = true
+		rows.push({ item: item, depth: depth })
+		var kids = children[item.id] || []
+		for (var k = 0; k < kids.length; k++) {
+			place(kids[k], depth + 1)
+		}
+	}
+	for (var r = 0; r < items.length; r++) {
+		if (!items[r]) {
+			continue
+		}
+		if (!items[r].id) {
+			rows.push({ item: items[r], depth: 0 })
+		} else if (isRoot(items[r])) {
+			place(items[r], 0)
+		}
+	}
+	// A loop with no task leading into it from outside: its tasks are top level.
+	for (var q = 0; q < items.length; q++) {
+		if (items[q] && items[q].id && !placed[items[q].id]) {
+			place(items[q], 0)
+		}
+	}
+	return rows
+}
+
+// A body with only the given changes: { title?, notes?, dueDay?: 'YYYY-MM-DD' | '', dueTime?:
+// 'HH:mm' | '', priority?, repeatRule?, reminders?: [minutes], subtasks?: [{ id, title, done }] }.
+// Google shape (title, notes, due); the other fields are kept by name for TickTick
+// (toTickTick) and dropped for Google (googleBody).
 function editBody(changes) {
 	var body = {}
 	changes = changes || {}
@@ -104,7 +244,36 @@ function editBody(changes) {
 	if (typeof changes.dueDay !== 'undefined') {
 		body.due = dueValue(changes.dueDay)
 	}
+	if (typeof changes.dueTime !== 'undefined') {
+		body.dueTime = cleanTime(changes.dueTime)
+	}
+	if (typeof changes.priority !== 'undefined') {
+		body.priority = priorityOf(changes.priority)
+	}
+	if (typeof changes.repeatRule !== 'undefined') {
+		body.repeatRule = cleanRepeatRule(changes.repeatRule)
+	}
+	if (typeof changes.reminders !== 'undefined') {
+		body.reminders = cleanReminders(changes.reminders)
+	}
+	if (typeof changes.subtasks !== 'undefined') {
+		body.subtasks = cleanSubtasks(changes.subtasks)
+	}
 	return body
+}
+
+// The fields Google Tasks doesn't have (no time, priority, repeat, reminders or checklist).
+var NOT_GOOGLE_FIELDS = ['dueTime', 'priority', 'repeatRule', 'reminders', 'subtasks']
+
+// A copy of body (editBody, restoreBody, toggleBody) without NOT_GOOGLE_FIELDS: what goes to Google.
+function googleBody(body) {
+	var out = {}
+	for (var key in (body || {})) {
+		if (NOT_GOOGLE_FIELDS.indexOf(key) < 0) {
+			out[key] = body[key]
+		}
+	}
+	return out
 }
 
 // The body to create a deleted task again from its undo copy (Undo.restoreCopy): title, notes,
@@ -122,6 +291,24 @@ function restoreBody(copy) {
 	body.status = done ? 'completed' : 'needsAction'
 	if (done && copy.completed) {
 		body.completed = copy.completed
+	}
+	// TickTick's own fields, when the task had them (googleBody drops them for Google).
+	if (due && cleanTime(copy.dueTime)) {
+		body.dueTime = cleanTime(copy.dueTime)
+	}
+	if (priorityOf(copy)) {
+		body.priority = priorityOf(copy)
+	}
+	if (cleanRepeatRule(copy.repeatRule)) {
+		body.repeatRule = cleanRepeatRule(copy.repeatRule)
+	}
+	if (cleanReminders(copy.reminders).length) {
+		body.reminders = cleanReminders(copy.reminders)
+	}
+	if (cleanSubtasks(copy.subtasks).length) {
+		body.subtasks = cleanSubtasks(copy.subtasks).map(function(s) {
+			return { id: '', title: s.title, done: s.done } // New items: the old ids are gone
+		})
 	}
 	return body
 }
@@ -174,12 +361,59 @@ function tickTickDue(task, wallClock) {
 	return { day: dayString(d), time: pad2(d.getHours()) + ':' + pad2(d.getMinutes()) }
 }
 
-// The Google-shaped fields of a TickTick task: { title, notes, due, dueTime, status, completed },
-// due null when undated, completed null when not done. wallClock: see tickTickDue.
+// Minutes before due of a TickTick reminder ('TRIGGER:-PT15M' 15 before, 'TRIGGER:PT0S' at due,
+// 'TRIGGER:P0DT9H0M0S' 9 hours after: 9:00 on an all-day task's day), or null.
+function parseTickTickReminder(text) {
+	var m = /^(?:TRIGGER:)?([+-])?P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/.exec(String(text || '').trim())
+	if (!m || !/\d/.test(String(text))) {
+		return null
+	}
+	var minutes = Number(m[2] || 0) * 7 * 1440 + Number(m[3] || 0) * 1440 + Number(m[4] || 0) * 60
+		+ Number(m[5] || 0) + Math.floor(Number(m[6] || 0) / 60)
+	return m[1] === '-' || minutes === 0 ? minutes : -minutes
+}
+
+// TickTick's reminder for minutes before due (see parseTickTickReminder).
+function formatTickTickReminder(minutesBefore) {
+	var n = Math.round(Number(minutesBefore) || 0)
+	if (n === 0) {
+		return 'TRIGGER:PT0S'
+	}
+	var total = Math.abs(n)
+	var days = Math.floor(total / 1440)
+	var hours = Math.floor((total % 1440) / 60)
+	var minutes = total % 60
+	var text = 'P' + (days ? days + 'D' : '')
+	if (hours || minutes) {
+		text += 'T' + (hours ? hours + 'H' : '') + (minutes ? minutes + 'M' : '')
+	}
+	return 'TRIGGER:' + (n > 0 ? '-' : '') + text
+}
+
+// A TickTick checklist item done: status 1 (also 2, like a task).
+function tickTickItemDone(item) {
+	return !!item && (item.status === 1 || item.status === 2)
+}
+
+// The Google-shaped fields of a TickTick task: { title, notes, due, dueTime, status, completed,
+// reminders, priority, repeatRule, parentId, subtasks }, due null when undated, completed null
+// when not done. wallClock: see tickTickDue.
 function fromTickTick(task, wallClock) {
 	var due = tickTickDue(task, wallClock)
 	var done = !!task && task.status === 2
 	var completedMs = parseTickTickDate(task && task.completedTime)
+	var reminders = []
+	var rawReminders = task && Array.isArray(task.reminders) ? task.reminders : []
+	for (var i = 0; i < rawReminders.length; i++) {
+		var minutes = parseTickTickReminder(rawReminders[i])
+		if (minutes !== null && reminders.indexOf(minutes) < 0) {
+			reminders.push(minutes)
+		}
+	}
+	var rawItems = task && Array.isArray(task.items) ? task.items.slice() : []
+	rawItems.sort(function(a, b) {
+		return (Number(a && a.sortOrder) || 0) - (Number(b && b.sortOrder) || 0)
+	})
 	return {
 		title: (task && task.title) || '',
 		notes: (task && task.content) || '',
@@ -187,25 +421,45 @@ function fromTickTick(task, wallClock) {
 		dueTime: due.time,
 		status: done ? 'completed' : 'needsAction',
 		completed: done && !isNaN(completedMs) ? new Date(completedMs).toISOString() : null,
+		reminders: reminders,
+		priority: priorityOf(task && task.priority),
+		repeatRule: cleanRepeatRule(task && task.repeatFlag),
+		parentId: task && task.parentId ? String(task.parentId) : '',
+		subtasks: rawItems.filter(function(item) { return !!item }).map(function(item) {
+			return { id: String(item.id || ''), title: String(item.title || ''), done: tickTickItemDone(item) }
+		}),
 	}
 }
 
-// The TickTick fields for a Google-shaped body (editBody, toggleBody, restoreBody): only what it
-// changes. task: the task's TickTick fields (dueDate, isAllDay, timeZone), or null for a new one.
-// A timed task keeps its time on another day; other due days are all-day, at the start of the
+// The TickTick fields for a body (editBody, toggleBody, restoreBody): only what it changes.
+// task: the task's TickTick fields (dueDate, isAllDay, timeZone, items), or null for a new one.
+// With dueTime ('HH:mm') the task is timed at that local time, with dueTime '' all-day; without
+// dueTime a timed task keeps its time on another day. All-day due days are at the start of the
 // day in the task's time zone (toUtc(zone, year, month (0-11), day, h, m, s) -> UTC ms or null,
 // eg: TimeZone.toUtc; optional), else in local time. A due of null clears the dates.
-function toTickTick(body, task, toUtc) {
+// opts (optional): { wallClock (see tickTickDue: the current day when only dueTime changes),
+// timeZone: the zone a new timed task gets (eg: TimeZone.guessLocal()) }.
+// reminders -> 'TRIGGER:...' strings, priority, repeatRule -> repeatFlag, subtasks -> items
+// (the task's own item fields kept by id, status 0 / 1).
+function toTickTick(body, task, toUtc, opts) {
 	var out = {}
 	body = body || {}
+	opts = opts || {}
 	if (typeof body.title !== 'undefined') {
 		out.title = body.title || ''
 	}
 	if (typeof body.notes !== 'undefined') {
 		out.content = body.notes || ''
 	}
+	var hasTime = typeof body.dueTime !== 'undefined'
+	var newTime = hasTime ? cleanTime(body.dueTime) : ''
+	var day = null // null: the due day doesn't change
 	if (typeof body.due !== 'undefined') {
-		var day = dueDay(body)
+		day = dueDay(body)
+	} else if (hasTime && task) {
+		day = tickTickDue(task, opts.wallClock).day || null // No due day: no time either
+	}
+	if (day !== null) {
 		if (!day) {
 			out.dueDate = null
 			out.startDate = null
@@ -214,7 +468,13 @@ function toTickTick(body, task, toUtc) {
 			var y = Number(parts[0]), mo = Number(parts[1]) - 1, d = Number(parts[2])
 			var current = parseTickTickDate(task && (task.dueDate || task.startDate))
 			var ms = null
-			if (task && task.isAllDay === false && !isNaN(current)) {
+			if (newTime) {
+				ms = new Date(y, mo, d, Number(newTime.substring(0, 2)), Number(newTime.substring(3, 5))).getTime()
+				out.isAllDay = false
+				if (!(task && task.timeZone) && opts.timeZone) {
+					out.timeZone = String(opts.timeZone)
+				}
+			} else if (!hasTime && task && task.isAllDay === false && !isNaN(current)) {
 				var time = new Date(current)
 				ms = new Date(y, mo, d, time.getHours(), time.getMinutes()).getTime()
 				out.isAllDay = false
@@ -238,7 +498,55 @@ function toTickTick(body, task, toUtc) {
 			out.completedTime = formatTickTickDate(completedMs)
 		}
 	}
+	if (typeof body.priority !== 'undefined') {
+		out.priority = priorityOf(body.priority)
+	}
+	if (typeof body.repeatRule !== 'undefined') {
+		out.repeatFlag = cleanRepeatRule(body.repeatRule)
+	}
+	if (typeof body.reminders !== 'undefined') {
+		out.reminders = cleanReminders(body.reminders).map(formatTickTickReminder)
+	}
+	if (typeof body.subtasks !== 'undefined') {
+		out.items = tickTickItems(body.subtasks, task && task.items)
+	}
 	return out
+}
+
+// TickTick checklist items for subtasks ([{ id, title, done }]): an item of current (the task's
+// items) with the same id keeps its other fields; a new one (no id) has title and status only.
+function tickTickItems(subtasks, current) {
+	var byId = {}
+	var currentList = current && typeof current.length === 'number' ? current : []
+	for (var i = 0; i < currentList.length; i++) {
+		if (currentList[i] && currentList[i].id) {
+			byId[currentList[i].id] = currentList[i]
+		}
+	}
+	var lastOrder = -1
+	return cleanSubtasks(subtasks).map(function(s) {
+		var item = {}
+		var old = s.id ? byId[s.id] : null
+		for (var key in (old || {})) {
+			item[key] = old[key]
+		}
+		if (s.id) {
+			item.id = s.id
+		}
+		item.title = s.title
+		var wasDone = tickTickItemDone(old)
+		item.status = s.done ? 1 : 0
+		if (!s.done) {
+			delete item.completedTime
+		} else if (!wasDone) {
+			item.completedTime = formatTickTickDate(Date.now())
+		}
+		if (!isFinite(Number(item.sortOrder)) || item.sortOrder === null || item.sortOrder === '') {
+			item.sortOrder = lastOrder + 1 // After the item before it
+		}
+		lastOrder = Number(item.sortOrder)
+		return item
+	})
 }
 
 //--- Tasks view: task lists as sections
@@ -278,9 +586,18 @@ function compareTitle(a, b) {
 	return at === bt ? 0 : at.localeCompare(bt) || (at < bt ? -1 : 1)
 }
 
+// By priority: the highest first; 0 for the same priority.
+function comparePriority(a, b) {
+	return priorityOf(b) - priorityOf(a)
+}
+
 // The order of open tasks for a sort (Tasks view "Sort by"): 'due' (sortOpenTasks), 'title' (then
-// by due day), 'list' (by the list's rank ra / rb, then in the list's order).
+// by due day), 'list' (by the list's rank ra / rb, then in the list's order), 'priority' (the
+// highest first, then by due day).
 function compareOpen(a, b, sortBy, ra, rb) {
+	if (sortBy === 'priority') {
+		return comparePriority(a, b) || compareDue(a, b) || comparePosition(a, b)
+	}
 	if (sortBy === 'title') {
 		return compareTitle(a, b) || compareDue(a, b) || comparePosition(a, b)
 	}

@@ -12,7 +12,8 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
-	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd']
+	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
+	'priorityOf', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -397,10 +398,11 @@ same(T.tickTickDue({}, null), { day: '', time: '' })
 same(T.tickTickDue({ dueDate: 'bad' }, null), { day: '', time: '' })
 
 // fromTickTick: Google-shaped fields the UI reads.
+const noExtras = { reminders: [], priority: 0, repeatRule: '', parentId: '', subtasks: [] }
 same(T.fromTickTick({ title: 'A', content: 'n', dueDate: '2026-10-26T23:00:00+0000', isAllDay: true, status: 0 }, TZ.wallClock),
-	{ title: 'A', notes: 'n', due: '2026-10-27T00:00:00.000Z', dueTime: '', status: 'needsAction', completed: null })
+	{ title: 'A', notes: 'n', due: '2026-10-27T00:00:00.000Z', dueTime: '', status: 'needsAction', completed: null, ...noExtras })
 same(T.fromTickTick({ title: 'B', status: 2, completedTime: '2026-10-25T10:00:00+0000' }, null),
-	{ title: 'B', notes: '', due: null, dueTime: '', status: 'completed', completed: '2026-10-25T10:00:00.000Z' })
+	{ title: 'B', notes: '', due: null, dueTime: '', status: 'completed', completed: '2026-10-25T10:00:00.000Z', ...noExtras })
 const fromTimed = T.fromTickTick({ title: 'C', dueDate: '2026-10-27T13:00:00+0000', isAllDay: false, status: 0 }, null)
 assert.strictEqual(fromTimed.due, '2026-10-27T00:00:00.000Z')
 assert.strictEqual(fromTimed.dueTime, '14:00')
@@ -432,5 +434,121 @@ same(T.toTickTick(T.toggleBody(false), null, null), { status: 0 })
 // Restore copy (undo a delete).
 same(T.toTickTick(T.restoreBody({ title: 'R', notes: 'x', due: '2026-10-27T00:00:00.000Z', isCompleted: false }), null, null),
 	{ title: 'R', content: 'x', isAllDay: true, dueDate: '2026-10-26T23:00:00+0000', startDate: '2026-10-26T23:00:00+0000', status: 0 })
+
+
+//--- Priority, reminders, repeat, subtasks
+
+// priorityOf: 0 / 1 / 3 / 5, from an item or a value.
+same([0, 1, 2, 3, 4, 5, 9, -1, 'x', null, undefined, '3'].map(T.priorityOf), [0, 1, 1, 3, 3, 5, 5, 0, 0, 0, 0, 3])
+assert.strictEqual(T.priorityOf(task({ priority: 5 })), 5)
+assert.strictEqual(T.priorityOf(task({})), 0)
+
+// Priority sort: the highest first, then by due day, then position.
+{
+	const open = [
+		task({ id: 'none-today', due: '2026-10-26T00:00:00.000Z' }),
+		task({ id: 'low', priority: 1 }),
+		task({ id: 'high-later', priority: 5, due: '2026-11-03T00:00:00.000Z' }),
+		task({ id: 'high-today', priority: 5, due: '2026-10-26T00:00:00.000Z' }),
+		task({ id: 'medium', priority: 3 }),
+	]
+	same(T.sortOpenTasks(open, 'priority').map(t => t.id), ['high-today', 'high-later', 'medium', 'low', 'none-today'])
+	// Every row builder takes it.
+	const lists = [{ id: 'a::1', name: 'L', group: 'a' }]
+	const byList = { 'a::1': open }
+	same(T.taskRows(lists, byList, false, 'priority').filter(r => r.type === 'task').map(r => r.item.id),
+		['high-today', 'high-later', 'medium', 'low', 'none-today'])
+	same(T.flatRows(lists, byList, 'priority', false).filter(r => r.type === 'task').map(r => r.item.id),
+		['high-today', 'high-later', 'medium', 'low', 'none-today'])
+	same(T.dateRows(lists, byList, '2026-10-26', 1, false, 'priority').filter(r => r.type === 'task' && r.section === 'nodate').map(r => r.item.id),
+		['medium', 'low'])
+}
+
+// subtaskTree: parents then their children (any depth), siblings in the given order.
+{
+	const items = [
+		task({ id: 'c2', parent: 'p' }),
+		task({ id: 'p' }),
+		task({ id: 'g', parentId: 'c1' }),
+		task({ id: 'c1', parent: 'p' }),
+		task({ id: 'q' }),
+		task({ id: 'orphan', parent: 'gone' }),
+		task({ id: 'x', parent: 'y' }), // A loop: shown once each, top level first
+		task({ id: 'y', parent: 'x' }),
+	]
+	same(T.subtaskTree(items).map(r => r.item.id + ':' + r.depth),
+		['p:0', 'c2:1', 'c1:1', 'g:2', 'q:0', 'orphan:0', 'x:0', 'y:1'])
+	same(T.subtaskTree([]), [])
+	same(T.subtaskTree(null), [])
+}
+
+// editBody: the new fields only when given, cleaned.
+same(T.editBody({ dueTime: '9:05', priority: 4, repeatRule: ' RRULE:FREQ=DAILY ', reminders: [15, '0', 'x', 15], subtasks: [{ id: 's1', title: 'A', done: 1 }, null, { title: 'B' }] }),
+	{ dueTime: '09:05', priority: 3, repeatRule: 'RRULE:FREQ=DAILY', reminders: [15, 0], subtasks: [{ id: 's1', title: 'A', done: true }, { id: '', title: 'B', done: false }] })
+same(T.editBody({ dueTime: '25:00', repeatRule: null, reminders: null, subtasks: 'x' }), { dueTime: '', repeatRule: '', reminders: [], subtasks: [] })
+
+// googleBody: Google has no time, priority, repeat, reminders or checklist.
+same(T.googleBody(T.editBody({ title: 'A', dueDay: '2026-11-01', dueTime: '10:00', priority: 5, repeatRule: 'RRULE:FREQ=DAILY', reminders: [5], subtasks: [] })),
+	{ title: 'A', due: '2026-11-01T00:00:00.000Z' })
+same(T.googleBody(T.toggleBody(false)), { status: 'needsAction', completed: null })
+
+// restoreBody keeps TickTick's fields when the copy has them (subtasks as new items).
+same(T.restoreBody({ title: 'R', due: '2026-11-01T00:00:00.000Z', dueTime: '10:00', priority: 3, repeatRule: 'RRULE:FREQ=WEEKLY', reminders: [0], subtasks: [{ id: 'old', title: 'S', done: true }] }),
+	{ title: 'R', due: '2026-11-01T00:00:00.000Z', status: 'needsAction', dueTime: '10:00', priority: 3, repeatRule: 'RRULE:FREQ=WEEKLY', reminders: [0], subtasks: [{ id: '', title: 'S', done: true }] })
+
+// Reminders: TickTick triggers <-> minutes before due.
+same(['TRIGGER:-PT15M', 'TRIGGER:PT0S', 'TRIGGER:P0DT9H0M0S', 'TRIGGER:-P1DT15H0M0S', '-PT1H', 'TRIGGER:-P1W', 'TRIGGER:', 'nonsense', null].map(T.parseTickTickReminder),
+	[15, 0, -540, 2340, 60, 10080, null, null, null])
+same([15, 0, -540, 2340, 60, 1440].map(T.formatTickTickReminder),
+	['TRIGGER:-PT15M', 'TRIGGER:PT0S', 'TRIGGER:PT9H', 'TRIGGER:-P1DT15H', 'TRIGGER:-PT1H', 'TRIGGER:-P1D'])
+for (const minutes of [15, 0, -540, 2340, 1441, 30]) {
+	assert.strictEqual(T.parseTickTickReminder(T.formatTickTickReminder(minutes)), minutes, 'reminder round trip ' + minutes)
+}
+
+// fromTickTick: the new fields.
+{
+	const raw = {
+		title: 'Rich', dueDate: '2026-10-27T13:30:00+0000', isAllDay: false, timeZone: 'Europe/Warsaw', status: 0,
+		reminders: ['TRIGGER:PT0S', 'TRIGGER:-PT30M', 'bad', 'TRIGGER:-PT30M'], priority: 5, repeatFlag: 'RRULE:FREQ=DAILY;INTERVAL=1',
+		parentId: 'par', items: [{ id: 'i2', title: 'Second', status: 0, sortOrder: 2 }, { id: 'i1', title: 'First', status: 1, sortOrder: 1 }],
+	}
+	const f = T.fromTickTick(raw, TZ.wallClock)
+	same([f.dueTime, f.reminders, f.priority, f.repeatRule, f.parentId], ['14:30', [0, 30], 5, 'RRULE:FREQ=DAILY;INTERVAL=1', 'par'])
+	same(f.subtasks, [{ id: 'i1', title: 'First', done: true }, { id: 'i2', title: 'Second', done: false }])
+
+	// toTickTick: back again.
+	same(T.toTickTick(T.editBody({ priority: 1, repeatRule: '', reminders: [0, 30] }), raw, TZ.toUtc),
+		{ priority: 1, repeatFlag: '', reminders: ['TRIGGER:PT0S', 'TRIGGER:-PT30M'] })
+	// Subtasks: the task's own item fields kept by id; a new one after the last.
+	const items = T.toTickTick(T.editBody({ subtasks: [{ id: 'i1', title: 'First!', done: false }, { id: 'i2', title: 'Second', done: false }, { title: 'New', done: false }] }), raw, null).items
+	same(items, [
+		{ id: 'i1', title: 'First!', status: 0, sortOrder: 1 },
+		{ id: 'i2', title: 'Second', status: 0, sortOrder: 2 },
+		{ title: 'New', status: 0, sortOrder: 3 },
+	])
+	const checked = T.toTickTick({ subtasks: [{ id: 'i2', title: 'Second', done: true }] }, raw, null).items[0]
+	assert.strictEqual(checked.status, 1)
+	assert.ok(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+0000$/.test(checked.completedTime), 'checked item: completedTime')
+
+	// Due time: timed on the day at that local time; '' makes it all-day.
+	same(T.toTickTick(T.editBody({ dueDay: '2026-10-28', dueTime: '09:15' }), null, TZ.toUtc, { timeZone: 'Europe/Warsaw' }),
+		{ isAllDay: false, timeZone: 'Europe/Warsaw', dueDate: '2026-10-28T08:15:00+0000', startDate: '2026-10-28T08:15:00+0000' })
+	// The task's own zone is kept (not sent again).
+	same(T.toTickTick(T.editBody({ dueDay: '2026-10-28', dueTime: '09:15' }), raw, TZ.toUtc, { timeZone: 'Asia/Tokyo' }),
+		{ isAllDay: false, dueDate: '2026-10-28T08:15:00+0000', startDate: '2026-10-28T08:15:00+0000' })
+	// Only the time changes: on the task's current day.
+	same(T.toTickTick(T.editBody({ dueTime: '18:00' }), raw, TZ.toUtc, { wallClock: TZ.wallClock }),
+		{ isAllDay: false, dueDate: '2026-10-27T17:00:00+0000', startDate: '2026-10-27T17:00:00+0000' })
+	same(T.toTickTick(T.editBody({ dueTime: '' }), raw, TZ.toUtc, { wallClock: TZ.wallClock }),
+		{ isAllDay: true, dueDate: '2026-10-26T23:00:00+0000', startDate: '2026-10-26T23:00:00+0000' })
+	// No due day: no time either.
+	same(T.toTickTick(T.editBody({ dueTime: '18:00' }), { status: 0 }, TZ.toUtc), {})
+	same(T.toTickTick(T.editBody({ dueDay: '', dueTime: '18:00' }), raw, TZ.toUtc), { dueDate: null, startDate: null })
+	// Round trip of a timed task.
+	same(T.tickTickDue(Object.assign({}, raw, T.toTickTick(T.editBody({ dueDay: '2026-11-02', dueTime: '07:45' }), raw, TZ.toUtc)), TZ.wallClock),
+		{ day: '2026-11-02', time: '07:45' })
+}
+// Without the new fields toTickTick is as before (no priority / items / reminders sent).
+same(T.toTickTick(T.editBody({ title: 'Plain' }), { priority: 5, items: [{ id: 'a' }] }, null), { title: 'Plain' })
 
 console.log('PASS tasks')
