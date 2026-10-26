@@ -35,8 +35,11 @@ PlasmaExtras.PlasmoidHeading {
 		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
 		readonly property real sideWidth: Math.max(leftGroup.implicitWidth, rightGroup.implicitWidth)
 		// Not enough room for the view names next to the title: icons only (names in tooltips).
+		// Icons only when the tab names don't fit beside a short title (a long one, eg: the Day view's
+		// date, is elided first rather than taking the names away).
 		readonly property bool compactTabs: header.showViewTabs
-			&& width < Math.max(fullTabsMeasure.implicitWidth, rightGroup.implicitWidth) * 2 + centerGroup.implicitWidth + Kirigami.Units.largeSpacing * 2
+			&& width < Math.max(fullTabsMeasure.implicitWidth, rightGroup.implicitWidth) * 2
+				+ Math.min(centerGroup.implicitWidth, Kirigami.Units.gridUnit * 8) + Kirigami.Units.largeSpacing * 2
 
 		readonly property var viewTabs: {
 			var tabs = [
