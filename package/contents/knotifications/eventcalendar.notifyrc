@@ -23,6 +23,11 @@ Name=Daily agenda
 Comment=Today's events, once in the morning
 Action=Popup
 
+[Event/taskReminder]
+Name=Task reminder
+Comment=A task is due, or the tasks due today
+Action=Popup
+
 [Event/timer]
 Name=Timer finished
 Comment=The widget's timer has finished

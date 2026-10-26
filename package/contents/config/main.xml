@@ -277,6 +277,18 @@
 			<!-- "yyyy-m-d" of the last daily agenda shown, so it's shown once a day. -->
 			<default></default>
 		</entry>
+		<entry name="dailyAgendaTasks" type="bool">
+			<!-- The daily agenda also lists today's and overdue open tasks. -->
+			<default>true</default>
+		</entry>
+		<entry name="taskRemindersEnabled" type="bool">
+			<!-- Notifications for tasks: their own reminders (due time, TickTick reminders), and the tasks of the day at the daily agenda time. -->
+			<default>true</default>
+		</entry>
+		<entry name="taskSummaryDay" type="string">
+			<!-- "yyyy-m-d" of the last morning task summary, so it's shown once a day. -->
+			<default></default>
+		</entry>
 		<entry name="clockShowNextEvent" type="bool">
 			<default>true</default>
 		</entry>

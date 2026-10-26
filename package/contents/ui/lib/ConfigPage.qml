@@ -180,6 +180,12 @@ KCM.SimpleKCM {
 	property var cfg_dailyAgendaTimeDefault
 	property var cfg_dailyAgendaDay
 	property var cfg_dailyAgendaDayDefault
+	property var cfg_dailyAgendaTasks
+	property var cfg_dailyAgendaTasksDefault
+	property var cfg_taskRemindersEnabled
+	property var cfg_taskRemindersEnabledDefault
+	property var cfg_taskSummaryDay
+	property var cfg_taskSummaryDayDefault
 	property var cfg_clockShowNextEvent
 	property var cfg_clockShowNextEventDefault
 	property var cfg_clockNextEventMinutes

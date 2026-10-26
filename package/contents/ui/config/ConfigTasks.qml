@@ -392,6 +392,24 @@ ConfigPage {
 			}
 		}
 
+		//--- Notifications (UpcomingEvents.qml)
+		FormCard.FormHeader {
+			title: i18n("Notifications")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Task reminders")
+				description: i18n("A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time.")
+				configKey: 'taskRemindersEnabled'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Tasks in the daily agenda")
+				description: i18n("The daily agenda notification also lists today's and overdue tasks.")
+				configKey: 'dailyAgendaTasks'
+			}
+		}
+
 		//--- Google Tasks
 		FormCard.FormHeader {
 			title: i18n("Google Tasks")
