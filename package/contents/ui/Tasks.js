@@ -522,10 +522,60 @@ function fromTickTick(task, wallClock) {
 	}
 }
 
+// The day ('YYYY-MM-DD') of a TickTick instant (UTC ms) as tickTickDue counts it: all-day in the
+// task's zone (wallClock, optional) else local time; timed in local time.
+function tickTickDayOf(ms, task, wallClock) {
+	if (task && task.isAllDay !== false && task.timeZone && wallClock) {
+		var w = wallClock(task.timeZone, ms)
+		if (w) {
+			return w.year + '-' + pad2(w.month + 1) + '-' + pad2(w.day)
+		}
+	}
+	return dayString(new Date(ms))
+}
+
+// Days from day a to day b ('YYYY-MM-DD').
+function daysBetween(a, b) {
+	var pa = a.split('-'), pb = b.split('-')
+	return Math.round((Date.UTC(Number(pb[0]), Number(pb[1]) - 1, Number(pb[2]))
+		- Date.UTC(Number(pa[0]), Number(pa[1]) - 1, Number(pa[2]))) / 86400000)
+}
+
+// The new start (UTC ms) of a task that spans time (a startDate before its dueDate) when its due
+// moment moves to dueMs on day ('YYYY-MM-DD'), so it keeps its length; null when it had no span.
+// Timed to timed: the same length in time. Otherwise whole days: all-day it starts that many days
+// before at the start of the day (in the task's zone, see toTickTick), timed at the due's time.
+function tickTickShiftedStart(task, day, dueMs, allDay, toUtc, wallClock) {
+	var oldDue = parseTickTickDate(task && task.dueDate)
+	var oldStart = parseTickTickDate(task && task.startDate)
+	if (isNaN(oldDue) || isNaN(oldStart) || oldStart >= oldDue) {
+		return null
+	}
+	if (!allDay && task.isAllDay === false) {
+		return dueMs - (oldDue - oldStart)
+	}
+	var days = daysBetween(tickTickDayOf(oldStart, task, wallClock), tickTickDayOf(oldDue, task, wallClock))
+	if (days <= 0) {
+		return null
+	}
+	var parts = addDays(day, -days).split('-')
+	var y = Number(parts[0]), mo = Number(parts[1]) - 1, d = Number(parts[2])
+	if (!allDay) {
+		var due = new Date(dueMs)
+		return new Date(y, mo, d, due.getHours(), due.getMinutes()).getTime()
+	}
+	var ms = task.timeZone && toUtc ? toUtc(task.timeZone, y, mo, d, 0, 0, 0) : null
+	if (ms === null || typeof ms === 'undefined' || isNaN(ms)) {
+		ms = new Date(y, mo, d).getTime()
+	}
+	return ms
+}
+
 // The TickTick fields for a body (editBody, toggleBody, restoreBody): only what it changes.
 // task: the task's TickTick fields (dueDate, isAllDay, timeZone, items), or null for a new one.
 // With dueTime ('HH:mm') the task is timed at that local time, with dueTime '' all-day; without
-// dueTime a timed task keeps its time on another day. All-day due days are at the start of the
+// dueTime a timed task keeps its time on another day. A task with a start before its due keeps its
+// length (tickTickShiftedStart), else startDate is the due. All-day due days are at the start of the
 // day in the task's time zone (toUtc(zone, year, month (0-11), day, h, m, s) -> UTC ms or null,
 // eg: TimeZone.toUtc; optional), else in local time. A due of null clears the dates.
 // opts (optional): { wallClock (see tickTickDue: the current day when only dueTime changes),
@@ -580,6 +630,10 @@ function toTickTick(body, task, toUtc, opts) {
 			}
 			out.dueDate = formatTickTickDate(ms)
 			out.startDate = out.dueDate
+			var startMs = tickTickShiftedStart(task, day, ms, out.isAllDay, toUtc, opts.wallClock)
+			if (startMs !== null) {
+				out.startDate = formatTickTickDate(startMs)
+			}
 		}
 	}
 	if (typeof body.status !== 'undefined') {

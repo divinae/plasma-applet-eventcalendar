@@ -427,6 +427,26 @@ same(T.tickTickDue(Object.assign({}, tokyoAllDay, T.toTickTick(T.editBody({ dueD
 // A timed task keeps its local time on the new day (14:00 Warsaw, before and after the switch).
 same(T.toTickTick(T.editBody({ dueDay: '2026-10-20' }), { dueDate: '2026-10-27T13:00:00+0000', isAllDay: false }, TZ.toUtc),
 	{ isAllDay: false, dueDate: '2026-10-20T12:00:00+0000', startDate: '2026-10-20T12:00:00+0000' })
+// A task that spans time (startDate before dueDate) keeps its length when its day moves.
+// Timed, 2 h (12:00-14:00 Warsaw on the 27th, after the switch) to the 20th (before it): 12:00-14:00.
+same(T.toTickTick(T.editBody({ dueDay: '2026-10-20' }), { startDate: '2026-10-27T11:00:00+0000', dueDate: '2026-10-27T13:00:00+0000', isAllDay: false }, TZ.toUtc),
+	{ isAllDay: false, dueDate: '2026-10-20T12:00:00+0000', startDate: '2026-10-20T10:00:00+0000' })
+// Only the time changes: the start moves with it.
+same(T.toTickTick(T.editBody({ dueTime: '16:00' }), { startDate: '2026-10-27T11:00:00+0000', dueDate: '2026-10-27T13:00:00+0000', isAllDay: false, timeZone: 'Europe/Warsaw' }, TZ.toUtc, { wallClock: TZ.wallClock }),
+	{ isAllDay: false, dueDate: '2026-10-27T15:00:00+0000', startDate: '2026-10-27T13:00:00+0000' })
+// All-day over three days (27th-29th Warsaw) to the 23rd: 21st-23rd, midnights across the switch.
+const span3 = { startDate: '2026-10-26T23:00:00+0000', dueDate: '2026-10-28T23:00:00+0000', isAllDay: true, timeZone: 'Europe/Warsaw' }
+same(T.toTickTick(T.editBody({ dueDay: '2026-10-23' }), span3, TZ.toUtc),
+	{ isAllDay: true, dueDate: '2026-10-22T22:00:00+0000', startDate: '2026-10-20T22:00:00+0000' })
+// All-day span made timed: the start keeps its days, at the due's time.
+same(T.toTickTick(T.editBody({ dueDay: '2026-10-29', dueTime: '10:00' }), span3, TZ.toUtc),
+	{ isAllDay: false, dueDate: '2026-10-29T09:00:00+0000', startDate: '2026-10-27T09:00:00+0000' })
+// Timed over two days made all-day: whole days, at the start of the day.
+same(T.toTickTick(T.editBody({ dueDay: '2026-11-05', dueTime: '' }), { startDate: '2026-10-27T20:00:00+0000', dueDate: '2026-10-28T08:00:00+0000', isAllDay: false }, TZ.toUtc),
+	{ isAllDay: true, dueDate: '2026-11-04T23:00:00+0000', startDate: '2026-11-03T23:00:00+0000' })
+// Timed within one day made all-day: start = due.
+same(T.toTickTick(T.editBody({ dueDay: '2026-11-05', dueTime: '' }), { startDate: '2026-10-27T08:00:00+0000', dueDate: '2026-10-27T10:00:00+0000', isAllDay: false }, TZ.toUtc),
+	{ isAllDay: true, dueDate: '2026-11-04T23:00:00+0000', startDate: '2026-11-04T23:00:00+0000' })
 // Done / not done.
 same(T.toTickTick(T.toggleBody(true, new Date(Date.UTC(2026, 9, 26, 8, 0, 0))), null, null),
 	{ status: 2, completedTime: '2026-10-26T08:00:00+0000' })
