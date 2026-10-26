@@ -340,14 +340,55 @@ CalendarManager {
 	}
 
 	//--- Event cache (EventCache.qml): shown on start until the first fetch round brings them in.
-	property var cachedEventsByCalendar: ({}) // { calendarId: { items: [...] } }, Google calendars only
+	// { calendarId: { items: [...] } }: Google calendars, Google task lists and TickTick projects.
+	property var cachedEventsByCalendar: ({})
 
-	// Events from the disk cache: parsed like fetched ones, shown right away.
+	// The account of a cached calendar id ('account::calendar') is a TickTick one.
+	function isTickTickAccountId(accountId) {
+		var accounts = tickTickAccountsStore.accounts
+		for (var i = 0; i < accounts.length; i++) {
+			if (accounts[i].id === accountId) {
+				return true
+			}
+		}
+		return false
+	}
+
+	// A cached task as the tasks managers parse it: placed on its day again, no notes.
+	function parseCachedTask(calendarId, item) {
+		var now = new Date()
+		var day = Tasks.placementDay(item, now, !!plasmoid.configuration.agendaPlaceOverdueTasksOnToday)
+		item.start = { date: day }
+		item.end = { date: Tasks.addDays(day, 1) }
+		defaultEventParsing(calendarId, item)
+		item.calendarManagerId = isTickTickAccountId(Tasks.listAccount(calendarId)) ? 'TickTick' : 'GoogleTasks'
+		item.notes = ''
+		item.description = ''
+		item.isCompleted = Tasks.isDone(item)
+		item.priority = Tasks.priorityOf(item)
+		item.dueTime = item.dueTime || ''
+		item.parentId = item.parentId || ''
+		item.repeatRule = item.repeatRule || ''
+		item.reminders = []
+		item.subtasks = []
+		var dueDay = Tasks.dueDay(item)
+		if (dueDay) {
+			item.dueDate = dueDay
+			item.dueDateTime = new Date(dueDay + ' 00:00:00')
+			item.dueEndTime = new Date(Tasks.addDays(dueDay, 1) + ' 00:00:00')
+		}
+	}
+
+	// Events and tasks from the disk cache: parsed like fetched ones, shown right away.
 	function showCachedEvents(calendars) {
 		var shown = {}
 		for (var calendarId in calendars) {
 			var items = calendars[calendarId]
 			for (var i = 0; i < items.length; i++) {
+				if (Tasks.isTask(items[i])) {
+					parseCachedTask(calendarId, items[i])
+					continue
+				}
 				defaultEventParsing(calendarId, items[i])
 				items[i].calendarManagerId = 'GoogleCalendar'
 				items[i].description = ''
@@ -359,10 +400,15 @@ CalendarManager {
 		mergeEvents()
 	}
 
+	// Google and TickTick accounts, for EventCacheUtil.selectedCalendarIds.
+	function cacheAccounts() {
+		return Shared.toArray(googleAccountsStore.accounts).concat(Shared.toArray(tickTickAccountsStore.accounts))
+	}
+
 	// A fetch round that couldn't load a cached calendar (offline right after boot, keyring still
 	// locked) keeps showing the cached events instead of an empty calendar.
 	function restoreCachedCalendars() {
-		var selected = EventCacheUtil.selectedCalendarIds(googleAccountsStore.accounts)
+		var selected = EventCacheUtil.selectedCalendarIds(cacheAccounts())
 		for (var calendarId in eventModel.cachedEventsByCalendar) {
 			if (!eventModel.eventsByCalendar[calendarId] && selected[calendarId]) {
 				eventModel.eventsByCalendar[calendarId] = eventModel.cachedEventsByCalendar[calendarId]
@@ -372,13 +418,10 @@ CalendarManager {
 
 	// After a fetch round without network errors: calendars that were fetched no longer need the
 	// cached copy, nor do ones whose account can't be fetched (signed out). Until the keyring gave
-	// the tokens, nothing Google was fetched yet, so everything stays.
+	// an account kind's tokens (Google, TickTick), nothing of it was fetched yet, so those stay.
 	function settleCachedCalendars() {
-		if (!googleAccountsStore.secretsLoaded) {
-			return
-		}
 		var fetchable = {}
-		var accounts = googleAccountsStore.fetchableAccounts
+		var accounts = Shared.toArray(googleAccountsStore.fetchableAccounts).concat(Shared.toArray(tickTickAccountsStore.fetchableAccounts))
 		for (var i = 0; i < accounts.length; i++) {
 			fetchable[accounts[i].id] = true
 		}
@@ -389,6 +432,11 @@ CalendarManager {
 			var accountId = calendarId.slice(0, calendarId.indexOf('::'))
 			if (eventModel.eventsByCalendar[calendarId] !== cached) {
 				continue // Fetched
+			}
+			var secretsLoaded = isTickTickAccountId(accountId) ? tickTickAccountsStore.secretsLoaded : googleAccountsStore.secretsLoaded
+			if (!secretsLoaded) {
+				remaining[calendarId] = cached // Not fetched yet
+				continue
 			}
 			if (!fetchable[accountId]) {
 				delete eventModel.eventsByCalendar[calendarId]

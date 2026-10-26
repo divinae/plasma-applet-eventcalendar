@@ -1,6 +1,7 @@
 // Event cache (instant start): what is kept on disk and how it's read back. Pure functions, no I/O.
-// Only Google calendar events (calendar ids "account::calendar"), only the fields the views need:
-// no descriptions, no attendee e-mails, never tokens.
+// Only Google calendar events and tasks (Google Tasks, TickTick) of accounts (calendar / list ids
+// "account::calendar"), only the fields the views need: no descriptions or task notes, no
+// attendee e-mails, never tokens.
 
 var VERSION = 1
 var MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000
@@ -106,10 +107,45 @@ function pickEvent(event) {
 	return picked
 }
 
+// The cached copy of one task (whitelisted fields only): no notes, no checklist, no reminders.
+var TASK_TEXT_FIELDS = ['due', 'dueTime', 'status', 'completed', 'parentId', 'repeatRule', 'projectId', 'backgroundColor']
+
+function pickTask(task) {
+	var picked = {
+		kind: 'tasks#task',
+		id: String(task.id),
+		title: String(typeof task._summary !== 'undefined' ? task._summary : (task.title || task.summary || '')),
+		start: copyDate(task.start),
+		end: copyDate(task.end),
+	}
+	picked.summary = picked.title
+	for (var i = 0; i < TASK_TEXT_FIELDS.length; i++) {
+		var key = TASK_TEXT_FIELDS[i]
+		var value = task[key]
+		if (value !== undefined && value !== null && value !== '' && typeof value !== 'object') {
+			picked[key] = String(value)
+		}
+	}
+	var priority = Number(task.priority)
+	if (isFinite(priority) && priority > 0) {
+		picked.priority = priority
+	}
+	// Not the whole task: changing it must start from the server copy (the tasks managers).
+	picked.fromCache = true
+	return picked
+}
+
+function isTask(event) {
+	return !!event && event.kind === 'tasks#task'
+}
+
 function isCacheableEvent(event) {
 	return !!event && !!event.id && !!event.start && !!event.end
 		&& typeof event.start === 'object' && typeof event.end === 'object'
-		&& event.kind !== 'tasks#task'
+}
+
+function pickItem(event) {
+	return isTask(event) ? pickTask(event) : pickEvent(event)
 }
 
 // JSON text for eventsByCalendar ({ calendarId: { items: [...] } }).
@@ -123,7 +159,7 @@ function serialize(eventsByCalendar, dateMin, dateMax, now) {
 		// Working locations (kept apart, see EventTypes.splitWorkingLocations) are stored with the
 		// events and split again when read (EventModel.showCachedEvents).
 		var events = toList(data && data.items).concat(toList(data && data.workingLocations))
-		calendars[calendarId] = events.filter(isCacheableEvent).map(pickEvent)
+		calendars[calendarId] = events.filter(isCacheableEvent).map(pickItem)
 	}
 	return JSON.stringify({
 		version: VERSION,
@@ -160,12 +196,13 @@ function deserialize(text, now, isSelected) {
 		}
 		var items = data.calendars[calendarId]
 		// Re-pick on read too, so an old or hand-edited file can't bring in more than the whitelist.
-		calendars[calendarId] = Array.isArray(items) ? items.filter(isCacheableEvent).map(pickEvent) : []
+		calendars[calendarId] = Array.isArray(items) ? items.filter(isCacheableEvent).map(pickItem) : []
 	}
 	return { savedAt: data.savedAt, dateMin: data.dateMin, dateMax: data.dateMax, calendars: calendars }
 }
 
-// Scoped ids ("account::calendar") of the calendars selected in the Google account settings.
+// Scoped ids ("account::calendar") of the calendars and task lists selected in the account
+// settings: Google (calendarIdList, tasklistIdList) and TickTick (projectIdList) accounts.
 function selectedCalendarIds(accounts) {
 	var ids = {}
 	var list = toList(accounts)
@@ -189,6 +226,12 @@ function selectedCalendarIds(accounts) {
 				ids[account.id + '::primary'] = true
 			}
 		}
+		var lists = toList(account.tasklistIdList).concat(toList(account.projectIdList))
+		for (var l = 0; l < lists.length; l++) {
+			if (lists[l]) {
+				ids[account.id + '::' + lists[l]] = true
+			}
+		}
 	}
 	return ids
 }
@@ -199,6 +242,7 @@ if (typeof module !== 'undefined') {
 		MAX_AGE_MS: MAX_AGE_MS,
 		isCacheableCalendarId: isCacheableCalendarId,
 		pickEvent: pickEvent,
+		pickTask: pickTask,
 		serialize: serialize,
 		deserialize: deserialize,
 		selectedCalendarIds: selectedCalendarIds,

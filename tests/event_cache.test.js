@@ -49,10 +49,42 @@ function fullEvent(overrides) {
 	}, overrides || {})
 }
 
+function fullTask(overrides) {
+	return Object.assign({
+		kind: 'tasks#task',
+		id: 't1',
+		calendarId: 'acc_1::tasks1',
+		calendarManagerId: 'TickTick',
+		title: 'Buy milk',
+		summary: 'Buy milk',
+		_summary: 'Buy milk',
+		notes: 'Private task note',
+		description: 'Private task note',
+		due: '2026-10-16T00:00:00.000Z',
+		dueTime: '14:30',
+		status: 'needsAction',
+		completed: null,
+		priority: 5,
+		parentId: 'p0',
+		repeatRule: 'RRULE:FREQ=DAILY;INTERVAL=1',
+		reminders: [15, 0],
+		subtasks: [{ id: 's1', title: 'Checklist secret', done: false }],
+		projectId: 'proj1',
+		position: '00001',
+		backgroundColor: '#00ff00',
+		htmlLink: 'https://ticktick.com/webapp/#p/proj1/tasks/t1',
+		tickTick: { items: [{ id: 's1', title: 'Checklist secret' }], reminders: ['TRIGGER:-PT15M'] },
+		start: { date: '2026-10-16' },
+		end: { date: '2026-10-17' },
+		startDateTime: new Date(2026, 9, 16),
+		accessToken: 'tt-token-must-not-leak',
+	}, overrides || {})
+}
+
 function sampleCalendars() {
 	return {
 		'acc_1::work@example.test': { items: [fullEvent()] },
-		'acc_1::tasks1': { items: [{ kind: 'tasks#task', id: 't1', start: { date: '2026-10-16' }, end: { date: '2026-10-17' } }] },
+		'acc_1::tasks1': { items: [fullTask()] },
 		'plasma_Holidays': { items: [fullEvent({ id: 'holiday' })] },
 		'https://example.test/cal.ics': { items: [fullEvent({ id: 'ics' })] },
 	}
@@ -60,12 +92,19 @@ function sampleCalendars() {
 
 function testWhitelist() {
 	const text = cache.serialize(sampleCalendars(), new Date(2026, 9, 1), new Date(2026, 10, 1), NOW)
-	for (const word of ['description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting', 'attachments', 'Budget sheet', 'drive.google.com']) {
+	for (const word of ['Private task note', 'Checklist secret', 'TRIGGER', 'notes', 'subtasks', 'reminders', 'tt-token', 'webapp', 'description', 'Secret agenda', 'email', 'boss@', 'me@example', 'token', 'Token', 'ya29', '1//nope', 'pin', 'passcode', 'organizer', 'creator', 'iconUri', 'conferenceId', 'displayName', 'conflictsWith', 'Overlapping meeting', 'attachments', 'Budget sheet', 'drive.google.com']) {
 		assert.ok(text.indexOf(word) === -1, 'cache contains ' + word)
 	}
 	const data = JSON.parse(text)
 	assert.deepStrictEqual(Object.keys(data.calendars), ['acc_1::work@example.test', 'acc_1::tasks1'])
-	assert.deepStrictEqual(data.calendars['acc_1::tasks1'], [], 'tasks are not cached')
+	// Tasks are cached too (whitelisted: no notes, checklist, reminders or links).
+	assert.deepStrictEqual(data.calendars['acc_1::tasks1'], [{
+		kind: 'tasks#task', id: 't1', title: 'Buy milk', summary: 'Buy milk',
+		start: { date: '2026-10-16' }, end: { date: '2026-10-17' },
+		due: '2026-10-16T00:00:00.000Z', dueTime: '14:30', status: 'needsAction', parentId: 'p0',
+		repeatRule: 'RRULE:FREQ=DAILY;INTERVAL=1', projectId: 'proj1', backgroundColor: '#00ff00',
+		priority: 5, fromCache: true,
+	}])
 	const event = data.calendars['acc_1::work@example.test'][0]
 	assert.deepStrictEqual(Object.keys(event).sort(), [
 		'attendees', 'backgroundColor', 'canEdit', 'colorId', 'conferenceData', 'end', 'fromCache', 'hangoutLink',
@@ -120,6 +159,34 @@ function testRoundTripAndSelection() {
 	assert.deepStrictEqual(Object.keys(selected.calendars), ['acc_1::tasks1'])
 }
 
+function testTasks() {
+	// A done Google task, a task without optional fields; tampered fields dropped on read too.
+	const text = cache.serialize({ 'g::L1': { items: [
+		fullTask({ id: 'd', calendarManagerId: 'GoogleTasks', status: 'completed', completed: '2026-10-15T10:00:00.000Z', priority: 0, dueTime: '', repeatRule: '', parentId: '' }),
+		{ kind: 'tasks#task', id: 'bare', title: '', start: { date: '2026-10-16' }, end: { date: '2026-10-17' } },
+		{ kind: 'tasks#task', id: 'nostart' },
+	] } }, 0, 0, NOW)
+	const tasks = JSON.parse(text).calendars['g::L1']
+	assert.deepStrictEqual(tasks.map(t => t.id), ['d', 'bare'])
+	assert.strictEqual(tasks[0].completed, '2026-10-15T10:00:00.000Z')
+	assert.strictEqual(tasks[0].status, 'completed')
+	assert.ok(!('priority' in tasks[0]) && !('dueTime' in tasks[0]) && !('parentId' in tasks[0]))
+	assert.deepStrictEqual(Object.keys(tasks[1]).sort(), ['end', 'fromCache', 'id', 'kind', 'start', 'summary', 'title'])
+
+	const tampered = JSON.stringify({ version: cache.VERSION, savedAt: NOW.getTime(), calendars: {
+		'tt::p1': [fullTask({ repeatRule: { evil: true } })],
+	} })
+	const read = cache.deserialize(tampered, NOW).calendars['tt::p1'][0]
+	assert.strictEqual(read.notes, undefined)
+	assert.strictEqual(read.description, undefined)
+	assert.strictEqual(read.subtasks, undefined)
+	assert.strictEqual(read.reminders, undefined)
+	assert.strictEqual(read.tickTick, undefined)
+	assert.strictEqual(read.accessToken, undefined)
+	assert.strictEqual(read.repeatRule, undefined, 'repeatRule: a string only')
+	assert.strictEqual(read.title, 'Buy milk')
+}
+
 function testRejectsOldBrokenOrForeign() {
 	const text = cache.serialize(sampleCalendars(), 0, 0, NOW)
 	assert.strictEqual(cache.deserialize(text, new Date(NOW.getTime() + cache.MAX_AGE_MS + 1)), null, 'too old')
@@ -148,17 +215,19 @@ function testReadIsWhitelistedToo() {
 
 function testSelectedCalendarIds() {
 	const ids = cache.selectedCalendarIds([
-		{ id: 'acc_1', calendarIdList: ['primary', 'team@group.test'], calendarList: [{ id: 'me@example.test', primary: true }, { id: 'team@group.test' }] },
+		{ id: 'acc_1', calendarIdList: ['primary', 'team@group.test'], calendarList: [{ id: 'me@example.test', primary: true }, { id: 'team@group.test' }], tasklistIdList: ['L1'] },
 		{ id: 'acc_2', calendarIdList: [], calendarList: [] },
+		{ id: 'tt_1', projectIdList: ['inbox', 'p1'] },
 		null,
 	])
-	assert.deepStrictEqual(Object.keys(ids).sort(), ['acc_1::me@example.test', 'acc_1::primary', 'acc_1::team@group.test'])
+	assert.deepStrictEqual(Object.keys(ids).sort(), ['acc_1::L1', 'acc_1::me@example.test', 'acc_1::primary', 'acc_1::team@group.test', 'tt_1::inbox', 'tt_1::p1'])
 }
 
 testWhitelist()
 testSummaryUsesRawTitle()
 testEventTypes()
 testRoundTripAndSelection()
+testTasks()
 testRejectsOldBrokenOrForeign()
 testReadIsWhitelistedToo()
 testSelectedCalendarIds()

@@ -4,9 +4,10 @@ import QtCore
 import "./lib"
 import "./EventCacheUtil.js" as EventCacheUtil
 
-// The last loaded Google events on disk, shown right away after login or a Plasma restart (and
-// offline after a reboot) until the first fetch finishes. See EventCacheUtil.js for what's kept:
-// no descriptions, no attendee e-mails, never tokens.
+// The last loaded Google events and tasks (Google Tasks, TickTick) on disk, shown right away after
+// login or a Plasma restart (and offline after a reboot) until the first fetch finishes. See
+// EventCacheUtil.js for what's kept: no descriptions or task notes, no attendee e-mails, never
+// tokens.
 // ~/.cache/plasma-eventcalendar/events.ini: the directory is 0700, the file 0600.
 QtObject {
 	id: eventCache

@@ -25,9 +25,10 @@ Item {
 		pollTimer.start()
 	}
 
-	//--- Event cache: the last loaded Google events, shown until the first fetch round finishes.
+	//--- Event cache: the last loaded Google events and tasks (Google, TickTick), shown until the
+	// first fetch round finishes.
 	function showCachedEvents() {
-		var selected = EventCacheUtil.selectedCalendarIds(parseGoogleAccounts())
+		var selected = EventCacheUtil.selectedCalendarIds(parseGoogleAccounts().concat(parseTickTickAccounts()))
 		var cached = eventCache.load(function(calendarId) { return !!selected[calendarId] })
 		if (!cached) {
 			return
@@ -295,6 +296,19 @@ Item {
 			return []
 		}
 	}
+	// TickTick accounts from config (ids and selected projects; the tokens are in the keyring).
+	function parseTickTickAccounts() {
+		var raw = plasmoid.configuration.tickTickAccounts
+		if (!raw) {
+			return []
+		}
+		try {
+			var parsed = Array.isArray(raw) ? raw : SafeConfig.parseBase64Json(raw, [])
+			return Array.isArray(parsed) ? parsed : []
+		} catch (e) {
+			return []
+		}
+	}
 	function currentGoogleCredentials() {
 		return GoogleOAuthConfig.effectiveClientCredentials(plasmoid.configuration, GoogleOAuthConfig.defaultClientId)
 	}
@@ -352,7 +366,7 @@ Item {
 				logic.eventsNetworkFailed = true
 				logic.networkFailed()
 			} else {
-				// Event cache: the last loaded Google events (see showCachedEvents).
+				// Event cache: the last loaded Google events and tasks (see showCachedEvents).
 				eventModel.settleCachedCalendars()
 				eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
 				logic.eventsNetworkFailed = false
