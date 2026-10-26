@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -24,7 +24,7 @@ msgstr "Widoki"
 msgid "Clock"
 msgstr "Zegar"
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Wydarzenia"
 
@@ -36,7 +36,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Kalendarz Google"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Zadania"
 
@@ -861,6 +861,26 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "Otwarte zadania z terminem we wcześniejszym dniu są wyświetlane na dziś we wszystkich widokach."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Przypomnienia o zadaniach"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time."
+msgstr "Powiadomienie, gdy nadchodzi termin zadania z godziną lub przypomnieniem, a o godzinie dziennego harmonogramu — zadania z terminem na dziś."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Zadania w dziennym harmonogramie"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "Powiadomienie dziennego harmonogramu zawiera też dzisiejsze i zaległe zadania."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Zadania Google"
 
@@ -1587,6 +1607,19 @@ msgstr[1] "Pokaż wszystkie %1"
 msgstr[2] "Pokaż wszystkie %1"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 dzień później o %2"
+msgstr[1] "%1 dni później o %2"
+msgstr[2] "%1 dni później o %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "W dniu terminu o %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 (Twój czas)"
@@ -1707,6 +1740,34 @@ msgid "Due date"
 msgstr "Termin"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Godzina terminu"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Bez priorytetu"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Niski priorytet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Średni priorytet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Wysoki priorytet"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Priorytet"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Wydarzenie"
@@ -1809,6 +1870,10 @@ msgid "Yearly on %1"
 msgstr "Co roku, %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Niestandardowe (jak ustawiono w TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Niestandardowe (jak ustawiono w Kalendarzu Google)"
 
@@ -1889,7 +1954,7 @@ msgstr "Dodaj rozmowę wideo Google Meet"
 msgid "Video conferencing will be removed when you save"
 msgstr "Rozmowa wideo zostanie usunięta po zapisaniu"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Cofnij"
 
@@ -2029,6 +2094,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Znajdź termin"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Podzadania"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Podzadanie"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Usuń podzadanie"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Dodaj podzadanie…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2623,12 +2704,12 @@ msgid "No to All Events"
 msgstr "Nie dla wszystkich wydarzeń"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Szukaj wydarzeń…"
+msgid "Search events and tasks…"
+msgstr "Szukaj wydarzeń i zadań…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "Zacznij pisać, aby szukać w tytułach, miejscach i opisach wydarzeń"
+msgid "Type to search events and tasks"
+msgstr "Wpisz, aby szukać wydarzeń i zadań"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2645,6 +2726,11 @@ msgstr "Nie można przeszukać Kalendarza Google"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Przeszukiwanie Kalendarza Google…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2666,6 +2752,24 @@ msgstr "Wykonane"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Niewykonane"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "Wykonano %1 z %2 podzadań"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Ukryj podzadania"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Pokaż podzadania"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2784,6 +2888,11 @@ msgid "List order"
 msgstr "Kolejność listy"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Priorytet"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Pokaż szczegóły"
 
@@ -2896,6 +3005,11 @@ msgstr "Ukończone"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Brak otwartych zadań"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Wykonane"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3019,6 +3133,76 @@ msgid "Open Agenda"
 msgstr "Otwórz harmonogram"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Po terminie"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Termin: dziś %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Termin: dziś"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Termin: jutro %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Termin: jutro"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Termin: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Oznacz jako wykonane"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 zadanie na dziś"
+msgstr[1] "%1 zadania na dziś"
+msgstr[2] "%1 zadań na dziś"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 zaległe zadanie"
+msgstr[1] "%1 zaległe zadania"
+msgstr[2] "%1 zaległych zadań"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 zaległe"
+msgstr[1] "%1 zaległe"
+msgstr[2] "%1 zaległych"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 więcej"
+msgstr[1] "+%1 więcej"
+msgstr[2] "+%1 więcej"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "jutro %1"
@@ -3118,6 +3302,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Szukaj wydarzeń…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "Zacznij pisać, aby szukać w tytułach, miejscach i opisach wydarzeń"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3418,9 +3608,6 @@ msgstr "Miejsce pracy: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr " min"
-
-#~ msgid "Notifications"
-#~ msgstr "Powiadomienia"
 
 #~ msgid "Event Starting"
 #~ msgstr "Rozpoczęcie wydarzenia"

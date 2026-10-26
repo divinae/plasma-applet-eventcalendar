@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -30,6 +30,7 @@ msgstr "שעון"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "אירועים"
 
@@ -43,6 +44,7 @@ msgstr "Google Calendar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "משימות"
 
@@ -975,6 +977,30 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "משימות פתוחות שהיעד שלהן ביום קודם מוצגות ביום הנוכחי, בכל התצוגות."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "התראות"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "תזכורות משימות"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"התראה כשמגיע מועד היעד או התזכורת של משימה עם שעת יעד, והמשימות שהיעד שלהן "
+"היום בשעת סדר היום היומי."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "משימות בסדר היום היומי"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "התראת סדר היום היומי מציגה גם את משימות היום ואת המשימות באיחור."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1746,6 +1772,20 @@ msgstr[2] "הצגת כל ה־%1"
 msgstr[3] "הצגת כל ה־%1"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "יום %1 אחרי בשעה %2"
+msgstr[1] "יומיים אחרי בשעה %2"
+msgstr[2] "%1 ימים אחרי בשעה %2"
+msgstr[3] "%1 ימים אחרי בשעה %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "באותו יום בשעה %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 לפי השעון שלך"
@@ -1866,6 +1906,34 @@ msgid "Due date"
 msgstr "תאריך יעד"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "שעת יעד"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "ללא עדיפות"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "עדיפות נמוכה"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "עדיפות בינונית"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "עדיפות גבוהה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "עדיפות"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "אירוע"
@@ -1968,6 +2036,10 @@ msgid "Yearly on %1"
 msgstr "שנתי ב־%1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "מותאם אישית (כפי שהוגדר ב־TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "מותאם אישית (כפי שהוגדר ב־Google Calendar)"
 
@@ -2054,6 +2126,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "שיחת הווידאו תוסר בעת השמירה"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "ביטול"
 
@@ -2197,6 +2270,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "מציאת זמן"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "תת־משימות"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "תת־משימה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "הסרת תת־משימה"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "הוספת תת־משימה…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2817,12 +2906,12 @@ msgid "No to All Events"
 msgstr "לא לכל האירועים"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "חיפוש אירועים…"
+msgid "Search events and tasks…"
+msgstr "חיפוש אירועים ומשימות…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "יש להקליד כדי לחפש בכותרות, במיקומים ובתיאורים של אירועים"
+msgid "Type to search events and tasks"
+msgstr "יש להקליד כדי לחפש אירועים ומשימות"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2839,6 +2928,11 @@ msgstr "לא ניתן לחפש ב־Google Calendar"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "מחפש ב־Google Calendar…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2860,6 +2954,24 @@ msgstr "הושלמה"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "לא הושלמה"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 מתוך %2 תת־משימות הושלמו"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "הסתרת תת־משימות"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "הצגת תת־משימות"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2979,6 +3091,11 @@ msgid "List order"
 msgstr "סדר הרשימה"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "עדיפות"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "הצגת פרטים"
 
@@ -3092,6 +3209,11 @@ msgstr "הושלמו"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "אין משימות פתוחות"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "הושלמה"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3218,6 +3340,80 @@ msgid "Open Agenda"
 msgstr "פתיחת סדר היום"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "באיחור"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "יעד: היום %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "יעד: היום"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "יעד: מחר %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "יעד: מחר"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "יעד: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "סימון כהושלמה"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "משימה %1 שהיעד שלה היום"
+msgstr[1] "%1 משימות שהיעד שלהן היום"
+msgstr[2] "%1 משימות שהיעד שלהן היום"
+msgstr[3] "%1 משימות שהיעד שלהן היום"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "משימה %1 באיחור"
+msgstr[1] "%1 משימות באיחור"
+msgstr[2] "%1 משימות באיחור"
+msgstr[3] "%1 משימות באיחור"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 באיחור"
+msgstr[1] "%1 באיחור"
+msgstr[2] "%1 באיחור"
+msgstr[3] "%1 באיחור"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 נוספת"
+msgstr[1] "+%1 נוספות"
+msgstr[2] "+%1 נוספות"
+msgstr[3] "+%1 נוספות"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "מחר %1"
@@ -3319,6 +3515,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "חיפוש אירועים…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "יש להקליד כדי לחפש בכותרות, במיקומים ובתיאורים של אירועים"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"

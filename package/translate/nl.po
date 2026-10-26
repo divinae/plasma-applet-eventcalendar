@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -29,6 +29,7 @@ msgstr "Klok"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Afspraken"
 
@@ -42,6 +43,7 @@ msgstr "Google Agenda"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Taken"
 
@@ -998,6 +1000,33 @@ msgstr ""
 "weergave op vandaag getoond."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Meldingen"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Taakherinneringen"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"Een melding wanneer een taak met een eindtijd of een herinnering aan de "
+"beurt is, en de taken die vandaag af moeten op het tijdstip van de "
+"dagelijkse agenda."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Taken in de dagelijkse agenda"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr ""
+"De melding van de dagelijkse agenda toont ook de taken van vandaag en de "
+"achterstallige taken."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Taken"
 
@@ -1769,6 +1798,18 @@ msgstr[0] "Nog 1 tonen"
 msgstr[1] "Alle %1 tonen"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 dag later om %2"
+msgstr[1] "%1 dagen later om %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "Op de dag om %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 (jouw tijd)"
@@ -1889,6 +1930,34 @@ msgid "Due date"
 msgstr "Einddatum"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Eindtijd"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Geen prioriteit"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Lage prioriteit"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Gemiddelde prioriteit"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Hoge prioriteit"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Prioriteit"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Afspraak"
@@ -1991,6 +2060,10 @@ msgid "Yearly on %1"
 msgstr "Jaarlijks op %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Aangepast (zoals ingesteld in TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Aangepast (zoals ingesteld in Google Agenda)"
 
@@ -2067,6 +2140,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "Videovergadering wordt bij opslaan verwijderd"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Ongedaan maken"
 
@@ -2202,6 +2276,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Tijd zoeken"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Subtaken"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Subtaak"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Subtaak verwijderen"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Subtaak toevoegen…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2809,12 +2899,12 @@ msgid "No to All Events"
 msgstr "Nee voor alle afspraken"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Afspraken zoeken…"
+msgid "Search events and tasks…"
+msgstr "Afspraken en taken zoeken…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "Typ om te zoeken in titels, locaties en beschrijvingen van afspraken"
+msgid "Type to search events and tasks"
+msgstr "Typ om afspraken en taken te zoeken"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2831,6 +2921,11 @@ msgstr "Kan niet zoeken in Google Agenda"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Zoeken in Google Agenda…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2852,6 +2947,24 @@ msgstr "Afgerond"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Niet afgerond"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 van %2 subtaken afgerond"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Subtaken verbergen"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Subtaken tonen"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2970,6 +3083,11 @@ msgid "List order"
 msgstr "Lijstvolgorde"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Prioriteit"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Details tonen"
 
@@ -3085,6 +3203,11 @@ msgstr "Voltooid"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Geen open taken"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Voltooid"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3205,6 +3328,72 @@ msgid "Open Agenda"
 msgstr "Agenda openen"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Te laat"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Uiterlijk vandaag %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Uiterlijk vandaag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Uiterlijk morgen %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Uiterlijk morgen"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Uiterlijk %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Als afgerond markeren"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 taak voor vandaag"
+msgstr[1] "%1 taken voor vandaag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 achterstallige taak"
+msgstr[1] "%1 achterstallige taken"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 te laat"
+msgstr[1] "%1 te laat"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 meer"
+msgstr[1] "+%1 meer"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "morgen %1"
@@ -3306,6 +3495,13 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Afspraken zoeken…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr ""
+#~ "Typ om te zoeken in titels, locaties en beschrijvingen van afspraken"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3659,9 +3855,6 @@ msgstr "Werklocatie: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr "min."
-
-#~ msgid "Notifications"
-#~ msgstr "Meldingen"
 
 #~ msgid "Event Reminder"
 #~ msgstr "Afspraakherinnering"

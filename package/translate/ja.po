@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr "ビュー"
 msgid "Clock"
 msgstr "時計"
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "イベント"
 
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "タスク"
 
@@ -856,6 +856,26 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "期限が過ぎた未完了のタスクを、すべてのビューで今日に表示します。"
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "通知"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "タスクのリマインダー"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time."
+msgstr "期限時刻またはリマインダーが設定されたタスクの期限が来たとき、および毎日の予定の時刻に今日が期限のタスクを通知します。"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "毎日の予定にタスクを含める"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "毎日の予定の通知に、今日のタスクと期限切れのタスクも表示します。"
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1578,6 +1598,17 @@ msgid_plural "Show all %1"
 msgstr[0] "すべて表示 (%1)"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 日後の %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "当日の %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 (あなたの時間)"
@@ -1698,6 +1729,34 @@ msgid "Due date"
 msgstr "期限"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "期限時刻"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "優先度なし"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "優先度: 低"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "優先度: 中"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "優先度: 高"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "優先度"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "イベント"
@@ -1800,6 +1859,10 @@ msgid "Yearly on %1"
 msgstr "毎年%1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "カスタム (TickTick での設定)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "カスタム (Google Calendar での設定)"
 
@@ -1870,7 +1933,7 @@ msgstr "Google Meet のビデオ会議を追加"
 msgid "Video conferencing will be removed when you save"
 msgstr "保存するとビデオ会議は削除されます"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "元に戻す"
 
@@ -2002,6 +2065,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "時間を探す"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "サブタスク"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "サブタスク"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "サブタスクを削除"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "サブタスクを追加…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2574,12 +2653,12 @@ msgid "No to All Events"
 msgstr "すべてのイベントに「いいえ」"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "イベントを検索…"
+msgid "Search events and tasks…"
+msgstr "イベントとタスクを検索…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "入力してイベントのタイトル、場所、説明を検索"
+msgid "Type to search events and tasks"
+msgstr "入力してイベントとタスクを検索"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2596,6 +2675,11 @@ msgstr "Google Calendar を検索できませんでした"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Google Calendar を検索中…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2617,6 +2701,24 @@ msgstr "完了"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "未完了"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "サブタスク %2 件中 %1 件完了"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "サブタスクを隠す"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "サブタスクを表示"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2733,6 +2835,11 @@ msgid "List order"
 msgstr "リストの順序"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "優先度"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "詳細を表示"
 
@@ -2843,6 +2950,11 @@ msgstr "完了済み"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "未完了のタスクはありません"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "完了"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -2960,6 +3072,68 @@ msgid "Open Agenda"
 msgstr "予定を開く"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "期限切れ"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "期限 今日 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "期限 今日"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "期限 明日 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "期限 明日"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "期限 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "完了にする"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "今日が期限のタスク %1 件"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "期限切れのタスク %1 件"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "期限切れ %1 件"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1、%2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "他 +%1 件"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "明日 %1"
@@ -3057,6 +3231,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "イベントを検索…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "入力してイベントのタイトル、場所、説明を検索"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3376,9 +3556,6 @@ msgstr "勤務場所: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr "分"
-
-#~ msgid "Notifications"
-#~ msgstr "通知"
 
 #~ msgid "Event Starting"
 #~ msgstr "イベントを開始"

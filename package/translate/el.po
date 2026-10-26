@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -29,6 +29,7 @@ msgstr "Ρολόϊ"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Συμβάντα"
 
@@ -42,6 +43,7 @@ msgstr "Ημερολόγιο Google"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Εργασίες"
 
@@ -1006,6 +1008,33 @@ msgstr ""
 "σημερινή ημέρα, σε κάθε προβολή."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Ειδοποιήσεις"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Υπενθυμίσεις εργασιών"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"Μια ειδοποίηση όταν λήγει η προθεσμία μιας εργασίας με ώρα προθεσμίας ή "
+"υπενθύμιση, καθώς και οι εργασίες με προθεσμία σήμερα κατά την ώρα της "
+"ημερήσιας ατζέντας."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Εργασίες στην ημερήσια ατζέντα"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr ""
+"Η ειδοποίηση της ημερήσιας ατζέντας περιλαμβάνει επίσης τις σημερινές και "
+"τις εκπρόθεσμες εργασίες."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1781,6 +1810,18 @@ msgstr[0] "Εμφάνιση %1 ακόμη"
 msgstr[1] "Εμφάνιση όλων (%1)"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 ημέρα αργότερα στις %2"
+msgstr[1] "%1 ημέρες αργότερα στις %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "Την ίδια ημέρα στις %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 δική σας ώρα"
@@ -1901,6 +1942,34 @@ msgid "Due date"
 msgstr "Προθεσμία"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Ώρα προθεσμίας"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Χωρίς προτεραιότητα"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Χαμηλή προτεραιότητα"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Μεσαία προτεραιότητα"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Υψηλή προτεραιότητα"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Προτεραιότητα"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Συμβάν"
@@ -2003,6 +2072,10 @@ msgid "Yearly on %1"
 msgstr "Ετήσια, στις %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Προσαρμοσμένη (όπως ορίστηκε στο TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Προσαρμοσμένο (όπως ορίστηκε στο Ημερολόγιο Google)"
 
@@ -2079,6 +2152,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "Η βιντεοδιάσκεψη θα αφαιρεθεί κατά την αποθήκευση"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Αναίρεση"
 
@@ -2214,6 +2288,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Εύρεση ώρας"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Υποεργασίες"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Υποεργασία"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Αφαίρεση υποεργασίας"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Προσθήκη υποεργασίας…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2824,13 +2914,12 @@ msgid "No to All Events"
 msgstr "Όχι σε όλα τα συμβάντα"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Αναζήτηση συμβάντων…"
+msgid "Search events and tasks…"
+msgstr "Αναζήτηση γεγονότων και εργασιών…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr ""
-"Πληκτρολογήστε για αναζήτηση σε τίτλους, τοποθεσίες και περιγραφές συμβάντων"
+msgid "Type to search events and tasks"
+msgstr "Πληκτρολογήστε για αναζήτηση γεγονότων και εργασιών"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2847,6 +2936,11 @@ msgstr "Αδυναμία αναζήτησης στο Ημερολόγιο Google
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Αναζήτηση στο Ημερολόγιο Google…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2868,6 +2962,24 @@ msgstr "Ολοκληρωμένη"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Μη ολοκληρωμένη"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 από %2 υποεργασίες ολοκληρώθηκαν"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Απόκρυψη υποεργασιών"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Εμφάνιση υποεργασιών"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2986,6 +3098,11 @@ msgid "List order"
 msgstr "Σειρά λίστας"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Προτεραιότητα"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Εμφάνιση λεπτομερειών"
 
@@ -3101,6 +3218,11 @@ msgstr "Ολοκληρωμένες"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Καμία ανοιχτή εργασία"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Ολοκληρώθηκε"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3224,6 +3346,72 @@ msgid "Open Agenda"
 msgstr "Άνοιγμα ατζέντας"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Εκπρόθεσμο"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Προθεσμία σήμερα %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Προθεσμία σήμερα"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Προθεσμία αύριο %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Προθεσμία αύριο"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Προθεσμία %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Σήμανση ως ολοκληρωμένης"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 εργασία με προθεσμία σήμερα"
+msgstr[1] "%1 εργασίες με προθεσμία σήμερα"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 εκπρόθεσμη εργασία"
+msgstr[1] "%1 εκπρόθεσμες εργασίες"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 εκπρόθεσμη"
+msgstr[1] "%1 εκπρόθεσμες"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 ακόμη"
+msgstr[1] "+%1 ακόμη"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "αύριο %1"
@@ -3325,6 +3513,14 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Αναζήτηση συμβάντων…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr ""
+#~ "Πληκτρολογήστε για αναζήτηση σε τίτλους, τοποθεσίες και περιγραφές "
+#~ "συμβάντων"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3641,9 +3837,6 @@ msgstr "Τοποθεσία εργασίας: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr "λεπτό"
-
-#~ msgid "Notifications"
-#~ msgstr "Ειδοποιήσεις"
 
 #~ msgid "Event Starting"
 #~ msgstr "Έναρξη Συμβάντος"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -29,6 +29,7 @@ msgstr "Ur"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Begivenheder"
 
@@ -42,6 +43,7 @@ msgstr "Google Kalender"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Opgaver"
 
@@ -987,6 +989,31 @@ msgstr ""
 "visninger."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Notifikationer"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Opgavepåmindelser"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"En notifikation, når en opgave med et forfaldstidspunkt eller en påmindelse "
+"forfalder, og dagens forfaldne opgaver på tidspunktet for den daglige agenda."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Opgaver i den daglige agenda"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr ""
+"Notifikationen for den daglige agenda viser også dagens og forfaldne opgaver."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1754,6 +1781,18 @@ msgstr[0] "Vis 1 mere"
 msgstr[1] "Vis alle %1"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 dag senere kl. %2"
+msgstr[1] "%1 dage senere kl. %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "Samme dag kl. %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 din tid"
@@ -1874,6 +1913,34 @@ msgid "Due date"
 msgstr "Forfaldsdato"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Forfaldstidspunkt"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Ingen prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Lav prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Middel prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Høj prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Begivenhed"
@@ -1976,6 +2043,10 @@ msgid "Yearly on %1"
 msgstr "Årligt den %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Brugerdefineret (som angivet i TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Brugerdefineret (som angivet i Google Kalender)"
 
@@ -2052,6 +2123,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "Videokonferencen fjernes, når du gemmer"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Fortryd"
 
@@ -2187,6 +2259,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Find et tidspunkt"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Delopgaver"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Delopgave"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Fjern delopgave"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Tilføj en delopgave…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2788,12 +2876,12 @@ msgid "No to All Events"
 msgstr "Nej til alle begivenheder"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Søg i begivenheder…"
+msgid "Search events and tasks…"
+msgstr "Søg i begivenheder og opgaver…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "Skriv for at søge i begivenheders titler, steder og beskrivelser"
+msgid "Type to search events and tasks"
+msgstr "Skriv for at søge i begivenheder og opgaver"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2810,6 +2898,11 @@ msgstr "Kunne ikke søge i Google Kalender"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Søger i Google Kalender…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2831,6 +2924,24 @@ msgstr "Udført"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Ikke udført"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 af %2 delopgaver udført"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Skjul delopgaver"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Vis delopgaver"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2948,6 +3059,11 @@ msgid "List order"
 msgstr "Listerækkefølge"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Vis detaljer"
 
@@ -3059,6 +3175,11 @@ msgstr "Fuldført"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Ingen åbne opgaver"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Udført"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3179,6 +3300,72 @@ msgid "Open Agenda"
 msgstr "Åbn agenda"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Forfalden"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Forfalder i dag %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Forfalder i dag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Forfalder i morgen %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Forfalder i morgen"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Forfalder %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Markér som udført"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 opgave forfalder i dag"
+msgstr[1] "%1 opgaver forfalder i dag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 forfalden opgave"
+msgstr[1] "%1 forfaldne opgaver"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 forfalden"
+msgstr[1] "%1 forfaldne"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 mere"
+msgstr[1] "+%1 mere"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "i morgen %1"
@@ -3278,6 +3465,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Søg i begivenheder…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "Skriv for at søge i begivenheders titler, steder og beskrivelser"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3603,9 +3796,6 @@ msgstr "Arbejdssted: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr "min"
-
-#~ msgid "Notifications"
-#~ msgstr "Notifikationer"
 
 #~ msgid "Event Starting"
 #~ msgstr "Begivenhed starter"

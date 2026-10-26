@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,6 +29,7 @@ msgstr "시계"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "행사"
 
@@ -42,6 +43,7 @@ msgstr "Google 캘린더"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "할 일"
 
@@ -978,6 +980,30 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "기한이 이전 날짜인 미완료 작업을 모든 보기에서 오늘에 표시합니다."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "알림"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "작업 알림"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"기한 시간이나 미리 알림이 설정된 작업의 기한이 되면 알리고, 오늘의 일정 시간"
+"에 오늘 기한인 작업을 알립니다."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "오늘의 일정에 작업 포함"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "오늘의 일정 알림에 오늘 작업과 기한 지난 작업도 표시합니다."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1745,6 +1771,17 @@ msgid_plural "Show all %1"
 msgstr[0] "모두 표시(%1)"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1일 후 %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "당일 %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 (내 시간)"
@@ -1865,6 +1902,34 @@ msgid "Due date"
 msgstr "기한"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "기한 시간"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "우선순위 없음"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "낮은 우선순위"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "보통 우선순위"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "높은 우선순위"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "우선순위"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "이벤트"
@@ -1967,6 +2032,10 @@ msgid "Yearly on %1"
 msgstr "매년 %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "사용자 지정 (TickTick에서 설정한 대로)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "사용자 정의(Google 캘린더에서 설정)"
 
@@ -2038,6 +2107,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "저장하면 화상 회의가 삭제됩니다"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "실행 취소"
 
@@ -2169,6 +2239,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "시간 찾기"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "하위 작업"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "하위 작업"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "하위 작업 제거"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "하위 작업 추가…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2762,12 +2848,12 @@ msgid "No to All Events"
 msgstr "모든 이벤트에 아니요"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "이벤트 검색…"
+msgid "Search events and tasks…"
+msgstr "이벤트 및 작업 검색…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "이벤트 제목, 장소, 설명을 검색하려면 입력하십시오"
+msgid "Type to search events and tasks"
+msgstr "입력하여 이벤트 및 작업 검색"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2784,6 +2870,11 @@ msgstr "Google 캘린더를 검색할 수 없음"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Google 캘린더 검색 중…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2805,6 +2896,24 @@ msgstr "완료"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "완료 안 됨"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "하위 작업 %2개 중 %1개 완료"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "하위 작업 숨기기"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "하위 작업 표시"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2921,6 +3030,11 @@ msgid "List order"
 msgstr "목록 순서"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "우선순위"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "세부 정보 표시"
 
@@ -3032,6 +3146,11 @@ msgstr "완료됨"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "열린 작업 없음"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "완료됨"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3150,6 +3269,68 @@ msgid "Open Agenda"
 msgstr "일정 열기"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "기한 지남"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "오늘 기한 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "오늘 기한"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "내일 기한 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "내일 기한"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "기한 %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "완료로 표시"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "오늘 기한인 작업 %1개"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "기한 지난 작업 %1개"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "기한 지남 %1개"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1개 더"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "내일 %1"
@@ -3248,6 +3429,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "이벤트 검색…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "이벤트 제목, 장소, 설명을 검색하려면 입력하십시오"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3597,9 +3784,6 @@ msgstr "근무 위치: %1"
 #~ msgctxt "Polling interval in minutes"
 #~ msgid "min"
 #~ msgstr "분"
-
-#~ msgid "Notifications"
-#~ msgstr "알림"
 
 #~ msgid "Event Reminder"
 #~ msgstr "이벤트 리마인더"

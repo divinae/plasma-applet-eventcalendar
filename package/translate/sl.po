@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -30,6 +30,7 @@ msgstr "Ura"
 
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Dogodki"
 
@@ -43,6 +44,7 @@ msgstr "Googlov koledar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Opravila"
 
@@ -994,6 +996,30 @@ msgstr ""
 "prikazana na današnjem dnevu."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Obvestila"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Opomniki opravil"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid ""
+"A notification when a task with a due time or a reminder is due, and the "
+"tasks due today at the daily agenda time."
+msgstr ""
+"Obvestilo, ko zapade opravilo s časom roka ali opomnikom, in opravila z "
+"rokom danes ob času dnevnega reda."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Opravila v dnevnem redu"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "Obvestilo dnevnega reda navede tudi današnja in zapadla opravila."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Googlova opravila"
 
@@ -1767,6 +1793,20 @@ msgstr[2] "Prikaži vse %1"
 msgstr[3] "Prikaži vseh %1"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 dan pozneje ob %2"
+msgstr[1] "%1 dneva pozneje ob %2"
+msgstr[2] "%1 dnevi pozneje ob %2"
+msgstr[3] "%1 dni pozneje ob %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "Na dan roka ob %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 po vašem času"
@@ -1887,6 +1927,34 @@ msgid "Due date"
 msgstr "Rok"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Čas roka"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Brez prioritete"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Nizka prioriteta"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Srednja prioriteta"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Visoka prioriteta"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Prioriteta"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Dogodek"
@@ -1989,6 +2057,10 @@ msgid "Yearly on %1"
 msgstr "Letno: %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Po meri (kot je nastavljeno v TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Po meri (kot je nastavljeno v Googlovem koledarju)"
 
@@ -2075,6 +2147,7 @@ msgid "Video conferencing will be removed when you save"
 msgstr "Videokonferenca bo ob shranjevanju odstranjena"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -2218,6 +2291,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Najdi termin"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Podopravila"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Podopravilo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Odstrani podopravilo"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Dodaj podopravilo …"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2841,12 +2930,12 @@ msgid "No to All Events"
 msgstr "Ne za vse dogodke"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Išči dogodke…"
+msgid "Search events and tasks…"
+msgstr "Iskanje dogodkov in opravil …"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "Vpišite besedilo za iskanje po naslovih, krajih in opisih dogodkov"
+msgid "Type to search events and tasks"
+msgstr "Vnesite besedilo za iskanje dogodkov in opravil"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2863,6 +2952,11 @@ msgstr "Iskanje v Googlovem koledarju ni uspelo"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Iskanje v Googlovem koledarju…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2884,6 +2978,24 @@ msgstr "Opravljeno"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Ni opravljeno"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "Opravljenih %1 od %2 podopravil"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Skrij podopravila"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Prikaži podopravila"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -3003,6 +3115,11 @@ msgid "List order"
 msgstr "Vrstni red seznama"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Prioriteta"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Prikaži podrobnosti"
 
@@ -3120,6 +3237,11 @@ msgstr "Dokončano"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Ni odprtih opravil"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Opravljeno"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -3247,6 +3369,80 @@ msgid "Open Agenda"
 msgstr "Odpri dnevni red"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Zapadlo"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Rok danes ob %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Rok danes"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Rok jutri ob %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Rok jutri"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Rok: %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Označi kot opravljeno"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 opravilo z rokom danes"
+msgstr[1] "%1 opravili z rokom danes"
+msgstr[2] "%1 opravila z rokom danes"
+msgstr[3] "%1 opravil z rokom danes"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 zapadlo opravilo"
+msgstr[1] "%1 zapadli opravili"
+msgstr[2] "%1 zapadla opravila"
+msgstr[3] "%1 zapadlih opravil"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 zapadlo"
+msgstr[1] "%1 zapadli"
+msgstr[2] "%1 zapadla"
+msgstr[3] "%1 zapadlih"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 več"
+msgstr[1] "+%1 več"
+msgstr[2] "+%1 več"
+msgstr[3] "+%1 več"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "jutri ob %1"
@@ -3348,6 +3544,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Išči dogodke…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "Vpišite besedilo za iskanje po naslovih, krajih in opisih dogodkov"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3693,9 +3895,6 @@ msgstr "Delovna lokacija: %1"
 
 #~ msgid "Refresh events every: "
 #~ msgstr "Osveži dogodke na: "
-
-#~ msgid "Notifications"
-#~ msgstr "Obvestila"
 
 #~ msgid "Event Starting"
 #~ msgstr "Začetek dogodka"

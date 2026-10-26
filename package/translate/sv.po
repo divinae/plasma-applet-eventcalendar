@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 13:36+0100\n"
+"POT-Creation-Date: 2026-10-26 14:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr "Vyer"
 msgid "Clock"
 msgstr "Klocka"
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Händelser"
 
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Uppgifter"
 
@@ -859,6 +859,26 @@ msgid "Open tasks due on an earlier day are shown on today, in every view."
 msgstr "Öppna uppgifter som förföll en tidigare dag visas på dagens datum i alla vyer."
 
 #: ../contents/ui/config/ConfigTasks.qml
+msgid "Notifications"
+msgstr "Meddelanden"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Task reminders"
+msgstr "Uppgiftspåminnelser"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time."
+msgstr "En avisering när en uppgift med förfallotid eller påminnelse förfaller, samt dagens uppgifter vid tiden för den dagliga dagordningen."
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Tasks in the daily agenda"
+msgstr "Uppgifter i den dagliga dagordningen"
+
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "The daily agenda notification also lists today's and overdue tasks."
+msgstr "Aviseringen för den dagliga dagordningen listar även dagens och försenade uppgifter."
+
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
@@ -1583,6 +1603,18 @@ msgstr[0] "Visa 1 till"
 msgstr[1] "Visa alla %1"
 
 #: ../contents/ui/EventEditView.qml
+msgctxt "task reminder after the due day starts"
+msgid "%1 day later at %2"
+msgid_plural "%1 days later at %2"
+msgstr[0] "%1 dag senare kl. %2"
+msgstr[1] "%1 dagar senare kl. %2"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task reminder: %1 = time"
+msgid "On the day at %1"
+msgstr "Samma dag kl. %1"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "%1 = start and end time in the local time zone"
 msgid "%1 your time"
 msgstr "%1 din tid"
@@ -1703,6 +1735,34 @@ msgid "Due date"
 msgstr "Förfallodatum"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Due time"
+msgstr "Förfallotid"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Ingen prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Low priority"
+msgstr "Låg prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "Medium priority"
+msgstr "Medelhög prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "High priority"
+msgstr "Hög prioritet"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../contents/ui/EventEditView.qml
 msgctxt "event type"
 msgid "Event"
 msgstr "Händelse"
@@ -1805,6 +1865,10 @@ msgid "Yearly on %1"
 msgstr "Varje år den %1"
 
 #: ../contents/ui/EventEditView.qml
+msgid "Custom (as set in TickTick)"
+msgstr "Anpassad (enligt inställning i TickTick)"
+
+#: ../contents/ui/EventEditView.qml
 msgid "Custom (as set in Google Calendar)"
 msgstr "Anpassad (enligt inställning i Google Kalender)"
 
@@ -1880,7 +1944,7 @@ msgstr "Lägg till videokonferens i Google Meet"
 msgid "Video conferencing will be removed when you save"
 msgstr "Videokonferensen tas bort när du sparar"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Ångra"
 
@@ -2016,6 +2080,22 @@ msgstr "%1 <%2>"
 #: ../contents/ui/EventEditView.qml ../contents/ui/FindTimeView.qml
 msgid "Find a Time"
 msgstr "Hitta en tid"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtasks"
+msgstr "Deluppgifter"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Subtask"
+msgstr "Deluppgift"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Remove subtask"
+msgstr "Ta bort deluppgift"
+
+#: ../contents/ui/EventEditView.qml
+msgid "Add a subtask…"
+msgstr "Lägg till en deluppgift…"
 
 #: ../contents/ui/EventEditView.qml
 msgid "Notes"
@@ -2599,12 +2679,12 @@ msgid "No to All Events"
 msgstr "Nej till alla händelser"
 
 #: ../contents/ui/SearchView.qml
-msgid "Search events…"
-msgstr "Sök händelser…"
+msgid "Search events and tasks…"
+msgstr "Sök händelser och uppgifter…"
 
 #: ../contents/ui/SearchView.qml
-msgid "Type to search event titles, places and descriptions"
-msgstr "Skriv för att söka i händelsernas titlar, platser och beskrivningar"
+msgid "Type to search events and tasks"
+msgstr "Skriv för att söka händelser och uppgifter"
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching…"
@@ -2621,6 +2701,11 @@ msgstr "Kunde inte söka i Google Kalender"
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
 msgstr "Söker i Google Kalender…"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
+msgid "%1 %2"
+msgstr "%1 %2"
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
@@ -2642,6 +2727,24 @@ msgstr "Klar"
 #: ../contents/ui/TaskRow.qml
 msgid "Not done"
 msgstr "Inte klar"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1 of %2 subtasks done"
+msgstr "%1 av %2 deluppgifter klara"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "checklist items done: %1 of %2"
+msgid "%1/%2"
+msgstr "%1/%2"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Hide subtasks"
+msgstr "Dölj deluppgifter"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Show subtasks"
+msgstr "Visa deluppgifter"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"
@@ -2759,6 +2862,11 @@ msgid "List order"
 msgstr "Listordning"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Priority"
+msgstr "Prioritet"
+
+#: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Visa detaljer"
 
@@ -2870,6 +2978,11 @@ msgstr "Slutförda"
 #: ../contents/ui/TasksView.qml
 msgid "No open tasks"
 msgstr "Inga öppna uppgifter"
+
+#: ../contents/ui/TaskUndoBar.qml
+msgctxt "a task was checked"
+msgid "Completed"
+msgstr "Klar"
 
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
@@ -2990,6 +3103,72 @@ msgid "Open Agenda"
 msgstr "Öppna dagordning"
 
 #: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Overdue"
+msgstr "Försenad"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due today %1"
+msgstr "Förfaller idag %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due today"
+msgstr "Förfaller idag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = time"
+msgid "Due tomorrow %1"
+msgstr "Förfaller imorgon %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Due tomorrow"
+msgstr "Förfaller imorgon"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder, %1 = date (and time)"
+msgid "Due %1"
+msgstr "Förfaller %1"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task reminder"
+msgid "Mark as done"
+msgstr "Markera som klar"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 task due today"
+msgid_plural "%1 tasks due today"
+msgstr[0] "%1 uppgift förfaller idag"
+msgstr[1] "%1 uppgifter förfaller idag"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "%1 overdue task"
+msgid_plural "%1 overdue tasks"
+msgstr[0] "%1 försenad uppgift"
+msgstr[1] "%1 försenade uppgifter"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "tasks"
+msgid "%1 overdue"
+msgid_plural "%1 overdue"
+msgstr[0] "%1 försenad"
+msgstr[1] "%1 försenade"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = 3 tasks due today, %2 = 2 overdue"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "task summary, more tasks"
+msgid "+%1 more"
+msgid_plural "+%1 more"
+msgstr[0] "+%1 till"
+msgstr[1] "+%1 till"
+
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
 msgid "tomorrow %1"
 msgstr "imorgon %1"
@@ -3088,6 +3267,12 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Search events…"
+#~ msgstr "Sök händelser…"
+
+#~ msgid "Type to search event titles, places and descriptions"
+#~ msgstr "Skriv för att söka i händelsernas titlar, platser och beskrivningar"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -3393,9 +3578,6 @@ msgstr "Arbetsplats: %1"
 
 #~ msgid "Refresh events every: "
 #~ msgstr "Uppdatera händelser varje: "
-
-#~ msgid "Notifications"
-#~ msgstr "Meddelanden"
 
 #~ msgid "Event Starting"
 #~ msgstr "Händelse startad"
