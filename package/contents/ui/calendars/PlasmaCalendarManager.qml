@@ -333,7 +333,8 @@ CalendarManager {
 	}
 
 	//--- Create
-	function createEvent(calendarId, date, text) {
+	// time: 'HH:mm' for an hour long event (to 23:59 at most), '' for an all-day one.
+	function createEvent(calendarId, date, text, time) {
 		if (calendarId.indexOf('plasma_Events_') !== 0) {
 			logger.log('Could not create event: unknown calendar')
 			return
@@ -356,6 +357,12 @@ CalendarManager {
 			'--summary',
 			text,
 		]
+		var m = /^(\d{2}):(\d{2})$/.exec(time || '')
+		if (m) {
+			var endHour = Number(m[1]) + 1
+			var end = endHour > 23 ? '23:59' : (endHour < 10 ? '0' : '') + endHour + ':' + m[2]
+			cmd.push('--time', time, '--end-time', end)
+		}
 		executable.execArgv(cmd, function(cmd, exitCode, exitStatus, stdout, stderr){
 			logger.debug('konsolekalendar.exitCode', exitCode, exitStatus) // No command line: the title is in it
 

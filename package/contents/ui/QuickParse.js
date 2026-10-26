@@ -13,6 +13,7 @@
 //   dayNames: [[names of Sunday], [Monday], ...] more weekday names (the locale's),
 //   monthNames: [[names of January], ...] more month names (the locale's),
 //   ignore: ['kind:text'] tokens the user ruled out (kept in the title, see tokenKey),
+//   kinds: ['date', 'time'] only these kinds (default: all),
 // }
 // kind: 'date', 'time', 'priority', 'list' or 'repeat'. The first of each kind counts; a later
 // one stays in the title. A token never starts or ends inside a word.
@@ -342,7 +343,7 @@ function parse(text, opts) {
 	var all = rules(opts)
 	for (var r = 0; r < all.length; r++) {
 		var rule = all[r]
-		if (found[rule.kind]) {
+		if (found[rule.kind] || (opts.kinds && opts.kinds.indexOf(rule.kind) < 0)) {
 			continue
 		}
 		var re = new RegExp(rule.re, 'gi')

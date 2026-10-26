@@ -578,15 +578,23 @@ CalendarManager {
 			plasmoid.configuration.agendaNewEventLastCalendarId = calendarId
 		}
 	}
-	function createEvent(calendarId, date, text) {
+	// time: optional 'HH:mm' (a timed event), for the calendars that don't read it from the text.
+	function createEvent(calendarId, date, text, time) {
 		rememberNewEventCalendar(calendarId)
 
 		var calendarManager = managerWith(calendarId, 'createEvent')
 		if (calendarManager) {
-			calendarManager.createEvent(calendarId, date, text)
+			calendarManager.createEvent(calendarId, date, text, time || '')
 		} else {
 			logger.log('Could not createEvent: no calendar manager')
 		}
+	}
+
+	// Google Calendar reads the day, time and place from a quick add's text (its quickAdd); the
+	// others get the day and time from QuickParse.js.
+	function readsQuickAddText(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && calendarManager.calendarManagerId === 'GoogleCalendar'
 	}
 
 	// Search the calendars that support it (Google) between timeMin and timeMax.

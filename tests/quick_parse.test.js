@@ -216,6 +216,10 @@ assert.strictEqual(Q.parse('a tomorrow 17:00', {}).dueTime, '17:00')
 	check('a 9:00 10:00', { title: 'a 9:00', dueTime: '10:00' }, { ignore: ['time:9:00'] })
 }
 
+// Only some kinds (events: day and time)
+check('Party ! #home tomorrow 20:00 every week', { title: 'Party ! #home every week', dueDay: '2026-10-27', dueTime: '20:00', priority: 0, listId: '', repeatRule: '' },
+	{ kinds: ['date', 'time'] })
+
 // Month ends and years
 assert.strictEqual(Q.parse('a in 1 month', { today: '2026-01-31' }).dueDay, '2026-02-28')
 assert.strictEqual(Q.parse('a tomorrow', { today: '2026-12-31' }).dueDay, '2027-01-01')

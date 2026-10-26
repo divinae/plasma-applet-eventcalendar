@@ -75,27 +75,12 @@ Item {
 	// The tokens ruled out with their ✕ (QuickParse.tokenKey), until the field is emptied.
 	property var ignored: []
 	readonly property string today: Tasks.dayString(typeof timeModel !== "undefined" && timeModel ? timeModel.currentTime : new Date())
-	// The locale's day and month names, and its order of day and month (10/11).
-	readonly property var localeWords: {
-		var locale = Qt.locale()
-		var days = []
-		for (var d = 0; d < 7; d++) {
-			days.push([locale.dayName(d, Locale.LongFormat), locale.standaloneDayName(d, Locale.LongFormat)])
-		}
-		var months = []
-		for (var m = 0; m < 12; m++) {
-			months.push([locale.monthName(m, Locale.LongFormat), locale.monthName(m, Locale.ShortFormat),
-				locale.standaloneMonthName(m, Locale.LongFormat), locale.standaloneMonthName(m, Locale.ShortFormat)])
-		}
-		var format = locale.dateFormat(Locale.ShortFormat)
-		return { days: days, months: months, dayFirst: format.indexOf('d') >= 0 && format.indexOf('d') < format.indexOf('M') }
-	}
 	readonly property var parsed: smart && field.text ? QuickParse.parse(field.text, {
 		today: today,
 		lists: parseLists,
-		dayFirst: localeWords.dayFirst,
-		dayNames: localeWords.days,
-		monthNames: localeWords.months,
+		dayFirst: appletConfig.quickParseLocale.dayFirst,
+		dayNames: appletConfig.quickParseLocale.dayNames,
+		monthNames: appletConfig.quickParseLocale.monthNames,
 		ignore: ignored,
 	}) : { title: field.text, dueDay: '', dueTime: '', priority: 0, listId: '', repeatRule: '', tokens: [] }
 	// What the target list's provider has: Google Tasks has no time, priority or repeat.

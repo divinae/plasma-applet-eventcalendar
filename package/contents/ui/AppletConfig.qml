@@ -193,6 +193,21 @@ QtObject {
 			return line1TimeFormat
 		}
 	}
+	// The locale's words for QuickParse.js: { dayNames, monthNames, dayFirst } (10/11 = 10 November).
+	readonly property var quickParseLocale: {
+		var locale = Qt.locale()
+		var days = []
+		for (var d = 0; d < 7; d++) {
+			days.push([locale.dayName(d, Locale.LongFormat), locale.standaloneDayName(d, Locale.LongFormat)])
+		}
+		var months = []
+		for (var m = 0; m < 12; m++) {
+			months.push([locale.monthName(m, Locale.LongFormat), locale.monthName(m, Locale.ShortFormat),
+				locale.standaloneMonthName(m, Locale.LongFormat), locale.standaloneMonthName(m, Locale.ShortFormat)])
+		}
+		var format = localeDateFormat
+		return { dayNames: days, monthNames: months, dayFirst: format.indexOf('d') >= 0 && format.indexOf('d') < format.indexOf('M') }
+	}
 	readonly property string timeFormat: clock24h ? 'HH:mm' : 'h:mm AP' // Times in the views: 09:45 / 9:45 AM
 	readonly property bool clock24h: {
 		var is12hour = combinedFormat.toLowerCase().indexOf('ap') >= 0

@@ -193,8 +193,9 @@ Item {
 	}
 
 	//---
-	function createEvent(calendarId, date, text) {
-		logger.log(calendarManager, 'createEvent(', date, text, ') is not implemented')
+	// time: optional 'HH:mm' (else all-day), where the text isn't read for it.
+	function createEvent(calendarId, date, text, time) {
+		logger.log(calendarManager, 'createEvent is not implemented')
 	}
 
 	function deleteEvent(calendarId, eventId) {
