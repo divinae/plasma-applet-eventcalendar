@@ -17,6 +17,9 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   the whole day; drag events to move or resize them; the Day view has a weather panel for the day
   shown) and **Agenda** (a list of upcoming days). Drag events between days (Ctrl + drag copies),
   show or hide calendars from the header, a work week, a second time zone, keyboard navigation.
+- **Islands style** (default, or flat): the Day view's weather, hour grid and tasks, each agenda
+  day and each section of the Tasks tab sit in their own rounded cards; task sections fold, and
+  the done tasks wait in a folded "Completed" card.
 - **Google Calendar**: several accounts at once, choose calendars and task lists per account.
   Create, edit and delete events with color, guests, Google Meet and **recurring events** (ends on
   a date / after N times, custom repeats; edit one occurrence or the whole series) and their own
