@@ -376,6 +376,7 @@ MouseArea {
 		}
 		function onCalendarFetched(calendarId, data) { popup.refreshTaskLists() }
 		function onDataCleared() { popup.refreshTaskLists() }
+		function onTaskListsChanged() { popup.refreshTaskLists() } // A list made or deleted
 	}
 	Timer {
 		// Never leave the spinner stuck if a fetch doesn't report back.
