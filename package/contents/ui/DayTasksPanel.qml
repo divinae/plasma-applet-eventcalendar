@@ -158,10 +158,10 @@ ColumnLayout {
 		compact: true
 	}
 
-	// Apart from what follows (the hours below the strip).
+	// Apart from what follows (the hours below the strip). Not in the islands style: the card's edge is.
 	property bool showSeparator: true
 	Kirigami.Separator {
-		visible: dayTasks.showSeparator
+		visible: dayTasks.showSeparator && !appletConfig.islands
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.smallSpacing
 		Layout.bottomMargin: Kirigami.Units.smallSpacing
