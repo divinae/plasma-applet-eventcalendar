@@ -8,7 +8,11 @@ const read = name => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const Shared = {}
 vm.runInNewContext(read('Shared.js'), Shared)
-const A = { Shared }
+const Tasks = {}
+vm.runInNewContext(read('Tasks.js'), Tasks)
+const NotifyTiming = {}
+vm.runInNewContext(read('NotifyTiming.js'), NotifyTiming)
+const A = { Shared, Tasks, NotifyTiming }
 vm.runInNewContext(read('DailyAgenda.js'), A)
 
 // Time setting
@@ -67,5 +71,38 @@ assert.strictEqual(s.more, 3)
 s = A.summarize([], now, 5)
 assert.strictEqual(s.count, 0)
 assert.strictEqual(s.items.length, 0)
+
+//--- Tasks: today's and overdue open ones
+const task = (id, day, extra) => Object.assign({ kind: 'tasks#task', id, calendarId: 'acc::l1', summary: id, status: 'needsAction',
+	due: day ? '2026-10-' + day + 'T00:00:00.000Z' : undefined, dueTime: '', reminders: [], priority: 0 }, extra || {})
+const tasks = [
+	task('Today', 19),
+	task('Old', 12),
+	task('Yesterday', 18),
+	task('Urgent', 19, { priority: 5 }),
+	task('Timed', 19, { dueTime: '14:00' }),
+	task('Nine', 19, { reminders: [-540] }),
+	task('OldTimed', 17, { dueTime: '10:00' }),
+	task('Done', 19, { status: 'completed' }),
+	task('Tomorrow', 20),
+	task('Undated', null),
+	task('Today', 19), // The same task twice
+	ev('Event', 9, 0),
+]
+let t = A.summarizeTasks(tasks, now, 3, false)
+assert.strictEqual(t.count, 5, 'summary: without the ones with reminders of their own')
+assert.strictEqual(t.overdue, 3)
+assert.strictEqual(t.today, 2)
+assert.deepStrictEqual(Array.from(t.titles), ['Old', 'OldTimed', 'Yesterday'], 'overdue first, oldest first')
+assert.strictEqual(t.more, 2)
+t = A.summarizeTasks(tasks, now, 10, true)
+assert.strictEqual(t.count, 7, 'agenda: all of today')
+assert.deepStrictEqual(Array.from(t.titles).slice(3), ['Urgent', 'Today', 'Timed', 'Nine'], 'higher priority first')
+assert.strictEqual(t.more, 0)
+assert.strictEqual(A.summarizeTasks([], now, 3, false).count, 0)
+assert.strictEqual(A.summarizeTasks(undefined, now, 3, false).count, 0)
+
+assert.strictEqual(A.overdueTaskCount(tasks, now), 3)
+assert.strictEqual(A.overdueTaskCount([task('Done', 1, { status: 'completed' })], now), 0)
 
 console.log('daily_agenda ok')

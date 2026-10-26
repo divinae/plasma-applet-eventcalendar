@@ -67,3 +67,91 @@ function pruneSent(sent, nowMs) {
 	}
 	return kept
 }
+
+//--- Tasks (kind 'tasks#task', see Tasks.js): reminders at the due moment minus each reminder.
+
+// The due moment of a task in local time (ms): its due day at dueTime ('HH:mm'), or 00:00 for an
+// all-day task; NaN when undated.
+function taskDueMs(task) {
+	var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String((task && task.due) || ''))
+	if (!m) {
+		return NaN
+	}
+	var t = /^(\d{1,2}):(\d{2})$/.exec(String((task && task.dueTime) || ''))
+	return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), t ? Number(t[1]) : 0, t ? Number(t[2]) : 0).getTime()
+}
+
+// A task's reminders as whole minutes (numbers only, no repeats).
+function taskReminders(task) {
+	var list = task && task.reminders
+	var out = []
+	if (!list || typeof list === 'string' || typeof list.length !== 'number') {
+		return out
+	}
+	for (var i = 0; i < list.length; i++) {
+		var n = Number(list[i])
+		if (list[i] !== null && list[i] !== '' && isFinite(n) && out.indexOf(Math.round(n)) < 0) {
+			out.push(Math.round(n))
+		}
+	}
+	return out
+}
+
+// Whether a task gets reminders of its own: open, with a due day and a due time or reminders
+// (TickTick). The others (Google, all-day without reminders) are in the morning summary.
+function taskHasAlert(task) {
+	if (!task || task.status === 'completed' || !isFinite(taskDueMs(task))) {
+		return false
+	}
+	return !!task.dueTime || taskReminders(task).length > 0
+}
+
+// When a task's reminders come: [{ minutes, at (ms) }]: each reminder (minutes before the due
+// moment; negative = after it, eg: -540 on an all-day task = 09:00 that day), else the due time.
+function taskAlertTimes(task) {
+	if (!taskHasAlert(task)) {
+		return []
+	}
+	var due = taskDueMs(task)
+	var reminders = taskReminders(task)
+	if (!reminders.length) {
+		reminders = [0]
+	}
+	return reminders.map(function(minutes) {
+		return { minutes: minutes, at: due - minutes * MINUTE }
+	})
+}
+
+// The task reminders to send in this window: [{ kind: 'task', minutes, key }].
+function taskDueFor(task, win) {
+	var due = []
+	var times = taskAlertTimes(task)
+	var id = 'task|' + String((task && task.calendarId) || '') + '|' + String((task && (task.id || task.summary)) || '') + '|' + taskDueMs(task)
+	for (var i = 0; i < times.length; i++) {
+		if (inWindow(times[i].at, win)) {
+			due.push({ kind: 'task', minutes: times[i].minutes, key: id + '|' + times[i].minutes })
+		}
+	}
+	return due
+}
+
+// For a task reminder's text: { state: 'overdue' | 'today' | 'tomorrow' | 'date' | 'none', timed,
+// due (ms) }. Overdue: a timed task past its time, an all-day one past its day.
+function taskDueState(task, nowMs) {
+	var due = taskDueMs(task)
+	if (!isFinite(due)) {
+		return { state: 'none', timed: false, due: NaN }
+	}
+	var timed = /^\d{1,2}:\d{2}$/.test(String((task && task.dueTime) || ''))
+	var now = new Date(nowMs)
+	var d = new Date(due)
+	var dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+	var dayEnd = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime()
+	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+	var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime()
+	var state = (timed ? floorMinute(due) < floorMinute(nowMs) : dayEnd <= nowMs) ? 'overdue'
+		: dayStart === today ? 'today'
+		: dayStart === tomorrow ? 'tomorrow'
+		: 'date'
+	return { state: state, timed: timed, due: due }
+}

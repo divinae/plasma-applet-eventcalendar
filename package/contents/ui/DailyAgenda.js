@@ -1,6 +1,8 @@
 .pragma library
 
 .import "Shared.js" as Shared
+.import "Tasks.js" as Tasks
+.import "NotifyTiming.js" as NotifyTiming
 
 // The morning agenda notification: once a day at the first check at or after the chosen time
 // (also when the computer is turned on later that day), today's events. Pure functions, tested
@@ -87,4 +89,64 @@ function summarize(events, now, maxItems) {
 		items: shown,
 		more: list.length - shown.length,
 	}
+}
+
+//--- Tasks
+
+// Open tasks due today and overdue ones: { count, today, overdue, titles (at most maxItems),
+// more }. withAlerts false: without today's tasks that have reminders of their own (a due time or
+// reminders, see NotifyTiming.taskHasAlert), for the morning summary. Overdue first (oldest
+// first), then today's; higher priority first within a day. A task in two lists counted once.
+function summarizeTasks(items, now, maxItems, withAlerts) {
+	var today = Tasks.dayString(now)
+	var seen = {}
+	var list = []
+	;(items || []).forEach(function(item) {
+		if (!Tasks.isTask(item) || Tasks.isDone(item)) {
+			return
+		}
+		var day = Tasks.dueDay(item)
+		if (!day || day > today) {
+			return
+		}
+		var overdue = day < today
+		if (!overdue && !withAlerts && NotifyTiming.taskHasAlert(item)) {
+			return
+		}
+		var key = String(item.calendarId || '') + '|' + String(item.id || item.summary || '')
+		if (seen[key]) {
+			return
+		}
+		seen[key] = true
+		list.push({ day: day, overdue: overdue, priority: Tasks.priorityOf(item), title: String(item.summary || item.title || '') })
+	})
+	list.sort(function(a, b) {
+		return a.day < b.day ? -1 : a.day > b.day ? 1 : b.priority - a.priority
+	})
+	var overdueCount = list.filter(function(t) { return t.overdue }).length
+	var limit = maxItems > 0 ? maxItems : 3
+	return {
+		count: list.length,
+		today: list.length - overdueCount,
+		overdue: overdueCount,
+		titles: list.slice(0, limit).map(function(t) { return t.title }),
+		more: Math.max(0, list.length - limit),
+	}
+}
+
+// How many open tasks are due before today (the panel tooltip), each task once.
+function overdueTaskCount(items, now) {
+	var seen = {}
+	var count = 0
+	;(items || []).forEach(function(item) {
+		if (!Tasks.isTask(item) || !Tasks.isOverdue(item, now)) {
+			return
+		}
+		var key = String(item.calendarId || '') + '|' + String(item.id || item.summary || '')
+		if (!seen[key]) {
+			seen[key] = true
+			count++
+		}
+	})
+	return count
 }
