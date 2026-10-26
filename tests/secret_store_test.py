@@ -118,6 +118,19 @@ class SecretStoreTests(unittest.TestCase):
         self.assertIn("secret-tool", error)
         self.assertIn("kwallet-query", error)
 
+    def test_scope_allowlist(self):
+        parser = self.secret_store.build_parser()
+        for scope in ("google-account", "ticktick-account"):
+            args = parser.parse_args(["clear", "--scope", scope, "--key", "token", "--account-id", "tt_1"])
+            self.assertEqual(args.scope, scope)
+            self.assertEqual(
+                self.secret_store.build_attributes(args),
+                [("app", "plasma-applet-eventcalendar"), ("scope", scope), ("key", "token"), ("account_id", "tt_1")],
+            )
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                parser.parse_args(["clear", "--scope", "other", "--key", "token"])
+
 
 if __name__ == "__main__":
     unittest.main()
