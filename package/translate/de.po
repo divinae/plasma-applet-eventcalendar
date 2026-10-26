@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -43,7 +43,6 @@ msgstr "Google Kalender"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Aufgaben"
 
@@ -2873,6 +2872,36 @@ msgid "Due tomorrow"
 msgstr "Morgen fällig"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "Alle"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Heute"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Morgen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "Nächste 7 Tage"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "Überfällig"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Kein Datum"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "Die Farbe der Liste konnte nicht geändert werden"
 
@@ -2895,32 +2924,9 @@ msgstr[0] "%1 offene Aufgabe"
 msgstr[1] "%1 offene Aufgaben"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "Listenverwaltung beenden"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Listen verwalten"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "Listenverwaltung beenden (zeigt die Aufgaben nach Datum)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "Listen verwalten (zeigt die Aufgaben nach Liste)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Erledigte anzeigen"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "Erledigte Aufgaben ausblenden"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "Erledigte Aufgaben anzeigen"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "Anzeigen: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2929,6 +2935,64 @@ msgstr "Nach Datum"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Nach Liste"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "Ansichtsoptionen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "Gruppieren nach"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "Datum"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "Liste"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "Keine"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "Fälligkeitsdatum"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "Titel"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "Listenreihenfolge"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "Details anzeigen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Erledigte ausblenden"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Erledigte anzeigen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Listen verwalten"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3253,6 +3317,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "Listenverwaltung beenden"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "Listenverwaltung beenden (zeigt die Aufgaben nach Datum)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "Listen verwalten (zeigt die Aufgaben nach Liste)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "Erledigte Aufgaben ausblenden"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "Erledigte Aufgaben anzeigen"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

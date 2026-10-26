@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,7 +42,6 @@ msgstr "Google Takvim"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -2845,6 +2844,36 @@ msgid "Due tomorrow"
 msgstr "Son tarih yarın"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "Tümü"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Bugün"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Yarın"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "Sonraki 7 gün"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "Gecikmiş"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Tarihsiz"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "Listenin rengi değiştirilemedi"
 
@@ -2867,32 +2896,9 @@ msgstr[0] "%1 açık görev"
 msgstr[1] "%1 açık görev"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "Liste Yönetimini Bitir"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Listeleri yönet"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "Liste yönetimini bitir (görevleri tarihe göre gösterir)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "Listeleri Yönet (görevleri listeye göre gösterir)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Tamamlananları göster"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "Tamamlanan görevleri gizle"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "Tamamlanan görevleri göster"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "Göster: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2901,6 +2907,64 @@ msgstr "Tarihe göre"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Listeye göre"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "Görünüm Seçenekleri"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "Gruplandır"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "Tarih"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "Liste"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "Yok"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "Sırala"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "Son tarih"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "Başlık"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "Liste sırası"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "Ayrıntıları göster"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Tamamlananları gizle"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Tamamlananları göster"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Listeleri yönet"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3222,6 +3286,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "Liste Yönetimini Bitir"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "Liste yönetimini bitir (görevleri tarihe göre gösterir)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "Listeleri Yönet (görevleri listeye göre gösterir)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "Tamamlanan görevleri gizle"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "Tamamlanan görevleri göster"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

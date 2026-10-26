@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -43,7 +43,6 @@ msgstr "Googlov koledar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Opravila"
 
@@ -2887,6 +2886,36 @@ msgid "Due tomorrow"
 msgstr "Rok jutri"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "Vsa"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Danes"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Jutri"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "Naslednjih 7 dni"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "Zapadla"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Brez datuma"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "Barve seznama ni bilo mogoče spremeniti"
 
@@ -2911,32 +2940,9 @@ msgstr[2] "%1 odprta opravila"
 msgstr[3] "%1 odprtih opravil"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "Končaj upravljanje seznamov"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Upravljaj sezname"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "Končaj upravljanje seznamov (prikaže opravila po datumu)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "Upravljaj sezname (prikaže opravila po seznamih)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Prikaži opravljena"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "Skrij opravljena opravila"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "Prikaži opravljena opravila"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "Prikaži: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2945,6 +2951,64 @@ msgstr "Po datumu"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Po seznamu"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "Možnosti pogleda"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "Združi po"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "Datum"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "Seznam"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "Brez"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "Razvrsti po"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "Rok"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "Naslov"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "Vrstni red seznama"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "Prikaži podrobnosti"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Skrij opravljena"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Prikaži opravljena"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Upravljaj sezname"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3277,6 +3341,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "Končaj upravljanje seznamov"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "Končaj upravljanje seznamov (prikaže opravila po datumu)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "Upravljaj sezname (prikaže opravila po seznamih)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "Skrij opravljena opravila"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "Prikaži opravljena opravila"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

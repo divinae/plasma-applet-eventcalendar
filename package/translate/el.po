@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -42,7 +42,6 @@ msgstr "Ημερολόγιο Google"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Εργασίες"
 
@@ -2871,6 +2870,36 @@ msgid "Due tomorrow"
 msgstr "Προθεσμία αύριο"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "Όλες"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Σήμερα"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Αύριο"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "Επόμενες 7 ημέρες"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "Εκπρόθεσμες"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Χωρίς ημερομηνία"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "Δεν ήταν δυνατή η αλλαγή του χρώματος της λίστας"
 
@@ -2894,32 +2923,9 @@ msgstr[0] "%1 ανοιχτή εργασία"
 msgstr[1] "%1 ανοιχτές εργασίες"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "Τέλος διαχείρισης λιστών"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Διαχείριση λιστών"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "Τέλος διαχείρισης λιστών (εμφανίζει τις εργασίες ανά ημερομηνία)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "Διαχείριση λιστών (εμφανίζει τις εργασίες ανά λίστα)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Εμφάνιση ολοκληρωμένων"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "Απόκρυψη ολοκληρωμένων εργασιών"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "Εμφάνιση ολοκληρωμένων εργασιών"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "Εμφάνιση: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2928,6 +2934,64 @@ msgstr "Κατά ημερομηνία"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Κατά λίστα"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "Επιλογές προβολής"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "Ομαδοποίηση κατά"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "Λίστα"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "Καμία"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "Ταξινόμηση κατά"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "Προθεσμία"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "Τίτλος"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "Σειρά λίστας"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "Εμφάνιση λεπτομερειών"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Απόκρυψη ολοκληρωμένων"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Εμφάνιση ολοκληρωμένων"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Διαχείριση λιστών"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3254,6 +3318,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "Τέλος διαχείρισης λιστών"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "Τέλος διαχείρισης λιστών (εμφανίζει τις εργασίες ανά ημερομηνία)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "Διαχείριση λιστών (εμφανίζει τις εργασίες ανά λίστα)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "Απόκρυψη ολοκληρωμένων εργασιών"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "Εμφάνιση ολοκληρωμένων εργασιών"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

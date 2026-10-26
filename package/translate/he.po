@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -43,7 +43,6 @@ msgstr "Google Calendar"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "משימות"
 
@@ -2863,6 +2862,36 @@ msgid "Due tomorrow"
 msgstr "יעד: מחר"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "הכול"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "היום"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "מחר"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "7 הימים הבאים"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "באיחור"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "ללא תאריך"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "לא ניתן לשנות את צבע הרשימה"
 
@@ -2887,32 +2916,9 @@ msgstr[2] "%1 משימות פתוחות"
 msgstr[3] "%1 משימות פתוחות"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "סיום ניהול רשימות"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "ניהול רשימות"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "סיום ניהול רשימות (מציג את המשימות לפי תאריך)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "ניהול רשימות (מציג את המשימות לפי רשימה)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "הצגת משימות שהושלמו"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "הסתרת משימות שהושלמו"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "הצגת משימות שהושלמו"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "הצגה: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2921,6 +2927,64 @@ msgstr "לפי תאריך"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "לפי רשימה"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "אפשרויות תצוגה"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "קיבוץ לפי"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "תאריך"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "רשימה"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "ללא"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "מיון לפי"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "תאריך יעד"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "כותרת"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "סדר הרשימה"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "הצגת פרטים"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "הסתרת משימות שהושלמו"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "הצגת משימות שהושלמו"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "ניהול רשימות"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3248,6 +3312,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "סיום ניהול רשימות"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "סיום ניהול רשימות (מציג את המשימות לפי תאריך)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "ניהול רשימות (מציג את המשימות לפי רשימה)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "הסתרת משימות שהושלמו"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "הצגת משימות שהושלמו"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

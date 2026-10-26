@@ -172,7 +172,7 @@
 		</entry>
 		<entry name="tasksShowCompleted" type="bool">
 			<!-- Tasks view: the done tasks (at the bottom of each list; islands: the Completed card). -->
-			<default>false</default>
+			<default>true</default>
 		</entry>
 		<entry name="tasksGroupBy" type="string">
 			<!-- Tasks view: 'date' (Overdue, Today, Tomorrow, This week, Later, No date), 'list' or 'none'. -->

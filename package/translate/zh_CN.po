@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -42,7 +42,6 @@ msgstr "Google 日历"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "任务"
 
@@ -2770,6 +2769,36 @@ msgid "Due tomorrow"
 msgstr "明天截止"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "全部"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "今天"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "明天"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "未来 7 天"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "已逾期"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "无日期"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "无法更改列表颜色"
 
@@ -2791,32 +2820,9 @@ msgid_plural "%1 open tasks"
 msgstr[0] "%1 个未完成的任务"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "完成列表管理"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "管理列表"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "完成列表管理（按日期显示任务）"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "管理列表（按列表显示任务）"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "显示已完成"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "隐藏已完成的任务"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "显示已完成的任务"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "显示：%1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2825,6 +2831,64 @@ msgstr "按日期"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "按列表"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "视图选项"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "分组方式"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "日期"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "列表"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "无"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "排序方式"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "截止日期"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "标题"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "列表顺序"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "显示详细信息"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "隐藏已完成"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "显示已完成"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "管理列表"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3137,6 +3201,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "完成列表管理"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "完成列表管理（按日期显示任务）"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "管理列表（按列表显示任务）"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "隐藏已完成的任务"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "显示已完成的任务"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

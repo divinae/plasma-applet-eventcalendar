@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr "タスク"
 
@@ -2619,6 +2619,36 @@ msgid "Due tomorrow"
 msgstr "期限を明日にする"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "すべて"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "今日"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "明日"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "今後 7 日間"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "期限切れ"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "日付なし"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "リストの色を変更できませんでした"
 
@@ -2640,32 +2670,9 @@ msgid_plural "%1 open tasks"
 msgstr[0] "未完了のタスク %1 件"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "リストの管理を終了"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "リストを管理"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "リストの管理を終了 (タスクを日付別に表示)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "リストを管理 (タスクをリスト別に表示)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "完了済みを表示"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "完了したタスクを隠す"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "完了したタスクを表示"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "表示: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2674,6 +2681,64 @@ msgstr "日付別"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "リスト別"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "表示オプション"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "グループ化"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "日付"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "リスト"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "なし"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "並べ替え"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "期限"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "タイトル"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "リストの順序"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "詳細を表示"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "完了済みを隠す"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "完了済みを表示"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "リストを管理"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -2985,6 +3050,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "リストの管理を終了"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "リストの管理を終了 (タスクを日付別に表示)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "リストを管理 (タスクをリスト別に表示)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "完了したタスクを隠す"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "完了したタスクを表示"
 
 #~ msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
 #~ msgstr "アイランド: 日表示のパネル、予定一覧の各日、タスクの各セクションをそれぞれ角丸のカードに表示します。"

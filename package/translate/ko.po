@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,7 +42,6 @@ msgstr "Google 캘린더"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "할 일"
 
@@ -2808,6 +2807,36 @@ msgid "Due tomorrow"
 msgstr "기한을 내일로"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "전체"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "오늘"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "내일"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "다음 7일"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "기한 지남"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "날짜 없음"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "목록 색상을 바꿀 수 없습니다"
 
@@ -2829,32 +2858,9 @@ msgid_plural "%1 open tasks"
 msgstr[0] "열린 작업 %1개"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "목록 관리 완료"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "목록 관리"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "목록 관리 완료 (작업을 날짜별로 표시)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "목록 관리 (작업을 목록별로 표시)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "완료된 작업 표시"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "완료된 작업 숨기기"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "완료된 작업 표시"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "표시: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2863,6 +2869,64 @@ msgstr "날짜별"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "목록별"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "보기 옵션"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "그룹화 기준"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "날짜"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "목록"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "없음"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "정렬 기준"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "기한"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "제목"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "목록 순서"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "세부 정보 표시"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "완료된 작업 숨기기"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "완료된 작업 표시"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "목록 관리"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3177,6 +3241,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "목록 관리 완료"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "목록 관리 완료 (작업을 날짜별로 표시)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "목록 관리 (작업을 목록별로 표시)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "완료된 작업 숨기기"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "완료된 작업 표시"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

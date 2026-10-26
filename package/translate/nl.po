@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -42,7 +42,6 @@ msgstr "Google Agenda"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/TasksView.qml
 msgid "Tasks"
 msgstr "Taken"
 
@@ -2855,6 +2854,36 @@ msgid "Due tomorrow"
 msgstr "Uiterlijk morgen"
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr "Alle"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Vandaag"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Morgen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr "Komende 7 dagen"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr "Te laat"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Geen datum"
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr "Kan de kleur van de lijst niet wijzigen"
 
@@ -2878,32 +2907,9 @@ msgstr[0] "%1 open taak"
 msgstr[1] "%1 open taken"
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr "Klaar met lijsten beheren"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr "Lijsten beheren"
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr "Klaar met lijsten beheren (toont de taken per datum)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr "Lijsten beheren (toont de taken per lijst)"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr "Afgeronde tonen"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr "Afgeronde taken verbergen"
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
-msgstr "Afgeronde taken tonen"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
+msgstr "Tonen: %1"
 
 #: ../contents/ui/TasksView.qml
 msgid "By date"
@@ -2912,6 +2918,64 @@ msgstr "Op datum"
 #: ../contents/ui/TasksView.qml
 msgid "By list"
 msgstr "Op lijst"
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr "Weergaveopties"
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr "Groeperen op"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr "Datum"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr "Lijst"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr "Geen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr "Sorteren op"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr "Uiterlijke datum"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr "Titel"
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr "Lijstvolgorde"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr "Details tonen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Afgeronde verbergen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr "Afgeronde tonen"
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
+msgstr "Lijsten beheren"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "%1 = task list name"
@@ -3235,6 +3299,21 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid "Done managing lists"
+#~ msgstr "Klaar met lijsten beheren"
+
+#~ msgid "Done managing lists (shows the tasks by date)"
+#~ msgstr "Klaar met lijsten beheren (toont de taken per datum)"
+
+#~ msgid "Manage lists (shows the tasks by list)"
+#~ msgstr "Lijsten beheren (toont de taken per lijst)"
+
+#~ msgid "Hide completed tasks"
+#~ msgstr "Afgeronde taken verbergen"
+
+#~ msgid "Show completed tasks"
+#~ msgstr "Afgeronde taken tonen"
 
 #~ msgid ""
 #~ "Islands: the Day view's panels, the agenda days and the task sections "

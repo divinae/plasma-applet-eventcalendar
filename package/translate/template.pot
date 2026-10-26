@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 12:02+0100\n"
+"POT-Creation-Date: 2026-10-26 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Google Calendar"
 msgstr ""
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/TasksView.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
 msgid "Tasks"
 msgstr ""
 
@@ -2651,6 +2651,36 @@ msgid "Due tomorrow"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "All"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Next 7 days"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Overdue"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
 msgstr ""
 
@@ -2673,31 +2703,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../contents/ui/TasksView.qml
-msgid "Done managing lists"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Done managing lists (shows the tasks by date)"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Manage lists (shows the tasks by list)"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed tasks"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "Show completed tasks"
+msgctxt "%1 = tasks filter or list name"
+msgid "Show: %1"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
@@ -2706,6 +2713,64 @@ msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "By list"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "View options"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Group by"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "Date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "List"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "group tasks by"
+msgid "None"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Sort by"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Due date"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "Title"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgctxt "sort tasks by"
+msgid "List order"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Show details"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Show completed"
+msgstr ""
+
+#: ../contents/ui/TasksView.qml
+msgid "Manage lists"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
