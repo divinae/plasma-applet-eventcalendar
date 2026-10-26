@@ -19,7 +19,9 @@ import "../lib/Requests.js" as Requests
 
 // Tasks are event-shaped items (kind 'tasks#task'), see Tasks.js: an all-day event on the day
 // it's shown on (Tasks.placementDay), with the raw due, status, completed, notes, position and
-// parent kept, and notes as the description.
+// parent kept, and notes as the description. Of the provider-neutral fields Google has only
+// parentId (its parent: subtasks are tasks); the others are empty (dueTime '', reminders [],
+// priority 0, repeatRule '', subtasks []) and dropped from the bodies sent (Tasks.googleBody).
 
 CalendarManager {
 	id: googleTasksManager
@@ -338,6 +340,15 @@ CalendarManager {
 
 		eventData.isCompleted = Tasks.isDone(taskData)
 
+		// Provider-neutral fields (Tasks.js): Google has no time, reminders, priority, repeat or
+		// checklist; subtasks are tasks with a parent.
+		eventData.parentId = taskData.parent ? String(taskData.parent) : ''
+		eventData.dueTime = ''
+		eventData.reminders = []
+		eventData.priority = 0
+		eventData.repeatRule = ''
+		eventData.subtasks = []
+
 		// The due date only records date information: the time portion is always dropped.
 		var dueDay = Tasks.dueDay(taskData)
 		if (dueDay) {
@@ -431,7 +442,7 @@ CalendarManager {
 	// done(err, item): optional, always called; item is the new task as shown, or null.
 	// params: optional query params of tasks.insert, eg: { parent, previous }.
 	function createEventFromData(calendarId, body, done, params) {
-		tasksRequest('POST', taskPath(unscopedTasklistId(calendarId)), params, body, function(err, data, xhr) {
+		tasksRequest('POST', taskPath(unscopedTasklistId(calendarId)), params, Tasks.googleBody(body), function(err, data, xhr) {
 			var item = null
 			if (err || !data) {
 				reportError('createEvent', err, data, xhr)
@@ -549,7 +560,8 @@ CalendarManager {
 	}
 
 	//--- Update
-	// PATCH only the changed fields (args, Google names: title, notes, due, status, completed).
+	// PATCH only the changed fields (args, Google names: title, notes, due, status, completed; the
+	// fields Google doesn't have are dropped, see Tasks.googleBody).
 	// A field set to undefined is cleared (sent as null).
 	// options: optional { done(err, item) }, always called once the server answered.
 	function setEventProperties(calendarId, eventId, args, options) {
@@ -563,8 +575,9 @@ CalendarManager {
 			return
 		}
 		var body = {}
-		for (var key in (args || {})) {
-			body[key] = typeof args[key] === 'undefined' ? null : args[key]
+		var googleArgs = Tasks.googleBody(args)
+		for (var key in googleArgs) {
+			body[key] = typeof googleArgs[key] === 'undefined' ? null : googleArgs[key]
 		}
 		tasksRequest('PATCH', taskPath(unscopedTasklistId(calendarId), eventId), null, body, function(err, data, xhr) {
 			if (err || !data) {
@@ -584,6 +597,55 @@ CalendarManager {
 			if (done) {
 				done(null, current)
 			}
+		})
+	}
+
+	//--- Reorder within a list (tasks.move with previous)
+	// Put a task right after previousTaskId ('' or null: first) among its siblings: it keeps its
+	// parent, so a subtask stays one. When previousTaskId is under another parent, its ancestor
+	// that is a sibling is used (dropped after a subtask of X: after X); none: first.
+	// cb(err, item): optional, always called; item is the task with its new position.
+	function reorderTask(listId, taskId, previousTaskId, cb) {
+		var finish = function(err, item) {
+			if (cb) {
+				cb(err || null, item || null)
+			}
+		}
+		var event = getEvent(listId, taskId)
+		if (!event) {
+			logger.log(calendarManagerId, 'reorderTask', 'task not loaded')
+			finish('reorderTask: task not loaded', null)
+			return
+		}
+		var parent = event.parent ? String(event.parent) : ''
+		var previous = previousTaskId ? String(previousTaskId) : ''
+		var seen = {}
+		while (previous && !seen[previous]) {
+			seen[previous] = true
+			var previousTask = getEvent(listId, previous)
+			var previousParent = previousTask && previousTask.parent ? String(previousTask.parent) : ''
+			if (!previousTask || previousParent === parent) {
+				break // A sibling (or not loaded: the server decides)
+			}
+			previous = previousParent
+		}
+		if (previous === taskId) {
+			previous = ''
+		}
+		var query = { parent: parent, previous: previous }
+		tasksRequest('POST', taskPath(unscopedTasklistId(listId), taskId) + '/move', query, "", function(err, data, xhr) {
+			if (err || !data || !data.id) {
+				reportError('reorderTask', err || 'no data', data, xhr)
+				finish(err || 'reorderTask: no data', null)
+				return
+			}
+			var current = getEvent(listId, taskId) || event
+			var eventData = parseTaskAsEventData(data)
+			Shared.merge(current, eventData)
+			Shared.removeMissingKeys(current, eventData) // eg: parent cleared
+			parseSingleEvent(listId, current)
+			eventUpdated(listId, taskId, current)
+			finish(null, current)
 		})
 	}
 
