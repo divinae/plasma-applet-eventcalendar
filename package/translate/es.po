@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 15:18+0100\n"
+"POT-Creation-Date: 2026-10-26 15:26+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -1368,7 +1368,7 @@ msgstr "Lista de tareas mostrada"
 msgid "New Task"
 msgstr "Nueva tarea"
 
-#: ../contents/ui/DayTasksPanel.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Sin tareas"
 
@@ -2518,6 +2518,10 @@ msgstr "Formatos de fecha y hora…"
 #: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Manage lists"
 msgstr "Gestionar listas"
+
+#: ../contents/ui/ManageListsView.qml
+msgid "No lists"
+msgstr "No hay listas"
 
 #: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "%1 open task"

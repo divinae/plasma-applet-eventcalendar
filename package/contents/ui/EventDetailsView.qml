@@ -64,7 +64,7 @@ Rectangle {
 	readonly property bool isOverdue: isTask && Tasks.isOverdue(eventItem, timeModel.currentTime)
 	// Tasks: TickTick's checklist ({ id, title, done }), Google's subtasks (the list's tasks with
 	// this one as their parent, made again when the list changes).
-	readonly property var checklist: isTask && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
+	readonly property var checklist: isTask ? Tasks.cleanSubtasks(eventItem.subtasks) : []
 	property int listRevision: 0
 	readonly property var childTasks: {
 		listRevision // Depends on it
@@ -702,7 +702,8 @@ Rectangle {
 					PlasmaComponents3.Label {
 						readonly property var progress: Tasks.subtaskProgress(details.eventItem)
 						Layout.fillWidth: true
-						text: details.checklist.length > 0
+						// Both kinds (a checklist and child tasks): no count for half of them.
+						text: details.checklist.length > 0 && details.childTasks.length === 0
 							? i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", progress.done, progress.total)
 							: i18n("Subtasks")
 						textFormat: Text.PlainText

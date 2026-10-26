@@ -42,13 +42,6 @@ ColumnLayout {
 		return out
 	}
 
-	function close() {
-		view.cancelRename()
-		view.confirmDeleteListId = ""
-		view.addingList = false
-		view.newListDraft = ""
-		view.managing = false
-	}
 
 	spacing: Kirigami.Units.smallSpacing
 
@@ -66,7 +59,7 @@ ColumnLayout {
 				icon.name: Qt.application.layoutDirection === Qt.RightToLeft ? "go-next" : "go-previous"
 				display: QQC2.AbstractButton.IconOnly
 				text: i18n("Back")
-				onClicked: manage.close()
+				onClicked: manage.view.closeManaging()
 				PlasmaComponents3.ToolTip.text: text
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
@@ -137,7 +130,7 @@ ColumnLayout {
 							visible: groupCard.group.lists.length === 0
 							Layout.fillWidth: true
 							Layout.leftMargin: manage.view.titleX
-							text: i18n("No tasks")
+							text: i18n("No lists")
 							textFormat: Text.PlainText
 							opacity: manage.view.dimOpacity
 						}
@@ -253,9 +246,26 @@ ColumnLayout {
 						font.weight: Font.DemiBold
 						readOnly: listRow.busy
 						Accessible.name: i18n("List name")
+						objectName: "renameListField"
+						// The first time: focused, the name selected; made again (a rebuild): the cursor kept.
+						property bool restored: false
 						Component.onCompleted: {
-							forceActiveFocus()
-							selectAll()
+							if (!manage.view.renameFocused) {
+								manage.view.renameFocused = true
+								forceActiveFocus()
+								selectAll()
+							} else {
+								if (manage.view.renameCursor >= 0) {
+									cursorPosition = Math.min(manage.view.renameCursor, length)
+								}
+								forceActiveFocus()
+							}
+							restored = true
+						}
+						onCursorPositionChanged: {
+							if (restored) {
+								manage.view.renameCursor = cursorPosition
+							}
 						}
 						onTextEdited: manage.view.renameDraft = text
 						onAccepted: manage.view.commitRename(listRow.list, text)
@@ -344,6 +354,7 @@ ColumnLayout {
 				PlasmaComponents3.Button {
 					icon.name: "edit-delete"
 					text: i18n("Delete")
+					enabled: listRow.idle
 					onClicked: manage.view.deleteList(listRow.list)
 				}
 				PlasmaComponents3.Button {

@@ -338,6 +338,9 @@ MouseArea {
 		searchOpen = false
 		quickAddOpen = false
 		closeImport()
+		if (tasksViewLoader.item) {
+			tasksViewLoader.item.closeManaging()
+		}
 	}
 	// Overlays belong to the view they were opened from.
 	Connections {
@@ -872,6 +875,12 @@ MouseArea {
 
 	Keys.onPressed: function(event) {
 		if (anyOverlayOpen || KeyNav.isTextInput(Window.activeFocusItem)) {
+			return
+		}
+		// Esc on the Tasks tab's "Manage lists": back to the tasks.
+		if (event.key === Qt.Key_Escape && tasksMode && tasksViewLoader.item && tasksViewLoader.item.managing) {
+			tasksViewLoader.item.closeManaging()
+			event.accepted = true
 			return
 		}
 		var action = KeyNav.actionFor(event.key, event.modifiers, currentViewMode)

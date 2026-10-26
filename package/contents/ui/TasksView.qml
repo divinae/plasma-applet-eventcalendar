@@ -456,8 +456,19 @@ Item {
 
 	// The list's colors on their own ("Manage lists": its dot).
 	function openColorMenu(list, parentItem, x, y) {
-		listMenu.list = list
-		listMenu.colorMenu.popup(parentItem, x, y)
+		standaloneColorMenu.list = list
+		standaloneColorMenu.popup(parentItem, x, y)
+	}
+	// Back from "Manage lists" (also when the popup closes), nothing left half done.
+	function closeManaging() {
+		if (!managing) {
+			return
+		}
+		cancelRename()
+		confirmDeleteListId = ""
+		addingList = false
+		newListDraft = ""
+		managing = false
 	}
 	function openListMenu(list, parentItem, x, y) {
 		listMenu.list = list
@@ -484,6 +495,9 @@ Item {
 		}
 	}
 	function moveKeyRow(delta) {
+		if (managing) {
+			return
+		}
 		var keys = taskRowKeys()
 		if (!keys.length) {
 			return
@@ -528,6 +542,9 @@ Item {
 	}
 	// action: 'open', 'toggle', 'edit', 'delete'. True when there was a task for it.
 	function keyAction(action) {
+		if (managing) {
+			return false
+		}
 		var row = keyRow()
 		if (!row) {
 			moveKeyRow(1) // First press: highlight the first task
@@ -559,6 +576,9 @@ Item {
 	}
 	// "N": the "Add a task…" field.
 	function focusQuickAdd() {
+		if (managing) {
+			return true // Nothing to add a task to on that page
+		}
 		var loader = rowItem('add')
 		if (loader && loader.item && typeof loader.item.focusField === 'function') {
 			var flick = scrollView.contentItem
@@ -1652,7 +1672,7 @@ Item {
 					}
 					// Rename: Enter saves, Esc cancels.
 					Loader {
-						active: listHeader.renaming
+						active: listHeader.renaming && !tasksView.managing
 						visible: active
 						Layout.fillWidth: true
 						Layout.rightMargin: Kirigami.Units.smallSpacing
@@ -1931,6 +1951,45 @@ Item {
 		}
 	}
 
+	// A list's colors (TickTick): in the list's menu, and on its own ("Manage lists": the dot).
+	component ColorMenu: PlasmaComponents3.Menu {
+		id: colorChoice
+		property var list: null
+		title: i18n("Color")
+		icon.name: "color-management"
+		Repeater {
+			model: TaskLists.swatches
+			PlasmaComponents3.MenuItem {
+				id: swatchItem
+				readonly property string swatch: modelData
+				readonly property bool current: !!colorChoice.list && TaskLists.hexColor(colorChoice.list.color) === swatch
+				text: [i18nc("color", "Red"), i18nc("color", "Orange"), i18nc("color", "Yellow"), i18nc("color", "Blue"),
+					i18nc("color", "Green"), i18nc("color", "Indigo"), i18nc("color", "Purple"), i18nc("color", "Gray")][index] || swatch
+				contentItem: RowLayout {
+					spacing: Kirigami.Units.smallSpacing
+					Rectangle {
+						implicitWidth: Kirigami.Units.iconSizes.small
+						implicitHeight: implicitWidth
+						radius: width / 2
+						color: swatchItem.swatch
+						border.width: swatchItem.current ? 2 : 0
+						border.color: Kirigami.Theme.textColor
+					}
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						text: swatchItem.text
+						textFormat: Text.PlainText
+						font.weight: swatchItem.current ? Font.DemiBold : Font.Normal
+					}
+				}
+				onTriggered: tasksView.setListColor(colorChoice.list, swatch)
+			}
+		}
+	}
+	ColorMenu {
+		id: standaloneColorMenu
+	}
+
 	// A list's menu ("⋯" or right click on its header).
 	PlasmaComponents3.Menu {
 		id: listMenu
@@ -1947,37 +2006,8 @@ Item {
 				listMenu.takeMenu(colorMenuIndex)
 			}
 		}
-		property PlasmaComponents3.Menu colorMenu: PlasmaComponents3.Menu {
-			title: i18n("Color")
-			icon.name: "color-management"
-			Repeater {
-				model: TaskLists.swatches
-				PlasmaComponents3.MenuItem {
-					id: swatchItem
-					readonly property string swatch: modelData
-					readonly property bool current: !!listMenu.list && TaskLists.hexColor(listMenu.list.color) === swatch
-					text: [i18nc("color", "Red"), i18nc("color", "Orange"), i18nc("color", "Yellow"), i18nc("color", "Blue"),
-						i18nc("color", "Green"), i18nc("color", "Indigo"), i18nc("color", "Purple"), i18nc("color", "Gray")][index] || swatch
-					contentItem: RowLayout {
-						spacing: Kirigami.Units.smallSpacing
-						Rectangle {
-							implicitWidth: Kirigami.Units.iconSizes.small
-							implicitHeight: implicitWidth
-							radius: width / 2
-							color: swatchItem.swatch
-							border.width: swatchItem.current ? 2 : 0
-							border.color: Kirigami.Theme.textColor
-						}
-						PlasmaComponents3.Label {
-							Layout.fillWidth: true
-							text: swatchItem.text
-							textFormat: Text.PlainText
-							font.weight: swatchItem.current ? Font.DemiBold : Font.Normal
-						}
-					}
-					onTriggered: tasksView.setListColor(listMenu.list, swatch)
-				}
-			}
+		property PlasmaComponents3.Menu colorMenu: ColorMenu {
+			list: listMenu.list
 		}
 
 		PlasmaComponents3.MenuItem {
