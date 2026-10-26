@@ -774,7 +774,10 @@ Item {
 							readonly property bool separated: !tasksView.islands && index > 0 && tasksView.rows[index - 1].type !== 'group'
 							Layout.fillWidth: true
 							// A card gap above a card (less right below an account's heading), room below its last row.
-							Layout.topMargin: card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0
+							// A card that is only "Add a task…" (no heading above it): the same room above as below,
+							// so the row sits centered.
+							readonly property real cardTopPadding: card && card.start && card.end && row.type === 'add' ? tasksView.cardEndPadding : 0
+							Layout.topMargin: (card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0) + cardTopPadding
 							Layout.bottomMargin: card && card.end ? tasksView.cardEndPadding : 0
 							sourceComponent: row.type === 'group' ? groupComponent
 								: row.type === 'list' ? listComponent
@@ -784,7 +787,8 @@ Item {
 								: taskComponent
 							CardSlice {
 								visible: !!rowLoader.card
-								height: parent.height + (rowLoader.card && rowLoader.card.end ? tasksView.cardEndPadding : 0)
+								y: -rowLoader.cardTopPadding
+								height: parent.height + rowLoader.cardTopPadding + (rowLoader.card && rowLoader.card.end ? tasksView.cardEndPadding : 0)
 								joinTop: !!rowLoader.card && !rowLoader.card.start
 								joinBottom: !!rowLoader.card && !rowLoader.card.end
 								key: rowLoader.card ? rowLoader.card.key : ""
