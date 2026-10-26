@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1217,6 +1217,26 @@ msgstr "클래식(Google에서 반환한 색상)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "시스템 색 구성표 따르기"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "스타일"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"아일랜드: 일 보기의 패널, 일정의 각 날짜, 작업 섹션이 각각 둥근 카드에 표시됩"
+"니다."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "아일랜드 (카드)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "플랫"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3413,9 +3433,6 @@ msgstr "근무 위치: %1"
 
 #~ msgid "Do Nothing"
 #~ msgstr "아무것도 안 함"
-
-#~ msgid "Style"
-#~ msgstr "스타일"
 
 #~ msgid "Current Month Title:"
 #~ msgstr "이번 달 제목:"

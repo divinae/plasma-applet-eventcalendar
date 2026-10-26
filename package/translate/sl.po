@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1233,6 +1233,26 @@ msgstr "Klasične (kot jih vrne Google)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Sledi sistemski barvni shemi"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Slog"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"Otoki: plošče dnevnega pogleda, dnevi dnevnega reda in razdelki opravil so "
+"vsak na svoji zaobljeni kartici."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "Otoki (kartice)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "Ploščat"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3513,9 +3533,6 @@ msgstr "Delovna lokacija: %1"
 
 #~ msgid "Do Nothing"
 #~ msgstr "Ne naredi ničesar"
-
-#~ msgid "Style"
-#~ msgstr "Slog"
 
 #~ msgid "Current Month Title:"
 #~ msgstr "Ime trenutnega meseca:"

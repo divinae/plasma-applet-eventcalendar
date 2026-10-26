@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1212,6 +1212,26 @@ msgstr "קלאסיים (כפי ש־Google מחזירה)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "לפי ערכת הצבעים של המערכת"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "סגנון"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"איים: הלוחות של תצוגת היום, ימי סדר היום וקטעי המשימות נמצאים כל אחד בכרטיס "
+"מעוגל."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "איים (כרטיסים)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "שטוח"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

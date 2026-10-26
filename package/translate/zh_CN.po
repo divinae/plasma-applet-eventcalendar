@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1189,6 +1189,25 @@ msgstr "经典（Google 返回的颜色）"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "跟随系统配色方案"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "样式"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"岛屿：日视图的各面板、日程的各天和任务的各分区分别位于各自的圆角卡片中。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "岛屿（卡片）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "扁平"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3346,9 +3365,6 @@ msgstr "工作地点：%1"
 
 #~ msgid "Do Nothing"
 #~ msgstr "无动作"
-
-#~ msgid "Style"
-#~ msgstr "样式"
 
 #~ msgid "Show Borders"
 #~ msgstr "显示边框"

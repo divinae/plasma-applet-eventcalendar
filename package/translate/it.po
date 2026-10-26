@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1072,6 +1072,22 @@ msgstr "Classici (come restituiti da Google)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Segui lo schema di colori del sistema"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Stile"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+msgstr "Isole: i pannelli della vista giorno, i giorni dell'agenda e le sezioni delle attività stanno ognuno in una scheda arrotondata."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "Isole (schede)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "Piatto"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3247,9 +3263,6 @@ msgstr "Luogo di lavoro: %1"
 
 #~ msgid "Do Nothing"
 #~ msgstr "Non fare nulla"
-
-#~ msgid "Style"
-#~ msgstr "Stile"
 
 #~ msgid "Current Month Title:"
 #~ msgstr "Titolo del mese corrente:"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1250,6 +1250,26 @@ msgstr "Κλασικά (όπως τα επιστρέφει η Google)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Ακολούθηση του χρωματικού σχήματος του συστήματος"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Στιλ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"Νησιά: τα πλαίσια της προβολής ημέρας, οι ημέρες της ατζέντας και οι "
+"ενότητες εργασιών βρίσκονται η καθεμία σε στρογγυλεμένη κάρτα."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "Νησιά (κάρτες)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "Επίπεδο"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3465,9 +3485,6 @@ msgstr "Τοποθεσία εργασίας: %1"
 
 #~ msgid "Double-click on Date:"
 #~ msgstr "Διπλό κλικ στην Ημερομηνία:"
-
-#~ msgid "Style"
-#~ msgstr "Στιλ"
 
 #~ msgid "Show Borders"
 #~ msgstr "Εμφάνιση Περιθωρίων"

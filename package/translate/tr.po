@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1229,6 +1229,26 @@ msgstr "Klasik (Google’ın döndürdüğü gibi)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Sistem renk şemasını izle"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Tarz"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Islands: the Day view's panels, the agenda days and the task sections each "
+"sit in a rounded card."
+msgstr ""
+"Adalar: gün görünümünün panelleri, ajandanın günleri ve görev bölümleri her "
+"biri yuvarlatılmış bir kartta durur."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "Adalar (kartlar)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "Düz"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3440,9 +3460,6 @@ msgstr "Çalışma konumu: %1"
 
 #~ msgid "Double-click on Date:"
 #~ msgstr "Tarihe Çift Tıklama:"
-
-#~ msgid "Style"
-#~ msgstr "Tarz"
 
 #~ msgid "Show Borders"
 #~ msgstr "Kenarıkları Göster"

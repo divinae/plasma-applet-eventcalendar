@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 11:16+0100\n"
+"POT-Creation-Date: 2026-10-26 11:51+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1074,6 +1074,22 @@ msgstr "Klasyczne (zwracane przez Google)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Follow the system color scheme"
 msgstr "Zgodnie ze schematem kolorów systemu"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Styl"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+msgstr "Wyspy: panele widoku dnia, dni agendy i sekcje zadań są każde na osobnej zaokrąglonej karcie."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands (cards)"
+msgstr "Wyspy (karty)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Flat"
+msgstr "Płaski"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
@@ -3247,9 +3263,6 @@ msgstr "Miejsce pracy: %1"
 
 #~ msgid "Double-click on Date:"
 #~ msgstr "Podwójne kliknięcie daty:"
-
-#~ msgid "Style"
-#~ msgstr "Styl"
 
 #~ msgid "Show Borders"
 #~ msgstr "Pokaż obramowanie"
