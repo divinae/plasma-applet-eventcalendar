@@ -77,7 +77,7 @@ LinkRect {
 	// Events that already ended today are dimmed (whole past days are dimmed by the day item).
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
 	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
-	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing
+	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing + (eventStyle.showBar ? 4 : 0)
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
 	// "Bar" event look: the bar in the event color along the left edge (EventStyle.showBar).
@@ -129,6 +129,7 @@ LinkRect {
 						}
 						return model.summary
 					}
+					textFormat: Text.PlainText
 					color: agendaEventItem.tileTextColor
 					font.family: appletConfig.eventFont.family
 					font.pointSize: appletConfig.eventFont.pointSize
@@ -153,7 +154,9 @@ LinkRect {
 						opacity: 0.85
 						font: appletConfig.eventSmallFont
 						Layout.fillWidth: true
-						Layout.maximumWidth: implicitWidth
+						// Rounded up: a fractional implicitWidth is rounded down and elides the text.
+						Layout.preferredWidth: Math.ceil(implicitWidth)
+						Layout.maximumWidth: Math.ceil(implicitWidth)
 						elide: Text.ElideRight
 					}
 					// What else is set; the location, Join button and description are shown already.

@@ -41,9 +41,9 @@ Item {
 				id: agendaRepeater
 				model: root.agendaModel
 				delegate: AgendaListItem {
-					width: parent.width
-					// Islands: the day cards as wide as the column (not as their content).
-					Layout.fillWidth: appletConfig.islands
+					// The days as wide as the column (not as their content). Not width: parent.width,
+					// the parent is null while a delegate is removed.
+					Layout.fillWidth: true
 				}
 			}
 		}

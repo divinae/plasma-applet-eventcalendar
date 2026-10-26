@@ -38,6 +38,7 @@ Row {
 		anchors.verticalCenter: parent.verticalCenter
 		width: Math.min(implicitWidth, Math.max(0, workingLocationLabel.maxWidth - (icon.visible ? icon.width + workingLocationLabel.spacing : 0)))
 		text: workingLocationLabel.text
+		textFormat: Text.PlainText
 		color: workingLocationLabel.color
 		font: Kirigami.Theme.smallFont
 		elide: Text.ElideRight

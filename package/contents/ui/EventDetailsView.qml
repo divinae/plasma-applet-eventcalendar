@@ -515,6 +515,7 @@ Rectangle {
 							var parts = name.split(" - ")
 							return parts.length === 2 && parts[0] === parts[1] ? parts[0] : name
 						}
+						textFormat: Text.PlainText
 					}
 
 					// Reminders

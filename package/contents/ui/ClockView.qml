@@ -258,6 +258,7 @@ Item {
 				text: clock.nextEvent
 					? i18nc("%1 = event title, %2 = in 5 min / 12 min left", "%1 · %2", clock.nextEvent.summary, nextEventChip.whenText())
 					: ""
+				textFormat: Text.PlainText
 				elide: Text.ElideMiddle // Keep the time visible.
 				width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 12)
 			}
