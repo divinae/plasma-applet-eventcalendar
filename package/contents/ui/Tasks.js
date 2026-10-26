@@ -240,3 +240,127 @@ function toTickTick(body, task, toUtc) {
 	}
 	return out
 }
+
+//--- Tasks view: task lists as sections
+
+// Google's order within a list (position strings), tasks without one first, then by title.
+function comparePosition(a, b) {
+	var aHas = typeof a.position === 'string' && a.position !== ''
+	var bHas = typeof b.position === 'string' && b.position !== ''
+	if (aHas && bHas && a.position !== b.position) {
+		return a.position < b.position ? -1 : 1
+	}
+	if (aHas !== bHas) {
+		return aHas ? 1 : -1
+	}
+	var at = String(a.summary || a.title || '').toLowerCase()
+	var bt = String(b.summary || b.title || '').toLowerCase()
+	return at < bt ? -1 : at > bt ? 1 : 0
+}
+
+// Open tasks: by due day (overdue ones are the earliest, so first), undated last; the same due day
+// in the list's order (position). A sorted copy.
+function sortOpenTasks(tasks) {
+	return (tasks || []).slice().sort(function(a, b) {
+		var da = dueDay(a)
+		var db = dueDay(b)
+		if (da !== db) {
+			if (!da || !db) {
+				return da ? -1 : 1
+			}
+			return da < db ? -1 : 1
+		}
+		return comparePosition(a, b)
+	})
+}
+
+// Done tasks: the most recently completed first. A sorted copy.
+function sortDoneTasks(tasks) {
+	return (tasks || []).slice().sort(function(a, b) {
+		var ca = a.completed ? new Date(a.completed).getTime() || 0 : 0
+		var cb = b.completed ? new Date(b.completed).getTime() || 0 : 0
+		return ca !== cb ? cb - ca : comparePosition(a, b)
+	})
+}
+
+// When a task is due, for its label: { kind: 'none' | 'overdue' | 'today' | 'tomorrow' | 'date', day }.
+function dueInfo(item, now) {
+	var day = dueDay(item)
+	if (!day) {
+		return { kind: 'none', day: '' }
+	}
+	var today = dayString(now)
+	var kind = day === today ? 'today'
+		: day === addDays(today, 1) ? 'tomorrow'
+		: day < today && !isDone(item) ? 'overdue'
+		: 'date'
+	return { kind: kind, day: day }
+}
+
+// The first non-empty line of a task's notes, trimmed.
+function firstLine(text) {
+	var lines = String(text || '').split(/\r?\n/)
+	for (var i = 0; i < lines.length; i++) {
+		var line = lines[i].trim()
+		if (line) {
+			return line
+		}
+	}
+	return ''
+}
+
+// The rows of the Tasks view, top to bottom.
+// lists: [{ id, name, color, group }] (group: the account; lists of one group are kept together,
+// in the order the groups first appear). itemsByList: { listId: [items] } (non-tasks and
+// repeated ids are skipped). Rows:
+//   { type: 'group', key, text }: only when the lists are from more than one account
+//   { type: 'list', key, list, openCount, doneCount }
+//   { type: 'task', key, item, list, done }: open tasks (sortOpenTasks), then with showCompleted
+//     the done ones (sortDoneTasks)
+//   { type: 'empty', key, list }: the list has no open task
+function taskRows(lists, itemsByList, showCompleted) {
+	var groups = []
+	var byGroup = {}
+	;(lists || []).forEach(function(list) {
+		var group = String(list.group || '')
+		if (!Object.prototype.hasOwnProperty.call(byGroup, group)) {
+			byGroup[group] = []
+			groups.push(group)
+		}
+		byGroup[group].push(list)
+	})
+	var showGroups = groups.length > 1
+	var rows = []
+	groups.forEach(function(group) {
+		if (showGroups) {
+			rows.push({ type: 'group', key: 'group:' + group, text: group })
+		}
+		byGroup[group].forEach(function(list) {
+			var open = []
+			var done = []
+			var seen = {}
+			var items = (itemsByList && itemsByList[list.id]) || []
+			for (var i = 0; i < items.length; i++) {
+				var item = items[i]
+				if (!isTask(item) || seen[item.id]) {
+					continue
+				}
+				seen[item.id] = true
+				;(isDone(item) ? done : open).push(item)
+			}
+			rows.push({ type: 'list', key: 'list:' + list.id, list: list, openCount: open.length, doneCount: done.length })
+			sortOpenTasks(open).forEach(function(item) {
+				rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: false })
+			})
+			if (!open.length) {
+				rows.push({ type: 'empty', key: 'empty:' + list.id, list: list })
+			}
+			if (showCompleted) {
+				sortDoneTasks(done).forEach(function(item) {
+					rows.push({ type: 'task', key: 'task:' + list.id + ':' + item.id, item: item, list: list, done: true })
+				})
+			}
+		})
+	})
+	return rows
+}

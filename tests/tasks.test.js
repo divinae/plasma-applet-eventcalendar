@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(__dirname, '../package/contents/u
 	.replace(/^\.pragma library\s*$/m, '').replace(/^\.import .*$/mg, '')
 const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'placementDay', 'toggleBody',
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
-	'fromTickTick', 'toTickTick', 'withoutTasks']
+	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -29,6 +29,61 @@ assert.strictEqual(T.isDone(task({})), false)
 // withoutTasks: the Month / Week / Day views get events only.
 same(T.withoutTasks([task({ id: 't' }), { kind: 'calendar#event', id: 'e' }, { id: 'x' }]).map(i => i.id), ['e', 'x'])
 same(T.withoutTasks(null), [])
+
+// sortOpenTasks: overdue (earliest due) first, then by due day, undated last; same day by position.
+{
+	const open = [
+		task({ id: 'undated-b', position: '2' }),
+		task({ id: 'later', due: '2026-11-03T00:00:00.000Z' }),
+		task({ id: 'today-2', due: '2026-10-26T00:00:00.000Z', position: '00002' }),
+		task({ id: 'overdue', due: '2026-10-20T00:00:00.000Z' }),
+		task({ id: 'today-1', due: '2026-10-26T00:00:00.000Z', position: '00001' }),
+		task({ id: 'undated-a', position: '1' }),
+	]
+	same(T.sortOpenTasks(open).map(t => t.id), ['overdue', 'today-1', 'today-2', 'later', 'undated-a', 'undated-b'])
+	assert.strictEqual(open[0].id, 'undated-b', 'a sorted copy')
+}
+// sortDoneTasks: last completed first.
+same(T.sortDoneTasks([
+	task({ id: 'old', status: 'completed', completed: '2026-10-01T10:00:00.000Z' }),
+	task({ id: 'new', status: 'completed', completed: '2026-10-25T10:00:00.000Z' }),
+]).map(t => t.id), ['new', 'old'])
+
+// dueInfo
+same(T.dueInfo(task({}), now), { kind: 'none', day: '' })
+same(T.dueInfo(task({ due: '2026-10-26T00:00:00.000Z' }), now), { kind: 'today', day: '2026-10-26' })
+same(T.dueInfo(task({ due: '2026-10-27T00:00:00.000Z' }), now), { kind: 'tomorrow', day: '2026-10-27' })
+same(T.dueInfo(task({ due: '2026-10-25T00:00:00.000Z' }), now), { kind: 'overdue', day: '2026-10-25' })
+same(T.dueInfo(task({ due: '2026-10-25T00:00:00.000Z', status: 'completed' }), now), { kind: 'date', day: '2026-10-25' })
+same(T.dueInfo(task({ due: '2026-12-01T00:00:00.000Z' }), now), { kind: 'date', day: '2026-12-01' })
+
+// firstLine
+assert.strictEqual(T.firstLine('\n  first  \nsecond'), 'first')
+assert.strictEqual(T.firstLine(undefined), '')
+
+// taskRows: lists grouped by account (headings only for more than one), open tasks, an empty
+// note, done tasks with showCompleted; events and repeated ids skipped.
+{
+	const lists = [
+		{ id: 'g::a', name: 'A', group: 'Work' },
+		{ id: 't::x', name: 'X', group: 'TickTick' },
+		{ id: 'g::b', name: 'B', group: 'Work' },
+	]
+	const items = {
+		'g::a': [task({ id: '1', due: '2026-10-28T00:00:00.000Z' }), task({ id: '2', due: '2026-10-20T00:00:00.000Z' }),
+			task({ id: '2', due: '2026-10-20T00:00:00.000Z' }), { kind: 'calendar#event', id: 'e' },
+			task({ id: '3', status: 'completed' })],
+		'g::b': [task({ id: '4', status: 'completed' })],
+	}
+	const rows = T.taskRows(lists, items, false)
+	same(rows.map(r => r.key), ['group:Work', 'list:g::a', 'task:g::a:2', 'task:g::a:1', 'list:g::b', 'empty:g::b',
+		'group:TickTick', 'list:t::x', 'empty:t::x'])
+	assert.strictEqual(rows[1].openCount, 2)
+	assert.strictEqual(rows[1].doneCount, 1)
+	const withDone = T.taskRows(lists, items, true)
+	same(withDone.filter(r => r.type === 'task').map(r => r.item.id + (r.done ? '+' : '')), ['2', '1', '3+', '4+'])
+	same(T.taskRows([lists[0]], items, false).filter(r => r.type === 'group'), [], 'one account: no heading')
+}
 
 // dueDay: the date part, whatever the time zone.
 assert.strictEqual(T.dueDay(task({ due: '2026-10-26T00:00:00.000Z' })), '2026-10-26')
