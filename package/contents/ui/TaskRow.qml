@@ -168,10 +168,33 @@ LinkRect {
 	implicitWidth: contents.implicitWidth + sideMargin * 2
 	implicitHeight: contents.implicitHeight + verticalPadding * 2
 
+	// The islands style (like TickTick): a square check, when it's due as accent-colored text (a
+	// repeat icon below it), and the list's color as a thin stripe along the left edge (by date: in
+	// place of the list's name, which is in the tooltip).
+	property bool cardStyle: appletConfig.islands
+	readonly property bool repeats: !!eventItem && (!!eventItem.recurringEventId || !!eventItem.repeatFlag)
+	readonly property string dueTextShort: due.kind === 'overdue' ? dueDateText : dueText
+	readonly property bool showDueText: cardStyle && !!dueTextShort && (compact ? overdue : true)
+	readonly property bool showStripe: cardStyle && (compact || !!showList)
+
 	// The list (by date) and when it's due, at the right end of the title's line.
-	readonly property bool showListName: !compact && !!showList
-	readonly property bool showDueChip: compact ? overdue : showChip
-	readonly property bool showInfo: showListName || showDueChip
+	readonly property bool showListName: !cardStyle && !compact && !!showList
+	readonly property bool showDueChip: !cardStyle && (compact ? overdue : showChip)
+	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact)
+
+	Rectangle {
+		visible: taskRow.showStripe
+		x: 0
+		y: taskRow.compact ? 3 : 0
+		width: 3
+		height: parent.height - y * 2
+		radius: taskRow.compact ? 1.5 : 0
+		color: appletConfig.eventBarColor(taskRow.eventStyle.color)
+		opacity: taskRow.eventStyle.doneOpacity
+	}
+	PlasmaComponents3.ToolTip.text: cardStyle && showList ? (showList.name || "") : ""
+	PlasmaComponents3.ToolTip.visible: cardStyle && !!showList && !!showList.name && rowHover.hovered && !dragging
+	PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
 
 	RowLayout {
 		id: contents
@@ -189,6 +212,8 @@ LinkRect {
 			size: 2 * Math.round(Math.min(Kirigami.Units.iconSizes.small * 1.1, titleLabel.implicitHeight) / 2)
 			eventItem: taskRow.eventItem
 			color: taskRow.listColor
+			square: taskRow.cardStyle
+			overdue: taskRow.overdue
 			opacity: taskRow.eventStyle.doneOpacity
 		}
 
@@ -234,7 +259,8 @@ LinkRect {
 		RowLayout {
 			visible: taskRow.showInfo && !taskRow.showActions
 			Layout.alignment: Qt.AlignTop
-			Layout.preferredHeight: titleLabel.implicitHeight
+			// Islands: as tall as the date and the repeat icon below it.
+			Layout.preferredHeight: taskRow.cardStyle ? -1 : titleLabel.implicitHeight
 			spacing: Kirigami.Units.smallSpacing * 2
 			opacity: taskRow.eventStyle.doneOpacity
 			// A Row (not a layout): exactly as wide as the dot and the name.
@@ -265,6 +291,30 @@ LinkRect {
 				text: taskRow.chipText
 				kind: taskRow.overdue ? 'overdue' : taskRow.due.kind
 				font: taskRow.detailFont
+			}
+			// Islands: when it's due as text, a repeat icon below it.
+			Column {
+				visible: taskRow.cardStyle
+				Layout.alignment: Qt.AlignTop
+				spacing: 0
+				PlasmaComponents3.Label {
+					anchors.right: parent.right
+					visible: taskRow.showDueText
+					text: taskRow.dueTextShort
+					textFormat: Text.PlainText
+					font: taskRow.detailFont
+					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.linkColor
+				}
+				Kirigami.Icon {
+					anchors.right: parent.right
+					visible: taskRow.repeats && !taskRow.compact
+					width: Kirigami.Units.iconSizes.small * 0.75
+					height: width
+					source: "media-playlist-repeat"
+					color: Kirigami.Theme.textColor
+					isMask: true
+					opacity: 0.6
+				}
 			}
 		}
 

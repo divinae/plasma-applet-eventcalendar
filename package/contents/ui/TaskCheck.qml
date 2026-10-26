@@ -40,16 +40,26 @@ Item {
 		eventModel.toggleTask(item, !done)
 	}
 
+	// The islands style's look (like TickTick): a rounded square with a neutral border (red when
+	// overdue), filled in the accent color with a light tick once done.
+	property bool square: false
+	property bool overdue: false
+	readonly property color squareBorderColor: done ? Kirigami.Theme.highlightColor
+		: overdue ? Kirigami.Theme.negativeTextColor
+		: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.45)
+	readonly property color hoverColor: square ? squareBorderColor : color
+
 	Rectangle {
 		id: circle
 		anchors.centerIn: parent
-		width: Math.round(taskCheck.size * 0.85)
+		width: Math.round(taskCheck.size * (taskCheck.square ? 0.8 : 0.85))
 		height: width
-		radius: width / 2
-		color: mouseArea.containsMouse && taskCheck.canToggle
-			? Qt.rgba(taskCheck.color.r, taskCheck.color.g, taskCheck.color.b, 0.2) : "transparent"
-		border.width: Math.max(2, Math.round(taskCheck.size / 9))
-		border.color: taskCheck.visualFocus ? Kirigami.Theme.focusColor : taskCheck.color
+		radius: taskCheck.square ? 3 : width / 2
+		color: taskCheck.square && taskCheck.done ? Kirigami.Theme.highlightColor
+			: mouseArea.containsMouse && taskCheck.canToggle
+			? Qt.rgba(taskCheck.hoverColor.r, taskCheck.hoverColor.g, taskCheck.hoverColor.b, 0.2) : "transparent"
+		border.width: taskCheck.square ? 2 : Math.max(2, Math.round(taskCheck.size / 9))
+		border.color: taskCheck.visualFocus ? Kirigami.Theme.focusColor : taskCheck.square ? taskCheck.squareBorderColor : taskCheck.color
 	}
 
 	Shape {
@@ -57,7 +67,7 @@ Item {
 		anchors.fill: circle
 		preferredRendererType: Shape.CurveRenderer
 		ShapePath {
-			strokeColor: taskCheck.color
+			strokeColor: taskCheck.square ? Kirigami.Theme.highlightedTextColor : taskCheck.color
 			strokeWidth: Math.max(1.5, taskCheck.size / 9)
 			fillColor: "transparent"
 			capStyle: ShapePath.RoundCap
