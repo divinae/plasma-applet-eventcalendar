@@ -48,17 +48,24 @@ Item {
 		readonly property real overshoot: card.radius + card.shadowSize + 2
 
 		Kirigami.ShadowedRectangle {
+			id: surface
 			x: card.shadowSize
 			y: card.joinTop ? -frame.overshoot : card.shadowSize
 			width: card.width
 			height: card.height + (card.joinTop ? frame.overshoot : 0) + (card.joinBottom ? frame.overshoot : 0)
 			radius: card.radius
 			color: card.tint.a > 0 ? Qt.tint(appletConfig.cardColor, card.tint) : appletConfig.cardColor
-			border.width: 1
-			border.color: card.borderColor
 			shadow.size: card.shadowSize
 			shadow.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.08)
 			shadow.yOffset: 1
+		}
+		// The border on its own: a translucent one of the ShadowedRectangle shows through its fill.
+		Rectangle {
+			anchors.fill: surface
+			radius: card.radius
+			color: "transparent"
+			border.width: 1
+			border.color: card.borderColor
 		}
 	}
 
