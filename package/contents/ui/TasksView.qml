@@ -170,6 +170,9 @@ Item {
 		var newRows = byList ? Tasks.taskRows(shown.lists, shown.itemsByList, withDone, sortBy)
 			: groupBy === 'none' ? Tasks.flatRows(shown.lists, shown.itemsByList, sortBy, withDone)
 			: Tasks.dateRows(shown.lists, shown.itemsByList, today, firstDayOfWeek, withDone, sortBy)
+		// One "Add a task…" for the whole view, at the top (not one per list): on the filter's list, or
+		// a picked one.
+		newRows = [{ type: 'add', key: 'add' }].concat(newRows.filter(function(row) { return row.type !== 'add' }))
 		var newCards = []
 		if (islands) {
 			// Not grouped: the tasks and the quick add are one card, as a list's (byList).
@@ -1776,7 +1779,7 @@ Item {
 		}
 	}
 
-	// "Add a task…": on the list (by list), else undated on a picked list.
+	// "Add a task…" (one, at the top): on the filter's list and due day, else on a picked list.
 	Component {
 		id: addComponent
 		QuickAddTaskRow {
