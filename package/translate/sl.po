@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:21+0100\n"
+"POT-Creation-Date: 2026-10-26 10:44+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -88,40 +88,6 @@ msgstr "Novo opravilo…"
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Ni dogodkov"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
-msgctxt "short month+date format"
-msgid "MMM d"
-msgstr "MMM d"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Task"
-msgstr "Opravilo"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Done"
-msgstr "Opravljeno"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Not done"
-msgstr "Ni opravljeno"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/EventModel.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Rok: %1"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml
-msgid "Overdue"
-msgstr "Zapadlo"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgctxt "%1 = short date"
-msgid "Overdue · due %1"
-msgstr "Zapadlo · rok %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1547,6 +1513,15 @@ msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Rok: %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
+msgid "Overdue"
+msgstr "Zapadlo"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
 msgid "This event"
@@ -2184,6 +2159,12 @@ msgstr "Opombe"
 msgid "Description"
 msgstr "Opis"
 
+#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/TaskRow.qml
+msgctxt "short month+date format"
+msgid "MMM d"
+msgstr "MMM d"
+
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
@@ -2818,6 +2799,23 @@ msgstr "Iskanje v Googlovem koledarju…"
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "Jutri"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Zapadlo · rok %1"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Task"
+msgstr "Opravilo"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Done"
+msgstr "Opravljeno"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Not done"
+msgstr "Ni opravljeno"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"

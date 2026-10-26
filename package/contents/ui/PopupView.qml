@@ -74,8 +74,25 @@ MouseArea {
 	function refreshTaskLists() {
 		taskListsSelected = !!eventModel && eventModel.getSelectedTaskLists().length > 0
 	}
-	readonly property string viewMode: plasmoid.configuration.popupMode === 'tasks' && !taskListsSelected
-		? 'month' : plasmoid.configuration.popupMode
+	// Views offered in the header (Settings > Views > Tabs); the shown one falls back to the first
+	// of them when its tab is hidden (or Tasks has no lists).
+	readonly property var hiddenViewTabs: plasmoid.configuration.hiddenViewTabs || []
+	function viewOffered(mode) {
+		return hiddenViewTabs.indexOf(mode) < 0 && (mode !== 'tasks' || taskListsSelected)
+	}
+	readonly property string viewMode: {
+		var mode = plasmoid.configuration.popupMode
+		if (viewOffered(mode)) {
+			return mode
+		}
+		var modes = ['month', 'week', 'today', 'classic', 'tasks']
+		for (var i = 0; i < modes.length; i++) {
+			if (viewOffered(modes[i])) {
+				return modes[i]
+			}
+		}
+		return 'month'
+	}
 	readonly property bool monthMode: viewMode === 'month'
 	readonly property bool weekMode: viewMode === 'week'
 	readonly property bool dayMode: viewMode === 'today'
@@ -906,7 +923,7 @@ MouseArea {
 				openSearch()
 				return true
 			case 'view':
-				if (action.mode === 'tasks' && !taskListsSelected) {
+				if (!viewOffered(action.mode)) {
 					return false
 				}
 				if (action.mode !== plasmoid.configuration.popupMode) {

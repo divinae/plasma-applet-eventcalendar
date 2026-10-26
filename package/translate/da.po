@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:21+0100\n"
+"POT-Creation-Date: 2026-10-26 10:44+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -87,40 +87,6 @@ msgstr "Ny opgave…"
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
 msgstr "Ingen begivenheder"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
-msgctxt "short month+date format"
-msgid "MMM d"
-msgstr "d. MMM"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Task"
-msgstr "Opgave"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Done"
-msgstr "Udført"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Not done"
-msgstr "Ikke udført"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/EventModel.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Forfalder %1"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml
-msgid "Overdue"
-msgstr "Forfalden"
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgctxt "%1 = short date"
-msgid "Overdue · due %1"
-msgstr "Forfalden · forfalder %1"
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
 msgctxt "more events not shown in a month day cell"
@@ -1539,6 +1505,15 @@ msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Forfalder %1"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
+msgid "Overdue"
+msgstr "Forfalden"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 #: ../contents/ui/EventMover.qml
 msgid "This event"
@@ -2154,6 +2129,12 @@ msgstr "Noter"
 msgid "Description"
 msgstr "Beskrivelse"
 
+#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/TaskRow.qml
+msgctxt "short month+date format"
+msgid "MMM d"
+msgstr "d. MMM"
+
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
@@ -2766,6 +2747,23 @@ msgstr "Søger i Google Kalender…"
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "I morgen"
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr "Forfalden · forfalder %1"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Task"
+msgstr "Opgave"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Done"
+msgstr "Udført"
+
+#: ../contents/ui/TaskRow.qml
+msgid "Not done"
+msgstr "Ikke udført"
 
 #: ../contents/ui/TaskRow.qml
 msgid "Due today"

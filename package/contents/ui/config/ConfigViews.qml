@@ -36,8 +36,35 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
+				id: showViewTabsSwitch
 				text: i18n("View switcher in the header")
 				configKey: 'showViewTabs'
+			}
+			// The views the switcher offers (at least one stays).
+			Repeater {
+				model: [
+					{ mode: 'month', text: i18n("Month") },
+					{ mode: 'week', text: i18n("Week") },
+					{ mode: 'today', text: i18nc("calendar view showing one day", "Day") },
+					{ mode: 'classic', text: i18n("Agenda") },
+					{ mode: 'tasks', text: i18n("Tasks") },
+				]
+				FormCard.FormCheckDelegate {
+					readonly property var hidden: page.configBridge.read("hiddenViewTabs", []) || []
+					enabled: showViewTabsSwitch.checked && (!checked || hidden.length < 4)
+					leftPadding: Kirigami.Units.gridUnit * 2
+					text: modelData.text
+					checked: hidden.indexOf(modelData.mode) < 0
+					onToggled: {
+						var list = Array.prototype.slice.call(page.configBridge.read("hiddenViewTabs", []) || []).filter(function(mode) {
+							return mode !== modelData.mode
+						})
+						if (!checked) {
+							list.push(modelData.mode)
+						}
+						page.configBridge.write("hiddenViewTabs", list)
+					}
+				}
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {

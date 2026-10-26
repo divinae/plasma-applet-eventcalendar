@@ -70,6 +70,10 @@
 		<entry name="showViewTabs" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="hiddenViewTabs" type="StringList">
+			<!-- Views left out of the header's view switcher: month, week, today, classic, tasks -->
+			<default></default>
+		</entry>
 		<entry name="eventFontScale" type="int">
 			<!-- Event text size in the views, percent of the theme font. -->
 			<default>100</default>

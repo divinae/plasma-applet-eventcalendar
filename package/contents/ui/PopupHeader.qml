@@ -48,7 +48,9 @@ PlasmaExtras.PlasmoidHeading {
 			if (header.showTasksTab) {
 				tabs.push({ mode: 'tasks', icon: "view-calendar-tasks", text: i18n("Tasks") })
 			}
-			return tabs
+			// Settings > Views > Tabs: the ones left out.
+			var hidden = plasmoid.configuration.hiddenViewTabs || []
+			return tabs.filter(function(tab) { return hidden.indexOf(tab.mode) < 0 })
 		}
 		// The view switcher's width with names, measured off screen.
 		Row {

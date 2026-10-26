@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-26 10:21+0100\n"
+"POT-Creation-Date: 2026-10-26 10:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,37 +82,6 @@ msgstr ""
 
 #: ../contents/ui/AgendaListItem.qml
 msgid "No events"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
-msgctxt "short month+date format"
-msgid "MMM d"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Task"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Done"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgid "Not done"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
-msgid "Overdue"
-msgstr ""
-
-#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/TaskRow.qml
-msgctxt "%1 = short date"
-msgid "Overdue · due %1"
 msgstr ""
 
 #: ../contents/ui/badges/EventTitlesBadge.qml
@@ -1385,6 +1354,15 @@ msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr ""
 
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
+msgid "Overdue"
+msgstr ""
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr ""
@@ -1996,6 +1974,11 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/TaskRow.qml
+msgctxt "short month+date format"
+msgid "MMM d"
+msgstr ""
+
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
 msgid "Home"
@@ -2587,6 +2570,23 @@ msgstr ""
 
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgctxt "%1 = short date"
+msgid "Overdue · due %1"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Task"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Done"
+msgstr ""
+
+#: ../contents/ui/TaskRow.qml
+msgid "Not done"
 msgstr ""
 
 #: ../contents/ui/TaskRow.qml
