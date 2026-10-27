@@ -189,6 +189,7 @@ Item {
 		onTriggered: logic.updateWeather(true)
 	}
 	function weatherArrived() {
+		retryDone()
 		weatherRetries = 0
 		weatherRetryTimer.stop()
 	}
@@ -418,10 +419,14 @@ Item {
 	property int networkFailures: 0
 	property double nextRetryAt: 0 // ms since epoch
 	property bool outageNotified: false
+	// A retry is running (the banner's Retry Now waits for it): until the fetch fails or comes back,
+	// at most retryingTimeout.
+	property bool retrying: false
 	readonly property var retryDelays: [30, 60, 120, 300] // seconds; capped below the poll interval
 	property int outageNotifyDelay: 3 * 60 * 1000 // Desktop notification only if the outage lasts
 
 	function networkFailed() {
+		retryDone()
 		if (!offline) {
 			offline = true
 			outageNotified = false
@@ -439,6 +444,7 @@ Item {
 		if (popup) popup.showNetworkError()
 	}
 	function networkRecovered() {
+		retryDone()
 		if (!offline || eventsNetworkFailed || weatherNetworkFailed) {
 			return
 		}
@@ -462,8 +468,13 @@ Item {
 		}
 	}
 	function retryNow() {
+		if (retrying) {
+			return
+		}
 		retryTimer.stop()
 		nextRetryAt = 0
+		retrying = true
+		retryingTimeout.restart()
 		if (eventsNetworkFailed || !weatherNetworkFailed) {
 			logic.updateEvents()
 		}
@@ -474,6 +485,16 @@ Item {
 	Timer {
 		id: retryTimer
 		onTriggered: logic.retryNow()
+	}
+	function retryDone() {
+		retrying = false
+		retryingTimeout.stop()
+	}
+	// A fetch that never ends (no answer, no error): Retry Now can be pressed again.
+	Timer {
+		id: retryingTimeout
+		interval: 45000
+		onTriggered: logic.retrying = false
 	}
 	// One desktop notification per outage, only if it lasts.
 	Timer {

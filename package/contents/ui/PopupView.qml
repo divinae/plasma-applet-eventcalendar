@@ -434,7 +434,7 @@ MouseArea {
 			if (!network) {
 				return errorText
 			}
-			var retry = secondsLeft <= 0 ? i18n("Retrying…")
+			var retry = logic.retrying || secondsLeft <= 0 ? i18n("Retrying…")
 				: secondsLeft < 60 ? i18np("Retrying in %1 second.", "Retrying in %1 seconds.", secondsLeft)
 				: i18np("Retrying in %1 minute.", "Retrying in %1 minutes.", Math.ceil(secondsLeft / 60))
 			return i18n("Can't connect. Showing the last loaded events.") + " " + retry
@@ -442,8 +442,10 @@ MouseArea {
 		actions: [
 			Kirigami.Action {
 				visible: errorBanner.network
+				// While a retry runs: disabled, says so.
+				enabled: !logic.retrying
 				icon.name: "view-refresh"
-				text: i18n("Retry Now")
+				text: logic.retrying ? i18n("Retrying…") : i18n("Retry Now")
 				onTriggered: logic.retryNow()
 			},
 			Kirigami.Action {
