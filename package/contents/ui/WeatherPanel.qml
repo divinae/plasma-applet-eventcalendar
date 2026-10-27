@@ -137,24 +137,50 @@ ColumnLayout {
 		}
 	}
 
-	// Location, with a small spinner while refreshing.
+	// "Weather" as the card's title (like the Day view's "Tasks" beside it), the location on the
+	// right with a pin, a small spinner while refreshing.
 	RowLayout {
-		visible: panel.showData && !panel.compact && !!panel.locationName
+		visible: panel.showData && !panel.compact
 		Layout.fillWidth: true
+		spacing: Kirigami.Units.smallSpacing
 		PlasmaComponents3.Label {
-			Layout.fillWidth: true
-			elide: Text.ElideRight
-			text: panel.locationName
-			textFormat: Text.PlainText // User text: never parsed as HTML
-			// The card's title: like the Day view's "Tasks" beside it.
+			text: i18n("Weather")
+			textFormat: Text.PlainText
 			font.weight: Font.Bold
 			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.25
+		}
+		Item {
+			Layout.fillWidth: true
 		}
 		PlasmaComponents3.BusyIndicator {
 			visible: panel.loading
 			running: visible
 			Layout.preferredWidth: Kirigami.Units.iconSizes.small
 			Layout.preferredHeight: Layout.preferredWidth
+		}
+		Kirigami.Icon {
+			visible: !!panel.locationName
+			Layout.alignment: Qt.AlignVCenter
+			implicitWidth: Kirigami.Units.iconSizes.small
+			implicitHeight: implicitWidth
+			source: "mark-location"
+			opacity: panel.dimOpacity
+		}
+		PlasmaComponents3.Label {
+			visible: !!panel.locationName
+			Layout.alignment: Qt.AlignVCenter
+			Layout.minimumWidth: 0
+			Layout.maximumWidth: Math.ceil(implicitWidth)
+			Layout.fillWidth: true
+			elide: Text.ElideRight
+			text: panel.locationName
+			textFormat: Text.PlainText // User text: never parsed as HTML
+			opacity: panel.dimOpacity
+			PlasmaComponents3.ToolTip.text: text
+			PlasmaComponents3.ToolTip.visible: truncated && locationHover.hovered
+			HoverHandler {
+				id: locationHover
+			}
 		}
 	}
 
