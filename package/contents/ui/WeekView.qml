@@ -70,10 +70,10 @@ Item {
 	// Day view: the weather on the left of the day grid (capped width) and the day's tasks on its
 	// right, all centered. Not enough room: the tasks become a strip above the grid, then the
 	// weather a compact row above it.
-	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 13, Math.max(Kirigami.Units.gridUnit * 10, width * 0.25)))
+	// Both side columns as wide as each other: a share of the popup, within limits.
+	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 17, Math.max(Kirigami.Units.gridUnit * 12, width * 0.27)))
 	readonly property real weatherPanelWidth: sidePanelWidth
-	// The tasks get more room than the weather: titles are longer than "9°".
-	readonly property real tasksPanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 19, Math.max(Kirigami.Units.gridUnit * 13, width * 0.34)))
+	readonly property real tasksPanelWidth: sidePanelWidth
 	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
 	// Islands style: the hour grid (with the day names and the all-day events) is a card
 	// (IslandCard); in the Day view the weather and the tasks are cards too, a card gap apart.
