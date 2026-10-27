@@ -119,22 +119,26 @@ PlasmaComponents3.Menu {
 				id: priorityItem
 				readonly property bool current: !!eventMenu.eventItem && Tasks.priorityOf(eventMenu.eventItem) === modelData.value
 				text: modelData.text
-				// A dot in the priority's color (an empty ring: none), the current one in bold.
+				// A flag in the priority's color (grey: none), a check after the current one.
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing
-					Rectangle {
+					Kirigami.Icon {
 						implicitWidth: Kirigami.Units.iconSizes.small
 						implicitHeight: implicitWidth
-						radius: width / 2
-						color: modelData.color || "transparent"
-						border.width: modelData.color ? 0 : 1.5
-						border.color: Kirigami.Theme.disabledTextColor
+						source: "flag"
+						isMask: true
+						color: modelData.color || Kirigami.Theme.disabledTextColor
 					}
 					PlasmaComponents3.Label {
 						Layout.fillWidth: true
 						text: priorityItem.text
 						textFormat: Text.PlainText
-						font.weight: priorityItem.current ? Font.DemiBold : Font.Normal
+					}
+					Kirigami.Icon {
+						implicitWidth: Kirigami.Units.iconSizes.small
+						implicitHeight: implicitWidth
+						source: "checkmark"
+						opacity: priorityItem.current ? 1 : 0
 					}
 				}
 				onTriggered: eventMenu.setPriority(modelData.value)
