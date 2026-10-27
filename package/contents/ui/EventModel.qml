@@ -526,11 +526,11 @@ CalendarManager {
 		var lines = []
 		var dueDay = Tasks.dueDay(task)
 		if (dueDay) {
-			var due = Qt.formatDateTime(new Date(dueDay + ' 00:00:00'), i18nc("short month+date format", "MMM d"))
+			var due = Shared.formatDateTime(new Date(dueDay + ' 00:00:00'), i18nc("short month+date format", "MMM d"))
 			if (task.dueTime) { // Timed TickTick tasks
 				var parts = String(task.dueTime).split(':')
 				var time = new Date(2000, 0, 1, Number(parts[0]), Number(parts[1]))
-				due = i18nc("date (%1) with time (%2)", "%1, %2", due, Qt.formatTime(time, appletConfig.timeFormat))
+				due = i18nc("date (%1) with time (%2)", "%1, %2", due, Shared.formatTime(time, appletConfig.timeFormat))
 			}
 			lines.push(i18nc("%1 = date", "Due %1", due))
 		} else {

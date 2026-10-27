@@ -191,7 +191,7 @@ Rectangle {
 				PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
 			}
 			PlasmaComponents3.Label {
-				text: Qt.formatDate(findTime.day, i18nc("Find a time: the day shown", "ddd, d MMM"))
+				text: Shared.formatDate(findTime.day, i18nc("Find a time: the day shown", "ddd, d MMM"))
 			}
 			PlasmaComponents3.ToolButton {
 				icon.name: "go-next-symbolic"
@@ -235,7 +235,7 @@ Rectangle {
 							x: Math.max(0, Math.min(hourScale.width - width, position * hourScale.width - width / 2))
 							font: Kirigami.Theme.smallFont
 							opacity: 0.6
-							text: Qt.formatTime(new Date(2000, 0, 1, hour), appletConfig.clock24h ? "HH" : "h AP")
+							text: Shared.formatTime(new Date(2000, 0, 1, hour), appletConfig.clock24h ? "HH" : "h AP")
 						}
 					}
 				}

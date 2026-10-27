@@ -200,7 +200,7 @@ Item {
 	}
 	function formatZoneTime(hours, minutes) {
 		var d = new Date(2000, 0, 1, hours, minutes)
-		return Qt.formatTime(d, appletConfig.clock24h ? 'HH:mm' : (minutes ? 'h:mm AP' : 'h AP'))
+		return Shared.formatTime(d, appletConfig.clock24h ? 'HH:mm' : (minutes ? 'h:mm AP' : 'h AP'))
 	}
 	// The second zone's clock at a local hour of the first shown day. When the time difference
 	// changes during the shown days (a DST switch), the header says so (secondZoneShifts).
@@ -213,7 +213,7 @@ Item {
 	// Short zone names for the hour column header: the local one from Qt, the other from tz rules.
 	// Both names when it changes between the first and last shown day (eg: "EDT/EST").
 	function zoneAbbreviationAt(zone, ms) {
-		return zone ? TimeZone.abbreviation(zone, ms) : Qt.formatDateTime(new Date(ms), "t")
+		return zone ? TimeZone.abbreviation(zone, ms) : Shared.formatDateTime(new Date(ms), "t")
 	}
 	function zoneAbbreviation(zone) {
 		var first = zoneAbbreviationAt(zone, columnDate(0).getTime() + 12 * 3600000)
@@ -238,16 +238,16 @@ Item {
 
 	readonly property string title: {
 		if (singleDay) {
-			return Qt.formatDate(weekStart, Qt.locale().dateFormat(Locale.LongFormat))
+			return Shared.formatDate(weekStart, Qt.locale().dateFormat(Locale.LongFormat))
 		}
 		var first = columnDate(0)
 		var last = columnDate(columnCount - 1)
 		if (first.getFullYear() !== last.getFullYear()) {
-			return Qt.formatDate(first, 'd MMM yyyy') + ' – ' + Qt.formatDate(last, 'd MMM yyyy')
+			return Shared.formatDate(first, 'd MMM yyyy') + ' – ' + Shared.formatDate(last, 'd MMM yyyy')
 		} else if (first.getMonth() !== last.getMonth()) {
-			return Qt.formatDate(first, 'd MMM') + ' – ' + Qt.formatDate(last, 'd MMM yyyy')
+			return Shared.formatDate(first, 'd MMM') + ' – ' + Shared.formatDate(last, 'd MMM yyyy')
 		}
-		return Qt.formatDate(first, 'd') + ' – ' + Qt.formatDate(last, 'd MMMM yyyy')
+		return Shared.formatDate(first, 'd') + ' – ' + Shared.formatDate(last, 'd MMMM yyyy')
 	}
 
 	//--- Data
@@ -712,7 +712,7 @@ Item {
 								opacity: 0.6
 								PlasmaComponents3.ToolTip.text: weekView.secondZoneShifts
 									? i18nc("%1 = time zone, %2 = a date", "%1\nThe time difference changes during these days: the hours shown are those of %2.",
-										weekView.secondZone.replace(/_/g, ' '), Qt.formatDate(weekView.columnDate(0), Qt.locale().dateFormat(Locale.ShortFormat)))
+										weekView.secondZone.replace(/_/g, ' '), Shared.formatDate(weekView.columnDate(0), Qt.locale().dateFormat(Locale.ShortFormat)))
 									: weekView.secondZone.replace(/_/g, ' ')
 								PlasmaComponents3.ToolTip.visible: secondZoneHover.hovered
 								HoverHandler {
@@ -1366,7 +1366,7 @@ Item {
 																var text = Shared.formatTimeRange(item.startDateTime, item.endDateTime, format)
 																return item.location ? text + ' · ' + Shared.locationLink(item.location) : text
 															}
-															return Qt.formatTime(item.startDateTime, format)
+															return Shared.formatTime(item.startDateTime, format)
 														}
 														textFormat: Text.StyledText
 														linkColor: eventBlock.eventStyle.textColor

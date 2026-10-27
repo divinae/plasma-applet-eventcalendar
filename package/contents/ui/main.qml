@@ -13,6 +13,7 @@ import org.kde.kcmutils as KCMUtils
 
 import "./lib"
 import "DayWeather.js" as DayWeather
+import "Shared.js" as Shared
 
 PlasmoidItem {
 	id: root
@@ -52,7 +53,7 @@ PlasmoidItem {
 	}
 
 	function formatClipboardText() {
-		return Qt.formatDateTime(timeModel.currentTime, Qt.locale().dateTimeFormat(Locale.LongFormat))
+		return Shared.formatDateTime(timeModel.currentTime, Qt.locale().dateTimeFormat(Locale.LongFormat))
 	}
 
 	function copyCurrentDateTime() {

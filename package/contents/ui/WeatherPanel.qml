@@ -36,7 +36,7 @@ ColumnLayout {
 	readonly property color lineColor: appletConfig.eventColoredTextColor(Kirigami.Theme.highlightColor)
 
 	function timeText(dt) {
-		return Qt.formatTime(new Date(dt * 1000), appletConfig.clock24h ? 'HH:mm' : 'h AP')
+		return Shared.formatTime(new Date(dt * 1000), appletConfig.clock24h ? 'HH:mm' : 'h AP')
 	}
 	function precipitationText(mm) {
 		return mm > 0 ? i18nc("precipitation in mm", "%1 mm", Math.round(mm * 10) / 10) : ""

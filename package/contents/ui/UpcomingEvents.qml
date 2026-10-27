@@ -241,7 +241,7 @@ CalendarManager {
 			var title = Shared.escapeHtml(item.title)
 			return item.allDay
 				? i18nc("daily agenda, %1 = event title", "All day: %1", title)
-				: Qt.formatTime(item.start, appletConfig.timeFormat) + ' ' + title
+				: Shared.formatTime(item.start, appletConfig.timeFormat) + ' ' + title
 		})
 		if (agenda.more > 0) {
 			lines.push(i18ncp("daily agenda, more events", "+%1 more", "+%1 more", agenda.more))
@@ -433,7 +433,7 @@ CalendarManager {
 	function taskDueText(task) {
 		var info = NotifyTiming.taskDueState(task, timeModel.currentTime.getTime())
 		var due = new Date(info.due)
-		var time = info.timed ? Qt.formatTime(due, appletConfig.timeFormat) : ''
+		var time = info.timed ? Shared.formatTime(due, appletConfig.timeFormat) : ''
 		if (info.state === 'overdue') {
 			return i18nc("task reminder", "Overdue")
 		} else if (info.state === 'today') {
@@ -441,7 +441,7 @@ CalendarManager {
 		} else if (info.state === 'tomorrow') {
 			return time ? i18nc("task reminder, %1 = time", "Due tomorrow %1", time) : i18nc("task reminder", "Due tomorrow")
 		} else if (info.state === 'date') {
-			var date = Qt.formatDate(due, Locale.ShortFormat)
+			var date = Shared.formatDate(due, Locale.ShortFormat)
 			return i18nc("task reminder, %1 = date (and time)", "Due %1", time ? date + ' ' + time : date)
 		}
 		return ''
@@ -664,14 +664,14 @@ CalendarManager {
 		var today = Shared.startOfDay(now)
 		var startDay = Shared.startOfDay(start)
 		var days = Math.round((startDay - today) / (24 * 60 * 60 * 1000))
-		var time = Qt.formatTime(start, appletConfig.timeFormat)
+		var time = Shared.formatTime(start, appletConfig.timeFormat)
 		var when
 		if (days === 0) {
 			when = time
 		} else if (days === 1) {
 			when = i18nc("%1 = time", "tomorrow %1", time)
 		} else {
-			when = Qt.formatDate(start, Locale.ShortFormat) + ' ' + time
+			when = Shared.formatDate(start, Locale.ShortFormat) + ' ' + time
 		}
 		var msLeft = start - now
 		if (msLeft < 24 * 60 * 60 * 1000) {
@@ -703,7 +703,7 @@ CalendarManager {
 		}
 		tooltipNowText = current
 			? i18nc("%1 = event title, %2 = end time", "Now: %1, until %2", current.summary,
-				Qt.formatTime(current.endDateTime, appletConfig.timeFormat))
+				Shared.formatTime(current.endDateTime, appletConfig.timeFormat))
 			: ""
 		tooltipNextText = next ? i18nc("%1 = event title, %2 = when", "Next: %1, %2", next.summary, formatTooltipStart(next, now)) : ""
 		updateTooltipTasks()

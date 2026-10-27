@@ -23,6 +23,8 @@ const i18n = (text, ...args) => i18nc('', text, ...args)
 
 const Shared = { Qt }
 vm.runInNewContext(strip(fs.readFileSync(path.join(ui, 'Shared.js'), 'utf8')), Shared)
+// Shared's date helpers use QML's Date.toLocaleString(locale, format), which Node doesn't have.
+Object.assign(Shared, { formatDate: format, formatTime: format, formatDateTime: format })
 const L = { Qt, i18n, i18nc, Shared }
 vm.runInNewContext(strip(fs.readFileSync(path.join(ui, 'LocaleFuncs.js'), 'utf8')), L)
 

@@ -80,7 +80,7 @@ Rectangle {
 		var after = -minutes
 		var time = new Date(2000, 0, 1, Math.floor(after / 60) % 24, after % 60)
 		var days = Math.floor(after / 1440)
-		var clock = Qt.formatTime(time, appletConfig.timeFormat)
+		var clock = Shared.formatTime(time, appletConfig.timeFormat)
 		return days > 0 ? i18ncp("task reminder after the due day starts", "%1 day later at %2", "%1 days later at %2", days, clock)
 			: i18nc("task reminder: %1 = time", "On the day at %1", clock)
 	}
@@ -107,6 +107,7 @@ Rectangle {
 			title: title,
 			notes: descriptionField.text,
 			dueDay: dueDay,
+			// Data, not display: always "HH:mm" in ASCII digits (Qt.formatTime: the C locale).
 			dueTime: taskTimed ? Qt.formatTime(taskTime, "HH:mm") : '',
 			priority: taskPriority,
 			reminders: reminderItems.map(Reminders.toMinutes).concat(taskRemindersAfter),
@@ -347,7 +348,7 @@ Rectangle {
 		var format = { clock24h: appletConfig.clock24h }
 		var text = LocaleFuncs.formatEventTime(start, format) + " – " + LocaleFuncs.formatEventTime(end, format)
 		if (start.toDateString() !== durationSelector.startDateTime.toDateString()) {
-			text = Qt.formatDate(start, i18nc("event editor date format", "d MMM, yyyy")) + " " + text
+			text = Shared.formatDate(start, i18nc("event editor date format", "d MMM, yyyy")) + " " + text
 		}
 		return i18nc("%1 = start and end time in the local time zone", "%1 your time", text)
 	}
@@ -1423,7 +1424,7 @@ Rectangle {
 								{ key: 'weekdays', text: i18n("Every weekday (Monday to Friday)") },
 								{ key: 'weekly', text: i18nc("%1 = day name", "Weekly on %1", Qt.locale().dayName(start.getDay())) },
 								{ key: 'monthly', text: i18nc("%1 = day of the month", "Monthly on day %1", start.getDate()) },
-								{ key: 'yearly', text: i18nc("%1 = date, eg: 16 October", "Yearly on %1", Qt.formatDate(start, "d MMMM")) },
+								{ key: 'yearly', text: i18nc("%1 = date, eg: 16 October", "Yearly on %1", Shared.formatDate(start, "d MMMM")) },
 							]
 							if (form.initialRepeatKey === 'original') {
 								list.push({ key: 'original', text: form.taskMode ? i18n("Custom (as set in TickTick)") : i18n("Custom (as set in Google Calendar)") })

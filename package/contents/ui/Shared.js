@@ -1,5 +1,22 @@
 .pragma library
 
+//--- Dates and times in the system's language. Qt 6's Qt.formatDate / formatTime / formatDateTime
+// always use English names (and an ISO date / a time with seconds for Locale.ShortFormat), so
+// "ddd, d MMM" showed "Tue, 27 Oct" in a Polish locale. format: a format string ("ddd d MMM",
+// "HH:mm") or a Locale format (Locale.ShortFormat, …); a date, or anything new Date() takes.
+function asDate(d) {
+	return d instanceof Date ? d : new Date(d)
+}
+function formatDateTime(d, format) {
+	return typeof format === 'number' ? asDate(d).toLocaleString(Qt.locale(), format) : asDate(d).toLocaleString(Qt.locale(), String(format))
+}
+function formatDate(d, format) {
+	return typeof format === 'number' ? asDate(d).toLocaleDateString(Qt.locale(), format) : asDate(d).toLocaleString(Qt.locale(), String(format))
+}
+function formatTime(d, format) {
+	return typeof format === 'number' ? asDate(d).toLocaleTimeString(Qt.locale(), format) : asDate(d).toLocaleString(Qt.locale(), String(format))
+}
+
 function openGoogleCalendarNewEventUrl(date) {
 	function dateString(year, month, day) {
 		var s = '' + year
@@ -38,7 +55,7 @@ function dateString(d) {
 	return d.toISOString().substr(0, 10)
 }
 function localeDateString(d) {
-	return Qt.formatDateTime(d, 'yyyy-MM-dd')
+	return formatDateTime(d, 'yyyy-MM-dd')
 }
 function isValidDate(d) {
 	if (d === null) {
@@ -348,7 +365,7 @@ function formatTemp(t) {
 
 // "09:45 – 10:00", format: a Qt time format, eg: appletConfig.timeFormat
 function formatTimeRange(start, end, format) {
-	return Qt.formatTime(start, format) + ' – ' + Qt.formatTime(end, format)
+	return formatTime(start, format) + ' – ' + formatTime(end, format)
 }
 
 // Monochrome variant of a (weather) icon: readable on any background. Use with `fallback: name`.
@@ -446,15 +463,15 @@ function eventSpan(e, timeFormat, now) {
 		var last = new Date(end)
 		last.setDate(last.getDate() - 1)
 		var dateFormat = spanDateFormat(start, last, now || new Date())
-		result.startText = Qt.formatDate(start, dateFormat)
-		result.endText = Qt.formatDate(last, dateFormat)
+		result.startText = formatDate(start, dateFormat)
+		result.endText = formatDate(last, dateFormat)
 	} else if (days > 1) {
 		var timedFormat = spanDateFormat(start, end, now || new Date()) + ' ' + timeFormat
-		result.startText = Qt.formatDateTime(start, timedFormat)
-		result.endText = Qt.formatDateTime(end, timedFormat)
+		result.startText = formatDateTime(start, timedFormat)
+		result.endText = formatDateTime(end, timedFormat)
 	} else {
-		result.startText = Qt.formatTime(start, timeFormat)
-		result.endText = Qt.formatTime(end, timeFormat)
+		result.startText = formatTime(start, timeFormat)
+		result.endText = formatTime(end, timeFormat)
 	}
 	return result
 }

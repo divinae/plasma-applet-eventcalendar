@@ -237,7 +237,7 @@ MouseArea {
 		// With event titles each event bar has its own tooltip.
 		active: root.showTooltips && !dayStyle.showEventTitles
 		visible: root.showTooltips && !dayStyle.showEventTitles // Needed with active=false to make sure the ToolTipArea doesn't close a parent ToolTipArea. Eg: DateSelector.
-		mainText: containsMouse ? Qt.formatDate(thisDate, Qt.locale().dateFormat(Locale.LongFormat)) : ""
+		mainText: containsMouse ? Shared.formatDate(thisDate, Qt.locale().dateFormat(Locale.LongFormat)) : ""
 		subText: containsMouse ? tooltipBody() : ""
 		function tooltipBody() {
 			var count = eventsLength(model.events)

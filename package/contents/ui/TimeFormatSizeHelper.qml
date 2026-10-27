@@ -1,5 +1,6 @@
 import QtQuick
 import org.kde.plasma.components as PlasmaComponents3
+import "Shared.js" as Shared
 
 Item {
 	id: timeFormatSizeHelper
@@ -42,10 +43,10 @@ Item {
 	function updateMinWidth() {
 		var now = new Date(timeModel.currentTime)
 		var date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1, 0, 0)
-		var timeAm = Qt.formatDateTime(date, widestTimeFormat)
+		var timeAm = Shared.formatDateTime(date, widestTimeFormat)
 		var advanceWidthAm = fontMetrics.advanceWidth(timeAm)
 		date.setHours(13)
-		var timePm = Qt.formatDateTime(date, widestTimeFormat)
+		var timePm = Shared.formatDateTime(date, widestTimeFormat)
 		var advanceWidthPm = fontMetrics.advanceWidth(timePm)
 
 		if (advanceWidthAm > advanceWidthPm) {

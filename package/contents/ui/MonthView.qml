@@ -527,7 +527,7 @@ PinchArea {
 					if (calendarBackend.displayedDate.getFullYear() === today.getFullYear()) {
 						if (showTodaysDate && calendarBackend.displayedDate.getMonth() === today.getMonth()) {
 							dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
-							text = Qt.formatDateTime(today, dateFormat)
+							text = Shared.formatDateTime(today, dateFormat)
 							return text
 						} else {
 							dateFormat = i18nc("calendar title format for other months of current year", "MMMM")
@@ -536,7 +536,7 @@ PinchArea {
 						dateFormat = i18nc("calendar title format for months not from current year", "MMMM, yyyy")
 					}
 
-					text = Qt.formatDateTime(calendarBackend.displayedDate, dateFormat)
+					text = Shared.formatDateTime(calendarBackend.displayedDate, dateFormat)
 					return text
 				}
 

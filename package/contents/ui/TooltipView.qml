@@ -51,10 +51,10 @@ Item {
 		// add the dataengine TZ offset to it
 		var dateTime = new Date(msUTC + (zoneInfo["Offset"] * 1000))
 
-		var formattedTime = Qt.formatTime(dateTime, timezoneTimeFormat)
+		var formattedTime = Shared.formatTime(dateTime, timezoneTimeFormat)
 
 		if (dateTime.getDay() !== localInfo["DateTime"].getDay()) {
-			formattedTime += " (" + Qt.formatDate(dateTime, Locale.ShortFormat) + ")"
+			formattedTime += " (" + Shared.formatDate(dateTime, Locale.ShortFormat) + ")"
 		}
 
 		return formattedTime
@@ -104,14 +104,14 @@ Item {
 					Layout.maximumWidth: preferredTextWidth
 					elide: Text.ElideRight
 					// Long format has seconds, which would be stale when the clock ticks per minute.
-					text: Qt.formatTime(timeModel.currentTime, Qt.locale().timeFormat(timeModel.needsSeconds ? Locale.LongFormat : Locale.ShortFormat))
+					text: Shared.formatTime(timeModel.currentTime, Qt.locale().timeFormat(timeModel.needsSeconds ? Locale.LongFormat : Locale.ShortFormat))
 				}
 
 				PlasmaComponents3.Label {
 					id: tooltipSubtext
 					Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
 					Layout.maximumWidth: preferredTextWidth
-					text: Qt.formatDate(timeModel.currentTime, Qt.locale().dateFormat(Locale.LongFormat))
+					text: Shared.formatDate(timeModel.currentTime, Qt.locale().dateFormat(Locale.LongFormat))
 					opacity: 0.6
 				}
 

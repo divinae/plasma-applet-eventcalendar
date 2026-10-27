@@ -7,6 +7,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 import "../lib"
 import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 import "../ScriptPath.js" as ScriptPath
+import "../Shared.js" as Shared
 
 // Event sources, clicking events, notifications.
 ConfigPage {
@@ -378,7 +379,7 @@ ConfigPage {
 				to: 24 * 60 - 15
 				stepSize: 15
 				textFromValue: function(value, locale) {
-					return Qt.formatTime(new Date(2000, 0, 1, Math.floor(value / 60), value % 60), Qt.locale().timeFormat(Locale.ShortFormat))
+					return Shared.formatTime(new Date(2000, 0, 1, Math.floor(value / 60), value % 60), Qt.locale().timeFormat(Locale.ShortFormat))
 				}
 				valueFromText: function(text, locale) {
 					var match = /(\d{1,2})\D*(\d{2})?\s*(am|pm)?/i.exec(String(text))

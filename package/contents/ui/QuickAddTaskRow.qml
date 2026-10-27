@@ -6,6 +6,7 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "Tasks.js" as Tasks
 import "QuickParse.js" as QuickParse
+import "Shared.js" as Shared
 
 // "Add a task…" at the bottom of a task list (Tasks view) or of the day's tasks (Day view): a flat
 // field lined up with the TaskRows, a "+" where their check is. Enter adds the task (on listId,
@@ -121,10 +122,10 @@ Item {
 				return i18n("Tomorrow")
 			}
 			var date = dateFrom(token.value)
-			return i18nc("%1 = weekday, %2 = short date", "%1, %2", Qt.formatDate(date, "ddd"),
-				Qt.formatDate(date, i18nc("short month+date format", "MMM d")))
+			return i18nc("%1 = weekday, %2 = short date", "%1, %2", Shared.formatDate(date, "ddd"),
+				Shared.formatDate(date, i18nc("short month+date format", "MMM d")))
 		case 'time':
-			return Qt.formatTime(new Date(2000, 0, 1, Number(token.value.substring(0, 2)), Number(token.value.substring(3, 5))), appletConfig.timeFormat)
+			return Shared.formatTime(new Date(2000, 0, 1, Number(token.value.substring(0, 2)), Number(token.value.substring(3, 5))), appletConfig.timeFormat)
 		case 'priority':
 			return token.value >= 5 ? i18n("High priority") : token.value >= 3 ? i18n("Medium priority") : i18n("Low priority")
 		case 'list':

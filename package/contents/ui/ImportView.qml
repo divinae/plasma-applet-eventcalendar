@@ -9,6 +9,7 @@ import "IcsImport.js" as IcsImport
 import "Recurrence.js" as Recurrence
 import "ScriptPath.js" as ScriptPath
 import "lib"
+import "Shared.js" as Shared
 
 // Import the events of a .ics file (eg: an invitation saved from an email, or an export) into a
 // Google calendar. The file is read with scripts/icsjson.py; each event is sent to Google's
@@ -205,7 +206,7 @@ Item {
 			text = i18ncp("%2 = Weekly on Monday, ...", "%2, %1 time", "%2, %1 times", r.count, text)
 		} else if (r.until) {
 			text = i18nc("%1 = Weekly on Monday, ..., %2 = date", "%1, until %2", text,
-				Qt.formatDate(r.until, Qt.locale().dateFormat(Locale.ShortFormat)))
+				Shared.formatDate(r.until, Qt.locale().dateFormat(Locale.ShortFormat)))
 		}
 		var exceptions = IcsImport.exceptionCount(item)
 		if (exceptions > 0) {

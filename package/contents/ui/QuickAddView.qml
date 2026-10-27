@@ -129,17 +129,17 @@ Item {
 				font: Kirigami.Theme.smallFont
 				textFormat: Text.PlainText
 				text: quickAdd.addsTask
-					? i18nc("%1 = date", "The task is due on %1.", Qt.formatDate(quickAdd.date, Qt.locale().dateFormat(Locale.LongFormat)))
+					? i18nc("%1 = date", "The task is due on %1.", Shared.formatDate(quickAdd.date, Qt.locale().dateFormat(Locale.LongFormat)))
 					: quickAdd.parsedEvent && quickAdd.parsedEvent.dueTime
 					? i18nc("%1 = date, %2 = time", "The event is added on %1 at %2.",
-						Qt.formatDate(quickAdd.eventDay, Qt.locale().dateFormat(Locale.LongFormat)),
-						Qt.formatTime(new Date(2000, 0, 1, Number(quickAdd.parsedEvent.dueTime.substring(0, 2)), Number(quickAdd.parsedEvent.dueTime.substring(3, 5))), appletConfig.timeFormat))
+						Shared.formatDate(quickAdd.eventDay, Qt.locale().dateFormat(Locale.LongFormat)),
+						Shared.formatTime(new Date(2000, 0, 1, Number(quickAdd.parsedEvent.dueTime.substring(0, 2)), Number(quickAdd.parsedEvent.dueTime.substring(3, 5))), appletConfig.timeFormat))
 					: quickAdd.parsedEvent
-					? i18nc("%1 = date", "The event is added on %1, all day.", Qt.formatDate(quickAdd.eventDay, Qt.locale().dateFormat(Locale.LongFormat)))
+					? i18nc("%1 = date", "The event is added on %1, all day.", Shared.formatDate(quickAdd.eventDay, Qt.locale().dateFormat(Locale.LongFormat)))
 					: quickAdd.isToday
 					? i18n("Type what, when and where. Without a day, the event is added today.")
 					: i18nc("%1 = date", "Type what, when and where. Without a day, the event is added on %1.",
-						Qt.formatDate(quickAdd.date, Qt.locale().dateFormat(Locale.LongFormat)))
+						Shared.formatDate(quickAdd.date, Qt.locale().dateFormat(Locale.LongFormat)))
 			}
 
 			CalendarSelector {

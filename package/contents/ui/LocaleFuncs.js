@@ -16,12 +16,12 @@ function formatEventTime(dateTime, args) {
 			timeFormat = i18nc("event time (12 hour clock)", "h:mm AP")
 		}
 	}
-	return Qt.formatDateTime(dateTime, timeFormat)
+	return Shared.formatDateTime(dateTime, timeFormat)
 }
 
 function formatEventDateTime(dateTime, args) {
 	var shortDateFormat = i18nc("short month+date format", "MMM d")
-	var dateStr = Qt.formatDateTime(dateTime, shortDateFormat)
+	var dateStr = Shared.formatDateTime(dateTime, shortDateFormat)
 	var timeStr = formatEventTime(dateTime, args)
 	return i18nc("date (%1) with time (%2)", "%1, %2", dateStr, timeStr)
 }
@@ -41,8 +41,8 @@ function formatEventDuration(event, args) {
 		if (Shared.isSameDate(startTime, dayBefore)) {
 			return i18n("All Day")
 		} else {
-			var startStr = Qt.formatDateTime(startTime, shortDateFormat)
-			var endStr = Qt.formatDateTime(dayBefore, shortDateFormat)
+			var startStr = Shared.formatDateTime(startTime, shortDateFormat)
+			var endStr = Shared.formatDateTime(dayBefore, shortDateFormat)
 			return i18nc("from date/time %1 until date/time %2", "%1 - %2", startStr, endStr)
 		}
 	} else {
@@ -81,7 +81,7 @@ function formatWhen(e, timeFormat, now) {
 		return formatRange(span.startText, span.endText)
 	}
 	var start = new Date(e.startDateTime)
-	var day = Qt.formatDate(start, 'ddd ' + Shared.spanDateFormat(start, start, now))
+	var day = Shared.formatDate(start, 'ddd ' + Shared.spanDateFormat(start, start, now))
 	if (span.allDay) {
 		return i18nc("search result, %1 = date", "%1 · All day", day)
 	}

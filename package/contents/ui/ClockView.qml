@@ -25,6 +25,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
 import "lib/ColorUtil.js" as ColorUtil
 import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 Item {
 	id: clock
@@ -170,7 +171,7 @@ Item {
 					smooth: true
 
 					property string timeFormat: appletConfig.line1TimeFormat // Used in TimeFormatSizeHelper
-					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+					text: Shared.formatDateTime(clock.currentTime, timeFormat)
 				}
 
 				// Debugging
@@ -198,7 +199,7 @@ Item {
 					smooth: true
 
 					property string timeFormat: appletConfig.line2TimeFormat // Used in TimeFormatSizeHelper
-					text: Qt.formatDateTime(clock.currentTime, timeFormat)
+					text: Shared.formatDateTime(clock.currentTime, timeFormat)
 				}
 
 				// Debugging

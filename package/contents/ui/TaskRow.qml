@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Tasks.js" as Tasks
+import "Shared.js" as Shared
 
 // A task as a list row (Tasks view, Day view), like a to-do app rather than an event tile: its done
 // check in the list's color, the title in the theme's text color on one line, and at the right end
@@ -82,7 +83,7 @@ LinkRect {
 		}
 		var parts = due.day.split('-')
 		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
-		return Qt.formatDate(date, i18nc("short month+date format", "MMM d"))
+		return Shared.formatDate(date, i18nc("short month+date format", "MMM d"))
 	}
 	// The time it's due ("14:00" / "2:00 PM"), '' when all-day.
 	readonly property string timeText: {
@@ -90,7 +91,7 @@ LinkRect {
 		if (!time) {
 			return ""
 		}
-		return Qt.formatTime(new Date(2000, 0, 1, Number(time.substring(0, 2)), Number(time.substring(3, 5))), appletConfig.timeFormat)
+		return Shared.formatTime(new Date(2000, 0, 1, Number(time.substring(0, 2)), Number(time.substring(3, 5))), appletConfig.timeFormat)
 	}
 	// "Today", "Tomorrow" or the date, with the time when it has one ("Today 14:00", "Oct 28 14:00").
 	function withTime(dayText) {

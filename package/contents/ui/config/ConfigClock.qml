@@ -21,16 +21,16 @@ ConfigPage {
 
 	// Format presets; "" means the locale default. The last entry is "Custom".
 	readonly property var timePresets: [
-		{ format: "", text: i18n("Default (%1)", Qt.formatTime(new Date(), localeTimeFormat)) },
-		{ format: "HH:mm", text: Qt.formatTime(new Date(), "HH:mm") + " " + i18n("(24-hour)") },
-		{ format: "h:mm AP", text: Qt.formatTime(new Date(), "h:mm AP") + " " + i18n("(12-hour)") },
-		{ format: localeTimeFormat.replace('mm', 'mm:ss'), text: Qt.formatTime(new Date(), localeTimeFormat.replace('mm', 'mm:ss')) + " " + i18n("(with seconds)") },
+		{ format: "", text: i18n("Default (%1)", Shared.formatTime(new Date(), localeTimeFormat)) },
+		{ format: "HH:mm", text: Shared.formatTime(new Date(), "HH:mm") + " " + i18n("(24-hour)") },
+		{ format: "h:mm AP", text: Shared.formatTime(new Date(), "h:mm AP") + " " + i18n("(12-hour)") },
+		{ format: localeTimeFormat.replace('mm', 'mm:ss'), text: Shared.formatTime(new Date(), localeTimeFormat.replace('mm', 'mm:ss')) + " " + i18n("(with seconds)") },
 	]
 	readonly property var datePresets: [
-		{ format: "", text: i18n("Default (%1)", Qt.formatDate(new Date(), localeDateFormat)) },
-		{ format: longDateNoWeekday, text: Qt.formatDate(new Date(), longDateNoWeekday) },
-		{ format: "ddd d MMM", text: Qt.formatDate(new Date(), "ddd d MMM") },
-		{ format: "MMM d", text: Qt.formatDate(new Date(), "MMM d") },
+		{ format: "", text: i18n("Default (%1)", Shared.formatDate(new Date(), localeDateFormat)) },
+		{ format: longDateNoWeekday, text: Shared.formatDate(new Date(), longDateNoWeekday) },
+		{ format: "ddd d MMM", text: Shared.formatDate(new Date(), "ddd d MMM") },
+		{ format: "MMM d", text: Shared.formatDate(new Date(), "MMM d") },
 	]
 
 	// A format combo: presets + "Custom…" that shows the text field.
@@ -73,7 +73,7 @@ ConfigPage {
 		}
 		Label {
 			visible: picker.showCustom
-			text: formatField.value ? Qt.formatDateTime(new Date(), formatField.value) : ""
+			text: formatField.value ? Shared.formatDateTime(new Date(), formatField.value) : ""
 			opacity: 0.7
 		}
 	}

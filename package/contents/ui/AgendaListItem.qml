@@ -36,7 +36,7 @@ IslandCard {
 		if (!agendaItemDate) {
 			return ""
 		}
-		var date = Qt.formatDate(agendaItemDate, "ddd, d MMM")
+		var date = Shared.formatDate(agendaItemDate, "ddd, d MMM")
 		var now = timeModel.currentTime
 		var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
 		if (agendaItemIsToday) {
