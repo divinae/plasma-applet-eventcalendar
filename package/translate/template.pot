@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:48+0100\n"
+"POT-Creation-Date: 2026-10-27 15:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1154,6 +1154,18 @@ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Day view shows"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Small calendar"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
 msgstr ""
 
@@ -1392,7 +1404,7 @@ msgstr ""
 msgid "Due date"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr ""
@@ -3321,10 +3333,6 @@ msgid "dddd, d MMM"
 msgstr ""
 
 #: ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr ""
-
-#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr ""
 
@@ -3367,6 +3375,17 @@ msgstr ""
 msgctxt "%1 = day and time, %2 = event title"
 msgid "Next: %1 · %2"
 msgstr ""
+
+#: ../contents/ui/WeekView.qml
+msgctxt "the day before today"
+msgid "Yesterday"
+msgstr ""
+
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"

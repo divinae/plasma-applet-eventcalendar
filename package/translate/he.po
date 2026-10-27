@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:48+0100\n"
+"POT-Creation-Date: 2026-10-27 15:01+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1301,6 +1301,18 @@ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr "תחזית בכותרות הימים, ובתצוגת יום – חלונית מזג אוויר."
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Day view shows"
+msgstr "תצוגת היום מציגה"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Small calendar"
+msgstr "לוח שנה קטן"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "הבא בתור"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
 msgstr "תיאורי אירועים"
 
@@ -1558,7 +1570,7 @@ msgid "Due date"
 msgstr "תאריך יעד"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
-#: ../contents/ui/UpNextPanel.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "היום"
@@ -3592,10 +3604,6 @@ msgid "dddd, d MMM"
 msgstr "dddd, d MMM"
 
 #: ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr "הבא בתור"
-
-#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "אין דבר מתוכנן בימים הקרובים."
 
@@ -3638,6 +3646,19 @@ msgstr "הימים הבאים"
 msgctxt "%1 = day and time, %2 = event title"
 msgid "Next: %1 · %2"
 msgstr "הבא: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
+msgctxt "the day before today"
+msgid "Yesterday"
+msgstr "אתמול"
+
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "אירוע %1"
+msgstr[1] "%1 אירועים"
+msgstr[2] "%1 אירועים"
+msgstr[3] "%1 אירועים"
 
 #: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"

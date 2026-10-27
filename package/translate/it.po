@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:48+0100\n"
+"POT-Creation-Date: 2026-10-27 15:01+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1143,6 +1143,18 @@ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr "Previsioni nelle intestazioni dei giorni e, nella vista Giorno, un pannello meteo."
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Day view shows"
+msgstr "La vista Giorno mostra"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Small calendar"
+msgstr "Calendario piccolo"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "Prossimi"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
 msgstr "Descrizioni degli eventi"
 
@@ -1380,7 +1392,7 @@ msgstr "Nessuna priorità"
 msgid "Due date"
 msgstr "Data di scadenza"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Oggi"
@@ -3312,10 +3324,6 @@ msgid "dddd, d MMM"
 msgstr "dddd d MMM"
 
 #: ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr "Prossimi"
-
-#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Niente in programma nei prossimi giorni."
 
@@ -3358,6 +3366,17 @@ msgstr "Prossimi giorni"
 msgctxt "%1 = day and time, %2 = event title"
 msgid "Next: %1 · %2"
 msgstr "Prossimo: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
+msgctxt "the day before today"
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 evento"
+msgstr[1] "%1 eventi"
 
 #: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"

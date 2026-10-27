@@ -84,12 +84,21 @@ Item {
 	readonly property real islandsEdge: 0
 	readonly property real minDayGridWidth: Kirigami.Units.gridUnit * 14
 	readonly property bool dayHasTaskLists: dayTasksStrip.hasLists
-	// Right of the grid, when there's room: the day's weather and below it its tasks. Left of it, when
-	// there's room for that too: a small month (MiniMonth) and below it Up next.
-	readonly property bool rightBeside: singleDay && width >= minDayGridWidth + tasksPanelWidth + panelGap
-	readonly property bool leftBeside: rightBeside && width >= minDayGridWidth + tasksPanelWidth + sidePanelWidth + panelGap * 2
-	readonly property bool weatherBeside: rightBeside && showWeather
-	readonly property bool tasksBeside: rightBeside && dayHasTaskLists
+	// The Day view's panels the user wants (Settings > Views > Day view shows).
+	readonly property bool dayWantsMiniMonth: plasmoid.configuration.dayShowMiniMonth !== false
+	readonly property bool dayWantsUpNext: plasmoid.configuration.dayShowUpNext !== false
+	readonly property bool dayWantsWeather: plasmoid.configuration.dayShowWeather !== false
+	readonly property bool dayWantsTasks: plasmoid.configuration.dayShowTasks !== false
+	// Right of the grid, when there's room: the day's tasks and below them its weather. Left of it,
+	// when there's room for that too: a small month (MiniMonth) and below it Up next. A column whose
+	// panels are all turned off isn't there.
+	readonly property bool rightWanted: (dayWantsTasks && dayHasTaskLists) || (dayWantsWeather && showWeather)
+	readonly property bool leftWanted: dayWantsMiniMonth || (dayWantsUpNext && islands)
+	readonly property bool rightBeside: singleDay && rightWanted && width >= minDayGridWidth + tasksPanelWidth + panelGap
+	readonly property bool leftBeside: singleDay && leftWanted
+		&& width >= minDayGridWidth + sidePanelWidth + panelGap + (rightBeside ? tasksPanelWidth + panelGap : 0)
+	readonly property bool weatherBeside: rightBeside && dayWantsWeather && showWeather
+	readonly property bool tasksBeside: rightBeside && dayWantsTasks && dayHasTaskLists
 	readonly property real leftPanelSpace: leftBeside ? sidePanelWidth + panelGap : 0
 	readonly property real rightPanelSpace: rightBeside ? tasksPanelWidth + panelGap : 0
 	readonly property real contentWidth: {
@@ -631,7 +640,7 @@ Item {
 	// Left of the grid, on top: a small month to pick another day, dots by how busy a day is.
 	IslandCard {
 		id: miniMonthCard
-		visible: weekView.leftBeside
+		visible: weekView.leftBeside && weekView.dayWantsMiniMonth
 		shown: weekView.islands
 		// Flat: padding on its left (the popup's edge), the same space on the grid side. Islands: a
 		// card from the top down, a card gap from the grid.
@@ -658,8 +667,8 @@ Item {
 	// bottom edge.
 	IslandCard {
 		id: upNextCard
-		readonly property real startY: miniMonthCard.y + miniMonthCard.height + appletConfig.cardGap
-		visible: weekView.islands && weekView.leftBeside && weekView.sideBottom - startY >= Kirigami.Units.gridUnit * 6
+		readonly property real startY: miniMonthCard.visible ? miniMonthCard.y + miniMonthCard.height + appletConfig.cardGap : 0
+		visible: weekView.islands && weekView.leftBeside && weekView.dayWantsUpNext && weekView.sideBottom - startY >= Kirigami.Units.gridUnit * 6
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
@@ -673,15 +682,18 @@ Item {
 		}
 	}
 
-	// Right of the grid, on top: the shown day's weather (as tall as it is).
+	// Right of the grid, at the bottom: the shown day's weather (as tall as it is; at the top without
+	// the tasks).
 	IslandCard {
 		id: weatherCard
+		readonly property real topY: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		visible: weekView.weatherBeside
 		shown: weekView.islands
 		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
-		y: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
+		y: weekView.tasksBeside ? Math.max(topY, weekView.sideBottom - height) : topY
 		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
-		height: Math.min(implicitHeight, parent.height - y - weekView.islandsEdge)
+		// As tall as the weather, at most the column (from its top: not from y, which follows height).
+		height: Math.min(implicitHeight, weekView.sideBottom - topY)
 
 		DayWeatherPanel {
 			// Room for the tasks below: on a short popup without the hourly chart, shorter still
@@ -704,22 +716,23 @@ Item {
 		}
 	}
 
-	// Below it: the day's tasks (islands: down to the grid's bottom edge, like the left column).
+	// On top: the day's tasks, down to the weather (or the grid's bottom edge).
 	IslandCard {
 		id: tasksCard
+		readonly property real bottomY: weekView.weatherBeside ? weatherCard.y - (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
+			: weekView.sideBottom
 		visible: weekView.tasksBeside
 		shown: weekView.islands
 		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
-		y: weekView.weatherBeside ? weatherCard.y + weatherCard.height + (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
-			: (weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing)
+		y: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
-		height: weekView.islands ? Math.max(implicitHeight, weekView.sideBottom - y) : implicitHeight
+		height: Math.max(implicitHeight, bottomY - y)
 
 		DayTasksPanel {
 			eventModel: weekView.singleDay ? weekView.eventModel : null
 			day: weekView.columnDate(0)
 			showSeparator: false
-			maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, tasksCard.parent.height - tasksCard.y - tasksCard.topPadding - tasksCard.bottomPadding - Kirigami.Units.gridUnit * 5)
+			maxListHeight: Math.max(Kirigami.Units.gridUnit * 3, tasksCard.bottomY - tasksCard.y - tasksCard.topPadding - tasksCard.bottomPadding - Kirigami.Units.gridUnit * 5)
 		}
 	}
 
@@ -730,7 +743,7 @@ Item {
 		spacing: weekView.islands ? appletConfig.cardGap : Kirigami.Units.smallSpacing
 
 		IslandCard {
-			visible: weekView.singleDay && weekView.showWeather && !weekView.weatherBeside && weekView.weatherIsSetup
+			visible: weekView.singleDay && weekView.dayWantsWeather && weekView.showWeather && !weekView.weatherBeside && weekView.weatherIsSetup
 			shown: weekView.islands
 			Layout.fillWidth: true
 			DayWeatherPanel {
@@ -764,6 +777,40 @@ Item {
 
 			ColumnLayout {
 				spacing: Kirigami.Units.smallSpacing
+
+				// Day view: a title like the side cards' ("Today", "Tomorrow", "Yesterday" or the
+				// weekday), the day's number of events on the right.
+				RowLayout {
+					visible: weekView.singleDay
+					Layout.fillWidth: true
+					Layout.leftMargin: weekView.islands ? 0 : Kirigami.Units.smallSpacing
+					Layout.rightMargin: Kirigami.Units.smallSpacing
+					Layout.bottomMargin: Kirigami.Units.smallSpacing
+					spacing: Kirigami.Units.smallSpacing
+					readonly property int eventCount: weekView.days.length > 0 ? weekView.days[0].timed.length + weekView.days[0].allDay.length : 0
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						Layout.minimumWidth: 0
+						text: {
+							var diff = Math.round((Shared.startOfDay(weekView.weekStart).getTime() - weekView.todayStart.getTime()) / 86400000)
+							return diff === 0 ? i18nc("tasks filter", "Today")
+								: diff === 1 ? i18nc("tasks filter", "Tomorrow")
+								: diff === -1 ? i18nc("the day before today", "Yesterday")
+								: Qt.locale().standaloneDayName(weekView.weekStart.getDay(), Locale.LongFormat)
+						}
+						textFormat: Text.PlainText
+						font.weight: Font.Bold
+						font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.25
+						font.capitalization: Font.Capitalize
+						elide: Text.ElideRight
+					}
+					PlasmaComponents3.Label {
+						visible: parent.eventCount > 0
+						text: i18np("%1 event", "%1 events", parent.eventCount)
+						textFormat: Text.PlainText
+						opacity: 0.75
+					}
+				}
 
 				// Day names. Not in the Today view: the popup header shows the date.
 				Row {
@@ -1106,7 +1153,7 @@ Item {
 					Layout.leftMargin: Kirigami.Units.smallSpacing
 					Layout.rightMargin: Kirigami.Units.smallSpacing
 					// Also tells whether there are task lists at all (dayHasTaskLists), so it keeps its model.
-					readonly property bool wanted: weekView.singleDay && !weekView.tasksBeside
+					readonly property bool wanted: weekView.singleDay && weekView.dayWantsTasks && !weekView.tasksBeside
 					visible: wanted && hasLists && !weekView.islands
 					eventModel: weekView.singleDay ? weekView.eventModel : null
 					day: weekView.columnDate(0)

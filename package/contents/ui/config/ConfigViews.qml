@@ -274,6 +274,36 @@ ConfigPage {
 				description: i18n("Forecast in the day headers and, in the Day view, a weather panel.")
 				configKey: 'weatherShowInViews'
 			}
+			FormCard.FormDelegateSeparator {}
+			// The Day view's panels beside the hours, one row of checkboxes.
+			FormCard.AbstractFormDelegate {
+				background: null
+				contentItem: ColumnLayout {
+					spacing: Kirigami.Units.smallSpacing
+					QQC2.Label {
+						Layout.fillWidth: true
+						text: i18n("Day view shows")
+						textFormat: Text.PlainText
+					}
+					Flow {
+						Layout.fillWidth: true
+						spacing: Kirigami.Units.largeSpacing
+						Repeater {
+							model: [
+								{ key: 'dayShowMiniMonth', text: i18n("Small calendar") },
+								{ key: 'dayShowUpNext', text: i18n("Up next") },
+								{ key: 'dayShowWeather', text: i18n("Weather") },
+								{ key: 'dayShowTasks', text: i18n("Tasks") },
+							]
+							QQC2.CheckBox {
+								text: modelData.text
+								checked: page.configBridge.read(modelData.key, true) !== false
+								onToggled: page.configBridge.write(modelData.key, checked)
+							}
+						}
+					}
+				}
+			}
 		}
 
 		//--- Agenda (classic mode only)

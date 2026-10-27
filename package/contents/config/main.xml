@@ -489,6 +489,19 @@
 		<entry name="openMeteoLocationName" type="string">
 			<default></default>
 		</entry>
+		<!-- Day view: the panels beside the hours (Settings > Views > Day view shows). -->
+		<entry name="dayShowMiniMonth" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="dayShowUpNext" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="dayShowWeather" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="dayShowTasks" type="bool">
+			<default>true</default>
+		</entry>
 		<entry name="weatherShowInViews" type="bool">
 			<default>true</default>
 		</entry>

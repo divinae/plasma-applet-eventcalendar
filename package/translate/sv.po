@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:48+0100\n"
+"POT-Creation-Date: 2026-10-27 15:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -1143,6 +1143,18 @@ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 msgstr "Prognos i dagrubrikerna och en väderpanel i dagvyn."
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Day view shows"
+msgstr "Dagsvyn visar"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Small calendar"
+msgstr "Liten kalender"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "Härnäst"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
 msgstr "Händelsebeskrivningar"
 
@@ -1380,7 +1392,7 @@ msgstr "Ingen prioritet"
 msgid "Due date"
 msgstr "Förfallodatum"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "I dag"
@@ -3312,10 +3324,6 @@ msgid "dddd, d MMM"
 msgstr "dddd d MMM"
 
 #: ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr "Härnäst"
-
-#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Inget planerat de närmaste dagarna."
 
@@ -3358,6 +3366,17 @@ msgstr "Kommande dagar"
 msgctxt "%1 = day and time, %2 = event title"
 msgid "Next: %1 · %2"
 msgstr "Nästa: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
+msgctxt "the day before today"
+msgid "Yesterday"
+msgstr "I går"
+
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 händelse"
+msgstr[1] "%1 händelser"
 
 #: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"

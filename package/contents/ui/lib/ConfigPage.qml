@@ -276,6 +276,16 @@ KCM.SimpleKCM {
 	property var cfg_meteogramHoursDefault
 	property var cfg_eventCacheEnabled
 	property var cfg_eventCacheEnabledDefault
+	property var cfg_tasksInProgress
+	property var cfg_tasksInProgressDefault
+	property var cfg_dayShowMiniMonth
+	property var cfg_dayShowMiniMonthDefault
+	property var cfg_dayShowUpNext
+	property var cfg_dayShowUpNextDefault
+	property var cfg_dayShowWeather
+	property var cfg_dayShowWeatherDefault
+	property var cfg_dayShowTasks
+	property var cfg_dayShowTasksDefault
 	// END AUTO CFG PROPS
 
 	property QtObject configBridge: QtObject {

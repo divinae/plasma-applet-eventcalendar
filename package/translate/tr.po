@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:48+0100\n"
+"POT-Creation-Date: 2026-10-27 15:01+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1318,6 +1318,18 @@ msgstr ""
 "Gün başlıklarında hava tahmini ve Gün görünümünde bir hava durumu paneli."
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Day view shows"
+msgstr "Gün görünümü gösterir"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Small calendar"
+msgstr "Küçük takvim"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "Sıradakiler"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
 msgstr "Etkinlik açıklamaları"
 
@@ -1575,7 +1587,7 @@ msgid "Due date"
 msgstr "Son tarih"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
-#: ../contents/ui/UpNextPanel.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Bugün"
@@ -3545,10 +3557,6 @@ msgid "dddd, d MMM"
 msgstr "d MMM, dddd"
 
 #: ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr "Sıradakiler"
-
-#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Önümüzdeki günlerde planlanmış bir şey yok."
 
@@ -3593,6 +3601,17 @@ msgstr "Sonraki günler"
 msgctxt "%1 = day and time, %2 = event title"
 msgid "Next: %1 · %2"
 msgstr "Sonraki: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
+msgctxt "the day before today"
+msgid "Yesterday"
+msgstr "Dün"
+
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 etkinlik"
+msgstr[1] "%1 etkinlik"
 
 #: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
