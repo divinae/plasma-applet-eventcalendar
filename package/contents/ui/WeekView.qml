@@ -685,7 +685,7 @@ Item {
 		}
 	}
 
-	// Right of the grid, at the bottom: the shown day's weather (as tall as it is; at the top without
+	// Right of the grid, under the tasks: the shown day's weather (as tall as it is; at the top without
 	// the tasks).
 	IslandCard {
 		id: weatherCard
@@ -693,17 +693,18 @@ Item {
 		visible: weekView.weatherBeside
 		shown: weekView.islands
 		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
-		y: weekView.tasksBeside ? Math.max(topY, weekView.sideBottom - height) : topY
+		// Right under the tasks (as tall as they are), or at the top without them.
+		y: weekView.tasksBeside ? tasksCard.y + tasksCard.height + (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing) : topY
+		readonly property real room: weekView.sideBottom - y
 		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
-		// As tall as the weather, at most the column (from its top: not from y, which follows height).
-		height: Math.min(implicitHeight, weekView.sideBottom - topY)
+		// As tall as the weather, at most the room left.
+		height: Math.max(0, Math.min(implicitHeight, room))
 
 		DayWeatherPanel {
-			// Room for the tasks below: on a short popup without the hourly chart, shorter still
-			// without the next days.
-			readonly property bool roomForTasks: !weekView.tasksBeside
-			showHourly: roomForTasks || weekView.sideBottom >= Kirigami.Units.gridUnit * 38
-			showNextDays: roomForTasks || weekView.sideBottom >= Kirigami.Units.gridUnit * 28
+			// Its sections from the room left under the tasks: without the hourly chart, then without
+			// the next days.
+			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
+			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
 			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
 			nextDays: {
@@ -719,17 +720,19 @@ Item {
 		}
 	}
 
-	// On top: the day's tasks, down to the weather (or the grid's bottom edge).
+	// On top: the day's tasks, as tall as they are (the list scrolls past the room there is).
 	IslandCard {
 		id: tasksCard
-		readonly property real bottomY: weekView.weatherBeside ? weatherCard.y - (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
+		// The most it may take: the column, less at least the weather's current conditions below.
+		readonly property real bottomY: weekView.weatherBeside ? weekView.sideBottom - Kirigami.Units.gridUnit * 9 - (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
 			: weekView.sideBottom
 		visible: weekView.tasksBeside
 		shown: weekView.islands
 		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
 		y: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
-		height: Math.max(implicitHeight, bottomY - y)
+		// As tall as its tasks (not stretched).
+		height: implicitHeight
 
 		DayTasksPanel {
 			eventModel: weekView.singleDay ? weekView.eventModel : null
