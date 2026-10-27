@@ -455,6 +455,18 @@ MouseArea {
 				onTriggered: errorBanner.errorText = ""
 			}
 		]
+		// A retry runs: a thin running bar along the banner's bottom edge.
+		PlasmaComponents3.ProgressBar {
+			visible: errorBanner.network && (logic.retrying || popup.refreshing)
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+			anchors.leftMargin: Kirigami.Units.cornerRadius
+			anchors.rightMargin: Kirigami.Units.cornerRadius
+			height: 3
+			indeterminate: true
+			Accessible.name: i18n("Retrying…")
+		}
 		Timer {
 			interval: 1000
 			repeat: true

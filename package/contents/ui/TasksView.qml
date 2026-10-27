@@ -184,7 +184,7 @@ Item {
 		var selected = eventModel.getSelectedTaskLists()
 		var itemsByList = {}
 		for (var i = 0; i < selected.length; i++) {
-			var calendar = eventModel.eventsByCalendar[selected[i].id]
+			var calendar = eventModel.loadedCalendar(selected[i].id)
 			itemsByList[selected[i].id] = calendar && calendar.items ? calendar.items : []
 		}
 		var counts = Tasks.filterCounts(selected, itemsByList, today, smartHidden)
@@ -417,7 +417,7 @@ Item {
 	}
 	// The tasks a delete takes with it (those loaded: TickTick loads open tasks only).
 	function listTaskCount(listId) {
-		var calendar = eventModel ? eventModel.eventsByCalendar[listId] : null
+		var calendar = eventModel ? eventModel.loadedCalendar(listId) : null
 		return TaskLists.taskCount(calendar && calendar.items)
 	}
 

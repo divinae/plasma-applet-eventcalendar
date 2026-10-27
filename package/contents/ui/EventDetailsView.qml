@@ -71,7 +71,7 @@ Rectangle {
 		if (!isTask || !eventItem.id || typeof eventModel === "undefined" || !eventModel) {
 			return []
 		}
-		var calendar = eventModel.eventsByCalendar[eventItem.calendarId]
+		var calendar = eventModel.loadedCalendar(eventItem.calendarId)
 		var items = calendar && calendar.items ? calendar.items : []
 		return items.filter(function(item) {
 			return Tasks.isTask(item) && item.parentId === eventItem.id

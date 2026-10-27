@@ -354,6 +354,21 @@ CalendarManager {
 	onAllDataFetched: {
 		restoreCachedCalendars()
 		mergeEvents()
+		fetchRound = false
+	}
+
+	// A fetch round runs: eventsByCalendar was emptied and fills up calendar by calendar.
+	property bool fetchRound: false
+	onFetchingData: fetchRound = true
+	// A calendar's loaded data for a view that reads it directly (the Tasks tab, the Day view's
+	// tasks): during a fetch round, until the calendar arrives, what the last round loaded, so the
+	// view doesn't go empty meanwhile (eg: Retry Now while offline).
+	function loadedCalendar(calendarId) {
+		var calendar = eventModel.eventsByCalendar[calendarId]
+		if (!calendar && fetchRound) {
+			calendar = eventModel.previousEventsByCalendar[calendarId]
+		}
+		return calendar || null
 	}
 
 	//--- Event cache (EventCache.qml): shown on start until the first fetch round brings them in.

@@ -62,7 +62,7 @@ ColumnLayout {
 			if (shownId && lists[i].id !== shownId) {
 				continue
 			}
-			var calendar = eventModel.eventsByCalendar[lists[i].id]
+			var calendar = eventModel.loadedCalendar(lists[i].id)
 			if (calendar && calendar.items) {
 				items = items.concat(calendar.items)
 			}
