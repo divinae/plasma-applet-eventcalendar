@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.5.0
+    1.6.0
 
 **License**
 
@@ -76,7 +76,7 @@ Google Calendar
 Tasks
 - Google Tasks and TickTick (or Dida365, with an API token kept in the system keyring) in their own tab: smart filters (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by due date, title, list or priority
 - Add a task with smart recognition: "tomorrow 17:00 !high #Work every week" sets the day, time, priority, list and repeat
-- Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); drag between days, lists and accounts; undo, keyboard, search
+- Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); mark tasks in progress; drag between days, lists and accounts; undo, keyboard, search
 - Manage lists: rename, color, clear completed, delete, hide from the smart lists
 - Task reminders, a morning summary, and the day's tasks in the Day view
 
@@ -103,38 +103,31 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.5.0)**
+**Changelog (1.6.0)**
 
 ```
 Tasks
-- A Tasks tab for Google Tasks and TickTick: smart filters (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list), by date or by list, sort by due date, title, list or priority
-- Add a task with smart recognition: "Call mom tomorrow 17:00 !high #Work every week" sets the day, time, priority, list and repeat
-- Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); a task's details list its subtasks
-- Drag tasks between days, lists and accounts; undo; keyboard; search finds tasks
-- Manage lists: rename, color, clear completed, delete, hide from the smart lists, new lists
-- Task reminders, a morning summary and tasks in the daily agenda; overdue count in the panel tooltip
-- The Day view shows the day's tasks beside the hour grid; tasks left out of the Month, Week and Agenda views
+- Mark a task as in progress (right-click menu or its details): a half-filled check, first in its section, an "In progress" filter
+- Right-click menu: set the priority (TickTick) and the due date (today, tomorrow, next week, none)
+- The priority also shows as a colored flag on the task's row
+- After a restart, cached tasks show right away
 
-Views and style
-- Islands style (the default): the views' parts in rounded cards; Flat keeps the old look
-- Choose which view tabs the header shows
-- Month view: events that already ended today are dimmed
+Day view
+- A new weather card: the location, the current weather on a sky-colored tile, today's high and low, clearer titles, more contrast in a light theme
 
-Offline
-- Tasks kept for an offline start too; a setting to turn the cache off
+Popup
+- A thin scroll bar; the hour grid and the agenda reach the card's edge
+- Offline: Retry Now shows it's retrying, and the shown tasks stay meanwhile
 
-Fixes
-- Join only in the notification when a meeting starts
-- No second or empty event tooltip; agenda times no longer cut off
-- Text that looked like HTML no longer can crash Plasma
-- Task reminders on daylight saving days, TickTick task durations, cleared Google tasks stay hidden
-- A locked keyring is retried instead of asking to sign in again
+Settings
+- Tidier Views, Events and Clock pages
+- Fixed: blank Clock and Events pages with older Kirigami Addons (Debian 13 / Plasma 6.3)
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.5.0-plasma6.0.plasmoid` from the
-  [v1.5.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.5.0),
+- **Product file:** `eventcalendar-v1.6.0-plasma6.0.plasmoid` from the
+  [v1.6.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.6.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data), in this order:
   1. `month.png`

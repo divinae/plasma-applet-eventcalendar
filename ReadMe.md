@@ -32,7 +32,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by
   due date, title, list or priority. **Add a task…** recognizes "tomorrow 17:00 !high #Work every
   week" as the day, time, priority, list and repeat. Priorities, due times, repeats, reminders,
-  checklists (TickTick) and subtasks (Google); drag tasks between days, lists and accounts; undo,
+  checklists (TickTick) and subtasks (Google); mark tasks in progress; set the priority and due
+  date from the right-click menu; drag tasks between days, lists and accounts; undo,
   keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
   lists). Task reminders, a morning summary, and the day's tasks in the Day view. TickTick signs in
   with an API token, kept in the system keyring.
@@ -72,9 +73,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.5.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.6.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.5.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.6.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a

@@ -1,3 +1,22 @@
+## v1.6.0 - October 27 2026
+
+### Tasks
+* Mark a task as **in progress** (right-click menu or its details): a half-filled check, first in its section, and an "In progress" smart filter. The widget keeps this mark (Google Tasks and TickTick have no such state).
+* The right-click menu sets the **priority** (TickTick) and the **due date** (today, tomorrow, next week, none).
+* A task's priority also shows as a colored flag at the right end of its row.
+* After a restart, the cached tasks show right away instead of after the first fetch.
+
+### Day view
+* A new weather card: "Weather" with the location, the current weather on a small sky-colored tile, today's high and low, and clearer section titles; more contrast in a light theme.
+
+### Popup
+* A thin scroll bar that shows while scrolling; the Week and Day hour grid and the Agenda reach the card's edge.
+* Offline: "Retry Now" shows that it's retrying (a running bar, the button waits), and the tasks shown stay while it fetches again.
+
+### Settings
+* Tidier Views, Events and Clock pages: the view tabs in one row, the popup size and working hours in one row each, an Appearance section, the event notifications in five sections instead of nine, and options of a switch that's off hidden.
+* The Clock, Events and Tasks pages work again with older Kirigami Addons (Debian 13 / Plasma 6.3). CI checks the settings against Kirigami Addons 1.7.
+
 ## v1.5.0 - October 26 2026
 
 ### Tasks
