@@ -1180,13 +1180,14 @@ Item {
 							? weekView.hourY(weekView.currentTime.getTime(), weekView.todayStart.getTime()) - flickable.contentY : 0
 						readonly property real areaTop: Math.max(0, Math.min(timeGrid.height, nowY))
 						visible: weekView.dayFree && timeGrid.height - areaTop >= Kirigami.Units.gridUnit * 4
-						x: weekView.gutterWidth + Math.round((timeGrid.width - weekView.gutterWidth - width) / 2)
+						// The day column's width (not from its contents: the labels' maximum width follows it).
+						x: weekView.gutterWidth + Kirigami.Units.gridUnit / 2
 						y: Math.round(areaTop + (timeGrid.height - areaTop - height) / 2)
-						width: Math.min(implicitWidth, timeGrid.width - weekView.gutterWidth - Kirigami.Units.gridUnit)
+						width: Math.max(0, timeGrid.width - weekView.gutterWidth - Kirigami.Units.gridUnit)
 						spacing: Kirigami.Units.smallSpacing
 						PlasmaComponents3.Label {
-							Layout.alignment: Qt.AlignHCenter
-							Layout.maximumWidth: freeNote.width
+							Layout.fillWidth: true
+							horizontalAlignment: Text.AlignHCenter
 							text: weekView.showingToday ? i18n("No more events today") : i18n("No events")
 							textFormat: Text.PlainText
 							opacity: 0.6
