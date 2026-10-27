@@ -1,4 +1,6 @@
 import QtQuick
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Guests.js" as Guests
@@ -9,8 +11,8 @@ import "Tasks.js" as Tasks
 
 // Right-click menu for an event, the same in every view: details, join, open in Google Calendar,
 // respond (RSVP, when invited), email the guests, edit, delete (confirmed in a submenu). One instance lives in
-// PopupView (popup.showEventMenu). Tasks: mark as done / not done, details, edit, move to another
-// list of the account, delete.
+// PopupView (popup.showEventMenu). Tasks: mark as done / not done, in progress, details, edit,
+// priority (TickTick), due date, move to another list of the account, delete.
 PlasmaComponents3.Menu {
 	id: eventMenu
 
@@ -33,7 +35,12 @@ PlasmaComponents3.Menu {
 		eventItem = item
 		showRespondMenu(canRespond && !isTask)
 		taskLists = isTask && canEdit ? otherTaskLists(item) : []
-		showMoveMenu(taskLists.length > 0)
+		var openTask = isTask && canEdit && !isDone
+		var caps = isTask ? eventModel.taskCapabilities(item.calendarId) : {}
+		// Before Delete, in this order: Priority, Due Date, Move to List.
+		showSubMenu(priorityMenu, openTask && !!caps.priority)
+		showSubMenu(dueMenu, openTask)
+		showSubMenu(moveMenu, taskLists.length > 0)
 		popup(parentItem, x, y)
 	}
 
@@ -70,22 +77,100 @@ PlasmaComponents3.Menu {
 			}
 		}
 	}
-	// Inserted before Delete, only for tasks with other lists to move to.
-	function showMoveMenu(show) {
+	// A task submenu (a submenu can't be hidden): inserted right before Delete when shown, taken out
+	// otherwise. Called in their order, so they stay in it.
+	function showSubMenu(menu, show) {
 		var deleteIndex = -1
 		var shownIndex = -1
 		for (var i = 0; i < eventMenu.count; i++) {
 			var menuItem = eventMenu.itemAt(i)
 			if (menuItem && menuItem.subMenu === deleteMenu) {
 				deleteIndex = i
-			} else if (menuItem && menuItem.subMenu === moveMenu) {
+			} else if (menuItem && menuItem.subMenu === menu) {
 				shownIndex = i
 			}
 		}
-		if (show && shownIndex < 0 && deleteIndex >= 0) {
-			eventMenu.insertMenu(deleteIndex, moveMenu)
-		} else if (!show && shownIndex >= 0) {
+		if (shownIndex >= 0) {
 			eventMenu.takeMenu(shownIndex)
+			if (deleteIndex > shownIndex) {
+				deleteIndex--
+			}
+		}
+		if (show && deleteIndex >= 0) {
+			eventMenu.insertMenu(deleteIndex, menu)
+		}
+	}
+
+	// Priority (TickTick): high, medium, low, none; the current one checked.
+	function setPriority(value) {
+		eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.editBody({ priority: value }), {})
+	}
+	property PlasmaComponents3.Menu priorityMenu: PlasmaComponents3.Menu {
+		title: i18n("Priority")
+		icon.name: "flag"
+		Repeater {
+			model: [
+				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority"), color: "#e03b30" },
+				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority"), color: "#f0a020" },
+				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority"), color: "#4c7cf6" },
+				{ value: Tasks.PRIORITY_NONE, text: i18nc("task priority", "No priority"), color: "" },
+			]
+			PlasmaComponents3.MenuItem {
+				id: priorityItem
+				readonly property bool current: !!eventMenu.eventItem && Tasks.priorityOf(eventMenu.eventItem) === modelData.value
+				text: modelData.text
+				// A dot in the priority's color (an empty ring: none), the current one in bold.
+				contentItem: RowLayout {
+					spacing: Kirigami.Units.smallSpacing
+					Rectangle {
+						implicitWidth: Kirigami.Units.iconSizes.small
+						implicitHeight: implicitWidth
+						radius: width / 2
+						color: modelData.color || "transparent"
+						border.width: modelData.color ? 0 : 1.5
+						border.color: Kirigami.Theme.disabledTextColor
+					}
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						text: priorityItem.text
+						textFormat: Text.PlainText
+						font.weight: priorityItem.current ? Font.DemiBold : Font.Normal
+					}
+				}
+				onTriggered: eventMenu.setPriority(modelData.value)
+			}
+		}
+	}
+
+	// Due date: today, tomorrow, the start of next week, none (the time, if any, is kept).
+	function setDue(day) {
+		eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.editBody({ dueDay: day }), {})
+	}
+	readonly property string today: Tasks.dayString(timeModel.currentTime)
+	readonly property int firstDayOfWeek: {
+		var setting = plasmoid.configuration.firstDayOfWeek
+		return setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
+	}
+	property PlasmaComponents3.Menu dueMenu: PlasmaComponents3.Menu {
+		title: i18n("Due date")
+		icon.name: "view-calendar-day"
+		Repeater {
+			model: [
+				{ day: eventMenu.today, text: i18nc("tasks filter", "Today"), icon: "go-jump-today" },
+				{ day: Tasks.addDays(eventMenu.today, 1), text: i18nc("tasks filter", "Tomorrow"), icon: "go-next" },
+				{ day: Tasks.nextWeekStart(eventMenu.today, eventMenu.firstDayOfWeek), text: i18n("Next week"), icon: "go-next-skip" },
+				{ day: '', text: i18nc("tasks filter", "No date"), icon: "edit-clear" },
+			]
+			PlasmaComponents3.MenuItem {
+				text: modelData.text
+				icon.name: modelData.icon
+				checkable: true
+				checked: !!eventMenu.eventItem && Tasks.dueDay(eventMenu.eventItem) === modelData.day
+				onTriggered: {
+					checked = Qt.binding(function() { return !!eventMenu.eventItem && Tasks.dueDay(eventMenu.eventItem) === modelData.day })
+					eventMenu.setDue(modelData.day)
+				}
+			}
 		}
 	}
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:05+0100\n"
+"POT-Creation-Date: 2026-10-27 10:10+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1568,6 +1568,50 @@ msgstr "προς"
 msgid "Move to List"
 msgstr "Μετακίνηση σε λίστα"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Προτεραιότητα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Υψηλή προτεραιότητα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Μεσαία προτεραιότητα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Χαμηλή προτεραιότητα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Χωρίς προτεραιότητα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Προθεσμία"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Σήμερα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Αύριο"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Next week"
+msgstr "Επόμενη εβδομάδα"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Χωρίς ημερομηνία"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
@@ -1975,17 +2019,8 @@ msgid "Title"
 msgstr "Τίτλος"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Due date"
-msgstr "Προθεσμία"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Due time"
 msgstr "Ώρα προθεσμίας"
-
-#: ../contents/ui/EventEditView.qml
-msgctxt "task priority"
-msgid "No priority"
-msgstr "Χωρίς προτεραιότητα"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task priority"
@@ -2001,10 +2036,6 @@ msgstr "Μεσαία προτεραιότητα"
 msgctxt "task priority"
 msgid "High priority"
 msgstr "Υψηλή προτεραιότητα"
-
-#: ../contents/ui/EventEditView.qml
-msgid "Priority"
-msgstr "Προτεραιότητα"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -2922,18 +2953,6 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/QuickAddTaskRow.qml
-msgid "High priority"
-msgstr "Υψηλή προτεραιότητα"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Medium priority"
-msgstr "Μεσαία προτεραιότητα"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Low priority"
-msgstr "Χαμηλή προτεραιότητα"
-
-#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Every weekday"
 msgstr "Κάθε εργάσιμη"
 
@@ -3149,16 +3168,6 @@ msgstr "Όλες"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
-msgid "Today"
-msgstr "Σήμερα"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "Tomorrow"
-msgstr "Αύριο"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
 msgid "Next 7 days"
 msgstr "Επόμενες 7 ημέρες"
 
@@ -3166,11 +3175,6 @@ msgstr "Επόμενες 7 ημέρες"
 msgctxt "tasks filter"
 msgid "Overdue"
 msgstr "Εκπρόθεσμες"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "No date"
-msgstr "Χωρίς ημερομηνία"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"

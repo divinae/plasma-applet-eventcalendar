@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:05+0100\n"
+"POT-Creation-Date: 2026-10-27 10:10+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1351,6 +1351,50 @@ msgstr "fino al"
 msgid "Move to List"
 msgstr "Sposta nell'elenco"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Priorità"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Priorità alta"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Priorità media"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Priorità bassa"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Nessuna priorità"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Data di scadenza"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Oggi"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Domani"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Next week"
+msgstr "Settimana prossima"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Senza data"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
@@ -1749,17 +1793,8 @@ msgid "Title"
 msgstr "Titolo"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Due date"
-msgstr "Data di scadenza"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Due time"
 msgstr "Orario di scadenza"
-
-#: ../contents/ui/EventEditView.qml
-msgctxt "task priority"
-msgid "No priority"
-msgstr "Nessuna priorità"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task priority"
@@ -1775,10 +1810,6 @@ msgstr "Priorità media"
 msgctxt "task priority"
 msgid "High priority"
 msgstr "Priorità alta"
-
-#: ../contents/ui/EventEditView.qml
-msgid "Priority"
-msgstr "Priorità"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -2664,18 +2695,6 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/QuickAddTaskRow.qml
-msgid "High priority"
-msgstr "Priorità alta"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Medium priority"
-msgstr "Priorità media"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Low priority"
-msgstr "Priorità bassa"
-
-#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Every weekday"
 msgstr "Ogni giorno feriale"
 
@@ -2889,16 +2908,6 @@ msgstr "Tutte"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
-msgid "Today"
-msgstr "Oggi"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "Tomorrow"
-msgstr "Domani"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
 msgid "Next 7 days"
 msgstr "Prossimi 7 giorni"
 
@@ -2906,11 +2915,6 @@ msgstr "Prossimi 7 giorni"
 msgctxt "tasks filter"
 msgid "Overdue"
 msgstr "Scadute"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "No date"
-msgstr "Senza data"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"

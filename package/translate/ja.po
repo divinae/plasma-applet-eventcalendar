@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:05+0100\n"
+"POT-Creation-Date: 2026-10-27 10:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1348,6 +1348,50 @@ msgstr "から"
 msgid "Move to List"
 msgstr "リストに移動"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "優先度"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "優先度: 高"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "優先度: 中"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "優先度: 低"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "優先度なし"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "期限"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "今日"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "明日"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Next week"
+msgstr "来週"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "日付なし"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
@@ -1743,17 +1787,8 @@ msgid "Title"
 msgstr "タイトル"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Due date"
-msgstr "期限"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Due time"
 msgstr "期限時刻"
-
-#: ../contents/ui/EventEditView.qml
-msgctxt "task priority"
-msgid "No priority"
-msgstr "優先度なし"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task priority"
@@ -1769,10 +1804,6 @@ msgstr "優先度: 中"
 msgctxt "task priority"
 msgid "High priority"
 msgstr "優先度: 高"
-
-#: ../contents/ui/EventEditView.qml
-msgid "Priority"
-msgstr "優先度"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -2636,18 +2667,6 @@ msgid "%1, %2"
 msgstr "%1、%2"
 
 #: ../contents/ui/QuickAddTaskRow.qml
-msgid "High priority"
-msgstr "優先度: 高"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Medium priority"
-msgstr "優先度: 中"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Low priority"
-msgstr "優先度: 低"
-
-#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Every weekday"
 msgstr "平日毎日"
 
@@ -2857,16 +2876,6 @@ msgstr "すべて"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
-msgid "Today"
-msgstr "今日"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "Tomorrow"
-msgstr "明日"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
 msgid "Next 7 days"
 msgstr "今後 7 日間"
 
@@ -2874,11 +2883,6 @@ msgstr "今後 7 日間"
 msgctxt "tasks filter"
 msgid "Overdue"
 msgstr "期限切れ"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "No date"
-msgstr "日付なし"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"

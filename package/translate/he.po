@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:05+0100\n"
+"POT-Creation-Date: 2026-10-27 10:10+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1525,6 +1525,50 @@ msgstr "עד"
 msgid "Move to List"
 msgstr "העברה לרשימה"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "עדיפות"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "עדיפות גבוהה"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "עדיפות בינונית"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "עדיפות נמוכה"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "ללא עדיפות"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "תאריך יעד"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "היום"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "מחר"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Next week"
+msgstr "השבוע הבא"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "ללא תאריך"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
@@ -1938,17 +1982,8 @@ msgid "Title"
 msgstr "כותרת"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Due date"
-msgstr "תאריך יעד"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Due time"
 msgstr "שעת יעד"
-
-#: ../contents/ui/EventEditView.qml
-msgctxt "task priority"
-msgid "No priority"
-msgstr "ללא עדיפות"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task priority"
@@ -1964,10 +1999,6 @@ msgstr "עדיפות בינונית"
 msgctxt "task priority"
 msgid "High priority"
 msgstr "עדיפות גבוהה"
-
-#: ../contents/ui/EventEditView.qml
-msgid "Priority"
-msgstr "עדיפות"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -2915,18 +2946,6 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/QuickAddTaskRow.qml
-msgid "High priority"
-msgstr "עדיפות גבוהה"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Medium priority"
-msgstr "עדיפות בינונית"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Low priority"
-msgstr "עדיפות נמוכה"
-
-#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Every weekday"
 msgstr "כל יום עבודה"
 
@@ -3148,16 +3167,6 @@ msgstr "הכול"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
-msgid "Today"
-msgstr "היום"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "Tomorrow"
-msgstr "מחר"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
 msgid "Next 7 days"
 msgstr "7 הימים הבאים"
 
@@ -3165,11 +3174,6 @@ msgstr "7 הימים הבאים"
 msgctxt "tasks filter"
 msgid "Overdue"
 msgstr "באיחור"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "No date"
-msgstr "ללא תאריך"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"

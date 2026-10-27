@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:05+0100\n"
+"POT-Creation-Date: 2026-10-27 10:10+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1354,6 +1354,50 @@ msgstr "->"
 msgid "Move to List"
 msgstr "Siirrä luetteloon"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Priority"
+msgstr "Prioriteetti"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "High priority"
+msgstr "Korkea tärkeys"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Medium priority"
+msgstr "Keskitason tärkeys"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+msgid "Low priority"
+msgstr "Matala tärkeys"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgctxt "task priority"
+msgid "No priority"
+msgstr "Ei prioriteettia"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+msgid "Due date"
+msgstr "Eräpäivä"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Today"
+msgstr "Tänään"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "Tomorrow"
+msgstr "Huomenna"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Next week"
+msgstr "Ensi viikko"
+
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "No date"
+msgstr "Ei päivämäärää"
+
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "RSVP to an invitation"
 msgid "Respond"
@@ -1752,17 +1796,8 @@ msgid "Title"
 msgstr "Otsikko"
 
 #: ../contents/ui/EventEditView.qml
-msgid "Due date"
-msgstr "Eräpäivä"
-
-#: ../contents/ui/EventEditView.qml
 msgid "Due time"
 msgstr "Eräaika"
-
-#: ../contents/ui/EventEditView.qml
-msgctxt "task priority"
-msgid "No priority"
-msgstr "Ei prioriteettia"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task priority"
@@ -1778,10 +1813,6 @@ msgstr "Keskitason prioriteetti"
 msgctxt "task priority"
 msgid "High priority"
 msgstr "Korkea prioriteetti"
-
-#: ../contents/ui/EventEditView.qml
-msgid "Priority"
-msgstr "Prioriteetti"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "event type"
@@ -2667,18 +2698,6 @@ msgid "%1, %2"
 msgstr "%1, %2"
 
 #: ../contents/ui/QuickAddTaskRow.qml
-msgid "High priority"
-msgstr "Korkea tärkeys"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Medium priority"
-msgstr "Keskitason tärkeys"
-
-#: ../contents/ui/QuickAddTaskRow.qml
-msgid "Low priority"
-msgstr "Matala tärkeys"
-
-#: ../contents/ui/QuickAddTaskRow.qml
 msgid "Every weekday"
 msgstr "Joka arkipäivä"
 
@@ -2892,16 +2911,6 @@ msgstr "Kaikki"
 
 #: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
-msgid "Today"
-msgstr "Tänään"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "Tomorrow"
-msgstr "Huomenna"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
 msgid "Next 7 days"
 msgstr "Seuraavat 7 päivää"
 
@@ -2909,11 +2918,6 @@ msgstr "Seuraavat 7 päivää"
 msgctxt "tasks filter"
 msgid "Overdue"
 msgstr "Myöhässä"
-
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "No date"
-msgstr "Ei päivämäärää"
 
 #: ../contents/ui/TasksView.qml
 msgid "Couldn't change the list's color"
