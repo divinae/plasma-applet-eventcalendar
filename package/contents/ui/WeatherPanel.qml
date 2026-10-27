@@ -266,24 +266,77 @@ ColumnLayout {
 			opacity: panel.dimOpacity
 		}
 	}
+	// Today: high, low and rain spread over a soft strip, each with its icon.
+	Rectangle {
+		id: todayStrip
+		readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+		visible: panel.showData && !panel.compact && !!panel.today && panel.isToday
+		Layout.fillWidth: true
+		Layout.topMargin: Kirigami.Units.largeSpacing
+		implicitHeight: statsRow.implicitHeight + Kirigami.Units.smallSpacing * 2
+		radius: Kirigami.Units.cornerRadius * 2
+		color: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.darkTheme ? 0.07 : 0.05)
+		Accessible.role: Accessible.StaticText
+		Accessible.name: panel.today ? i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
+			+ (rain ? ", " + i18nc("precipitation", "rain %1", rain) : "") : ""
+		RowLayout {
+			id: statsRow
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.verticalCenter: parent.verticalCenter
+			anchors.leftMargin: Kirigami.Units.largeSpacing
+			anchors.rightMargin: Kirigami.Units.largeSpacing
+			spacing: 0
+			Stat {
+				icon: "arrow-up"
+				text: panel.today ? Shared.formatTemp(panel.today.temp.max) : ""
+			}
+			Stat {
+				icon: "arrow-down"
+				text: panel.today ? Shared.formatTemp(panel.today.temp.min) : ""
+			}
+			Stat {
+				visible: !!todayStrip.rain
+				icon: "weather-showers-symbolic"
+				text: todayStrip.rain
+			}
+		}
+	}
+	// Another day: its rain (the high / low are in the heading).
 	PlasmaComponents3.Label {
-		visible: panel.showData && !panel.compact && !!panel.today
+		readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+		visible: panel.showData && !panel.compact && !!panel.today && !panel.isToday && !!rain
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.smallSpacing
 		wrapMode: Text.Wrap
-		text: {
-			if (!panel.today) {
-				return ""
-			}
-			if (!panel.isToday) {
-				var dayRain = panel.precipitationText(panel.today.precipitation)
-				return dayRain ? i18nc("precipitation during the day", "Rain: %1", dayRain) : ""
-			}
-			var s = i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
-			var rain = panel.precipitationText(panel.today.precipitation)
-			return rain ? s + ", " + i18nc("precipitation", "rain %1", rain) : s
-		}
+		text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
 		opacity: panel.dimOpacity
+	}
+	// An icon and its value, centered in an equal share of the today strip.
+	component Stat: Item {
+		property alias icon: statIcon.source
+		property alias text: statLabel.text
+		Layout.fillWidth: true
+		Layout.preferredWidth: 1
+		implicitHeight: statContent.implicitHeight
+		RowLayout {
+			id: statContent
+			anchors.centerIn: parent
+			spacing: Kirigami.Units.smallSpacing
+			Kirigami.Icon {
+				id: statIcon
+				Layout.alignment: Qt.AlignVCenter
+				implicitWidth: Kirigami.Units.iconSizes.small
+				implicitHeight: implicitWidth
+				opacity: panel.dimOpacity
+			}
+			PlasmaComponents3.Label {
+				id: statLabel
+				Layout.alignment: Qt.AlignVCenter
+				textFormat: Text.PlainText
+				font.weight: Font.DemiBold
+			}
+		}
 	}
 
 	// Past days and days beyond the forecast

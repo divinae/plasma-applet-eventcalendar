@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 08:44+0100\n"
+"POT-Creation-Date: 2026-10-27 08:47+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -3568,11 +3568,6 @@ msgid "High %1 · Low %2"
 msgstr "Max %1 · Min %2"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "precipitation during the day"
-msgid "Rain: %1"
-msgstr "Regen: %1"
-
-#: ../contents/ui/WeatherPanel.qml
 msgctxt "today's high / low temperature"
 msgid "Today: high %1, low %2"
 msgstr "Vandaag: max %1, min %2"
@@ -3581,6 +3576,11 @@ msgstr "Vandaag: max %1, min %2"
 msgctxt "precipitation"
 msgid "rain %1"
 msgstr "regen %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the day"
+msgid "Rain: %1"
+msgstr "Regen: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
