@@ -36,23 +36,24 @@ ColumnLayout {
 		return mm > 0 ? i18nc("precipitation in mm", "%1 mm", Math.round(mm * 10) / 10) : ""
 	}
 
-	// A line, then the section name.
+	// A line, then the section name: as large as the text below it, dimmed.
 	component SectionTitle: ColumnLayout {
 		property alias text: titleLabel.text
 		property bool showSeparator: true
 		Layout.fillWidth: true
-		Layout.topMargin: showSeparator ? Kirigami.Units.smallSpacing : 0
-		spacing: Kirigami.Units.smallSpacing
+		Layout.topMargin: showSeparator ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.largeSpacing
 		Kirigami.Separator {
 			visible: parent.showSeparator
 			Layout.fillWidth: true
-			Layout.bottomMargin: Kirigami.Units.smallSpacing
+			opacity: 0.6
 		}
 		PlasmaComponents3.Label {
 			id: titleLabel
 			Layout.fillWidth: true
+			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
-			opacity: 0.7
+			opacity: 0.75
 		}
 	}
 
@@ -137,7 +138,9 @@ ColumnLayout {
 			elide: Text.ElideRight
 			text: panel.locationName
 			textFormat: Text.PlainText // User text: never parsed as HTML
-			font.weight: Font.Bold
+			// The card's title: like the Day view's "Tasks" beside it.
+			font.weight: Font.DemiBold
+			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.05 : Kirigami.Theme.defaultFont.pointSize
 		}
 		PlasmaComponents3.BusyIndicator {
 			visible: panel.loading
@@ -184,12 +187,24 @@ ColumnLayout {
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
 			radius: Math.round(width * 0.3)
-			gradient: Gradient {
-				GradientStop { position: 0; color: ColorUtil.setAlpha(iconTile.tint, 0.30) }
-				GradientStop { position: 1; color: ColorUtil.setAlpha(iconTile.tint, 0.12) }
+			color: "transparent"
+			// A soft glow in the tint below it instead of a frame.
+			Kirigami.ShadowedRectangle {
+				anchors.fill: parent
+				radius: parent.radius
+				color: ColorUtil.setAlpha(iconTile.tint, 0.2)
+				shadow.size: 10
+				shadow.yOffset: 3
+				shadow.color: ColorUtil.setAlpha(iconTile.tint, 0.4)
 			}
-			border.width: 1
-			border.color: ColorUtil.setAlpha(iconTile.tint, 0.25)
+			Rectangle {
+				anchors.fill: parent
+				radius: parent.radius
+				gradient: Gradient {
+					GradientStop { position: 0; color: ColorUtil.setAlpha(iconTile.tint, 0.18) }
+					GradientStop { position: 1; color: "transparent" }
+				}
+			}
 			Kirigami.Icon {
 				anchors.centerIn: parent
 				width: parent.width - Kirigami.Units.smallSpacing * 2
@@ -200,8 +215,11 @@ ColumnLayout {
 		ColumnLayout {
 			Layout.fillWidth: true
 			spacing: 0
+			// The temperature: the panel's largest text, beside the icon.
 			Kirigami.Heading {
-				level: 2
+				level: 1
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * (panel.compact ? 1.4 : 1.9)
+				font.weight: Font.Normal
 				text: panel.current ? Shared.formatTemp(panel.current.temp)
 					: panel.showDaySummary ? Shared.formatTemp(panel.today.temp.max) + " / " + Shared.formatTemp(panel.today.temp.min) : ""
 			}
@@ -223,6 +241,7 @@ ColumnLayout {
 	PlasmaComponents3.Label {
 		visible: panel.showData && !panel.compact && !!panel.today
 		Layout.fillWidth: true
+		Layout.topMargin: Kirigami.Units.smallSpacing
 		wrapMode: Text.Wrap
 		text: {
 			if (!panel.today) {
@@ -371,6 +390,7 @@ ColumnLayout {
 		model: panel.showData && !panel.compact ? panel.nextDays.slice(0, 4) : []
 		RowLayout {
 			Layout.fillWidth: true
+			Layout.topMargin: index > 0 ? 2 : 0
 			spacing: Kirigami.Units.smallSpacing
 			PlasmaComponents3.Label {
 				Layout.fillWidth: true
