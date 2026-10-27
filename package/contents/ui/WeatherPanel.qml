@@ -180,7 +180,8 @@ ColumnLayout {
 	readonly property bool showDaySummary: !isToday && !!today
 	SectionTitle {
 		visible: panel.showData && !panel.compact && (!!panel.current || panel.showDaySummary)
-		showSeparator: false
+		// Apart from the location above it, like the other sections.
+		showSeparator: !!panel.locationName
 		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Day view", "Forecast")
 	}
 	RowLayout {
