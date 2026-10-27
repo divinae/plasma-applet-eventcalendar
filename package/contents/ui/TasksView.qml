@@ -818,7 +818,7 @@ Item {
 					contentHeight: sidebarColumn.implicitHeight
 					clip: contentHeight > height
 					boundsBehavior: Flickable.StopAtBounds
-					QQC2.ScrollBar.vertical: PlasmaComponents3.ScrollBar {
+					QQC2.ScrollBar.vertical: OverlayScrollBar {
 						policy: sidebarFlick.contentHeight > sidebarFlick.height ? QQC2.ScrollBar.AsNeeded : QQC2.ScrollBar.AlwaysOff
 					}
 					ColumnLayout {
@@ -1046,6 +1046,9 @@ Item {
 				Layout.fillHeight: true
 				contentWidth: availableWidth
 				QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+				QQC2.ScrollBar.vertical: OverlayScrollBar {
+					view: scrollView
+				}
 
 				// The column, centered (the scroll bar stays at the view's edge).
 				ColumnLayout {

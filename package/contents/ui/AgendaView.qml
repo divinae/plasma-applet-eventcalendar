@@ -11,21 +11,15 @@ Item {
 	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
 
-	// No separator line next to the scrollbar (both the desktop style and Breeze draw one).
+	// The thin scroll bar over the days' right edge, no lane of its own.
 	PlasmaComponents3.ScrollView {
 		id: agendaScrollView
 		anchors.fill: parent
+		rightPadding: 0
+		leftPadding: 0
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
-		// Keep Plasma's own (positioned) scrollbar, just without its separator line: a replacement
-		// scrollbar isn't laid out by the ScrollView and showed as a dot in the corner.
-		Component.onCompleted: {
-			var bar = QQC2.ScrollBar.vertical
-			for (var i = 0; bar && i < bar.children.length; i++) {
-				var child = bar.children[i]
-				if (child !== bar.background && child !== bar.contentItem && child.implicitWidth === 1 && child.implicitHeight === 1) {
-					child.visible = false // The 1 px separator Breeze draws next to the scrollbar
-				}
-			}
+		QQC2.ScrollBar.vertical: OverlayScrollBar {
+			view: agendaScrollView
 		}
 		readonly property int viewportWidth: contentItem ? contentItem.width : width
 		readonly property int viewportHeight: contentItem ? contentItem.height : height

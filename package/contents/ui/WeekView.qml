@@ -159,9 +159,8 @@ Item {
 		smallFontMetrics.advanceWidth(formatZoneTime(23, 45)), smallFontMetrics.advanceWidth(formatZoneTime(12, 45)),
 		smallFontMetrics.advanceWidth(zoneAbbreviation(secondZone)))) + Kirigami.Units.smallSpacing : 0
 	readonly property int gutterWidth: localGutterWidth + secondGutterWidth
-	// The scroll bar gets its own room right of the grid instead of covering the last day.
-	readonly property real scrollBarSpace: hourScrollBar.visible ? hourScrollBar.width : 0
-	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth - scrollBarSpace) / columnCount)
+	// The day columns reach the edge: the thin scroll bar shows over the last one while in use.
+	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / columnCount)
 	readonly property int allDayRowHeight: Math.round(lineHeight * 2.2) + 6 // Title + date span
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
@@ -1069,7 +1068,7 @@ Item {
 						contentWidth: width
 						contentHeight: weekView.hourCount * weekView.hourHeight
 						boundsBehavior: Flickable.StopAtBounds
-						PlasmaComponents3.ScrollBar.vertical: PlasmaComponents3.ScrollBar {
+						PlasmaComponents3.ScrollBar.vertical: OverlayScrollBar {
 							id: hourScrollBar
 							onPressedChanged: {
 								if (pressed) {

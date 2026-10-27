@@ -231,6 +231,9 @@ ColumnLayout {
 		Layout.preferredHeight: Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight)
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
+		QQC2.ScrollBar.vertical: OverlayScrollBar {
+			view: scrollView
+		}
 
 		ColumnLayout {
 			id: taskColumn
