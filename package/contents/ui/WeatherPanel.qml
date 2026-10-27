@@ -147,6 +147,24 @@ ColumnLayout {
 		}
 	}
 
+	// The icon tile's color for a weather icon name (weather-clear, weather-showers-night, …).
+	function skyTint(iconName) {
+		var name = String(iconName || "")
+		if (name.indexOf("night") >= 0) {
+			return "#6e75f4"
+		}
+		if (name === "weather-clear" || name === "weather-few-clouds") {
+			return "#ffac38"
+		}
+		if (name.indexOf("fog") >= 0 || name === "weather-overcast") {
+			return "#8a8f99"
+		}
+		if (name.indexOf("storm") >= 0 || name.indexOf("severe") >= 0) {
+			return "#bb71e6"
+		}
+		return "#4ca1ff" // Clouds, rain, snow
+	}
+
 	//--- Now (today), or the shown day's forecast
 	readonly property bool showDaySummary: !isToday && !!today
 	SectionTitle {
@@ -158,12 +176,20 @@ ColumnLayout {
 		visible: panel.showData && (!!panel.current || panel.showDaySummary)
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.largeSpacing
-		// Colored icon on a soft round backdrop: light icons (clouds) vanish on a light theme otherwise.
+		// Colored icon on a rounded tile tinted like the sky it shows (sun: warm, clouds and rain:
+		// blue, night: indigo, fog: grey): light icons (clouds) vanish on a light theme otherwise.
 		Rectangle {
+			id: iconTile
+			readonly property color tint: panel.skyTint(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "")
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
-			radius: width / 2
-			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.12)
+			radius: Math.round(width * 0.3)
+			gradient: Gradient {
+				GradientStop { position: 0; color: ColorUtil.setAlpha(iconTile.tint, 0.30) }
+				GradientStop { position: 1; color: ColorUtil.setAlpha(iconTile.tint, 0.12) }
+			}
+			border.width: 1
+			border.color: ColorUtil.setAlpha(iconTile.tint, 0.25)
 			Kirigami.Icon {
 				anchors.centerIn: parent
 				width: parent.width - Kirigami.Units.smallSpacing * 2
