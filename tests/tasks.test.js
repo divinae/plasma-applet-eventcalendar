@@ -12,7 +12,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
-	'flatRows', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
+	'flatRows', 'progressKey', 'isInProgress', 'withProgress', 'stampInProgress', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
 	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
@@ -244,9 +244,9 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(T.filterTasks(null, 'all', today), [])
 
 	// filterCounts: open tasks only.
-	same(T.filterCounts(lists, items, today), { all: 7, today: 3, tomorrow: 1, next7: 5, overdue: 1, nodate: 1,
+	same(T.filterCounts(lists, items, today), { all: 7, progress: 0, today: 3, tomorrow: 1, next7: 5, overdue: 1, nodate: 1,
 		'list:g::a': 6, 'list:g::b': 1, 'list:t::c': 0 })
-	same(T.filterCounts([], {}, today), { all: 0, today: 0, tomorrow: 0, next7: 0, overdue: 0, nodate: 0 })
+	same(T.filterCounts([], {}, today), { all: 0, progress: 0, today: 0, tomorrow: 0, next7: 0, overdue: 0, nodate: 0 })
 
 	// filterLists: a list filter keeps that list only; the others keep every list.
 	const one = T.filterLists(lists, items, 'list:g::b', today)
@@ -283,6 +283,26 @@ assert.strictEqual(T.firstLine(undefined), '')
 		'separator:separator', 'group:group:me@g', 'list:list:g::a=6', 'list:list:g::b=1', 'group:group:TickTick', 'list:list:t::c=0'])
 	same(T.filterEntries(lists.slice(0, 2), counts).filter(e => e.type === 'group'), [], 'one account: no headings')
 	same(T.filterEntries([], {}).map(e => e.key), ['all', 'today', 'tomorrow', 'next7', 'overdue', 'nodate'])
+
+	// In progress (kept by the widget): keys, the filter, the order and the side bar entry.
+	const tomorrowTask = items['g::a'].filter(t => t.id === 'tomorrow')[0]
+	assert.strictEqual(T.progressKey(tomorrowTask), 'g::a|tomorrow')
+	assert.strictEqual(T.progressKey({ id: 'x' }), '', 'no list: no key')
+	let keys = T.withProgress([], tomorrowTask, true)
+	same(keys, ['g::a|tomorrow'])
+	same(T.withProgress(keys, tomorrowTask, true), ['g::a|tomorrow'], 'set once')
+	assert.strictEqual(T.isInProgress(tomorrowTask, keys), true)
+	assert.strictEqual(T.isInProgress({ kind: 'tasks#task', calendarId: 'g::a', id: 'tomorrow', status: 'completed' }, keys), false, 'never a done task')
+	Object.keys(items).forEach(id => T.stampInProgress(items[id], keys))
+	const progressCounts = T.filterCounts(lists, items, today)
+	assert.strictEqual(progressCounts.progress, 1)
+	same(T.filterTasks(items['g::a'], 'progress', today).map(t => t.id), ['tomorrow'])
+	same(T.filterEntries(lists, progressCounts).slice(0, 2).map(e => e.key + '=' + e.count), ['all=7', 'progress=1'], 'shown while one is')
+	same(T.sortOpenTasks(T.filterTasks(items['g::a'], 'next7', today).filter(t => !T.isDone(t)), 'due')[0].id, 'tomorrow', 'first in any sort')
+	keys = T.withProgress(keys, tomorrowTask, false)
+	same(keys, [])
+	Object.keys(items).forEach(id => T.stampInProgress(items[id], keys))
+	assert.strictEqual(tomorrowTask.inProgress, false)
 
 	// filterQuickAdd: the list of a list filter, the due day of Today / Tomorrow / Next 7 days.
 	same(T.filterQuickAdd('list:g::b', today), { listId: 'g::b', dueDay: '' })
