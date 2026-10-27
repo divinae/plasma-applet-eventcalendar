@@ -239,7 +239,10 @@ LinkRect {
 	// The list (by date) and when it's due, at the right end of the title's line.
 	readonly property bool showListName: !cardStyle && !compact && !!showList
 	readonly property bool showDueChip: !cardStyle && showChip
-	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact)
+	// The priority as a flag in its color, last on the title's line (not once done).
+	readonly property string priorityKey: Tasks.priorityKey(eventItem)
+	readonly property bool showPriorityFlag: priorityKey !== 'none' && !done
+	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact) || showPriorityFlag
 
 	Rectangle {
 		visible: taskRow.showStripe
@@ -284,7 +287,7 @@ LinkRect {
 			Layout.alignment: Qt.AlignTop
 			spacing: 1
 
-			// The title, then a flag in the priority's color (none without a priority, or once done).
+			// The title (a flag at the row's right end shows the priority).
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
@@ -304,17 +307,6 @@ LinkRect {
 					elide: Text.ElideRight
 					maximumLineCount: 1
 					wrapMode: Text.NoWrap
-				}
-				Kirigami.Icon {
-					readonly property string priority: Tasks.priorityKey(taskRow.eventItem)
-					visible: priority !== 'none' && !taskRow.done
-					Layout.alignment: Qt.AlignVCenter
-					implicitWidth: Math.round(titleLabel.implicitHeight * 0.75)
-					implicitHeight: implicitWidth
-					source: "flag"
-					isMask: true
-					color: Tasks.priorityColor(priority)
-					Accessible.name: priority === 'high' ? i18n("High priority") : priority === 'medium' ? i18n("Medium priority") : i18n("Low priority")
 				}
 				Item {
 					Layout.fillWidth: true
@@ -481,6 +473,16 @@ LinkRect {
 					font: taskRow.detailFont
 					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.linkColor
 				}
+			}
+			Kirigami.Icon {
+				visible: taskRow.showPriorityFlag
+				Layout.alignment: Qt.AlignVCenter
+				implicitWidth: Math.round(titleLabel.implicitHeight * 0.75)
+				implicitHeight: implicitWidth
+				source: "flag"
+				isMask: true
+				color: Tasks.priorityColor(taskRow.priorityKey)
+				Accessible.name: taskRow.priorityKey === 'high' ? i18n("High priority") : taskRow.priorityKey === 'medium' ? i18n("Medium priority") : i18n("Low priority")
 			}
 		}
 
