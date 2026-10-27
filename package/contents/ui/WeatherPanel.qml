@@ -45,10 +45,8 @@ ColumnLayout {
 	// The section name, underlined: a line below it, then the section's content.
 	component SectionTitle: ColumnLayout {
 		property alias text: titleLabel.text
-		// The first section (right below the location): less room above.
-		property bool first: false
 		Layout.fillWidth: true
-		Layout.topMargin: first ? Kirigami.Units.largeSpacing : Kirigami.Units.largeSpacing * 2
+		Layout.topMargin: Kirigami.Units.largeSpacing * 2
 		Layout.bottomMargin: Kirigami.Units.smallSpacing
 		spacing: Kirigami.Units.smallSpacing
 		PlasmaComponents3.Label {
@@ -205,14 +203,11 @@ ColumnLayout {
 
 	//--- Now (today), or the shown day's forecast
 	readonly property bool showDaySummary: !isToday && !!today
-	SectionTitle {
-		visible: panel.showData && !panel.compact && (!!panel.current || panel.showDaySummary)
-		first: true
-		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Day view", "Forecast")
-	}
 	RowLayout {
 		visible: panel.showData && (!!panel.current || panel.showDaySummary)
 		Layout.fillWidth: true
+		// Right below the card's title (no section title of its own).
+		Layout.topMargin: panel.compact ? 0 : Kirigami.Units.largeSpacing
 		spacing: Kirigami.Units.largeSpacing
 		// The colored icon on a small sky (blue by day, indigo at night, grey for fog, …) with a
 		// soft shadow: light icons (clouds) vanish on a light card otherwise.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 08:42+0100\n"
+"POT-Creation-Date: 2026-10-27 08:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -3276,16 +3276,6 @@ msgid "Loading weather…"
 msgstr "天気を読み込み中…"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "current weather"
-msgid "Now"
-msgstr "現在"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Day view"
-msgid "Forecast"
-msgstr "天気予報"
-
-#: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
 msgid "High %1 · Low %2"
 msgstr "最高 %1 · 最低 %2"
@@ -3345,6 +3335,14 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "current weather"
+#~ msgid "Now"
+#~ msgstr "現在"
+
+#~ msgctxt "weather of the day shown in the Day view"
+#~ msgid "Forecast"
+#~ msgstr "天気予報"
 
 #~ msgid "Search events…"
 #~ msgstr "イベントを検索…"

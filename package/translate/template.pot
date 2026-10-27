@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 08:42+0100\n"
+"POT-Creation-Date: 2026-10-27 08:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3321,16 +3321,6 @@ msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
-msgstr ""
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "current weather"
-msgid "Now"
-msgstr ""
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Day view"
-msgid "Forecast"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml

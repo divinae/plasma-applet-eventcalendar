@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 08:42+0100\n"
+"POT-Creation-Date: 2026-10-27 08:44+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -3580,16 +3580,6 @@ msgid "Loading weather…"
 msgstr "Φόρτωση καιρού…"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "current weather"
-msgid "Now"
-msgstr "Τώρα"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "weather of the day shown in the Day view"
-msgid "Forecast"
-msgstr "Πρόγνωση"
-
-#: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
 msgid "High %1 · Low %2"
 msgstr "Μέγ. %1 · Ελάχ. %2"
@@ -3652,6 +3642,14 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgctxt "current weather"
+#~ msgid "Now"
+#~ msgstr "Τώρα"
+
+#~ msgctxt "weather of the day shown in the Day view"
+#~ msgid "Forecast"
+#~ msgstr "Πρόγνωση"
 
 #~ msgid "Search events…"
 #~ msgstr "Αναζήτηση συμβάντων…"
