@@ -35,8 +35,10 @@ Item {
 
 	signal toggled(bool done)
 
+	// The check in the priority's color; off where the priority shows otherwise (TaskRow's flag).
+	property bool showPriority: true
 	// 'high', 'medium', 'low' or 'none' (Tasks.priorityKey); none for a checklist item.
-	readonly property string priority: subtaskId ? 'none' : Tasks.priorityKey(eventItem)
+	readonly property string priority: subtaskId || !showPriority ? 'none' : Tasks.priorityKey(eventItem)
 	readonly property color priorityColor: Tasks.priorityColor(priority) || color
 	readonly property bool hasPriority: priority !== 'none'
 	// Marked in progress (the widget's own mark, Tasks.isInProgress): half filled.

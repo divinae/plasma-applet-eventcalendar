@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:17+0100\n"
+"POT-Creation-Date: 2026-10-27 10:21+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1547,14 +1547,17 @@ msgid "Priority"
 msgstr "Prioritet"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Høj prioritet"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Mellem prioritet"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Lav prioritet"
 

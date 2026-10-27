@@ -273,6 +273,7 @@ LinkRect {
 			color: taskRow.listColor
 			square: taskRow.cardStyle
 			overdue: taskRow.overdue
+			showPriority: false // The flag after the title shows it
 			opacity: taskRow.doneOpacity
 			onToggled: function(done) { taskRow.checkToggled(taskRow.eventItem, done) }
 		}
@@ -283,20 +284,41 @@ LinkRect {
 			Layout.alignment: Qt.AlignTop
 			spacing: 1
 
-			PlasmaComponents3.Label {
-				id: titleLabel
+			// The title, then a flag in the priority's color (none without a priority, or once done).
+			RowLayout {
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
-				text: taskRow.title
-				textFormat: Text.PlainText // User text: never parsed as HTML
-				color: Kirigami.Theme.textColor
-				opacity: taskRow.doneOpacity
-				font.family: appletConfig.eventFont.family
-				font.pointSize: appletConfig.eventFont.pointSize
-				font.strikeout: taskRow.done
-				elide: Text.ElideRight
-				maximumLineCount: 1
-				wrapMode: Text.NoWrap
+				spacing: Kirigami.Units.smallSpacing
+				PlasmaComponents3.Label {
+					id: titleLabel
+					Layout.fillWidth: true
+					Layout.minimumWidth: 0
+					Layout.maximumWidth: Math.ceil(implicitWidth)
+					text: taskRow.title
+					textFormat: Text.PlainText // User text: never parsed as HTML
+					color: Kirigami.Theme.textColor
+					opacity: taskRow.doneOpacity
+					font.family: appletConfig.eventFont.family
+					font.pointSize: appletConfig.eventFont.pointSize
+					font.strikeout: taskRow.done
+					elide: Text.ElideRight
+					maximumLineCount: 1
+					wrapMode: Text.NoWrap
+				}
+				Kirigami.Icon {
+					readonly property string priority: Tasks.priorityKey(taskRow.eventItem)
+					visible: priority !== 'none' && !taskRow.done
+					Layout.alignment: Qt.AlignVCenter
+					implicitWidth: Math.round(titleLabel.implicitHeight * 0.75)
+					implicitHeight: implicitWidth
+					source: "flag"
+					isMask: true
+					color: Tasks.priorityColor(priority)
+					Accessible.name: priority === 'high' ? i18n("High priority") : priority === 'medium' ? i18n("Medium priority") : i18n("Low priority")
+				}
+				Item {
+					Layout.fillWidth: true
+				}
 			}
 			// The first line of the notes.
 			PlasmaComponents3.Label {
