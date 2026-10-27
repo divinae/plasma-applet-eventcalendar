@@ -29,6 +29,12 @@ ColumnLayout {
 
 	spacing: Kirigami.Units.smallSpacing
 
+	// Secondary text (section titles, descriptions, hours): dimmed less in a light theme, where the
+	// translucent card is light grey too.
+	readonly property real dimOpacity: appletConfig.darkTheme ? 0.75 : 0.9
+	// The chart's line and points: the accent, dark enough to stand out on a light card.
+	readonly property color lineColor: appletConfig.eventColoredTextColor(Kirigami.Theme.highlightColor)
+
 	function timeText(dt) {
 		return Qt.formatTime(new Date(dt * 1000), appletConfig.clock24h ? 'HH:mm' : 'h AP')
 	}
@@ -46,14 +52,14 @@ ColumnLayout {
 		Kirigami.Separator {
 			visible: parent.showSeparator
 			Layout.fillWidth: true
-			opacity: 0.6
+			opacity: appletConfig.darkTheme ? 0.6 : 1
 		}
 		PlasmaComponents3.Label {
 			id: titleLabel
 			Layout.fillWidth: true
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
-			opacity: 0.75
+			opacity: panel.dimOpacity
 		}
 	}
 
@@ -228,14 +234,14 @@ ColumnLayout {
 				elide: Text.ElideRight
 				text: panel.current ? panel.current.text : panel.showDaySummary ? (panel.today.text || panel.today.description || "") : ""
 				textFormat: Text.PlainText // User text: never parsed as HTML
-				opacity: 0.8
+				opacity: panel.dimOpacity
 			}
 		}
 		// Compact: today's range on the same row
 		PlasmaComponents3.Label {
 			visible: panel.compact && !!panel.today && !!panel.current
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
-			opacity: 0.8
+			opacity: panel.dimOpacity
 		}
 	}
 	PlasmaComponents3.Label {
@@ -255,7 +261,7 @@ ColumnLayout {
 			var rain = panel.precipitationText(panel.today.precipitation)
 			return rain ? s + ", " + i18nc("precipitation", "rain %1", rain) : s
 		}
-		opacity: 0.8
+		opacity: panel.dimOpacity
 	}
 
 	// Past days and days beyond the forecast
@@ -264,7 +270,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		wrapMode: Text.Wrap
 		text: i18n("No forecast for this day.")
-		opacity: 0.7
+		opacity: panel.dimOpacity
 	}
 
 	//--- Next hours: temperature line with rain bars, labels every 3 hours
@@ -315,7 +321,7 @@ ColumnLayout {
 				}
 				// Rain bars
 				var barWidth = Math.max(2, (width - 12) / (pts.length - 1) * 0.5)
-				ctx.fillStyle = Qt.rgba(0.2, 0.5, 0.9, 0.35)
+				ctx.fillStyle = Qt.rgba(0.2, 0.5, 0.9, appletConfig.darkTheme ? 0.35 : 0.5)
 				for (var i = 0; i < pts.length; i++) {
 					var rain = pts[i].precipitation || 0
 					if (rain > 0) {
@@ -324,7 +330,7 @@ ColumnLayout {
 					}
 				}
 				// Temperature line
-				ctx.strokeStyle = Kirigami.Theme.highlightColor
+				ctx.strokeStyle = panel.lineColor
 				ctx.lineWidth = 2
 				ctx.beginPath()
 				for (var j = 0; j < pts.length; j++) {
@@ -338,7 +344,7 @@ ColumnLayout {
 				}
 				ctx.stroke()
 				// Points every 3 hours
-				ctx.fillStyle = Kirigami.Theme.highlightColor
+				ctx.fillStyle = panel.lineColor
 				for (var k = 0; k < pts.length; k += 3) {
 					ctx.beginPath()
 					ctx.arc(hourChart.xAt(k), hourChart.yAt(pts[k].temp), 3, 0, Math.PI * 2)
@@ -375,7 +381,7 @@ ColumnLayout {
 					y: hourChart.plotBottom + 1
 					text: parent.point ? panel.timeText(parent.point.dt) : ""
 					font: Kirigami.Theme.smallFont
-					opacity: 0.7
+					opacity: panel.dimOpacity
 				}
 			}
 		}
