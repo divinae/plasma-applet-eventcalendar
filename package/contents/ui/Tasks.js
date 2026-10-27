@@ -1233,6 +1233,23 @@ function withProgress(keys, item, on) {
 	}
 	return out
 }
+// keys without the marks of tasks that are gone or done, in the lists of itemsByList ({ listId:
+// items }, loaded): checked off or deleted elsewhere (another device, the service's app). Marks of
+// other lists stay (not loaded now).
+function pruneProgress(keys, itemsByList) {
+	var open = {}
+	for (var listId in itemsByList || {}) {
+		;(itemsByList[listId] || []).forEach(function(item) {
+			if (isTask(item) && !isDone(item)) {
+				open[progressKey(item)] = true
+			}
+		})
+	}
+	return Array.prototype.filter.call(keys || [], function(key) {
+		var listId = String(key).substring(0, String(key).lastIndexOf('|'))
+		return !Object.prototype.hasOwnProperty.call(itemsByList || {}, listId) || !!open[key]
+	})
+}
 // Sets item.inProgress on each task of items (for compareOpen and the 'progress' filter).
 function stampInProgress(items, keys) {
 	;(items || []).forEach(function(item) {
@@ -1250,7 +1267,11 @@ function filterListId(filter) {
 }
 
 // The filter to show: filter when it's a smart one or one of lists' ('list:<id>'), else 'all'.
-function validFilter(filter, lists) {
+// counts (optional, filterCounts): In progress only while a task is (its entry is gone otherwise).
+function validFilter(filter, lists, counts) {
+	if (filter === 'progress' && counts && !counts.progress) {
+		return 'all'
+	}
 	if (smartFilters.indexOf(filter) >= 0) {
 		return filter
 	}
@@ -1263,7 +1284,8 @@ function validFilter(filter, lists) {
 	return 'all'
 }
 
-// Whether a task is in a smart filter by when it's due (a 'list:' filter: every task). Open tasks
+// Whether a task is in a smart filter by when it's due (a 'list:' filter: every task); 'progress':
+// the open ones marked in progress (stampInProgress). Open tasks
 // by their due day; done ones by their due day, else the day they were completed (never overdue).
 function matchesDate(item, filter, today) {
 	var done = isDone(item)
@@ -1297,7 +1319,8 @@ function filterLists(lists, itemsByList, filter, today, hidden) {
 	var outLists = []
 	var outItems = {}
 	;(lists || []).forEach(function(list) {
-		if (listId ? list.id !== listId : !!(hidden && hidden[list.id])) {
+		// In progress: lists left out of the smart filters too (the mark was set on purpose).
+		if (listId ? list.id !== listId : filter !== 'progress' && !!(hidden && hidden[list.id])) {
 			return
 		}
 		outLists.push(list)
@@ -1319,7 +1342,7 @@ function filterCounts(lists, itemsByList, today, hidden) {
 	})
 	listTasks(lists, itemsByList).open.forEach(function(e) {
 		smartFilters.forEach(function(f) {
-			if (!(hidden && hidden[e.list.id]) && matchesDate(e.item, f, today)) {
+			if ((f === 'progress' || !(hidden && hidden[e.list.id])) && matchesDate(e.item, f, today)) {
 				counts[f]++
 			}
 		})

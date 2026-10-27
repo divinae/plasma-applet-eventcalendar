@@ -26,6 +26,8 @@ Item {
 	property var parseLists: lists
 	// The new task's due day, 'YYYY-MM-DD', or '' for none.
 	property string dueDay: ""
+	// The new task is marked in progress (eventModel.setTaskInProgress).
+	property bool markInProgress: false
 	// Lined up with compact TaskRows (Day view).
 	property bool compact: false
 
@@ -216,6 +218,8 @@ Item {
 		var self = { item: quickAdd, alive: quickAdd.alive }
 		var drafts = addDrafts
 		var key = draftKey
+		var model = eventModel
+		var mark = markInProgress
 		if (drafts && key) {
 			saveDraft()
 			drafts[key].saving = true
@@ -231,6 +235,9 @@ Item {
 					draft.text = ""
 					draft.ignored = []
 				}
+			}
+			if (!err && mark && item && item.id) {
+				model.setTaskInProgress({ calendarId: target, id: item.id }, true)
 			}
 			// Not the one '#Name' picked: the picker stays as it was.
 			if (!err && !fromText) {

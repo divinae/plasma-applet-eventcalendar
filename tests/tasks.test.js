@@ -12,7 +12,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'editBody', 'restoreBody', 'dayString', 'addDays', 'parseTickTickDate', 'formatTickTickDate', 'tickTickDue',
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
-	'flatRows', 'progressKey', 'isInProgress', 'withProgress', 'stampInProgress', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
+	'flatRows', 'progressKey', 'isInProgress', 'withProgress', 'stampInProgress', 'pruneProgress', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
 	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
@@ -299,8 +299,16 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(T.filterTasks(items['g::a'], 'progress', today).map(t => t.id), ['tomorrow'])
 	same(T.filterEntries(lists, progressCounts).slice(0, 2).map(e => e.key + '=' + e.count), ['all=7', 'progress=1'], 'shown while one is')
 	same(T.sortOpenTasks(T.filterTasks(items['g::a'], 'next7', today).filter(t => !T.isDone(t)), 'due')[0].id, 'tomorrow', 'first in any sort')
+	assert.strictEqual(T.validFilter('progress', lists, progressCounts), 'progress')
+	const hiddenProgress = T.filterCounts(lists, items, today, { 'g::a': true })
+	assert.strictEqual(hiddenProgress.progress, 1, 'a list left out of the smart filters still counts in progress')
+	same(T.pruneProgress(['g::a|tomorrow', 'g::a|gone', 'other|x'], { 'g::a': items['g::a'] }), ['g::a|tomorrow', 'other|x'],
+		'gone or done tasks dropped, lists not loaded kept')
 	keys = T.withProgress(keys, tomorrowTask, false)
 	same(keys, [])
+	assert.strictEqual(T.validFilter('progress', lists, T.filterCounts(lists, items, today)), 'progress', 'stamps not refreshed yet')
+	Object.keys(items).forEach(id => T.stampInProgress(items[id], keys))
+	assert.strictEqual(T.validFilter('progress', lists, T.filterCounts(lists, items, today)), 'all', 'none in progress: back to all')
 	Object.keys(items).forEach(id => T.stampInProgress(items[id], keys))
 	assert.strictEqual(tomorrowTask.inProgress, false)
 

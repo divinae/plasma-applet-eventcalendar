@@ -194,8 +194,9 @@ Item {
 			var calendar = eventModel.loadedCalendar(selected[i].id)
 			itemsByList[selected[i].id] = Tasks.stampInProgress(calendar && calendar.items ? calendar.items : [], plasmoid.configuration.tasksInProgress)
 		}
+		pruneProgress(selected)
 		var counts = Tasks.filterCounts(selected, itemsByList, today, smartHidden)
-		var filter = Tasks.validFilter(configFilter, selected)
+		var filter = Tasks.validFilter(configFilter, selected, counts)
 		var shown = Tasks.filterLists(selected, itemsByList, filter, today, smartHidden)
 		var flick = scrollView.contentItem
 		var y = flick ? flick.contentY : 0
@@ -244,6 +245,25 @@ Item {
 		// Toggling a task rebuilds the rows: stay where the list was.
 		if (flick) {
 			flick.contentY = Math.max(0, Math.min(y, flick.contentHeight - flick.height))
+		}
+	}
+	// In progress: drop the marks of tasks checked off or deleted elsewhere, from the lists fetched
+	// (not cached or still loading), after this rebuild.
+	function pruneProgress(selected) {
+		if (eventModel.fetchRound) {
+			return
+		}
+		var fetched = {}
+		for (var i = 0; i < selected.length; i++) {
+			var calendar = eventModel.eventsByCalendar[selected[i].id]
+			if (calendar && calendar !== eventModel.cachedEventsByCalendar[selected[i].id]) {
+				fetched[selected[i].id] = calendar.items || []
+			}
+		}
+		var keys = plasmoid.configuration.tasksInProgress || []
+		var kept = Tasks.pruneProgress(keys, fetched)
+		if (kept.length !== keys.length) {
+			Qt.callLater(function() { plasmoid.configuration.tasksInProgress = kept })
 		}
 	}
 	function deferredRebuild() {
@@ -2179,6 +2199,8 @@ Item {
 			lists: row && row.list ? [row.list] : tasksView.lists
 			parseLists: tasksView.allLists
 			dueDay: tasksView.quickAddTarget.dueDay
+			// On the In progress filter: the new task is in progress too (else it'd vanish from it).
+			markInProgress: tasksView.currentFilter === 'progress'
 			draftKey: row ? row.key : ""
 			addDrafts: tasksView.addDrafts
 		}

@@ -663,26 +663,35 @@ CalendarManager {
 		}
 	}
 
-	// done(err): optional, called once the server answered (Google).
 	// In progress (Tasks.isInProgress): kept by the widget, not by the services.
-	function isTaskInProgress(item) {
-		return Tasks.isInProgress(item, plasmoid.configuration.tasksInProgress)
-	}
 	function setTaskInProgress(item, on) {
 		var keys = plasmoid.configuration.tasksInProgress || []
-		if (Tasks.isInProgress(item, keys) !== !!on) {
-			plasmoid.configuration.tasksInProgress = Tasks.withProgress(keys, item, on)
+		var next = Tasks.withProgress(keys, item, on)
+		if (next.length !== keys.length) {
+			plasmoid.configuration.tasksInProgress = next
+		}
+	}
+	// A task's mark from one list (and id) to another: a task moved to another list.
+	function moveTaskProgress(from, to) {
+		var keys = plasmoid.configuration.tasksInProgress || []
+		if (Array.prototype.indexOf.call(keys, Tasks.progressKey(from)) >= 0) {
+			plasmoid.configuration.tasksInProgress = Tasks.withProgress(Tasks.withProgress(keys, from, false), to, true)
 		}
 	}
 
+	// done(err): optional, called once the server answered (Google). A deleted task's in-progress
+	// mark goes once it's deleted.
 	function deleteEvent(calendarId, eventId, done) {
-		// A deleted task's mark goes too.
-		if (Array.prototype.indexOf.call(plasmoid.configuration.tasksInProgress || [], calendarId + '|' + eventId) >= 0) {
-			plasmoid.configuration.tasksInProgress = Tasks.withProgress(plasmoid.configuration.tasksInProgress, { calendarId: calendarId, id: eventId }, false)
-		}
 		var calendarManager = managerWith(calendarId, 'deleteEvent')
 		if (calendarManager) {
-			calendarManager.deleteEvent(calendarId, eventId, done)
+			calendarManager.deleteEvent(calendarId, eventId, function(err) {
+				if (!err) {
+					eventModel.setTaskInProgress({ calendarId: calendarId, id: eventId }, false)
+				}
+				if (done) {
+					done.apply(null, arguments)
+				}
+			})
 		} else {
 			logger.log('Could not deleteEvent: no calendar manager')
 		}
@@ -787,10 +796,17 @@ CalendarManager {
 			}
 			return
 		}
-		if (done) {
-			setTaskInProgress(item, false) // Done: no longer in progress
-		}
-		setEventProperties(item.calendarId, item.id, Tasks.toggleBody(done), { done: cb })
+		// Done (once saved): no longer in progress.
+		var model = eventModel
+		var key = { calendarId: item.calendarId, id: item.id }
+		setEventProperties(item.calendarId, item.id, Tasks.toggleBody(done), { done: function(err) {
+			if (!err && done) {
+				model.setTaskInProgress(key, false)
+			}
+			if (cb) {
+				cb.apply(null, arguments)
+			}
+		} })
 	}
 
 	// Check (done) or uncheck a subtask of a task: a TickTick checklist item (subtaskId: its id in
@@ -1018,7 +1034,16 @@ CalendarManager {
 	function moveEvent(calendarId, eventId, destinationCalendarId, done, params) {
 		var calendarManager = managerWith(calendarId, 'moveEvent')
 		if (calendarManager) {
-			calendarManager.moveEvent(calendarId, eventId, destinationCalendarId, done, params)
+			// A task in progress keeps its mark in the other list (Google: maybe under a new id).
+			calendarManager.moveEvent(calendarId, eventId, destinationCalendarId, function(err, data) {
+				if (!err) {
+					eventModel.moveTaskProgress({ calendarId: calendarId, id: eventId },
+						{ calendarId: destinationCalendarId, id: data && data.id ? data.id : eventId })
+				}
+				if (done) {
+					done.apply(null, arguments)
+				}
+			}, params)
 		} else {
 			logger.log('Could not moveEvent: no calendar manager')
 			if (done) {
