@@ -129,7 +129,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Maximum height")
-				description: i18n("0 = fit the panel")
+				hint: i18n("0 = fit the panel")
 				configKey: 'clockMaxHeight'
 				suffix: i18n(" px")
 				from: 0

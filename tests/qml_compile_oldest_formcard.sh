@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Compile every QML file against the FormCard QML of the oldest Kirigami Addons we support
-# (Debian 14 ships 1.12). A property or handler that only newer FormCard delegates have fails a
-# whole settings page there (it showed up blank). Downloads the FormCard sources from KDE's GitLab.
+# (Debian 13 ships 1.7, Debian 14 1.12). A property or handler that only newer FormCard delegates
+# have fails a whole settings page there (it showed up blank). Downloads the FormCard sources from
+# KDE's GitLab.
 set -euo pipefail
 
-VERSION="${KIRIGAMI_ADDONS_VERSION:-v1.12.0}"
+VERSION="${KIRIGAMI_ADDONS_VERSION:-v1.7.0}"
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT

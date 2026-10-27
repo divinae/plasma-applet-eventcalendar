@@ -291,18 +291,29 @@ ConfigPage {
 			}
 			onAccepted: page.renameList(managed.section, managed.provider, managed.account, managed.list, text)
 			Keys.onEscapePressed: managed.section.editingId = ""
-			trailing: [
+		}
+		// Its buttons in a row of their own: FormTextFieldDelegate has no trailing before Kirigami
+		// Addons 1.8 (Debian 13 ships 1.7), and an unknown property fails the whole page.
+		FormCard.AbstractFormDelegate {
+			visible: managed.renaming
+			Layout.fillWidth: true
+			background: null
+			contentItem: RowLayout {
+				spacing: Kirigami.Units.smallSpacing
+				Item {
+					Layout.fillWidth: true
+				}
 				Button {
 					icon.name: "dialog-ok-apply"
 					text: i18n("Rename")
 					enabled: !page.listBusy
 					onClicked: page.renameList(managed.section, managed.provider, managed.account, managed.list, renameField.text)
-				},
+				}
 				Button {
 					text: i18n("Cancel")
 					onClicked: managed.section.editingId = ""
 				}
-			]
+			}
 		}
 		FormCard.AbstractFormDelegate {
 			visible: managed.confirming
@@ -360,11 +371,21 @@ ConfigPage {
 			text: newList.section ? newList.section.newListText : ""
 			onTextEdited: newList.section.newListText = text
 			onAccepted: page.createList(newList.section, newList.provider, newList.account, text)
-			trailing: Button {
-				icon.name: "list-add"
-				text: i18n("Add")
-				enabled: !page.listBusy && TaskLists.cleanTitle(newListField.text).length > 0
-				onClicked: page.createList(newList.section, newList.provider, newList.account, newListField.text)
+		}
+		// Its button in a row of its own (no trailing before Kirigami Addons 1.8, see above).
+		FormCard.AbstractFormDelegate {
+			Layout.fillWidth: true
+			background: null
+			contentItem: RowLayout {
+				Item {
+					Layout.fillWidth: true
+				}
+				Button {
+					icon.name: "list-add"
+					text: i18n("Add")
+					enabled: !page.listBusy && TaskLists.cleanTitle(newListField.text).length > 0
+					onClicked: page.createList(newList.section, newList.provider, newList.account, newListField.text)
+				}
 			}
 		}
 	}

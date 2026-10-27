@@ -9,7 +9,16 @@ FormCard.FormSpinBoxDelegate {
 	property string configKey
 	property string suffix: ""
 	property var configBridge: null
-	Component.onCompleted: configBridge = ConfigUtils.findBridge(control)
+	// A line under the label (eg: "0 = off"). FormSpinBoxDelegate has a description only in newer
+	// Kirigami Addons (not 1.7, Debian 13): set when it's there, else left out, since assigning an
+	// unknown property fails the whole settings page.
+	property string hint: ""
+	Component.onCompleted: {
+		configBridge = ConfigUtils.findBridge(control)
+		if (hint && 'description' in control) {
+			control.description = hint
+		}
+	}
 
 	value: configKey && configBridge ? (configBridge.read(configKey, 0) || 0) : 0
 	textFromValue: function(value, locale) {

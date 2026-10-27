@@ -204,7 +204,7 @@ ConfigPage {
 			FormConfigSpin {
 				enabled: reminderEnabled.checked
 				label: i18n("Snooze")
-				description: i18n("0 = no Snooze button")
+				hint: i18n("0 = no Snooze button")
 				configKey: 'eventReminderSnoozeMinutes'
 				suffix: i18nc("Time in minutes", " min")
 				from: 0
