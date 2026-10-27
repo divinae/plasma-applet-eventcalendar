@@ -19,6 +19,9 @@ ColumnLayout {
 	property bool isSetup: true
 	property string locationName: ""
 	property bool compact: false // One row above the grid when the popup is narrow
+	// Sections left out where there's little height (the Day view's right column above the tasks).
+	property bool showHourly: true
+	property bool showNextDays: true
 	property bool loading: false // A forecast request is running
 	property string errorText: "" // The last request failed
 	signal retryRequested()
@@ -306,12 +309,12 @@ ColumnLayout {
 
 	//--- Next hours: temperature line with rain bars, labels every 3 hours
 	SectionTitle {
-		visible: panel.showData && !panel.compact && panel.hourly.length > 1
+		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
 		text: panel.isToday ? i18n("Next 12 hours") : i18nc("weather by hour of the shown day", "During the day")
 	}
 	Item {
 		id: hourChart
-		visible: panel.showData && !panel.compact && points.length > 1
+		visible: panel.showData && !panel.compact && panel.showHourly && points.length > 1
 		Layout.fillWidth: true
 		Layout.preferredHeight: Kirigami.Units.gridUnit * 7
 
@@ -420,11 +423,11 @@ ColumnLayout {
 
 	//--- Next days: day, icon, high / low
 	SectionTitle {
-		visible: panel.showData && !panel.compact && panel.nextDays.length > 0
+		visible: panel.showData && !panel.compact && panel.showNextDays && panel.nextDays.length > 0
 		text: i18n("Next days")
 	}
 	Repeater {
-		model: panel.showData && !panel.compact ? panel.nextDays.slice(0, 4) : []
+		model: panel.showData && !panel.compact && panel.showNextDays ? panel.nextDays.slice(0, 4) : []
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.topMargin: index > 0 ? 2 : 0
