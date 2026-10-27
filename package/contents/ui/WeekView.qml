@@ -1175,6 +1175,21 @@ Item {
 					Layout.fillHeight: true
 					clip: true
 
+					// The note's card: as wide as its text and the next event's button (their implicit widths,
+					// not the note's), a bit of room around them.
+					Rectangle {
+						readonly property real pad: Kirigami.Units.largeSpacing
+						visible: freeNote.visible
+						z: 2
+						width: Math.min(freeNote.width, Math.max(freeNoteLabel.implicitWidth, nextButton.visible ? nextButton.implicitWidth : 0) + pad * 2)
+						height: freeNote.height + pad * 2
+						x: freeNote.x + Math.round((freeNote.width - width) / 2)
+						y: freeNote.y - pad
+						radius: appletConfig.cardRadius
+						color: appletConfig.cardColor
+						border.width: 1
+						border.color: appletConfig.cardBorderColor
+					}
 					// Day view, nothing (more) in the hours: a quiet note in the free part under the now line,
 					// and the next event after the day (a click shows its day).
 					ColumnLayout {
@@ -1190,6 +1205,7 @@ Item {
 						width: Math.max(0, timeGrid.width - weekView.gutterWidth - Kirigami.Units.gridUnit)
 						spacing: Kirigami.Units.smallSpacing
 						PlasmaComponents3.Label {
+							id: freeNoteLabel
 							Layout.fillWidth: true
 							horizontalAlignment: Text.AlignHCenter
 							text: weekView.showingToday ? i18n("No more events today") : i18n("No events")
@@ -1198,6 +1214,7 @@ Item {
 							elide: Text.ElideRight
 						}
 						PlasmaComponents3.ToolButton {
+							id: nextButton
 							visible: !!weekView.nextEvent
 							Layout.alignment: Qt.AlignHCenter
 							Layout.maximumWidth: freeNote.width
