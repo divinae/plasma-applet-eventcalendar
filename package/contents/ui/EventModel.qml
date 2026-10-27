@@ -368,6 +368,11 @@ CalendarManager {
 		if (!calendar && fetchRound) {
 			calendar = eventModel.previousEventsByCalendar[calendarId]
 		}
+		// Not fetched yet at all (start, an account's token just read from the keyring): the
+		// event cache's copy.
+		if (!calendar) {
+			calendar = eventModel.cachedEventsByCalendar[calendarId]
+		}
 		return calendar || null
 	}
 
@@ -434,6 +439,7 @@ CalendarManager {
 		}
 		eventModel.cachedEventsByCalendar = shown
 		mergeEvents()
+		taskListsChanged() // The task views: the cached lists (cachedTaskLists) and their tasks
 	}
 
 	// Google and TickTick accounts, for EventCacheUtil.selectedCalendarIds.
@@ -892,6 +898,42 @@ CalendarManager {
 				out.push(entry)
 			}
 		}
+		return out.concat(cachedTaskLists(out))
+	}
+
+	// Before the keyring gave an account's token (at start), it has no tasks manager yet: its selected
+	// lists from the account's settings, those the event cache has tasks of, so the cached tasks show
+	// right away (the Tasks tab, the Day view) instead of after the first fetch.
+	function cachedTaskLists(shown) {
+		var managed = {}
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			if (calendarManagerList[i].accountId) {
+				managed[String(calendarManagerList[i].accountId)] = true
+			}
+		}
+		var have = {}
+		shown.forEach(function(list) { have[list.id] = true })
+		var out = []
+		var addAccount = function(account, lists, selectedIds, fallbackGroup) {
+			if (!account || !account.id || managed[String(account.id)]) {
+				return
+			}
+			var group = String(account.label || fallbackGroup)
+			Shared.toArray(lists).forEach(function(list) {
+				var id = String(account.id) + '::' + list.id
+				if (have[id] || Shared.toArray(selectedIds).indexOf(list.id) < 0
+						|| !Object.prototype.hasOwnProperty.call(eventModel.cachedEventsByCalendar, id)) {
+					return
+				}
+				out.push({ id: id, name: String(list.title || list.name || ""), color: String(list.color || ""), group: group })
+			})
+		}
+		Shared.toArray(googleAccountsStore.accounts).forEach(function(account) {
+			addAccount(account, account.tasklistList, account.tasklistIdList, "Google")
+		})
+		Shared.toArray(tickTickAccountsStore.accounts).forEach(function(account) {
+			addAccount(account, account.projectList, account.projectIdList, "TickTick")
+		})
 		return out
 	}
 
