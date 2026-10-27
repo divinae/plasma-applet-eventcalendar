@@ -672,7 +672,8 @@ Item {
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
-		height: Math.max(0, weekView.sideBottom - startY)
+		// As tall as its few events, at most down to the grid's bottom edge.
+		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
 
 		UpNextPanel {
 			eventModel: upNextCard.visible ? weekView.eventModel : null

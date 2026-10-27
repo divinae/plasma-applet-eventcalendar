@@ -7,7 +7,8 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 
-// The Day view's "Up next" (left column, under the weather): the events after the shown day, by day
+// The Day view's "Up next" (left column, under the small month): a few events after the shown day
+// (at most limit, from the next days days), by day
 // ("Tomorrow", "Thu 29 Oct"), each with its color bar, time and title (Shared.upcomingEvents;
 // eventModel.eventsData, so declined or hidden ones are left out as everywhere; tasks left out). A
 // click shows that day (dayRequested), a right click the event menu. Scrolls when long.
@@ -18,13 +19,18 @@ ColumnLayout {
 	// Events from this time on (the day after the one shown).
 	property date after: new Date()
 	property date today: new Date()
-	property int limit: 20
+	// Kept short: a glance at what's next, not a second agenda.
+	property int limit: 5
+	property int days: 3
 
 	signal dayRequested(date day)
 
 	readonly property var entries: {
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		return Shared.upcomingEvents(items, after, limit)
+		var until = Shared.addDays(Shared.startOfDay(after), days).getTime()
+		return Shared.upcomingEvents(items, after, limit).filter(function(entry) {
+			return entry.day.getTime() < until
+		})
 	}
 	// The entries with a heading row before each day's first: [{ type: 'day' | 'event', … }].
 	readonly property var rows: {
@@ -76,6 +82,9 @@ ColumnLayout {
 		id: scrollView
 		visible: upNext.entries.length > 0
 		Layout.fillWidth: true
+		// As tall as its rows (a long day scrolls in the room there is).
+		Layout.preferredHeight: rowsColumn.implicitHeight
+		Layout.maximumHeight: rowsColumn.implicitHeight
 		Layout.fillHeight: true
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
@@ -84,6 +93,7 @@ ColumnLayout {
 		}
 
 		ColumnLayout {
+			id: rowsColumn
 			width: scrollView.availableWidth
 			spacing: 2
 			Repeater {
