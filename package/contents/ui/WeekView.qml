@@ -1187,7 +1187,8 @@ Item {
 						x: freeNote.x + Math.round((freeNote.width - width) / 2)
 						y: freeNote.y - pad
 						radius: appletConfig.cardRadius
-						color: appletConfig.cardColor
+						// Opaque: the hour lines don't show through.
+						color: ColorUtil.setAlpha(appletConfig.cardColor, 1)
 						border.width: 1
 						border.color: appletConfig.cardBorderColor
 					}
