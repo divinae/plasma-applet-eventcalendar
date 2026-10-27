@@ -135,6 +135,6 @@ Settings
   3. `tasks.png`
   4. `week.png`
   5. `agenda.png`
-- **Logo:** the Breeze `office-calendar` app icon as a 256×256 PNG:
-  `rsvg-convert -w 256 -h 256 /usr/share/icons/breeze/apps/48/office-calendar.svg -o logo.png`
-  (the widget itself uses the theme icon `view-calendar`).
+- **Logo:** `docs/logo.png` (512×512, from `docs/logo.svg`: a calendar page with event bars, a
+  task check and a sun, on the widget's blue). Another size:
+  `rsvg-convert -w 256 -h 256 docs/logo.svg -o logo-256.png`
