@@ -258,48 +258,36 @@ ColumnLayout {
 				textFormat: Text.PlainText // User text: never parsed as HTML
 				opacity: panel.dimOpacity
 			}
+			// Today: the high, the low and the rain (when there is any), each with its icon.
+			RowLayout {
+				id: todayStats
+				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+				visible: !panel.compact && !!panel.today && panel.isToday
+				Layout.topMargin: Kirigami.Units.smallSpacing
+				spacing: Kirigami.Units.largeSpacing
+				Accessible.role: Accessible.StaticText
+				Accessible.name: panel.today ? i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
+					+ (rain ? ", " + i18nc("precipitation", "rain %1", rain) : "") : ""
+				Stat {
+					icon: "arrow-up"
+					text: panel.today ? Shared.formatTemp(panel.today.temp.max) : ""
+				}
+				Stat {
+					icon: "arrow-down"
+					text: panel.today ? Shared.formatTemp(panel.today.temp.min) : ""
+				}
+				Stat {
+					visible: !!todayStats.rain
+					icon: "weather-showers-symbolic"
+					text: todayStats.rain
+				}
+			}
 		}
 		// Compact: today's range on the same row
 		PlasmaComponents3.Label {
 			visible: panel.compact && !!panel.today && !!panel.current
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			opacity: panel.dimOpacity
-		}
-	}
-	// Today: high, low and rain spread over a soft strip, each with its icon.
-	Rectangle {
-		id: todayStrip
-		readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
-		visible: panel.showData && !panel.compact && !!panel.today && panel.isToday
-		Layout.fillWidth: true
-		Layout.topMargin: Kirigami.Units.largeSpacing
-		implicitHeight: statsRow.implicitHeight + Kirigami.Units.smallSpacing * 2
-		radius: Kirigami.Units.cornerRadius * 2
-		color: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.darkTheme ? 0.07 : 0.05)
-		Accessible.role: Accessible.StaticText
-		Accessible.name: panel.today ? i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
-			+ (rain ? ", " + i18nc("precipitation", "rain %1", rain) : "") : ""
-		RowLayout {
-			id: statsRow
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.verticalCenter: parent.verticalCenter
-			anchors.leftMargin: Kirigami.Units.largeSpacing
-			anchors.rightMargin: Kirigami.Units.largeSpacing
-			spacing: 0
-			Stat {
-				icon: "arrow-up"
-				text: panel.today ? Shared.formatTemp(panel.today.temp.max) : ""
-			}
-			Stat {
-				icon: "arrow-down"
-				text: panel.today ? Shared.formatTemp(panel.today.temp.min) : ""
-			}
-			Stat {
-				visible: !!todayStrip.rain
-				icon: "weather-showers-symbolic"
-				text: todayStrip.rain
-			}
 		}
 	}
 	// Another day: its rain (the high / low are in the heading).
@@ -312,30 +300,22 @@ ColumnLayout {
 		text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
 		opacity: panel.dimOpacity
 	}
-	// An icon and its value, centered in an equal share of the today strip.
-	component Stat: Item {
+	// An icon and its value (today's high, low, rain).
+	component Stat: RowLayout {
 		property alias icon: statIcon.source
 		property alias text: statLabel.text
-		Layout.fillWidth: true
-		Layout.preferredWidth: 1
-		implicitHeight: statContent.implicitHeight
-		RowLayout {
-			id: statContent
-			anchors.centerIn: parent
-			spacing: Kirigami.Units.smallSpacing
-			Kirigami.Icon {
-				id: statIcon
-				Layout.alignment: Qt.AlignVCenter
-				implicitWidth: Kirigami.Units.iconSizes.small
-				implicitHeight: implicitWidth
-				opacity: panel.dimOpacity
-			}
-			PlasmaComponents3.Label {
-				id: statLabel
-				Layout.alignment: Qt.AlignVCenter
-				textFormat: Text.PlainText
-				font.weight: Font.DemiBold
-			}
+		spacing: 2
+		Kirigami.Icon {
+			id: statIcon
+			Layout.alignment: Qt.AlignVCenter
+			implicitWidth: Kirigami.Units.iconSizes.small
+			implicitHeight: implicitWidth
+			opacity: panel.dimOpacity
+		}
+		PlasmaComponents3.Label {
+			id: statLabel
+			Layout.alignment: Qt.AlignVCenter
+			textFormat: Text.PlainText
 		}
 	}
 
