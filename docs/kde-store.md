@@ -129,14 +129,12 @@ Settings
 - **Product file:** `eventcalendar-v1.6.0-plasma6.0.plasmoid` from the
   [v1.6.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.6.0),
   or `./build`.
-- **Screenshots** (`docs/screenshots/`, mock data), in this order:
-  1. `month.png`
-  2. `week.png`
-  3. `today.png` (Day view)
-  4. `tasks.png`
+- **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
+  1. `month.png` (the cover)
+  2. `today.png` (Day view: weather and tasks)
+  3. `tasks.png`
+  4. `week.png`
   5. `agenda.png`
-  6. `event-details.png`
-  7. `settings-google.png`
 - **Logo:** the Breeze `office-calendar` app icon as a 256×256 PNG:
   `rsvg-convert -w 256 -h 256 /usr/share/icons/breeze/apps/48/office-calendar.svg -o logo.png`
   (the widget itself uses the theme icon `view-calendar`).
