@@ -1196,16 +1196,12 @@ Item {
 					ColumnLayout {
 						id: freeNote
 						z: 3
-						readonly property real nowY: weekView.showingToday
-							? weekView.hourY(weekView.currentTime.getTime(), weekView.todayStart.getTime()) - flickable.contentY : 0
-						// A fixed spot in the visible hours, not following the now line (it crept down with time):
-						// in the lower part, or the upper part once the now line is down there.
-						readonly property real lowerY: Math.round(timeGrid.height * 0.62 - height / 2)
-						readonly property bool nowBelowSpot: weekView.showingToday && nowY > lowerY - Kirigami.Units.gridUnit
+						// Always the same spot: near the bottom of the visible hours, whatever the time or the
+						// scrolling (it used to follow the now line).
 						visible: weekView.dayFree && timeGrid.height >= Kirigami.Units.gridUnit * 8
 						// The day column's width (not from its contents: the labels' maximum width follows it).
 						x: weekView.gutterWidth + Kirigami.Units.gridUnit / 2
-						y: nowBelowSpot ? Math.round(timeGrid.height * 0.3 - height / 2) : lowerY
+						y: Math.round(timeGrid.height - height - Kirigami.Units.gridUnit * 2)
 						width: Math.max(0, timeGrid.width - weekView.gutterWidth - Kirigami.Units.gridUnit)
 						spacing: Kirigami.Units.smallSpacing
 						PlasmaComponents3.Label {
