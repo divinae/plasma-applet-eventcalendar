@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:21+0100\n"
+"POT-Creation-Date: 2026-10-27 14:38+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -2582,6 +2582,19 @@ msgstr "Criar"
 msgid "%1mm"
 msgstr "%1mm"
 
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Previous Month"
+msgstr "Mês anterior"
+
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Next Month"
+msgstr "Mês seguinte"
+
+#: ../contents/ui/MiniMonth.qml
+msgctxt "%1 = date"
+msgid "%1, has events"
+msgstr "%1, tem eventos"
+
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
 msgid "MMMM d, yyyy"
@@ -2609,10 +2622,6 @@ msgstr "Dia anterior"
 msgid "Previous Week"
 msgstr "Semana anterior"
 
-#: ../contents/ui/PopupHeader.qml
-msgid "Previous Month"
-msgstr "Mês anterior"
-
 #: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Hoje"
@@ -2624,10 +2633,6 @@ msgstr "Dia seguinte"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Semana seguinte"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Month"
-msgstr "Mês seguinte"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

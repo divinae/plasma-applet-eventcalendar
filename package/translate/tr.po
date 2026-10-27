@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:21+0100\n"
+"POT-Creation-Date: 2026-10-27 14:38+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2807,6 +2807,19 @@ msgstr "Oluştur"
 msgid "%1mm"
 msgstr "%1mm"
 
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Previous Month"
+msgstr "Önceki Ay"
+
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Next Month"
+msgstr "Sonraki Ay"
+
+#: ../contents/ui/MiniMonth.qml
+msgctxt "%1 = date"
+msgid "%1, has events"
+msgstr "%1, etkinlik var"
+
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
 msgid "MMMM d, yyyy"
@@ -2834,10 +2847,6 @@ msgstr "Önceki Gün"
 msgid "Previous Week"
 msgstr "Önceki Hafta"
 
-#: ../contents/ui/PopupHeader.qml
-msgid "Previous Month"
-msgstr "Önceki Ay"
-
 #: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -2850,10 +2859,6 @@ msgstr "Sonraki Gün"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Sonraki Hafta"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Month"
-msgstr "Sonraki Ay"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

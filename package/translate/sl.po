@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:21+0100\n"
+"POT-Creation-Date: 2026-10-27 14:38+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2860,6 +2860,19 @@ msgstr "Ustvari"
 msgid "%1mm"
 msgstr "%1 mm"
 
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Previous Month"
+msgstr "Prejšnji mesec"
+
+#: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
+msgid "Next Month"
+msgstr "Naslednji mesec"
+
+#: ../contents/ui/MiniMonth.qml
+msgctxt "%1 = date"
+msgid "%1, has events"
+msgstr "%1, ima dogodke"
+
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
 msgid "MMMM d, yyyy"
@@ -2887,10 +2900,6 @@ msgstr "Prejšnji dan"
 msgid "Previous Week"
 msgstr "Prejšnji teden"
 
-#: ../contents/ui/PopupHeader.qml
-msgid "Previous Month"
-msgstr "Prejšnji mesec"
-
 #: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
 #: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -2903,10 +2912,6 @@ msgstr "Naslednji dan"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Naslednji teden"
-
-#: ../contents/ui/PopupHeader.qml
-msgid "Next Month"
-msgstr "Naslednji mesec"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

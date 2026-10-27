@@ -335,6 +335,35 @@ function dayKey(d) {
 	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
 }
 
+// The days (dayKey) from..to (dates, to excluded) with an event of items: an all-day event on each
+// of its days (its end date excluded), a timed one on each day it touches.
+function eventDayKeys(items, from, to) {
+	var keys = {}
+	var first = startOfDay(from)
+	var last = startOfDay(to)
+	;(items || []).forEach(function(item) {
+		if (!item || !item.startDateTime || !item.endDateTime) {
+			return
+		}
+		var start = new Date(item.startDateTime)
+		var end = new Date(item.endDateTime)
+		// The last day it's on: an all-day end is the next day; a timed one ending at midnight too.
+		var lastDay = startOfDay(new Date(end.getTime() - 1))
+		if (end <= start) {
+			lastDay = startOfDay(start)
+		}
+		var day = startOfDay(start)
+		if (day < first) {
+			day = new Date(first)
+		}
+		for (var n = 0; day <= lastDay && day < last && n < 62; n++) {
+			keys[dayKey(day)] = true
+			day = addDays(day, 1)
+		}
+	})
+	return keys
+}
+
 function pad2(n) {
 	return (n < 10 ? '0' : '') + n
 }
