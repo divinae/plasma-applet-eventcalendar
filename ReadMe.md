@@ -62,7 +62,7 @@ All shots use mock data.
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
-| ![Day view](docs/screenshots/today.png) **Day**: weather, hours with Join buttons, the day's tasks | ![Tasks](docs/screenshots/tasks.png) **Tasks**: smart filters, priorities, in progress |
+| ![Day view](docs/screenshots/today.png) **Day**: a small month, Up next, the hours, tasks and weather | ![Tasks](docs/screenshots/tasks.png) **Tasks**: smart filters, priorities, in progress |
 | ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
 | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts and calendars | ![View settings](docs/screenshots/settings-views.png) **Settings**: views and appearance |
 
@@ -74,9 +74,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.6.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.7.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.6.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.7.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a

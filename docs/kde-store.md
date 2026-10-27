@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.6.0
+    1.7.0
 
 **License**
 
@@ -103,31 +103,23 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.6.0)**
+**Changelog (1.7.0)**
 
 ```
-Tasks
-- Mark a task as in progress (right-click menu or its details): a half-filled check, first in its section, an "In progress" filter
-- Right-click menu: set the priority (TickTick) and the due date (today, tomorrow, next week, none)
-- The priority also shows as a colored flag on the task's row
-- After a restart, cached tasks show right away
-
 Day view
-- A new weather card: the location, the current weather on a sky-colored tile, today's high and low, clearer titles, more contrast in a light theme
+- A small month to go to another day, with dots under the days that have events (more on busier days)
+- Up next: the next few events of the coming days
+- A title over the hours (Today, Tomorrow, … and the number of events); "No more events today" with a link to the next event
+- Tasks and weather on the right; each panel can be turned off (Settings > Views > Day view shows)
 
-Popup
-- A thin scroll bar; the hour grid and the agenda reach the card's edge
-- Offline: Retry Now shows it's retrying, and the shown tasks stay meanwhile
-
-Settings
-- Tidier Views, Events and Clock pages
-- Fixed: blank Clock and Events pages with older Kirigami Addons (Debian 13 / Plasma 6.3)
+Fixes
+- Dates and times in the system's language everywhere (some were in English)
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.6.0-plasma6.0.plasmoid` from the
-  [v1.6.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.6.0),
+- **Product file:** `eventcalendar-v1.7.0-plasma6.0.plasmoid` from the
+  [v1.7.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.7.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

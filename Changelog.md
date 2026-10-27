@@ -1,3 +1,14 @@
+## v1.7.0 - October 27 2026
+
+### Day view
+* A small month on the left to go to another day, with dots under the days that have events (more dots on busier days).
+* Up next under it: the next few events of the coming days; a click shows that day.
+* The hours have a title (Today, Tomorrow, … and the number of events); when nothing is left today, "No more events today" and a link to the next event.
+* The tasks and the weather on the right; each panel can be turned off in Settings > Views > Day view shows.
+
+### Fixes
+* Dates and times are in the system's language everywhere (they were in English: "Tue, 27 Oct" with a Polish locale, and dates like "2026-10-27"). Thanks to testitquickly's fix in ALikesToCode's fork for pointing it out.
+
 ## v1.6.0 - October 27 2026
 
 ### Tasks
