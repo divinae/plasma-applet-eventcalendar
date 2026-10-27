@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:38+0100\n"
+"POT-Creation-Date: 2026-10-27 14:48+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -77,7 +77,7 @@ msgstr "Novo evento"
 msgid "New Task…"
 msgstr "Nova tarefa…"
 
-#: ../contents/ui/AgendaListItem.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/WeekView.qml
 msgid "No events"
 msgstr "Sem eventos"
 
@@ -1378,12 +1378,12 @@ msgstr "Sem prioridade"
 msgid "Due date"
 msgstr "Prazo"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Hoje"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Amanhã"
@@ -1572,7 +1572,7 @@ msgstr "Duplicar"
 msgid "Private event"
 msgstr "Evento privado"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "Todo o dia"
 
@@ -2591,9 +2591,11 @@ msgid "Next Month"
 msgstr "Mês seguinte"
 
 #: ../contents/ui/MiniMonth.qml
-msgctxt "%1 = date"
-msgid "%1, has events"
-msgstr "%1, tem eventos"
+msgctxt "%2 = date"
+msgid "%2, %1 event"
+msgid_plural "%2, %1 events"
+msgstr[0] "%2, %1 evento"
+msgstr[1] "%2, %1 eventos"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
@@ -3302,6 +3304,19 @@ msgctxt "%1 = event title, %2 = when"
 msgid "Next: %1, %2"
 msgstr "Seguinte: %1, %2"
 
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+msgctxt "Up next: a day's heading"
+msgid "dddd, d MMM"
+msgstr "dddd, d MMM"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "A seguir"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Nothing planned in the coming days."
+msgstr "Nada planeado para os próximos dias."
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "Defina uma localização em Configuração > Meteorologia para ver aqui a previsão."
@@ -3338,6 +3353,11 @@ msgid "Next days"
 msgstr "Próximos dias"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = day and time, %2 = event title"
+msgid "Next: %1 · %2"
+msgstr "Próximo: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3357,10 +3377,18 @@ msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/WeekView.qml
+msgid "No more events today"
+msgstr "Não há mais eventos hoje"
+
 #: ../contents/ui/WorkingLocationLabel.qml
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgctxt "%1 = date"
+#~ msgid "%1, has events"
+#~ msgstr "%1, tem eventos"
 
 #~ msgid "Sounds"
 #~ msgstr "Sons"

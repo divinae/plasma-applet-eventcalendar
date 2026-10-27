@@ -278,6 +278,12 @@ ColumnLayout {
 		compact: true
 	}
 
+	// A card taller than the tasks (the Day view's right column, down to the grid's bottom): they
+	// stay at the top.
+	Item {
+		Layout.fillHeight: true
+	}
+
 	// Apart from what follows (the hours below the strip). Not in the islands style: the card's edge is.
 	property bool showSeparator: true
 	Kirigami.Separator {

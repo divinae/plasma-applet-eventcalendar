@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:38+0100\n"
+"POT-Creation-Date: 2026-10-27 14:48+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -87,7 +87,7 @@ msgstr "Yeni Etkinlik"
 msgid "New Task…"
 msgstr "Yeni Görev…"
 
-#: ../contents/ui/AgendaListItem.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/WeekView.qml
 msgid "No events"
 msgstr "Etkinlik yok"
 
@@ -1575,11 +1575,13 @@ msgid "Due date"
 msgstr "Son tarih"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Bugün"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Yarın"
@@ -1775,7 +1777,7 @@ msgid "Private event"
 msgstr "Gizli etkinlik"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "Tüm gün"
 
@@ -2816,9 +2818,11 @@ msgid "Next Month"
 msgstr "Sonraki Ay"
 
 #: ../contents/ui/MiniMonth.qml
-msgctxt "%1 = date"
-msgid "%1, has events"
-msgstr "%1, etkinlik var"
+msgctxt "%2 = date"
+msgid "%2, %1 event"
+msgid_plural "%2, %1 events"
+msgstr[0] "%2, %1 etkinlik"
+msgstr[1] "%2, %1 etkinlik"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
@@ -3535,6 +3539,19 @@ msgctxt "%1 = event title, %2 = when"
 msgid "Next: %1, %2"
 msgstr "Sıradaki: %1, %2"
 
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+msgctxt "Up next: a day's heading"
+msgid "dddd, d MMM"
+msgstr "d MMM, dddd"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "Sıradakiler"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Nothing planned in the coming days."
+msgstr "Önümüzdeki günlerde planlanmış bir şey yok."
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr ""
@@ -3573,6 +3590,11 @@ msgid "Next days"
 msgstr "Sonraki günler"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = day and time, %2 = event title"
+msgid "Next: %1 · %2"
+msgstr "Sonraki: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3593,10 +3615,18 @@ msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/WeekView.qml
+msgid "No more events today"
+msgstr "Bugün başka etkinlik yok"
+
 #: ../contents/ui/WorkingLocationLabel.qml
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgctxt "%1 = date"
+#~ msgid "%1, has events"
+#~ msgstr "%1, etkinlik var"
 
 #~ msgid "Sounds"
 #~ msgstr "Sesler"

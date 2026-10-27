@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 14:38+0100\n"
+"POT-Creation-Date: 2026-10-27 14:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -79,7 +79,7 @@ msgstr "新しいイベント"
 msgid "New Task…"
 msgstr "新しいタスク…"
 
-#: ../contents/ui/AgendaListItem.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/WeekView.qml
 msgid "No events"
 msgstr "イベントはありません"
 
@@ -1377,12 +1377,12 @@ msgstr "優先度なし"
 msgid "Due date"
 msgstr "期限"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "今日"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "明日"
@@ -1570,7 +1570,7 @@ msgstr "複製"
 msgid "Private event"
 msgstr "非公開の予定"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "終日"
 
@@ -2567,9 +2567,10 @@ msgid "Next Month"
 msgstr "次の月"
 
 #: ../contents/ui/MiniMonth.qml
-msgctxt "%1 = date"
-msgid "%1, has events"
-msgstr "%1、予定あり"
+msgctxt "%2 = date"
+msgid "%2, %1 event"
+msgid_plural "%2, %1 events"
+msgstr[0] "%2、予定 %1 件"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for current month"
@@ -3265,6 +3266,19 @@ msgctxt "%1 = event title, %2 = when"
 msgid "Next: %1, %2"
 msgstr "次: %1、%2"
 
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+msgctxt "Up next: a day's heading"
+msgid "dddd, d MMM"
+msgstr "M月d日 dddd"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "次の予定"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Nothing planned in the coming days."
+msgstr "今後数日の予定はありません。"
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "ここに天気予報を表示するには、設定 > 天気 で場所を設定してください。"
@@ -3301,6 +3315,11 @@ msgid "Next days"
 msgstr "今後数日"
 
 #: ../contents/ui/WeekView.qml
+msgctxt "%1 = day and time, %2 = event title"
+msgid "Next: %1 · %2"
+msgstr "次: %1 · %2"
+
+#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3319,10 +3338,18 @@ msgctxt "more events not shown"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/WeekView.qml
+msgid "No more events today"
+msgstr "今日はこれ以上予定がありません"
+
 #: ../contents/ui/WorkingLocationLabel.qml
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "%1 = date"
+#~ msgid "%1, has events"
+#~ msgstr "%1、予定あり"
 
 #~ msgid "Sounds"
 #~ msgstr "サウンド"

@@ -9,8 +9,9 @@ import "Tasks.js" as Tasks
 
 // A small month calendar (the Day view, beside the hours): the month's name with previous / next,
 // the weekday initials, and the days of six weeks. The shown day (selectedDate) is filled in the
-// accent color, today is in the accent color, days of the months around are dimmed, and a dot
-// under a day says it has events (eventModel.eventsData, tasks left out). A click picks the day
+// accent color, today is in the accent color, days of the months around are dimmed, and dots
+// under a day say how busy it is: 1 for 1-2 events, 2 for 3-4, 3 for 5 or more
+// (eventModel.eventsData, tasks left out). A click picks the day
 // (dayClicked); the month shown follows selectedDate and can be paged through on its own.
 ColumnLayout {
 	id: miniMonth
@@ -42,9 +43,12 @@ ColumnLayout {
 		}
 		return list
 	}
-	readonly property var eventDays: {
+	readonly property var eventCounts: {
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		return Shared.eventDayKeys(items, gridStart, Shared.addDays(gridStart, 42))
+		return Shared.eventDayCounts(items, gridStart, Shared.addDays(gridStart, 42))
+	}
+	function dotCount(count) {
+		return count >= 5 ? 3 : count >= 3 ? 2 : count > 0 ? 1 : 0
 	}
 
 	readonly property real cellSize: Math.floor(width / 7)
@@ -55,13 +59,14 @@ ColumnLayout {
 	RowLayout {
 		Layout.fillWidth: true
 		spacing: 0
+		// Like the other side cards' titles ("Weather", "Tasks").
 		PlasmaComponents3.Label {
 			Layout.fillWidth: true
-			Layout.leftMargin: Kirigami.Units.smallSpacing
 			// The standalone month name ("Październik", not the "Października" of a date).
 			text: Qt.locale().standaloneMonthName(miniMonth.monthStart.getMonth(), Locale.LongFormat) + " " + miniMonth.monthStart.getFullYear()
 			textFormat: Text.PlainText
-			font.weight: Font.DemiBold
+			font.weight: Font.Bold
+			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.25
 			font.capitalization: Font.Capitalize
 			elide: Text.ElideRight
 		}
@@ -109,13 +114,13 @@ ColumnLayout {
 				readonly property bool inMonth: day.getMonth() === miniMonth.monthStart.getMonth()
 				readonly property bool selected: Shared.isSameDate(day, miniMonth.selectedDate)
 				readonly property bool isToday: Shared.isSameDate(day, miniMonth.today)
-				readonly property bool hasEvents: !!miniMonth.eventDays[Shared.dayKey(day)]
+				readonly property int eventCount: miniMonth.eventCounts[Shared.dayKey(day)] || 0
 				width: miniMonth.cellSize
 				// Compact rows: the tasks below keep their room.
 				height: miniMonth.rowHeight
 				hoverEnabled: true
 				text: Shared.formatDate(day, Locale.LongFormat)
-				Accessible.name: hasEvents ? i18nc("%1 = date", "%1, has events", text) : text
+				Accessible.name: eventCount > 0 ? i18ncp("%2 = date", "%2, %1 event", "%2, %1 events", eventCount, text) : text
 				onClicked: miniMonth.dayClicked(day)
 
 				background: Rectangle {
@@ -140,17 +145,22 @@ ColumnLayout {
 							: Kirigami.Theme.textColor
 						opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
 					}
-					// Has events: a small dot under the number.
-					Rectangle {
-						visible: dayButton.hasEvents
+					// How busy: 1-3 small dots under the number.
+					Row {
 						anchors.horizontalCenter: parent.horizontalCenter
 						anchors.bottom: parent.bottom
 						anchors.bottomMargin: Math.round(parent.height * 0.12)
-						width: 4
-						height: 4
-						radius: 2
-						color: dayButton.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.highlightColor
-						opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
+						spacing: 2
+						Repeater {
+							model: miniMonth.dotCount(dayButton.eventCount)
+							Rectangle {
+								width: 4
+								height: 4
+								radius: 2
+								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.highlightColor
+								opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
+							}
+						}
 					}
 				}
 			}

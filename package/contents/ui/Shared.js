@@ -335,10 +335,11 @@ function dayKey(d) {
 	return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate()
 }
 
-// The days (dayKey) from..to (dates, to excluded) with an event of items: an all-day event on each
-// of its days (its end date excluded), a timed one on each day it touches.
-function eventDayKeys(items, from, to) {
-	var keys = {}
+// How many events of items are on each day from..to (dates, to excluded): { dayKey: count }. An
+// all-day event counts on each of its days (its end date excluded), a timed one on each day it
+// touches.
+function eventDayCounts(items, from, to) {
+	var counts = {}
 	var first = startOfDay(from)
 	var last = startOfDay(to)
 	;(items || []).forEach(function(item) {
@@ -348,20 +349,40 @@ function eventDayKeys(items, from, to) {
 		var start = new Date(item.startDateTime)
 		var end = new Date(item.endDateTime)
 		// The last day it's on: an all-day end is the next day; a timed one ending at midnight too.
-		var lastDay = startOfDay(new Date(end.getTime() - 1))
-		if (end <= start) {
-			lastDay = startOfDay(start)
-		}
+		var lastDay = end > start ? startOfDay(new Date(end.getTime() - 1)) : startOfDay(start)
 		var day = startOfDay(start)
 		if (day < first) {
 			day = new Date(first)
 		}
 		for (var n = 0; day <= lastDay && day < last && n < 62; n++) {
-			keys[dayKey(day)] = true
+			var key = dayKey(day)
+			counts[key] = (counts[key] || 0) + 1
 			day = addDays(day, 1)
 		}
 	})
+	return counts
+}
+// The days with an event (eventDayCounts), { dayKey: true }.
+function eventDayKeys(items, from, to) {
+	var counts = eventDayCounts(items, from, to)
+	var keys = {}
+	for (var key in counts) {
+		keys[key] = true
+	}
 	return keys
+}
+// The events of items starting from after (a date) on, earliest first, at most limit: [{ item, day }]
+// (day: its start's day). For "Up next" and the Day view's "Next: …".
+function upcomingEvents(items, after, limit) {
+	var from = new Date(after).getTime()
+	var list = (items || []).filter(function(item) {
+		return !!item && !!item.startDateTime && new Date(item.startDateTime).getTime() >= from
+	}).sort(function(a, b) {
+		return new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime()
+	})
+	return list.slice(0, limit > 0 ? limit : list.length).map(function(item) {
+		return { item: item, day: startOfDay(new Date(item.startDateTime)) }
+	})
 }
 
 function pad2(n) {

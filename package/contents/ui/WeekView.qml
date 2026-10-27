@@ -107,6 +107,29 @@ Item {
 	}
 	// Day view: the weather panel follows the shown day.
 	readonly property bool showingToday: Shared.startOfDay(weekStart).getTime() === todayStart.getTime()
+	// The Day view with nothing (more) in the hours: no timed event left today, or none on another
+	// day. The grid then says so, with the next event after the day (nextEvent: { item, day }).
+	readonly property bool dayFree: {
+		if (!singleDay || days.length === 0) {
+			return false
+		}
+		var now = currentTime.getTime()
+		return days[0].timed.filter(function(block) { return !weekView.showingToday || block.end > now }).length === 0
+	}
+	readonly property var nextEvent: {
+		if (!dayFree) {
+			return null
+		}
+		var items = Tasks.withoutTasks(eventModel && eventModel.eventsData ? eventModel.eventsData.items : [])
+		return Shared.upcomingEvents(items, dayDate(1), 1)[0] || null
+	}
+	function nextEventText(entry) {
+		var start = new Date(entry.item.startDateTime)
+		var day = Shared.isSameDate(entry.day, dayDate(1)) && showingToday ? i18nc("tasks filter", "Tomorrow")
+			: Shared.formatDate(entry.day, i18nc("Up next: a day's heading", "dddd, d MMM"))
+		var time = entry.item.start && entry.item.start.date ? "" : " " + Shared.formatTime(start, appletConfig.timeFormat)
+		return i18nc("%1 = day and time, %2 = event title", "Next: %1 · %2", day + time, entry.item.summary || "")
+	}
 	// The shown day's daytime hours (7:00 to 19:00) from the hourly forecast.
 	function dayHours(d) {
 		var from = Shared.startOfDay(d).getTime() + 7 * 3600000
@@ -601,8 +624,12 @@ Item {
 		today: weekView.dayWeather(weekView.weekStart)
 	}
 
+	// The side columns end with the grid's card (islands): its bottom edge.
+	readonly property real sideBottom: gridCard.y + gridCard.height
+
 	// Left of the grid: the shown day's weather.
 	IslandCard {
+		id: weatherCard
 		visible: weekView.weatherBeside
 		shown: weekView.islands
 		// Flat: padding on its left (the popup's edge), the same space on the grid side. Islands: a
@@ -629,6 +656,25 @@ Item {
 				}
 				return list
 			}
+		}
+	}
+
+	// Under the weather (islands, when there's room): the events after the shown day, down to the
+	// grid's bottom edge.
+	IslandCard {
+		id: upNextCard
+		readonly property real startY: weatherCard.y + weatherCard.height + appletConfig.cardGap
+		visible: weekView.islands && weekView.weatherBeside && weekView.sideBottom - startY >= Kirigami.Units.gridUnit * 6
+		x: weatherCard.x
+		y: startY
+		width: weatherCard.width
+		height: Math.max(0, weekView.sideBottom - startY)
+
+		UpNextPanel {
+			eventModel: upNextCard.visible ? weekView.eventModel : null
+			after: weekView.dayDate(1)
+			today: weekView.currentTime
+			onDayRequested: function(day) { weekView.weekStart = Shared.startOfDay(day) }
 		}
 	}
 
@@ -662,7 +708,8 @@ Item {
 		x: miniMonthCard.x
 		y: miniMonthCard.y + miniMonthCard.height + (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
 		width: miniMonthCard.width
-		height: implicitHeight
+		// Islands: down to the grid's bottom edge, like the left column.
+		height: weekView.islands ? Math.max(implicitHeight, weekView.sideBottom - y) : implicitHeight
 
 		DayTasksPanel {
 			eventModel: weekView.singleDay ? weekView.eventModel : null
@@ -1071,6 +1118,54 @@ Item {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					clip: true
+
+					// Day view, nothing (more) in the hours: a quiet note in the free part under the now line,
+					// and the next event after the day (a click shows its day).
+					ColumnLayout {
+						id: freeNote
+						z: 3
+						readonly property real nowY: weekView.showingToday
+							? weekView.hourY(weekView.currentTime.getTime(), weekView.todayStart.getTime()) - flickable.contentY : 0
+						readonly property real areaTop: Math.max(0, Math.min(timeGrid.height, nowY))
+						visible: weekView.dayFree && timeGrid.height - areaTop >= Kirigami.Units.gridUnit * 4
+						x: weekView.gutterWidth + Math.round((timeGrid.width - weekView.gutterWidth - width) / 2)
+						y: Math.round(areaTop + (timeGrid.height - areaTop - height) / 2)
+						width: Math.min(implicitWidth, timeGrid.width - weekView.gutterWidth - Kirigami.Units.gridUnit)
+						spacing: Kirigami.Units.smallSpacing
+						PlasmaComponents3.Label {
+							Layout.alignment: Qt.AlignHCenter
+							Layout.maximumWidth: freeNote.width
+							text: weekView.showingToday ? i18n("No more events today") : i18n("No events")
+							textFormat: Text.PlainText
+							opacity: 0.6
+							elide: Text.ElideRight
+						}
+						PlasmaComponents3.ToolButton {
+							visible: !!weekView.nextEvent
+							Layout.alignment: Qt.AlignHCenter
+							Layout.maximumWidth: freeNote.width
+							readonly property string label: weekView.nextEvent ? weekView.nextEventText(weekView.nextEvent) : ""
+							text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the title
+							Accessible.name: label
+							// The event's title as plain text (never parsed as HTML).
+							contentItem: RowLayout {
+								spacing: Kirigami.Units.smallSpacing
+								PlasmaComponents3.Label {
+									Layout.fillWidth: true
+									Layout.minimumWidth: 0
+									text: parent.parent.label
+									textFormat: Text.PlainText
+									elide: Text.ElideRight
+								}
+								Kirigami.Icon {
+									implicitWidth: Kirigami.Units.iconSizes.small
+									implicitHeight: implicitWidth
+									source: Qt.application.layoutDirection === Qt.RightToLeft ? "go-previous" : "go-next"
+								}
+							}
+							onClicked: weekView.weekStart = Shared.startOfDay(weekView.nextEvent.day)
+						}
+					}
 
 					// Frame around the day columns (not the hour labels), with rounded corners. Not in the
 					// islands style: the card is the frame (a second border inside it stuck out).

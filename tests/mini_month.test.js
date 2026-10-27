@@ -25,3 +25,17 @@ assert.deepStrictEqual(days(S.eventDayKeys([timed(22, 23, 0, 23)], from, to)), [
 assert.deepStrictEqual(days(S.eventDayKeys([allDay(30, 5)], from, to)), [key(30), key(31)], 'clipped to the range')
 assert.deepStrictEqual(days(S.eventDayKeys([{ summary: 'no dates' }, null], from, to)), [], 'items without dates')
 assert.deepStrictEqual(days(S.eventDayKeys([], from, to)), [])
+
+// eventDayCounts: how busy each day is (the small month's 1-3 dots).
+const counts = S.eventDayCounts([timed(5, 9, 10), timed(5, 12, 13), allDay(5, 2), timed(6, 9, 10)], from, to)
+assert.strictEqual(counts[key(5)], 3, 'two timed and an all-day event')
+assert.strictEqual(counts[key(6)], 2, "the all-day event's second day and a timed one")
+assert.strictEqual(counts[key(7)], undefined)
+
+// upcomingEvents: from a time on, earliest first, at most limit ("Up next", "Next: …").
+const later = [timed(29, 9, 10), timed(28, 14, 15), timed(26, 9, 10), timed(28, 9, 10)]
+later.forEach((e, i) => { e.id = 'e' + i })
+assert.deepStrictEqual(S.upcomingEvents(later, d(28), 0).map(e => e.item.id), ['e3', 'e1', 'e0'], 'sorted, the earlier one left out')
+assert.deepStrictEqual(S.upcomingEvents(later, d(28), 2).map(e => e.item.id), ['e3', 'e1'], 'limit')
+assert.strictEqual(S.dayKey(S.upcomingEvents(later, d(28), 1)[0].day), key(28), 'the day of its start')
+assert.deepStrictEqual(S.upcomingEvents([], d(28), 3), [])
