@@ -89,15 +89,15 @@ Item {
 	readonly property bool dayWantsUpNext: plasmoid.configuration.dayShowUpNext !== false
 	readonly property bool dayWantsWeather: plasmoid.configuration.dayShowWeather !== false
 	readonly property bool dayWantsTasks: plasmoid.configuration.dayShowTasks !== false
-	// Right of the grid, when there's room: the day's tasks. Left of it, when there's room for that
-	// too: a small month (MiniMonth), Up next and at the bottom the day's weather. A column whose
+	// Right of the grid, when there's room: the day's tasks and below them its weather. Left of it,
+	// when there's room for that too: a small month (MiniMonth) and below it Up next. A column whose
 	// panels are all turned off isn't there.
-	readonly property bool rightWanted: dayWantsTasks && dayHasTaskLists
-	readonly property bool leftWanted: dayWantsMiniMonth || (dayWantsUpNext && islands) || (dayWantsWeather && showWeather)
+	readonly property bool rightWanted: (dayWantsTasks && dayHasTaskLists) || (dayWantsWeather && showWeather)
+	readonly property bool leftWanted: dayWantsMiniMonth || (dayWantsUpNext && islands)
 	readonly property bool rightBeside: singleDay && rightWanted && width >= minDayGridWidth + tasksPanelWidth + panelGap
 	readonly property bool leftBeside: singleDay && leftWanted
 		&& width >= minDayGridWidth + sidePanelWidth + panelGap + (rightBeside ? tasksPanelWidth + panelGap : 0)
-	readonly property bool weatherBeside: leftBeside && dayWantsWeather && showWeather
+	readonly property bool weatherBeside: rightBeside && dayWantsWeather && showWeather
 	readonly property bool tasksBeside: rightBeside && dayWantsTasks && dayHasTaskLists
 	readonly property real leftPanelSpace: leftBeside ? sidePanelWidth + panelGap : 0
 	readonly property real rightPanelSpace: rightBeside ? tasksPanelWidth + panelGap : 0
@@ -663,24 +663,21 @@ Item {
 		}
 	}
 
-	// The left column's top (islands: the card's edge; flat: the day header, like the grid).
-	readonly property real sideTop: islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
-	readonly property real sideGap: islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing
-
-	// Under it (islands, when there's room): a few events after the shown day, as tall as they are,
-	// leaving the weather below at least its current conditions.
+	// Under it (islands, when there's room): the events after the shown day, down to the grid's
+	// bottom edge.
 	IslandCard {
 		id: upNextCard
-		readonly property real startY: miniMonthCard.visible ? miniMonthCard.y + miniMonthCard.height + weekView.sideGap : weekView.sideTop
-		readonly property real endY: weekView.weatherBeside ? weekView.sideBottom - Kirigami.Units.gridUnit * 9 - weekView.sideGap : weekView.sideBottom
-		visible: weekView.islands && weekView.leftBeside && weekView.dayWantsUpNext && endY - startY >= Kirigami.Units.gridUnit * 6
+		readonly property real startY: miniMonthCard.visible ? miniMonthCard.y + miniMonthCard.height + appletConfig.cardGap : 0
+		visible: weekView.islands && weekView.leftBeside && weekView.dayWantsUpNext && weekView.sideBottom - startY >= Kirigami.Units.gridUnit * 6
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
-		height: Math.max(0, Math.min(implicitHeight, endY - startY))
+		// As tall as its few events, at most down to the grid's bottom edge.
+		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
 
 		UpNextPanel {
-			maxHeight: upNextCard.endY - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
+			// Only the events that fit whole (a short popup: fewer, not a cut row).
+			maxHeight: weekView.sideBottom - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
 			eventModel: upNextCard.visible ? weekView.eventModel : null
 			after: weekView.dayDate(1)
 			today: weekView.currentTime
@@ -688,25 +685,25 @@ Item {
 		}
 	}
 
-	// Left column, under Up next: the shown day's weather, down to the grid's bottom edge. Its sections
-	// from the room left: without the hourly chart, then without the next days.
+	// Right of the grid, at the bottom: the shown day's weather (as tall as it is; at the top without
+	// the tasks).
 	IslandCard {
 		id: weatherCard
-		// Below the month and Up next.
-		readonly property real topY: upNextCard.visible ? upNextCard.y + upNextCard.height + weekView.sideGap
-			: miniMonthCard.visible ? miniMonthCard.y + miniMonthCard.height + weekView.sideGap
-			: weekView.sideTop
-		readonly property real room: weekView.sideBottom - topY
+		readonly property real topY: weekView.islands ? 0 : gridCard.y + dayNamesRow.y + Kirigami.Units.largeSpacing
 		visible: weekView.weatherBeside
 		shown: weekView.islands
-		x: miniMonthCard.x
-		y: topY
-		width: miniMonthCard.width
-		height: Math.max(0, weekView.islands ? room : Math.min(implicitHeight, room))
+		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
+		y: weekView.tasksBeside ? Math.max(topY, weekView.sideBottom - height) : topY
+		width: weekView.islands ? weekView.tasksPanelWidth : weekView.tasksPanelWidth - Kirigami.Units.largeSpacing
+		// As tall as the weather, at most the column (from its top: not from y, which follows height).
+		height: Math.min(implicitHeight, weekView.sideBottom - topY)
 
 		DayWeatherPanel {
-			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
-			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
+			// Room for the tasks below: on a short popup without the hourly chart, shorter still
+			// without the next days.
+			readonly property bool roomForTasks: !weekView.tasksBeside
+			showHourly: roomForTasks || weekView.sideBottom >= Kirigami.Units.gridUnit * 38
+			showNextDays: roomForTasks || weekView.sideBottom >= Kirigami.Units.gridUnit * 28
 			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
 			nextDays: {
@@ -722,10 +719,11 @@ Item {
 		}
 	}
 
-	// Right of the grid: the day's tasks, down to the grid's bottom edge.
+	// On top: the day's tasks, down to the weather (or the grid's bottom edge).
 	IslandCard {
 		id: tasksCard
-		readonly property real bottomY: weekView.sideBottom
+		readonly property real bottomY: weekView.weatherBeside ? weatherCard.y - (weekView.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing)
+			: weekView.sideBottom
 		visible: weekView.tasksBeside
 		shown: weekView.islands
 		x: weekView.contentX + weekView.contentWidth + (weekView.islands ? weekView.panelGap : weekView.weatherGap * 2)
