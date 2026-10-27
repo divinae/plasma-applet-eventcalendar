@@ -12,9 +12,10 @@ import "Tasks.js" as Tasks
 // line only for the first line of its notes. Click opens it, right click the shared event menu;
 // the check marks it done / not done. Done ones are dimmed and struck through. Hovered (or with the
 // keyboard focus): buttons for due today / tomorrow, edit and delete, in place of the list and chip.
+// Its priority: a flag in the priority's color at the right end (also while the buttons show).
 // With draggable, press and drag past the start drag distance drags it (dragStarted, dragMoved,
 // dropped, dragCanceled; points in scene coordinates); the click that ends a drag isn't a click.
-// The check's color is the task's priority (TaskCheck); when it's due has its time ("Today 14:00").
+// The check's color is the task's priority too (TaskCheck); when it's due has its time ("Today 14:00").
 // A subtask (Google: a task with a parent) is indented by depth. TickTick's checklist: "2/5" with
 // a chevron, which shows the items below the title, each with a small check of its own.
 LinkRect {
@@ -239,10 +240,10 @@ LinkRect {
 	// The list (by date) and when it's due, at the right end of the title's line.
 	readonly property bool showListName: !cardStyle && !compact && !!showList
 	readonly property bool showDueChip: !cardStyle && showChip
+	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact)
 	// The priority as a flag in its color, last on the title's line (not once done).
 	readonly property string priorityKey: Tasks.priorityKey(eventItem)
 	readonly property bool showPriorityFlag: priorityKey !== 'none' && !done
-	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact) || showPriorityFlag
 
 	Rectangle {
 		visible: taskRow.showStripe
@@ -276,7 +277,6 @@ LinkRect {
 			color: taskRow.listColor
 			square: taskRow.cardStyle
 			overdue: taskRow.overdue
-			showPriority: false // The flag after the title shows it
 			opacity: taskRow.doneOpacity
 			onToggled: function(done) { taskRow.checkToggled(taskRow.eventItem, done) }
 		}
@@ -287,7 +287,7 @@ LinkRect {
 			Layout.alignment: Qt.AlignTop
 			spacing: 1
 
-			// The title (a flag at the row's right end shows the priority).
+			// The title.
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
@@ -452,7 +452,7 @@ LinkRect {
 			// Islands: the repeat icon and the date as text, on the title's line (one line, so the row
 			// keeps its height when the hover buttons take their place).
 			Row {
-				visible: taskRow.cardStyle
+				visible: taskRow.cardStyle && (taskRow.showDueText || (taskRow.repeats && !taskRow.compact))
 				Layout.alignment: Qt.AlignVCenter
 				spacing: Kirigami.Units.smallSpacing
 				Kirigami.Icon {
@@ -474,16 +474,7 @@ LinkRect {
 					color: taskRow.overdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.linkColor
 				}
 			}
-			Kirigami.Icon {
-				visible: taskRow.showPriorityFlag
-				Layout.alignment: Qt.AlignVCenter
-				implicitWidth: Math.round(titleLabel.implicitHeight * 0.75)
-				implicitHeight: implicitWidth
-				source: "flag"
-				isMask: true
-				color: Tasks.priorityColor(taskRow.priorityKey)
-				Accessible.name: taskRow.priorityKey === 'high' ? i18n("High priority") : taskRow.priorityKey === 'medium' ? i18n("Medium priority") : i18n("Low priority")
-			}
+
 		}
 
 		// The hover buttons, centered on the title's line: they take no height.
@@ -523,6 +514,25 @@ LinkRect {
 					text: i18n("Delete")
 					onClicked: taskRow.remove()
 				}
+			}
+		}
+
+		// The priority: a flag in its color at the right end, also while the hover buttons show.
+		Item {
+			visible: taskRow.showPriorityFlag
+			Layout.alignment: Qt.AlignTop
+			implicitWidth: priorityFlag.width
+			implicitHeight: titleLabel.implicitHeight
+			opacity: taskRow.doneOpacity
+			Kirigami.Icon {
+				id: priorityFlag
+				anchors.verticalCenter: parent.verticalCenter
+				width: Math.round(Kirigami.Units.iconSizes.small * 0.85)
+				height: width
+				source: "flag"
+				isMask: true
+				color: Tasks.priorityColor(taskRow.priorityKey)
+				Accessible.name: taskRow.priorityKey === 'high' ? i18n("High priority") : taskRow.priorityKey === 'medium' ? i18n("Medium priority") : i18n("Low priority")
 			}
 		}
 	}
