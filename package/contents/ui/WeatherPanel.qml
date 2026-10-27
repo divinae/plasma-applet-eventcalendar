@@ -42,27 +42,26 @@ ColumnLayout {
 		return mm > 0 ? i18nc("precipitation in mm", "%1 mm", Math.round(mm * 10) / 10) : ""
 	}
 
-	// A line, then the section name: as large as the text below it, dimmed.
+	// The section name, underlined: a line below it, then the section's content.
 	component SectionTitle: ColumnLayout {
 		property alias text: titleLabel.text
-		property bool showSeparator: true
+		// The first section (right below the location): less room above.
+		property bool first: false
 		Layout.fillWidth: true
-		Layout.topMargin: showSeparator ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.largeSpacing
-		Kirigami.Separator {
-			visible: parent.showSeparator
-			Layout.fillWidth: true
-			opacity: appletConfig.darkTheme ? 0.6 : 1
-		}
+		Layout.topMargin: first ? Kirigami.Units.largeSpacing : Kirigami.Units.largeSpacing * 2
+		Layout.bottomMargin: Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.smallSpacing
 		PlasmaComponents3.Label {
 			id: titleLabel
 			Layout.fillWidth: true
 			textFormat: Text.PlainText
-			// Some room before the section's content.
-			Layout.bottomMargin: Kirigami.Units.smallSpacing
 			// Above the text below it: larger and bolder, not dimmed.
 			font.weight: Font.DemiBold
 			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.1
+		}
+		Kirigami.Separator {
+			Layout.fillWidth: true
+			opacity: appletConfig.darkTheme ? 0.6 : 1
 		}
 	}
 
@@ -182,8 +181,7 @@ ColumnLayout {
 	readonly property bool showDaySummary: !isToday && !!today
 	SectionTitle {
 		visible: panel.showData && !panel.compact && (!!panel.current || panel.showDaySummary)
-		// Apart from the location above it, like the other sections.
-		showSeparator: !!panel.locationName
+		first: true
 		text: panel.isToday ? i18nc("current weather", "Now") : i18nc("weather of the day shown in the Day view", "Forecast")
 	}
 	RowLayout {
