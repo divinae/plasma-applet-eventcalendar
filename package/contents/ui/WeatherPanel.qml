@@ -58,6 +58,8 @@ ColumnLayout {
 			id: titleLabel
 			Layout.fillWidth: true
 			textFormat: Text.PlainText
+			// Some room before the section's content.
+			Layout.bottomMargin: Kirigami.Units.smallSpacing
 			// Above the text below it: larger and bolder, not dimmed.
 			font.weight: Font.DemiBold
 			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.1
