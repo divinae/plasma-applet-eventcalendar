@@ -22,15 +22,42 @@ ColumnLayout {
 	// Kept short: a glance at what's next, not a second agenda.
 	property int limit: 5
 	property int days: 3
+	// The height it may take (0: no limit): only the events that fit whole are listed.
+	property real maxHeight: 0
+	readonly property real titleHeight: titleMetrics.height * 1.25 + spacing
+	readonly property real dayHeight: titleMetrics.height + Kirigami.Units.smallSpacing + 2
+	readonly property real eventHeight: titleMetrics.height + 6 + 2
+	FontMetrics {
+		id: titleMetrics
+		font: Kirigami.Theme.defaultFont
+	}
 
 	signal dayRequested(date day)
 
 	readonly property var entries: {
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
 		var until = Shared.addDays(Shared.startOfDay(after), days).getTime()
-		return Shared.upcomingEvents(items, after, limit).filter(function(entry) {
+		var list = Shared.upcomingEvents(items, after, limit).filter(function(entry) {
 			return entry.day.getTime() < until
 		})
+		if (maxHeight <= 0) {
+			return list
+		}
+		// As many as fit, with their days' headings.
+		var used = titleHeight + Kirigami.Units.smallSpacing * 2
+		var lastKey = null
+		var fit = []
+		for (var i = 0; i < list.length; i++) {
+			var key = Shared.dayKey(list[i].day)
+			var add = eventHeight + (key !== lastKey ? dayHeight : 0)
+			if (used + add > maxHeight) {
+				break
+			}
+			used += add
+			lastKey = key
+			fit.push(list[i])
+		}
+		return fit
 	}
 	// The entries with a heading row before each day's first: [{ type: 'day' | 'event', … }].
 	readonly property var rows: {
