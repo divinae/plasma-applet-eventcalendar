@@ -104,7 +104,7 @@ Item {
 		field.forceActiveFocus()
 	}
 	function priorityColor(priority) {
-		return priority >= 5 ? "#e03b30" : priority >= 3 ? "#f0a020" : "#4c7cf6" // TaskCheck's
+		return Tasks.priorityColor(Tasks.priorityKey(priority)) || Tasks.priorityColor('low')
 	}
 	function dateFrom(day) {
 		var parts = day.split('-')

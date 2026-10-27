@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 10:10+0100\n"
+"POT-Creation-Date: 2026-10-27 10:17+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1499,6 +1499,10 @@ msgstr "至"
 #: ../contents/ui/EventContextMenu.qml
 msgid "Move to List"
 msgstr "移至列表"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Couldn't save the task"
+msgstr "无法保存任务"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
 msgid "Priority"

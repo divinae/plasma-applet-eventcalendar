@@ -101,24 +101,39 @@ PlasmaComponents3.Menu {
 		}
 	}
 
+	// A change of the task (priority, due date): saved, or an error in the popup's banner.
+	function saveTask(changes) {
+		var shownPopup = popup
+		eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.editBody(changes), {
+			done: function(err) {
+				if (err && shownPopup) {
+					shownPopup.showError(i18n("Couldn't save the task"))
+				}
+			},
+		})
+	}
+
 	// Priority (TickTick): high, medium, low, none; the current one checked.
 	function setPriority(value) {
-		eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.editBody({ priority: value }), {})
+		saveTask({ priority: value })
 	}
 	property PlasmaComponents3.Menu priorityMenu: PlasmaComponents3.Menu {
 		title: i18n("Priority")
 		icon.name: "flag"
 		Repeater {
 			model: [
-				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority"), color: "#e03b30" },
-				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority"), color: "#f0a020" },
-				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority"), color: "#4c7cf6" },
+				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority"), color: Tasks.priorityColor('high') },
+				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority"), color: Tasks.priorityColor('medium') },
+				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority"), color: Tasks.priorityColor('low') },
 				{ value: Tasks.PRIORITY_NONE, text: i18nc("task priority", "No priority"), color: "" },
 			]
 			PlasmaComponents3.MenuItem {
 				id: priorityItem
 				readonly property bool current: !!eventMenu.eventItem && Tasks.priorityOf(eventMenu.eventItem) === modelData.value
 				text: modelData.text
+				Accessible.role: Accessible.RadioButton
+				Accessible.checkable: true
+				Accessible.checked: current
 				// A flag in the priority's color (grey: none), a check after the current one.
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing
@@ -133,11 +148,14 @@ PlasmaComponents3.Menu {
 						Layout.fillWidth: true
 						text: priorityItem.text
 						textFormat: Text.PlainText
+						font: priorityItem.font
+						color: priorityItem.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 					}
 					Kirigami.Icon {
 						implicitWidth: Kirigami.Units.iconSizes.small
 						implicitHeight: implicitWidth
 						source: "checkmark"
+						color: priorityItem.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 						opacity: priorityItem.current ? 1 : 0
 					}
 				}
@@ -148,7 +166,12 @@ PlasmaComponents3.Menu {
 
 	// Due date: today, tomorrow, the start of next week, none (the time, if any, is kept).
 	function setDue(day) {
-		eventModel.setEventProperties(eventItem.calendarId, eventItem.id, Tasks.editBody({ dueDay: day }), {})
+		saveTask({ dueDay: day })
+	}
+	// The start of next week, a week later when that's tomorrow (eg: Sunday, the week from Monday).
+	readonly property string nextWeekDay: {
+		var day = Tasks.nextWeekStart(today, firstDayOfWeek)
+		return day === Tasks.addDays(today, 1) ? Tasks.addDays(day, 7) : day
 	}
 	readonly property string today: Tasks.dayString(timeModel.currentTime)
 	readonly property int firstDayOfWeek: {
@@ -157,12 +180,12 @@ PlasmaComponents3.Menu {
 	}
 	property PlasmaComponents3.Menu dueMenu: PlasmaComponents3.Menu {
 		title: i18n("Due date")
-		icon.name: "view-calendar-day"
+		icon.name: "view-calendar-upcoming-events"
 		Repeater {
 			model: [
 				{ day: eventMenu.today, text: i18nc("tasks filter", "Today"), icon: "go-jump-today" },
 				{ day: Tasks.addDays(eventMenu.today, 1), text: i18nc("tasks filter", "Tomorrow"), icon: "go-next" },
-				{ day: Tasks.nextWeekStart(eventMenu.today, eventMenu.firstDayOfWeek), text: i18n("Next week"), icon: "go-next-skip" },
+				{ day: eventMenu.nextWeekDay, text: i18n("Next week"), icon: "go-next-skip" },
 				{ day: '', text: i18nc("tasks filter", "No date"), icon: "edit-clear" },
 			]
 			PlasmaComponents3.MenuItem {

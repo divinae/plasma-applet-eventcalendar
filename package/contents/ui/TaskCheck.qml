@@ -37,10 +37,7 @@ Item {
 
 	// 'high', 'medium', 'low' or 'none' (Tasks.priorityKey); none for a checklist item.
 	readonly property string priority: subtaskId ? 'none' : Tasks.priorityKey(eventItem)
-	readonly property color priorityColor: priority === 'high' ? "#e03b30"
-		: priority === 'medium' ? "#f0a020"
-		: priority === 'low' ? "#4c7cf6"
-		: color
+	readonly property color priorityColor: Tasks.priorityColor(priority) || color
 	readonly property bool hasPriority: priority !== 'none'
 	// Marked in progress (the widget's own mark, Tasks.isInProgress): half filled.
 	readonly property bool inProgress: !subtaskId && !done && Tasks.isInProgress(eventItem, plasmoid.configuration.tasksInProgress)

@@ -182,6 +182,12 @@ function cleanRepeatRule(rule) {
 	return typeof rule === 'string' ? rule.trim() : ''
 }
 
+// A priority's color (like TickTick: high red, medium orange, low blue), '' for none. key:
+// priorityKey's 'high' | 'medium' | 'low' | 'none'.
+function priorityColor(key) {
+	return key === 'high' ? '#e03b30' : key === 'medium' ? '#f0a020' : key === 'low' ? '#4c7cf6' : ''
+}
+
 // The priority's name: 'high', 'medium', 'low' or 'none' (the check's color, like TickTick).
 function priorityKey(itemOrValue) {
 	switch (priorityOf(itemOrValue)) {
