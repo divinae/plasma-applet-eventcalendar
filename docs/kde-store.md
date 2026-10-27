@@ -58,7 +58,8 @@ This is a maintained Plasma 6 fork of Event Calendar by Chris Holland (Zren), vi
 
 Views (switch from the popup's header)
 - Month: event titles in the days, multi-day events as bars across them
-- Week and Day: an hour grid you can scroll through the whole day; drag events to move or resize them; the Day view has a weather panel for the day shown
+- Week and Day: an hour grid you can scroll through the whole day; drag events to move or resize them
+- Day: beside the hours a small month (dots on busy days), Up next, the day's tasks and its weather; each panel can be turned off
 - Agenda: upcoming days as event tiles
 - Tasks: your Google Tasks and TickTick lists
 - Islands style (rounded cards, the default) or flat
@@ -123,7 +124,7 @@ Fixes
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
-  2. `today.png` (Day view: weather and tasks)
+  2. `today.png` (Day view: small month, Up next, the hours, tasks and weather)
   3. `tasks.png`
   4. `week.png`
   5. `agenda.png`

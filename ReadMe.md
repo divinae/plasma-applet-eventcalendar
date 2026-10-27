@@ -14,8 +14,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days,
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
-  the whole day; drag events to move or resize them; the Day view has a weather panel for the day
-  shown, and the day's tasks) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
+  the whole day; drag events to move or resize them; beside the Day view's hours: a small month
+  with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
   show or hide calendars from the header, a work week, a second time zone, keyboard navigation.
 - **Islands style** (default, or flat): the month grid, the Week view's grid, the Day view's
   weather, hour grid and tasks, each agenda day and each section of the Tasks tab sit in their own
