@@ -62,8 +62,9 @@ All shots use mock data.
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
-| ![Day view](docs/screenshots/today.png) **Day**: one day with a weather panel and Join buttons | ![Agenda](docs/screenshots/agenda.png) **Agenda**: upcoming days as event tiles |
-| ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts, calendars and task lists |
+| ![Day view](docs/screenshots/today.png) **Day**: weather, hours with Join buttons, the day's tasks | ![Tasks](docs/screenshots/tasks.png) **Tasks**: smart filters, priorities, in progress |
+| ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
+| ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts and calendars | ![View settings](docs/screenshots/settings-views.png) **Settings**: views and appearance |
 
 ## Install
 

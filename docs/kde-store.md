@@ -133,9 +133,10 @@ Settings
   1. `month.png`
   2. `week.png`
   3. `today.png` (Day view)
-  4. `agenda.png`
-  5. `event-details.png`
-  6. `settings-google.png`
+  4. `tasks.png`
+  5. `agenda.png`
+  6. `event-details.png`
+  7. `settings-google.png`
 - **Logo:** the Breeze `office-calendar` app icon as a 256×256 PNG:
   `rsvg-convert -w 256 -h 256 /usr/share/icons/breeze/apps/48/office-calendar.svg -o logo.png`
   (the widget itself uses the theme icon `view-calendar`).
