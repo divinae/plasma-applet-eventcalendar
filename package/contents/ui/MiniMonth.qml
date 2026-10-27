@@ -48,7 +48,7 @@ ColumnLayout {
 	}
 
 	readonly property real cellSize: Math.floor(width / 7)
-	readonly property real rowHeight: Math.round(Kirigami.Units.gridUnit * 1.45)
+	readonly property real rowHeight: Math.round(Kirigami.Units.gridUnit * 1.75)
 	spacing: 2
 
 	// "October 2026", previous, next.
@@ -58,7 +58,8 @@ ColumnLayout {
 		PlasmaComponents3.Label {
 			Layout.fillWidth: true
 			Layout.leftMargin: Kirigami.Units.smallSpacing
-			text: Shared.formatDate(miniMonth.monthStart, "MMMM yyyy")
+			// The standalone month name ("Październik", not the "Października" of a date).
+			text: Qt.locale().standaloneMonthName(miniMonth.monthStart.getMonth(), Locale.LongFormat) + " " + miniMonth.monthStart.getFullYear()
 			textFormat: Text.PlainText
 			font.weight: Font.DemiBold
 			font.capitalization: Font.Capitalize
