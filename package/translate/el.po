@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -467,6 +467,10 @@ msgstr "Αναβολή"
 msgid "0 = no Snooze button"
 msgstr "0 = χωρίς κουμπί Αναβολής"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "Ήχος"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "Όταν ξεκινά ένα συμβάν"
@@ -484,58 +488,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "Εμφανίζεται ακόμη και σε λειτουργία «Μην ενοχλείτε»"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "Ήχοι"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "Υπενθύμιση"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "Έναρξη συμβάντος"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "Άνοιγμα συνδέσμων σύσκεψης σε"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "Προεπιλεγμένος περιηγητής"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "Άλλη εντολή…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "Εντολή"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Λογαριασμός Google"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Προεπιλογή"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"Τα κουμπιά συμμετοχής ανοίγουν εδώ τους συνδέσμους Google Meet· οι άλλοι "
-"σύνδεσμοι σύσκεψης ανοίγουν στον προεπιλεγμένο περιηγητή. Σε μια εντολή, το "
-"%u αντιστοιχεί στον σύνδεσμο. Λογαριασμός Google: ο αριθμός του (0, 1, …) ή "
-"το email του, όπως στην εναλλαγή λογαριασμών της Google· κενό χρησιμοποιεί "
-"την προεπιλογή της εφαρμογής."
+msgid "\"Join meeting\" button"
+msgstr "Κουμπί «Συμμετοχή στη σύσκεψη»"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -581,8 +535,46 @@ msgid "Only meetings I accepted"
 msgstr "Μόνο συσκέψεις που αποδέχτηκα"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "Προσκλήσεις"
+msgid "Open Google Meet links in"
+msgstr "Άνοιγμα συνδέσμων Google Meet σε"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Προεπιλεγμένος περιηγητής"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Άλλη εντολή…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Εντολή"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Λογαριασμός Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Προεπιλογή"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"Τα κουμπιά συμμετοχής ανοίγουν εδώ τους συνδέσμους Google Meet· οι άλλοι "
+"σύνδεσμοι σύσκεψης ανοίγουν στον προεπιλεγμένο περιηγητή. Σε μια εντολή, το "
+"%u αντιστοιχεί στον σύνδεσμο. Λογαριασμός Google: ο αριθμός του (0, 1, …) ή "
+"το email του, όπως στην εναλλαγή λογαριασμών της Google· κενό χρησιμοποιεί "
+"την προεπιλογή της εφαρμογής."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "Άλλες ειδοποιήσεις"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -595,10 +587,6 @@ msgid ""
 msgstr ""
 "Μια ειδοποίηση για κάθε σημερινή σύσκεψη που δεν έχετε απαντήσει ακόμα, με "
 "Ναι, Ίσως και Όχι."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "Ημερήσια ατζέντα"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -615,18 +603,6 @@ msgstr ""
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "Στις"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "Όλες οι ειδοποιήσεις συμβάντων"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "Κουμπί «Συμμετοχή στη σύσκεψη»"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "Στην ειδοποίηση όταν ξεκινά μια σύσκεψη."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1200,101 +1176,12 @@ msgid "View switcher in the header"
 msgstr "Εναλλαγή προβολής στην κεφαλίδα"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "Πλάτος αναδυόμενου"
+msgid "Popup size"
+msgstr "Μέγεθος αναδυόμενου"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "Ύψος αναδυόμενου"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "Εβδομάδα και ημέρα"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "Εμφανιζόμενες ημέρες"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 ημέρες"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "Εργάσιμη εβδομάδα (χωρίς το Σαββατοκύριακο)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "Έναρξη ωραρίου εργασίας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "Λήξη ωραρίου εργασίας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "Δεύτερη ζώνη ώρας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "Καμία"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "Χωρίς δεύτερη ζώνη ώρας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr ""
-"Οι ώρες της εμφανίζονται δίπλα στις τοπικές στις προβολές Εβδομάδας και "
-"Ημέρας."
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "Αναζήτηση ζωνών ώρας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
-"Πρόγνωση στις κεφαλίδες των ημερών και, στην προβολή ημέρας, ένα πλαίσιο "
-"καιρού."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "Ημερολόγιο"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "Πρώτη ημέρα της εβδομάδας"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "Χρώματα συμβάντων"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Το API της Google επιστρέφει ακόμα μια παλαιότερη παλέτα· το «Όπως στο "
-"Ημερολόγιο Google» δείχνει την τρέχουσα. Η «Ακολούθηση του χρωματικού "
-"σχήματος του συστήματος» χρησιμοποιεί τα πλησιέστερα χρώματα του χρωματικού "
-"σχήματος του Plasma."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Όπως στο Ημερολόγιο Google"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "Κλασικά (όπως τα επιστρέφει η Google)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "Ακολούθηση του χρωματικού σχήματος του συστήματος"
+msgid "Appearance"
+msgstr "Εμφάνιση"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1330,8 +1217,43 @@ msgid "Filled in the event color"
 msgstr "Γεμάτα με το χρώμα του συμβάντος"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Χρώματα συμβάντων"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Το API της Google επιστρέφει ακόμα μια παλαιότερη παλέτα· το «Όπως στο "
+"Ημερολόγιο Google» δείχνει την τρέχουσα. Η «Ακολούθηση του χρωματικού "
+"σχήματος του συστήματος» χρησιμοποιεί τα πλησιέστερα χρώματα του χρωματικού "
+"σχήματος του Plasma."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Όπως στο Ημερολόγιο Google"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Κλασικά (όπως τα επιστρέφει η Google)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Ακολούθηση του χρωματικού σχήματος του συστήματος"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "Μέγεθος κειμένου γεγονότων"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "Ημερολόγιο"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "Πρώτη ημέρα της εβδομάδας"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1344,6 +1266,18 @@ msgstr "Το κλικ σε μια ημέρα την ανοίγει στην πρ
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "Προβολή μήνα"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "Διπλό κλικ σε ημέρα"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Νέο συμβάν στο Ημερολόγιο Google (περιηγητής)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "Καμία ενέργεια"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1359,16 +1293,54 @@ msgid "Hide"
 msgstr "Απόκρυψη"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "Διπλό κλικ σε ημέρα"
+msgid "Week and Day"
+msgstr "Εβδομάδα και ημέρα"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Νέο συμβάν στο Ημερολόγιο Google (περιηγητής)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Εμφανιζόμενες ημέρες"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "Καμία ενέργεια"
+msgid "7 days"
+msgstr "7 ημέρες"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "Εργάσιμη εβδομάδα (χωρίς το Σαββατοκύριακο)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "Ώρες εργασίας"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Δεύτερη ζώνη ώρας"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Καμία"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Χωρίς δεύτερη ζώνη ώρας"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr ""
+"Οι ώρες της εμφανίζονται δίπλα στις τοπικές στις προβολές Εβδομάδας και "
+"Ημέρας."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Αναζήτηση ζωνών ώρας"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
+"Πρόγνωση στις κεφαλίδες των ημερών και, στην προβολή ημέρας, ένα πλαίσιο "
+"καιρού."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3433,10 +3405,6 @@ msgstr ""
 "Κυλήστε ή χρησιμοποιήστε τα πλήκτρα συν και πλην για ρύθμιση της διάρκειας"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "Ήχος"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "Ορισμός χρονομετρητή"
 
@@ -3650,6 +3618,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "Ήχοι"
+
+#~ msgid "Reminder"
+#~ msgstr "Υπενθύμιση"
+
+#~ msgid "Event starts"
+#~ msgstr "Έναρξη συμβάντος"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "Άνοιγμα συνδέσμων σύσκεψης σε"
+
+#~ msgid "Invitations"
+#~ msgstr "Προσκλήσεις"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "Ημερήσια ατζέντα"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "Όλες οι ειδοποιήσεις συμβάντων"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "Στην ειδοποίηση όταν ξεκινά μια σύσκεψη."
+
+#~ msgid "Popup width"
+#~ msgstr "Πλάτος αναδυόμενου"
+
+#~ msgid "Popup height"
+#~ msgstr "Ύψος αναδυόμενου"
+
+#~ msgid "Working hours start"
+#~ msgstr "Έναρξη ωραρίου εργασίας"
+
+#~ msgid "Working hours end"
+#~ msgstr "Λήξη ωραρίου εργασίας"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,6 +419,10 @@ msgstr "Torkku"
 msgid "0 = no Snooze button"
 msgstr "0 = ei torkkupainiketta"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "Ääni"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "Kun tapahtuma alkaa"
@@ -436,49 +440,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "Näytetään myös Älä häiritse -tilassa"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "Äänet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "Muistutus"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "Tapahtuma alkaa"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "Avaa kokouslinkit sovelluksessa"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "Oletusselain"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "Muu komento…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "Komento"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Google-tili"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Oletus"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
-msgstr "Liity-painikkeet avaavat Google Meet -linkit siinä; muut kokouslinkit avautuvat oletusselaimessa. Komennossa %u tarkoittaa kokouslinkkiä. Google-tili: sen numero (0, 1, …) tai sähköposti kuten Googlen tilinvaihtajassa; tyhjä käyttää sovelluksen oletusta."
+msgid "\"Join meeting\" button"
+msgstr "\"Liity kokoukseen\" -painike"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -513,8 +476,37 @@ msgid "Only meetings I accepted"
 msgstr "Vain hyväksymäni kokoukset"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "Kutsut"
+msgid "Open Google Meet links in"
+msgstr "Avaa Google Meet -linkit sovelluksessa"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Oletusselain"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Muu komento…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Komento"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google-tili"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Oletus"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "Liity-painikkeet avaavat Google Meet -linkit siinä; muut kokouslinkit avautuvat oletusselaimessa. Komennossa %u tarkoittaa kokouslinkkiä. Google-tili: sen numero (0, 1, …) tai sähköposti kuten Googlen tilinvaihtajassa; tyhjä käyttää sovelluksen oletusta."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "Muut ilmoitukset"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -523,10 +515,6 @@ msgstr "Uudet kutsut tälle päivälle"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "Ilmoitus jokaisesta tämän päivän tapaamisesta, johon et ole vielä vastannut, ja valinnat Kyllä, Ehkä ja Ei."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "Päivän agenda"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -539,18 +527,6 @@ msgstr "Ilmoitus päivän tapahtumista kerran päivässä, myös jos tietokone k
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "Klo"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "Kaikki tapahtumailmoitukset"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "\"Liity kokoukseen\" -painike"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "Ilmoituksessa, kun kokous alkaa."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1019,90 +995,12 @@ msgid "View switcher in the header"
 msgstr "Näkymän vaihdin otsakkeessa"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "Ponnahdusikkunan leveys"
+msgid "Popup size"
+msgstr "Ponnahdusikkunan koko"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "Ponnahdusikkunan korkeus"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "Viikko ja päivä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "Näytettävät päivät"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 päivää"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "Työviikko (ilman viikonloppua)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "Työajan alku"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "Työajan loppu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "Toinen aikavyöhyke"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "Ei mitään"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "Ei toista aikavyöhykettä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr "Sen tunnit näytetään paikallisten vieressä viikko- ja päivänäkymissä."
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "Hae aikavyöhykkeitä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Sääennuste päivien otsikoissa ja päivänäkymässä sääpaneeli."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "Kalenteri"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "Viikon ensimmäinen päivä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "Tapahtumien värit"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
-msgstr "Googlen API palauttaa yhä vanhemman paletin; ”Kuten Google-kalenterissa” näyttää nykyisen. ”Seuraa järjestelmän väriteemaa” käyttää Plasman väriteeman lähimpiä värejä."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Kuten Google-kalenterissa"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "Klassiset (kuten Google ne palauttaa)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "Seuraa järjestelmän väriteemaa"
+msgid "Appearance"
+msgstr "Ulkoasu"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1133,8 +1031,36 @@ msgid "Filled in the event color"
 msgstr "Täytetty tapahtuman värillä"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Tapahtumien värit"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
+msgstr "Googlen API palauttaa yhä vanhemman paletin; ”Kuten Google-kalenterissa” näyttää nykyisen. ”Seuraa järjestelmän väriteemaa” käyttää Plasman väriteeman lähimpiä värejä."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Kuten Google-kalenterissa"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Klassiset (kuten Google ne palauttaa)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Seuraa järjestelmän väriteemaa"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "Tapahtumien tekstin koko"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "Kalenteri"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "Viikon ensimmäinen päivä"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1147,6 +1073,18 @@ msgstr "Päivän napsauttaminen avaa sen päivänäkymään"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "Kuukausinäkymä"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "Päivän kaksoisnapsautus"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Uusi tapahtuma Google-kalenterissa (selain)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "Älä tee mitään"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1162,16 +1100,50 @@ msgid "Hide"
 msgstr "Piilota"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "Päivän kaksoisnapsautus"
+msgid "Week and Day"
+msgstr "Viikko ja päivä"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Uusi tapahtuma Google-kalenterissa (selain)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Näytettävät päivät"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "Älä tee mitään"
+msgid "7 days"
+msgstr "7 päivää"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "Työviikko (ilman viikonloppua)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "Työaika"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Toinen aikavyöhyke"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Ei mitään"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Ei toista aikavyöhykettä"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "Sen tunnit näytetään paikallisten vieressä viikko- ja päivänäkymissä."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Hae aikavyöhykkeitä"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr "Sääennuste päivien otsikoissa ja päivänäkymässä sääpaneeli."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3171,10 +3143,6 @@ msgid "Scroll or use plus and minus keys to adjust duration"
 msgstr "Säädä kestoa vierittämällä tai plus- ja miinusnäppäimillä"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "Ääni"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "Aseta ajastin"
 
@@ -3385,6 +3353,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "Äänet"
+
+#~ msgid "Reminder"
+#~ msgstr "Muistutus"
+
+#~ msgid "Event starts"
+#~ msgstr "Tapahtuma alkaa"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "Avaa kokouslinkit sovelluksessa"
+
+#~ msgid "Invitations"
+#~ msgstr "Kutsut"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "Päivän agenda"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "Kaikki tapahtumailmoitukset"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "Ilmoituksessa, kun kokous alkaa."
+
+#~ msgid "Popup width"
+#~ msgstr "Ponnahdusikkunan leveys"
+
+#~ msgid "Popup height"
+#~ msgstr "Ponnahdusikkunan korkeus"
+
+#~ msgid "Working hours start"
+#~ msgstr "Työajan alku"
+
+#~ msgid "Working hours end"
+#~ msgstr "Työajan loppu"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

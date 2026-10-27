@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -468,6 +468,10 @@ msgstr "Dremež"
 msgid "0 = no Snooze button"
 msgstr "0 = brez gumba Dremež"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "Zvok"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "Ko se dogodek začne"
@@ -485,57 +489,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "Prikazano tudi v načinu Ne moti"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "Zvoki"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "Opomnik"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "Začetek dogodka"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "Odpri povezave do sestankov v"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "Privzeti brskalnik"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "Drug ukaz …"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "Ukaz"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Račun Google"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Ponastavi"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"Gumbi Pridruži se tam odprejo povezave Google Meet; druge povezave do "
-"sestankov se odprejo v privzetem brskalniku. V ukazu %u pomeni povezavo do "
-"sestanka. Račun Google: njegova številka (0, 1, …) ali e-pošta, kot v "
-"Googlovem preklopniku računov; prazno uporabi privzeto vrednost programa."
+msgid "\"Join meeting\" button"
+msgstr "Gumb »Pridruži se sestanku«"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -580,8 +535,45 @@ msgid "Only meetings I accepted"
 msgstr "Samo sestanki, ki sem jih sprejel"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "Povabila"
+msgid "Open Google Meet links in"
+msgstr "Odpri povezave Google Meet v"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Privzeti brskalnik"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Drug ukaz …"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Ukaz"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Račun Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Ponastavi"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"Gumbi Pridruži se tam odprejo povezave Google Meet; druge povezave do "
+"sestankov se odprejo v privzetem brskalniku. V ukazu %u pomeni povezavo do "
+"sestanka. Račun Google: njegova številka (0, 1, …) ali e-pošta, kot v "
+"Googlovem preklopniku računov; prazno uporabi privzeto vrednost programa."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "Druga obvestila"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -594,10 +586,6 @@ msgid ""
 msgstr ""
 "Obvestilo za vsak današnji sestanek, na katerega še niste odgovorili, z "
 "možnostmi Da, Morda in Ne."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "Dnevni red za danes"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -614,18 +602,6 @@ msgstr ""
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "Ob"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "Vsa obvestila o dogodkih"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "Gumb »Pridruži se sestanku«"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "V obvestilu, ko se sestanek začne."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1184,97 +1160,12 @@ msgid "View switcher in the header"
 msgstr "Preklopnik pogledov v glavi"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "Širina pojavnega okna"
+msgid "Popup size"
+msgstr "Velikost okna"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "Višina pojavnega okna"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "Teden in dan"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "Prikazani dnevi"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 dni"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "Delovni teden (brez vikenda)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "Začetek delovnega časa"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "Konec delovnega časa"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "Drugi časovni pas"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "Brez"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "Brez drugega časovnega pasu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr ""
-"Njegove ure so prikazane poleg krajevnih v tedenskem in dnevnem pogledu."
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "Iskanje časovnih pasov"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Napoved v glavah dni ter vremenska plošča v dnevnem pogledu."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "Koledar"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "Prvi dan tedna"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "Barve dogodkov"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Googlov API še vedno vrača starejšo paleto; »Kot v Googlovem koledarju« "
-"prikaže trenutno. »Sledi sistemski barvni shemi« uporabi najbližje barve "
-"vaše barvne sheme Plasma."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Kot v Googlovem koledarju"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "Klasične (kot jih vrne Google)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "Sledi sistemski barvni shemi"
+msgid "Appearance"
+msgstr "Videz"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1309,8 +1200,42 @@ msgid "Filled in the event color"
 msgstr "Zapolnjeni z barvo dogodka"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Barve dogodkov"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Googlov API še vedno vrača starejšo paleto; »Kot v Googlovem koledarju« "
+"prikaže trenutno. »Sledi sistemski barvni shemi« uporabi najbližje barve "
+"vaše barvne sheme Plasma."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Kot v Googlovem koledarju"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Klasične (kot jih vrne Google)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Sledi sistemski barvni shemi"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "Velikost besedila dogodkov"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "Koledar"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "Prvi dan tedna"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1323,6 +1248,18 @@ msgstr "Klik na dan ga odpre v dnevnem pogledu"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "Mesečni pogled"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "Dvoklik na dan"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Nov dogodek v Googlovem koledarju (brskalnik)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "Ne naredi ničesar"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1338,16 +1275,51 @@ msgid "Hide"
 msgstr "Skrij"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "Dvoklik na dan"
+msgid "Week and Day"
+msgstr "Teden in dan"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Nov dogodek v Googlovem koledarju (brskalnik)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Prikazani dnevi"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "Ne naredi ničesar"
+msgid "7 days"
+msgstr "7 dni"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "Delovni teden (brez vikenda)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "Delovni čas"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Drugi časovni pas"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Brez"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Brez drugega časovnega pasu"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr ""
+"Njegove ure so prikazane poleg krajevnih v tedenskem in dnevnem pogledu."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Iskanje časovnih pasov"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr "Napoved v glavah dni ter vremenska plošča v dnevnem pogledu."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3458,10 +3430,6 @@ msgstr ""
 "Za prilagoditev trajanja se pomaknite ali uporabite tipki plus in minus"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "Zvok"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "Določi ročno"
 
@@ -3689,6 +3657,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "Zvoki"
+
+#~ msgid "Reminder"
+#~ msgstr "Opomnik"
+
+#~ msgid "Event starts"
+#~ msgstr "Začetek dogodka"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "Odpri povezave do sestankov v"
+
+#~ msgid "Invitations"
+#~ msgstr "Povabila"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "Dnevni red za danes"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "Vsa obvestila o dogodkih"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "V obvestilu, ko se sestanek začne."
+
+#~ msgid "Popup width"
+#~ msgstr "Širina pojavnega okna"
+
+#~ msgid "Popup height"
+#~ msgstr "Višina pojavnega okna"
+
+#~ msgid "Working hours start"
+#~ msgstr "Začetek delovnega časa"
+
+#~ msgid "Working hours end"
+#~ msgstr "Konec delovnega časa"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

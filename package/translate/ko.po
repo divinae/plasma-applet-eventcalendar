@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -457,6 +457,10 @@ msgstr "다시 알림"
 msgid "0 = no Snooze button"
 msgstr "0 = 다시 알림 단추 없음"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "소리"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "이벤트 시작 시"
@@ -474,57 +478,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "방해 금지 모드에서도 표시"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "소리"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "미리 알림"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "이벤트 시작"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "회의 링크를 열 앱"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "기본 브라우저"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "다른 명령…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "명령"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Google 계정"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "기본"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"참가 단추는 여기에서 Google Meet 링크를 엽니다. 다른 회의 링크는 기본 브라우"
-"저에서 열립니다. 명령에서 %u는 회의 링크를 나타냅니다. Google 계정: Google 계"
-"정 전환기와 같은 번호(0, 1, …) 또는 이메일이며, 비워 두면 앱의 기본값을 사용"
-"합니다."
+msgid "\"Join meeting\" button"
+msgstr "\"회의 참가\" 단추"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -567,8 +522,45 @@ msgid "Only meetings I accepted"
 msgstr "수락한 회의만"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "초대"
+msgid "Open Google Meet links in"
+msgstr "Google Meet 링크 열기"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "기본 브라우저"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "다른 명령…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "명령"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google 계정"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "기본"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"참가 단추는 여기에서 Google Meet 링크를 엽니다. 다른 회의 링크는 기본 브라우"
+"저에서 열립니다. 명령에서 %u는 회의 링크를 나타냅니다. Google 계정: Google 계"
+"정 전환기와 같은 번호(0, 1, …) 또는 이메일이며, 비워 두면 앱의 기본값을 사용"
+"합니다."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "기타 알림"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -581,10 +573,6 @@ msgid ""
 msgstr ""
 "아직 답하지 않은 오늘의 회의마다 예, 미정, 아니요를 선택할 수 있는 알림을 표"
 "시합니다."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "오늘의 일정"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -601,18 +589,6 @@ msgstr ""
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "시각"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "모든 이벤트 알림"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "\"회의 참가\" 단추"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "회의가 시작될 때 알림에 표시합니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1168,97 +1144,12 @@ msgid "View switcher in the header"
 msgstr "헤더의 보기 전환기"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "팝업 너비"
+msgid "Popup size"
+msgstr "팝업 크기"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "팝업 높이"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "주 및 일"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "표시할 요일"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7일"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "근무 주간 (주말 제외)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "근무 시간 시작"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "근무 시간 종료"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "보조 시간대"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "없음"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "보조 시간대 없음"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr "주 및 일 보기에서 로컬 시간 옆에 해당 시간이 표시됩니다."
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "시간대 검색"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
-"날짜 헤더에 일기 예보를 표시하고, 일 보기에서는 날씨 패널을 표시합니다."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "달력"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "한 주의 시작 요일"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "이벤트 색상"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Google API는 아직 이전 팔레트를 반환합니다. \"Google 캘린더와 같게\"는 현재 "
-"색상을 표시합니다. \"시스템 색 구성표 따르기\"는 Plasma 색 구성표에서 가장 가"
-"까운 색을 사용합니다."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Google 캘린더와 같게"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "클래식(Google에서 반환한 색상)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "시스템 색 구성표 따르기"
+msgid "Appearance"
+msgstr "모양"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1293,8 +1184,42 @@ msgid "Filled in the event color"
 msgstr "일정 색으로 채우기"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "이벤트 색상"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Google API는 아직 이전 팔레트를 반환합니다. \"Google 캘린더와 같게\"는 현재 "
+"색상을 표시합니다. \"시스템 색 구성표 따르기\"는 Plasma 색 구성표에서 가장 가"
+"까운 색을 사용합니다."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Google 캘린더와 같게"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "클래식(Google에서 반환한 색상)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "시스템 색 구성표 따르기"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "일정 글자 크기"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "달력"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "한 주의 시작 요일"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1307,6 +1232,18 @@ msgstr "날짜를 클릭하면 일 보기에서 열기"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "월 보기"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "날짜를 두 번 클릭할 때"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Google 캘린더에서 새 이벤트(브라우저)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "아무것도 하지 않음"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1322,16 +1259,51 @@ msgid "Hide"
 msgstr "숨기기"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "날짜를 두 번 클릭할 때"
+msgid "Week and Day"
+msgstr "주 및 일"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Google 캘린더에서 새 이벤트(브라우저)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "표시할 요일"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "아무것도 하지 않음"
+msgid "7 days"
+msgstr "7일"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "근무 주간 (주말 제외)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "근무 시간"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "보조 시간대"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "없음"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "보조 시간대 없음"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "주 및 일 보기에서 로컬 시간 옆에 해당 시간이 표시됩니다."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "시간대 검색"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr ""
+"날짜 헤더에 일기 예보를 표시하고, 일 보기에서는 날씨 패널을 표시합니다."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3353,10 +3325,6 @@ msgid "Scroll or use plus and minus keys to adjust duration"
 msgstr "스크롤하거나 더하기/빼기 키로 시간 조정"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "소리"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "타이머 설정"
 
@@ -3560,6 +3528,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "소리"
+
+#~ msgid "Reminder"
+#~ msgstr "미리 알림"
+
+#~ msgid "Event starts"
+#~ msgstr "이벤트 시작"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "회의 링크를 열 앱"
+
+#~ msgid "Invitations"
+#~ msgstr "초대"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "오늘의 일정"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "모든 이벤트 알림"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "회의가 시작될 때 알림에 표시합니다."
+
+#~ msgid "Popup width"
+#~ msgstr "팝업 너비"
+
+#~ msgid "Popup height"
+#~ msgstr "팝업 높이"
+
+#~ msgid "Working hours start"
+#~ msgstr "근무 시간 시작"
+
+#~ msgid "Working hours end"
+#~ msgstr "근무 시간 종료"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

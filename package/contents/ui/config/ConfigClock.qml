@@ -152,9 +152,9 @@ ConfigPage {
 				description: i18n("Eg: the date")
 				configKey: 'clockShowLine2'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: clockShowLine2.checked }
 			LabeledRow {
-				enabled: clockShowLine2.checked
+				visible: clockShowLine2.checked
 				title: i18n("Format")
 				FormatPicker {
 					Layout.fillWidth: true
@@ -162,15 +162,15 @@ ConfigPage {
 					presets: page.datePresets
 				}
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: clockShowLine2.checked }
 			FormConfigSwitch {
-				enabled: clockShowLine2.checked
+				visible: clockShowLine2.checked
 				text: i18n("Bold")
 				configKey: 'clockLineBold2'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: clockShowLine2.checked }
 			LabeledRow {
-				enabled: clockShowLine2.checked
+				visible: clockShowLine2.checked
 				title: i18n("Size")
 				ConfigSlider {
 					Layout.fillWidth: true
@@ -192,18 +192,18 @@ ConfigPage {
 				text: i18n("Show next to the clock")
 				configKey: 'clockShowNextEvent'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
 			FormConfigSpin {
-				enabled: clockShowNextEvent.checked
+				visible: clockShowNextEvent.checked
 				label: i18n("When it starts within")
 				configKey: 'clockNextEventMinutes'
 				suffix: i18n(" min")
 				from: 5
 				to: 1440
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
 			FormConfigSwitch {
-				enabled: clockShowNextEvent.checked
+				visible: clockShowNextEvent.checked
 				text: i18n("Progress of the current meeting")
 				description: i18n("A thin bar under the meeting's name, in its calendar's color.")
 				configKey: 'clockShowMeetingProgress'

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -418,6 +418,10 @@ msgstr "Drzemka"
 msgid "0 = no Snooze button"
 msgstr "0 = bez przycisku Drzemka"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "Dźwięk"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "Gdy zaczyna się wydarzenie"
@@ -435,49 +439,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "Wyświetlane nawet w trybie Nie przeszkadzać"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "Dźwięki"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "Przypomnienie"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "Początek wydarzenia"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "Otwieraj linki spotkań w"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "Domyślna przeglądarka"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "Inne polecenie…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "Polecenie"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Konto Google"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "Domyślna"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
-msgstr "Przyciski Dołącz otwierają tam linki Google Meet; inne linki spotkań otwierają się w domyślnej przeglądarce. W poleceniu %u oznacza link do spotkania. Konto Google: jego numer (0, 1, …) albo e-mail, jak w przełączniku kont Google; puste oznacza domyślne konto aplikacji."
+msgid "\"Join meeting\" button"
+msgstr "Przycisk „Dołącz do spotkania”"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -512,8 +475,37 @@ msgid "Only meetings I accepted"
 msgstr "Tylko zaakceptowane przeze mnie spotkania"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "Zaproszenia"
+msgid "Open Google Meet links in"
+msgstr "Otwieraj linki Google Meet w"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "Domyślna przeglądarka"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "Inne polecenie…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "Polecenie"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Konto Google"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "Domyślna"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "Przyciski Dołącz otwierają tam linki Google Meet; inne linki spotkań otwierają się w domyślnej przeglądarce. W poleceniu %u oznacza link do spotkania. Konto Google: jego numer (0, 1, …) albo e-mail, jak w przełączniku kont Google; puste oznacza domyślne konto aplikacji."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "Inne powiadomienia"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -522,10 +514,6 @@ msgstr "Nowe zaproszenia na dziś"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "Powiadomienie o każdym dzisiejszym spotkaniu, na które jeszcze nie odpowiedziałeś, z opcjami Tak, Może i Nie."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "Dzienny harmonogram"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -538,18 +526,6 @@ msgstr "Powiadomienie z dzisiejszymi wydarzeniami raz dziennie, także gdy kompu
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "O"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "Wszystkie powiadomienia o wydarzeniach"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "Przycisk „Dołącz do spotkania”"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "W powiadomieniu, gdy spotkanie się zaczyna."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1018,90 +994,12 @@ msgid "View switcher in the header"
 msgstr "Przełącznik widoków w nagłówku"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "Szerokość okna"
+msgid "Popup size"
+msgstr "Rozmiar okna"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "Wysokość okna"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "Tydzień i dzień"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "Wyświetlane dni"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 dni"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "Tydzień roboczy (bez weekendu)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "Początek godzin pracy"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "Koniec godzin pracy"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "Druga strefa czasowa"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "Brak"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "Brak drugiej strefy czasowej"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr "Jej godziny są pokazywane obok lokalnych w widokach tygodnia i dnia."
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "Szukaj stref czasowych"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Prognoza w nagłówkach dni oraz panel pogody w widoku dnia."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "Kalendarz"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "Pierwszy dzień tygodnia"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "Kolory wydarzeń"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
-msgstr "API Google wciąż zwraca starszą paletę; „Jak w Kalendarzu Google” pokazuje obecną. „Zgodnie ze schematem kolorów systemu” używa najbliższych kolorów z Twojego schematu kolorów Plasmy."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Jak w Kalendarzu Google"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "Klasyczne (zwracane przez Google)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "Zgodnie ze schematem kolorów systemu"
+msgid "Appearance"
+msgstr "Wygląd"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1132,8 +1030,36 @@ msgid "Filled in the event color"
 msgstr "Wypełnione kolorem wydarzenia"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "Kolory wydarzeń"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
+msgstr "API Google wciąż zwraca starszą paletę; „Jak w Kalendarzu Google” pokazuje obecną. „Zgodnie ze schematem kolorów systemu” używa najbliższych kolorów z Twojego schematu kolorów Plasmy."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Jak w Kalendarzu Google"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "Klasyczne (zwracane przez Google)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "Zgodnie ze schematem kolorów systemu"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "Rozmiar tekstu wydarzeń"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "Kalendarz"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "Pierwszy dzień tygodnia"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1146,6 +1072,18 @@ msgstr "Kliknięcie dnia otwiera go w widoku dnia"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "Widok miesiąca"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "Dwukrotne kliknięcie dnia"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Nowe wydarzenie w Kalendarzu Google (przeglądarka)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "Nic nie rób"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1161,16 +1099,50 @@ msgid "Hide"
 msgstr "Ukryj"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "Dwukrotne kliknięcie dnia"
+msgid "Week and Day"
+msgstr "Tydzień i dzień"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Nowe wydarzenie w Kalendarzu Google (przeglądarka)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "Wyświetlane dni"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "Nic nie rób"
+msgid "7 days"
+msgstr "7 dni"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "Tydzień roboczy (bez weekendu)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "Godziny pracy"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "Druga strefa czasowa"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "Brak"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "Brak drugiej strefy czasowej"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "Jej godziny są pokazywane obok lokalnych w widokach tygodnia i dnia."
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "Szukaj stref czasowych"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr "Prognoza w nagłówkach dni oraz panel pogody w widoku dnia."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3199,10 +3171,6 @@ msgid "Scroll or use plus and minus keys to adjust duration"
 msgstr "Przewiń lub użyj klawiszy plus i minus, aby zmienić czas"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "Dźwięk"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "Ustaw minutnik"
 
@@ -3421,6 +3389,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "Dźwięki"
+
+#~ msgid "Reminder"
+#~ msgstr "Przypomnienie"
+
+#~ msgid "Event starts"
+#~ msgstr "Początek wydarzenia"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "Otwieraj linki spotkań w"
+
+#~ msgid "Invitations"
+#~ msgstr "Zaproszenia"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "Dzienny harmonogram"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "Wszystkie powiadomienia o wydarzeniach"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "W powiadomieniu, gdy spotkanie się zaczyna."
+
+#~ msgid "Popup width"
+#~ msgstr "Szerokość okna"
+
+#~ msgid "Popup height"
+#~ msgstr "Wysokość okna"
+
+#~ msgid "Working hours start"
+#~ msgstr "Początek godzin pracy"
+
+#~ msgid "Working hours end"
+#~ msgstr "Koniec godzin pracy"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

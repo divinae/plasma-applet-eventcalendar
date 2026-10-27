@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -413,6 +413,10 @@ msgstr "スヌーズ"
 msgid "0 = no Snooze button"
 msgstr "0 = スヌーズボタンなし"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "音"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "イベント開始時"
@@ -430,49 +434,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "おやすみモードでも表示"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "サウンド"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "リマインダー"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "イベント開始"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "会議リンクを開くアプリ"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "既定のブラウザ"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "その他のコマンド…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "コマンド"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Google アカウント"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "デフォルト"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
-msgstr "参加ボタンは Google Meet のリンクをここで開きます。その他の会議リンクは既定のブラウザで開きます。コマンドでは %u が会議リンクを表します。Google アカウント: Google のアカウント切り替えと同じ番号 (0、1、…) またはメールアドレス。空欄の場合はアプリの既定になります。"
+msgid "\"Join meeting\" button"
+msgstr "「会議に参加」ボタン"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -507,8 +470,37 @@ msgid "Only meetings I accepted"
 msgstr "承諾した会議のみ"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "招待"
+msgid "Open Google Meet links in"
+msgstr "Google Meet のリンクを開くアプリ"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "既定のブラウザ"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "その他のコマンド…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "コマンド"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google アカウント"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "デフォルト"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "参加ボタンは Google Meet のリンクをここで開きます。その他の会議リンクは既定のブラウザで開きます。コマンドでは %u が会議リンクを表します。Google アカウント: Google のアカウント切り替えと同じ番号 (0、1、…) またはメールアドレス。空欄の場合はアプリの既定になります。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "その他の通知"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -517,10 +509,6 @@ msgstr "今日の新しい招待"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
 msgstr "まだ返答していない今日の会議ごとに、はい・未定・いいえ を選べる通知を表示します。"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "毎日の予定"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -533,18 +521,6 @@ msgstr "今日のイベントを 1 日 1 回通知します。後でコンピュ
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "時刻"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "すべてのイベント通知"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "「会議に参加」ボタン"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "会議の開始時の通知に表示します。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1013,90 +989,12 @@ msgid "View switcher in the header"
 msgstr "ヘッダーのビュー切り替え"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "ポップアップの幅"
+msgid "Popup size"
+msgstr "ポップアップのサイズ"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "ポップアップの高さ"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "週と日"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "表示する日数"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 日間"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "平日のみ (週末を除く)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "勤務時間の開始"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "勤務時間の終了"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "2 つ目のタイムゾーン"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "なし"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "2 つ目のタイムゾーンなし"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr "週と日の表示で、その時刻がローカル時刻の横に表示されます。"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "タイムゾーンを検索"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "日の見出しに天気予報を、日ビューに天気パネルを表示します。"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "カレンダー"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "週の最初の曜日"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "イベントの色"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
-msgstr "Google の API はまだ古いパレットを返します。「Google Calendar と同じ」は現在の色を表示します。「システムの配色に従う」は Plasma の配色の最も近い色を使います。"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "Google Calendar と同じ"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "クラシック（Google が返す色）"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "システムの配色に従う"
+msgid "Appearance"
+msgstr "外観"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1127,8 +1025,36 @@ msgid "Filled in the event color"
 msgstr "予定の色で塗りつぶす"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "イベントの色"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
+msgstr "Google の API はまだ古いパレットを返します。「Google Calendar と同じ」は現在の色を表示します。「システムの配色に従う」は Plasma の配色の最も近い色を使います。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "Google Calendar と同じ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "クラシック（Google が返す色）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "システムの配色に従う"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "予定の文字サイズ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "カレンダー"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "週の最初の曜日"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1141,6 +1067,18 @@ msgstr "日をクリックすると日ビューで開く"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "月ビュー"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "日をダブルクリックしたとき"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "Google Calendar で新しいイベント (ブラウザー)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "何もしない"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1156,16 +1094,50 @@ msgid "Hide"
 msgstr "非表示"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "日をダブルクリックしたとき"
+msgid "Week and Day"
+msgstr "週と日"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "Google Calendar で新しいイベント (ブラウザー)"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "表示する日数"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "何もしない"
+msgid "7 days"
+msgstr "7 日間"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "平日のみ (週末を除く)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "勤務時間"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "2 つ目のタイムゾーン"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "なし"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "2 つ目のタイムゾーンなし"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "週と日の表示で、その時刻がローカル時刻の横に表示されます。"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "タイムゾーンを検索"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr "日の見出しに天気予報を、日ビューに天気パネルを表示します。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3136,10 +3108,6 @@ msgid "Scroll or use plus and minus keys to adjust duration"
 msgstr "スクロールするか、プラス/マイナスキーで時間を調整"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "音"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "タイマーセット"
 
@@ -3342,6 +3310,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Sounds"
+#~ msgstr "サウンド"
+
+#~ msgid "Reminder"
+#~ msgstr "リマインダー"
+
+#~ msgid "Event starts"
+#~ msgstr "イベント開始"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "会議リンクを開くアプリ"
+
+#~ msgid "Invitations"
+#~ msgstr "招待"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "毎日の予定"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "すべてのイベント通知"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "会議の開始時の通知に表示します。"
+
+#~ msgid "Popup width"
+#~ msgstr "ポップアップの幅"
+
+#~ msgid "Popup height"
+#~ msgstr "ポップアップの高さ"
+
+#~ msgid "Working hours start"
+#~ msgstr "勤務時間の開始"
+
+#~ msgid "Working hours end"
+#~ msgstr "勤務時間の終了"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

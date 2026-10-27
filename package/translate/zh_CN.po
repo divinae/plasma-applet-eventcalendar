@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:48+0100\n"
+"POT-Creation-Date: 2026-10-27 10:05+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -455,6 +455,10 @@ msgstr "稍后提醒"
 msgid "0 = no Snooze button"
 msgstr "0 = 不显示稍后提醒按钮"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+msgid "Sound"
+msgstr "声音"
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "When an Event Starts"
 msgstr "事件开始时"
@@ -472,56 +476,8 @@ msgid "Shown even in Do Not Disturb"
 msgstr "勿扰模式下也显示"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Sounds"
-msgstr "声音"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Reminder"
-msgstr "提醒"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Event starts"
-msgstr "事件开始"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google Meet"
-msgstr "Google Meet"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Open meeting links in"
-msgstr "会议链接打开方式"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Default browser"
-msgstr "默认浏览器"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Other command…"
-msgstr "其他命令…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Command"
-msgstr "命令"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Google account"
-msgstr "Google 账号"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
-msgid "Default"
-msgstr "默认"
-
-#: ../contents/ui/config/ConfigEvents.qml
-#, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"“加入”按钮会在这里打开 Google Meet 链接；其他会议链接在默认浏览器中打开。在命"
-"令中，%u 表示会议链接。Google 账号：其编号（0、1、…）或邮箱，与 Google 账号切"
-"换器一致；留空则使用应用的默认账号。"
+msgid "\"Join meeting\" button"
+msgstr "“加入会议”按钮"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Meetings"
@@ -564,8 +520,44 @@ msgid "Only meetings I accepted"
 msgstr "仅限我已接受的会议"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Invitations"
-msgstr "邀请"
+msgid "Open Google Meet links in"
+msgstr "Google Meet 链接打开方式"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Default browser"
+msgstr "默认浏览器"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other command…"
+msgstr "其他命令…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command"
+msgstr "命令"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google account"
+msgstr "Google 账号"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Default"
+msgstr "默认"
+
+#: ../contents/ui/config/ConfigEvents.qml
+#, c-format
+msgid ""
+"Join buttons open Google Meet links there; other meeting links open in the "
+"default browser. In a command, %u stands for the meeting link. Google "
+"account: its number (0, 1, …) or email, as in Google's account switcher; "
+"empty uses the app's default."
+msgstr ""
+"“加入”按钮会在这里打开 Google Meet 链接；其他会议链接在默认浏览器中打开。在命"
+"令中，%u 表示会议链接。Google 账号：其编号（0、1、…）或邮箱，与 Google 账号切"
+"换器一致；留空则使用应用的默认账号。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other Notifications"
+msgstr "其他通知"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "New invitations for today"
@@ -576,10 +568,6 @@ msgid ""
 "A notification for each meeting today you haven't answered yet, with Yes, "
 "Maybe and No."
 msgstr "为今天每个尚未答复的会议显示一条通知，可选择“是”、“可能”和“否”。"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Daily Agenda"
-msgstr "每日日程"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
@@ -594,18 +582,6 @@ msgstr "每天一次显示今天事件的通知，电脑较晚开机时也会显
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "时间"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "All Event Notifications"
-msgstr "所有事件通知"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "\"Join meeting\" button"
-msgstr "“加入会议”按钮"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "In the notification when a meeting starts."
-msgstr "在会议开始时的通知中。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip all-day events"
@@ -1141,95 +1117,12 @@ msgid "View switcher in the header"
 msgstr "标题栏中的视图切换器"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup width"
-msgstr "弹出窗口宽度"
+msgid "Popup size"
+msgstr "弹出窗口大小"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Popup height"
-msgstr "弹出窗口高度"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Week and Day"
-msgstr "周和日"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "week view setting"
-msgid "Days shown"
-msgstr "显示的天数"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "7 days"
-msgstr "7 天"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Work week (without the weekend)"
-msgstr "工作周（不含周末）"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours start"
-msgstr "工作时间开始"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Working hours end"
-msgstr "工作时间结束"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Second time zone"
-msgstr "第二时区"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgctxt "no second time zone"
-msgid "None"
-msgstr "无"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "No second time zone"
-msgstr "无第二时区"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr "其时间会在周视图和日视图中显示在本地时间旁边。"
-
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
-msgid "Search time zones"
-msgstr "搜索时区"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "在日期标题中显示天气预报，并在日视图中显示天气面板。"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Calendar"
-msgstr "日历"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "First day of week"
-msgstr "每周第一天"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Event colors"
-msgstr "事件颜色"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Google 的 API 仍返回旧调色板；“与 Google 日历一致”显示当前颜色。“跟随系统配色"
-"方案”使用 Plasma 配色方案中最接近的颜色。"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "As in Google Calendar"
-msgstr "与 Google 日历一致"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Classic (as returned by Google)"
-msgstr "经典（Google 返回的颜色）"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Follow the system color scheme"
-msgstr "跟随系统配色方案"
+msgid "Appearance"
+msgstr "外观"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Style"
@@ -1264,8 +1157,41 @@ msgid "Filled in the event color"
 msgstr "以事件颜色填充"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Event colors"
+msgstr "事件颜色"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Google's API still returns an older palette; \"As in Google Calendar\" shows "
+"the current one. \"Follow the system color scheme\" uses the nearest colors "
+"of your Plasma color scheme."
+msgstr ""
+"Google 的 API 仍返回旧调色板；“与 Google 日历一致”显示当前颜色。“跟随系统配色"
+"方案”使用 Plasma 配色方案中最接近的颜色。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "As in Google Calendar"
+msgstr "与 Google 日历一致"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Classic (as returned by Google)"
+msgstr "经典（Google 返回的颜色）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Follow the system color scheme"
+msgstr "跟随系统配色方案"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event text size"
 msgstr "事件文字大小"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Calendar"
+msgstr "日历"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "First day of week"
+msgstr "每周第一天"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
@@ -1278,6 +1204,18 @@ msgstr "单击某天时在日视图中打开"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view"
 msgstr "月视图"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Double-clicking a day"
+msgstr "双击某天时"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "New event in Google Calendar (browser)"
+msgstr "在 Google 日历中新建事件（浏览器）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Do nothing"
+msgstr "不执行任何操作"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Declined events"
@@ -1293,16 +1231,50 @@ msgid "Hide"
 msgstr "隐藏"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Double-clicking a day"
-msgstr "双击某天时"
+msgid "Week and Day"
+msgstr "周和日"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "New event in Google Calendar (browser)"
-msgstr "在 Google 日历中新建事件（浏览器）"
+msgctxt "week view setting"
+msgid "Days shown"
+msgstr "显示的天数"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Do nothing"
-msgstr "不执行任何操作"
+msgid "7 days"
+msgstr "7 天"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Work week (without the weekend)"
+msgstr "工作周（不含周末）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Working hours"
+msgstr "工作时间"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Second time zone"
+msgstr "第二时区"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "no second time zone"
+msgid "None"
+msgstr "无"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "No second time zone"
+msgstr "无第二时区"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Its hours are shown next to the local ones in the Week and Day views."
+msgstr "其时间会在周视图和日视图中显示在本地时间旁边。"
+
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
+msgid "Search time zones"
+msgstr "搜索时区"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgstr "在日期标题中显示天气预报，并在日视图中显示天气面板。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -3311,10 +3283,6 @@ msgid "Scroll or use plus and minus keys to adjust duration"
 msgstr "滚动或使用加号和减号键调整时长"
 
 #: ../contents/ui/TimerView.qml
-msgid "Sound"
-msgstr "声音"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
 msgstr "设置倒计时"
 
@@ -3518,6 +3486,45 @@ msgstr "+%1"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Sounds"
+#~ msgstr "声音"
+
+#~ msgid "Reminder"
+#~ msgstr "提醒"
+
+#~ msgid "Event starts"
+#~ msgstr "事件开始"
+
+#~ msgid "Google Meet"
+#~ msgstr "Google Meet"
+
+#~ msgid "Open meeting links in"
+#~ msgstr "会议链接打开方式"
+
+#~ msgid "Invitations"
+#~ msgstr "邀请"
+
+#~ msgid "Daily Agenda"
+#~ msgstr "每日日程"
+
+#~ msgid "All Event Notifications"
+#~ msgstr "所有事件通知"
+
+#~ msgid "In the notification when a meeting starts."
+#~ msgstr "在会议开始时的通知中。"
+
+#~ msgid "Popup width"
+#~ msgstr "弹出窗口宽度"
+
+#~ msgid "Popup height"
+#~ msgstr "弹出窗口高度"
+
+#~ msgid "Working hours start"
+#~ msgstr "工作时间开始"
+
+#~ msgid "Working hours end"
+#~ msgstr "工作时间结束"
 
 #~ msgctxt "today's high / low temperature"
 #~ msgid "Today: high %1, low %2"

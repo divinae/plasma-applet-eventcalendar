@@ -137,7 +137,7 @@ ConfigPage {
 			}
 		}
 
-		//--- Reminder
+		//--- Reminder (the options only while it's on)
 		FormCard.FormHeader {
 			title: i18n("Reminder Before an Event")
 		}
@@ -147,35 +147,35 @@ ConfigPage {
 				text: i18n("Show a reminder")
 				configKey: 'eventReminderNotificationEnabled'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
 			FormConfigSpin {
-				enabled: reminderEnabled.checked
+				visible: reminderEnabled.checked
 				label: i18n("Time before")
 				configKey: 'eventReminderMinutesBefore'
 				suffix: i18nc("Time in minutes", " min")
 				from: 1
 				to: 100000
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
 			FormConfigSwitch {
-				enabled: reminderEnabled.checked
+				visible: reminderEnabled.checked
 				text: i18n("Use the reminder times set in Google Calendar")
 				configKey: 'eventReminderUseGoogle'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
 			// eventReminderTimeout: 0 = keep until dismissed, N > 0 = hide after N seconds,
 			// -1 = Plasma's popup timeout (System Settings > Notifications).
 			FormCard.FormSwitchDelegate {
 				id: reminderKeep
-				enabled: reminderEnabled.checked
+				visible: reminderEnabled.checked
 				text: i18n("Keep until dismissed")
 				checked: page.configBridge.read("eventReminderTimeout", -1) === 0
 				onToggled: page.configBridge.write("eventReminderTimeout", checked ? 0 : (reminderHideAfter.value > 0 ? reminderHideAfter.value : -1))
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: reminderHideAfter.visible }
 			FormCard.FormSpinBoxDelegate {
 				id: reminderHideAfter
-				enabled: reminderEnabled.checked && !reminderKeep.checked
+				visible: reminderEnabled.checked && !reminderKeep.checked
 				label: i18n("Hide after")
 				// 0 shows as the system's timeout.
 				value: Math.max(0, page.configBridge.read("eventReminderTimeout", -1))
@@ -197,18 +197,25 @@ ConfigPage {
 				}
 			}
 			FormCard.FormSectionText {
-				visible: reminderHideAfter.enabled
+				visible: reminderHideAfter.visible
 				text: i18n("System default: as set in System Settings > Notifications. A reminder hidden after a set time isn't kept in the notification history.")
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
 			FormConfigSpin {
-				enabled: reminderEnabled.checked
+				visible: reminderEnabled.checked
 				label: i18n("Snooze")
 				hint: i18n("0 = no Snooze button")
 				configKey: 'eventReminderSnoozeMinutes'
 				suffix: i18nc("Time in minutes", " min")
 				from: 0
 				to: 120
+			}
+			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
+			SoundRow {
+				visible: reminderEnabled.checked
+				label: i18n("Sound")
+				sfxEnabledKey: 'eventReminderSfxEnabled'
+				sfxPathKey: 'eventReminderSfxPath'
 			}
 		}
 
@@ -222,49 +229,67 @@ ConfigPage {
 				text: i18n("Show a notification")
 				configKey: 'eventStartingNotificationEnabled'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
 			FormConfigSwitch {
-				enabled: startingEnabled.checked
+				visible: startingEnabled.checked
 				text: i18n("Keep until dismissed")
 				configKey: 'eventStartingPersistent'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
 			FormConfigSwitch {
-				enabled: startingEnabled.checked
+				visible: startingEnabled.checked
 				text: i18n("Critical")
 				description: i18n("Shown even in Do Not Disturb")
 				configKey: 'eventStartingCritical'
 			}
-		}
-
-		//--- Sounds
-		FormCard.FormHeader {
-			title: i18n("Sounds")
-		}
-		FormCard.FormCard {
-			SoundRow {
-				enabled: reminderEnabled.checked
-				label: i18n("Reminder")
-				sfxEnabledKey: 'eventReminderSfxEnabled'
-				sfxPathKey: 'eventReminderSfxPath'
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+			FormConfigSwitch {
+				visible: startingEnabled.checked
+				text: i18n("\"Join meeting\" button")
+				configKey: 'eventNotificationActions'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
 			SoundRow {
-				enabled: startingEnabled.checked
-				label: i18n("Event starts")
+				visible: startingEnabled.checked
+				label: i18n("Sound")
 				sfxEnabledKey: 'eventStartingSfxEnabled'
 				sfxPathKey: 'eventStartingSfxPath'
 			}
 		}
 
-		//--- Google Meet: which app opens Meet links (Join buttons)
+		//--- Meetings, and which app opens Google Meet links (Join buttons)
 		FormCard.FormHeader {
-			title: i18n("Google Meet")
+			title: i18n("Meetings")
 		}
 		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Open the meeting link when a meeting starts")
+				description: i18n("For meetings you accepted or organize, not marked as ended.")
+				configKey: 'meetingAutoJoin'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Pause music and videos when joining a meeting")
+				description: i18n("Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts.")
+				configKey: 'meetingPauseMedia'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				id: meetingDoNotDisturb
+				text: i18n("Do Not Disturb during meetings")
+				description: i18n("Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off.")
+				configKey: 'meetingDoNotDisturb'
+			}
+			FormCard.FormDelegateSeparator { visible: meetingDoNotDisturb.checked }
+			FormConfigSwitch {
+				visible: meetingDoNotDisturb.checked
+				text: i18n("Only meetings I accepted")
+				configKey: 'meetingDoNotDisturbAcceptedOnly'
+			}
+			FormCard.FormDelegateSeparator {}
 			FormCard.FormComboBoxDelegate {
 				id: meetAppCombo
-				text: i18n("Open meeting links in")
+				text: i18n("Open Google Meet links in")
 				textRole: "text"
 				// Default browser, the Meet web apps found (scripts/find_meet_apps.py), a command.
 				model: [{ text: i18n("Default browser"), command: "" }]
@@ -326,40 +351,9 @@ ConfigPage {
 			text: i18n("Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default.")
 		}
 
-		//--- Meetings
+		//--- Other notifications: invitations, the daily agenda (DailyAgenda.js), what's left out
 		FormCard.FormHeader {
-			title: i18n("Meetings")
-		}
-		FormCard.FormCard {
-			FormConfigSwitch {
-				text: i18n("Open the meeting link when a meeting starts")
-				description: i18n("For meetings you accepted or organize, not marked as ended.")
-				configKey: 'meetingAutoJoin'
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				text: i18n("Pause music and videos when joining a meeting")
-				description: i18n("Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts.")
-				configKey: 'meetingPauseMedia'
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				id: meetingDoNotDisturb
-				text: i18n("Do Not Disturb during meetings")
-				description: i18n("Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off.")
-				configKey: 'meetingDoNotDisturb'
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				enabled: meetingDoNotDisturb.checked
-				text: i18n("Only meetings I accepted")
-				configKey: 'meetingDoNotDisturbAcceptedOnly'
-			}
-		}
-
-		//--- Invitations
-		FormCard.FormHeader {
-			title: i18n("Invitations")
+			title: i18n("Other Notifications")
 		}
 		FormCard.FormCard {
 			FormConfigSwitch {
@@ -367,23 +361,17 @@ ConfigPage {
 				description: i18n("A notification for each meeting today you haven't answered yet, with Yes, Maybe and No.")
 				configKey: 'invitationNotificationEnabled'
 			}
-		}
-
-		//--- Daily agenda: today's events once a day (DailyAgenda.js)
-		FormCard.FormHeader {
-			title: i18n("Daily Agenda")
-		}
-		FormCard.FormCard {
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				id: dailyAgendaEnabled
 				text: i18n("Today's events every morning")
 				description: i18n("A notification with today's events once a day, also when the computer is turned on later.")
 				configKey: 'dailyAgendaEnabled'
 			}
-			FormCard.FormDelegateSeparator {}
+			FormCard.FormDelegateSeparator { visible: dailyAgendaEnabled.checked }
 			// dailyAgendaTime: minutes since midnight, shown as a time.
 			FormCard.FormSpinBoxDelegate {
-				enabled: dailyAgendaEnabled.checked
+				visible: dailyAgendaEnabled.checked
 				label: i18n("At")
 				value: page.configBridge.read("dailyAgendaTime", 480)
 				from: 0
@@ -406,18 +394,6 @@ ConfigPage {
 					return Math.min(24 * 60 - 1, hours * 60 + Number(match[2] || 0))
 				}
 				onValueChanged: page.configBridge.write("dailyAgendaTime", value) // See FormConfigSpin
-			}
-		}
-
-		//--- Both
-		FormCard.FormHeader {
-			title: i18n("All Event Notifications")
-		}
-		FormCard.FormCard {
-			FormConfigSwitch {
-				text: i18n("\"Join meeting\" button")
-				description: i18n("In the notification when a meeting starts.")
-				configKey: 'eventNotificationActions'
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
