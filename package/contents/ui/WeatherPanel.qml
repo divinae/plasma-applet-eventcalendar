@@ -58,8 +58,9 @@ ColumnLayout {
 			id: titleLabel
 			Layout.fillWidth: true
 			textFormat: Text.PlainText
+			// Above the text below it: larger and bolder, not dimmed.
 			font.weight: Font.DemiBold
-			opacity: panel.dimOpacity
+			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.1
 		}
 	}
 
@@ -145,8 +146,8 @@ ColumnLayout {
 			text: panel.locationName
 			textFormat: Text.PlainText // User text: never parsed as HTML
 			// The card's title: like the Day view's "Tasks" beside it.
-			font.weight: Font.DemiBold
-			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.05 : Kirigami.Theme.defaultFont.pointSize
+			font.weight: Font.Bold
+			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.25
 		}
 		PlasmaComponents3.BusyIndicator {
 			visible: panel.loading
@@ -156,22 +157,23 @@ ColumnLayout {
 		}
 	}
 
-	// The icon tile's color for a weather icon name (weather-clear, weather-showers-night, …).
-	function skyTint(iconName) {
+	// The icon tile's sky for a weather icon name (weather-clear, weather-showers-night, …):
+	// [top, bottom] of its gradient, deep enough that the sun and the white clouds stand out.
+	function skyColors(iconName) {
 		var name = String(iconName || "")
 		if (name.indexOf("night") >= 0) {
-			return "#6e75f4"
-		}
-		if (name === "weather-clear" || name === "weather-few-clouds") {
-			return "#ffac38"
-		}
-		if (name.indexOf("fog") >= 0 || name === "weather-overcast") {
-			return "#8a8f99"
+			return ["#1f2a5a", "#3b4a8c"]
 		}
 		if (name.indexOf("storm") >= 0 || name.indexOf("severe") >= 0) {
-			return "#bb71e6"
+			return ["#463a6e", "#76669f"]
 		}
-		return "#4ca1ff" // Clouds, rain, snow
+		if (name.indexOf("fog") >= 0 || name === "weather-overcast") {
+			return ["#66707c", "#949daa"]
+		}
+		if (name === "weather-clear" || name === "weather-few-clouds") {
+			return ["#2f86dc", "#79bdf3"]
+		}
+		return ["#4c709a", "#86a7c9"] // Clouds, rain, snow
 	}
 
 	//--- Now (today), or the shown day's forecast
@@ -185,30 +187,28 @@ ColumnLayout {
 		visible: panel.showData && (!!panel.current || panel.showDaySummary)
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.largeSpacing
-		// Colored icon on a rounded tile tinted like the sky it shows (sun: warm, clouds and rain:
-		// blue, night: indigo, fog: grey): light icons (clouds) vanish on a light theme otherwise.
-		Rectangle {
+		// The colored icon on a small sky (blue by day, indigo at night, grey for fog, …) with a
+		// soft shadow: light icons (clouds) vanish on a light card otherwise.
+		Item {
 			id: iconTile
-			readonly property color tint: panel.skyTint(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "")
+			readonly property var sky: panel.skyColors(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "")
+			readonly property real radius: Math.round(width * 0.3)
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
-			radius: Math.round(width * 0.3)
-			color: "transparent"
-			// A soft glow in the tint below it instead of a frame.
 			Kirigami.ShadowedRectangle {
 				anchors.fill: parent
-				radius: parent.radius
-				color: ColorUtil.setAlpha(iconTile.tint, 0.2)
-				shadow.size: 10
-				shadow.yOffset: 3
-				shadow.color: ColorUtil.setAlpha(iconTile.tint, 0.4)
+				radius: iconTile.radius
+				color: iconTile.sky[1]
+				shadow.size: 8
+				shadow.yOffset: 2
+				shadow.color: ColorUtil.setAlpha(iconTile.sky[0], appletConfig.darkTheme ? 0.5 : 0.35)
 			}
 			Rectangle {
 				anchors.fill: parent
-				radius: parent.radius
+				radius: iconTile.radius
 				gradient: Gradient {
-					GradientStop { position: 0; color: ColorUtil.setAlpha(iconTile.tint, 0.18) }
-					GradientStop { position: 1; color: "transparent" }
+					GradientStop { position: 0; color: iconTile.sky[0] }
+					GradientStop { position: 1; color: iconTile.sky[1] }
 				}
 			}
 			Kirigami.Icon {

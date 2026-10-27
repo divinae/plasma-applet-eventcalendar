@@ -126,15 +126,14 @@ ColumnLayout {
 			PlasmaComponents3.ToolTip.text: text
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
-		// Islands: like the Tasks tab's card titles (bold, a bit larger, the count on the right).
-		// Flat: like the weather panel's section titles.
+		// The card's title, like the weather card's location beside it.
 		PlasmaComponents3.Label {
 			Layout.leftMargin: dayTasks.collapsible || appletConfig.islands ? 0 : Kirigami.Units.smallSpacing
 			text: i18n("Tasks")
 			textFormat: Text.PlainText
-			font.weight: Font.DemiBold
-			font.pointSize: appletConfig.islands ? appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.05 : Kirigami.Theme.defaultFont.pointSize
-			opacity: appletConfig.islands ? 1 : 0.85
+			// Like the weather card's title beside it.
+			font.weight: Font.Bold
+			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.25
 			MouseArea {
 				anchors.fill: parent
 				enabled: dayTasks.collapsible
