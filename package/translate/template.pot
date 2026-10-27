@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:13+0100\n"
+"POT-Creation-Date: 2026-10-27 09:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1405,6 +1405,14 @@ msgid "Mark as Done"
 msgstr ""
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not in Progress"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as in Progress"
+msgstr ""
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr ""
 
@@ -1577,6 +1585,15 @@ msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Not in progress"
+msgstr ""
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
 msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml

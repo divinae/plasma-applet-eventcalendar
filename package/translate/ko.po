@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:13+0100\n"
+"POT-Creation-Date: 2026-10-27 09:48+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1572,6 +1572,14 @@ msgid "Mark as Done"
 msgstr "완료로 표시"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not in Progress"
+msgstr "진행 중 해제"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as in Progress"
+msgstr "진행 중으로 표시"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "자세히 보기"
 
@@ -1752,6 +1760,16 @@ msgstr "완료 안 됨으로 표시"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "완료로 표시"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Not in progress"
+msgstr "진행 중 아님"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "진행 중"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

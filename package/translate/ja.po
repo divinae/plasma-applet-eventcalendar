@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:13+0100\n"
+"POT-Creation-Date: 2026-10-27 09:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1390,6 +1390,14 @@ msgid "Mark as Done"
 msgstr "完了にする"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not in Progress"
+msgstr "進行中を解除"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as in Progress"
+msgstr "進行中にする"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "詳細を表示"
 
@@ -1562,6 +1570,15 @@ msgstr "未完了にする"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "完了にする"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Not in progress"
+msgstr "進行中ではない"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "進行中"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

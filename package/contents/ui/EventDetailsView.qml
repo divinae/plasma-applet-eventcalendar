@@ -376,13 +376,24 @@ Rectangle {
 					}
 				}
 
-				// Tasks: done / not done.
-				PlasmaComponents3.Button {
-					visible: details.isTask && !!(details.eventItem && details.eventItem.canEdit !== false)
+				// Tasks: done / not done, in progress (the widget's own mark).
+				RowLayout {
+					visible: details.isTask
 					Layout.leftMargin: Kirigami.Units.largeSpacing
-					icon.name: details.isDone ? "edit-undo" : "checkmark"
-					text: details.isDone ? i18n("Mark as not done") : i18n("Mark as done")
-					onClicked: details.toggleDone()
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Button {
+						visible: !!(details.eventItem && details.eventItem.canEdit !== false)
+						icon.name: details.isDone ? "edit-undo" : "checkmark"
+						text: details.isDone ? i18n("Mark as not done") : i18n("Mark as done")
+						onClicked: details.toggleDone()
+					}
+					PlasmaComponents3.Button {
+						readonly property bool inProgress: Tasks.isInProgress(details.eventItem, plasmoid.configuration.tasksInProgress)
+						visible: !details.isDone
+						icon.name: inProgress ? "media-playback-pause" : "media-playback-start"
+						text: inProgress ? i18n("Not in progress") : i18nc("tasks filter", "In progress")
+						onClicked: eventModel.setTaskInProgress(details.eventItem, !inProgress)
+					}
 				}
 
 				// Join

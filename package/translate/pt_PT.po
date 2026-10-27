@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:13+0100\n"
+"POT-Creation-Date: 2026-10-27 09:48+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -1391,6 +1391,14 @@ msgid "Mark as Done"
 msgstr "Marcar como concluída"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not in Progress"
+msgstr "Marcar como não em curso"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as in Progress"
+msgstr "Marcar como em curso"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "Mostrar detalhes"
 
@@ -1564,6 +1572,15 @@ msgstr "Marcar como não concluída"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Marcar como concluída"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Not in progress"
+msgstr "Não em curso"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Em curso"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

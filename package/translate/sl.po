@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 09:13+0100\n"
+"POT-Creation-Date: 2026-10-27 09:48+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1588,6 +1588,14 @@ msgid "Mark as Done"
 msgstr "Označi kot opravljeno"
 
 #: ../contents/ui/EventContextMenu.qml
+msgid "Mark as Not in Progress"
+msgstr "Označi kot ne v teku"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mark as in Progress"
+msgstr "Označi kot v teku"
+
+#: ../contents/ui/EventContextMenu.qml
 msgid "Show Details"
 msgstr "Prikaži podrobnosti"
 
@@ -1771,6 +1779,16 @@ msgstr "Označi kot neopravljeno"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Označi kot opravljeno"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Not in progress"
+msgstr "Ni v teku"
+
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "V teku"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

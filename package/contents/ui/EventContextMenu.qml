@@ -141,6 +141,15 @@ PlasmaComponents3.Menu {
 		icon.name: eventMenu.isDone ? "edit-undo" : "checkmark"
 		onTriggered: eventMenu.toggleDone()
 	}
+	// Kept by the widget only (Google Tasks and TickTick have no such state).
+	PlasmaComponents3.MenuItem {
+		readonly property bool inProgress: eventMenu.isTask && Tasks.isInProgress(eventMenu.eventItem, plasmoid.configuration.tasksInProgress)
+		visible: eventMenu.isTask && !eventMenu.isDone
+		height: visible ? implicitHeight : 0
+		text: inProgress ? i18n("Mark as Not in Progress") : i18n("Mark as in Progress")
+		icon.name: inProgress ? "media-playback-pause" : "media-playback-start"
+		onTriggered: eventModel.setTaskInProgress(eventMenu.eventItem, !inProgress)
+	}
 	PlasmaComponents3.MenuItem {
 		text: i18n("Show Details")
 		icon.name: "view-calendar-day"

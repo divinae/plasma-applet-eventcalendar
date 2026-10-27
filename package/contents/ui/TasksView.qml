@@ -73,6 +73,11 @@ Item {
 		return map
 	}
 	onSmartHiddenChanged: deferredRebuild()
+	// A task marked in progress or not: first in its section, the In progress filter.
+	Connections {
+		target: plasmoid.configuration
+		function onTasksInProgressChanged() { tasksView.deferredRebuild() }
+	}
 	function setShownInSmartLists(list, shown) {
 		var ids = Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).filter(function(id) {
 			return id !== list.id
@@ -110,6 +115,7 @@ Item {
 	function filterName(key) {
 		switch (key) {
 			case 'all': return i18nc("tasks filter", "All")
+			case 'progress': return i18nc("tasks filter", "In progress")
 			case 'today': return i18nc("tasks filter", "Today")
 			case 'tomorrow': return i18nc("tasks filter", "Tomorrow")
 			case 'next7': return i18nc("tasks filter", "Next 7 days")
@@ -122,6 +128,7 @@ Item {
 	function filterIcon(key) {
 		switch (key) {
 			case 'all': return "view-list-text"
+			case 'progress': return "media-playback-start"
 			case 'today': return "view-calendar-day"
 			case 'tomorrow': return "view-calendar-upcoming-events"
 			case 'next7': return "view-calendar-week"
@@ -185,7 +192,7 @@ Item {
 		var itemsByList = {}
 		for (var i = 0; i < selected.length; i++) {
 			var calendar = eventModel.loadedCalendar(selected[i].id)
-			itemsByList[selected[i].id] = calendar && calendar.items ? calendar.items : []
+			itemsByList[selected[i].id] = Tasks.stampInProgress(calendar && calendar.items ? calendar.items : [], plasmoid.configuration.tasksInProgress)
 		}
 		var counts = Tasks.filterCounts(selected, itemsByList, today, smartHidden)
 		var filter = Tasks.validFilter(configFilter, selected)

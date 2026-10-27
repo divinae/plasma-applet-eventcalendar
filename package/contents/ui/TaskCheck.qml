@@ -42,6 +42,8 @@ Item {
 		: priority === 'low' ? "#4c7cf6"
 		: color
 	readonly property bool hasPriority: priority !== 'none'
+	// Marked in progress (the widget's own mark, Tasks.isInProgress): half filled.
+	readonly property bool inProgress: !subtaskId && !done && Tasks.isInProgress(eventItem, plasmoid.configuration.tasksInProgress)
 	// The callbacks of a save may come after the row is gone.
 	property var alive: ({ value: true })
 	// A save of this task (or item) failed, maybe started by an earlier check of it: as it is.
@@ -70,6 +72,7 @@ Item {
 	Accessible.checkable: true
 	Accessible.checked: done
 	Accessible.name: done ? i18n("Mark as not done") : i18n("Mark as done")
+	Accessible.description: inProgress ? i18nc("tasks filter", "In progress") : ""
 	Accessible.onToggleAction: toggle()
 	Accessible.onPressAction: toggle()
 	Keys.onSpacePressed: toggle()
@@ -140,6 +143,25 @@ Item {
 			: "transparent"
 		border.width: taskCheck.square ? (taskCheck.size < 14 ? 1.5 : 2) : Math.max(2, Math.round(taskCheck.size / 9))
 		border.color: taskCheck.visualFocus ? Kirigami.Theme.focusColor : taskCheck.square ? taskCheck.squareBorderColor : taskCheck.circleColor
+	}
+
+	// In progress: the lower half filled, inside the border.
+	Item {
+		visible: taskCheck.inProgress
+		readonly property real inset: circle.border.width + 1
+		x: circle.x + inset
+		y: circle.y + circle.height / 2
+		width: circle.width - inset * 2
+		height: circle.height / 2 - inset
+		clip: true
+		Rectangle {
+			y: -(circle.height / 2 - parent.inset)
+			width: parent.width
+			height: width
+			radius: taskCheck.square ? 1.5 : width / 2
+			// Islands: the accent when it has no priority (the neutral border is too faint to fill with).
+			color: taskCheck.square ? (taskCheck.hasPriority ? taskCheck.priorityColor : Kirigami.Theme.highlightColor) : taskCheck.circleColor
+		}
 	}
 
 	Shape {

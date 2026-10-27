@@ -664,7 +664,22 @@ CalendarManager {
 	}
 
 	// done(err): optional, called once the server answered (Google).
+	// In progress (Tasks.isInProgress): kept by the widget, not by the services.
+	function isTaskInProgress(item) {
+		return Tasks.isInProgress(item, plasmoid.configuration.tasksInProgress)
+	}
+	function setTaskInProgress(item, on) {
+		var keys = plasmoid.configuration.tasksInProgress || []
+		if (Tasks.isInProgress(item, keys) !== !!on) {
+			plasmoid.configuration.tasksInProgress = Tasks.withProgress(keys, item, on)
+		}
+	}
+
 	function deleteEvent(calendarId, eventId, done) {
+		// A deleted task's mark goes too.
+		if (Array.prototype.indexOf.call(plasmoid.configuration.tasksInProgress || [], calendarId + '|' + eventId) >= 0) {
+			plasmoid.configuration.tasksInProgress = Tasks.withProgress(plasmoid.configuration.tasksInProgress, { calendarId: calendarId, id: eventId }, false)
+		}
 		var calendarManager = managerWith(calendarId, 'deleteEvent')
 		if (calendarManager) {
 			calendarManager.deleteEvent(calendarId, eventId, done)
@@ -771,6 +786,9 @@ CalendarManager {
 				cb('toggleTask: not a task', null)
 			}
 			return
+		}
+		if (done) {
+			setTaskInProgress(item, false) // Done: no longer in progress
 		}
 		setEventProperties(item.calendarId, item.id, Tasks.toggleBody(done), { done: cb })
 	}

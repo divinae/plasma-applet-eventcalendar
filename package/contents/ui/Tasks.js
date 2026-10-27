@@ -769,8 +769,12 @@ function comparePriority(a, b) {
 
 // The order of open tasks for a sort (Tasks view "Sort by"): 'due' (sortOpenTasks), 'title' (then
 // by due day), 'list' (by the list's rank ra / rb, then in the list's order), 'priority' (the
-// highest first, then by due day).
+// highest first, then by due day). Tasks in progress (stampInProgress) come first in any sort.
 function compareOpen(a, b, sortBy, ra, rb) {
+	var progress = (b.inProgress ? 1 : 0) - (a.inProgress ? 1 : 0)
+	if (progress) {
+		return progress
+	}
 	if (sortBy === 'priority') {
 		return comparePriority(a, b) || compareDue(a, b) || comparePosition(a, b)
 	}
@@ -1206,7 +1210,38 @@ function quickAddList(lists, lastId) {
 // 'all', 'today' (due today, and the overdue open ones), 'tomorrow', 'next7' (today to 6 days on,
 // the overdue open ones too), 'overdue', 'nodate', and 'list:<id>' for a task list.
 
-var smartFilters = ['all', 'today', 'tomorrow', 'next7', 'overdue', 'nodate']
+var smartFilters = ['all', 'progress', 'today', 'tomorrow', 'next7', 'overdue', 'nodate']
+
+//--- In progress: a mark kept by the widget (Google Tasks and TickTick have no such state), by
+// task: plasmoid.configuration.tasksInProgress holds progressKey of each.
+
+// A task's key in the in-progress list: 'calendarId|taskId', '' for none.
+function progressKey(item) {
+	return item && item.calendarId && item.id ? String(item.calendarId) + '|' + String(item.id) : ''
+}
+// Whether item is marked in progress in keys (the setting's list); never a done task.
+function isInProgress(item, keys) {
+	var key = progressKey(item)
+	return !!key && !isDone(item) && Array.prototype.indexOf.call(keys || [], key) >= 0
+}
+// keys with item's mark set (on) or cleared: a new list, as the setting stores it.
+function withProgress(keys, item, on) {
+	var key = progressKey(item)
+	var out = Array.prototype.filter.call(keys || [], function(k) { return k !== key })
+	if (on && key) {
+		out.push(key)
+	}
+	return out
+}
+// Sets item.inProgress on each task of items (for compareOpen and the 'progress' filter).
+function stampInProgress(items, keys) {
+	;(items || []).forEach(function(item) {
+		if (isTask(item)) {
+			item.inProgress = isInProgress(item, keys)
+		}
+	})
+	return items
+}
 
 // The list id of a 'list:<id>' filter, else ''.
 function filterListId(filter) {
@@ -1235,6 +1270,7 @@ function matchesDate(item, filter, today) {
 	var due = dueDay(item)
 	var day = done ? (due || completedDay(item)) : due
 	switch (filter) {
+		case 'progress': return !done && !!item.inProgress
 		case 'today': return done ? day === today : !!due && due <= today
 		case 'tomorrow': return !!day && day === addDays(today, 1)
 		case 'next7': return !!day && day <= addDays(today, 6) && (!done || day >= today)
@@ -1300,7 +1336,10 @@ function filterCounts(lists, itemsByList, today, hidden) {
 // counts: filterCounts.
 function filterEntries(lists, counts) {
 	counts = counts || {}
-	var entries = smartFilters.map(function(f) {
+	// In progress: only while some task is.
+	var entries = smartFilters.filter(function(f) {
+		return f !== 'progress' || counts[f] > 0
+	}).map(function(f) {
 		return { type: 'filter', key: f, count: counts[f] || 0 }
 	})
 	var listRows = taskRows(lists, {}, false).filter(function(row) {

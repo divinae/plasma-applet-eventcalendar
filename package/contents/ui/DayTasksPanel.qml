@@ -71,6 +71,7 @@ ColumnLayout {
 			dayTasks.lists = lists // Unchanged: not set again (the list menu would be made again)
 		}
 		hasLists = lists.length > 0
+		Tasks.stampInProgress(items, plasmoid.configuration.tasksInProgress)
 		var rows = Tasks.dayTaskRows(items, dayText, today)
 		taskRows = rows
 		tasks = rows.map(function(row) { return row.item })
@@ -95,6 +96,7 @@ ColumnLayout {
 	Connections {
 		target: plasmoid.configuration
 		function onDayTasksListIdChanged() { dayTasks.deferredRebuild() }
+		function onTasksInProgressChanged() { dayTasks.deferredRebuild() }
 	}
 
 	Connections {
