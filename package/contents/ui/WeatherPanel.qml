@@ -258,29 +258,24 @@ ColumnLayout {
 				textFormat: Text.PlainText // User text: never parsed as HTML
 				opacity: panel.dimOpacity
 			}
-			// Today: the high, the low and the rain (when there is any), each with its icon.
-			RowLayout {
-				id: todayStats
-				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+			// Today: the high and the low, then the rain (when there is any), in words.
+			PlasmaComponents3.Label {
 				visible: !panel.compact && !!panel.today && panel.isToday
-				Layout.topMargin: Kirigami.Units.smallSpacing
-				spacing: Kirigami.Units.largeSpacing
-				Accessible.role: Accessible.StaticText
-				Accessible.name: panel.today ? i18nc("today's high / low temperature", "Today: high %1, low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min))
-					+ (rain ? ", " + i18nc("precipitation", "rain %1", rain) : "") : ""
-				Stat {
-					icon: "arrow-up"
-					text: panel.today ? Shared.formatTemp(panel.today.temp.max) : ""
-				}
-				Stat {
-					icon: "arrow-down"
-					text: panel.today ? Shared.formatTemp(panel.today.temp.min) : ""
-				}
-				Stat {
-					visible: !!todayStats.rain
-					icon: "weather-showers-symbolic"
-					text: todayStats.rain
-				}
+				Layout.fillWidth: true
+				Layout.topMargin: 2
+				elide: Text.ElideRight
+				textFormat: Text.PlainText
+				text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
+				opacity: panel.dimOpacity
+			}
+			PlasmaComponents3.Label {
+				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+				visible: !panel.compact && !!panel.today && panel.isToday && !!rain
+				Layout.fillWidth: true
+				elide: Text.ElideRight
+				textFormat: Text.PlainText
+				text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
+				opacity: panel.dimOpacity
 			}
 		}
 		// Compact: today's range on the same row
@@ -300,25 +295,6 @@ ColumnLayout {
 		text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
 		opacity: panel.dimOpacity
 	}
-	// An icon and its value (today's high, low, rain).
-	component Stat: RowLayout {
-		property alias icon: statIcon.source
-		property alias text: statLabel.text
-		spacing: 2
-		Kirigami.Icon {
-			id: statIcon
-			Layout.alignment: Qt.AlignVCenter
-			implicitWidth: Kirigami.Units.iconSizes.small
-			implicitHeight: implicitWidth
-			opacity: panel.dimOpacity
-		}
-		PlasmaComponents3.Label {
-			id: statLabel
-			Layout.alignment: Qt.AlignVCenter
-			textFormat: Text.PlainText
-		}
-	}
-
 	// Past days and days beyond the forecast
 	PlasmaComponents3.Label {
 		visible: panel.showData && !panel.isToday && !panel.today && panel.hourly.length === 0
