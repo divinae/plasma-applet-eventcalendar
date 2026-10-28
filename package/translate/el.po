@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:55+0100\n"
+"POT-Creation-Date: 2026-10-28 08:59+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -3152,11 +3152,11 @@ msgstr "Αδυναμία αναζήτησης στο Ημερολόγιο Google
 msgid "Searching Google Calendar…"
 msgstr "Αναζήτηση στο Ημερολόγιο Google…"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as not done"
 msgstr "Σήμανση ως μη ολοκληρωμένης"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as done"
 msgstr "Σήμανση ως ολοκληρωμένης"
 

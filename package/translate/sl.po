@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:55+0100\n"
+"POT-Creation-Date: 2026-10-28 08:59+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3183,11 +3183,11 @@ msgstr "Iskanje v Googlovem koledarju ni uspelo"
 msgid "Searching Google Calendar…"
 msgstr "Iskanje v Googlovem koledarju…"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as not done"
 msgstr "Označi kot neopravljeno"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as done"
 msgstr "Označi kot opravljeno"
 

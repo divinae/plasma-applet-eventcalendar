@@ -8,7 +8,8 @@ import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 
-// A task's details (EventDetailsView with a task), like TickTick's: the title with its check, then
+// A task's details (EventDetailsView with a task), like TickTick's: the title, a large Mark as done
+// button, then
 // one row per property with its icon (due, list, priority, in progress with a switch, repeat,
 // reminders), the notes in a soft box. The subtasks and Edit / Delete come after it (the card's).
 ColumnLayout {
@@ -58,30 +59,61 @@ ColumnLayout {
 
 	spacing: Kirigami.Units.smallSpacing
 
-	// The title with its check (marks it done / not done).
-	RowLayout {
+	// The title.
+	Kirigami.Heading {
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.largeSpacing
 		Layout.rightMargin: Kirigami.Units.largeSpacing
+		level: 2
+		wrapMode: Text.Wrap
+		text: body.item ? body.item.summary || "" : ""
+		textFormat: Text.PlainText // User text: never parsed as HTML
+		font.strikeout: body.done
+		opacity: body.done ? 0.7 : 1
+	}
+	// Done / not done: a large button in the accent color, easy to hit.
+	QQC2.AbstractButton {
+		id: doneButton
+		visible: !!(body.item && body.item.canEdit !== false)
+		Layout.fillWidth: true
+		Layout.leftMargin: Kirigami.Units.largeSpacing
+		Layout.rightMargin: Kirigami.Units.largeSpacing
+		Layout.topMargin: Kirigami.Units.smallSpacing
 		Layout.bottomMargin: Kirigami.Units.largeSpacing
-		spacing: Kirigami.Units.largeSpacing
-		TaskCheck {
-			Layout.alignment: Qt.AlignTop
-			Layout.topMargin: 3
-			size: Math.round(Kirigami.Units.iconSizes.medium * 0.85)
-			eventItem: body.item
-			color: body.details ? body.details.eventColor : Kirigami.Theme.textColor
-			square: appletConfig.islands
-			overdue: !!body.details && body.details.isOverdue
+		implicitHeight: Math.round(Kirigami.Units.gridUnit * 2.2)
+		hoverEnabled: true
+		activeFocusOnTab: true
+		text: body.done ? i18n("Mark as not done") : i18n("Mark as done")
+		Accessible.name: text
+		onClicked: body.details.toggleDone()
+		Keys.onSpacePressed: clicked()
+		readonly property color accent: body.done ? Kirigami.Theme.textColor : Kirigami.Theme.highlightColor
+		background: Rectangle {
+			radius: Kirigami.Units.cornerRadius * 2
+			color: Qt.rgba(doneButton.accent.r, doneButton.accent.g, doneButton.accent.b,
+				doneButton.pressed ? 0.3 : doneButton.hovered ? 0.22 : 0.14)
+			border.width: doneButton.visualFocus ? 2 : 1
+			border.color: doneButton.visualFocus ? Kirigami.Theme.focusColor : Qt.rgba(doneButton.accent.r, doneButton.accent.g, doneButton.accent.b, 0.45)
 		}
-		Kirigami.Heading {
-			Layout.fillWidth: true
-			level: 2
-			wrapMode: Text.Wrap
-			text: body.item ? body.item.summary || "" : ""
-			textFormat: Text.PlainText // User text: never parsed as HTML
-			font.strikeout: body.done
-			opacity: body.done ? 0.7 : 1
+		contentItem: Item {
+			Row {
+				anchors.centerIn: parent
+				spacing: Kirigami.Units.smallSpacing
+				Kirigami.Icon {
+					anchors.verticalCenter: parent.verticalCenter
+					width: Kirigami.Units.iconSizes.small
+					height: width
+					source: body.done ? "edit-undo" : "checkmark"
+					isMask: true
+					color: body.done ? Kirigami.Theme.textColor : Kirigami.Theme.highlightColor
+				}
+				PlasmaComponents3.Label {
+					anchors.verticalCenter: parent.verticalCenter
+					text: doneButton.text
+					textFormat: Text.PlainText
+					font.weight: Font.DemiBold
+				}
+			}
 		}
 	}
 

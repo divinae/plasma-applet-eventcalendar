@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:55+0100\n"
+"POT-Creation-Date: 2026-10-28 08:59+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -2881,11 +2881,11 @@ msgstr "Não foi possível pesquisar no Calendário Google"
 msgid "Searching Google Calendar…"
 msgstr "A pesquisar no Calendário Google…"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as not done"
 msgstr "Marcar como não concluída"
 
-#: ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Mark as done"
 msgstr "Marcar como concluída"
 
