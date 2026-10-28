@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:22+0100\n"
+"POT-Creation-Date: 2026-10-28 09:51+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2902,21 +2902,6 @@ msgstr[1] "%2, %1 dogodka"
 msgstr[2] "%2, %1 dogodki"
 msgstr[3] "%2, %1 dogodkov"
 
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "MMMM d, yyyy"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for other months of current year"
-msgid "MMMM"
-msgstr "MMMM"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for months not from current year"
-msgid "MMMM, yyyy"
-msgstr "MMMM yyyy"
-
 #: ../contents/ui/NewEventForm.qml
 msgid "Eg: 9am-5pm Work"
 msgstr "npr.: 9.00-17.00 služba"
@@ -3747,6 +3732,18 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgctxt "calendar title format for current month"
+#~ msgid "MMMM d, yyyy"
+#~ msgstr "MMMM d, yyyy"
+
+#~ msgctxt "calendar title format for other months of current year"
+#~ msgid "MMMM"
+#~ msgstr "MMMM"
+
+#~ msgctxt "calendar title format for months not from current year"
+#~ msgid "MMMM, yyyy"
+#~ msgstr "MMMM yyyy"
 
 #~ msgid "Not in progress"
 #~ msgstr "Ni v teku"

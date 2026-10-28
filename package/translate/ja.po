@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:22+0100\n"
+"POT-Creation-Date: 2026-10-28 09:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2585,21 +2585,6 @@ msgid "%2, %1 event"
 msgid_plural "%2, %1 events"
 msgstr[0] "%2、予定 %1 件"
 
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "M月 d日 yyyy"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for other months of current year"
-msgid "MMMM"
-msgstr "MMMM"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for months not from current year"
-msgid "MMMM, yyyy"
-msgstr "yyyy年MMMM"
-
 #: ../contents/ui/NewEventForm.qml
 msgid "Eg: 9am-5pm Work"
 msgstr "例：9am-5pm 仕事"
@@ -3378,6 +3363,18 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "calendar title format for current month"
+#~ msgid "MMMM d, yyyy"
+#~ msgstr "M月 d日 yyyy"
+
+#~ msgctxt "calendar title format for other months of current year"
+#~ msgid "MMMM"
+#~ msgstr "MMMM"
+
+#~ msgctxt "calendar title format for months not from current year"
+#~ msgid "MMMM, yyyy"
+#~ msgstr "yyyy年MMMM"
 
 #~ msgid "Not in progress"
 #~ msgstr "進行中ではない"

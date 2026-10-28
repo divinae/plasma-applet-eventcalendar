@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:22+0100\n"
+"POT-Creation-Date: 2026-10-28 09:51+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -2855,21 +2855,6 @@ msgid_plural "%2, %1 events"
 msgstr[0] "%2, %1 evento"
 msgstr[1] "%2, %1 eventos"
 
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "MMMM d, yyyy"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for other months of current year"
-msgid "MMMM"
-msgstr "MMMM"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for months not from current year"
-msgid "MMMM, yyyy"
-msgstr "MMMM, yyyy"
-
 #: ../contents/ui/NewEventForm.qml
 msgid "Eg: 9am-5pm Work"
 msgstr "Ex.: 09:00-17:00 Trabalho"
@@ -3668,6 +3653,18 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgctxt "calendar title format for current month"
+#~ msgid "MMMM d, yyyy"
+#~ msgstr "MMMM d, yyyy"
+
+#~ msgctxt "calendar title format for other months of current year"
+#~ msgid "MMMM"
+#~ msgstr "MMMM"
+
+#~ msgctxt "calendar title format for months not from current year"
+#~ msgid "MMMM, yyyy"
+#~ msgstr "MMMM, yyyy"
 
 #~ msgid "Not in progress"
 #~ msgstr "Não em andamento"

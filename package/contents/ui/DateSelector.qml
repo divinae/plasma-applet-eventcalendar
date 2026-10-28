@@ -80,7 +80,6 @@ PlasmaComponents3.TextField {
 			displayedDate: dateSelector.dateTime
 
 			showTooltips: false
-			showTodaysDate: false
 			headingFontLevel: 3
 
 			onDateClicked: {

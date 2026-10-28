@@ -54,7 +54,6 @@ PinchArea {
 
 	property alias displayedDate: calendarBackend.displayedDate
 	property bool showTooltips: true
-	property bool showTodaysDate: true
 
 	property QtObject date
 	property date currentDate
@@ -522,22 +521,13 @@ PinchArea {
 
 			initialItem: DaysCalendar {
 				id: mainDaysCalendar
+				// The month's standalone name ("Listopad", not the "listopada" of a date), with the
+				// year when it isn't this one; no day.
 				title: {
-					var dateFormat, text
-					if (calendarBackend.displayedDate.getFullYear() === today.getFullYear()) {
-						if (showTodaysDate && calendarBackend.displayedDate.getMonth() === today.getMonth()) {
-							dateFormat = i18nc("calendar title format for current month", "MMMM d, yyyy")
-							text = Shared.formatDateTime(today, dateFormat)
-							return text
-						} else {
-							dateFormat = i18nc("calendar title format for other months of current year", "MMMM")
-						}
-					} else {
-						dateFormat = i18nc("calendar title format for months not from current year", "MMMM, yyyy")
-					}
-
-					text = Shared.formatDateTime(calendarBackend.displayedDate, dateFormat)
-					return text
+					var shown = calendarBackend.displayedDate
+					var name = Qt.locale().standaloneMonthName(shown.getMonth(), Locale.LongFormat)
+					name = name.charAt(0).toLocaleUpperCase() + name.slice(1)
+					return shown.getFullYear() === today.getFullYear() ? name : name + " " + shown.getFullYear()
 				}
 
 				columns: calendarBackend.days
