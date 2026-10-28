@@ -43,6 +43,12 @@ ColumnLayout {
 		return null
 	}
 	property var tasks: []
+	// Tasks of several lists together: each row marks its list (a dot).
+	readonly property bool mixedLists: {
+		var ids = {}
+		tasks.forEach(function(task) { ids[task.calendarId] = true })
+		return Object.keys(ids).length > 1
+	}
 	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the done ones only with showDone
 	// The done tasks are folded away under "N completed" (for the session).
 	property bool showDone: false
@@ -255,6 +261,7 @@ ColumnLayout {
 					depth: modelData.depth
 					today: dayTasks.today
 					compact: true
+					listMark: dayTasks.mixedLists
 					expandedStore: dayTasks.expandedSubtasks
 					onCheckToggled: function(item, done) {
 						if (done) {

@@ -27,6 +27,9 @@ LinkRect {
 	property string today: Tasks.dayString(new Date())
 	// Tighter, no notes, the due date only when overdue (Day view, Agenda).
 	property bool compact: false
+	// Compact: the list's color as a small dot at the right end (tasks of several lists together);
+	// compact rows have no list stripe.
+	property bool listMark: false
 	// The task's list ({ name, color }), shown before the due date (Tasks view by date), or null.
 	property var showList: null
 	// The first line of the notes below the title (Tasks view: "Show details").
@@ -236,15 +239,18 @@ LinkRect {
 	readonly property bool repeats: !!eventItem && (!!eventItem.recurringEventId || !!eventItem.repeatFlag || !!eventItem.repeatRule)
 	readonly property string dueTextShort: chipText
 	readonly property bool showDueText: cardStyle && !!dueTextShort
-	readonly property bool showStripe: cardStyle && (compact || !!showList)
+	// Compact (the Day view): no stripe, it's busy enough (a dot with listMark instead).
+	readonly property bool showStripe: cardStyle && !compact && !!showList
+	readonly property bool showListDot: compact && listMark
 
 	// The list (by date) and when it's due, at the right end of the title's line.
 	readonly property bool showListName: !cardStyle && !compact && !!showList
 	readonly property bool showDueChip: !cardStyle && showChip
-	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact)
+	readonly property bool showInfo: showListName || showDueChip || showDueText || (cardStyle && repeats && !compact) || showListDot
 	// The priority as a flag in its color, last on the title's line (not once done).
 	readonly property string priorityKey: Tasks.priorityKey(eventItem)
-	readonly property bool showPriorityFlag: priorityKey !== 'none' && !done
+	// Not in a compact row: its check shows the priority already.
+	readonly property bool showPriorityFlag: priorityKey !== 'none' && !done && !compact
 
 	Rectangle {
 		visible: taskRow.showStripe
@@ -372,7 +378,8 @@ LinkRect {
 		// (also with the hover buttons).
 		QQC2.AbstractButton {
 			id: subtasksButton
-			visible: taskRow.progress.total > 0
+			// Not in a compact row (fewer details there).
+			visible: taskRow.progress.total > 0 && !taskRow.compact
 			Layout.alignment: Qt.AlignTop
 			Layout.preferredHeight: titleLabel.implicitHeight
 			hoverEnabled: true
@@ -442,6 +449,15 @@ LinkRect {
 					font: taskRow.detailFont
 					elide: Text.ElideRight
 				}
+			}
+			// Compact, several lists: the list's color.
+			Rectangle {
+				visible: taskRow.showListDot
+				Layout.alignment: Qt.AlignVCenter
+				implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.4)
+				implicitHeight: implicitWidth
+				radius: width / 2
+				color: taskRow.listColor
 			}
 			TaskDueChip {
 				visible: taskRow.showDueChip
