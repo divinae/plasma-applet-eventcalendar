@@ -43,7 +43,11 @@ ColumnLayout {
 		return null
 	}
 	property var tasks: []
-	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }]
+	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the done ones only with showDone
+	// The done tasks are folded away under "N completed" (for the session).
+	property bool showDone: false
+	property int doneCount: 0
+	onShowDoneChanged: deferredRebuild()
 	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
 	property var expandedSubtasks: ({})
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
@@ -73,7 +77,9 @@ ColumnLayout {
 		hasLists = lists.length > 0
 		Tasks.stampInProgress(items, plasmoid.configuration.tasksInProgress)
 		var rows = Tasks.dayTaskRows(items, dayText, today)
-		taskRows = rows
+		var openRows = rows.filter(function(row) { return !Tasks.isDone(row.item) })
+		doneCount = rows.length - openRows.length
+		taskRows = showDone ? rows : openRows
 		tasks = rows.map(function(row) { return row.item })
 	}
 	function deferredRebuild() {
@@ -216,10 +222,11 @@ ColumnLayout {
 	}
 
 	PlasmaComponents3.Label {
-		visible: dayTasks.open && dayTasks.tasks.length === 0
+		visible: dayTasks.open && dayTasks.taskRows.length === 0
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.smallSpacing
-		text: i18n("No tasks")
+		// Only done ones left (folded away): all done.
+		text: dayTasks.doneCount > 0 ? i18n("All done") : i18n("No tasks")
 		textFormat: Text.PlainText
 		opacity: 0.75
 		elide: Text.ElideRight
@@ -227,7 +234,7 @@ ColumnLayout {
 
 	PlasmaComponents3.ScrollView {
 		id: scrollView
-		visible: dayTasks.open && dayTasks.tasks.length > 0
+		visible: dayTasks.open && dayTasks.taskRows.length > 0
 		Layout.fillWidth: true
 		Layout.preferredHeight: Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight)
 		contentWidth: availableWidth
@@ -257,6 +264,19 @@ ColumnLayout {
 				}
 			}
 		}
+	}
+
+	// "2 completed" / "Hide completed": the done tasks folded away or shown.
+	PlasmaComponents3.ToolButton {
+		visible: dayTasks.open && dayTasks.doneCount > 0
+		Layout.leftMargin: Math.max(0, Kirigami.Units.smallSpacing - leftPadding)
+		icon.name: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
+		icon.width: Kirigami.Units.iconSizes.small
+		icon.height: Kirigami.Units.iconSizes.small
+		text: dayTasks.showDone ? i18n("Hide completed") : i18np("%1 completed", "%1 completed", dayTasks.doneCount)
+		font: Kirigami.Theme.smallFont
+		opacity: 0.75
+		onClicked: dayTasks.showDone = !dayTasks.showDone
 	}
 
 	TaskUndoBar {

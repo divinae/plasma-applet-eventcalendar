@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 15:01+0100\n"
+"POT-Creation-Date: 2026-10-28 08:35+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -1554,8 +1554,23 @@ msgid "New Task"
 msgstr "Новая задача"
 
 #: ../contents/ui/DayTasksPanel.qml
+msgid "All done"
+msgstr "Всё сделано"
+
+#: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Нет задач"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "Скрыть выполненные"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "%1 completed"
+msgid_plural "%1 completed"
+msgstr[0] "%1 выполнена"
+msgstr[1] "%1 выполнены"
+msgstr[2] "%1 выполнено"
 
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
@@ -3300,10 +3315,6 @@ msgstr "Приоритет"
 #: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "Показывать подробности"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed"
-msgstr "Скрыть выполненные"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"

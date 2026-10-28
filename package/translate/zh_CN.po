@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 15:01+0100\n"
+"POT-Creation-Date: 2026-10-28 08:35+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1501,8 +1501,21 @@ msgid "New Task"
 msgstr "新建任务"
 
 #: ../contents/ui/DayTasksPanel.qml
+msgid "All done"
+msgstr "全部完成"
+
+#: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "没有任务"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "隐藏已完成"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "%1 completed"
+msgid_plural "%1 completed"
+msgstr[0] "已完成 %1 项"
 
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
@@ -3177,10 +3190,6 @@ msgstr "优先级"
 #: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "显示详细信息"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed"
-msgstr "隐藏已完成"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"

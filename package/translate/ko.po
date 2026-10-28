@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-27 15:01+0100\n"
+"POT-Creation-Date: 2026-10-28 08:35+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1531,8 +1531,21 @@ msgid "New Task"
 msgstr "새 작업"
 
 #: ../contents/ui/DayTasksPanel.qml
+msgid "All done"
+msgstr "모두 완료"
+
+#: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "작업 없음"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "Hide completed"
+msgstr "완료된 작업 숨기기"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "%1 completed"
+msgid_plural "%1 completed"
+msgstr[0] "완료 %1개"
 
 #: ../contents/ui/DurationSelector.qml
 msgid "to"
@@ -3218,10 +3231,6 @@ msgstr "우선순위"
 #: ../contents/ui/TasksView.qml
 msgid "Show details"
 msgstr "세부 정보 표시"
-
-#: ../contents/ui/TasksView.qml
-msgid "Hide completed"
-msgstr "완료된 작업 숨기기"
 
 #: ../contents/ui/TasksView.qml
 msgid "Show completed"
