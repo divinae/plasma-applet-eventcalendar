@@ -1595,7 +1595,8 @@ Item {
 												id: joinPill
 												visible: !!eventBlock.meetingLink && eventBlock.width >= Kirigami.Units.gridUnit * 10
 												anchors.right: parent.right
-												anchors.rightMargin: Kirigami.Units.smallSpacing
+												// Short blocks: as far from the right edge as from the top and bottom.
+												anchors.rightMargin: compact ? Math.max(2, Math.min(Kirigami.Units.smallSpacing, Math.round((parent.height - height) / 2))) : Kirigami.Units.smallSpacing
 												// Short blocks: centered and slimmer; taller ones: next to the title.
 												readonly property bool compact: eventBlock.height < weekView.lineHeight * 2 + 4
 												anchors.verticalCenter: compact ? parent.verticalCenter : undefined
