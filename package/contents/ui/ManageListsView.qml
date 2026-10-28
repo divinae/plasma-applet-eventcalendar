@@ -199,11 +199,10 @@ ColumnLayout {
 						color: "transparent"
 						border.width: colorButton.enabled && colorButton.hovered ? 1 : 0
 						border.color: Kirigami.Theme.textColor
-						Rectangle {
+						ListMark {
 							anchors.centerIn: parent
-							width: listRow.dotSize
-							height: width
-							radius: width / 2
+							list: listRow.list
+							size: listRow.dotSize
 							color: manage.view.listDotColor(listRow.list)
 						}
 					}

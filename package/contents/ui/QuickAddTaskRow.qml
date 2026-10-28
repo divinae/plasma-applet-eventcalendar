@@ -383,10 +383,10 @@ Item {
 				PlasmaComponents3.ToolTip.visible: hovered
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing
-					Rectangle {
-						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.5)
-						implicitHeight: implicitWidth
-						radius: width / 2
+					ListMark {
+						Layout.alignment: Qt.AlignVCenter
+						list: quickAdd.targetList
+						size: Math.round(Kirigami.Units.gridUnit * 0.5)
 						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(quickAdd.targetList && quickAdd.targetList.color ? quickAdd.targetList.color : null))
 					}
 					PlasmaComponents3.Label {
@@ -532,10 +532,10 @@ Item {
 				readonly property bool current: list.id === quickAdd.targetListId
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.smallSpacing
-					Rectangle {
-						implicitWidth: Math.round(Kirigami.Units.gridUnit * 0.5)
-						implicitHeight: implicitWidth
-						radius: width / 2
+					ListMark {
+						Layout.alignment: Qt.AlignVCenter
+						list: listMenuItem.list
+						size: Math.round(Kirigami.Units.gridUnit * 0.5)
 						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(listMenuItem.list.color || null))
 					}
 					PlasmaComponents3.Label {

@@ -893,7 +893,7 @@ CalendarManager {
 				if (!selected) {
 					continue
 				}
-				var entry = selectedCalendarEntry(calendar.id, calendar, label)
+				var entry = withListIcon(selectedCalendarEntry(calendar.id, calendar, label))
 				entry.group = group
 				out.push(entry)
 			}
@@ -904,6 +904,15 @@ CalendarManager {
 	// Before the keyring gave an account's token (at start), it has no tasks manager yet: its selected
 	// lists from the account's settings, those the event cache has tasks of, so the cached tasks show
 	// right away (the Tasks tab, the Day view) instead of after the first fetch.
+	// A task list's entry with the emoji its name starts with as its icon, like TickTick (TaskLists.
+	// splitIcon): { …, name: without it, icon, fullName: the name as stored (to rename it) }.
+	function withListIcon(entry) {
+		var split = TaskLists.splitIcon(entry.name)
+		entry.fullName = entry.name
+		entry.name = split.name
+		entry.icon = split.icon
+		return entry
+	}
 	function cachedTaskLists(shown) {
 		var managed = {}
 		for (var i = 0; i < calendarManagerList.length; i++) {
@@ -925,7 +934,7 @@ CalendarManager {
 						|| !Object.prototype.hasOwnProperty.call(eventModel.cachedEventsByCalendar, id)) {
 					return
 				}
-				out.push({ id: id, name: String(list.title || list.name || ""), color: String(list.color || ""), group: group })
+				out.push(withListIcon({ id: id, name: String(list.title || list.name || ""), color: String(list.color || ""), group: group }))
 			})
 		}
 		Shared.toArray(googleAccountsStore.accounts).forEach(function(account) {

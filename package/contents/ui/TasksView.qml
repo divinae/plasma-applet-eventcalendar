@@ -400,7 +400,7 @@ Item {
 		renameFocused = false
 		renameCursor = -1
 		renameHadFocus = false
-		renameDraft = list.name
+		renameDraft = list.fullName || list.name // With its emoji
 		renamingListId = list.id
 	}
 	function cancelRename() {
@@ -412,7 +412,7 @@ Item {
 	}
 	function commitRename(list, text) {
 		var title = TaskLists.cleanTitle(text)
-		if (!title || title === list.name) {
+		if (!title || title === (list.fullName || list.name)) {
 			cancelRename()
 			return
 		}
@@ -1252,12 +1252,11 @@ Item {
 						isMask: true
 						opacity: sideEntry.current ? 1 : 0.8
 					}
-					Rectangle {
+					ListMark {
 						visible: sideEntry.isList
 						anchors.centerIn: parent
-						width: Math.round(Kirigami.Units.gridUnit * 0.6)
-						height: width
-						radius: width / 2
+						list: sideEntry.isList ? sideEntry.entry.list : null
+						size: Math.round(Kirigami.Units.gridUnit * 0.6)
 						color: sideEntry.isList ? tasksView.listDotColor(sideEntry.entry.list) : "transparent"
 					}
 				}
@@ -1371,12 +1370,11 @@ Item {
 								color: Kirigami.Theme.textColor
 								isMask: true
 							}
-							Rectangle {
+							ListMark {
 								visible: filterItem.isList
 								anchors.centerIn: parent
-								width: Math.round(Kirigami.Units.gridUnit * 0.6)
-								height: width
-								radius: width / 2
+								list: filterItem.isList ? filterItem.entry.list : null
+								size: Math.round(Kirigami.Units.gridUnit * 0.6)
 								color: filterItem.isList ? tasksView.listDotColor(filterItem.entry.list) : "transparent"
 							}
 						}
@@ -1668,14 +1666,18 @@ Item {
 					Layout.bottomMargin: 2
 					Layout.rightMargin: Kirigami.Units.smallSpacing
 					spacing: 0
-					// The dot lined up with the task checks, the name with their titles.
-					Rectangle {
-						Layout.leftMargin: tasksView.sideMargin + (tasksView.checkSize - listHeader.dotSize) / 2
-						Layout.rightMargin: tasksView.titleX - tasksView.sideMargin - (tasksView.checkSize + listHeader.dotSize) / 2
-						implicitWidth: listHeader.dotSize
-						implicitHeight: implicitWidth
-						radius: width / 2
-						color: appletConfig.eventColoredTextColor(appletConfig.eventColor(row && row.list.color ? row.list.color : null))
+					// The dot (or the list's emoji) lined up with the task checks, the name with their titles.
+					Item {
+						Layout.leftMargin: tasksView.sideMargin
+						Layout.rightMargin: tasksView.titleX - tasksView.sideMargin - tasksView.checkSize
+						implicitWidth: tasksView.checkSize
+						implicitHeight: tasksView.checkSize
+						ListMark {
+							anchors.centerIn: parent
+							list: listHeader.row ? listHeader.row.list : null
+							size: listHeader.dotSize
+							color: appletConfig.eventColoredTextColor(appletConfig.eventColor(listHeader.row && listHeader.row.list.color ? listHeader.row.list.color : null))
+						}
 					}
 					PlasmaComponents3.Label {
 						visible: !listHeader.renaming

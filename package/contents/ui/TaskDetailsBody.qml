@@ -6,6 +6,7 @@ import org.kde.plasma.components as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
 import "Shared.js" as Shared
+import "TaskLists.js" as TaskLists
 import "Tasks.js" as Tasks
 
 // A task's details (EventDetailsView with a task), like TickTick's: the title, a large Mark as done
@@ -50,12 +51,13 @@ ColumnLayout {
 		})
 		return i18nc("%1 = 10m, 2m", "Reminders: %1 before", parts.join(", "))
 	}
-	// The list's name without the account ("TickTick - Work" is "Work").
-	readonly property string listName: {
+	// The list's name without the account ("TickTick - Work" is "Work"), its emoji apart (its icon).
+	readonly property var listSplit: {
 		var name = details && details.calendar ? String(details.calendar.summary || "") : ""
 		var parts = name.split(" - ")
-		return parts.length > 1 ? parts.slice(1).join(" - ") : name
+		return TaskLists.splitIcon(parts.length > 1 ? parts.slice(1).join(" - ") : name)
 	}
+	readonly property string listName: listSplit.name
 
 	spacing: Kirigami.Units.smallSpacing * 1.5
 
@@ -129,6 +131,7 @@ ColumnLayout {
 	PropertyRow {
 		visible: !!body.listName
 		dotColor: body.details ? body.details.eventColor : "transparent"
+		emoji: body.listSplit.icon
 		text: body.listName
 	}
 	PropertyRow {
@@ -199,6 +202,7 @@ ColumnLayout {
 		property string icon: ""
 		property color iconColor: Kirigami.Theme.textColor
 		property color dotColor: "transparent"
+		property string emoji: "" // In place of the dot (a list's emoji)
 		property alias text: rowLabel.text
 		property color textColor: Kirigami.Theme.textColor
 		default property alias trailing: trailingArea.data
@@ -219,8 +223,14 @@ ColumnLayout {
 				color: row.iconColor
 				opacity: row.iconColor === Kirigami.Theme.textColor ? 0.75 : 1
 			}
+			PlasmaComponents3.Label {
+				visible: !row.icon && !!row.emoji
+				anchors.centerIn: parent
+				text: row.emoji
+				textFormat: Text.PlainText
+			}
 			Rectangle {
-				visible: !row.icon
+				visible: !row.icon && !row.emoji
 				anchors.centerIn: parent
 				width: Math.round(parent.width * 0.7)
 				height: width

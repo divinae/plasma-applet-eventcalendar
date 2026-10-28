@@ -433,11 +433,10 @@ LinkRect {
 				visible: taskRow.showListName
 				Layout.alignment: Qt.AlignVCenter
 				spacing: Kirigami.Units.smallSpacing
-				Rectangle {
+				ListMark {
 					anchors.verticalCenter: parent.verticalCenter
-					width: Math.round(Kirigami.Units.gridUnit * 0.45)
-					height: width
-					radius: width / 2
+					list: taskRow.showList
+					size: Math.round(Kirigami.Units.gridUnit * 0.45)
 					color: taskRow.listColor
 				}
 				PlasmaComponents3.Label {

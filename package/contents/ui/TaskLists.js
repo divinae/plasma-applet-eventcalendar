@@ -134,3 +134,53 @@ function refreshed(stored, fresh, fields) {
 		changed: sign(stored.lists) !== sign(fresh) || ids.length !== (stored.ids || []).length,
 	}
 }
+
+// A list's name starting with an emoji (like TickTick, which shows it as the list's icon): { icon:
+// the emoji ('' for none), name: the rest, trimmed }. The emoji: a pictograph (with its variation
+// selector, skin tone, keycap, and joined parts) at the very start.
+function splitIcon(fullName) {
+	var s = String(fullName || '')
+	var isHigh = function(c) { return c >= 0xD83C && c <= 0xD83E }
+	var isSymbol = function(c) {
+		return (c >= 0x2190 && c <= 0x21FF) || (c >= 0x2300 && c <= 0x23FF) || (c >= 0x25A0 && c <= 0x27BF)
+			|| (c >= 0x2900 && c <= 0x297F) || (c >= 0x2B00 && c <= 0x2BFF) || c === 0x00A9 || c === 0x00AE
+			|| c === 0x203C || c === 0x2049 || c === 0x2122 || c === 0x2139 || c === 0x3030 || c === 0x303D
+	}
+	// One pictograph at i: its length in code units, 0 when there's none.
+	var one = function(i) {
+		var c = s.charCodeAt(i)
+		var n = 0
+		if (isHigh(c) && i + 1 < s.length) {
+			n = 2
+		} else if (isSymbol(c)) {
+			n = 1
+		} else {
+			return 0
+		}
+		while (i + n < s.length) {
+			var d = s.charCodeAt(i + n)
+			if (d === 0xFE0F || d === 0x20E3) {
+				n += 1 // Variation selector, keycap
+			} else if (d === 0xD83C && i + n + 1 < s.length && s.charCodeAt(i + n + 1) >= 0xDFFB && s.charCodeAt(i + n + 1) <= 0xDFFF) {
+				n += 2 // Skin tone
+			} else {
+				break
+			}
+		}
+		return n
+	}
+	var len = one(0)
+	if (!len) {
+		return { icon: '', name: s.trim() }
+	}
+	// Joined emoji (ZWJ sequences, eg: a family).
+	while (s.charCodeAt(len) === 0x200D) {
+		var next = one(len + 1)
+		if (!next) {
+			break
+		}
+		len += 1 + next
+	}
+	var rest = s.substring(len).trim()
+	return rest ? { icon: s.substring(0, len), name: rest } : { icon: '', name: s.trim() }
+}

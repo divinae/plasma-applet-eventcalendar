@@ -6,7 +6,7 @@ const vm = require('vm')
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/TaskLists.js'), 'utf8')
 	.replace(/^\.pragma library\s*$/m, '')
 const names = ['swatches', 'isEditableRole', 'tickTickRole','capabilities', 'hasAny', 'cleanTitle', 'hexColor',
-	'withAdded', 'withChanged', 'withRemoved', 'taskCount', 'refreshed']
+	'withAdded', 'withChanged', 'withRemoved', 'taskCount', 'refreshed', 'splitIcon']
 const L = {}
 vm.runInNewContext(source + '\nObject.assign(out, { ' + names.join(', ') + ' })', { out: L })
 const plain = o => JSON.parse(JSON.stringify(o))
@@ -89,4 +89,17 @@ console.log('PASS task_lists')
 	const deleted = L.refreshed(stored, [{ id: 'b', name: 'Home' }], ['name', 'color'])
 	assert.deepStrictEqual(Array.from(deleted.ids), ['b'], 'a deleted list leaves the selection')
 	assert.strictEqual(deleted.changed, true)
+}
+
+// splitIcon: a list's leading emoji as its icon (like TickTick).
+{
+	const split = n => { const r = L.splitIcon(n); return [r.icon, r.name] }
+	assert.deepStrictEqual(split('🏠 Home'), ['🏠', 'Home'])
+	assert.deepStrictEqual(split('💼Work'), ['💼', 'Work'], 'no space after it')
+	assert.deepStrictEqual(split('Work'), ['', 'Work'], 'no emoji')
+	assert.deepStrictEqual(split('❤️ Love'), ['❤️', 'Love'], 'with its variation selector')
+	assert.deepStrictEqual(split('👍🏽 Ok'), ['👍🏽', 'Ok'], 'with a skin tone')
+	assert.deepStrictEqual(split('👨‍👩‍👧 Family'), ['👨‍👩‍👧', 'Family'], 'joined emoji')
+	assert.deepStrictEqual(split('🎉'), ['', '🎉'], 'only an emoji: kept as the name')
+	assert.deepStrictEqual(split(''), ['', ''])
 }
