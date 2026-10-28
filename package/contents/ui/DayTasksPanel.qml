@@ -282,8 +282,8 @@ ColumnLayout {
 		}
 	}
 
-	// "2 completed" / "Hide completed": the done tasks folded away or shown. Laid out like the rows
-	// and "Add a task…": the arrow where the checks are, the text in the tasks' font.
+	// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
+	// (the arrow in the checks' column), smaller than they are.
 	QQC2.AbstractButton {
 		id: doneToggle
 		readonly property real sideMargin: Kirigami.Units.smallSpacing * 2 // TaskRow's (compact)
@@ -304,13 +304,19 @@ ColumnLayout {
 		}
 		contentItem: RowLayout {
 			spacing: Kirigami.Units.largeSpacing
-			Kirigami.Icon {
+			// Smaller than the checks (a quiet line), centered in their column.
+			Item {
 				Layout.preferredWidth: doneToggle.checkSize
 				Layout.preferredHeight: doneToggle.checkSize
+				Kirigami.Icon {
+					anchors.centerIn: parent
+					width: Math.round(doneToggle.checkSize * 0.7)
+					height: width
 				source: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
 				color: Kirigami.Theme.textColor
 				isMask: true
 				opacity: 0.7
+				}
 			}
 			PlasmaComponents3.Label {
 				Layout.fillWidth: true
@@ -318,7 +324,7 @@ ColumnLayout {
 				text: doneToggle.text
 				textFormat: Text.PlainText
 				font.family: appletConfig.eventFont.family
-				font.pointSize: appletConfig.eventFont.pointSize
+				font.pointSize: appletConfig.eventFont.pointSize * 0.85
 				opacity: 0.7
 				elide: Text.ElideRight
 			}
