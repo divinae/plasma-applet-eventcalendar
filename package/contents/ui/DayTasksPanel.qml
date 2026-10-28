@@ -345,6 +345,21 @@ ColumnLayout {
 		visible: dayTasks.open && dayTasks.adding
 		onDismissed: dayTasks.adding = false
 		Layout.fillWidth: true
+		Layout.topMargin: Kirigami.Units.smallSpacing + 3
+		Layout.bottomMargin: 3
+		// A thin rounded frame: it reads as a field, apart from the tasks (a bit of room above and
+		// below the text).
+		Rectangle {
+			z: -1
+			anchors.fill: parent
+			anchors.topMargin: -3
+			anchors.bottomMargin: -3
+			radius: Kirigami.Units.cornerRadius * 2
+			color: "transparent"
+			border.width: 1
+			border.color: quickAddRow.fieldFocused ? Kirigami.Theme.highlightColor
+				: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.18)
+		}
 		eventModel: dayTasks.eventModel
 		lists: dayTasks.lists
 		// The filtered list, if any: new tasks go there.

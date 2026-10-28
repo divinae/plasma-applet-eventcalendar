@@ -175,6 +175,8 @@ Item {
 
 	// Esc in the empty field (eg: a row shown on demand closes).
 	signal dismissed()
+	// The field is being typed in (eg: a frame around the row in its accent).
+	readonly property bool fieldFocused: field.activeFocus
 	// The keyboard ("N" in the Tasks tab).
 	function focusField() {
 		field.forceActiveFocus()
