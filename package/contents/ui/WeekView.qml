@@ -273,7 +273,9 @@ Item {
 
 	readonly property string title: {
 		if (singleDay) {
-			return Shared.formatDate(weekStart, Qt.locale().dateFormat(Locale.LongFormat))
+			// Without the weekday: the hours' card title has it.
+			var longDate = Qt.locale().dateFormat(Locale.LongFormat).replace(/(^dddd.?\s)|(,?\sdddd$)/, "")
+			return Shared.formatDate(weekStart, longDate)
 		}
 		var first = columnDate(0)
 		var last = columnDate(columnCount - 1)
@@ -798,11 +800,14 @@ Item {
 						Layout.fillWidth: true
 						Layout.minimumWidth: 0
 						text: {
+							// "Today · Wednesday" (the popup's title has the date, without the weekday).
 							var diff = Math.round((Shared.startOfDay(weekView.weekStart).getTime() - weekView.todayStart.getTime()) / 86400000)
-							return diff === 0 ? i18nc("tasks filter", "Today")
+							var weekday = Qt.locale().standaloneDayName(weekView.weekStart.getDay(), Locale.LongFormat)
+							var relative = diff === 0 ? i18nc("tasks filter", "Today")
 								: diff === 1 ? i18nc("tasks filter", "Tomorrow")
 								: diff === -1 ? i18nc("the day before today", "Yesterday")
-								: Qt.locale().standaloneDayName(weekView.weekStart.getDay(), Locale.LongFormat)
+								: ""
+							return relative ? relative + " · " + weekday : weekday
 						}
 						textFormat: Text.PlainText
 						font.weight: Font.Bold
