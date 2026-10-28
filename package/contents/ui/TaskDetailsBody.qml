@@ -227,7 +227,8 @@ ColumnLayout {
 		font.strikeout: body.done
 		opacity: body.done ? 0.7 : 1
 	}
-	// Done / not done: a large button in the accent color, easy to hit.
+	// Done / not done: a large solid button in the accent color, easy to hit (done: a quiet one, to
+	// undo).
 	QQC2.AbstractButton {
 		id: doneButton
 		visible: !!(body.item && body.item.canEdit !== false)
@@ -236,20 +237,22 @@ ColumnLayout {
 		Layout.rightMargin: Kirigami.Units.largeSpacing
 		Layout.topMargin: Kirigami.Units.smallSpacing
 		Layout.bottomMargin: Kirigami.Units.largeSpacing
-		implicitHeight: Math.round(Kirigami.Units.gridUnit * 2.2)
+		implicitHeight: Math.round(Kirigami.Units.gridUnit * 2)
 		hoverEnabled: true
 		activeFocusOnTab: true
 		text: body.done ? i18n("Mark as not done") : i18n("Mark as done")
 		Accessible.name: text
 		onClicked: body.details.toggleDone()
 		Keys.onSpacePressed: clicked()
-		readonly property color accent: body.done ? Kirigami.Theme.textColor : Kirigami.Theme.highlightColor
+		readonly property color fg: body.done ? Kirigami.Theme.textColor : Kirigami.Theme.highlightedTextColor
 		background: Rectangle {
 			radius: Kirigami.Units.cornerRadius * 2
-			color: Qt.rgba(doneButton.accent.r, doneButton.accent.g, doneButton.accent.b,
-				doneButton.pressed ? 0.3 : doneButton.hovered ? 0.22 : 0.14)
-			border.width: doneButton.visualFocus ? 2 : 1
-			border.color: doneButton.visualFocus ? Kirigami.Theme.focusColor : Qt.rgba(doneButton.accent.r, doneButton.accent.g, doneButton.accent.b, 0.45)
+			readonly property color base: body.done
+				? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.08)
+				: Kirigami.Theme.highlightColor
+			color: doneButton.pressed ? Qt.darker(base, 1.15) : doneButton.hovered ? Qt.lighter(base, 1.08) : base
+			border.width: doneButton.visualFocus ? 2 : 0
+			border.color: Kirigami.Theme.focusColor
 		}
 		contentItem: Item {
 			Row {
@@ -261,13 +264,14 @@ ColumnLayout {
 					height: width
 					source: body.done ? "edit-undo" : "checkmark"
 					isMask: true
-					color: body.done ? Kirigami.Theme.textColor : Kirigami.Theme.highlightColor
+					color: doneButton.fg
 				}
 				PlasmaComponents3.Label {
 					anchors.verticalCenter: parent.verticalCenter
 					text: doneButton.text
 					textFormat: Text.PlainText
 					font.weight: Font.DemiBold
+					color: doneButton.fg
 				}
 			}
 		}
