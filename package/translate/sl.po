@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:48+0100\n"
+"POT-Creation-Date: 2026-10-28 08:55+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1582,18 +1582,18 @@ msgstr "Opravila ni bilo mogoče shraniti"
 msgid "Priority"
 msgstr "Prioriteta"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Visoka prednost"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Srednja prednost"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Nizka prednost"
 
@@ -1642,11 +1642,11 @@ msgstr "Označi kot neopravljeno"
 msgid "Mark as Done"
 msgstr "Označi kot opravljeno"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as Not in Progress"
 msgstr "Označi kot ne v teku"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as in Progress"
 msgstr "Označi kot v teku"
 
@@ -1753,12 +1753,12 @@ msgstr[1] "%1 gosta"
 msgstr[2] "%1 gostje"
 msgstr[3] "%1 gostov"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "reminder at event start"
 msgid "at start"
 msgstr "ob začetku"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Opomniki: %1 prej"
@@ -1771,10 +1771,6 @@ msgstr "Nazaj"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Izbriši:"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Delete this task?"
-msgstr "Izbrišem to opravilo?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1818,7 +1814,7 @@ msgid "All day"
 msgstr "Ves dan"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Repeats"
 msgstr "Ponavljanje"
 
@@ -1826,12 +1822,6 @@ msgstr "Ponavljanje"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, čas %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "V teku"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1898,6 +1888,10 @@ msgstr "Opravljenih %1 od %2 podopravil"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Subtasks"
 msgstr "Podopravila"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Izbrišem to opravilo?"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2128,7 +2122,7 @@ msgid "Does not repeat"
 msgstr "Se ne ponavlja"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Daily"
 msgstr "Dnevno"
 
@@ -2530,6 +2524,7 @@ msgstr[2] "Vsake %1 tedne"
 msgstr[3] "Vsakih %1 tednov"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Weekly"
 msgstr "Tedensko"
 
@@ -2547,6 +2542,7 @@ msgstr[2] "Vsake %1 mesece"
 msgstr[3] "Vsakih %1 mesecev"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Monthly"
 msgstr "Mesečno"
 
@@ -2559,6 +2555,7 @@ msgstr[2] "Vsaka %1 leta"
 msgstr[3] "Vsakih %1 let"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Yearly"
 msgstr "Letno"
 
@@ -3014,16 +3011,16 @@ msgctxt "%1 = weekday, %2 = short date"
 msgid "%1, %2"
 msgstr "%1, %2"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every weekday"
 msgstr "Vsak delovni dan"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = weekday"
 msgid "Every %1"
 msgstr "Tedensko (%1)"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every day"
 msgid_plural "Every %1 days"
 msgstr[0] "Vsak dan"
@@ -3031,7 +3028,7 @@ msgstr[1] "Vsaka %1 dneva"
 msgstr[2] "Vsake %1 dni"
 msgstr[3] "Vsakih %1 dni"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "Vsak teden"
@@ -3039,7 +3036,7 @@ msgstr[1] "Vsaka %1 tedna"
 msgstr[2] "Vsake %1 tedne"
 msgstr[3] "Vsakih %1 tednov"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every month"
 msgid_plural "Every %1 months"
 msgstr[0] "Vsak mesec"
@@ -3047,7 +3044,7 @@ msgstr[1] "Vsaka %1 meseca"
 msgstr[2] "Vsake %1 mesece"
 msgstr[3] "Vsakih %1 mesecev"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every year"
 msgid_plural "Every %1 years"
 msgstr[0] "Vsako leto"
@@ -3193,6 +3190,12 @@ msgstr "Označi kot neopravljeno"
 #: ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Označi kot opravljeno"
+
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "V teku"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"

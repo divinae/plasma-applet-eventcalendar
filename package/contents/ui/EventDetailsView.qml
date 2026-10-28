@@ -204,12 +204,13 @@ Rectangle {
 			}
 			Item { Layout.fillWidth: true }
 
+			// (A task: Edit / Delete at the bottom of its card.)
 			PlasmaComponents3.Label {
-				visible: details.confirmingDelete
-				text: details.isRecurring ? i18n("Delete:") : details.isTask ? i18n("Delete this task?") : i18n("Delete this event?")
+				visible: details.confirmingDelete && !details.isTask
+				text: details.isRecurring ? i18n("Delete:") : i18n("Delete this event?")
 			}
 			PlasmaComponents3.Button {
-				visible: details.confirmingDelete
+				visible: details.confirmingDelete && !details.isTask
 				icon.name: "edit-delete"
 				text: details.isRecurring ? i18n("This Occurrence") : i18n("Delete")
 				onClicked: {
@@ -230,7 +231,7 @@ Rectangle {
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
-				visible: details.confirmingDelete
+				visible: details.confirmingDelete && !details.isTask
 				text: i18n("Cancel")
 				onClicked: details.confirmingDelete = false
 			}
@@ -247,7 +248,7 @@ Rectangle {
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
-				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
+				visible: !details.confirmingDelete && !details.isTask && !!(details.eventItem && details.eventItem.canEdit)
 				icon.name: "document-edit"
 				text: i18n("Edit")
 				onClicked: details.editRequested()
@@ -262,7 +263,7 @@ Rectangle {
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
-				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
+				visible: !details.confirmingDelete && !details.isTask && !!(details.eventItem && details.eventItem.canEdit)
 				icon.name: "edit-delete"
 				text: i18n("Delete")
 				display: QQC2.AbstractButton.IconOnly
@@ -287,29 +288,25 @@ Rectangle {
 				width: scrollView.availableWidth
 				spacing: Kirigami.Units.largeSpacing
 
-				// Title with color bar
+				// A task: its own layout (title with its check, a row per property, the notes).
+				TaskDetailsBody {
+					visible: details.isTask
+					Layout.fillWidth: true
+					details: details
+				}
+
+				// Title with color bar (an event; a task has TaskDetailsBody)
 				RowLayout {
+					visible: !details.isTask
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					Layout.rightMargin: Kirigami.Units.largeSpacing
 					spacing: Kirigami.Units.largeSpacing
 					Rectangle {
-						visible: !details.isTask
 						Layout.fillHeight: true
 						Layout.preferredWidth: 6
 						radius: 3
 						color: details.eventColor
-					}
-					// A task: its check, large, beside the title (marks it done / not done).
-					TaskCheck {
-						visible: details.isTask
-						Layout.alignment: Qt.AlignTop
-						Layout.topMargin: 2
-						size: Math.round(Kirigami.Units.iconSizes.medium * 0.85)
-						eventItem: details.isTask ? details.eventItem : null
-						color: details.eventColor
-						square: appletConfig.islands
-						overdue: details.isOverdue
 					}
 					ColumnLayout {
 						Layout.fillWidth: true
@@ -394,48 +391,6 @@ Rectangle {
 					}
 				}
 
-				// Tasks: in progress (the widget's own mark, a toggle) and the priority.
-				Flow {
-					visible: details.isTask && !details.isDone
-					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.largeSpacing
-					Layout.rightMargin: Kirigami.Units.largeSpacing
-					spacing: Kirigami.Units.smallSpacing
-					PlasmaComponents3.ToolButton {
-						id: inProgressButton
-						icon.name: "media-playback-start"
-						text: i18nc("tasks filter", "In progress")
-						checkable: true
-						checked: details.taskInProgress
-						// The setting decides (a click doesn't keep its own state).
-						onClicked: {
-							eventModel.setTaskInProgress(details.eventItem, !details.taskInProgress)
-							checked = Qt.binding(function() { return details.taskInProgress })
-						}
-						PlasmaComponents3.ToolTip.text: details.taskInProgress ? i18n("Mark as Not in Progress") : i18n("Mark as in Progress")
-						PlasmaComponents3.ToolTip.visible: hovered
-					}
-					// The priority (TickTick), as the task menu shows it.
-					RowLayout {
-						visible: details.taskPriority !== 'none'
-						height: inProgressButton.height // Centered beside the button
-						spacing: Kirigami.Units.smallSpacing
-						Kirigami.Icon {
-							Layout.alignment: Qt.AlignVCenter
-							implicitWidth: Kirigami.Units.iconSizes.small
-							implicitHeight: implicitWidth
-							source: "flag"
-							isMask: true
-							color: Tasks.priorityColor(details.taskPriority)
-						}
-						PlasmaComponents3.Label {
-							Layout.alignment: Qt.AlignVCenter
-							text: details.taskPriority === 'high' ? i18n("High priority") : details.taskPriority === 'medium' ? i18n("Medium priority") : i18n("Low priority")
-							textFormat: Text.PlainText
-						}
-					}
-				}
-
 				// Join
 				PlasmaComponents3.Button {
 					visible: !!details.meetingLink && !details.isTask
@@ -474,11 +429,13 @@ Rectangle {
 				}
 
 				Kirigami.Separator {
+					visible: !details.isTask
 					Layout.fillWidth: true
 				}
 
-				// Properties: icon + text rows
+				// Properties: icon + text rows (an event's)
 				GridLayout {
+					visible: !details.isTask
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
 					Layout.rightMargin: Kirigami.Units.largeSpacing
@@ -782,6 +739,7 @@ Rectangle {
 								subtaskId: checklistRow.subtask.id
 								subtaskDone: !!checklistRow.subtask.done
 								color: details.eventColor
+								square: appletConfig.islands
 							}
 							PlasmaComponents3.Label {
 								id: checklistLabel
@@ -816,9 +774,9 @@ Rectangle {
 				PlasmaComponents3.Label {
 					id: descriptionLabel
 					// Tasks: their notes.
-					readonly property string description: !details.eventItem ? ""
-						: details.eventItem.description ? details.eventItem.description
-						: details.isTask && details.eventItem.notes ? details.eventItem.notes : ""
+					// (A task's notes are in TaskDetailsBody.)
+					readonly property string description: !details.eventItem || details.isTask ? ""
+						: details.eventItem.description ? details.eventItem.description : ""
 					visible: !!description
 					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
@@ -833,6 +791,50 @@ Rectangle {
 					}
 					linkColor: Kirigami.Theme.linkColor
 					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+				}
+
+				// A task: Edit and Delete at the bottom (Delete asks here first).
+				RowLayout {
+					visible: details.isTask && !!(details.eventItem && details.eventItem.canEdit)
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.largeSpacing
+					Layout.rightMargin: Kirigami.Units.largeSpacing
+					Layout.topMargin: Kirigami.Units.smallSpacing
+					Layout.bottomMargin: Kirigami.Units.largeSpacing
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Button {
+						visible: !details.confirmingDelete
+						icon.name: "document-edit"
+						text: i18n("Edit")
+						onClicked: details.editRequested()
+					}
+					Item {
+						Layout.fillWidth: true
+					}
+					PlasmaComponents3.Label {
+						visible: details.confirmingDelete
+						Layout.fillWidth: true
+						text: i18n("Delete this task?")
+						textFormat: Text.PlainText
+						elide: Text.ElideRight
+					}
+					PlasmaComponents3.Button {
+						icon.name: "edit-delete"
+						text: i18n("Delete")
+						onClicked: {
+							if (!details.confirmingDelete) {
+								details.confirmingDelete = true
+								return
+							}
+							popup.deleteWithUndo(details.eventItem, false)
+							details.closeRequested()
+						}
+					}
+					PlasmaComponents3.Button {
+						visible: details.confirmingDelete
+						text: i18n("Cancel")
+						onClicked: details.confirmingDelete = false
+					}
 				}
 			}
 		}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:48+0100\n"
+"POT-Creation-Date: 2026-10-28 08:55+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1388,15 +1388,15 @@ msgstr "Tehtävää ei voitu tallentaa"
 msgid "Priority"
 msgstr "Prioriteetti"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Korkea tärkeys"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Keskitason tärkeys"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Matala tärkeys"
 
@@ -1441,11 +1441,11 @@ msgstr "Merkitse tekemättömäksi"
 msgid "Mark as Done"
 msgstr "Merkitse tehdyksi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as Not in Progress"
 msgstr "Merkitse ei käynnissä olevaksi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as in Progress"
 msgstr "Merkitse käynnissä olevaksi"
 
@@ -1545,12 +1545,12 @@ msgid_plural "%1 guests"
 msgstr[0] "1 vieras"
 msgstr[1] "%1 vierasta"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "reminder at event start"
 msgid "at start"
 msgstr "alkaessa"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Muistutukset: %1 ennen"
@@ -1562,10 +1562,6 @@ msgstr "Takaisin"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Poista:"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Delete this task?"
-msgstr "Poistetaanko tämä tehtävä?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1607,7 +1603,7 @@ msgstr "Yksityinen tapahtuma"
 msgid "All day"
 msgstr "Koko päivä"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Repeats"
 msgstr "Toistuu"
 
@@ -1615,11 +1611,6 @@ msgstr "Toistuu"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, aikavyöhyke %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Käynnissä"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1684,6 +1675,10 @@ msgstr "%1/%2 alitehtävää tehty"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Subtasks"
 msgstr "Alitehtävät"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Poistetaanko tämä tehtävä?"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -1911,7 +1906,7 @@ msgstr "Aikavyöhyke"
 msgid "Does not repeat"
 msgstr "Ei toistu"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Daily"
 msgstr "Päivittäin"
 
@@ -2286,7 +2281,7 @@ msgid_plural "Every %1 weeks"
 msgstr[0] "%1 viikon välein"
 msgstr[1] "%1 viikon välein"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Weekly"
 msgstr "Viikoittain"
 
@@ -2301,7 +2296,7 @@ msgid_plural "Every %1 months"
 msgstr[0] "%1 kuukauden välein"
 msgstr[1] "%1 kuukauden välein"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Monthly"
 msgstr "Kuukausittain"
 
@@ -2311,7 +2306,7 @@ msgid_plural "Every %1 years"
 msgstr[0] "%1 vuoden välein"
 msgstr[1] "%1 vuoden välein"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Yearly"
 msgstr "Vuosittain"
 
@@ -2727,34 +2722,34 @@ msgctxt "%1 = weekday, %2 = short date"
 msgid "%1, %2"
 msgstr "%1, %2"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every weekday"
 msgstr "Joka arkipäivä"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = weekday"
 msgid "Every %1"
 msgstr "Joka %1"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every day"
 msgid_plural "Every %1 days"
 msgstr[0] "Joka päivä"
 msgstr[1] "%1 päivän välein"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "Joka viikko"
 msgstr[1] "%1 viikon välein"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every month"
 msgid_plural "Every %1 months"
 msgstr[0] "Joka kuukausi"
 msgstr[1] "%1 kuukauden välein"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every year"
 msgid_plural "Every %1 years"
 msgstr[0] "Joka vuosi"
@@ -2898,6 +2893,11 @@ msgstr "Merkitse tekemättömäksi"
 #: ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Merkitse tehdyksi"
+
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Käynnissä"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"

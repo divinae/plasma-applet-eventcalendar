@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:48+0100\n"
+"POT-Creation-Date: 2026-10-28 08:55+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1582,18 +1582,18 @@ msgstr "Не вдалося зберегти завдання"
 msgid "Priority"
 msgstr "Пріоритет"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Високий пріоритет"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Середній пріоритет"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Низький пріоритет"
 
@@ -1642,11 +1642,11 @@ msgstr "Позначити як невиконане"
 msgid "Mark as Done"
 msgstr "Позначити як виконане"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as Not in Progress"
 msgstr "Зняти позначку «виконується»"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as in Progress"
 msgstr "Позначити як виконується"
 
@@ -1752,12 +1752,12 @@ msgstr[0] "%1 гість"
 msgstr[1] "%1 гості"
 msgstr[2] "%1 гостей"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "reminder at event start"
 msgid "at start"
 msgstr "на початку"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Нагадування: за %1"
@@ -1770,10 +1770,6 @@ msgstr "Назад"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Вилучити:"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Delete this task?"
-msgstr "Вилучити це завдання?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1817,7 +1813,7 @@ msgid "All day"
 msgstr "Весь день"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Repeats"
 msgstr "Повторюється"
 
@@ -1825,12 +1821,6 @@ msgstr "Повторюється"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, час: %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Виконується"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1896,6 +1886,10 @@ msgstr "Виконано %1 з %2 підзавдань"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Subtasks"
 msgstr "Підзавдання"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Вилучити це завдання?"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2125,7 +2119,7 @@ msgid "Does not repeat"
 msgstr "Не повторюється"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Daily"
 msgstr "Щодня"
 
@@ -2516,6 +2510,7 @@ msgstr[1] "Кожні %1 тижні"
 msgstr[2] "Кожні %1 тижнів"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Weekly"
 msgstr "Щотижня"
 
@@ -2532,6 +2527,7 @@ msgstr[1] "Кожні %1 місяці"
 msgstr[2] "Кожні %1 місяців"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Monthly"
 msgstr "Щомісяця"
 
@@ -2543,6 +2539,7 @@ msgstr[1] "Кожні %1 роки"
 msgstr[2] "Кожні %1 років"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Yearly"
 msgstr "Щороку"
 
@@ -2986,37 +2983,37 @@ msgctxt "%1 = weekday, %2 = short date"
 msgid "%1, %2"
 msgstr "%1, %2"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every weekday"
 msgstr "Щобудня"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = weekday"
 msgid "Every %1"
 msgstr "Щотижня (%1)"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every day"
 msgid_plural "Every %1 days"
 msgstr[0] "Щодня"
 msgstr[1] "Кожні %1 дні"
 msgstr[2] "Кожні %1 днів"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "Щотижня"
 msgstr[1] "Кожні %1 тижні"
 msgstr[2] "Кожні %1 тижнів"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every month"
 msgid_plural "Every %1 months"
 msgstr[0] "Щомісяця"
 msgstr[1] "Кожні %1 місяці"
 msgstr[2] "Кожні %1 місяців"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every year"
 msgid_plural "Every %1 years"
 msgstr[0] "Щороку"
@@ -3162,6 +3159,12 @@ msgstr "Позначити як невиконане"
 #: ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Позначити як виконане"
+
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Виконується"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"

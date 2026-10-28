@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:48+0100\n"
+"POT-Creation-Date: 2026-10-28 08:55+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -1590,18 +1590,18 @@ msgstr "Kon de taak niet opslaan"
 msgid "Priority"
 msgstr "Prioriteit"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Hoge prioriteit"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Gemiddelde prioriteit"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Lage prioriteit"
 
@@ -1650,11 +1650,11 @@ msgstr "Als niet afgerond markeren"
 msgid "Mark as Done"
 msgstr "Als afgerond markeren"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as Not in Progress"
 msgstr "Markeren als niet bezig"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml
 msgid "Mark as in Progress"
 msgstr "Markeren als bezig"
 
@@ -1759,12 +1759,12 @@ msgid_plural "%1 guests"
 msgstr[0] "1 gast"
 msgstr[1] "%1 gasten"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "reminder at event start"
 msgid "at start"
 msgstr "bij aanvang"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Herinneringen: %1 vooraf"
@@ -1777,10 +1777,6 @@ msgstr "Terug"
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete:"
 msgstr "Verwijderen:"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Delete this task?"
-msgstr "Taak verwijderen?"
 
 #: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
@@ -1824,7 +1820,7 @@ msgid "All day"
 msgstr "Hele dag"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Repeats"
 msgstr "Herhaalt"
 
@@ -1832,12 +1828,6 @@ msgstr "Herhaalt"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 tijd in %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Bezig"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -1902,6 +1892,10 @@ msgstr "%1 van %2 subtaken afgerond"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Subtasks"
 msgstr "Subtaken"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Taak verwijderen?"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
@@ -2130,7 +2124,7 @@ msgid "Does not repeat"
 msgstr "Wordt niet herhaald"
 
 #: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Daily"
 msgstr "Dagelijks"
 
@@ -2513,6 +2507,7 @@ msgstr[0] "Elke %1 week"
 msgstr[1] "Elke %1 weken"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Weekly"
 msgstr "Wekelijks"
 
@@ -2528,6 +2523,7 @@ msgstr[0] "Elke %1 maand"
 msgstr[1] "Elke %1 maanden"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Monthly"
 msgstr "Maandelijks"
 
@@ -2538,6 +2534,7 @@ msgstr[0] "Elk %1 jaar"
 msgstr[1] "Elke %1 jaar"
 
 #: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgid "Yearly"
 msgstr "Jaarlijks"
 
@@ -2974,34 +2971,34 @@ msgctxt "%1 = weekday, %2 = short date"
 msgid "%1, %2"
 msgstr "%1, %2"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every weekday"
 msgstr "Elke werkdag"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "%1 = weekday"
 msgid "Every %1"
 msgstr "Elke %1"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every day"
 msgid_plural "Every %1 days"
 msgstr[0] "Elke dag"
 msgstr[1] "Elke %1 dagen"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every week"
 msgid_plural "Every %1 weeks"
 msgstr[0] "Elke week"
 msgstr[1] "Elke %1 weken"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every month"
 msgid_plural "Every %1 months"
 msgstr[0] "Elke maand"
 msgstr[1] "Elke %1 maanden"
 
-#: ../contents/ui/QuickAddTaskRow.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Every year"
 msgid_plural "Every %1 years"
 msgstr[0] "Elk jaar"
@@ -3147,6 +3144,12 @@ msgstr "Als niet afgerond markeren"
 #: ../contents/ui/TaskCheck.qml
 msgid "Mark as done"
 msgstr "Als afgerond markeren"
+
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Bezig"
 
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
