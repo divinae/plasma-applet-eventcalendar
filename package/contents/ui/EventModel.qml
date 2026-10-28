@@ -11,6 +11,7 @@ import "Conflicts.js" as Conflicts
 import "EventTypes.js" as EventTypes
 import "TaskLists.js" as TaskLists
 import "Tasks.js" as Tasks
+import "calendars/PlasmaCalendarEventState.js" as PlasmaCalendarEventState
 
 CalendarManager {
 	id: eventModel
@@ -595,11 +596,13 @@ CalendarManager {
 			return (!!eventItem.canEdit || !!Shared.myResponse(eventItem))
 				&& !Shared.isHiddenCalendar(eventItem.calendarId, hiddenCalendars)
 		}))
+		// A calendar both synced by Akonadi and signed in to directly: only the direct copy.
+		var pimDuplicates = PlasmaCalendarEventState.pimDuplicates(all)
 		var items = []
 		for (var i = 0; i < all.length; i++) {
 			var titles = conflicts[Conflicts.eventKey(all[i])] || []
 			all[i].conflictsWith = titles.map(function(title) { return { summary: title } })
-			if (!inHiddenCalendar[i] && !Shared.isHiddenDeclined(all[i], showDeclined)) {
+			if (!inHiddenCalendar[i] && !pimDuplicates[i] && !Shared.isHiddenDeclined(all[i], showDeclined)) {
 				items.push(all[i])
 			}
 		}
@@ -1156,7 +1159,9 @@ CalendarManager {
 					continue
 				}
 				listed[calendar.id] = true
-				out.push(selectedCalendarEntry(calendar.id, calendar, group))
+				if (calendar.inCalendarMenu !== false) { // false: its events are in another entry
+					out.push(selectedCalendarEntry(calendar.id, calendar, group))
+				}
 			}
 		}
 		// Calendars a manager doesn't list (iCalendar files): look them up by id.

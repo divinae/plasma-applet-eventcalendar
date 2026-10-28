@@ -59,29 +59,56 @@ CalendarManager {
 		}
 
 		logger.debug('calendarModel.count', calendarModel.rowCount())
-		var DataRole = Qt.UserRole + 1
-		// An enabled calendar (a row, or a child of one) of the model.
-		function push(index) {
-			var calendarData = calendarModel.data(index, DataRole)
-			if (calendarData['enabled']) {
-				calendarList.push({
-					"id": "plasma_Events_" + calendarData['id'],
-					"summary": calendarModel.data(index, Qt.DisplayRole),
-					"backgroundColor": "#9a9cff",
-					"accessRole": "owner",
-					"isTasklist": false,
-				})
+		var rows = PlasmaCalendarUtils.pimCalendarRows(calendarModel, Qt.UserRole, Qt.DisplayRole)
+		var shownNames = []
+		for (var i = 0; i < rows.length; i++) {
+			if (!rows[i].checked) {
+				continue
+			}
+			// For new events (konsolekalendar): the plugin doesn't say which calendar an event is from.
+			calendarList.push({
+				"id": "plasma_Events_" + rows[i].id,
+				"summary": rows[i].name,
+				"backgroundColor": "#9a9cff",
+				"accessRole": "owner",
+				"isTasklist": false,
+				"inCalendarMenu": false, // Its events are in the one below
+			})
+			if (shownNames.indexOf(rows[i].name) < 0) {
+				shownNames.push(rows[i].name)
 			}
 		}
-		for (var i = 0; i < calendarModel.rowCount(); i++) {
-			var index = calendarModel.index(i, 0)
-			push(index)
-			if (calendarModel.hasChildren(index)) {
-				for (var j = 0; j < calendarModel.rowCount(index); j++) {
-					push(calendarModel.index(j, 0, index))
-				}
+		if (shownNames.length === 0 || !pimEventsPluginEnabled()) {
+			return
+		}
+		// All the Akonadi events, as one calendar (eg: to hide them in the popup's calendar menu),
+		// named after the calendars shown and in the color most of its events have.
+		calendarList.push({
+			"id": calendarManagerId + "_Events",
+			"summary": shownNames.join(i18nc("separator of names in a list", ", ")),
+			"backgroundColor": pimEventsColor || Kirigami.Theme.highlightColor.toString(),
+			"accessRole": "reader",
+			"isTasklist": false,
+		})
+	}
+	function pimEventsPluginEnabled() {
+		return PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins).some(function(plugin) {
+			return PlasmaCalendarUtils.getPluginStem(plugin) === "pimevents"
+		})
+	}
+	// The most common color of the last fetched Akonadi events.
+	property string pimEventsColor: ""
+	function updatePimEventsColor(events) {
+		var counts = {}
+		var best = ""
+		for (var i = 0; i < events.length; i++) {
+			var color = events[i].backgroundColor
+			counts[color] = (counts[color] || 0) + 1
+			if (!best || counts[color] > counts[best]) {
+				best = color
 			}
 		}
+		pimEventsColor = best
 	}
 
 	// Holidays (KHolidays) come without a color: coral red (Google's "Flamingo"), pastel like the other calendars.
@@ -164,21 +191,25 @@ CalendarManager {
 
 	readonly property var eventTypeLabels: ({
 		holidays: [
+			i18ndc("plasmashellprivateplugin", "Agenda listview section title", "Holidays"),
 			i18ndc("libplasma6", "Agenda listview section title", "Holidays"),
 			i18ndc("libplasma5", "Agenda listview section title", "Holidays"),
 			i18n("Holidays"),
 		],
 		events: [
+			i18ndc("plasmashellprivateplugin", "Agenda listview section title", "Events"),
 			i18ndc("libplasma6", "Agenda listview section title", "Events"),
 			i18ndc("libplasma5", "Agenda listview section title", "Events"),
 			i18n("Events"),
 		],
 		todo: [
+			i18ndc("plasmashellprivateplugin", "Agenda listview section title", "Todo"),
 			i18ndc("libplasma6", "Agenda listview section title", "Todo"),
 			i18ndc("libplasma5", "Agenda listview section title", "Todo"),
 			i18n("Todo"),
 		],
 		other: [
+			i18ndc("plasmashellprivateplugin", "Means 'Other calendar items'", "Other"),
 			i18ndc("libplasma6", "Means 'Other calendar items'", "Other"),
 			i18ndc("libplasma5", "Means 'Other calendar items'", "Other"),
 			i18n("Other"),
@@ -196,7 +227,8 @@ CalendarManager {
 		// dayItem.eventType is translated, but is the only way to tell which plugin it belongs to without
 		// creating a seperate PlasmaCalendar.EventPluginsManager for each plugin (assuming it's not a singleton).
 		// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/eventdatadecorator.cpp#L60
-		// plasma-framework uses the "libplasma5"/"libplasma6" translation domains.
+		// Plasma 6 translates them in the "plasmashellprivateplugin" domain, older versions in
+		// "libplasma5"/"libplasma6".
 		if (isEventType(dayItem, eventTypeLabels.holidays)) {
 			return calendarManagerId + "_Holidays"
 		} else if (isEventType(dayItem, eventTypeLabels.events)) {
@@ -305,6 +337,7 @@ CalendarManager {
 			}
 			calendars[event.calendarId].push(event)
 		}
+		updatePimEventsColor(calendars[calendarManagerId + "_Events"] || [])
 		for (var i = 0; i < calendarIdList.length; i++) {
 			var calendarId = calendarIdList[i]
 			var calendarEvents = calendars[calendarId]

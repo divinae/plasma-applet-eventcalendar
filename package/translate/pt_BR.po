@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:47+0100\n"
+"POT-Creation-Date: 2026-10-29 08:56+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -158,6 +158,13 @@ msgstr "Erro desconhecido do auxiliar iCalendar"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "Não foi possível carregar %1: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/FindTimeView.qml
+msgctxt "separator of names in a list"
+msgid ", "
+msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -683,6 +690,22 @@ msgstr ""
 "detecta automaticamente."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
+"Sign in here as well to answer invitations, edit and delete events and join "
+"meetings from the widget. Events of an account synced both ways are shown "
+"once, from the sign-in here."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
+"sign-in here, where they can be answered and edited."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"
 msgstr "Entrar novamente"
 
@@ -720,6 +743,17 @@ msgstr "Nenhum calendário carregado ainda. Use o botão de recarregar."
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Task lists are chosen on the Tasks page."
 msgstr "As listas de tarefas são escolhidas na página Tarefas."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the settings "
+"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+"calendar menu they are one entry."
+msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -2424,11 +2458,6 @@ msgstr "Esta agenda não pode mostrar os horários de disponibilidade"
 #: ../contents/ui/EventMover.qml
 msgid "Event moved"
 msgstr "Evento movido"
-
-#: ../contents/ui/FindTimeView.qml
-msgctxt "separator of names in a list"
-msgid ", "
-msgstr ", "
 
 #: ../contents/ui/FindTimeView.qml
 msgid "No suggestions: the guests' busy times aren't available."

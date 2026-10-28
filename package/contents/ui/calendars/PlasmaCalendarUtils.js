@@ -42,6 +42,45 @@ function toArray(listLike) {
 	return []
 }
 
+// The Akonadi collections of a PimCalendarsModel (kdepim-addons' pimevents plugin):
+// [{ id, name, checked }], checked: shown in the Plasma calendars (the plugin's own selection,
+// [PIMEventsPlugin] calendars= in plasmashellrc). Accounts (resources) are left out.
+// Current versions: a flat list with the roles collectionId (UserRole + 1), name, enabled (false:
+// an account) and checked. Older ones: a tree with a { id, enabled } object in UserRole + 1.
+var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4
+function pimCalendarRows(model, userRole, displayRole) {
+	var rows = []
+	if (!model) {
+		return rows
+	}
+	function push(index) {
+		var data = model.data(index, userRole + PIM_ROLE_ID)
+		if (data && typeof data === 'object') {
+			rows.push({
+				id: String(data.id),
+				name: String(model.data(index, displayRole) || ''),
+				checked: !!data.enabled,
+			})
+		} else if (data !== undefined && data !== null && model.data(index, userRole + PIM_ROLE_ENABLED) !== false) {
+			rows.push({
+				id: String(data),
+				name: String(model.data(index, userRole + PIM_ROLE_NAME) || model.data(index, displayRole) || ''),
+				checked: !!model.data(index, userRole + PIM_ROLE_CHECKED),
+			})
+		}
+	}
+	for (var i = 0; i < model.rowCount(); i++) {
+		var index = model.index(i, 0)
+		push(index)
+		if (model.hasChildren(index)) {
+			for (var j = 0; j < model.rowCount(index); j++) {
+				push(model.index(j, 0, index))
+			}
+		}
+	}
+	return rows
+}
+
 function getPluginFilename(pluginPath) {
 	if (!pluginPath || typeof pluginPath !== 'string') {
 		return ''

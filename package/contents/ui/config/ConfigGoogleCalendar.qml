@@ -9,6 +9,7 @@ import "../lib"
 import "../ScriptPath.js" as ScriptPath
 import "../Shared.js" as Shared
 import "../code/GooglePalette.js" as GooglePalette
+import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
 ConfigPage {
 	id: page
@@ -72,6 +73,60 @@ ConfigPage {
 	}
 
 	ExecUtil { id: callbackListener }
+
+	//--- Google accounts KDE PIM (Akonadi) syncs: their events also come in, read-only, through the
+	// PIM events plugin of the Plasma calendars (Events page). The widget shows an event signed in
+	// to here as well only once (see PlasmaCalendarEventState.pimDuplicates).
+	ExecUtil { id: akonadiReader }
+	property var akonadiGoogleAccounts: [] // Email addresses
+	readonly property bool pimEventsEnabled: PlasmaCalendarUtils.toArray(page.configBridge.read("enabledCalendarPlugins", [])).some(function(plugin) {
+		return PlasmaCalendarUtils.getPluginStem(plugin) === "pimevents"
+	})
+	readonly property var directGoogleAccounts: Shared.toArray(googleLoginManager.accounts).map(function(account) {
+		return primaryCalendarId(account).toLowerCase()
+	}).filter(function(email) {
+		return !!email
+	})
+	readonly property var akonadiOnlyAccounts: akonadiGoogleAccounts.filter(function(email) {
+		return directGoogleAccounts.indexOf(email.toLowerCase()) < 0
+	})
+	function loadAkonadiGoogleAccounts() {
+		// The Account= of each Google resource that is still set up (has its agent config).
+		var script = 'cd "${XDG_CONFIG_HOME:-$HOME/.config}" || exit 0; '
+			+ 'for f in akonadi_google_resource_*rc; do '
+			+ '[ -f "akonadi/agent_config_${f%rc}" ] && sed -n "s/^Account=//p" "$f"; '
+			+ 'done; exit 0'
+		akonadiReader.execArgv(['sh', '-c', script], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			page.akonadiGoogleAccounts = String(stdout || "").split("\n").map(function(line) {
+				return line.trim()
+			}).filter(function(email, i, list) {
+				return !!email && list.indexOf(email) === i
+			})
+		})
+	}
+	Component.onCompleted: loadAkonadiGoogleAccounts()
+
+	// The Akonadi calendars the widget shows (the pimevents plugin's own selection), read-only here.
+	property var pimCalendarsModel: {
+		try { // kdepim-addons is optional
+			return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", page)
+		} catch (e) {
+			return null
+		}
+	}
+	property var shownPimCalendars: []
+	function updateShownPimCalendars() {
+		shownPimCalendars = PlasmaCalendarUtils.pimCalendarRows(pimCalendarsModel, Qt.UserRole, Qt.DisplayRole).filter(function(row) {
+			return row.checked
+		})
+	}
+	Connections { // Akonadi fills the model asynchronously
+		target: page.pimCalendarsModel
+		function onModelReset() { page.updateShownPimCalendars() }
+		function onRowsInserted() { page.updateShownPimCalendars() }
+		function onDataChanged() { page.updateShownPimCalendars() }
+	}
+	onPimCalendarsModelChanged: updateShownPimCalendars()
 
 	property bool autoLoginInProgress: false
 	property bool autoLoginCancelled: false
@@ -248,6 +303,14 @@ ConfigPage {
 			visible: !googleLoginManager.isLoggedIn
 			text: i18n("Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically.")
 		}
+		FormCard.FormSectionText {
+			visible: page.pimEventsEnabled && page.akonadiGoogleAccounts.length > 0
+			text: page.akonadiOnlyAccounts.length > 0
+				? i18nc("%1 = email addresses", "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here.",
+					page.akonadiOnlyAccounts.join(i18nc("separator of names in a list", ", ")))
+				: i18nc("%1 = email addresses", "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited.",
+					page.akonadiGoogleAccounts.join(i18nc("separator of names in a list", ", ")))
+		}
 
 		// One card per account: its calendars and task lists. All accounts sync at the same time.
 		Repeater {
@@ -358,6 +421,26 @@ ConfigPage {
 		FormCard.FormSectionText {
 			visible: googleLoginManager.isLoggedIn
 			text: i18n("Task lists are chosen on the Tasks page.")
+		}
+
+		// Calendars that come in through KDE PIM: listed, chosen in the pimevents plugin's settings.
+		FormCard.FormHeader {
+			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
+			title: i18n("KDE PIM (Akonadi)")
+		}
+		FormCard.FormCard {
+			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
+			Repeater {
+				model: page.shownPimCalendars
+				FormCard.FormTextDelegate {
+					icon.name: "view-calendar"
+					text: modelData.name
+				}
+			}
+		}
+		FormCard.FormSectionText {
+			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry.")
 		}
 
 		// Sign in / add another account
