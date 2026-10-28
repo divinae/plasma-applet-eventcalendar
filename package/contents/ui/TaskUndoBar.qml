@@ -5,7 +5,8 @@ import org.kde.plasma.components as PlasmaComponents3
 
 // "Completed · Undo" for a few seconds after a task was checked (Tasks view, Day view's tasks), like
 // TickTick's: a small pill, Undo unchecks it again. offer(item) shows it (a newer one replaces it);
-// it stays while the pointer is on it.
+// the pointer on it keeps it a little longer (twice at most: it shows up under the pointer that
+// checked the task, and the hover can stay on when the popup closes).
 Rectangle {
 	id: undoBar
 
@@ -16,8 +17,10 @@ Rectangle {
 	function offer(task) {
 		item = task
 		shown = true
+		extensions = 0
 		timer.restart()
 	}
+	property int extensions: 0
 	function undo() {
 		var task = item
 		shown = false
@@ -48,8 +51,14 @@ Rectangle {
 	Timer {
 		id: timer
 		interval: undoBar.timeout
-		running: undoBar.shown && !hover.hovered
-		onTriggered: undoBar.shown = false
+		onTriggered: {
+			if (hover.hovered && undoBar.extensions < 2) {
+				undoBar.extensions++
+				restart()
+				return
+			}
+			undoBar.shown = false
+		}
 	}
 
 	RowLayout {
