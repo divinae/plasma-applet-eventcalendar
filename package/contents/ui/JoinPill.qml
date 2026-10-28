@@ -16,8 +16,9 @@ Rectangle {
 	property color baseColor: Kirigami.Theme.backgroundColor
 	property real verticalPadding: Kirigami.Units.smallSpacing
 
-	implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 2
-	implicitHeight: joinRow.implicitHeight + verticalPadding * 2
+	// Room around the icon and the text (at least a little above and below, also when slim).
+	implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 3
+	implicitHeight: joinRow.implicitHeight + Math.max(2, verticalPadding) * 2
 	radius: height / 2
 	readonly property color pillTextColor: Kirigami.Theme.textColor
 	color: Qt.tint(ColorUtil.setAlpha(Kirigami.Theme.backgroundColor, 1),
