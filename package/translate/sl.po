@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:20+0100\n"
+"POT-Creation-Date: 2026-10-28 09:22+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1575,7 +1575,7 @@ msgstr "do"
 msgid "Move to List"
 msgstr "Premakni na seznam"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Couldn't save the task"
 msgstr "Opravila ni bilo mogoče shraniti"
 
@@ -1599,6 +1599,7 @@ msgid "Low priority"
 msgstr "Nizka prednost"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Brez prioritete"
@@ -1608,24 +1609,25 @@ msgid "Due date"
 msgstr "Rok"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Danes"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Jutri"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Next week"
 msgstr "Naslednji teden"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Brez datuma"
@@ -3198,6 +3200,10 @@ msgctxt "tasks filter"
 msgid "In progress"
 msgstr "V teku"
 
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr "Opravila ni bilo mogoče premakniti"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -3267,10 +3273,6 @@ msgstr "Dokončanih opravil ni bilo mogoče počistiti"
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Opravila lahko premaknete le na seznam istega računa"
-
-#: ../contents/ui/TasksView.qml
-msgid "Couldn't move the task"
-msgstr "Opravila ni bilo mogoče premakniti"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"

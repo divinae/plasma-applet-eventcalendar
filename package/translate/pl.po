@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:20+0100\n"
+"POT-Creation-Date: 2026-10-28 09:22+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1380,7 +1380,7 @@ msgstr "do"
 msgid "Move to List"
 msgstr "Przenieś na listę"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Couldn't save the task"
 msgstr "Nie udało się zapisać zadania"
 
@@ -1400,7 +1400,7 @@ msgstr "Średni priorytet"
 msgid "Low priority"
 msgstr "Niski priorytet"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Bez priorytetu"
@@ -1409,21 +1409,21 @@ msgstr "Bez priorytetu"
 msgid "Due date"
 msgstr "Termin"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Dziś"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Jutro"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Next week"
 msgstr "Następny tydzień"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Bez daty"
@@ -2929,6 +2929,10 @@ msgctxt "tasks filter"
 msgid "In progress"
 msgstr "W toku"
 
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr "Nie udało się przenieść zadania"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -2998,10 +3002,6 @@ msgstr "Nie udało się wyczyścić ukończonych zadań"
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Zadania można przenosić tylko do listy z tego samego konta"
-
-#: ../contents/ui/TasksView.qml
-msgid "Couldn't move the task"
-msgstr "Nie udało się przenieść zadania"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"

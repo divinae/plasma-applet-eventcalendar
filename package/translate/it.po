@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:20+0100\n"
+"POT-Creation-Date: 2026-10-28 09:22+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1377,7 +1377,7 @@ msgstr "fino al"
 msgid "Move to List"
 msgstr "Sposta nell'elenco"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Couldn't save the task"
 msgstr "Impossibile salvare l'attività"
 
@@ -1397,7 +1397,7 @@ msgstr "Priorità media"
 msgid "Low priority"
 msgstr "Priorità bassa"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Nessuna priorità"
@@ -1406,21 +1406,21 @@ msgstr "Nessuna priorità"
 msgid "Due date"
 msgstr "Data di scadenza"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Oggi"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Domani"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Next week"
 msgstr "Settimana prossima"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Senza data"
@@ -2896,6 +2896,10 @@ msgctxt "tasks filter"
 msgid "In progress"
 msgstr "In corso"
 
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr "Impossibile spostare l'attività"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -2965,10 +2969,6 @@ msgstr "Impossibile cancellare le attività completate"
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Le attività possono essere spostate solo in un elenco dello stesso account"
-
-#: ../contents/ui/TasksView.qml
-msgid "Couldn't move the task"
-msgstr "Impossibile spostare l'attività"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:20+0100\n"
+"POT-Creation-Date: 2026-10-28 09:22+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1569,7 +1569,7 @@ msgstr "dan"
 msgid "Move to List"
 msgstr "Listeye Taşı"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Couldn't save the task"
 msgstr "Görev kaydedilemedi"
 
@@ -1593,6 +1593,7 @@ msgid "Low priority"
 msgstr "Düşük öncelik"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Öncelik yok"
@@ -1602,24 +1603,25 @@ msgid "Due date"
 msgstr "Son tarih"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Bugün"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml
-#: ../contents/ui/WeekView.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Yarın"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Next week"
 msgstr "Gelecek hafta"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Tarihsiz"
@@ -3133,6 +3135,10 @@ msgctxt "tasks filter"
 msgid "In progress"
 msgstr "Devam ediyor"
 
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr "Görev taşınamadı"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -3202,10 +3208,6 @@ msgstr "Tamamlanan görevler temizlenemedi"
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Görevler yalnızca aynı hesaptaki bir listeye taşınabilir"
-
-#: ../contents/ui/TasksView.qml
-msgid "Couldn't move the task"
-msgstr "Görev taşınamadı"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:20+0100\n"
+"POT-Creation-Date: 2026-10-28 09:22+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1380,7 +1380,7 @@ msgstr "->"
 msgid "Move to List"
 msgstr "Siirrä luetteloon"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Couldn't save the task"
 msgstr "Tehtävää ei voitu tallentaa"
 
@@ -1400,7 +1400,7 @@ msgstr "Keskitason tärkeys"
 msgid "Low priority"
 msgstr "Matala tärkeys"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Ei prioriteettia"
@@ -1409,21 +1409,21 @@ msgstr "Ei prioriteettia"
 msgid "Due date"
 msgstr "Eräpäivä"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Tänään"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Huomenna"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Next week"
 msgstr "Ensi viikko"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Ei päivämäärää"
@@ -2899,6 +2899,10 @@ msgctxt "tasks filter"
 msgid "In progress"
 msgstr "Käynnissä"
 
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgid "Couldn't move the task"
+msgstr "Tehtävän siirtäminen epäonnistui"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -2968,10 +2972,6 @@ msgstr "Valmiiden tehtävien tyhjentäminen epäonnistui"
 #: ../contents/ui/TasksView.qml
 msgid "Tasks can only move to a list of the same account"
 msgstr "Tehtäviä voi siirtää vain saman tilin luetteloon"
-
-#: ../contents/ui/TasksView.qml
-msgid "Couldn't move the task"
-msgstr "Tehtävän siirtäminen epäonnistui"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"

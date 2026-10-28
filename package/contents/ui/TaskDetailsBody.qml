@@ -19,6 +19,107 @@ ColumnLayout {
 	property Item details: null
 	readonly property var item: details ? details.eventItem : null
 	readonly property bool done: !!details && details.isDone
+	readonly property bool canEdit: !!(item && item.canEdit !== false)
+	readonly property var caps: item && typeof eventModel !== "undefined" ? eventModel.taskCapabilities(item.calendarId) : ({})
+
+	//--- Changed here, without the editor: the due day, the priority, the list.
+	// A change saved, or "Couldn't save the task" in the popup's banner.
+	function save(changes) {
+		var shownPopup = popup
+		eventModel.setEventProperties(item.calendarId, item.id, Tasks.editBody(changes), {
+			done: function(err) {
+				if (err && shownPopup) {
+					shownPopup.showError(i18n("Couldn't save the task"))
+				}
+			},
+		})
+	}
+	// The other lists of the task's account: [{ id, summary }] (EventModel.getTaskLists).
+	readonly property var otherLists: {
+		var id = item ? String(item.calendarId || "") : ""
+		var i = id.indexOf('::')
+		if (i <= 0 || typeof eventModel === "undefined" || !eventModel.supportsMove(id)) {
+			return []
+		}
+		return eventModel.getTaskLists(id.slice(0, i)).filter(function(list) { return list.id !== id })
+	}
+	function moveTo(listId) {
+		var shownDetails = details
+		var appLogic = logic
+		eventModel.moveEvent(item.calendarId, item.id, listId, function(err) {
+			if (err) {
+				popup.showError(i18n("Couldn't move the task"))
+				return
+			}
+			appLogic.update()
+			shownDetails.closeRequested() // Its copy in the new list has the details now
+		})
+	}
+	readonly property string today: Tasks.dayString(timeModel.currentTime)
+	readonly property string nextWeekDay: {
+		var setting = plasmoid.configuration.firstDayOfWeek
+		var first = setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
+		var day = Tasks.nextWeekStart(today, first)
+		return day === Tasks.addDays(today, 1) ? Tasks.addDays(day, 7) : day
+	}
+
+	PlasmaComponents3.Menu {
+		id: dueMenu
+		Repeater {
+			model: [
+				{ day: body.today, text: i18nc("tasks filter", "Today") },
+				{ day: Tasks.addDays(body.today, 1), text: i18nc("tasks filter", "Tomorrow") },
+				{ day: body.nextWeekDay, text: i18n("Next week") },
+				{ day: '', text: i18nc("tasks filter", "No date") },
+			]
+			PlasmaComponents3.MenuItem {
+				text: modelData.text
+				checkable: true
+				checked: !!body.item && Tasks.dueDay(body.item) === modelData.day
+				onTriggered: {
+					checked = Qt.binding(function() { return !!body.item && Tasks.dueDay(body.item) === modelData.day })
+					body.save({ dueDay: modelData.day })
+				}
+			}
+		}
+	}
+	PlasmaComponents3.Menu {
+		id: priorityMenu
+		Repeater {
+			model: [
+				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority") },
+				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority") },
+				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority") },
+				{ value: Tasks.PRIORITY_NONE, text: i18nc("task priority", "No priority") },
+			]
+			PlasmaComponents3.MenuItem {
+				text: modelData.text
+				checkable: true
+				checked: !!body.item && Tasks.priorityOf(body.item) === modelData.value
+				onTriggered: {
+					checked = Qt.binding(function() { return !!body.item && Tasks.priorityOf(body.item) === modelData.value })
+					body.save({ priority: modelData.value })
+				}
+			}
+		}
+	}
+	PlasmaComponents3.Menu {
+		id: listMenu
+		Instantiator {
+			model: body.otherLists
+			delegate: PlainMenuItem {
+				required property var modelData
+				// "TickTick - 🏠 Home": the list's part.
+				label: {
+					var parts = String(modelData.summary || "").split(" - ")
+					return parts.length > 1 ? parts.slice(1).join(" - ") : String(modelData.summary || "")
+				}
+				onTriggered: body.moveTo(modelData.id)
+			}
+			onObjectAdded: function(index, object) { listMenu.insertItem(index, object) }
+			onObjectRemoved: function(index, object) { listMenu.removeItem(object) }
+		}
+	}
 
 	// "Every week", "Every Monday", … (the repeat of TickTick tasks, an RRULE).
 	function repeatLabel(rule) {
@@ -121,25 +222,37 @@ ColumnLayout {
 		}
 	}
 
-	// When it's due (red when overdue).
+	// When it's due (red when overdue); a click: today, tomorrow, next week, none.
 	PropertyRow {
+		id: dueRow
 		icon: "view-calendar-day"
 		text: body.details ? body.details.dueText : ""
 		textColor: body.details && body.details.isOverdue ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
+		editable: body.canEdit && !body.done
+		onActivated: dueMenu.popup(dueRow, 0, dueRow.height)
 	}
-	// Its list, with its color.
+	// Its list, with its color; a click: another list of the account to move it to.
 	PropertyRow {
+		id: listRow
 		visible: !!body.listName
 		dotColor: body.details ? body.details.eventColor : "transparent"
 		emoji: body.listSplit.icon
 		text: body.listName
+		editable: body.canEdit && body.otherLists.length > 0
+		onActivated: listMenu.popup(listRow, 0, listRow.height)
 	}
+	// The priority (TickTick; also "No priority", to set one); a click: high, medium, low, none.
 	PropertyRow {
+		id: priorityRow
 		readonly property string key: body.details ? body.details.taskPriority : 'none'
-		visible: key !== 'none'
+		visible: key !== 'none' || (body.canEdit && !body.done && body.caps.priority)
 		icon: "flag"
-		iconColor: Tasks.priorityColor(key)
-		text: key === 'high' ? i18n("High priority") : key === 'medium' ? i18n("Medium priority") : i18n("Low priority")
+		iconColor: key === 'none' ? Kirigami.Theme.textColor : Tasks.priorityColor(key)
+		text: key === 'high' ? i18n("High priority") : key === 'medium' ? i18n("Medium priority")
+			: key === 'low' ? i18n("Low priority") : i18nc("task priority", "No priority")
+		textColor: key === 'none' ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.7) : Kirigami.Theme.textColor
+		editable: body.canEdit && !body.done && !!body.caps.priority
+		onActivated: priorityMenu.popup(priorityRow, 0, priorityRow.height)
 	}
 	// In progress (the widget's own mark): a switch.
 	PropertyRow {
@@ -206,6 +319,10 @@ ColumnLayout {
 		property alias text: rowLabel.text
 		property color textColor: Kirigami.Theme.textColor
 		default property alias trailing: trailingArea.data
+		// A click changes it (a menu): a hover background and a small arrow at the end.
+		property bool editable: false
+		signal activated()
+
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.largeSpacing
 		Layout.rightMargin: Kirigami.Units.largeSpacing
@@ -215,6 +332,28 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignVCenter
 			implicitWidth: Kirigami.Units.iconSizes.small
 			implicitHeight: implicitWidth
+			// (Not layout cells: inside the icon's item, spread over the whole row.)
+			Rectangle {
+				visible: row.editable
+				z: -1
+				x: -parent.x - Kirigami.Units.smallSpacing
+				y: -parent.y
+				width: row.width + Kirigami.Units.smallSpacing * 2
+				height: row.height
+				radius: Kirigami.Units.cornerRadius
+				color: rowMouse.containsMouse ? appletConfig.agendaHoverBackground : "transparent"
+			}
+			MouseArea {
+				id: rowMouse
+				enabled: row.editable
+				x: -parent.x - Kirigami.Units.smallSpacing
+				y: -parent.y
+				width: row.width + Kirigami.Units.smallSpacing * 2
+				height: row.height
+				hoverEnabled: true
+				cursorShape: Qt.PointingHandCursor
+				onClicked: row.activated()
+			}
 			Kirigami.Icon {
 				anchors.fill: parent
 				visible: !!row.icon
@@ -245,6 +384,16 @@ ColumnLayout {
 			wrapMode: Text.Wrap
 			textFormat: Text.PlainText
 			color: row.textColor
+		}
+		Kirigami.Icon {
+			visible: row.editable
+			Layout.alignment: Qt.AlignVCenter
+			implicitWidth: Math.round(Kirigami.Units.iconSizes.small * 0.75)
+			implicitHeight: implicitWidth
+			source: "arrow-down"
+			isMask: true
+			color: Kirigami.Theme.textColor
+			opacity: rowMouse.containsMouse ? 0.8 : 0.4
 		}
 		Item {
 			id: trailingArea
