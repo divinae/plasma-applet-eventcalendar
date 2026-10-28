@@ -6,7 +6,7 @@ const vm = require('vm')
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/TaskLists.js'), 'utf8')
 	.replace(/^\.pragma library\s*$/m, '')
 const names = ['swatches', 'isEditableRole', 'tickTickRole','capabilities', 'hasAny', 'cleanTitle', 'hexColor',
-	'withAdded', 'withChanged', 'withRemoved', 'taskCount']
+	'withAdded', 'withChanged', 'withRemoved', 'taskCount', 'refreshed']
 const L = {}
 vm.runInNewContext(source + '\nObject.assign(out, { ' + names.join(', ') + ' })', { out: L })
 const plain = o => JSON.parse(JSON.stringify(o))
@@ -74,3 +74,19 @@ assert.strictEqual(L.taskCount([
 assert.strictEqual(L.taskCount(undefined), 0)
 
 console.log('PASS task_lists')
+
+// refreshed: the lists fetched again (renamed / recolored / added / deleted in the service's app).
+{
+	const stored = { lists: [{ id: 'a', name: 'Work', color: '#f00' }, { id: 'b', name: 'Home' }], ids: ['a', 'b'] }
+	const same = L.refreshed(stored, [{ id: 'a', name: 'Work', color: '#f00' }, { id: 'b', name: 'Home' }], ['name', 'color'])
+	assert.strictEqual(same.changed, false, 'nothing changed')
+	const renamed = L.refreshed(stored, [{ id: 'a', name: 'Job', color: '#f00' }, { id: 'b', name: 'Home' }], ['name', 'color'])
+	assert.strictEqual(renamed.changed, true, 'renamed')
+	assert.deepStrictEqual(Array.from(renamed.ids), ['a', 'b'], 'selection kept')
+	const added = L.refreshed(stored, [{ id: 'a', name: 'Work', color: '#f00' }, { id: 'b', name: 'Home' }, { id: 'c', name: 'New' }], ['name', 'color'])
+	assert.strictEqual(added.changed, true, 'a new list')
+	assert.deepStrictEqual(Array.from(added.ids), ['a', 'b'], 'a new list is not selected')
+	const deleted = L.refreshed(stored, [{ id: 'b', name: 'Home' }], ['name', 'color'])
+	assert.deepStrictEqual(Array.from(deleted.ids), ['b'], 'a deleted list leaves the selection')
+	assert.strictEqual(deleted.changed, true)
+}

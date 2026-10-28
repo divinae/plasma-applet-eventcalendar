@@ -107,7 +107,22 @@ CalendarManager {
 		var idList = getTasklistIdList()
 		if (idList.length) { // Avoid a token refresh when nothing is selected.
 			fetchGoogleAccountTasks(idList)
+			refreshTasklists()
 		}
+	}
+
+	// The task lists again (renamed, added or deleted in Google's apps): stored when a title or the
+	// lists changed, so their names follow. Not part of the fetch round.
+	function refreshTasklists() {
+		tasksRequest('GET', '/users/@me/lists', null, null, function(err, data) {
+			if (err || !data || !Array.isArray(data.items) || !getAccount()) {
+				return
+			}
+			var next = TaskLists.refreshed(storedTasklists(), data.items, ['title'])
+			if (next.changed) {
+				storeTasklists(next)
+			}
+		})
 	}
 
 	//--- Requests

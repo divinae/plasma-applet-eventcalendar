@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:59+0100\n"
+"POT-Creation-Date: 2026-10-28 09:02+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -146,6 +146,10 @@ msgstr "A fazer"
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Outro"
+
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Inbox"
+msgstr "Caixa de entrada"
 
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "TickTick: sign in again"
@@ -770,10 +774,6 @@ msgstr "Erro do TickTick: %1"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connecting to TickTick…"
 msgstr "A ligar ao TickTick…"
-
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Inbox"
-msgstr "Caixa de entrada"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Could not store the API token in the system keyring: %1"

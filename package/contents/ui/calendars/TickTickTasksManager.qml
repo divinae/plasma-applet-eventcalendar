@@ -100,6 +100,21 @@ CalendarManager {
 		if (idList.length) {
 			fetchAccountTasks(idList)
 		}
+		refreshProjects()
+	}
+
+	// The projects again (renamed, recolored, added or deleted in TickTick's app): stored when
+	// something shown changed, so the lists' names follow. Not part of the fetch round.
+	function refreshProjects() {
+		session.fetchProjects(i18n("Inbox"), function(err, projects) {
+			if (err || !projects || !getAccount()) {
+				return
+			}
+			var next = TaskLists.refreshed(storedProjects(), projects, ['name', 'color'])
+			if (next.changed) {
+				storeProjects(next)
+			}
+		})
 	}
 
 	//--- Requests

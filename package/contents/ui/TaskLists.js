@@ -115,3 +115,22 @@ function taskCount(items) {
 	})
 	return count
 }
+
+// The stored lists after fetching them again (renamed, recolored, added or deleted in the
+// service's app): { lists: fresh, ids: the selection without deleted lists (new ones aren't
+// selected), changed: whether anything shown changed (fields: the ones compared, eg: ['name',
+// 'color']) }. A list's id is its 'id'.
+function refreshed(stored, fresh, fields) {
+	var sign = function(lists) {
+		return JSON.stringify((lists || []).map(function(list) {
+			return [String(list.id)].concat((fields || []).map(function(f) { return list[f] === undefined ? null : String(list[f]) }))
+		}))
+	}
+	var freshIds = (fresh || []).map(function(list) { return String(list.id) })
+	var ids = (stored.ids || []).filter(function(id) { return freshIds.indexOf(String(id)) >= 0 })
+	return {
+		lists: fresh || [],
+		ids: ids,
+		changed: sign(stored.lists) !== sign(fresh) || ids.length !== (stored.ids || []).length,
+	}
+}
