@@ -237,7 +237,8 @@ Rectangle {
 			}
 
 			PlasmaComponents3.ToolButton {
-				visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
+				// (A task: at the bottom of its card.)
+				visible: !details.confirmingDelete && !details.isTask && !!(details.eventItem && details.eventItem.htmlLink)
 				icon.name: "globe" // Native action icon (internet-web-browser is a colored app icon)
 				text: details.isTask
 					? (details.eventItem && details.eventItem.calendarManagerId === "TickTick" ? i18n("Open in TickTick") : i18n("Open in Google Tasks"))
@@ -793,34 +794,50 @@ Rectangle {
 					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
 				}
 
-				// A task: Edit and Delete at the bottom (Delete asks here first).
-				RowLayout {
-					visible: details.isTask && !!(details.eventItem && details.eventItem.canEdit)
+				// A task: under a thin line, quiet buttons - Edit, Open in TickTick / Google Tasks and
+				// Delete (red; asks here first).
+				Kirigami.Separator {
+					visible: details.isTask
 					Layout.fillWidth: true
-					Layout.leftMargin: Kirigami.Units.largeSpacing
-					Layout.rightMargin: Kirigami.Units.largeSpacing
 					Layout.topMargin: Kirigami.Units.smallSpacing
-					Layout.bottomMargin: Kirigami.Units.largeSpacing
-					spacing: Kirigami.Units.smallSpacing
-					PlasmaComponents3.Button {
-						visible: !details.confirmingDelete
+				}
+				RowLayout {
+					visible: details.isTask
+					Layout.fillWidth: true
+					Layout.leftMargin: Kirigami.Units.smallSpacing
+					Layout.rightMargin: Kirigami.Units.smallSpacing
+					Layout.topMargin: -Kirigami.Units.smallSpacing
+					Layout.bottomMargin: Kirigami.Units.smallSpacing
+					spacing: 0
+					PlasmaComponents3.ToolButton {
+						visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.canEdit)
 						icon.name: "document-edit"
 						text: i18n("Edit")
 						onClicked: details.editRequested()
 					}
-					Item {
-						Layout.fillWidth: true
+					PlasmaComponents3.ToolButton {
+						visible: !details.confirmingDelete && !!(details.eventItem && details.eventItem.htmlLink)
+						icon.name: "globe"
+						text: details.eventItem && details.eventItem.calendarManagerId === "TickTick" ? i18n("Open in TickTick") : i18n("Open in Google Tasks")
+						onClicked: Shared.openExternalUrl(details.eventItem.htmlLink)
 					}
 					PlasmaComponents3.Label {
 						visible: details.confirmingDelete
 						Layout.fillWidth: true
+						Layout.leftMargin: Kirigami.Units.smallSpacing
 						text: i18n("Delete this task?")
 						textFormat: Text.PlainText
 						elide: Text.ElideRight
 					}
-					PlasmaComponents3.Button {
+					Item {
+						visible: !details.confirmingDelete
+						Layout.fillWidth: true
+					}
+					PlasmaComponents3.ToolButton {
+						visible: !!(details.eventItem && details.eventItem.canEdit)
 						icon.name: "edit-delete"
 						text: i18n("Delete")
+						display: details.confirmingDelete ? QQC2.AbstractButton.TextBesideIcon : QQC2.AbstractButton.IconOnly
 						onClicked: {
 							if (!details.confirmingDelete) {
 								details.confirmingDelete = true
@@ -829,8 +846,10 @@ Rectangle {
 							popup.deleteWithUndo(details.eventItem, false)
 							details.closeRequested()
 						}
+						PlasmaComponents3.ToolTip.text: text
+						PlasmaComponents3.ToolTip.visible: hovered && !details.confirmingDelete
 					}
-					PlasmaComponents3.Button {
+					PlasmaComponents3.ToolButton {
 						visible: details.confirmingDelete
 						text: i18n("Cancel")
 						onClicked: details.confirmingDelete = false

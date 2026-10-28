@@ -57,14 +57,16 @@ ColumnLayout {
 		return parts.length > 1 ? parts.slice(1).join(" - ") : name
 	}
 
-	spacing: Kirigami.Units.smallSpacing
+	spacing: Kirigami.Units.smallSpacing * 1.5
 
-	// The title.
+	// The title, like the side cards' titles.
 	Kirigami.Heading {
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.largeSpacing
 		Layout.rightMargin: Kirigami.Units.largeSpacing
-		level: 2
+		level: 1
+		font.weight: Font.Bold
+		font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.35
 		wrapMode: Text.Wrap
 		text: body.item ? body.item.summary || "" : ""
 		textFormat: Text.PlainText // User text: never parsed as HTML
