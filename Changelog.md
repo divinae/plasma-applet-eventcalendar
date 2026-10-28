@@ -1,3 +1,8 @@
+## v1.8.1 - October 28 2026
+
+### Fixes
+* Switching to the Agenda could freeze Plasma (Qt 6.12): the event icons hit a binding loop on every row (#3).
+
 ## v1.8.0 - October 28 2026
 
 ### Tasks

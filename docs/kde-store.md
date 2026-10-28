@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.8.0
+    1.8.1
 
 **License**
 
@@ -104,28 +104,17 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.8.0)**
+**Changelog (1.8.1)**
 
 ```
-Tasks
-- Clearer task details: a large "Mark as done" button, rows with icons, Edit / Open / Delete in the top bar
-- Change the due day, priority and list right in the details
-- Day view: done tasks folded under "N completed", "+" to add, calmer rows
-- A list name's leading emoji is its icon (TickTick); renamed lists follow
-
-Day view
-- Up next: Show more / Show less
-- The weekday in the hours' title; other days' titles with their date
-- A Join button that stands out on any tile and fits the shortest ones
-
-Month view
-- The title is the month's name and year, without the day
+Fixes
+- Switching to the Agenda could freeze Plasma (Qt 6.12)
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.8.0-plasma6.0.plasmoid` from the
-  [v1.8.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.0),
+- **Product file:** `eventcalendar-v1.8.1-plasma6.0.plasmoid` from the
+  [v1.8.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
