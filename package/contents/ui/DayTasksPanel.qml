@@ -49,7 +49,8 @@ ColumnLayout {
 		tasks.forEach(function(task) { ids[task.calendarId] = true })
 		return Object.keys(ids).length > 1
 	}
-	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the done ones only with showDone
+	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the open ones
+	property var doneRows: [] // …and the done ones, with showDone (below "Hide completed")
 	// The done tasks are folded away under "N completed" (for the session).
 	property bool showDone: false
 	// "Add a task…" shown (the title's "+").
@@ -87,7 +88,8 @@ ColumnLayout {
 		var rows = Tasks.dayTaskRows(items, dayText, today)
 		var openRows = rows.filter(function(row) { return !Tasks.isDone(row.item) })
 		doneCount = rows.length - openRows.length
-		taskRows = showDone ? rows : openRows
+		taskRows = openRows
+		doneRows = showDone ? rows.filter(function(row) { return Tasks.isDone(row.item) }) : []
 		tasks = rows.map(function(row) { return row.item })
 	}
 	function deferredRebuild() {
@@ -249,7 +251,7 @@ ColumnLayout {
 
 	PlasmaComponents3.ScrollView {
 		id: scrollView
-		visible: dayTasks.open && dayTasks.taskRows.length > 0
+		visible: dayTasks.open && (dayTasks.taskRows.length > 0 || dayTasks.doneCount > 0)
 		Layout.fillWidth: true
 		Layout.preferredHeight: Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight)
 		contentWidth: availableWidth
@@ -264,69 +266,77 @@ ColumnLayout {
 			spacing: 1
 			Repeater {
 				model: dayTasks.taskRows
-				TaskRow {
-					Layout.fillWidth: true
-					eventItem: modelData.item
-					depth: modelData.depth
-					today: dayTasks.today
-					compact: true
-					listMark: dayTasks.mixedLists
-					expandedStore: dayTasks.expandedSubtasks
-					onCheckToggled: function(item, done) {
-						if (done) {
-							undoBar.offer(item)
+				DayTaskRow {}
+			}
+			// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
+			// (the arrow in the checks' column), smaller than they are.
+			QQC2.AbstractButton {
+				id: doneToggle
+				readonly property real sideMargin: Kirigami.Units.smallSpacing * 2 // TaskRow's (compact)
+				readonly property int checkSize: 2 * Math.round(Kirigami.Units.iconSizes.small * 1.1 / 2)
+				visible: dayTasks.open && dayTasks.doneCount > 0
+				Layout.fillWidth: true
+				hoverEnabled: true
+				leftPadding: sideMargin
+				rightPadding: sideMargin
+				topPadding: Kirigami.Units.smallSpacing
+				bottomPadding: Kirigami.Units.smallSpacing
+				text: dayTasks.showDone ? i18n("Hide completed") : i18np("%1 completed", "%1 completed", dayTasks.doneCount)
+				Accessible.name: text
+				onClicked: dayTasks.showDone = !dayTasks.showDone
+				background: Rectangle {
+					radius: 6
+					color: doneToggle.hovered ? appletConfig.agendaHoverBackground : "transparent"
+				}
+				contentItem: RowLayout {
+					spacing: Kirigami.Units.largeSpacing
+					// Smaller than the checks (a quiet line), centered in their column.
+					Item {
+						Layout.preferredWidth: doneToggle.checkSize
+						Layout.preferredHeight: doneToggle.checkSize
+						Kirigami.Icon {
+							anchors.centerIn: parent
+							width: Math.round(doneToggle.checkSize * 0.7)
+							height: width
+						source: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
+						color: Kirigami.Theme.textColor
+						isMask: true
+						opacity: 0.7
 						}
 					}
+					PlasmaComponents3.Label {
+						Layout.fillWidth: true
+						Layout.minimumWidth: 0
+						text: doneToggle.text
+						textFormat: Text.PlainText
+						font.family: appletConfig.eventFont.family
+						font.pointSize: appletConfig.eventFont.pointSize * 0.85
+						opacity: 0.7
+						elide: Text.ElideRight
+					}
 				}
+			}
+			// The done ones, under "Hide completed".
+			Repeater {
+				model: dayTasks.doneRows
+				DayTaskRow {}
 			}
 		}
 	}
 
-	// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
-	// (the arrow in the checks' column), smaller than they are.
-	QQC2.AbstractButton {
-		id: doneToggle
-		readonly property real sideMargin: Kirigami.Units.smallSpacing * 2 // TaskRow's (compact)
-		readonly property int checkSize: 2 * Math.round(Kirigami.Units.iconSizes.small * 1.1 / 2)
-		visible: dayTasks.open && dayTasks.doneCount > 0
+	// A task of the list (open or done), from the Repeater's row.
+	component DayTaskRow: TaskRow {
+		required property var modelData
 		Layout.fillWidth: true
-		hoverEnabled: true
-		leftPadding: sideMargin
-		rightPadding: sideMargin
-		topPadding: Kirigami.Units.smallSpacing
-		bottomPadding: Kirigami.Units.smallSpacing
-		text: dayTasks.showDone ? i18n("Hide completed") : i18np("%1 completed", "%1 completed", dayTasks.doneCount)
-		Accessible.name: text
-		onClicked: dayTasks.showDone = !dayTasks.showDone
-		background: Rectangle {
-			radius: 6
-			color: doneToggle.hovered ? appletConfig.agendaHoverBackground : "transparent"
-		}
-		contentItem: RowLayout {
-			spacing: Kirigami.Units.largeSpacing
-			// Smaller than the checks (a quiet line), centered in their column.
-			Item {
-				Layout.preferredWidth: doneToggle.checkSize
-				Layout.preferredHeight: doneToggle.checkSize
-				Kirigami.Icon {
-					anchors.centerIn: parent
-					width: Math.round(doneToggle.checkSize * 0.7)
-					height: width
-				source: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
-				color: Kirigami.Theme.textColor
-				isMask: true
-				opacity: 0.7
-				}
-			}
-			PlasmaComponents3.Label {
-				Layout.fillWidth: true
-				Layout.minimumWidth: 0
-				text: doneToggle.text
-				textFormat: Text.PlainText
-				font.family: appletConfig.eventFont.family
-				font.pointSize: appletConfig.eventFont.pointSize * 0.85
-				opacity: 0.7
-				elide: Text.ElideRight
+		eventItem: modelData.item
+		depth: modelData.depth
+		today: dayTasks.today
+		compact: true
+		listMark: dayTasks.mixedLists
+		expandedStore: dayTasks.expandedSubtasks
+		onCheckToggled: function(item, done) {
+			if (done) {
+				undoBar.offer(item)
 			}
 		}
 	}
