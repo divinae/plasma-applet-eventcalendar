@@ -1596,7 +1596,9 @@ Item {
 												anchors.topMargin: Kirigami.Units.smallSpacing
 												verticalPadding: compact ? 0 : Kirigami.Units.smallSpacing / 2
 												meetingLink: eventBlock.meetingLink
-												textColor: Shared.contrastTextColor(eventBlock.eventStyle.color)
+												// The tile's own text color (white for a solid color, dark on a light tint).
+												textColor: eventBlock.eventStyle.textColor
+												baseColor: eventBlock.eventStyle.fillColor
 											}
 											// Bottom edge: drag to change the end time.
 											MouseArea {

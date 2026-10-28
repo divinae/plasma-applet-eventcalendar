@@ -6,18 +6,23 @@ import "lib/ColorUtil.js" as ColorUtil
 import "Shared.js" as Shared
 
 // "Join" meeting button drawn on an event tile: a pill in the tile's text color, so it reads as
-// part of the tile. meetingLink: from MeetingLink.find().
+// part of the tile. Opaque (the tile's color with the text color over it, baseColor: the tile's
+// fill): it never blends into a striped or translucent tile. meetingLink: from MeetingLink.find().
 Rectangle {
 	id: joinPill
 
 	property var meetingLink: null
 	property color textColor: Kirigami.Theme.textColor
+	property color baseColor: Kirigami.Theme.backgroundColor
 	property real verticalPadding: Kirigami.Units.smallSpacing
 
 	implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 2
 	implicitHeight: joinRow.implicitHeight + verticalPadding * 2
 	radius: height / 2
-	color: ColorUtil.setAlpha(textColor, joinMouse.pressed ? 0.35 : joinMouse.containsMouse ? 0.28 : 0.18)
+	color: ColorUtil.setAlpha(Qt.tint(ColorUtil.setAlpha(baseColor, 1),
+		ColorUtil.setAlpha(textColor, joinMouse.pressed ? 0.35 : joinMouse.containsMouse ? 0.28 : 0.18)), 1)
+	border.width: 1
+	border.color: ColorUtil.setAlpha(textColor, 0.25)
 
 	Row {
 		id: joinRow

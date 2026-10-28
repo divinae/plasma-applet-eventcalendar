@@ -180,6 +180,7 @@ LinkRect {
 				Layout.alignment: Qt.AlignVCenter
 				meetingLink: agendaEventItem.meetingLink
 				textColor: agendaEventItem.tileTextColor
+				baseColor: agendaEventItem.eventStyle.fillColor
 			}
 		}
 
