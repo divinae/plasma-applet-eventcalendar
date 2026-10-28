@@ -266,17 +266,47 @@ ColumnLayout {
 		}
 	}
 
-	// "2 completed" / "Hide completed": the done tasks folded away or shown.
-	PlasmaComponents3.ToolButton {
+	// "2 completed" / "Hide completed": the done tasks folded away or shown. Laid out like the rows
+	// and "Add a task…": the arrow where the checks are, the text in the tasks' font.
+	QQC2.AbstractButton {
+		id: doneToggle
+		readonly property real sideMargin: Kirigami.Units.smallSpacing * 2 // TaskRow's (compact)
+		readonly property int checkSize: 2 * Math.round(Kirigami.Units.iconSizes.small * 1.1 / 2)
 		visible: dayTasks.open && dayTasks.doneCount > 0
-		Layout.leftMargin: Math.max(0, Kirigami.Units.smallSpacing - leftPadding)
-		icon.name: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
-		icon.width: Kirigami.Units.iconSizes.small
-		icon.height: Kirigami.Units.iconSizes.small
+		Layout.fillWidth: true
+		hoverEnabled: true
+		leftPadding: sideMargin
+		rightPadding: sideMargin
+		topPadding: Kirigami.Units.smallSpacing
+		bottomPadding: Kirigami.Units.smallSpacing
 		text: dayTasks.showDone ? i18n("Hide completed") : i18np("%1 completed", "%1 completed", dayTasks.doneCount)
-		font: Kirigami.Theme.smallFont
-		opacity: 0.75
+		Accessible.name: text
 		onClicked: dayTasks.showDone = !dayTasks.showDone
+		background: Rectangle {
+			radius: 6
+			color: doneToggle.hovered ? appletConfig.agendaHoverBackground : "transparent"
+		}
+		contentItem: RowLayout {
+			spacing: Kirigami.Units.largeSpacing
+			Kirigami.Icon {
+				Layout.preferredWidth: doneToggle.checkSize
+				Layout.preferredHeight: doneToggle.checkSize
+				source: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
+				color: Kirigami.Theme.textColor
+				isMask: true
+				opacity: 0.7
+			}
+			PlasmaComponents3.Label {
+				Layout.fillWidth: true
+				Layout.minimumWidth: 0
+				text: doneToggle.text
+				textFormat: Text.PlainText
+				font.family: appletConfig.eventFont.family
+				font.pointSize: appletConfig.eventFont.pointSize
+				opacity: 0.7
+				elide: Text.ElideRight
+			}
+		}
 	}
 
 	TaskUndoBar {
