@@ -1,3 +1,21 @@
+## v1.8.0 - October 28 2026
+
+### Tasks
+* A task's details are clearer: a bold title, a large "Mark as done" button, and rows with icons for the due day, list, priority, in progress, repeat and reminders. Edit, Open and Delete are in the top bar, as for events.
+* Change the due day, the priority and the list right in the details, from small dropdowns.
+* Day view tasks: done tasks fold away under "N completed", "+" beside the title adds a task, and the rows are calmer (no list stripe, fewer details).
+* A list whose name starts with an emoji (TickTick: "🏠 Home") shows that emoji as its icon.
+* Lists renamed in TickTick or Google Tasks are renamed in the widget too.
+* The "Completed · Undo" pill always goes away.
+
+### Day view
+* Up next has "Show more" / "Show less".
+* The weekday is in the hours' title instead of the popup's; another day's title has its date ("Monday, 2 Nov").
+* The Join button stands out on any event tile and fits even the shortest ones.
+
+### Month view
+* The title is the month's name and year ("Listopad 2026", not the "Listopada" of a date), without the day.
+
 ## v1.7.0 - October 27 2026
 
 ### Day view

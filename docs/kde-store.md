@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.7.0
+    1.8.0
 
 **License**
 
@@ -104,23 +104,28 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.7.0)**
+**Changelog (1.8.0)**
 
 ```
-Day view
-- A small month to go to another day, with dots under the days that have events (more on busier days)
-- Up next: the next few events of the coming days
-- A title over the hours (Today, Tomorrow, … and the number of events); "No more events today" with a link to the next event
-- Tasks and weather on the right; each panel can be turned off (Settings > Views > Day view shows)
+Tasks
+- Clearer task details: a large "Mark as done" button, rows with icons, Edit / Open / Delete in the top bar
+- Change the due day, priority and list right in the details
+- Day view: done tasks folded under "N completed", "+" to add, calmer rows
+- A list name's leading emoji is its icon (TickTick); renamed lists follow
 
-Fixes
-- Dates and times in the system's language everywhere (some were in English)
+Day view
+- Up next: Show more / Show less
+- The weekday in the hours' title; other days' titles with their date
+- A Join button that stands out on any tile and fits the shortest ones
+
+Month view
+- The title is the month's name and year, without the day
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.7.0-plasma6.0.plasmoid` from the
-  [v1.7.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.7.0),
+- **Product file:** `eventcalendar-v1.8.0-plasma6.0.plasmoid` from the
+  [v1.8.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
