@@ -204,6 +204,9 @@ function toArray(value) {
 // or '' when not invited (no attendees, or the user organizes it). attendees is an array, or a
 // ListModel once the event has been put in one (agenda).
 function myResponse(eventItem) {
+	if (eventItem && typeof eventItem.attendeeResponse === 'string') {
+		return eventItem.attendeeResponse
+	}
 	var attendees = eventItem ? eventItem.attendees : null
 	if (!attendees) {
 		return ''
@@ -217,6 +220,23 @@ function myResponse(eventItem) {
 		}
 	}
 	return ''
+}
+
+// A copy of an event with its attendees summed up as plain values: attendeeResponse (myResponse)
+// and attendeeGuestCount (guests besides the user, not rooms). For a ListModel (the agenda): read
+// there, the nested attendees ListModel's get() in a binding loops (Qt 6.12) and froze Plasma
+// (issue #3).
+function withAttendeeSummary(eventItem) {
+	var copy = Object.assign({}, eventItem)
+	var guestCount = 0
+	toArray(eventItem.attendees).forEach(function(attendee) {
+		if (attendee && !attendee.self && !attendee.resource) {
+			guestCount++
+		}
+	})
+	copy.attendeeResponse = myResponse(eventItem)
+	copy.attendeeGuestCount = guestCount
+	return copy
 }
 
 // Left out of the views (and the panel's next meeting) when declined events are set to Hide.
@@ -295,7 +315,11 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 	var attendees = eventItem.attendees
 	var guestCount = 0
 	var response = ''
-	if (attendees) {
+	if (typeof eventItem.attendeeGuestCount === 'number') {
+		// Counted beforehand (withAttendeeSummary): no walking a nested ListModel in a binding.
+		guestCount = eventItem.attendeeGuestCount
+		response = myResponse(eventItem)
+	} else if (attendees) {
 		var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
 		var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
 		for (var i = 0; i < count; i++) {

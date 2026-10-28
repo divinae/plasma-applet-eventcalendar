@@ -123,7 +123,9 @@ ListModel {
 		if (eventItem.kind === 'tasks#task') {
 			agendaItem.tasks.push(eventItem)
 		} else {
-			agendaItem.events.push(eventItem)
+			// The attendees summed up (Shared.withAttendeeSummary): the indicators don't walk the
+			// nested ListModel in a binding.
+			agendaItem.events.push(Shared.withAttendeeSummary(eventItem))
 		}
 	}
 
