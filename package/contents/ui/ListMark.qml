@@ -20,7 +20,7 @@ Item {
 		anchors.centerIn: parent
 		text: mark.icon
 		textFormat: Text.PlainText
-		font.pixelSize: Math.max(10, Math.round(mark.size * 1.6))
+		font.pixelSize: Math.max(9, Math.round(mark.size * 1.4))
 	}
 	Rectangle {
 		visible: !mark.icon
