@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:43+0100\n"
+"POT-Creation-Date: 2026-10-28 08:48+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -1386,15 +1386,15 @@ msgstr "No se pudo guardar la tarea"
 msgid "Priority"
 msgstr "Prioridad"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Prioridad alta"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Prioridad media"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Prioridad baja"
 
@@ -1407,12 +1407,12 @@ msgstr "Sin prioridad"
 msgid "Due date"
 msgstr "Fecha de vencimiento"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "Hoy"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "Mañana"
@@ -1439,11 +1439,11 @@ msgstr "Marcar como no completada"
 msgid "Mark as Done"
 msgstr "Marcar como completada"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Mark as Not in Progress"
 msgstr "Marcar como no en curso"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Mark as in Progress"
 msgstr "Marcar como en curso"
 
@@ -1495,15 +1495,15 @@ msgstr "Eliminar todos los eventos de «%1»"
 msgid "No due date"
 msgstr "Sin fecha de vencimiento"
 
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "a task's due date in its details"
+msgid "dddd, d MMMM"
+msgstr "dddd, d 'de' MMMM"
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 = date"
-msgid "Due %1"
-msgstr "Vence %1"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
 msgid "Overdue"
@@ -1613,18 +1613,6 @@ msgstr "Se repite"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 hora de %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-msgid "Mark as not done"
-msgstr "Marcar como no completada"
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-msgid "Mark as done"
-msgstr "Marcar como completada"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Not in progress"
-msgstr "No en curso"
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
@@ -2185,6 +2173,11 @@ msgstr "Descripción"
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "MMM d"
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
+msgid "Due %1"
+msgstr "Vence %1"
 
 #: ../contents/ui/EventModel.qml
 msgctxt "working location"
@@ -2896,6 +2889,14 @@ msgstr "No se pudo buscar en Google Calendar"
 msgid "Searching Google Calendar…"
 msgstr "Buscando en Google Calendar…"
 
+#: ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr "Marcar como no completada"
+
+#: ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
+msgstr "Marcar como completada"
+
 #: ../contents/ui/TaskRow.qml
 msgctxt "task due: %1 = day (Today, Oct 28), %2 = time"
 msgid "%1 %2"
@@ -3417,6 +3418,9 @@ msgstr "No hay más eventos hoy"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lugar de trabajo: %1"
+
+#~ msgid "Not in progress"
+#~ msgstr "No en curso"
 
 #~ msgctxt "%1 = date"
 #~ msgid "%1, has events"

@@ -90,22 +90,27 @@ Rectangle {
 			listRevision++
 		}
 	}
+	// When the task is due, in words: "Today, 14:00", "Tomorrow", "Wednesday, 28 October", with
+	// "Overdue · " before a past day.
 	readonly property string dueText: {
-		var day = isTask ? Tasks.dueDay(eventItem) : ""
-		if (!day) {
+		var info = isTask ? Tasks.dueInfo(eventItem, timeModel.currentTime) : { kind: 'none' }
+		if (info.kind === 'none') {
 			return i18n("No due date")
 		}
-		var parts = day.split('-')
+		var parts = info.day.split('-')
 		var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
-		var dateText = Shared.formatDate(date, Qt.locale().dateFormat(Locale.LongFormat))
+		var dateText = info.kind === 'today' ? i18nc("tasks filter", "Today")
+			: info.kind === 'tomorrow' ? i18nc("tasks filter", "Tomorrow")
+			: Shared.formatDate(date, i18nc("a task's due date in its details", "dddd, d MMMM"))
 		if (eventItem.dueTime) { // Timed TickTick tasks
 			var time = eventItem.dueTime.split(':')
 			dateText = i18nc("date (%1) with time (%2)", "%1, %2", dateText,
 				Shared.formatTime(new Date(2000, 0, 1, Number(time[0]), Number(time[1])), appletConfig.timeFormat))
 		}
-		var text = i18nc("%1 = date", "Due %1", dateText)
-		return isOverdue ? text + " · " + i18n("Overdue") : text
+		return info.kind === 'overdue' ? i18n("Overdue") + " · " + dateText : dateText
 	}
+	readonly property bool taskInProgress: isTask && Tasks.isInProgress(eventItem, plasmoid.configuration.tasksInProgress)
+	readonly property string taskPriority: isTask ? Tasks.priorityKey(eventItem) : 'none'
 	function toggleDone() {
 		eventModel.toggleTask(eventItem, !isDone)
 	}
@@ -289,10 +294,22 @@ Rectangle {
 					Layout.rightMargin: Kirigami.Units.largeSpacing
 					spacing: Kirigami.Units.largeSpacing
 					Rectangle {
+						visible: !details.isTask
 						Layout.fillHeight: true
 						Layout.preferredWidth: 6
 						radius: 3
 						color: details.eventColor
+					}
+					// A task: its check, large, beside the title (marks it done / not done).
+					TaskCheck {
+						visible: details.isTask
+						Layout.alignment: Qt.AlignTop
+						Layout.topMargin: 2
+						size: Math.round(Kirigami.Units.iconSizes.medium * 0.85)
+						eventItem: details.isTask ? details.eventItem : null
+						color: details.eventColor
+						square: appletConfig.islands
+						overdue: details.isOverdue
 					}
 					ColumnLayout {
 						Layout.fillWidth: true
@@ -330,6 +347,7 @@ Rectangle {
 						PlasmaComponents3.Label {
 							Layout.fillWidth: true
 							wrapMode: Text.Wrap
+							textFormat: Text.PlainText
 							text: {
 								if (!details.eventItem) {
 									return ""
@@ -376,23 +394,45 @@ Rectangle {
 					}
 				}
 
-				// Tasks: done / not done, in progress (the widget's own mark).
-				RowLayout {
-					visible: details.isTask
+				// Tasks: in progress (the widget's own mark, a toggle) and the priority.
+				Flow {
+					visible: details.isTask && !details.isDone
+					Layout.fillWidth: true
 					Layout.leftMargin: Kirigami.Units.largeSpacing
+					Layout.rightMargin: Kirigami.Units.largeSpacing
 					spacing: Kirigami.Units.smallSpacing
-					PlasmaComponents3.Button {
-						visible: !!(details.eventItem && details.eventItem.canEdit !== false)
-						icon.name: details.isDone ? "edit-undo" : "checkmark"
-						text: details.isDone ? i18n("Mark as not done") : i18n("Mark as done")
-						onClicked: details.toggleDone()
+					PlasmaComponents3.ToolButton {
+						id: inProgressButton
+						icon.name: "media-playback-start"
+						text: i18nc("tasks filter", "In progress")
+						checkable: true
+						checked: details.taskInProgress
+						// The setting decides (a click doesn't keep its own state).
+						onClicked: {
+							eventModel.setTaskInProgress(details.eventItem, !details.taskInProgress)
+							checked = Qt.binding(function() { return details.taskInProgress })
+						}
+						PlasmaComponents3.ToolTip.text: details.taskInProgress ? i18n("Mark as Not in Progress") : i18n("Mark as in Progress")
+						PlasmaComponents3.ToolTip.visible: hovered
 					}
-					PlasmaComponents3.Button {
-						readonly property bool inProgress: Tasks.isInProgress(details.eventItem, plasmoid.configuration.tasksInProgress)
-						visible: !details.isDone
-						icon.name: inProgress ? "media-playback-pause" : "media-playback-start"
-						text: inProgress ? i18n("Not in progress") : i18nc("tasks filter", "In progress")
-						onClicked: eventModel.setTaskInProgress(details.eventItem, !inProgress)
+					// The priority (TickTick), as the task menu shows it.
+					RowLayout {
+						visible: details.taskPriority !== 'none'
+						height: inProgressButton.height // Centered beside the button
+						spacing: Kirigami.Units.smallSpacing
+						Kirigami.Icon {
+							Layout.alignment: Qt.AlignVCenter
+							implicitWidth: Kirigami.Units.iconSizes.small
+							implicitHeight: implicitWidth
+							source: "flag"
+							isMask: true
+							color: Tasks.priorityColor(details.taskPriority)
+						}
+						PlasmaComponents3.Label {
+							Layout.alignment: Qt.AlignVCenter
+							text: details.taskPriority === 'high' ? i18n("High priority") : details.taskPriority === 'medium' ? i18n("Medium priority") : i18n("Low priority")
+							textFormat: Text.PlainText
+						}
 					}
 				}
 
@@ -555,6 +595,9 @@ Rectangle {
 							var name = details.calendar ? String(details.calendar.summary) : ""
 							// Primary calendars are named after the account: "a@x.com - a@x.com".
 							var parts = name.split(" - ")
+							if (details.isTask && parts.length > 1) {
+								return parts.slice(1).join(" - ") // A task list: "TickTick - Work" is "Work"
+							}
 							return parts.length === 2 && parts[0] === parts[1] ? parts[0] : name
 						}
 						textFormat: Text.PlainText

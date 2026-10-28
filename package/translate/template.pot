@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:43+0100\n"
+"POT-Creation-Date: 2026-10-28 08:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1397,15 +1397,15 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr ""
 
@@ -1418,12 +1418,12 @@ msgstr ""
 msgid "Due date"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr ""
@@ -1450,11 +1450,11 @@ msgstr ""
 msgid "Mark as Done"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Mark as Not in Progress"
 msgstr ""
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Mark as in Progress"
 msgstr ""
 
@@ -1506,14 +1506,14 @@ msgstr ""
 msgid "No due date"
 msgstr ""
 
+#: ../contents/ui/EventDetailsView.qml
+msgctxt "a task's due date in its details"
+msgid "dddd, d MMMM"
+msgstr ""
+
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
-msgstr ""
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-msgctxt "%1 = date"
-msgid "Due %1"
 msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TasksView.qml
@@ -1623,18 +1623,6 @@ msgstr ""
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
-msgstr ""
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-msgid "Mark as not done"
-msgstr ""
-
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml
-msgid "Mark as done"
-msgstr ""
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Not in progress"
 msgstr ""
 
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/TaskCheck.qml ../contents/ui/TasksView.qml
@@ -2195,6 +2183,11 @@ msgstr ""
 #: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
+msgstr ""
+
+#: ../contents/ui/EventModel.qml
+msgctxt "%1 = date"
+msgid "Due %1"
 msgstr ""
 
 #: ../contents/ui/EventModel.qml
@@ -2902,6 +2895,14 @@ msgstr ""
 
 #: ../contents/ui/SearchView.qml
 msgid "Searching Google Calendar…"
+msgstr ""
+
+#: ../contents/ui/TaskCheck.qml
+msgid "Mark as not done"
+msgstr ""
+
+#: ../contents/ui/TaskCheck.qml
+msgid "Mark as done"
 msgstr ""
 
 #: ../contents/ui/TaskRow.qml
