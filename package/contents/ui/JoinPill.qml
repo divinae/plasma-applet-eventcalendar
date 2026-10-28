@@ -18,7 +18,11 @@ Rectangle {
 
 	// Even room around the icon and the text: above and below (at least 3 px, also when slim), and
 	// on the sides as much plus a little for the round ends.
-	readonly property real vPad: Math.max(3, verticalPadding)
+	// The height it may take (0: any): on a very short tile it gets slimmer, not taller than it.
+	property real maxHeight: 0
+	readonly property real vPad: maxHeight > 0
+		? Math.max(1, Math.min(Math.max(3, verticalPadding), Math.floor((maxHeight - joinRow.implicitHeight) / 2)))
+		: Math.max(3, verticalPadding)
 	readonly property real hPad: vPad + Kirigami.Units.smallSpacing
 	implicitWidth: joinRow.implicitWidth + hPad * 2
 	implicitHeight: joinRow.implicitHeight + vPad * 2
