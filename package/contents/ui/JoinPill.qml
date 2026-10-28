@@ -19,7 +19,10 @@ Rectangle {
 	implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 2
 	implicitHeight: joinRow.implicitHeight + verticalPadding * 2
 	radius: height / 2
-	color: ColorUtil.setAlpha(Qt.tint(ColorUtil.setAlpha(baseColor, 1),
+	// The tile's fill over the popup's background (a see-through tile, eg: an unanswered one, is
+	// the background, not black), then the text color over that.
+	readonly property color opaqueBase: Qt.tint(ColorUtil.setAlpha(Kirigami.Theme.backgroundColor, 1), baseColor)
+	color: ColorUtil.setAlpha(Qt.tint(opaqueBase,
 		ColorUtil.setAlpha(textColor, joinMouse.pressed ? 0.35 : joinMouse.containsMouse ? 0.28 : 0.18)), 1)
 	border.width: 1
 	border.color: ColorUtil.setAlpha(textColor, 0.25)
