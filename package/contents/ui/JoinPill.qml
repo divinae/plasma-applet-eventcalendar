@@ -5,9 +5,9 @@ import org.kde.plasma.components as PlasmaComponents3
 import "lib/ColorUtil.js" as ColorUtil
 import "Shared.js" as Shared
 
-// "Join" meeting button drawn on an event tile: a pill in the tile's text color, so it reads as
-// part of the tile. Opaque (the tile's color with the text color over it, baseColor: the tile's
-// fill): it never blends into a striped or translucent tile. meetingLink: from MeetingLink.find().
+// "Join" meeting button drawn on an event tile: a small pill in the popup's background and text
+// colors with a thin border, so it stands out on any tile (tinted, striped, solid).
+// meetingLink: from MeetingLink.find(). (textColor / baseColor: the tile's, kept for callers.)
 Rectangle {
 	id: joinPill
 
@@ -19,13 +19,11 @@ Rectangle {
 	implicitWidth: joinRow.implicitWidth + Kirigami.Units.largeSpacing * 2
 	implicitHeight: joinRow.implicitHeight + verticalPadding * 2
 	radius: height / 2
-	// The tile's fill over the popup's background (a see-through tile, eg: an unanswered one, is
-	// the background, not black), then the text color over that.
-	readonly property color opaqueBase: Qt.tint(ColorUtil.setAlpha(Kirigami.Theme.backgroundColor, 1), baseColor)
-	color: ColorUtil.setAlpha(Qt.tint(opaqueBase,
-		ColorUtil.setAlpha(textColor, joinMouse.pressed ? 0.35 : joinMouse.containsMouse ? 0.28 : 0.18)), 1)
+	readonly property color pillTextColor: Kirigami.Theme.textColor
+	color: Qt.tint(ColorUtil.setAlpha(Kirigami.Theme.backgroundColor, 1),
+		ColorUtil.setAlpha(Kirigami.Theme.textColor, joinMouse.pressed ? 0.16 : joinMouse.containsMouse ? 0.08 : 0))
 	border.width: 1
-	border.color: ColorUtil.setAlpha(textColor, 0.25)
+	border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.25)
 
 	Row {
 		id: joinRow
@@ -38,14 +36,14 @@ Rectangle {
 			source: "call-start-symbolic"
 			// Symbolic icons follow the theme text color: use the tile's.
 			Kirigami.Theme.inherit: false
-			Kirigami.Theme.textColor: joinPill.textColor
+			Kirigami.Theme.textColor: joinPill.pillTextColor
 			isMask: true
-			color: joinPill.textColor
+			color: joinPill.pillTextColor
 		}
 		PlasmaComponents3.Label {
 			anchors.verticalCenter: parent.verticalCenter
 			text: i18n("Join")
-			color: joinPill.textColor
+			color: joinPill.pillTextColor
 			font: Kirigami.Theme.smallFont
 		}
 	}
