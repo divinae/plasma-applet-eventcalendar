@@ -32,6 +32,17 @@ assert.strictEqual(counts[key(5)], 3, 'two timed and an all-day event')
 assert.strictEqual(counts[key(6)], 2, "the all-day event's second day and a timed one")
 assert.strictEqual(counts[key(7)], undefined)
 
+// eventDayColors + dotColors: the dots in the colors of the day's events.
+const colored = (e, color) => Object.assign(e, { backgroundColor: color })
+const colors = S.eventDayColors([colored(timed(5, 9, 10), 'green'), colored(timed(5, 12, 13), 'blue'),
+	colored(allDay(5, 2), 'green'), timed(6, 9, 10)], from, to)
+assert.deepStrictEqual(JSON.parse(JSON.stringify(colors[key(5)])), { green: 2, blue: 1 })
+assert.deepStrictEqual(JSON.parse(JSON.stringify(colors[key(6)])), { green: 1, '': 1 }, 'no color: ""')
+assert.deepStrictEqual(Array.from(S.dotColors({ green: 4, blue: 1 }, 3)), ['green', 'green', 'blue'], 'spare dots: the most used color')
+assert.deepStrictEqual(Array.from(S.dotColors({ a: 1, b: 3, c: 2, d: 1 }, 3)), ['b', 'c', 'a'], 'more colors than dots: the most used')
+assert.deepStrictEqual(Array.from(S.dotColors({ red: 1 }, 1)), ['red'])
+assert.deepStrictEqual(Array.from(S.dotColors(undefined, 0)), [])
+
 // upcomingEvents: from a time on, earliest first, at most limit ("Up next", "Next: …").
 const later = [timed(29, 9, 10), timed(28, 14, 15), timed(26, 9, 10), timed(28, 9, 10)]
 later.forEach((e, i) => { e.id = 'e' + i })

@@ -360,6 +360,13 @@ function dayKey(d) {
 // touches.
 function eventDayCounts(items, from, to) {
 	var counts = {}
+	forEachEventDay(items, from, to, function(key) {
+		counts[key] = (counts[key] || 0) + 1
+	})
+	return counts
+}
+// Calls fn(dayKey, item) for each day from..to an event of items is on (see eventDayCounts).
+function forEachEventDay(items, from, to, fn) {
 	var first = startOfDay(from)
 	var last = startOfDay(to)
 	;(items || []).forEach(function(item) {
@@ -375,12 +382,35 @@ function eventDayCounts(items, from, to) {
 			day = new Date(first)
 		}
 		for (var n = 0; day <= lastDay && day < last && n < 62; n++) {
-			var key = dayKey(day)
-			counts[key] = (counts[key] || 0) + 1
+			fn(dayKey(day), item)
 			day = addDays(day, 1)
 		}
 	})
-	return counts
+}
+// The colors of the events on each day from..to: { dayKey: { color: count } } ("": no color).
+function eventDayColors(items, from, to) {
+	var colors = {}
+	forEachEventDay(items, from, to, function(key, item) {
+		var color = item.backgroundColor ? String(item.backgroundColor) : ""
+		var day = colors[key] || (colors[key] = {})
+		day[color] = (day[color] || 0) + 1
+	})
+	return colors
+}
+// The colors of a day's dots (dots: how many): each of its colors once, the most used ones first,
+// as many as there are dots; dots left over have the most used color, next to its first one.
+function dotColors(colorCounts, dots) {
+	var colors = Object.keys(colorCounts || {}).sort(function(a, b) {
+		return colorCounts[b] - colorCounts[a] || (a < b ? -1 : a > b ? 1 : 0)
+	}).slice(0, dots)
+	var list = []
+	for (var i = 0; i < colors.length; i++) {
+		var repeat = i === 0 ? dots - colors.length + 1 : 1
+		for (var j = 0; j < repeat; j++) {
+			list.push(colors[i])
+		}
+	}
+	return list
 }
 // The days with an event (eventDayCounts), { dayKey: true }.
 function eventDayKeys(items, from, to) {

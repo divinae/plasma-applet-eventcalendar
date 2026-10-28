@@ -11,7 +11,7 @@ import "Tasks.js" as Tasks
 // the weekday initials, and the days of six weeks. The shown day (selectedDate) is filled in the
 // accent color, today is in the accent color, days of the months around are dimmed, and dots
 // under a day say how busy it is: 1 for 1-2 events, 2 for 3-4, 3 for 5 or more
-// (eventModel.eventsData, tasks left out). A click picks the day
+// (eventModel.eventsData, tasks left out), in the colors of its events. A click picks the day
 // (dayClicked); the month shown follows selectedDate and can be paged through on its own.
 ColumnLayout {
 	id: miniMonth
@@ -43,10 +43,9 @@ ColumnLayout {
 		}
 		return list
 	}
-	readonly property var eventCounts: {
-		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		return Shared.eventDayCounts(items, gridStart, Shared.addDays(gridStart, 42))
-	}
+	readonly property var dayEvents: eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
+	readonly property var eventCounts: Shared.eventDayCounts(dayEvents, gridStart, Shared.addDays(gridStart, 42))
+	readonly property var eventColors: Shared.eventDayColors(dayEvents, gridStart, Shared.addDays(gridStart, 42))
 	function dotCount(count) {
 		return count >= 5 ? 3 : count >= 3 ? 2 : count > 0 ? 1 : 0
 	}
@@ -115,6 +114,7 @@ ColumnLayout {
 				readonly property bool selected: Shared.isSameDate(day, miniMonth.selectedDate)
 				readonly property bool isToday: Shared.isSameDate(day, miniMonth.today)
 				readonly property int eventCount: miniMonth.eventCounts[Shared.dayKey(day)] || 0
+				readonly property var dotColors: Shared.dotColors(miniMonth.eventColors[Shared.dayKey(day)], miniMonth.dotCount(eventCount))
 				width: miniMonth.cellSize
 				// Compact rows: the tasks below keep their room.
 				height: miniMonth.rowHeight
@@ -145,19 +145,19 @@ ColumnLayout {
 							: Kirigami.Theme.textColor
 						opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
 					}
-					// How busy: 1-3 small dots under the number.
+					// How busy: 1-3 small dots under the number, in the colors of the day's events.
 					Row {
 						anchors.horizontalCenter: parent.horizontalCenter
 						anchors.bottom: parent.bottom
 						anchors.bottomMargin: Math.round(parent.height * 0.12)
 						spacing: 2
 						Repeater {
-							model: miniMonth.dotCount(dayButton.eventCount)
+							model: dayButton.dotColors
 							Rectangle {
 								width: 4
 								height: 4
 								radius: 2
-								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.highlightColor
+								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor : (modelData || Kirigami.Theme.highlightColor)
 								opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
 							}
 						}
