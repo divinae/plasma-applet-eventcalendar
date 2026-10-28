@@ -67,19 +67,16 @@ ColumnLayout {
 		id: dueMenu
 		Repeater {
 			model: [
-				{ day: body.today, text: i18nc("tasks filter", "Today") },
-				{ day: Tasks.addDays(body.today, 1), text: i18nc("tasks filter", "Tomorrow") },
-				{ day: body.nextWeekDay, text: i18n("Next week") },
-				{ day: '', text: i18nc("tasks filter", "No date") },
+				{ day: body.today, text: i18nc("tasks filter", "Today"), icon: "go-jump-today" },
+				{ day: Tasks.addDays(body.today, 1), text: i18nc("tasks filter", "Tomorrow"), icon: "go-next" },
+				{ day: body.nextWeekDay, text: i18n("Next week"), icon: "go-next-skip" },
+				{ day: '', text: i18nc("tasks filter", "No date"), icon: "edit-clear" },
 			]
-			PlasmaComponents3.MenuItem {
+			ChoiceItem {
 				text: modelData.text
-				checkable: true
-				checked: !!body.item && Tasks.dueDay(body.item) === modelData.day
-				onTriggered: {
-					checked = Qt.binding(function() { return !!body.item && Tasks.dueDay(body.item) === modelData.day })
-					body.save({ dueDay: modelData.day })
-				}
+				iconName: modelData.icon
+				current: !!body.item && Tasks.dueDay(body.item) === modelData.day
+				onTriggered: body.save({ dueDay: modelData.day })
 			}
 		}
 	}
@@ -87,19 +84,17 @@ ColumnLayout {
 		id: priorityMenu
 		Repeater {
 			model: [
-				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority") },
-				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority") },
-				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority") },
-				{ value: Tasks.PRIORITY_NONE, text: i18nc("task priority", "No priority") },
+				{ value: Tasks.PRIORITY_HIGH, text: i18n("High priority"), key: 'high' },
+				{ value: Tasks.PRIORITY_MEDIUM, text: i18n("Medium priority"), key: 'medium' },
+				{ value: Tasks.PRIORITY_LOW, text: i18n("Low priority"), key: 'low' },
+				{ value: Tasks.PRIORITY_NONE, text: i18nc("task priority", "No priority"), key: 'none' },
 			]
-			PlasmaComponents3.MenuItem {
+			ChoiceItem {
 				text: modelData.text
-				checkable: true
-				checked: !!body.item && Tasks.priorityOf(body.item) === modelData.value
-				onTriggered: {
-					checked = Qt.binding(function() { return !!body.item && Tasks.priorityOf(body.item) === modelData.value })
-					body.save({ priority: modelData.value })
-				}
+				iconName: "flag"
+				iconColor: Tasks.priorityColor(modelData.key) || Kirigami.Theme.disabledTextColor
+				current: !!body.item && Tasks.priorityOf(body.item) === modelData.value
+				onTriggered: body.save({ priority: modelData.value })
 			}
 		}
 	}
@@ -107,17 +102,73 @@ ColumnLayout {
 		id: listMenu
 		Instantiator {
 			model: body.otherLists
-			delegate: PlainMenuItem {
+			delegate: ChoiceItem {
 				required property var modelData
-				// "TickTick - 🏠 Home": the list's part.
-				label: {
+				// "TickTick - 🏠 Home": the list's part, its emoji as its icon.
+				readonly property var split: {
 					var parts = String(modelData.summary || "").split(" - ")
-					return parts.length > 1 ? parts.slice(1).join(" - ") : String(modelData.summary || "")
+					return TaskLists.splitIcon(parts.length > 1 ? parts.slice(1).join(" - ") : String(modelData.summary || ""))
 				}
+				text: split.name
+				emoji: split.icon
+				dotColor: appletConfig.eventColoredTextColor(appletConfig.eventColor(modelData.backgroundColor || null))
 				onTriggered: body.moveTo(modelData.id)
 			}
 			onObjectAdded: function(index, object) { listMenu.insertItem(index, object) }
 			onObjectRemoved: function(index, object) { listMenu.removeItem(object) }
+		}
+	}
+
+	// A menu choice like the task menu's: an icon (or an emoji, or a dot), its text (never parsed as
+	// HTML), a check after the current one.
+	component ChoiceItem: PlasmaComponents3.MenuItem {
+		id: choice
+		property string iconName: ""
+		property color iconColor: Kirigami.Theme.textColor
+		property string emoji: ""
+		property color dotColor: "transparent"
+		property bool current: false
+		readonly property color fg: highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+		Accessible.role: Accessible.RadioButton
+		Accessible.checkable: true
+		Accessible.checked: current
+		contentItem: RowLayout {
+			spacing: Kirigami.Units.smallSpacing
+			Item {
+				Layout.alignment: Qt.AlignVCenter
+				implicitWidth: Kirigami.Units.iconSizes.small
+				implicitHeight: implicitWidth
+				Kirigami.Icon {
+					anchors.fill: parent
+					visible: !!choice.iconName
+					source: choice.iconName
+					isMask: true
+					color: choice.iconColor === Kirigami.Theme.textColor ? choice.fg : choice.iconColor
+				}
+				ListMark {
+					visible: !choice.iconName
+					anchors.centerIn: parent
+					list: ({ icon: choice.emoji })
+					size: Math.round(Kirigami.Units.gridUnit * 0.5)
+					color: choice.dotColor
+				}
+			}
+			PlasmaComponents3.Label {
+				Layout.fillWidth: true
+				text: choice.text
+				textFormat: Text.PlainText
+				font: choice.font
+				color: choice.fg
+			}
+			Kirigami.Icon {
+				Layout.alignment: Qt.AlignVCenter
+				implicitWidth: Kirigami.Units.iconSizes.small
+				implicitHeight: implicitWidth
+				source: "checkmark"
+				isMask: true
+				color: choice.fg
+				opacity: choice.current ? 1 : 0
+			}
 		}
 	}
 
@@ -319,7 +370,7 @@ ColumnLayout {
 		property alias text: rowLabel.text
 		property color textColor: Kirigami.Theme.textColor
 		default property alias trailing: trailingArea.data
-		// A click changes it (a menu): a hover background and a small arrow at the end.
+		// A click changes it (a menu): a small arrow after the value, a hover background up to it.
 		property bool editable: false
 		signal activated()
 
@@ -338,7 +389,8 @@ ColumnLayout {
 				z: -1
 				x: -parent.x - Kirigami.Units.smallSpacing
 				y: -parent.y
-				width: row.width + Kirigami.Units.smallSpacing * 2
+				// Up to the arrow after the value (a dropdown-like chip), not the whole row.
+				width: rowArrow.x + rowArrow.width + Kirigami.Units.smallSpacing * 2
 				height: row.height
 				radius: Kirigami.Units.cornerRadius
 				color: rowMouse.containsMouse ? appletConfig.agendaHoverBackground : "transparent"
@@ -348,7 +400,7 @@ ColumnLayout {
 				enabled: row.editable
 				x: -parent.x - Kirigami.Units.smallSpacing
 				y: -parent.y
-				width: row.width + Kirigami.Units.smallSpacing * 2
+				width: rowArrow.x + rowArrow.width + Kirigami.Units.smallSpacing * 2
 				height: row.height
 				hoverEnabled: true
 				cursorShape: Qt.PointingHandCursor
@@ -380,20 +432,28 @@ ColumnLayout {
 		PlasmaComponents3.Label {
 			id: rowLabel
 			Layout.fillWidth: true
+			// Editable: as wide as its text, the arrow right after it.
+			Layout.maximumWidth: row.editable ? implicitWidth : -1
 			Layout.alignment: Qt.AlignVCenter
 			wrapMode: Text.Wrap
 			textFormat: Text.PlainText
 			color: row.textColor
 		}
 		Kirigami.Icon {
+			id: rowArrow
 			visible: row.editable
 			Layout.alignment: Qt.AlignVCenter
+			Layout.leftMargin: -Kirigami.Units.smallSpacing
 			implicitWidth: Math.round(Kirigami.Units.iconSizes.small * 0.75)
 			implicitHeight: implicitWidth
 			source: "arrow-down"
 			isMask: true
 			color: Kirigami.Theme.textColor
-			opacity: rowMouse.containsMouse ? 0.8 : 0.4
+			opacity: rowMouse.containsMouse ? 0.9 : 0.55
+		}
+		Item {
+			visible: row.editable
+			Layout.fillWidth: true
 		}
 		Item {
 			id: trailingArea
