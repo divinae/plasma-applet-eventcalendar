@@ -800,14 +800,16 @@ Item {
 						Layout.fillWidth: true
 						Layout.minimumWidth: 0
 						text: {
-							// "Today · Wednesday" (the popup's title has the date, without the weekday).
+							// "Today · Wednesday", "Monday, 2 Nov" (the popup's title has the date, without the weekday).
 							var diff = Math.round((Shared.startOfDay(weekView.weekStart).getTime() - weekView.todayStart.getTime()) / 86400000)
 							var weekday = Qt.locale().standaloneDayName(weekView.weekStart.getDay(), Locale.LongFormat)
 							var relative = diff === 0 ? i18nc("tasks filter", "Today")
 								: diff === 1 ? i18nc("tasks filter", "Tomorrow")
 								: diff === -1 ? i18nc("the day before today", "Yesterday")
 								: ""
-							return relative ? relative + " · " + weekday : weekday
+							// Another day: with its date too (next Monday isn't this one).
+							return relative ? relative + " · " + weekday
+								: Shared.formatDate(weekView.weekStart, i18nc("Up next: a day's heading", "dddd, d MMM"))
 						}
 						textFormat: Text.PlainText
 						font.weight: Font.Bold
