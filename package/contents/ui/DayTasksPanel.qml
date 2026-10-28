@@ -290,12 +290,14 @@ ColumnLayout {
 				}
 				contentItem: RowLayout {
 					spacing: Kirigami.Units.largeSpacing
-					// Smaller than the checks (a quiet line), centered in their column.
+					// Smaller than the checks (a quiet line), centered in their column, at the middle of
+					// the lowercase text beside it (lower than its line's middle).
 					Item {
 						Layout.preferredWidth: doneToggle.checkSize
 						Layout.preferredHeight: doneToggle.checkSize
 						Kirigami.Icon {
 							anchors.centerIn: parent
+							anchors.verticalCenterOffset: Math.round((doneMetrics.ascent - doneMetrics.descent - doneMetrics.xHeight) / 2)
 							width: Math.round(doneToggle.checkSize * 0.7)
 							height: width
 						source: dayTasks.showDone ? "arrow-down" : (Qt.application.layoutDirection === Qt.RightToLeft ? "arrow-left" : "arrow-right")
@@ -304,7 +306,12 @@ ColumnLayout {
 						opacity: 0.7
 						}
 					}
+					FontMetrics {
+						id: doneMetrics
+						font: doneLabel.font
+					}
 					PlasmaComponents3.Label {
+						id: doneLabel
 						Layout.fillWidth: true
 						Layout.minimumWidth: 0
 						text: doneToggle.text

@@ -18,6 +18,8 @@ Item {
 		id: emoji
 		visible: !!mark.icon
 		anchors.centerIn: parent
+		// Emoji fonts draw a bit high in their line: down to the middle of the text beside it.
+		anchors.verticalCenterOffset: Math.round(font.pixelSize * 0.1)
 		text: mark.icon
 		textFormat: Text.PlainText
 		font.pixelSize: Math.max(9, Math.round(mark.size * 1.4))
