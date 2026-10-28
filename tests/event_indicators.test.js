@@ -57,3 +57,24 @@ assert.strictEqual(S.eventIndicatorIconSize('location', 22), 16)
 assert.strictEqual(S.eventIndicatorIconSize('guests', 16), 16)
 assert.strictEqual(S.eventIndicatorIconSize('guests', 13), 13)
 console.log('event_indicators sizes: ok')
+
+// Agenda rows: nested lists summed up beforehand (withPlainSummary), read instead of walked.
+const busy = {
+	id: 'e1',
+	attendees: [{ self: true, responseStatus: 'needsAction' }, { email: 'sam@example.com' }, { email: 'room@x', resource: true }],
+	conflictsWith: [{ summary: 'Standup' }, { summary: 'Retro' }],
+}
+const plain = S.withPlainSummary(busy, { url: 'https://meet.google.com/abc', label: 'Google Meet' })
+assert.strictEqual(plain.attendeeResponse, 'needsAction')
+assert.strictEqual(plain.attendeeGuestCount, 1, 'not the user, not a room')
+assert.strictEqual(plain.conflictTitlesText, 'Standup\nRetro')
+assert.strictEqual(plain.meetingUrl, 'https://meet.google.com/abc')
+assert.strictEqual(busy.attendeeResponse, undefined, 'the event itself is left as is')
+// Read from the plain values even when the nested lists are gone (as a ListModel row would be).
+const row = Object.assign({}, plain, { attendees: null, conflictsWith: null })
+assert.deepStrictEqual(keys(row, true), ['needsAction', 'conflict', 'meeting', 'guests'], 'plain values')
+assert.strictEqual(S.myResponse(row), 'needsAction')
+assert.deepStrictEqual(Array.from(S.conflictTitles(row)), ['Standup', 'Retro'])
+const none = S.withPlainSummary({ id: 'e2' }, null)
+assert.deepStrictEqual(keys(Object.assign({}, none, { attendees: [{ email: 'x@example.com' }] })), [], 'summed-up count wins')
+assert.strictEqual(none.meetingUrl, '')

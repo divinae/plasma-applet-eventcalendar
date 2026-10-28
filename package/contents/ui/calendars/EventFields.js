@@ -4,7 +4,9 @@
 // GoogleCalendarManager.parseEvent, EventModel: the disk cache, conflicts). Never sent to Google:
 // removed from update bodies (GoogleCalendarManager.cloneRawEvent) and undo copies (Undo.js).
 var widgetFields = ['calendarManagerId', 'calendarId', 'startDateTime', 'endDateTime', 'canEdit',
-	'_summary', 'reminderMinutes', 'reminderOwn', 'fromCache', 'conflictsWith']
+	'_summary', 'reminderMinutes', 'reminderOwn', 'fromCache', 'conflictsWith',
+	// Shared.withPlainSummary (agenda rows).
+	'attendeeResponse', 'attendeeGuestCount', 'conflictTitlesText', 'meetingUrl', 'meetingLabel']
 
 // Deletes the widget's fields from data (a copy of an event), in place.
 function stripWidgetFields(data) {

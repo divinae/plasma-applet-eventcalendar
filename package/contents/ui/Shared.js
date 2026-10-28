@@ -205,37 +205,44 @@ function toArray(value) {
 // ListModel once the event has been put in one (agenda).
 function myResponse(eventItem) {
 	if (eventItem && typeof eventItem.attendeeResponse === 'string') {
-		return eventItem.attendeeResponse
+		return eventItem.attendeeResponse // Summed up beforehand (withPlainSummary)
 	}
-	var attendees = eventItem ? eventItem.attendees : null
+	return attendeeSummary(eventItem ? eventItem.attendees : null).response
+}
+
+// The attendees in one pass: response (myResponse) and guestCount (anyone besides the user, not
+// rooms). attendees: an array or a ListModel.
+function attendeeSummary(attendees) {
+	var summary = { response: '', guestCount: 0 }
 	if (!attendees) {
-		return ''
+		return summary
 	}
 	var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
 	var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
 	for (var i = 0; i < count; i++) {
 		var attendee = isModel ? attendees.get(i) : attendees[i]
 		if (attendee && attendee.self) {
-			return attendee.organizer ? '' : String(attendee.responseStatus || '')
+			summary.response = attendee.organizer ? '' : String(attendee.responseStatus || '')
+		} else if (attendee && !attendee.resource) {
+			summary.guestCount++
 		}
 	}
-	return ''
+	return summary
 }
 
-// A copy of an event with its attendees summed up as plain values: attendeeResponse (myResponse)
-// and attendeeGuestCount (guests besides the user, not rooms). For a ListModel (the agenda): read
-// there, the nested attendees ListModel's get() in a binding loops (Qt 6.12) and froze Plasma
-// (issue #3).
-function withAttendeeSummary(eventItem) {
+// A copy of an event with its nested lists summed up as plain values, for a ListModel (the agenda):
+// read there, a nested ListModel's get() in a binding loops (Qt 6.12) and froze Plasma (issue #3).
+// attendeeResponse (myResponse), attendeeGuestCount, conflictTitlesText (conflictTitles, one per
+// line), meetingUrl / meetingLabel (meeting: MeetingLink.find's, or null). The widget's own fields
+// (EventFields.widgetFields): never sent to the server.
+function withPlainSummary(eventItem, meeting) {
 	var copy = Object.assign({}, eventItem)
-	var guestCount = 0
-	toArray(eventItem.attendees).forEach(function(attendee) {
-		if (attendee && !attendee.self && !attendee.resource) {
-			guestCount++
-		}
-	})
-	copy.attendeeResponse = myResponse(eventItem)
-	copy.attendeeGuestCount = guestCount
+	var attendees = attendeeSummary(eventItem.attendees)
+	copy.attendeeResponse = attendees.response
+	copy.attendeeGuestCount = attendees.guestCount
+	copy.conflictTitlesText = conflictTitles(eventItem).join('\n')
+	copy.meetingUrl = meeting ? String(meeting.url || '') : ''
+	copy.meetingLabel = meeting ? String(meeting.label || '') : ''
 	return copy
 }
 
@@ -261,6 +268,9 @@ function isHiddenCalendar(calendarId, hiddenCalendarIds) {
 // Titles of the events this one overlaps (EventModel sets conflictsWith, see Conflicts.js). It holds
 // { summary } objects, not strings: a ListModel (agenda) drops plain strings from nested lists.
 function conflictTitles(eventItem) {
+	if (eventItem && typeof eventItem.conflictTitlesText === 'string') {
+		return eventItem.conflictTitlesText ? eventItem.conflictTitlesText.split('\n') : [] // withPlainSummary
+	}
 	var list = eventItem ? eventItem.conflictsWith : null
 	if (!list) {
 		return []
@@ -312,25 +322,11 @@ function eventIndicatorKeys(eventItem, hasMeeting, hide) {
 		return []
 	}
 	hide = hide || {}
-	var attendees = eventItem.attendees
-	var guestCount = 0
-	var response = ''
-	if (typeof eventItem.attendeeGuestCount === 'number') {
-		// Counted beforehand (withAttendeeSummary): no walking a nested ListModel in a binding.
-		guestCount = eventItem.attendeeGuestCount
-		response = myResponse(eventItem)
-	} else if (attendees) {
-		var isModel = typeof attendees.get === 'function' && typeof attendees.count === 'number'
-		var count = isModel ? attendees.count : (isList(attendees) ? attendees.length : 0)
-		for (var i = 0; i < count; i++) {
-			var attendee = isModel ? attendees.get(i) : attendees[i]
-			if (attendee && attendee.self) {
-				response = attendee.organizer ? '' : String(attendee.responseStatus || '') // As myResponse
-			} else if (attendee && !attendee.resource) {
-				guestCount++
-			}
-		}
-	}
+	var attendees = typeof eventItem.attendeeGuestCount === 'number'
+		? { response: myResponse(eventItem), guestCount: eventItem.attendeeGuestCount } // withPlainSummary
+		: attendeeSummary(eventItem.attendees)
+	var response = attendees.response
+	var guestCount = attendees.guestCount
 	var keys = []
 	function add(key, isSet) {
 		if (isSet && !hide[key]) {

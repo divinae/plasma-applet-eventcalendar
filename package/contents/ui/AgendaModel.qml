@@ -1,5 +1,6 @@
 import QtQuick
 
+import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 
@@ -69,7 +70,7 @@ ListModel {
 			agendaItem.events.map(function(e) {
 				return [e.id, e.calendarId, e.etag || e.updated || '', e.summary, e.location || '',
 					(e.description || '').length, time(e.startDateTime), time(e.endDateTime), e.backgroundColor || '', !!e.canEdit, Shared.myResponse(e),
-					Shared.conflictTitles(e)]
+					e.attendeeGuestCount, e.conflictTitlesText, e.meetingUrl]
 			}),
 			agendaItem.tasks.map(function(t) {
 				return [t.id, t.calendarId, t.etag || t.updated || '', t.summary, !!t.isCompleted, t.parent || '',
@@ -123,9 +124,7 @@ ListModel {
 		if (eventItem.kind === 'tasks#task') {
 			agendaItem.tasks.push(eventItem)
 		} else {
-			// The attendees summed up (Shared.withAttendeeSummary): the indicators don't walk the
-			// nested ListModel in a binding.
-			agendaItem.events.push(Shared.withAttendeeSummary(eventItem))
+			agendaItem.events.push(eventItem)
 		}
 	}
 
@@ -319,6 +318,11 @@ ListModel {
 			var breakupMultiDayEvents = plasmoid.configuration.agendaBreakupMultiDayEvents
 			for (; itemIndex < end; itemIndex++) {
 				var eventItem = items[itemIndex]
+				if (eventItem.kind !== 'tasks#task') {
+					// Nested lists summed up once per event (also when on many days): the rows don't
+					// walk nested ListModels in bindings (issue #3).
+					eventItem = Shared.withPlainSummary(eventItem, MeetingLink.find(eventItem))
+				}
 				if (breakupMultiDayEvents) {
 					// for Max(start, visibleMin) .. Min(end, visibleMax)
 					var lowerLimitDate = (agendaModel.clipEventsOutsideLimits && eventItem.startDateTime < agendaModel.visibleDateMin

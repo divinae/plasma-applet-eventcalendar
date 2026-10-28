@@ -46,6 +46,10 @@ function find(event) {
 	if (!event) {
 		return null
 	}
+	// Found beforehand (Shared.withPlainSummary, the agenda): no nested ListModel walked in a binding.
+	if (typeof event.meetingUrl === 'string') {
+		return event.meetingUrl ? { url: event.meetingUrl, label: event.meetingLabel || '' } : null
+	}
 	var conference = event.conferenceData
 	var solutionName = conference && conference.conferenceSolution && conference.conferenceSolution.name || ""
 
