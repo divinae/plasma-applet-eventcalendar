@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:35+0100\n"
+"POT-Creation-Date: 2026-10-28 08:43+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1525,6 +1525,11 @@ msgstr "Skjul opgaver"
 msgid "Show tasks"
 msgstr "Vis opgaver"
 
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
+#: ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "Ny opgave"
+
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All lists"
 msgstr "Alle lister"
@@ -1532,11 +1537,6 @@ msgstr "Alle lister"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "Task list shown"
 msgstr "Viste opgaveliste"
-
-#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/PopupHeader.qml
-msgid "New Task"
-msgstr "Ny opgave"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"

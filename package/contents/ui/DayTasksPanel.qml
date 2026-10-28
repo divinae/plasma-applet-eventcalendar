@@ -8,7 +8,7 @@ import "Tasks.js" as Tasks
 
 // The Day view's tasks (Tasks.dayTasks): due on the shown day, and on today the open overdue ones
 // too (undated ones are only in the Tasks tab), as compact TaskRows under a "Tasks" heading with a
-// "+" for a task due that day, and "Add a task…" below them. Hidden without task lists.
+// "+" beside the title that shows "Add a task…" (due that day) below them. Hidden without task lists.
 // Collapsible: a strip that folds to its heading (above the hour grid); otherwise always open
 // (beside the grid, right of it). Subtasks (Google) are indented under their parent; checking a
 // task offers "Completed · Undo" below the list for a few seconds.
@@ -52,6 +52,8 @@ ColumnLayout {
 	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the done ones only with showDone
 	// The done tasks are folded away under "N completed" (for the session).
 	property bool showDone: false
+	// "Add a task…" shown (the title's "+").
+	property bool adding: false
 	property int doneCount: 0
 	onShowDoneChanged: deferredRebuild()
 	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
@@ -154,6 +156,25 @@ ColumnLayout {
 				onClicked: dayTasks.expanded = !dayTasks.expanded
 			}
 		}
+		// "+" beside the title: shows "Add a task…" (again: hides it).
+		PlasmaComponents3.ToolButton {
+			visible: dayTasks.open
+			Layout.leftMargin: Kirigami.Units.smallSpacing
+			icon.name: "list-add"
+			icon.width: Kirigami.Units.iconSizes.small
+			icon.height: Kirigami.Units.iconSizes.small
+			display: QQC2.AbstractButton.IconOnly
+			text: i18n("New Task")
+			checked: dayTasks.adding
+			onClicked: {
+				dayTasks.adding = !dayTasks.adding
+				if (dayTasks.adding) {
+					Qt.callLater(quickAddRow.focusField)
+				}
+			}
+			PlasmaComponents3.ToolTip.text: text
+			PlasmaComponents3.ToolTip.visible: hovered
+		}
 		Item {
 			Layout.fillWidth: true
 		}
@@ -212,18 +233,6 @@ ColumnLayout {
 				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
 				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
 			}
-		}
-		// Islands: "Add a task…" below is enough.
-		PlasmaComponents3.ToolButton {
-			visible: !appletConfig.islands
-			icon.name: "list-add"
-			icon.width: Kirigami.Units.iconSizes.small
-			icon.height: Kirigami.Units.iconSizes.small
-			display: QQC2.AbstractButton.IconOnly
-			text: i18n("New Task")
-			onClicked: popup.newTask(dayTasks.day, "", "")
-			PlasmaComponents3.ToolTip.text: text
-			PlasmaComponents3.ToolTip.visible: hovered
 		}
 	}
 
@@ -325,7 +334,10 @@ ColumnLayout {
 
 	// "Add a task…" due on the shown day, on the last used list (a picker when there are several).
 	QuickAddTaskRow {
-		visible: dayTasks.open
+		id: quickAddRow
+		// Only after the title's "+" (or while a task is being typed or saved).
+		visible: dayTasks.open && dayTasks.adding
+		onDismissed: dayTasks.adding = false
 		Layout.fillWidth: true
 		eventModel: dayTasks.eventModel
 		lists: dayTasks.lists

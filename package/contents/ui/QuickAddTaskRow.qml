@@ -173,6 +173,8 @@ Item {
 	implicitWidth: layout.implicitWidth + sideMargin * 2
 	implicitHeight: layout.implicitHeight + (compact ? 2 : Kirigami.Units.smallSpacing * 2)
 
+	// Esc in the empty field (eg: a row shown on demand closes).
+	signal dismissed()
 	// The keyboard ("N" in the Tasks tab).
 	function focusField() {
 		field.forceActiveFocus()
@@ -356,6 +358,7 @@ Item {
 						quickAdd.errorText = ""
 					} else {
 						focus = false
+						quickAdd.dismissed()
 						// Back to the popup's keys (the Tasks tab's Up / Down, …).
 						if (typeof popup !== "undefined" && popup && typeof popup.focusForKeys === "function") {
 							popup.focusForKeys()

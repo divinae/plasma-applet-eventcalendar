@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 08:35+0100\n"
+"POT-Creation-Date: 2026-10-28 08:43+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -1337,6 +1337,10 @@ msgstr "Ocultar tarefas"
 msgid "Show tasks"
 msgstr "Mostrar tarefas"
 
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml ../contents/ui/PopupHeader.qml
+msgid "New Task"
+msgstr "Nova tarefa"
+
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All lists"
 msgstr "Todas as listas"
@@ -1344,10 +1348,6 @@ msgstr "Todas as listas"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "Task list shown"
 msgstr "Lista de tarefas mostrada"
-
-#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml ../contents/ui/PopupHeader.qml
-msgid "New Task"
-msgstr "Nova tarefa"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
