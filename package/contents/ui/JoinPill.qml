@@ -16,16 +16,22 @@ Rectangle {
 	property color baseColor: Kirigami.Theme.backgroundColor
 	property real verticalPadding: Kirigami.Units.smallSpacing
 
-	// Even room around the icon and the text: above and below (at least 3 px, also when slim), and
-	// on the sides as much plus a little for the round ends.
-	// The height it may take (0: any): on a very short tile it gets slimmer, not taller than it.
+	// The height it may take (0: any): on a very short tile it gets slimmer, then drops the text and
+	// shrinks the icon, never taller than that.
 	property real maxHeight: 0
+	readonly property real fullIconSize: Math.round(Kirigami.Units.iconSizes.small * 0.875)
+	readonly property bool showLabel: maxHeight <= 0 || Math.ceil(joinLabel.implicitHeight) + 2 <= maxHeight
+	readonly property real contentHeight: Math.ceil(joinRow.implicitHeight)
+	// Even room around the icon and the text: above and below at least 3 px (slimmer, down to 1, only
+	// to fit maxHeight), and on the sides 3 px plus a little for the round ends (not slimmer: the text
+	// keeps clear of them).
+	readonly property real fullPad: Math.max(3, verticalPadding)
 	readonly property real vPad: maxHeight > 0
-		? Math.max(1, Math.min(Math.max(3, verticalPadding), Math.floor((maxHeight - joinRow.implicitHeight) / 2)))
-		: Math.max(3, verticalPadding)
-	readonly property real hPad: vPad + Kirigami.Units.smallSpacing
-	implicitWidth: joinRow.implicitWidth + hPad * 2
-	implicitHeight: joinRow.implicitHeight + vPad * 2
+		? Math.max(1, Math.min(fullPad, Math.floor((maxHeight - contentHeight) / 2)))
+		: fullPad
+	readonly property real hPad: Math.round(fullPad + Kirigami.Units.smallSpacing)
+	implicitWidth: Math.ceil(joinRow.implicitWidth) + hPad * 2
+	implicitHeight: contentHeight + vPad * 2
 	radius: height / 2
 	readonly property color pillTextColor: Kirigami.Theme.textColor
 	color: Qt.tint(ColorUtil.setAlpha(Kirigami.Theme.backgroundColor, 1),
@@ -39,7 +45,7 @@ Rectangle {
 		spacing: Kirigami.Units.smallSpacing
 		Kirigami.Icon {
 			anchors.verticalCenter: parent.verticalCenter
-			width: Math.round(Kirigami.Units.iconSizes.small * 0.875)
+			width: joinPill.maxHeight > 0 ? Math.max(8, Math.min(joinPill.fullIconSize, Math.floor(joinPill.maxHeight - 2))) : joinPill.fullIconSize
 			height: width
 			source: "call-start-symbolic"
 			// Symbolic icons follow the theme text color: use the tile's.
@@ -49,6 +55,8 @@ Rectangle {
 			color: joinPill.pillTextColor
 		}
 		PlasmaComponents3.Label {
+			id: joinLabel
+			visible: joinPill.showLabel
 			anchors.verticalCenter: parent.verticalCenter
 			text: i18n("Join")
 			color: joinPill.pillTextColor

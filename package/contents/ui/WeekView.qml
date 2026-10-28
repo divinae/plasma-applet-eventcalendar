@@ -1523,7 +1523,7 @@ Item {
 												anchors.margins: 2
 												// Clear of the color bar (bar look), like the month view's rows.
 												anchors.leftMargin: eventBlock.showBar ? 9 : 6
-												anchors.rightMargin: joinPill.visible ? joinPill.width + Kirigami.Units.smallSpacing * 2 : 2
+												anchors.rightMargin: joinPill.visible ? joinPill.anchors.rightMargin + joinPill.width + Kirigami.Units.smallSpacing : 2
 												clip: true
 												PlasmaComponents3.Label {
 													width: parent.width
@@ -1596,14 +1596,14 @@ Item {
 												visible: !!eventBlock.meetingLink && eventBlock.width >= Kirigami.Units.gridUnit * 10
 												anchors.right: parent.right
 												// Short blocks: as far from the right edge as from the top and bottom.
-												anchors.rightMargin: compact ? Math.max(1, Math.min(Kirigami.Units.smallSpacing, Math.round((parent.height - height) / 2))) : Kirigami.Units.smallSpacing
+												anchors.rightMargin: compact ? Math.max(1, Math.min(Kirigami.Units.smallSpacing, Math.floor((parent.height - height) / 2))) : Kirigami.Units.smallSpacing
 												// Short blocks: centered and slimmer; taller ones: next to the title.
 												readonly property bool compact: eventBlock.height < weekView.lineHeight * 2 + 4
 												anchors.verticalCenter: compact ? parent.verticalCenter : undefined
 												anchors.top: compact ? undefined : parent.top
 												anchors.topMargin: Kirigami.Units.smallSpacing
 												verticalPadding: compact ? 0 : Kirigami.Units.smallSpacing / 2
-												// The shortest blocks (a line): a 1 px gap above and below at least.
+												// The shortest blocks (a line): a 1 px gap above and below at least (JoinPill fits it).
 												maxHeight: compact ? parent.height - 2 : 0
 												meetingLink: eventBlock.meetingLink
 												// The tile's own text color (white for a solid color, dark on a light tint).
