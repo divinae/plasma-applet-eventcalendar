@@ -19,9 +19,13 @@ ColumnLayout {
 	// Events from this time on (the day after the one shown).
 	property date after: new Date()
 	property date today: new Date()
-	// Kept short: a glance at what's next, not a second agenda.
+	// Kept short: a glance at what's next, not a second agenda; expanded ("Show more"): more of
+	// the week, the list scrolls.
 	property int limit: 5
 	property int days: 3
+	property bool expanded: false
+	readonly property int shownLimit: expanded ? 15 : limit
+	readonly property int shownDays: expanded ? 7 : days
 	// The height it may take (0: no limit): only the events that fit whole are listed.
 	property real maxHeight: 0
 	readonly property real titleHeight: titleMetrics.height * 1.25 + spacing
@@ -36,11 +40,11 @@ ColumnLayout {
 
 	readonly property var entries: {
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		var until = Shared.addDays(Shared.startOfDay(after), days).getTime()
-		var list = Shared.upcomingEvents(items, after, limit).filter(function(entry) {
+		var until = Shared.addDays(Shared.startOfDay(after), shownDays).getTime()
+		var list = Shared.upcomingEvents(items, after, shownLimit).filter(function(entry) {
 			return entry.day.getTime() < until
 		})
-		if (maxHeight <= 0) {
+		if (maxHeight <= 0 || expanded) {
 			return list
 		}
 		// As many as fit, with their days' headings.
@@ -58,6 +62,17 @@ ColumnLayout {
 			fit.push(list[i])
 		}
 		return fit
+	}
+	// More than shown (collapsed): "Show more" is offered.
+	readonly property bool hasMore: {
+		if (expanded) {
+			return true
+		}
+		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
+		var until = Shared.addDays(Shared.startOfDay(after), 7).getTime()
+		return Shared.upcomingEvents(items, after, entries.length + 1).filter(function(entry) {
+			return entry.day.getTime() < until
+		}).length > entries.length
 	}
 	// The entries with a heading row before each day's first: [{ type: 'day' | 'event', … }].
 	readonly property var rows: {
@@ -109,9 +124,11 @@ ColumnLayout {
 		id: scrollView
 		visible: upNext.entries.length > 0
 		Layout.fillWidth: true
-		// As tall as its rows (a long day scrolls in the room there is).
-		Layout.preferredHeight: rowsColumn.implicitHeight
-		Layout.maximumHeight: rowsColumn.implicitHeight
+		// As tall as its rows (expanded: at most the room there is, then it scrolls).
+		Layout.preferredHeight: upNext.expanded && upNext.maxHeight > 0
+			? Math.min(rowsColumn.implicitHeight, upNext.maxHeight - upNext.titleHeight - moreToggle.implicitHeight - Kirigami.Units.smallSpacing * 3)
+			: rowsColumn.implicitHeight
+		Layout.maximumHeight: Layout.preferredHeight
 		Layout.fillHeight: true
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
@@ -131,6 +148,48 @@ ColumnLayout {
 					Layout.fillWidth: true
 					sourceComponent: modelData.type === 'day' ? dayComponent : eventComponent
 				}
+			}
+		}
+	}
+
+	// "Show more" / "Show less", like the tasks' "N completed": a small arrow and text.
+	QQC2.AbstractButton {
+		id: moreToggle
+		visible: upNext.hasMore
+		Layout.fillWidth: true
+		hoverEnabled: true
+		topPadding: 2
+		bottomPadding: 2
+		text: upNext.expanded ? i18n("Show less") : i18n("Show more")
+		Accessible.name: text
+		onClicked: upNext.expanded = !upNext.expanded
+		background: Rectangle {
+			radius: 4
+			color: moreToggle.hovered ? appletConfig.agendaHoverBackground : "transparent"
+		}
+		contentItem: RowLayout {
+			spacing: Kirigami.Units.smallSpacing
+			Kirigami.Icon {
+				Layout.alignment: Qt.AlignVCenter
+				Layout.topMargin: Math.round((moreMetrics.ascent - moreMetrics.descent - moreMetrics.xHeight))
+				implicitWidth: Math.round(Kirigami.Units.iconSizes.small * 0.75)
+				implicitHeight: implicitWidth
+				source: upNext.expanded ? "arrow-up" : "arrow-down"
+				color: Kirigami.Theme.textColor
+				isMask: true
+				opacity: 0.7
+			}
+			FontMetrics {
+				id: moreMetrics
+				font: moreLabel.font
+			}
+			PlasmaComponents3.Label {
+				id: moreLabel
+				Layout.fillWidth: true
+				text: moreToggle.text
+				textFormat: Text.PlainText
+				font: Kirigami.Theme.smallFont
+				opacity: 0.75
 			}
 		}
 	}

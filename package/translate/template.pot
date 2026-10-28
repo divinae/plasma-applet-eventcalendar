@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:04+0100\n"
+"POT-Creation-Date: 2026-10-28 09:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1670,7 +1670,7 @@ msgctxt "the current user in a guest list"
 msgid "you"
 msgstr ""
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/UpNextPanel.qml
 msgid "Show less"
 msgstr ""
 
@@ -3345,6 +3345,10 @@ msgstr ""
 
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
+msgstr ""
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Show more"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml

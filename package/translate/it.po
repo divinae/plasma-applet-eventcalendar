@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:04+0100\n"
+"POT-Creation-Date: 2026-10-28 09:20+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1658,7 +1658,7 @@ msgctxt "the current user in a guest list"
 msgid "you"
 msgstr "tu"
 
-#: ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/UpNextPanel.qml
 msgid "Show less"
 msgstr "Mostra meno"
 
@@ -3337,6 +3337,10 @@ msgstr "dddd d MMM"
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Niente in programma nei prossimi giorni."
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Show more"
+msgstr "Mostra altro"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
