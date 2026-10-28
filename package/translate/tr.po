@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-28 09:02+0100\n"
+"POT-Creation-Date: 2026-10-28 09:04+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1766,6 +1766,10 @@ msgid "Delete:"
 msgstr "Sil:"
 
 #: ../contents/ui/EventDetailsView.qml
+msgid "Delete this task?"
+msgstr "Bu görev silinsin mi?"
+
+#: ../contents/ui/EventDetailsView.qml
 msgid "Delete this event?"
 msgstr "Bu etkinlik silinsin mi?"
 
@@ -1879,10 +1883,6 @@ msgstr "%2 alt görevden %1 tanesi tamamlandı"
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
 msgid "Subtasks"
 msgstr "Alt görevler"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Delete this task?"
-msgstr "Bu görev silinsin mi?"
 
 #: ../contents/ui/EventEditView.qml
 msgctxt "task reminder after the due day starts"
