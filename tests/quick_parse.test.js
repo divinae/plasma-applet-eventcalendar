@@ -6,7 +6,7 @@ const vm = require('vm')
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/QuickParse.js'), 'utf8')
 	.replace(/^\.pragma library\s*$/m, '')
 const Q = {}
-vm.runInNewContext(source + '\nObject.assign(out, { parse, tokenKey })', { out: Q })
+vm.runInNewContext(source + '\nObject.assign(out, { parse, tokenKey, goToDate })', { out: Q })
 
 const plain = o => JSON.parse(JSON.stringify(o))
 const today = '2026-10-26' // A Monday
