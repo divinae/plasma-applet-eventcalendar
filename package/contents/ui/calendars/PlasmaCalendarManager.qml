@@ -78,8 +78,15 @@ CalendarManager {
 				shownNames.push(rows[i].name)
 			}
 		}
-		if (shownNames.length === 0 || !pimEventsPluginEnabled()) {
+		if (!pimEventsPluginEnabled()) {
 			return
+		}
+		// Akonadi fills the model a moment after its events may have come: named for now.
+		if (shownNames.length === 0) {
+			if (!pimEventsColor) {
+				return // No Akonadi events either
+			}
+			shownNames.push(i18n("KDE PIM (Akonadi)"))
 		}
 		// All the Akonadi events, as one calendar (eg: to hide them in the popup's calendar menu),
 		// named after the calendars shown and in the color most of its events have.
@@ -92,9 +99,7 @@ CalendarManager {
 		})
 	}
 	function pimEventsPluginEnabled() {
-		return PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins).some(function(plugin) {
-			return PlasmaCalendarUtils.getPluginStem(plugin) === "pimevents"
-		})
+		return PlasmaCalendarUtils.hasPlugin(plasmoid.configuration.enabledCalendarPlugins, "pimevents")
 	}
 	// The most common color of the last fetched Akonadi events.
 	property string pimEventsColor: ""

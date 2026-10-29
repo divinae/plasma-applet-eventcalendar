@@ -597,7 +597,9 @@ CalendarManager {
 				&& !Shared.isHiddenCalendar(eventItem.calendarId, hiddenCalendars)
 		}))
 		// A calendar both synced by Akonadi and signed in to directly: only the direct copy.
-		var pimDuplicates = PlasmaCalendarEventState.pimDuplicates(all)
+		var pimDuplicates = PlasmaCalendarEventState.pimDuplicates(all, function(eventItem) {
+			return !!eventItem.canEdit || !!Shared.myResponse(eventItem)
+		})
 		var items = []
 		for (var i = 0; i < all.length; i++) {
 			var titles = conflicts[Conflicts.eventKey(all[i])] || []

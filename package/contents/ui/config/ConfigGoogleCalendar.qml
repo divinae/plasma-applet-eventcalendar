@@ -79,9 +79,7 @@ ConfigPage {
 	// to here as well only once (see PlasmaCalendarEventState.pimDuplicates).
 	ExecUtil { id: akonadiReader }
 	property var akonadiGoogleAccounts: [] // Email addresses
-	readonly property bool pimEventsEnabled: PlasmaCalendarUtils.toArray(page.configBridge.read("enabledCalendarPlugins", [])).some(function(plugin) {
-		return PlasmaCalendarUtils.getPluginStem(plugin) === "pimevents"
-	})
+	readonly property bool pimEventsEnabled: PlasmaCalendarUtils.hasPlugin(page.configBridge.read("enabledCalendarPlugins", []), "pimevents")
 	readonly property var directGoogleAccounts: Shared.toArray(googleLoginManager.accounts).map(function(account) {
 		return primaryCalendarId(account).toLowerCase()
 	}).filter(function(email) {
@@ -104,7 +102,10 @@ ConfigPage {
 			})
 		})
 	}
-	Component.onCompleted: loadAkonadiGoogleAccounts()
+	Component.onCompleted: {
+		loadAkonadiGoogleAccounts()
+		updateShownPimCalendars() // The model may be filled already: no reset or insert comes then
+	}
 
 	// The Akonadi calendars the widget shows (the pimevents plugin's own selection), read-only here.
 	property var pimCalendarsModel: {
@@ -124,6 +125,7 @@ ConfigPage {
 		target: page.pimCalendarsModel
 		function onModelReset() { page.updateShownPimCalendars() }
 		function onRowsInserted() { page.updateShownPimCalendars() }
+		function onRowsRemoved() { page.updateShownPimCalendars() }
 		function onDataChanged() { page.updateShownPimCalendars() }
 	}
 	onPimCalendarsModelChanged: updateShownPimCalendars()

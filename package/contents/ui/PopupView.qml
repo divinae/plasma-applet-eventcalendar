@@ -103,7 +103,8 @@ MouseArea {
 			plasmoid.configuration.popupLastView = currentView
 		}
 	}
-	// The Day view needs the hourly forecast.
+	// The Day view needs the hourly forecast (also when the popup is made in it: see
+	// Component.onCompleted, no change fires then).
 	onViewModeChanged: logic.updateWeather(true)
 	readonly property string viewMode: {
 		var mode = currentView
@@ -154,6 +155,9 @@ MouseArea {
 	Component.onCompleted: {
 		refreshTaskLists()
 		deferredUpdateUI()
+		if (dayMode || showMeteogram) {
+			logic.updateWeather(true)
+		}
 	}
 
 	onMonthViewDateChanged: {

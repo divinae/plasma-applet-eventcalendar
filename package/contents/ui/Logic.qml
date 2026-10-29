@@ -134,8 +134,10 @@ Item {
 		logic.updateDailyWeather()
 
 		// Hourly data feeds the meteogram (agenda view) and the Day view's weather panel.
-		var meteogramShown = popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic' // popup exists after first open
-		var viewMode = popup ? popup.viewMode : plasmoid.configuration.popupMode
+		// The popup exists after its first open; before, the view it will open in.
+		var cfg = plasmoid.configuration
+		var viewMode = popup ? popup.viewMode : (cfg.popupOpenLastView && cfg.popupLastView ? cfg.popupLastView : cfg.popupMode)
+		var meteogramShown = popup ? popup.showMeteogram : cfg.widgetShowMeteogram && viewMode === 'classic'
 		if (meteogramShown || viewMode === 'today') {
 			logic.updateHourlyWeather()
 		}

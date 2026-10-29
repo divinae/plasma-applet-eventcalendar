@@ -61,11 +61,15 @@ function sourceDuplicateKey(event) {
 }
 
 // The Akonadi events that a directly read calendar also has: { event index: true }. The direct
-// copy is the one kept, it can be edited and answered.
-function pimDuplicates(events) {
+// copy is the one kept, it can be edited and answered. Only the user's own direct events count
+// (isOwn(event): a calendar they can edit, or an invitation), never another Plasma plugin's
+// (holidays) or a calendar they only follow: a shared meeting would otherwise be left only in a
+// colleague's calendar, in its color and with their answer.
+function pimDuplicates(events, isOwn) {
 	var directKeys = {}
 	for (var i = 0; i < events.length; i++) {
-		if (!isPimEvent(events[i])) {
+		var calendarId = String(events[i] && events[i].calendarId || "")
+		if (calendarId.indexOf("plasma_") !== 0 && (!isOwn || isOwn(events[i]))) {
 			var key = sourceDuplicateKey(events[i])
 			if (key) {
 				directKeys[key] = true

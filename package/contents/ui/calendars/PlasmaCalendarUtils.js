@@ -95,6 +95,13 @@ function getPluginFilename(pluginPath) {
 	return pluginPath.substr(lastSlash + 1)
 }
 
+// Whether pluginList (enabledCalendarPlugins) has the plugin named stem ("pimevents").
+function hasPlugin(pluginList, stem) {
+	return toArray(pluginList).some(function(plugin) {
+		return getPluginStem(plugin) === stem
+	})
+}
+
 function getPluginStem(pluginRef) {
 	var pluginFilename = getPluginFilename(pluginRef)
 	if (!pluginFilename) {

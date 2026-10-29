@@ -343,9 +343,9 @@ ListModel {
 					if (agendaModel.clipEventsOutsideLimits && upperLimitDate > agendaModel.visibleDateMax) {
 						upperLimitDate = agendaModel.visibleDateMax
 					}
-					// An invalid start or end (NaN) would never pass the end: the start's day only.
-					if (isNaN(lowerLimitDate) || isNaN(upperLimitDate)) {
-						if (!isNaN(eventItem.startDateTime)) {
+					// An invalid start or end (no date, or NaN) would never pass the end: the start's day only.
+					if (!Shared.isValidDate(lowerLimitDate) || !Shared.isValidDate(upperLimitDate)) {
+						if (Shared.isValidDate(eventItem.startDateTime)) {
 							insertEventAtDate(agendaItemList, byDay, eventItem.startDateTime, eventItem)
 						}
 						continue

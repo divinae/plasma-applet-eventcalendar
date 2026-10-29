@@ -42,6 +42,15 @@ const mixed = [
 ]
 assert.deepStrictEqual(events.pimDuplicates(mixed), { 1: true, 5: true })
 assert.deepStrictEqual(events.pimDuplicates([timed('plasma_Events', 'Solo', 9, 10)]), {})
+// Only the user's own direct events count: not a followed colleague's calendar.
+const own = e => e.calendarId === 'acct::me@example.com'
+const followed = [
+	timed('acct::colleague@example.com', 'Standup', 9, 10),
+	timed('plasma_Events', 'Standup', 9, 10),
+	timed('acct::me@example.com', 'Review', 14, 15),
+	timed('plasma_Events', 'Review', 14, 15),
+]
+assert.deepStrictEqual(events.pimDuplicates(followed, own), { 3: true }, 'a followed calendar keeps the Akonadi copy')
 assert.strictEqual(events.sourceDuplicateKey({ summary: 'No dates' }), '')
 
 console.log('PASS plasma_calendar_event_state')

@@ -44,8 +44,19 @@ ColumnLayout {
 		return list
 	}
 	readonly property var dayEvents: eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-	readonly property var eventCounts: Shared.eventDayCounts(dayEvents, gridStart, Shared.addDays(gridStart, 42))
 	readonly property var eventColors: Shared.eventDayColors(dayEvents, gridStart, Shared.addDays(gridStart, 42))
+	// The events per day: the colors' counts summed up (one walk over the events, not two).
+	readonly property var eventCounts: {
+		var counts = {}
+		for (var key in eventColors) {
+			var total = 0
+			for (var color in eventColors[key]) {
+				total += eventColors[key][color]
+			}
+			counts[key] = total
+		}
+		return counts
+	}
 	function dotCount(count) {
 		return count >= 5 ? 3 : count >= 3 ? 2 : count > 0 ? 1 : 0
 	}
