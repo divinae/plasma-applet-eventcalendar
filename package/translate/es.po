@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:33+0100\n"
+"POT-Creation-Date: 2026-10-29 09:34+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -1015,19 +1015,19 @@ msgstr "Agenda"
 msgid "Open in the last used view"
 msgstr "Abrir en la última vista usada"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "View switcher"
 msgstr "Selector de vista"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Tabs"
 msgstr "Pestañas"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Drop-down menu"
 msgstr "Menú desplegable"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Views offered"
 msgstr "Vistas disponibles"
 

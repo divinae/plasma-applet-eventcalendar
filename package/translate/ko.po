@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:33+0100\n"
+"POT-Creation-Date: 2026-10-29 09:34+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1179,19 +1179,19 @@ msgstr "일정"
 msgid "Open in the last used view"
 msgstr "마지막으로 사용한 보기로 열기"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "View switcher"
 msgstr "보기 전환"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Tabs"
 msgstr "탭"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Drop-down menu"
 msgstr "드롭다운 메뉴"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Views offered"
 msgstr "제공할 보기"
 

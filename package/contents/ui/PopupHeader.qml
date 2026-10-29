@@ -60,6 +60,59 @@ PlasmaExtras.PlasmoidHeading {
 		}
 		PlasmaComponents3.Menu {
 			id: buttonsMenu
+			// The views offered (as Settings > Views): at least one calendar view stays.
+			readonly property var hiddenViews: plasmoid.configuration.hiddenViewTabs || []
+			readonly property int calendarViewsShown: ['month', 'week', 'today', 'classic'].filter(function(mode) {
+				return hiddenViews.indexOf(mode) < 0
+			}).length
+			function setViewShown(mode, shown) {
+				var list = Array.prototype.slice.call(hiddenViews).filter(function(m) { return m !== mode })
+				if (!shown) {
+					list.push(mode)
+				}
+				plasmoid.configuration.hiddenViewTabs = list
+			}
+			PlasmaComponents3.MenuItem {
+				text: i18n("Views offered")
+				enabled: false
+			}
+			Repeater {
+				model: topBar.viewTabsAll
+				PlasmaComponents3.MenuItem {
+					text: modelData.text
+					icon.name: modelData.icon
+					checkable: true
+					checked: buttonsMenu.hiddenViews.indexOf(modelData.mode) < 0
+					enabled: !checked || modelData.mode === 'tasks' || buttonsMenu.calendarViewsShown > 1
+					onTriggered: {
+						var mode = modelData.mode
+						buttonsMenu.setViewShown(mode, checked)
+						checked = Qt.binding(function() { return buttonsMenu.hiddenViews.indexOf(mode) < 0 })
+					}
+				}
+			}
+			PlasmaComponents3.MenuSeparator {}
+			PlasmaComponents3.MenuItem {
+				text: i18n("View switcher")
+				enabled: false
+			}
+			Repeater {
+				model: [
+					{ value: 'tabs', text: i18n("Tabs") },
+					{ value: 'menu', text: i18n("Drop-down menu") },
+				]
+				PlasmaComponents3.MenuItem {
+					text: modelData.text
+					checkable: true
+					checked: header.viewSwitcher === modelData.value
+					onTriggered: {
+						var value = modelData.value
+						plasmoid.configuration.viewSwitcher = value
+						checked = Qt.binding(function() { return header.viewSwitcher === value })
+					}
+				}
+			}
+			PlasmaComponents3.MenuSeparator {}
 			PlasmaComponents3.MenuItem {
 				text: i18n("Buttons in the header")
 				enabled: false

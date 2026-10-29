@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:33+0100\n"
+"POT-Creation-Date: 2026-10-29 09:34+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -1198,19 +1198,19 @@ msgstr "Agenda"
 msgid "Open in the last used view"
 msgstr "Abrir na última visualização usada"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "View switcher"
 msgstr "Seletor de visualização"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Tabs"
 msgstr "Abas"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Drop-down menu"
 msgstr "Menu suspenso"
 
-#: ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigViews.qml ../contents/ui/PopupHeader.qml
 msgid "Views offered"
 msgstr "Visualizações oferecidas"
 
