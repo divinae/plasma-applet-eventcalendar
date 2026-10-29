@@ -378,25 +378,28 @@ Item {
 					PlasmaCore.ToolTipArea {
 						id: tooltip
 						anchors.fill: parent
-						icon: modelData.gridItem.weatherIcon
+						icon: WeatherIcons.largeSource(modelData.gridItem.weatherIcon, plasmoid.configuration.weatherIconStyle)
 						mainText: modelData.gridItem.tooltipMainText
 						subText: modelData.gridItem.tooltipSubText
 						location: PlasmaCore.Types.BottomEdge
 					}
 
-					// Settings > Weather > Icons = Yr: the Yr symbol instead of the font glyph.
-					readonly property bool yrIcon: WeatherIcons.isYr(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle)
+					// The icons of Settings > Weather > Icons (the system's or Yr); the font only has the
+					// few without one (wi-tornado, wi-dust, ... from Weather Canada).
+					readonly property bool styledIcon: /^weather-/.test(modelData.aggregratedIcon || "")
 					Kirigami.Icon {
-						visible: modelData.showIcon && parent.yrIcon
+						visible: modelData.showIcon && parent.styledIcon
 						anchors.centerIn: parent
 						width: appletConfig.meteogramIconSize
 						height: width
-						source: parent.yrIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
+						source: parent.styledIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
+						fallback: parent.styledIcon ? modelData.aggregratedIcon : ""
+						color: appletConfig.meteogramIconColor
 						opacity: tooltip.containsMouse ? 0.1 : 1
 					}
 					FontIcon {
 						id: weatherIcon
-						visible: modelData.showIcon && !parent.yrIcon
+						visible: modelData.showIcon && !parent.styledIcon
 						anchors.centerIn: parent
 						color: appletConfig.meteogramIconColor
 						source: modelData.aggregratedIcon
