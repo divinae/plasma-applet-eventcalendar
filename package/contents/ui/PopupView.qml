@@ -112,6 +112,8 @@ MouseArea {
 	}
 	onCurrentViewChanged: {
 		switchStart = Date.now()
+		viewSwitching = true
+		Qt.callLater(runDueMonthParse)
 		closeOverlays() // Overlays belong to the view they were opened from.
 		if (openLastView) {
 			plasmoid.configuration.popupLastView = currentView
@@ -303,8 +305,12 @@ MouseArea {
 	function goToDay(day) {
 		goToDateOpen = false
 		day = Shared.startOfDay(day)
-		if (hourGridMode && weekViewLoader.item) {
-			weekViewLoader.item.weekStart = weekViewLoader.item.startOfWeek(day)
+		if (hourGridMode) {
+			if (weekViewLoader.item) {
+				weekViewLoader.item.weekStart = weekViewLoader.item.startOfWeek(day)
+			} else {
+				pendingDayViewDate = day // Still being built
+			}
 			return
 		}
 		// Month and Agenda: the day selected (the agenda scrolls to it).
@@ -724,12 +730,14 @@ MouseArea {
 	Loader {
 		id: weekViewLoader
 		active: popup.hourGridMode
+		// Built in the background: the header switches at once, the view shows when ready.
+		asynchronous: true
 		visible: active
 		anchors.fill: widgetGrid
 		onLoaded: {
 			popup.switchLog('week/day view built')
 			if (popup.pendingDayViewDate) {
-				item.weekStart = popup.pendingDayViewDate
+				item.weekStart = item.startOfWeek(popup.pendingDayViewDate)
 				popup.pendingDayViewDate = null
 			}
 		}
@@ -756,6 +764,7 @@ MouseArea {
 	Loader {
 		id: tasksViewLoader
 		active: popup.tasksMode
+		asynchronous: true
 		visible: active
 		anchors.top: widgetGrid.top
 		anchors.bottom: widgetGrid.bottom
@@ -867,14 +876,14 @@ MouseArea {
 			eventDragEnabled: true
 			eventDragModel: popup.eventModel
 
-			onDaysRebuilt: popup.updateMonth()
+			onDaysRebuilt: popup.requestMonthUpdate()
 			// The bar lanes depend on how many event rows fit in a day cell. Refilled right away
 			// (in the same frame as the layout change): a deferred refill showed the cells first
 			// filled the other way, then reordered.
 			onEventRowCapacityChanged: if (spanBarsActive) reparseGCalEvents()
 			onSpanBarsActiveChanged: reparseGCalEvents()
 			function reparseGCalEvents() {
-				popup.updateMonth()
+				popup.requestMonthUpdate()
 			}
 
 			function parseGCalEvents(data) {
@@ -984,6 +993,7 @@ MouseArea {
 		}
 	}
 	function updateMonth() {
+		monthParseDue = false
 		monthStale = !showCalendar
 		if (showCalendar) {
 			var t = Date.now()
@@ -992,7 +1002,26 @@ MouseArea {
 		}
 	}
 	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()
-	onShowCalendarChanged: if (showCalendar && monthStale) updateMonth()
+	onShowCalendarChanged: if (showCalendar && monthStale) requestMonthUpdate()
+	// A switch to the month shows it, turns its bars on and changes its row capacity at once:
+	// filled once after the switch (Qt.callLater, before the frame) instead of three times.
+	// Otherwise (a resize, another month) right away, in the same frame as the layout.
+	property bool viewSwitching: false
+	property bool monthParseDue: false
+	function requestMonthUpdate() {
+		if (viewSwitching) {
+			monthParseDue = true
+			Qt.callLater(runDueMonthParse)
+		} else {
+			updateMonth()
+		}
+	}
+	function runDueMonthParse() {
+		viewSwitching = false
+		if (monthParseDue) {
+			updateMonth()
+		}
+	}
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
