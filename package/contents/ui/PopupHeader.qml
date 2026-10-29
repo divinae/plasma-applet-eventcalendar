@@ -17,6 +17,21 @@ PlasmaExtras.PlasmoidHeading {
 	// 'tabs': a button per view; 'menu': one button with the view shown, the others in its menu
 	// (little room taken).
 	property string viewSwitcher: 'tabs'
+	// The action buttons left out of the header (a right click on it): in the "More Actions" menu
+	// instead. 'calendars', 'search', 'new', 'refresh', 'configure'.
+	readonly property var hiddenButtons: plasmoid.configuration.hiddenHeaderButtons || []
+	function buttonShown(key) {
+		return hiddenButtons.indexOf(key) < 0
+	}
+	readonly property bool anyButtonHidden: ['calendars', 'search', 'new', 'refresh'].some(function(key) { return !buttonShown(key) })
+		|| (configureButton.available && !buttonShown('configure'))
+	function setButtonShown(key, shown) {
+		var list = Array.prototype.slice.call(hiddenButtons).filter(function(k) { return k !== key })
+		if (!shown) {
+			list.push(key)
+		}
+		plasmoid.configuration.hiddenHeaderButtons = list
+	}
 	readonly property bool viewTabsShown: viewSwitcher !== 'menu'
 	// The view shown ('month', 'week', 'today', 'classic', 'tasks').
 	property string currentMode: plasmoid.configuration.popupMode
@@ -35,6 +50,44 @@ PlasmaExtras.PlasmoidHeading {
 	// Left: view switcher. Center: navigation and title. Right: calendars, search, new event, refresh, pin.
 	contentItem: Item {
 		id: topBar
+		// A right click on the header (not on a button: those take the left one only): which action
+		// buttons it shows.
+		MouseArea {
+			anchors.fill: parent
+			z: -1
+			acceptedButtons: Qt.RightButton
+			onClicked: function(mouse) { buttonsMenu.popup(topBar, mouse.x, mouse.y) }
+		}
+		PlasmaComponents3.Menu {
+			id: buttonsMenu
+			PlasmaComponents3.MenuItem {
+				text: i18n("Buttons in the header")
+				enabled: false
+			}
+			Repeater {
+				model: [
+					{ key: 'calendars', text: i18n("Calendars"), icon: "view-calendar-list" },
+					{ key: 'search', text: i18n("Search"), icon: "search" },
+					{ key: 'new', text: i18n("New Event"), icon: "list-add" },
+					{ key: 'refresh', text: i18n("Refresh"), icon: "view-refresh" },
+					{ key: 'configure', text: configureButton.configureAction ? configureButton.configureAction.text : "", icon: "configure" },
+				]
+				PlasmaComponents3.MenuItem {
+					id: buttonItem
+					visible: modelData.key !== 'configure' || configureButton.available
+					height: visible ? implicitHeight : 0
+					text: modelData.text
+					icon.name: modelData.icon
+					checkable: true
+					checked: header.buttonShown(modelData.key)
+					onTriggered: {
+						var key = modelData.key
+						header.setButtonShown(key, checked)
+						checked = Qt.binding(function() { return header.buttonShown(key) })
+					}
+				}
+			}
+		}
 		readonly property real sideWidth: Math.max(leftGroup.implicitWidth, rightGroup.implicitWidth)
 		// Title and arrows: centered when they fit between the sides, else in the room between
 		// the tabs and the buttons; when not even the arrows and a few letters fit there (a small
@@ -48,7 +101,10 @@ PlasmaExtras.PlasmoidHeading {
 		// configure) in one menu button. From fixed widths, not the groups' current ones (those
 		// change with this).
 		readonly property real buttonWidth: searchButton.implicitWidth
-		readonly property int actionCount: 4 + (configureButton.configureAction && configureButton.configureAction.enabled ? 1 : 0)
+		// The buttons shown (a right click on the header picks them; the others are in the menu).
+		readonly property int actionCount: ['calendars', 'search', 'new', 'refresh'].filter(header.buttonShown).length
+			+ (configureButton.available && header.buttonShown('configure') ? 1 : 0)
+			+ (header.anyButtonHidden ? 1 : 0)
 		// The drop-down: icon, arrow and, when the actions aren't in a menu, the view's name.
 		readonly property real switcherWidth: header.viewTabsShown ? viewTabs.length * buttonWidth
 			: buttonWidth + Math.round(Kirigami.Units.iconSizes.small * 0.75) + Kirigami.Units.smallSpacing + Math.ceil(viewNameMetrics.advanceWidth)
@@ -282,25 +338,25 @@ PlasmaExtras.PlasmoidHeading {
 			spacing: 0
 			CalendarToggles {
 				id: calendarToggles
-				visible: !topBar.menuActions
+				visible: !topBar.menuActions && header.buttonShown('calendars')
 			}
 			PlasmaComponents3.ToolButton {
 				id: searchButton
-				visible: !topBar.menuActions
+				visible: !topBar.menuActions && header.buttonShown('search')
 				icon.name: "search"
 				onClicked: header.searchClicked()
 				PlasmaComponents3.ToolTip.text: i18n("Search")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
-				visible: !topBar.menuActions
+				visible: !topBar.menuActions && header.buttonShown('new')
 				icon.name: "list-add"
 				onClicked: header.newEventClicked()
 				PlasmaComponents3.ToolTip.text: header.tasksMode ? i18n("New Task") : i18n("New Event")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			Item {
-				visible: !topBar.menuActions
+				visible: !topBar.menuActions && header.buttonShown('refresh')
 				Layout.preferredWidth: refreshButton.implicitWidth
 				Layout.preferredHeight: refreshButton.implicitHeight
 				Layout.alignment: Qt.AlignVCenter
@@ -327,16 +383,17 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				id: configureButton
 				readonly property var configureAction: plasmoid.internalAction("configure")
-				visible: !topBar.menuActions && !!configureAction && configureAction.enabled
+				readonly property bool available: !!configureAction && configureAction.enabled
+				visible: !topBar.menuActions && available && header.buttonShown('configure')
 				icon.name: "configure"
 				onClicked: configureAction.trigger()
 				PlasmaComponents3.ToolTip.text: configureAction ? configureAction.text : ""
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
-			// The same actions in a menu, when there's little room.
+			// The same actions in a menu, when there's little room or some are left out of the header.
 			PlasmaComponents3.ToolButton {
 				id: actionsButton
-				visible: topBar.menuActions
+				visible: topBar.menuActions || header.anyButtonHidden
 				icon.name: "overflow-menu"
 				down: pressed || actionsMenu.visible
 				onClicked: actionsMenu.popup(actionsButton, 0, actionsButton.height)
@@ -347,35 +404,47 @@ PlasmaExtras.PlasmoidHeading {
 					anchors.centerIn: parent
 					width: Kirigami.Units.iconSizes.small
 					height: width
-					running: header.refreshing && actionsButton.visible
+					running: header.refreshing && actionsButton.visible && (topBar.menuActions || !header.buttonShown('refresh'))
 					visible: running
 				}
 			}
 			PlasmaComponents3.Menu {
 				id: actionsMenu
+				// The actions not in the header: all of them when there's little room.
+				function inMenu(key) {
+					return topBar.menuActions || !header.buttonShown(key)
+				}
 				PlasmaComponents3.MenuItem {
+					visible: actionsMenu.inMenu('calendars')
+					height: visible ? implicitHeight : 0
 					text: i18n("Calendars")
 					icon.name: "view-calendar-list"
 					onTriggered: calendarToggles.open(actionsButton)
 				}
 				PlasmaComponents3.MenuItem {
+					visible: actionsMenu.inMenu('search')
+					height: visible ? implicitHeight : 0
 					text: i18n("Search")
 					icon.name: "search"
 					onTriggered: header.searchClicked()
 				}
 				PlasmaComponents3.MenuItem {
+					visible: actionsMenu.inMenu('new')
+					height: visible ? implicitHeight : 0
 					text: header.tasksMode ? i18n("New Task") : i18n("New Event")
 					icon.name: "list-add"
 					onTriggered: header.newEventClicked()
 				}
 				PlasmaComponents3.MenuItem {
+					visible: actionsMenu.inMenu('refresh')
+					height: visible ? implicitHeight : 0
 					text: i18n("Refresh")
 					icon.name: "view-refresh"
 					enabled: !header.refreshing
 					onTriggered: header.refreshClicked()
 				}
 				PlasmaComponents3.MenuItem {
-					visible: configureButton.configureAction && configureButton.configureAction.enabled
+					visible: configureButton.available && actionsMenu.inMenu('configure')
 					height: visible ? implicitHeight : 0
 					text: configureButton.configureAction ? configureButton.configureAction.text : ""
 					icon.name: "configure"

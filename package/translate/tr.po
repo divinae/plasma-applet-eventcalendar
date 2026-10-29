@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:17+0100\n"
+"POT-Creation-Date: 2026-10-29 09:33+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2894,6 +2894,10 @@ msgstr[1] "%2, %1 etkinlik"
 #: ../contents/ui/NewEventForm.qml
 msgid "Eg: 9am-5pm Work"
 msgstr "Örn: 9-5 arası iş"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Buttons in the header"
+msgstr "Başlıktaki düğmeler"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Previous Day"

@@ -79,6 +79,10 @@
 			<!-- Before 1.8.2: false hid the view switcher; now migrated to viewSwitcher = menu -->
 			<default>true</default>
 		</entry>
+		<entry name="hiddenHeaderButtons" type="StringList">
+			<!-- Action buttons left out of the popup header (a right click on it; no cfg_ property on the settings pages): calendars, search, new, refresh, configure -->
+			<default></default>
+		</entry>
 		<entry name="viewSwitcher" type="string">
 			<!-- tabs: a button per view; menu: one button with the view shown, the others in its menu -->
 			<default>tabs</default>
