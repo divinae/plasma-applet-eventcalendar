@@ -25,4 +25,12 @@ assert.deepStrictEqual(drop([shared, Object.assign({}, shared)]), [], 'the same 
 assert.deepStrictEqual(drop([shared, Object.assign({}, shared, { calendarId: 'b', kind: 'tasks#task' })]), [], 'tasks alone')
 assert.deepStrictEqual(drop([{ calendarId: 'a', id: 'n1', startDateTime: at(9) }, { calendarId: 'b', id: 'n1', startDateTime: at(9) }]), [1], 'no iCalUID: by id')
 
+// One calendar's copies are separate events, also when another calendar's copy is the best.
+const a = { calendarId: 'cal1', id: 'a', iCalUID: 'u2', startDateTime: at(11) }
+const b = { calendarId: 'cal2', id: 'b', iCalUID: 'u2', startDateTime: at(11), canEdit: true }
+const c = { calendarId: 'cal1', id: 'c', iCalUID: 'u2', startDateTime: at(11) }
+assert.deepStrictEqual(drop([a, b, c]), [0, 2], "the other calendar's copies go, both")
+// preferred(): a shown calendar's copy first.
+assert.deepStrictEqual(Object.keys(S.duplicateEvents([mine, shared], e => e.calendarId === 'team')).map(Number), [0], 'the preferred copy is kept')
+
 console.log('PASS duplicate_events')

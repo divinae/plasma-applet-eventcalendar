@@ -16,6 +16,8 @@ QtObject {
 		active: !!alertSet.eventItem
 		model: Qt.application.screens
 		delegate: MeetingAlertBlurLayer {
+			// No screen property (a DashboardWindow): its geometry, set before it shows, picks the
+			// output (Qt moves a window to the screen of its position), as in the Fokus plasmoid.
 			screenGeometry: Qt.rect(modelData.virtualX, modelData.virtualY, modelData.width, modelData.height)
 			eventItem: alertSet.eventItem
 			meetingLink: alertSet.meetingLink

@@ -10,8 +10,8 @@ Kicker.DashboardWindow {
 
 	property var eventItem: null
 	property var meetingLink: null
-	// Where it belongs, in virtual desktop coordinates: a DashboardWindow has no screen property,
-	// the geometry picks the output.
+	// Where it belongs, in virtual desktop coordinates: a DashboardWindow has no screen property, the
+	// geometry set before the first show picks the output (also for its layer surface).
 	property rect screenGeometry
 
 	signal joinRequested()
@@ -29,11 +29,11 @@ Kicker.DashboardWindow {
 	}
 	Component.onCompleted: showOnItsScreen()
 
-	flags: Qt.WindowStaysOnTopHint
-	// Dark (as MeetingAlertContent's complementary colors), translucent over the blur.
-	Kirigami.Theme.inherit: false
-	Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
-	backgroundColor: Qt.alpha(Kirigami.Theme.backgroundColor, 0.72)
+	// Frameless too (setting flags replaces DashboardWindow's own).
+	flags: Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint
+	// Dark, translucent over the blur: the content's complementary background (a window's own
+	// Kirigami.Theme may not follow a color set).
+	backgroundColor: Qt.alpha(alertContent.Kirigami.Theme.backgroundColor, 0.72)
 
 	// DashboardWindow takes Esc itself (keyEscapePressed) and passes the other keys to its
 	// keyEventProxy: Return reaches the content.

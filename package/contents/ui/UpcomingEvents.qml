@@ -84,7 +84,11 @@ CalendarManager {
 		}
 		// The same event in two calendars: one notification (Settings > Views, as in the views).
 		if (plasmoid.configuration.hideDuplicateEvents) {
-			var duplicates = Shared.duplicateEvents(items)
+			// The copy kept: one in a calendar shown and not left out of the clock, where possible.
+			var duplicates = Shared.duplicateEvents(items, function(eventItem) {
+				return !Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.hiddenCalendarIds)
+					&& !Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.clockHiddenCalendarIds)
+			})
 			items = items.filter(function(eventItem, index) { return !duplicates[index] })
 		}
 		return items
@@ -364,6 +368,7 @@ CalendarManager {
 		// calendar left out of the clock's countdown.
 		// Settings > Events > When an Event Starts: the notification, full screen.
 		if (plasmoid.configuration.eventStartingNotificationEnabled && plasmoid.configuration.meetingFullScreenAlert && !sent[key + '|alert']
+				&& shouldNotify(eventItem) // The notification's own rules (all-day, declined, muted)
 				&& !(eventItem.start && eventItem.start.date)
 				&& (!plasmoid.configuration.meetingFullScreenAlertLinkOnly || !!MeetingLink.find(eventItem))
 				&& Shared.myResponse(eventItem) !== 'declined'

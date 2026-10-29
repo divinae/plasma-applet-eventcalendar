@@ -578,14 +578,15 @@ function eventSpan(e, timeFormat, now) {
 
 // The same event in more than one calendar (a meeting in your calendar and a shared one, or a
 // calendar subscribed twice): { index: true } for the copies to leave out. Same iCalUID (else id)
-// and start; the copy kept is one you can edit, else one with your answer, else the first. Tasks
-// are left alone.
-function duplicateEvents(events) {
-	var best = {}
-	var drop = {}
+// and start, in other calendars: one calendar's copies are kept, the best one's: preferred(e) first
+// (eg: shown where it's used), then one you can edit, then one with your answer, then the first.
+// Copies within one calendar are separate events, never left out. Tasks are left alone.
+function duplicateEvents(events, preferred) {
 	function rank(e) {
-		return e.canEdit ? 2 : (myResponse(e) ? 1 : 0)
+		return (preferred && preferred(e) ? 4 : 0) + (e.canEdit ? 2 : (myResponse(e) ? 1 : 0))
 	}
+	var groups = {} // key -> { best: index, calendars: { calendarId: [indexes] } }
+	var order = []
 	for (var i = 0; i < events.length; i++) {
 		var e = events[i]
 		if (!e || e.kind === 'tasks#task' || !(e.iCalUID || e.id)) {
@@ -596,16 +597,25 @@ function duplicateEvents(events) {
 			continue
 		}
 		var key = String(e.iCalUID || e.id) + '|' + start
-		if (!(key in best)) {
-			best[key] = i
-		} else if (events[best[key]].calendarId === e.calendarId) {
-			continue // The same calendar: not a copy of another one
-		} else if (rank(e) > rank(events[best[key]])) {
-			drop[best[key]] = true
-			best[key] = i
-		} else {
-			drop[i] = true
+		var group = groups[key]
+		if (!group) {
+			group = groups[key] = { best: i, calendars: {} }
+			order.push(key)
+		} else if (rank(e) > rank(events[group.best])) {
+			group.best = i
 		}
+		var calendarId = String(e.calendarId || '')
+		;(group.calendars[calendarId] = group.calendars[calendarId] || []).push(i)
 	}
+	var drop = {}
+	order.forEach(function(key) {
+		var group = groups[key]
+		var keep = String(events[group.best].calendarId || '')
+		for (var calendarId in group.calendars) {
+			if (calendarId !== keep) {
+				group.calendars[calendarId].forEach(function(index) { drop[index] = true })
+			}
+		}
+	})
 	return drop
 }

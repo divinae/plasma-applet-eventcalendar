@@ -427,6 +427,12 @@ function goToDate(text, opts) {
 	if (offset) {
 		var n = Number(offset[2]) * (offset[1] === '-' ? -1 : 1)
 		var unit = offset[3].charAt(0).toLowerCase()
+		// Out of 1900-9999 before any Date: Date.UTC reads years 0-99 as 1900-1999.
+		var years = unit === 'd' ? n / 365.25 : unit === 'w' ? n * 7 / 365.25 : unit === 'm' ? n / 12 : n
+		var targetYear = partsOf(opts.today).y + years
+		if (targetYear < 1900 || targetYear > 9999) {
+			return ''
+		}
 		day = unit === 'd' ? addDays(opts.today, n)
 			: unit === 'w' ? addDays(opts.today, 7 * n)
 			: addMonths(opts.today, unit === 'm' ? n : 12 * n)
