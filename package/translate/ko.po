@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -426,10 +426,6 @@ msgstr "배경 표시"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "바탕 화면 위젯"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "디버그 로그 및 추가 설정 페이지"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1509,6 +1505,14 @@ msgstr ""
 "마지막으로 불러온 일정과 작업(설명과 메모 제외)은 ~/.cache/plasma-"
 "eventcalendar에 저장되어 첫 새로 고침까지 표시됩니다. 끔: 아무것도 저장되지 "
 "않으며 저장된 사본은 삭제됩니다."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "문제 해결"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "디버그 로그 및 추가 설정 페이지"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

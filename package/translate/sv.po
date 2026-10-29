@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -383,10 +383,6 @@ msgstr "Visa bakgrund"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Skrivbordskomponent"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Felsökningsloggning och extra inställningssidor"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1311,6 +1307,14 @@ msgstr "Behåll händelser och uppgifter för start offline"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
 msgstr "De senast inlästa händelserna och uppgifterna (utan beskrivningar eller anteckningar) sparas i ~/.cache/plasma-eventcalendar och visas till första uppdateringen. Av: inget sparas och den sparade kopian tas bort."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Felsökning"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Felsökningsloggning och extra inställningssidor"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

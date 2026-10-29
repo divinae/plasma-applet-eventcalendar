@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -435,10 +435,6 @@ msgstr "Показувати тло"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Віджет стільниці"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Журнал діагностики та додаткові сторінки параметрів"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1527,6 +1523,14 @@ msgstr ""
 "Останні завантажені події та завдання (без описів і нотаток) зберігаються в "
 "~/.cache/plasma-eventcalendar і показуються до першого оновлення. Вимкнено: "
 "нічого не зберігається, а збережена копія видаляється."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Усунення несправностей"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Журнал діагностики та додаткові сторінки параметрів"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

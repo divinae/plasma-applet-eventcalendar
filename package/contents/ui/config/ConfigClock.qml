@@ -253,11 +253,6 @@ ConfigPage {
 				description: i18n("Desktop widget")
 				configKey: 'showBackground'
 			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				text: i18n("Debug logging and extra settings pages")
-				configKey: 'debugging'
-			}
 		}
 	}
 }

@@ -402,5 +402,16 @@ ConfigPage {
 				configKey: 'eventCacheEnabled'
 			}
 		}
+
+		//--- Troubleshooting
+		FormCard.FormHeader {
+			title: i18n("Troubleshooting")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Debug logging and extra settings pages")
+				configKey: 'debugging'
+			}
+		}
 	}
 }

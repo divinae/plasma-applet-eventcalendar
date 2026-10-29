@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -381,10 +381,6 @@ msgstr "Mostrar o fundo"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Widget do ambiente de trabalho"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Registo de depuração e páginas de configuração adicionais"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1309,6 +1305,14 @@ msgstr "Manter eventos e tarefas para arrancar offline"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
 msgstr "Os últimos eventos e tarefas carregados (sem descrições nem notas) são guardados em ~/.cache/plasma-eventcalendar e mostrados até à primeira atualização. Desligado: nada é guardado e a cópia guardada é eliminada."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Resolução de problemas"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Registo de depuração e páginas de configuração adicionais"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

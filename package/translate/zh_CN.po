@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -424,10 +424,6 @@ msgstr "显示背景"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "桌面小部件"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "调试日志和额外的设置页面"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1476,6 +1472,14 @@ msgid ""
 msgstr ""
 "最近加载的事件和任务（不含描述或备注）保存在 ~/.cache/plasma-eventcalendar "
 "中，并在首次刷新前显示。关闭：不保存任何内容，并删除已保存的副本。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "故障排除"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "调试日志和额外的设置页面"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

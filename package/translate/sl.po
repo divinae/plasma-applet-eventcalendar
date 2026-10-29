@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -433,10 +433,6 @@ msgstr "Prikaži ozadje"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Gradnik namizja"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1525,6 +1521,14 @@ msgstr ""
 "Nazadnje naloženi dogodki in opravila (brez opisov ali opomb) so shranjeni v "
 "~/.cache/plasma-eventcalendar in prikazani do prve osvežitve. Izklopljeno: "
 "nič se ne shrani, shranjena kopija pa se izbriše."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Odpravljanje težav"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

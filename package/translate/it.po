@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -383,10 +383,6 @@ msgstr "Mostra lo sfondo"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Oggetto del desktop"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Log di debug e pagine di impostazioni aggiuntive"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1311,6 +1307,14 @@ msgstr "Conserva eventi e attività per l'avvio non in linea"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
 msgstr "Gli ultimi eventi e attività caricati (senza descrizioni né note) vengono salvati in ~/.cache/plasma-eventcalendar e mostrati fino al primo aggiornamento. Disattivato: non viene salvato nulla e la copia salvata viene eliminata."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Risoluzione dei problemi"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Log di debug e pagine di impostazioni aggiuntive"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

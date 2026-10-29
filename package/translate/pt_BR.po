@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -433,10 +433,6 @@ msgstr "Mostrar fundo"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Widget da área de trabalho"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Registro de depuração e páginas de configuração extras"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1530,6 +1526,14 @@ msgstr ""
 "Os últimos eventos e tarefas carregados (sem descrições nem notas) são "
 "guardados em ~/.cache/plasma-eventcalendar e exibidos até a primeira "
 "atualização. Desligado: nada é guardado e a cópia guardada é excluída."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Solução de problemas"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Registro de depuração e páginas de configuração extras"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

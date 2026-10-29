@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -427,10 +427,6 @@ msgstr "Vis baggrund"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Skrivebordswidget"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Fejlsøgningslog og ekstra indstillingssider"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1517,6 +1513,14 @@ msgstr ""
 "De senest indlæste begivenheder og opgaver (uden beskrivelser eller noter) "
 "gemmes i ~/.cache/plasma-eventcalendar og vises indtil første opdatering. "
 "Fra: intet gemmes, og den gemte kopi slettes."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Fejlfinding"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Fejlsøgningslog og ekstra indstillingssider"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

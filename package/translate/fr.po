@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -432,10 +432,6 @@ msgstr "Afficher l'arrière-plan"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Widget de bureau"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Journalisation de débogage et pages de paramètres supplémentaires"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1547,6 +1543,14 @@ msgstr ""
 "stockés dans ~/.cache/plasma-eventcalendar et affichés jusqu'à la première "
 "actualisation. Désactivé : rien n'est stocké et la copie stockée est "
 "supprimée."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Dépannage"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Journalisation de débogage et pages de paramètres supplémentaires"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"

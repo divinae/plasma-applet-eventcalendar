@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:24+0100\n"
+"POT-Creation-Date: 2026-10-29 16:01+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -430,10 +430,6 @@ msgstr "Arka planı göster"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Masaüstü araç takımı"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Hata ayıklama günlüğü ve ek ayar sayfaları"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
@@ -1522,6 +1518,14 @@ msgstr ""
 "Son yüklenen etkinlikler ve görevler (açıklamalar ve notlar hariç) ~/.cache/"
 "plasma-eventcalendar içinde saklanır ve ilk yenilemeye kadar gösterilir. "
 "Kapalı: hiçbir şey saklanmaz ve saklanan kopya silinir."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Troubleshooting"
+msgstr "Sorun giderme"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Hata ayıklama günlüğü ve ek ayar sayfaları"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
