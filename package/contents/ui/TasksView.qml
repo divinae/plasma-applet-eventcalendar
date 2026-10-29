@@ -198,8 +198,11 @@ Item {
 		var counts = Tasks.filterCounts(selected, itemsByList, today, smartHidden)
 		var filter = Tasks.validFilter(configFilter, selected, counts)
 		var shown = Tasks.filterLists(selected, itemsByList, filter, today, smartHidden)
-		var flick = scrollView.contentItem
-		var y = flick ? flick.contentY : 0
+		// The first row in sight and how far down it is: kept over the rebuild.
+		var topIndex = rowsList.indexAt(rowsList.columnX + 1, rowsList.contentY)
+		var topKey = topIndex >= 0 && rows[topIndex] ? rows[topIndex].key : ""
+		var topItem = topIndex >= 0 ? rowsList.itemAtIndex(topIndex) : null
+		var topOffset = topItem ? rowsList.contentY - topItem.y : 0
 		// Islands: the done ones in the "Completed" card instead of with the open ones.
 		var withDone = showCompleted && !islands
 		var newRows = byList ? Tasks.taskRows(shown.lists, shown.itemsByList, withDone, sortBy)
@@ -243,8 +246,11 @@ Item {
 		rows = newRows
 		keepKeyRow()
 		// Toggling a task rebuilds the rows: stay where the list was.
-		if (flick) {
-			flick.contentY = Math.max(0, Math.min(y, flick.contentHeight - flick.height))
+		var newTopIndex = topKey ? rowIndex(topKey) : -1
+		if (newTopIndex >= 0) {
+			rowsList.positionViewAtIndex(newTopIndex, ListView.Beginning)
+			rowsList.contentY += topOffset
+			rowsList.returnToBounds()
 		}
 	}
 	// In progress: drop the marks of tasks checked off or deleted elsewhere, from the lists fetched
@@ -536,26 +542,23 @@ Item {
 		Qt.callLater(scrollToKeyRow)
 	}
 	// The delegate of the row with key (a TaskRow, "Add a task…", …), or null.
+	// Rows out of sight aren't made (a ListView): it's brought into sight first.
 	function rowItem(key) {
-		for (var i = 0; i < rowsColumn.children.length; i++) {
-			var loader = rowsColumn.children[i]
-			if (loader.row && loader.row.key === key) {
-				return loader
-			}
+		var i = rowIndex(key)
+		if (i < 0) {
+			return null
 		}
-		return null
+		var slot = rowsList.itemAtIndex(i)
+		if (!slot) {
+			rowsList.positionViewAtIndex(i, ListView.Contain)
+			slot = rowsList.itemAtIndex(i)
+		}
+		return slot ? slot.loader : null
 	}
 	function scrollToKeyRow() {
-		var loader = rowItem(keyRowKey)
-		var flick = scrollView.contentItem
-		if (!loader || !flick) {
-			return
-		}
-		var y = loader.mapToItem(rowsColumn, 0, 0).y + rowsColumn.y
-		if (y < flick.contentY) {
-			flick.contentY = Math.max(0, y - Kirigami.Units.smallSpacing)
-		} else if (y + loader.height > flick.contentY + flick.height) {
-			flick.contentY = Math.min(Math.max(0, flick.contentHeight - flick.height), y + loader.height - flick.height + Kirigami.Units.smallSpacing)
+		var i = rowIndex(keyRowKey)
+		if (i >= 0) {
+			rowsList.positionViewAtIndex(i, ListView.Contain)
 		}
 	}
 	// The highlighted task's row data and delegate (TaskRow), or null.
@@ -608,10 +611,7 @@ Item {
 		}
 		var loader = rowItem('add')
 		if (loader && loader.item && typeof loader.item.focusField === 'function') {
-			var flick = scrollView.contentItem
-			if (flick) {
-				flick.contentY = 0
-			}
+			rowsList.positionViewAtBeginning()
 			loader.item.focusField()
 			return true
 		}
@@ -704,8 +704,9 @@ Item {
 			dropAction = action
 			return
 		}
-		var p = rowsColumn.mapFromItem(null, at.x, at.y)
-		var loader = rowsColumn.childAt(Math.max(0, Math.min(p.x, rowsColumn.width - 1)), p.y)
+		var p = rowsList.contentItem.mapFromItem(null, at.x, at.y)
+		var slot = rowsList.itemAt(Math.max(rowsList.columnX, Math.min(p.x, rowsList.columnX + rowsList.columnWidth - 1)), p.y)
+		var loader = slot && slot.loader && p.y >= slot.y + slot.loader.y && p.y < slot.y + slot.loader.y + slot.loader.height ? slot.loader : null
 		var target = loader ? loader.row : null
 		// Between the rows of its own list: a reorder (the line above or below the row).
 		if (target && dragRow && canReorder(target)) {
@@ -800,16 +801,14 @@ Item {
 		repeat: true
 		running: tasksView.dragActive
 		onTriggered: {
-			var flick = scrollView.contentItem
-			if (!flick) {
-				return
-			}
-			var y = scrollView.mapFromItem(null, tasksView.dragAt.x, tasksView.dragAt.y).y
+			var flick = rowsList
+			var y = flick.mapFromItem(null, tasksView.dragAt.x, tasksView.dragAt.y).y
 			var edge = Kirigami.Units.gridUnit * 1.5
-			var step = y < edge ? -(edge - y) / 2 : y > scrollView.height - edge ? (y - scrollView.height + edge) / 2 : 0
+			var step = y < edge ? -(edge - y) / 2 : y > flick.height - edge ? (y - flick.height + edge) / 2 : 0
 			if (step !== 0) {
-				var max = Math.max(0, flick.contentHeight - flick.height)
-				flick.contentY = Math.max(0, Math.min(max, flick.contentY + step))
+				var top = flick.originY
+				var bottom = flick.originY + Math.max(0, flick.contentHeight - flick.height)
+				flick.contentY = Math.max(top, Math.min(bottom, flick.contentY + step))
 				tasksView.moveDrag(tasksView.dragAt)
 			}
 		}
@@ -899,8 +898,8 @@ Item {
 				implicitHeight: headerRow.implicitHeight
 				RowLayout {
 					id: headerRow
-					x: rowsColumn.x
-					width: rowsColumn.width
+					x: rowsList.columnX
+					width: rowsList.columnWidth
 					spacing: Kirigami.Units.smallSpacing
 					readonly property real titleWidth: (tasksView.showSidebar ? titleRow.implicitWidth : filterButton.implicitWidth)
 						+ (sidebarToggle.visible ? sidebarToggle.implicitWidth + spacing : 0)
@@ -1059,100 +1058,109 @@ Item {
 				visible: !!tasksView.notice
 				Layout.fillWidth: true
 				Layout.minimumWidth: 0
-				Layout.leftMargin: rowsColumn.x + tasksView.sideMargin
-				Layout.rightMargin: rowsColumn.x + tasksView.sideMargin
+				Layout.leftMargin: rowsList.columnX + tasksView.sideMargin
+				Layout.rightMargin: rowsList.columnX + tasksView.sideMargin
 				text: tasksView.notice
 				textFormat: Text.PlainText
 				color: Kirigami.Theme.negativeTextColor
 				elide: Text.ElideRight
 			}
 
-			PlasmaComponents3.ScrollView {
-				id: scrollView
+			// The rows in a ListView: only the ones in sight (and a screen's worth around them) are built,
+			// not every task at once (300 tasks: about 3 s before the first frame, 0.2 s like this).
+			// The column is centered; the scroll bar stays at the view's edge.
+			ListView {
+				id: rowsList
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				contentWidth: availableWidth
-				QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
-				QQC2.ScrollBar.vertical: OverlayScrollBar {
-					view: scrollView
-				}
+				clip: true
+				model: tasksView.rows
+				cacheBuffer: Math.max(0, height)
+				boundsBehavior: Flickable.StopAtBounds
+				QQC2.ScrollBar.vertical: OverlayScrollBar {}
+				readonly property real columnWidth: Math.min(width, tasksView.maxColumnWidth)
+				readonly property real columnX: Math.round((width - columnWidth) / 2)
 
-				// The column, centered (the scroll bar stays at the view's edge).
-				ColumnLayout {
-					id: rowsColumn
-					x: Math.round((scrollView.availableWidth - width) / 2)
-					width: Math.min(scrollView.availableWidth, tasksView.maxColumnWidth)
-					spacing: 0
-
-					Repeater {
-						model: tasksView.rows
-						Loader {
-							id: rowLoader
-							readonly property var row: modelData
-							// Islands: this row's part of its card (Tasks.cardRows), null outside one.
-							readonly property var card: tasksView.islands && tasksView.cards[index] && tasksView.cards[index].card ? tasksView.cards[index] : null
-							// A heading after rows: a thin line above it (not right after an account's; not
-							// in the islands style, the cards are apart).
-							readonly property bool separated: !tasksView.islands && index > 0 && tasksView.rows[index - 1].type !== 'group'
-							Layout.fillWidth: true
-							// A card gap above a card (less right below an account's heading), room below its last row.
-							// A card that is only "Add a task…" (no heading above it): the same room above as below,
-							// so the row sits centered.
-							readonly property real cardTopPadding: card && card.start && card.end && row.type === 'add' ? tasksView.cardEndPadding : 0
-							Layout.topMargin: (card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0) + cardTopPadding
-							// Room below a card's last row; none under a lone heading (a folded card, eg: Completed),
-							// which has its own padding around it.
-							readonly property real cardBottomPadding: card && card.end && !(card.start && row.type !== 'add') ? tasksView.cardEndPadding : 0
-							Layout.bottomMargin: cardBottomPadding
-							sourceComponent: row.type === 'group' ? groupComponent
-								: row.type === 'list' ? listComponent
-								: row.type === 'section' ? sectionComponent
-								: row.type === 'empty' ? emptyComponent
-								: row.type === 'add' ? addComponent
-								: taskComponent
-							CardSlice {
-								visible: !!rowLoader.card
-								y: -rowLoader.cardTopPadding
-								height: parent.height + rowLoader.cardTopPadding + rowLoader.cardBottomPadding
-								joinTop: !!rowLoader.card && !rowLoader.card.start
-								joinBottom: !!rowLoader.card && !rowLoader.card.end
-								key: rowLoader.card ? rowLoader.card.key : ""
+				// A row: its Loader (rowLoader) with the room above and below it.
+				delegate: Item {
+					id: rowSlot
+					readonly property alias loader: rowLoader
+					width: ListView.view ? ListView.view.width : 0
+					height: rowLoader.topMargin + rowLoader.height + rowLoader.bottomMargin
+					Loader {
+						id: rowLoader
+						readonly property var row: modelData
+						// Islands: this row's part of its card (Tasks.cardRows), null outside one.
+						readonly property var card: tasksView.islands && tasksView.cards[index] && tasksView.cards[index].card ? tasksView.cards[index] : null
+						// A heading after rows: a thin line above it (not right after an account's; not
+						// in the islands style, the cards are apart).
+						readonly property bool separated: !tasksView.islands && index > 0 && tasksView.rows[index - 1].type !== 'group'
+						x: rowsList.columnX
+						y: topMargin
+						width: rowsList.columnWidth
+						// A card gap above a card (less right below an account's heading), room below its last row.
+						// A card that is only "Add a task…" (no heading above it): the same room above as below,
+						// so the row sits centered.
+						readonly property real cardTopPadding: card && card.start && card.end && row.type === 'add' ? tasksView.cardEndPadding : 0
+						readonly property real topMargin: (card && card.start && index > 0 ? (tasksView.rows[index - 1].type === 'group' ? Kirigami.Units.smallSpacing : appletConfig.cardGap) : 0) + cardTopPadding
+						// Room below a card's last row; none under a lone heading (a folded card, eg: Completed),
+						// which has its own padding around it.
+						readonly property real cardBottomPadding: card && card.end && !(card.start && row.type !== 'add') ? tasksView.cardEndPadding : 0
+						readonly property real bottomMargin: cardBottomPadding
+						sourceComponent: row.type === 'group' ? groupComponent
+							: row.type === 'list' ? listComponent
+							: row.type === 'section' ? sectionComponent
+							: row.type === 'empty' ? emptyComponent
+							: row.type === 'add' ? addComponent
+							: taskComponent
+						CardSlice {
+							visible: !!rowLoader.card
+							y: -rowLoader.cardTopPadding
+							height: parent.height + rowLoader.cardTopPadding + rowLoader.cardBottomPadding
+							joinTop: !!rowLoader.card && !rowLoader.card.start
+							joinBottom: !!rowLoader.card && !rowLoader.card.end
+							key: rowLoader.card ? rowLoader.card.key : ""
+						}
+						// A reorder: a line where the task goes, a dot at its start (like TickTick).
+						Item {
+							visible: tasksView.dragActive && tasksView.dropKey === 'reorder:' + (rowLoader.row ? rowLoader.row.key : "")
+							z: 5
+							x: tasksView.sideMargin + (rowLoader.row && rowLoader.row.depth ? rowLoader.row.depth * (tasksView.checkSize + Kirigami.Units.largeSpacing) : 0)
+							width: parent.width - x - tasksView.sideMargin
+							height: 6
+							y: (tasksView.reorderAbove ? 0 : parent.height) - height / 2
+							Rectangle {
+								anchors.left: parent.left
+								anchors.right: parent.right
+								anchors.verticalCenter: parent.verticalCenter
+								height: 2
+								radius: 1
+								color: Kirigami.Theme.highlightColor
 							}
-							// A reorder: a line where the task goes, a dot at its start (like TickTick).
-							Item {
-								visible: tasksView.dragActive && tasksView.dropKey === 'reorder:' + (rowLoader.row ? rowLoader.row.key : "")
-								z: 5
-								x: tasksView.sideMargin + (rowLoader.row && rowLoader.row.depth ? rowLoader.row.depth * (tasksView.checkSize + Kirigami.Units.largeSpacing) : 0)
-								width: parent.width - x - tasksView.sideMargin
-								height: 6
-								y: (tasksView.reorderAbove ? 0 : parent.height) - height / 2
-								Rectangle {
-									anchors.left: parent.left
-									anchors.right: parent.right
-									anchors.verticalCenter: parent.verticalCenter
-									height: 2
-									radius: 1
-									color: Kirigami.Theme.highlightColor
-								}
-								Rectangle {
-									anchors.verticalCenter: parent.verticalCenter
-									width: parent.height
-									height: width
-									radius: width / 2
-									color: Kirigami.Theme.backgroundColor
-									border.width: 2
-									border.color: Kirigami.Theme.highlightColor
-								}
+							Rectangle {
+								anchors.verticalCenter: parent.verticalCenter
+								width: parent.height
+								height: width
+								radius: width / 2
+								color: Kirigami.Theme.backgroundColor
+								border.width: 2
+								border.color: Kirigami.Theme.highlightColor
 							}
 						}
 					}
-					// By list: "New list" after the lists (islands: in a small card). With the side bar:
-					// there instead.
+				}
+
+				// By list: "New list" after the lists (islands: in a small card). With the side bar:
+				// there instead.
+				footer: Item {
+					width: rowsList.width
+					height: (newListLoader.active ? newListLoader.y + newListLoader.height + (tasksView.islands ? tasksView.cardEndPadding : 0) : 0)
+						+ Kirigami.Units.largeSpacing
 					Loader {
 						id: newListLoader
-						Layout.fillWidth: true
-						Layout.topMargin: tasksView.islands ? appletConfig.cardGap : 0
-						Layout.bottomMargin: tasksView.islands ? tasksView.cardEndPadding : 0
+						x: rowsList.columnX
+						y: tasksView.islands ? appletConfig.cardGap : 0
+						width: rowsList.columnWidth
 						active: tasksView.byList && tasksView.taskAccounts.length > 0 && !tasksView.showSidebar
 						visible: active
 						sourceComponent: newListComponent
@@ -1160,9 +1168,6 @@ Item {
 							visible: tasksView.islands
 							height: parent.height + tasksView.cardEndPadding
 						}
-					}
-					Item {
-						implicitHeight: Kirigami.Units.largeSpacing
 					}
 				}
 			}
@@ -1517,10 +1522,7 @@ Item {
 		addingList = true
 		if (!showSidebar) {
 			Qt.callLater(function() {
-				var flick = scrollView.contentItem
-				if (flick) {
-					flick.contentY = Math.max(0, flick.contentHeight - flick.height)
-				}
+				rowsList.positionViewAtEnd()
 			})
 		}
 	}
