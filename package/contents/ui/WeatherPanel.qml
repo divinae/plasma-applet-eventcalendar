@@ -619,7 +619,10 @@ ColumnLayout {
 		}
 	}
 
-	//--- Next days: day, icon, high / low
+	//--- Next days: day, icon, high / low. With the chart's larger icons, larger here too and the
+	// text to fit them.
+	readonly property bool largeIcons: plasmoid.configuration.weatherChartLargeIcons
+	readonly property real nextDaysFontScale: largeIcons ? 1.15 : 1
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showNextDays && panel.nextDays.length > 0
 		text: i18n("Next days")
@@ -635,17 +638,19 @@ ColumnLayout {
 				elide: Text.ElideRight
 				text: Qt.locale().dayName(new Date(modelData.dt * 1000).getDay(), Locale.LongFormat)
 				font.capitalization: Font.Capitalize
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
 			}
 			Kirigami.Icon {
 				source: WeatherIcons.source(modelData.iconName, plasmoid.configuration.weatherIconStyle)
 				fallback: modelData.iconName
-				Layout.preferredWidth: Kirigami.Units.iconSizes.small
+				Layout.preferredWidth: panel.largeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
 			}
 			PlasmaComponents3.Label {
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+				Layout.preferredWidth: Math.round(Kirigami.Units.gridUnit * 4 * panel.nextDaysFontScale)
 				horizontalAlignment: Text.AlignRight
 				text: Shared.formatTemp(modelData.temp.max) + " / " + Shared.formatTemp(modelData.temp.min)
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
 			}
 		}
 	}

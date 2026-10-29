@@ -1457,6 +1457,10 @@ msgid "Larger icons"
 msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Rain amounts"
 msgstr ""
 

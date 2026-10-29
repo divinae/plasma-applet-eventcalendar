@@ -249,6 +249,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Larger icons")
+				description: i18n("In the chart and the next days")
 				configKey: 'weatherChartLargeIcons'
 			}
 			FormCard.FormDelegateSeparator {}
