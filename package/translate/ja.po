@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -336,6 +336,31 @@ msgstr "終日イベントをスキップ"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "アジェンダには引き続き表示されます。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "ビデオリンクのある会議のみ"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "承諾した招待のみ"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "「未定」と返信したものや未返信のものは除きます。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "タイトルの最大長"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0: 収まるだけ。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " 文字"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -381,6 +381,31 @@ msgstr "Spring heldagsbegivenheder over"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "De vises stadig i dagsordenen."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "Kun møder med et videolink"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "Kun accepterede invitationer"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "Ikke dem, der er besvaret med måske eller ikke besvaret endnu."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "Længste titel"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0: så meget som der er plads til."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " tegn"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

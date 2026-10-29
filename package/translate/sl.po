@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -386,6 +386,31 @@ msgstr "Preskoči celodnevne dogodke"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "Še vedno so prikazani v dnevnem redu."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "Samo sestanki z video povezavo"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "Samo sprejeta povabila"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "Ne tistih z odgovorom morda ali še brez odgovora."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "Najdaljši naslov"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0: kolikor gre."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " znakov"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

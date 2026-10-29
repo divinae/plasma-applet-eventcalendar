@@ -211,6 +211,29 @@ ConfigPage {
 			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
 			FormConfigSwitch {
 				visible: clockShowNextEvent.checked
+				text: i18n("Only meetings with a video link")
+				configKey: 'clockNextEventLinkOnly'
+			}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
+			FormConfigSwitch {
+				visible: clockShowNextEvent.checked
+				text: i18n("Only accepted invitations")
+				description: i18n("Not the ones answered maybe or not answered yet.")
+				configKey: 'clockNextEventAcceptedOnly'
+			}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
+			FormConfigSpin {
+				visible: clockShowNextEvent.checked
+				label: i18n("Longest title")
+				hint: i18n("0: as much as fits.")
+				configKey: 'clockNextEventMaxTitle'
+				suffix: i18nc("characters, after a number", " characters")
+				from: 0
+				to: 100
+			}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
+			FormConfigSwitch {
+				visible: clockShowNextEvent.checked
 				text: i18n("Progress of the current meeting")
 				description: i18n("A thin bar under the meeting's name, in its calendar's color.")
 				configKey: 'clockShowMeetingProgress'

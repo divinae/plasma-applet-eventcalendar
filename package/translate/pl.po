@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -339,6 +339,31 @@ msgstr "Pomijaj wydarzenia całodniowe"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "Nadal są widoczne w agendzie."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "Tylko spotkania z linkiem wideo"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "Tylko zaakceptowane zaproszenia"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "Bez tych z odpowiedzią „może” i jeszcze bez odpowiedzi."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "Najdłuższy tytuł"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0: tyle, ile się zmieści."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " znaków"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

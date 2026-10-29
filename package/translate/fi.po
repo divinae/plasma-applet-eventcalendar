@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,6 +341,31 @@ msgstr "Ohita koko päivän tapahtumat"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "Ne näkyvät edelleen asialistalla."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "Vain kokoukset, joissa on videolinkki"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "Vain hyväksytyt kutsut"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "Ei ehkä-vastattuja eikä vielä vastaamattomia."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "Pisin otsikko"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0: niin paljon kuin mahtuu."
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " merkkiä"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

@@ -202,6 +202,12 @@ KCM.SimpleKCM {
 	property var cfg_clockNextEventMinutesDefault
 	property var cfg_clockNextEventSkipAllDay
 	property var cfg_clockNextEventSkipAllDayDefault
+	property var cfg_clockNextEventLinkOnly
+	property var cfg_clockNextEventLinkOnlyDefault
+	property var cfg_clockNextEventAcceptedOnly
+	property var cfg_clockNextEventAcceptedOnlyDefault
+	property var cfg_clockNextEventMaxTitle
+	property var cfg_clockNextEventMaxTitleDefault
 	property var cfg_clockShowMeetingProgress
 	property var cfg_clockShowMeetingProgressDefault
 	property var cfg_eventReminderTimeout

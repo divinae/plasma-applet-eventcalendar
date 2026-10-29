@@ -624,11 +624,18 @@ CalendarManager {
 			if (Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.clockHiddenCalendarIds)) {
 				continue
 			}
+			// Not accepted: a maybe, or an invitation not answered yet (your own events count).
+			if (plasmoid.configuration.clockNextEventAcceptedOnly && Shared.isUnconfirmedResponse(Shared.myResponse(eventItem))) {
+				continue
+			}
 			var inProgress = isEventInProgress(eventItem)
 			if (!inProgress && !(now < eventItem.startDateTime && eventItem.startDateTime.getTime() <= windowEnd)) {
 				continue
 			}
 			var hasLink = !!MeetingLink.find(eventItem)
+			if (plasmoid.configuration.clockNextEventLinkOnly && !hasLink) {
+				continue
+			}
 			var better = !best
 				// In progress beats upcoming. Among in progress, one with a meeting link, then the latest started.
 				|| (inProgress && !bestInProgress)

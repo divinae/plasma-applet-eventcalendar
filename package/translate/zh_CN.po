@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:55+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -378,6 +378,31 @@ msgstr "跳过全天事件"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
 msgstr "它们仍会显示在日程中。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only meetings with a video link"
+msgstr "仅限有视频链接的会议"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Only accepted invitations"
+msgstr "仅限已接受的邀请"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Not the ones answered maybe or not answered yet."
+msgstr "不包括答复为“可能”或尚未答复的。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "Longest title"
+msgstr "标题最大长度"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "0: as much as fits."
+msgstr "0：能放多少就显示多少。"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgctxt "characters, after a number"
+msgid " characters"
+msgstr " 个字符"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

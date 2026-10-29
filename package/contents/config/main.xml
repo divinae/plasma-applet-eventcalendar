@@ -336,6 +336,18 @@
 			<!-- All-day events (holidays, out of office) never take the chip; they stay in the agenda -->
 			<default>true</default>
 		</entry>
+		<entry name="clockNextEventLinkOnly" type="bool">
+			<!-- Only events with a meeting link (a video call) take the chip -->
+			<default>false</default>
+		</entry>
+		<entry name="clockNextEventAcceptedOnly" type="bool">
+			<!-- Invitations not accepted (maybe, not answered) never take the chip -->
+			<default>false</default>
+		</entry>
+		<entry name="clockNextEventMaxTitle" type="int">
+			<!-- The chip's title, at most this many characters (0: as much as fits) -->
+			<default>0</default>
+		</entry>
 		<entry name="clockHiddenCalendarIds" type="StringList">
 			<!-- Calendars whose events never take the chip (clock icon in the header calendars menu).
 			     They still show in the views and still send reminders. Set from the popup: no cfg_

@@ -262,7 +262,10 @@ Item {
 				anchors.verticalCenter: parent.verticalCenter
 				font.pointSize: -1
 				font.pixelSize: nextEventChip.fontPixelSize
-				text: clock.nextEvent ? clock.nextEvent.summary : ""
+				// At most clockNextEventMaxTitle characters when set (0: as much as fits).
+				readonly property int maxChars: plasmoid.configuration.clockNextEventMaxTitle || 0
+				readonly property string title: clock.nextEvent ? String(clock.nextEvent.summary || "") : ""
+				text: maxChars > 0 && title.length > maxChars ? title.slice(0, maxChars).trim() + "…" : title
 				textFormat: Text.PlainText
 				elide: Text.ElideRight
 				transform: Translate { x: nextEventChip.titleShift }
