@@ -105,7 +105,7 @@ MouseArea {
 	}
 	// The Day view needs the hourly forecast (also when the popup is made in it: see
 	// Component.onCompleted, no change fires then).
-	onViewModeChanged: logic.updateWeather(true)
+	onViewModeChanged: logic.ensureHourlyWeather()
 	readonly property string viewMode: {
 		var mode = currentView
 		if (viewOffered(mode)) {
@@ -449,7 +449,7 @@ MouseArea {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		monthViewItem: monthView
-		weekViewItem: weekViewLoader.item
+		weekViewItem: popup.hourGridMode ? weekViewLoader.item : null
 		currentMode: popup.viewMode
 		showTasksTab: popup.taskListsSelected
 		tasksMode: popup.tasksMode
@@ -704,8 +704,10 @@ MouseArea {
 
 	Loader {
 		id: weekViewLoader
-		active: popup.hourGridMode
-		visible: active
+		// Made the first time it's shown, then kept (switching back is instant); hidden, it isn't
+		// rebuilt (weekStale, see updateUI).
+		active: popup.hourGridMode || popup.weekViewUsed
+		visible: popup.hourGridMode
 		anchors.fill: widgetGrid
 		onLoaded: {
 			if (popup.pendingDayViewDate) {
@@ -735,8 +737,9 @@ MouseArea {
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
-		active: popup.tasksMode
-		visible: active
+		// Made the first time it's shown, then kept; hidden, it doesn't rebuild (TasksView.stale).
+		active: popup.tasksMode || popup.tasksViewUsed
+		visible: popup.tasksMode
 		anchors.top: widgetGrid.top
 		anchors.bottom: widgetGrid.bottom
 		anchors.left: widgetGrid.left
@@ -932,6 +935,39 @@ MouseArea {
 	//--- Weather for the views
 	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
 
+	//--- The Week/Day view and the Tasks tab: made when first shown, then kept.
+	property bool weekViewUsed: false
+	property bool tasksViewUsed: false
+	property bool weekStale: false
+	onHourGridModeChanged: {
+		if (!hourGridMode) {
+			return
+		}
+		var wasMade = weekViewUsed && !!weekViewLoader.item
+		weekViewUsed = true
+		if (!wasMade) {
+			return // A new view starts on today (or pendingDayViewDate, onLoaded)
+		}
+		// Shown again: on the day asked for, else today's week / day, as a new one would.
+		var item = weekViewLoader.item
+		var day = pendingDayViewDate || timeModel.currentTime
+		pendingDayViewDate = null
+		var start = item.startOfWeek(day)
+		if (start.getTime() !== item.weekStart.getTime()) {
+			item.weekStart = start // Rebuilds
+		} else if (weekStale) {
+			item.rebuild()
+		}
+		weekStale = false
+	}
+	onTasksModeChanged: if (tasksMode) tasksViewUsed = true
+	// Week -> Day (the same view, kept): the day asked for (a click on a day).
+	onDayModeChanged: {
+		if (dayMode && pendingDayViewDate && weekViewLoader.item && weekViewUsed) {
+			weekViewLoader.item.weekStart = pendingDayViewDate
+			pendingDayViewDate = null
+		}
+	}
 	// Only the views on screen are rebuilt; the others are marked stale and rebuilt when shown
 	// (a refresh while in the Day view doesn't build the agenda and the month nobody sees).
 	property bool agendaStale: false
@@ -943,7 +979,10 @@ MouseArea {
 		updateAgenda()
 		updateMonth()
 		if (weekViewLoader.item) {
-			weekViewLoader.item.rebuild()
+			weekStale = !hourGridMode
+			if (hourGridMode) {
+				weekViewLoader.item.rebuild()
+			}
 		}
 		scrollToSelection()
 	}
@@ -1000,7 +1039,7 @@ MouseArea {
 	}
 
 	function runKeyAction(action) {
-		var nav = weekViewLoader.item
+		var nav = hourGridMode ? weekViewLoader.item : null
 		switch (action.type) {
 			case 'previous':
 				if (nav) nav.goPrevious(); else monthView.goPrevious()
