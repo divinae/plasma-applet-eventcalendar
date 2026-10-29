@@ -89,7 +89,8 @@ PinchArea {
 	property bool eventTitles: false // The popup's Month view: event titles in the days
 	// A small month (a small popup): dots for the events instead of titles cut to a letter or two.
 	// From the view's own size: a cell's height depends on the badge type (the compact header).
-	readonly property bool roomForTitles: width / 7 >= Kirigami.Units.gridUnit * 3 && height / 7 >= Kirigami.Units.gridUnit * 2.2
+	// About 5 letters of a title (4.5 grid units) and a title row under the day number.
+	readonly property bool roomForTitles: width / 7 >= Kirigami.Units.gridUnit * 4.5 && height / 7 >= Kirigami.Units.gridUnit * 2.5
 	readonly property bool showsTitles: eventTitles && roomForTitles
 	property bool spanBarsEnabled: false
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
