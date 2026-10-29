@@ -240,6 +240,7 @@ ConfigPage {
 		FormCard.FormCard {
 			FormConfigCombo {
 				text: i18n("Style")
+				description: i18n("Also the meteogram above the agenda")
 				configKey: 'weatherChartStyle'
 				model: [
 					{ value: 'simple', text: i18n("Simple") },
