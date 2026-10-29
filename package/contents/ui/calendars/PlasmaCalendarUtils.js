@@ -342,21 +342,65 @@ function colorCalendars(events, idPrefix, titleCount) {
 	})
 }
 
-// The Akonadi calendars' colors (the collectioncolor attribute) are only in Akonadi's database: read
-// there with one SELECT when it's PostgreSQL (Akonadi's default) and psql is installed; otherwise
-// nothing (the colors and names then come from the events). Lines "collection id|#aarrggbb".
-function akonadiColorsCommand() {
-	var script = [
+// Akonadi's database, read with psql when it's PostgreSQL (Akonadi's default) and psql is
+// installed: the script lines that run one SELECT, its rows as "column|column" lines; nothing
+// otherwise.
+function akonadiPsqlLines(sql) {
+	return [
 		'rc="${XDG_CONFIG_HOME:-$HOME/.config}/akonadi/akonadiserverrc"',
-		'[ -f "$rc" ] && command -v psql >/dev/null || exit 0',
-		'grep -q "^Driver=QPSQL" "$rc" || exit 0',
+		'if [ -f "$rc" ] && command -v psql >/dev/null && grep -q "^Driver=QPSQL" "$rc"; then',
 		// Host (the socket directory) and the database name of the [QPSQL] section.
 		'host=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Host"{print substr($0,6);exit}\' "$rc")',
 		'name=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Name"{print substr($0,6);exit}\' "$rc")',
-		'timeout 5 psql ${host:+-h "$host"} -d "${name:-akonadi}" -At -c "SELECT collectionid, convert_from(value, \'UTF8\') FROM collectionattributetable WHERE convert_from(type, \'UTF8\') = \'collectioncolor\'" 2>/dev/null',
-		'exit 0',
-	].join('\n')
+		'timeout 5 psql ${host:+-h "$host"} -d "${name:-akonadi}" -At -c "' + sql + '" 2>/dev/null',
+		'fi',
+	]
+}
+
+// The Akonadi calendars' colors (the collectioncolor attribute) are only in Akonadi's database
+// (akonadiPsqlLines); without it nothing (the colors and names then come from the events). Lines
+// "collection id|#aarrggbb".
+function akonadiColorsCommand() {
+	var script = akonadiPsqlLines("SELECT collectionid, convert_from(value, 'UTF8') FROM collectionattributetable WHERE convert_from(type, 'UTF8') = 'collectioncolor'")
+		.concat(['exit 0']).join('\n')
 	return ['sh', '-c', script]
+}
+
+// The collections of Akonadi's Google resources, with the account of each: lines
+// "account|resource|email" from the resources' settings, "collection|id|resource|remote id" from the
+// database (a calendar's remote id is its Google calendar id).
+function akonadiGoogleCollectionsCommand() {
+	var script = [
+		'cd "${XDG_CONFIG_HOME:-$HOME/.config}" || exit 0',
+		'for f in akonadi_google_resource_*rc; do',
+		'[ -f "$f" ] && sed -n "s/^Account=/account|${f%rc}|/p" "$f"',
+		'done',
+	].concat(akonadiPsqlLines("SELECT 'collection', c.id, r.name, c.remoteid FROM collectiontable c JOIN resourcetable r ON r.id = c.resourceid WHERE r.name LIKE 'akonadi_google_resource_%'"))
+		.concat(['exit 0']).join('\n')
+	return ['sh', '-c', script]
+}
+// The collection ids of the Google calendars that Akonadi syncs for an account also signed in to
+// in the widget: { "collection id": true }. calendarIds: { "email": ["calendar id", ...] }, the
+// emails in lower case.
+function akonadiMirroredCollections(stdout, calendarIds) {
+	var accounts = {}
+	var collections = []
+	String(stdout || '').split('\n').forEach(function(line) {
+		var fields = line.trim().split('|')
+		if (fields[0] === 'account' && fields.length >= 3) {
+			accounts[fields[1]] = fields.slice(2).join('|').trim().toLowerCase()
+		} else if (fields[0] === 'collection' && fields.length >= 4) {
+			collections.push({ id: fields[1], resource: fields[2], remoteId: fields.slice(3).join('|') })
+		}
+	})
+	var mirrored = {}
+	collections.forEach(function(collection) {
+		var ids = (calendarIds || {})[accounts[collection.resource]]
+		if (ids && ids.indexOf(collection.remoteId) >= 0) {
+			mirrored[collection.id] = true
+		}
+	})
+	return mirrored
 }
 // The command's output as { "collection id": "#rrggbb" }.
 function parseAkonadiColors(stdout) {

@@ -78,4 +78,20 @@ assert.deepStrictEqual(groups, [
 	{ id: prefix + 'bbbbbb', color: '#bbbbbb', count: 5, titles: ['Vacation', 'Physio', 'Dentist'] },
 ], 'by color, different titles, other calendars left out')
 
+//--- Akonadi's Google calendars of an account also signed in to in the widget
+const mirrored = U.akonadiMirroredCollections([
+	'account|akonadi_google_resource_14|Me@Gmail.com',
+	'account|akonadi_google_resource_15|work@example.com',
+	'collection|1466|akonadi_google_resource_14|RootCollection',
+	'collection|1485|akonadi_google_resource_14|de.german#holiday@group.v.calendar.google.com',
+	'collection|1486|akonadi_google_resource_14|me@gmail.com',
+	'collection|1489|akonadi_google_resource_14|other@group.calendar.google.com',
+	'collection|1495|akonadi_google_resource_15|de.german#holiday@group.v.calendar.google.com',
+	'collection|1499|akonadi_google_resource_99|me@gmail.com',
+	'',
+].join('\n'), { 'me@gmail.com': ['me@gmail.com', 'de.german#holiday@group.v.calendar.google.com'] })
+assert.deepStrictEqual(JSON.parse(JSON.stringify(mirrored)), { 1485: true, 1486: true },
+	"that account's calendars in the widget: not those it lacks, not another account's, not a resource without settings")
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.akonadiMirroredCollections('', { 'me@gmail.com': ['me@gmail.com'] }))), {}, 'no database: none')
+
 console.log('PASS plasma_calendar_utils')
