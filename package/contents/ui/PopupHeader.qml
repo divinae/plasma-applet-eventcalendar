@@ -398,11 +398,28 @@ PlasmaExtras.PlasmoidHeading {
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
+				id: newButton
 				visible: !topBar.menuActions && header.buttonShown('new')
 				icon.name: "list-add"
 				onClicked: header.newEventClicked()
-				PlasmaComponents3.ToolTip.text: header.tasksMode ? i18n("New Task") : i18n("New Event")
-				PlasmaComponents3.ToolTip.visible: hovered
+				// Press and hold: a meeting right now (like Dato).
+				onPressAndHold: meetNowMenu.popup(newButton, 0, newButton.height)
+				PlasmaComponents3.ToolTip.text: header.tasksMode ? i18n("New Task")
+					: i18n("New Event (press and hold: a meeting now)")
+				PlasmaComponents3.ToolTip.visible: hovered && !meetNowMenu.visible
+			}
+			PlasmaComponents3.Menu {
+				id: meetNowMenu
+				PlasmaComponents3.MenuItem {
+					text: i18n("Start a Google Meet")
+					icon.name: "camera-video"
+					onTriggered: meetingOpener.open("https://meet.google.com/new")
+				}
+				PlasmaComponents3.MenuItem {
+					text: i18n("Start a Zoom Meeting")
+					icon.name: "camera-video"
+					onTriggered: Qt.openUrlExternally("https://zoom.us/start/videomeeting")
+				}
 			}
 			Item {
 				visible: !topBar.menuActions && header.buttonShown('refresh')

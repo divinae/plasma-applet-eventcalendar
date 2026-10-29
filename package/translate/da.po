@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:57+0100\n"
+"POT-Creation-Date: 2026-10-29 13:59+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1747,6 +1747,18 @@ msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Deltag i %1"
 
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Meeting Link"
+msgstr "Kopiér mødelink"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Unmute Notifications"
+msgstr "Slå notifikationer til igen"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mute Notifications"
+msgstr "Slå notifikationer fra"
+
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Calendar"
 msgstr "Åbn i Google Kalender"
@@ -2957,6 +2969,18 @@ msgstr "Næste dag"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Næste uge"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "New Event (press and hold: a meeting now)"
+msgstr "Ny begivenhed (tryk og hold: et møde nu)"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Start a Google Meet"
+msgstr "Start et Google Meet"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Start a Zoom Meeting"
+msgstr "Start et Zoom-møde"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "More Actions"

@@ -348,6 +348,10 @@
 			<!-- The chip's title, at most this many characters (0: as much as fits) -->
 			<default>0</default>
 		</entry>
+		<entry name="mutedEventKeys" type="StringList">
+			<!-- Events muted from the event menu (calendarId|id|start ms): no notifications, no clock chip, no auto-join or full-screen alert; still in the views. Set from the popup: no cfg_ property on the settings pages. -->
+			<default></default>
+		</entry>
 		<entry name="clockHiddenCalendarIds" type="StringList">
 			<!-- Calendars whose events never take the chip (clock icon in the header calendars menu).
 			     They still show in the views and still send reminders. Set from the popup: no cfg_

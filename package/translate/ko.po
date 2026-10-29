@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:57+0100\n"
+"POT-Creation-Date: 2026-10-29 13:59+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1738,6 +1738,18 @@ msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 참가"
 
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Meeting Link"
+msgstr "회의 링크 복사"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Unmute Notifications"
+msgstr "알림 음소거 해제"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Mute Notifications"
+msgstr "알림 음소거"
+
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Open in Google Calendar"
 msgstr "Google 캘린더에서 열기"
@@ -2924,6 +2936,18 @@ msgstr "다음 날"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "다음 주"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "New Event (press and hold: a meeting now)"
+msgstr "새 일정 (길게 누르기: 지금 회의)"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Start a Google Meet"
+msgstr "Google Meet 시작"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Start a Zoom Meeting"
+msgstr "Zoom 회의 시작"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "More Actions"

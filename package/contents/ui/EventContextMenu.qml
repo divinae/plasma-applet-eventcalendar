@@ -275,6 +275,22 @@ PlasmaComponents3.Menu {
 		onTriggered: meetingOpener.open(eventMenu.meetingLink.url)
 	}
 	PlasmaComponents3.MenuItem {
+		visible: !!eventMenu.meetingLink
+		height: visible ? implicitHeight : 0
+		text: i18n("Copy Meeting Link")
+		icon.name: "edit-copy"
+		onTriggered: eventMenu.copyText(eventMenu.meetingLink.url)
+	}
+	// No notifications, clock chip, auto-join or full-screen alert for this one; still in the views.
+	PlasmaComponents3.MenuItem {
+		readonly property bool muted: !!eventMenu.eventItem && !eventMenu.isTask && upcomingEvents.isMuted(eventMenu.eventItem)
+		visible: !!eventMenu.eventItem && !eventMenu.isTask && !!eventMenu.eventItem.startDateTime && !(eventMenu.eventItem.start && eventMenu.eventItem.start.date)
+		height: visible ? implicitHeight : 0
+		text: muted ? i18n("Unmute Notifications") : i18n("Mute Notifications")
+		icon.name: muted ? "notifications" : "notifications-disabled"
+		onTriggered: upcomingEvents.setMuted(eventMenu.eventItem, !muted)
+	}
+	PlasmaComponents3.MenuItem {
 		visible: !eventMenu.isTask && !!(eventMenu.eventItem && eventMenu.eventItem.htmlLink)
 		height: visible ? implicitHeight : 0
 		text: i18n("Open in Google Calendar")
@@ -333,5 +349,14 @@ PlasmaComponents3.Menu {
 			icon.name: "edit-delete"
 			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, true)
 		}
+	}
+	// Copies text to the clipboard (QML has no clipboard API of its own): a TextEdit made for it,
+	// not a child item (a Menu's items are its entries).
+	function copyText(text) {
+		var edit = Qt.createQmlObject('import QtQuick; TextEdit { visible: false }', eventMenu)
+		edit.text = text
+		edit.selectAll()
+		edit.copy()
+		edit.destroy()
 	}
 }

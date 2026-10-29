@@ -44,7 +44,32 @@ CalendarManager {
 	}
 
 	// All-day events "start" at midnight and declined events don't need a reminder.
+	//--- Muted events (the event menu): no notifications, no clock chip, no auto-join, Do Not
+	// Disturb or full-screen alert; still shown in the views. One occurrence: calendar, id, start.
+	readonly property var mutedKeys: plasmoid.configuration.mutedEventKeys || []
+	function muteKey(eventItem) {
+		return String(eventItem.calendarId || '') + '|' + String(eventItem.id || '') + '|' + new Date(eventItem.startDateTime).getTime()
+	}
+	function isMuted(eventItem) {
+		return !!eventItem && mutedKeys.indexOf(muteKey(eventItem)) >= 0
+	}
+	function setMuted(eventItem, muted) {
+		var key = muteKey(eventItem)
+		var dayAgo = Date.now() - 24 * 60 * 60 * 1000
+		// Without this one and without those of events past a day ago.
+		var keys = Array.prototype.slice.call(mutedKeys).filter(function(k) {
+			return k !== key && Number(String(k).split('|').pop()) > dayAgo
+		})
+		if (muted) {
+			keys.push(key)
+		}
+		plasmoid.configuration.mutedEventKeys = keys
+	}
+
 	function shouldNotify(eventItem) {
+		if (isMuted(eventItem)) {
+			return false
+		}
 		if (plasmoid.configuration.eventNotifySkipAllDay && eventItem.start && eventItem.start.date) {
 			return false
 		}
@@ -323,7 +348,7 @@ CalendarManager {
 		return String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
 	}
 	function atMeetingStart(eventItem, sent, now) {
-		if (eventItem.endDateTime <= now || isMarkedEnded(eventItem)) {
+		if (eventItem.endDateTime <= now || isMarkedEnded(eventItem) || isMuted(eventItem)) {
 			return
 		}
 		var key = meetingKey(eventItem)

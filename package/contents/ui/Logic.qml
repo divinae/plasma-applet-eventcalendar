@@ -271,6 +271,7 @@ Item {
 		function onClockHiddenCalendarIdsChanged() { upcomingEvents.updateNextEvent() }
 		function onClockNextEventSkipAllDayChanged() { upcomingEvents.updateNextEvent() }
 		function onClockNextEventLinkOnlyChanged() { upcomingEvents.updateNextEvent() }
+		function onMutedEventKeysChanged() { upcomingEvents.updateNextEvent() }
 		function onClockNextEventAcceptedOnlyChanged() { upcomingEvents.updateNextEvent() }
 
 		//--- Weather
