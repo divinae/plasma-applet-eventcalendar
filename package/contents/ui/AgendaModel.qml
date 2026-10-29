@@ -21,6 +21,8 @@ ListModel {
 	property int showNextNumDays: 14
 	property bool showAllDaysInMonth: true
 	property bool clipEventsOutsideLimits: true
+	// A multi-day event broken up into at most this many days.
+	readonly property int maxEventDays: 400
 	property bool clipEventsFromOtherMonths: true
 	property date visibleDateMin: new Date()
 	property date visibleDateMax: new Date()
@@ -341,9 +343,19 @@ ListModel {
 					if (agendaModel.clipEventsOutsideLimits && upperLimitDate > agendaModel.visibleDateMax) {
 						upperLimitDate = agendaModel.visibleDateMax
 					}
-					// Compare by day so a timed event crossing midnight also lands on its last day.
-					for (var eventItemDate = new Date(lowerLimitDate); !Shared.isDateAfter(eventItemDate, upperLimitDate); eventItemDate.setDate(eventItemDate.getDate() + 1)) {
+					// An invalid start or end (NaN) would never pass the end: the start's day only.
+					if (isNaN(lowerLimitDate) || isNaN(upperLimitDate)) {
+						if (!isNaN(eventItem.startDateTime)) {
+							insertEventAtDate(agendaItemList, byDay, eventItem.startDateTime, eventItem)
+						}
+						continue
+					}
+					// Compare by day so a timed event crossing midnight also lands on its last day. At most
+					// maxEventDays days (an event over years, not clipped to the visible range).
+					var eventItemDate = new Date(lowerLimitDate)
+					for (var dayCount = 0; dayCount < agendaModel.maxEventDays && !Shared.isDateAfter(eventItemDate, upperLimitDate); dayCount++) {
 						insertEventAtDate(agendaItemList, byDay, eventItemDate, eventItem)
+						eventItemDate.setDate(eventItemDate.getDate() + 1)
 					}
 				} else {
 					var now = new Date(timeModel.currentTime)
