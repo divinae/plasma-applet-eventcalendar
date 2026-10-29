@@ -1178,14 +1178,23 @@ CalendarManager {
 				}
 			}
 		}
-		// Calendars a manager doesn't list (iCalendar files): look them up by id.
+		// Calendars a manager doesn't list (iCalendar files), or under another id (a Google account's
+		// "primary"): look them up by id, with their account's other calendars.
 		for (var calendarId in eventModel.eventsByCalendar) {
 			if (listed[calendarId]) {
 				continue
 			}
 			var manager = eventModel.calendarPluginMap[calendarId]
 			var data = manager && typeof manager.getCalendar === 'function' ? manager.getCalendar(calendarId) : null
-			out.push(selectedCalendarEntry(calendarId, data || {}, ""))
+			var entry = selectedCalendarEntry(calendarId, data || {}, String(manager && manager.accountLabel || ""))
+			var at = out.length
+			for (var k = out.length - 1; entry.group && k >= 0; k--) {
+				if (out[k].group === entry.group) {
+					at = k + 1
+					break
+				}
+			}
+			out.splice(at, 0, entry)
 		}
 		return out
 	}
