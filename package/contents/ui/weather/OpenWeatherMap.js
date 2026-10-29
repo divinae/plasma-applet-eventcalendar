@@ -15,6 +15,16 @@
 // budget is kept low.
 var DAILY_LIMIT = 500
 
+// The language of the weather texts ("light rain"), OpenWeatherMap's code for it (de, pt_br, zh_cn,
+// ...): Logic.qml sets it from the widget's translation (setLanguage). Not asked for with 'en'.
+var language = 'en'
+function setLanguage(code) {
+	language = String(code || 'en')
+}
+function langParam() {
+	return language && language !== 'en' ? '&lang=' + encodeURIComponent(language) : ''
+}
+
 function weatherIsSetup(config) {
 	return !!config.openWeatherMapCityId
 }
@@ -31,6 +41,7 @@ function apiUrl(endpoint, args) {
 	var url = 'https://api.openweathermap.org/data/2.5/'
 	url += endpoint + '?id=' + args.cityId
 	url += '&units=' + unitsParam(args.units)
+	url += langParam()
 	url += '&appid=' + args.appId
 	return url
 }
@@ -40,6 +51,7 @@ function oneCallUrl(coord, args) {
 	url += '?lat=' + coord.lat + '&lon=' + coord.lon
 	url += '&exclude=minutely,alerts'
 	url += '&units=' + unitsParam(args.units)
+	url += langParam()
 	url += '&appid=' + args.appId
 	return url
 }

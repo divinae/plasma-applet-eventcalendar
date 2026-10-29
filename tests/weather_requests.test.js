@@ -198,4 +198,22 @@ assert.ok(/onecall\?lat=1\.5&lon=2\.5&exclude=minutely,hourly,daily,alerts/.test
 direct[2].callback('Timeout', null, { status: 0 })
 assert.deepStrictEqual(check, { current: true, daily: false, oneCall: 'Timeout' })
 
+//--- The weather texts in the widget's language
+const args = { cityId: 1, units: 'metric', appId: 'k' }
+assert.ok(/\/weather\?id=1&units=metric&appid=k$/.test(OWM.apiUrl('weather', args)), 'English: no lang')
+OWM.setLanguage('de')
+assert.ok(/\/weather\?id=1&units=metric&lang=de&appid=k$/.test(OWM.apiUrl('weather', args)))
+OWM.setLanguage('pt_br')
+assert.ok(/&units=metric&lang=pt_br&appid=k$/.test(OWM.oneCallUrl({ lat: 1, lon: 2 }, args)))
+OWM.setLanguage('')
+assert.ok(!/lang=/.test(OWM.apiUrl('forecast', args)), 'no translation: English')
+// Open-Meteo's texts are ours: all of them in the translation template.
+const OpenMeteo = { RequestCache, Requests, console }
+vm.runInNewContext(source('OpenMeteo.js'), OpenMeteo)
+assert.strictEqual(OpenMeteo.codeInfo(2, 1).text, 'Partly cloudy')
+assert.strictEqual(OpenMeteo.codeInfo(1234, 1).text, 'Unknown')
+const template = fs.readFileSync(path.join(__dirname, '../package/translate/template.pot'), 'utf8')
+const texts = new Set(Object.keys(OpenMeteo.codeMap).map(code => OpenMeteo.codeMap[code][2]).concat('Unknown'))
+texts.forEach(text => assert.ok(template.includes('\nmsgid "' + text + '"\n'), 'in template.pot: ' + text))
+
 console.log('PASS weather_requests')

@@ -14,40 +14,46 @@ function weatherIsSetup(config) {
 }
 
 //--- WMO weather codes
+// The texts are marked for translation only: there's no i18n() in a library, Logic.qml translates
+// them (localizedWeather) as the data comes.
+function I18N_NOOP(text) {
+	return text
+}
+
 // [day icon, night icon, short text]
 var codeMap = {
-	0: ['weather-clear', 'weather-clear-night', 'Clear'],
-	1: ['weather-few-clouds', 'weather-few-clouds-night', 'Mainly clear'],
-	2: ['weather-clouds', 'weather-clouds-night', 'Partly cloudy'],
-	3: ['weather-overcast', 'weather-overcast', 'Overcast'],
-	45: ['weather-fog', 'weather-fog', 'Fog'],
-	48: ['weather-fog', 'weather-fog', 'Rime fog'],
-	51: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Light drizzle'],
-	53: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Drizzle'],
-	55: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Heavy drizzle'],
-	56: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing drizzle'],
-	57: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing drizzle'],
-	61: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Light rain'],
-	63: ['weather-showers', 'weather-showers-night', 'Rain'],
-	65: ['weather-showers', 'weather-showers-night', 'Heavy rain'],
-	66: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing rain'],
-	67: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing rain'],
-	71: ['weather-snow-scattered-day', 'weather-snow-scattered-night', 'Light snow'],
-	73: ['weather-snow', 'weather-snow', 'Snow'],
-	75: ['weather-snow', 'weather-snow', 'Heavy snow'],
-	77: ['weather-snow', 'weather-snow', 'Snow grains'],
-	80: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Rain showers'],
-	81: ['weather-showers', 'weather-showers-night', 'Rain showers'],
-	82: ['weather-showers', 'weather-showers-night', 'Heavy rain showers'],
-	85: ['weather-snow-scattered-day', 'weather-snow-scattered-night', 'Snow showers'],
-	86: ['weather-snow', 'weather-snow', 'Heavy snow showers'],
-	95: ['weather-storm', 'weather-storm-night', 'Thunderstorm'],
-	96: ['weather-storm', 'weather-storm-night', 'Thunderstorm with hail'],
-	99: ['weather-storm', 'weather-storm-night', 'Thunderstorm with hail'],
+	0: ['weather-clear', 'weather-clear-night', I18N_NOOP("Clear")],
+	1: ['weather-few-clouds', 'weather-few-clouds-night', I18N_NOOP("Mainly clear")],
+	2: ['weather-clouds', 'weather-clouds-night', I18N_NOOP("Partly cloudy")],
+	3: ['weather-overcast', 'weather-overcast', I18N_NOOP("Overcast")],
+	45: ['weather-fog', 'weather-fog', I18N_NOOP("Fog")],
+	48: ['weather-fog', 'weather-fog', I18N_NOOP("Rime fog")],
+	51: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Light drizzle")],
+	53: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Drizzle")],
+	55: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Heavy drizzle")],
+	56: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing drizzle")],
+	57: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing drizzle")],
+	61: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Light rain")],
+	63: ['weather-showers', 'weather-showers-night', I18N_NOOP("Rain")],
+	65: ['weather-showers', 'weather-showers-night', I18N_NOOP("Heavy rain")],
+	66: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing rain")],
+	67: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing rain")],
+	71: ['weather-snow-scattered-day', 'weather-snow-scattered-night', I18N_NOOP("Light snow")],
+	73: ['weather-snow', 'weather-snow', I18N_NOOP("Snow")],
+	75: ['weather-snow', 'weather-snow', I18N_NOOP("Heavy snow")],
+	77: ['weather-snow', 'weather-snow', I18N_NOOP("Snow grains")],
+	80: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Rain showers")],
+	81: ['weather-showers', 'weather-showers-night', I18N_NOOP("Rain showers")],
+	82: ['weather-showers', 'weather-showers-night', I18N_NOOP("Heavy rain showers")],
+	85: ['weather-snow-scattered-day', 'weather-snow-scattered-night', I18N_NOOP("Snow showers")],
+	86: ['weather-snow', 'weather-snow', I18N_NOOP("Heavy snow showers")],
+	95: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm")],
+	96: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm with hail")],
+	99: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm with hail")],
 }
 
 function codeInfo(code, isDay) {
-	var info = codeMap[code] || ['weather-severe-alert', 'weather-severe-alert', 'Unknown']
+	var info = codeMap[code] || ['weather-severe-alert', 'weather-severe-alert', I18N_NOOP("Unknown")]
 	return { iconName: isDay === 0 ? info[1] : info[0], text: info[2] }
 }
 

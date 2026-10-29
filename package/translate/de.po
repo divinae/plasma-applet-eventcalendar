@@ -2909,6 +2909,11 @@ msgid "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work;
 msgstr "OpenWeatherMap hat die App-ID abgelehnt. Eine neue funktioniert erst nach bis zu 2 Stunden; prüfen Sie sie unter Einstellungen > Wetter."
 
 #: ../contents/ui/Logic.qml
+msgctxt "The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there"
+msgid "en"
+msgstr "de"
+
+#: ../contents/ui/Logic.qml
 msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 msgstr "Die Google-Autorisierung ist abgelaufen oder wurde widerrufen. Öffnen Sie Einstellungen für Ereigniskalender > Google Kalender und melden Sie sich erneut bei diesem Konto an."
 
@@ -3799,6 +3804,106 @@ msgstr "dddd, d. MMM"
 msgid "Nothing planned in the coming days."
 msgstr "In den nächsten Tagen ist nichts geplant."
 
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "Klar"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "Überwiegend klar"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "Teilweise bewölkt"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "Bedeckt"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "Nebel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "Nebel mit Reifansatz"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "Leichter Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "Starker Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "Gefrierender Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "Leichter Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "Starker Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "Gefrierender Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "Leichter Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "Starker Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "Schneegriesel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "Regenschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "Starke Regenschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "Schneeschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "Starke Schneeschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "Gewitter"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "Gewitter mit Hagel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "Unbekannt"
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "Legen Sie unter Einstellungen > Wetter einen Ort fest, um hier die Vorhersage zu sehen."
@@ -4478,9 +4583,6 @@ msgstr "Arbeitsort: %1"
 
 #~ msgid "Grid"
 #~ msgstr "Raster"
-
-#~ msgid "Rain"
-#~ msgstr "Regen"
 
 #~ msgid "Positive Temp"
 #~ msgstr "Positive Temperatur"

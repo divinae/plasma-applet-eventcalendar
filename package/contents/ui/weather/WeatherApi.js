@@ -5,6 +5,12 @@
 .import "OpenMeteo.js" as OpenMeteo
 .import "IconSeverity.js" as IconSeverity
 
+/* The language of the weather texts, OpenWeatherMap's code for it (Open-Meteo's are translated in
+   Logic.qml). */
+function setLanguage(code) {
+	OpenWeatherMap.setLanguage(code)
+}
+
 /* How many hours each data point represents */
 function getDataPointDuration(config) {
 	var weatherService = config.weatherService

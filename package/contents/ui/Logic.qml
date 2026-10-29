@@ -217,9 +217,34 @@ Item {
 		weatherRetryTimer.stop()
 	}
 
+	// The weather texts in the widget's language: OpenWeatherMap's from the service (its code for the
+	// language, a translation), Open-Meteo's from ours. The parsed items are new objects each time.
+	function setWeatherLanguage() {
+		WeatherApi.setLanguage(i18nc("The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there", "en"))
+	}
+	function localizedWeather(data) {
+		if (!data || plasmoid.configuration.weatherService !== 'OpenMeteo') {
+			return data
+		}
+		function localize(item) {
+			if (item && item.text) {
+				item.text = i18n(item.text)
+			}
+			if (item && item.description) {
+				item.description = i18n(item.description)
+			}
+		}
+		;(data.list || []).forEach(localize)
+		if (data.current && (data.list || []).indexOf(data.current) < 0) {
+			localize(data.current)
+		}
+		return data
+	}
+
 	function updateDailyWeather() {
 		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateDailyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
@@ -232,7 +257,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.dailyWeatherData = data
+			logic.dailyWeatherData = localizedWeather(data)
 			if (data.current) {
 				logic.currentWeatherData = data.current
 			}
@@ -243,6 +268,7 @@ Item {
 	function updateHourlyWeather() {
 		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateHourlyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
@@ -255,7 +281,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.hourlyWeatherData = data
+			logic.hourlyWeatherData = localizedWeather(data)
 			logic.currentWeatherData = data.current || data.list[0]
 			if (popup) popup.updateMeteogram()
 		})

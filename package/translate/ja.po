@@ -2808,6 +2808,11 @@ msgid "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work;
 msgstr ""
 
 #: ../contents/ui/Logic.qml
+msgctxt "The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there"
+msgid "en"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
 msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 msgstr "Google の認証が期限切れになったか、取り消されました。イベントカレンダーの設定 > Google Calendar を開き、そのアカウントに再度サインインしてください。"
 
@@ -3679,6 +3684,106 @@ msgstr "M月d日 dddd"
 msgid "Nothing planned in the coming days."
 msgstr "今後数日の予定はありません。"
 
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr ""
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "ここに天気予報を表示するには、設定 > 天気 で場所を設定してください。"
@@ -4318,9 +4423,6 @@ msgstr "勤務場所: %1"
 
 #~ msgid "Grid"
 #~ msgstr "グリッド"
-
-#~ msgid "Rain"
-#~ msgstr "雨"
 
 #~ msgid "Positive Temp"
 #~ msgstr "0以上の温度"

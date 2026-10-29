@@ -3068,6 +3068,14 @@ msgid ""
 msgstr ""
 
 #: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
 msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
@@ -3953,6 +3961,106 @@ msgstr "M월 d일 dddd"
 msgid "Nothing planned in the coming days."
 msgstr "앞으로 며칠 동안 계획된 일정이 없습니다."
 
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr ""
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "여기에 일기 예보를 표시하려면 설정 > 날씨에서 위치를 설정하십시오."
@@ -4657,9 +4765,6 @@ msgstr "근무 위치: %1"
 
 #~ msgid "Grid"
 #~ msgstr "격자"
-
-#~ msgid "Rain"
-#~ msgstr "비"
 
 #~ msgid "Positive Temp"
 #~ msgstr "영상"
