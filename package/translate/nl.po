@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -582,6 +582,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Voor vergaderingen die je hebt geaccepteerd of organiseert en die niet als "
 "afgelopen zijn gemarkeerd."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Opdracht als een vergadering begint"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "Bijv.: notify-send \"In een vergadering: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Opdracht als die eindigt"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"Uitgevoerd met sh: $1 is de titel van de vergadering, $2 de link, $3 en $4 "
+"begin en einde. Voor een vergadering met gasten of een link, niet afgewezen; "
+"die eindigt als ze voorbij is of als afgelopen gemarkeerd."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1796,6 +1818,10 @@ msgstr "Details tonen"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Deelnemen via %1"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Afspraakgegevens kopiëren"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

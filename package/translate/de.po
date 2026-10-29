@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -586,6 +586,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Für Besprechungen, die Sie angenommen haben oder organisieren und die nicht "
 "als beendet markiert sind."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Befehl, wenn eine Besprechung beginnt"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "Z. B.: notify-send \"In einer Besprechung: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Befehl, wenn sie endet"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"Läuft mit sh: $1 ist der Titel der Besprechung, $2 ihr Link, $3 und $4 "
+"Beginn und Ende. Für eine Besprechung mit Gästen oder Link, nicht abgelehnt; "
+"sie endet, wenn sie vorbei oder als beendet markiert ist."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1811,6 +1833,10 @@ msgstr "Details anzeigen"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Über %1 beitreten"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Termindetails kopieren"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

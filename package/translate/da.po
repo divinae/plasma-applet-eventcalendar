@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -577,6 +577,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "For møder, du har accepteret eller arrangerer, og som ikke er markeret som "
 "afsluttet."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Kommando, når et møde starter"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "F.eks.: notify-send \"I et møde: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Kommando, når det slutter"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"Køres med sh: $1 er mødets titel, $2 dets link, $3 og $4 dets start og slut. "
+"For et møde med gæster eller et link, ikke afvist; det slutter, når det er "
+"forbi eller markeret som afsluttet."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1776,6 +1798,10 @@ msgstr "Vis detaljer"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Deltag i %1"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Kopiér begivenhedens detaljer"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

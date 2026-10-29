@@ -348,6 +348,14 @@
 			<!-- The chip's title, at most this many characters (0: as much as fits) -->
 			<default>0</default>
 		</entry>
+		<entry name="meetingStartCommand" type="string">
+			<!-- Run when a meeting starts: sh -c; $1 title, $2 meeting link, $3 start, $4 end (ISO) -->
+			<default></default>
+		</entry>
+		<entry name="meetingEndCommand" type="string">
+			<!-- Run when it ends (or is marked as ended); the same arguments -->
+			<default></default>
+		</entry>
 		<entry name="meetingFullScreenAlert" type="bool">
 			<!-- The notification when an event starts, full screen (every screen) with Join, Snooze 1 min, Dismiss (eventStartingNotificationEnabled on) -->
 			<default>false</default>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -579,6 +579,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Kabul ettiğiniz veya düzenlediğiniz, bitti olarak işaretlenmemiş toplantılar "
 "için."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Toplantı başladığında komut"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "Örn.: notify-send \"Toplantıda: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Bittiğinde komut"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"sh ile çalışır: $1 toplantının başlığı, $2 bağlantısı, $3 ve $4 başlangıcı "
+"ve bitişi. Konuklu veya bağlantılı, reddedilmemiş bir toplantı için; "
+"bittiğinde veya bitti olarak işaretlendiğinde sona erer."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1781,6 +1803,10 @@ msgstr "Ayrıntıları Göster"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 ile Katıl"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Etkinlik ayrıntılarını kopyala"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

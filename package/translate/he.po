@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -580,6 +580,27 @@ msgstr "פתיחת קישור הפגישה כשהפגישה מתחילה"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "לפגישות שאישרת או שארגנת, שלא סומנו כהסתיימו."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "פקודה כשפגישה מתחילה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "לדוגמה: notify-send \"בפגישה: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "פקודה כשהיא מסתיימת"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"מורץ עם sh: $1 כותרת הפגישה, $2 הקישור שלה, $3 ו-$4 תחילתה וסופה. לפגישה עם "
+"אורחים או קישור, שלא נדחתה; היא מסתיימת כשהיא נגמרת או מסומנת כהסתיימה."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1764,6 +1785,10 @@ msgstr "הצגת פרטים"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "הצטרפות ל־%1"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "העתקת פרטי האירוע"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

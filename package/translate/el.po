@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -585,6 +585,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Για συσκέψεις που έχετε αποδεχτεί ή οργανώνετε και δεν έχουν σημανθεί ως "
 "ολοκληρωμένες."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Εντολή όταν ξεκινά μια σύσκεψη"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "Π.χ.: notify-send \"Σε σύσκεψη: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Εντολή όταν τελειώνει"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"Εκτελείται με sh: $1 ο τίτλος της σύσκεψης, $2 ο σύνδεσμος, $3 και $4 η "
+"έναρξη και η λήξη. Για σύσκεψη με καλεσμένους ή σύνδεσμο, που δεν "
+"απορρίφθηκε· λήγει όταν τελειώσει ή σημειωθεί ως ολοκληρωμένη."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1810,6 +1832,10 @@ msgstr "Εμφάνιση λεπτομερειών"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Συμμετοχή μέσω %1"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Αντιγραφή λεπτομερειών συμβάντος"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

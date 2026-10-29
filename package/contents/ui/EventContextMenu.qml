@@ -292,6 +292,14 @@ PlasmaComponents3.Menu {
 		icon.name: "call-start"
 		onTriggered: meetingOpener.open(eventMenu.meetingLink.url)
 	}
+	// The event as text (title, day and time, place, link), like Dato's Copy.
+	PlasmaComponents3.MenuItem {
+		visible: !!eventMenu.eventItem && !eventMenu.isTask
+		height: visible ? implicitHeight : 0
+		text: i18n("Copy Event Details")
+		icon.name: "edit-copy"
+		onTriggered: eventMenu.copyText(eventMenu.detailsText(eventMenu.eventItem))
+	}
 	PlasmaComponents3.MenuItem {
 		visible: !!eventMenu.meetingLink
 		height: visible ? implicitHeight : 0
@@ -371,6 +379,28 @@ PlasmaComponents3.Menu {
 			icon.name: "edit-delete"
 			onTriggered: eventMenu.deleteRequested(eventMenu.eventItem, true)
 		}
+	}
+	// "Design review\nThursday, 29 October 2026, 14:00 – 15:00\nRoom 4.12\nhttps://meet…": the event as
+	// plain text (all-day: the day, or the days).
+	function detailsText(item) {
+		var lines = [String(item.summary || '')]
+		var allDay = !!(item.start && item.start.date)
+		if (allDay) {
+			var lastDay = new Date(item.endDateTime.getTime() - 1)
+			lines.push(Shared.isSameDate(item.startDateTime, lastDay)
+				? Shared.formatDate(item.startDateTime, Locale.LongFormat)
+				: Shared.formatDate(item.startDateTime, Locale.LongFormat) + ' – ' + Shared.formatDate(lastDay, Locale.LongFormat))
+		} else {
+			lines.push(Shared.formatDate(item.startDateTime, Locale.LongFormat) + ', '
+				+ Shared.formatTimeRange(item.startDateTime, item.endDateTime, appletConfig.timeFormat))
+		}
+		if (item.location) {
+			lines.push(String(item.location))
+		}
+		if (meetingLink) {
+			lines.push(meetingLink.url)
+		}
+		return lines.join('\n')
 	}
 	// Copies text to the clipboard (QML has no clipboard API of its own): a TextEdit made for it,
 	// not a child item (a Menu's items are its entries).

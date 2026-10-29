@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:11+0100\n"
+"POT-Creation-Date: 2026-10-29 15:20+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -585,6 +585,28 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Для зустрічей, які ви прийняли або організовуєте і які не позначено як "
 "завершені."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when a meeting starts"
+msgstr "Команда на початку зустрічі"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Eg: notify-send \"In a meeting: $1\""
+msgstr "Напр.: notify-send \"На зустрічі: $1\""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Command when it ends"
+msgstr "Команда наприкінці"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
+"end. For a meeting with guests or a link, not declined; it ends when it's "
+"over or marked as ended."
+msgstr ""
+"Запускається через sh: $1 — назва зустрічі, $2 — посилання, $3 і $4 — "
+"початок і кінець. Для зустрічі з гостями або посиланням, не відхиленої; "
+"закінчується, коли мине або позначена як завершена."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1787,6 +1809,10 @@ msgstr "Показати подробиці"
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Приєднатися через %1"
+
+#: ../contents/ui/EventContextMenu.qml
+msgid "Copy Event Details"
+msgstr "Копіювати відомості про подію"
 
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Meeting Link"

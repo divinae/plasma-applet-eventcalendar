@@ -10,6 +10,7 @@ import "MeetingRules.js" as MeetingRules
 import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 import "./calendars"
+import "./lib"
 
 CalendarManager {
 	id: upcomingEvents
@@ -365,6 +366,7 @@ CalendarManager {
 			return
 		}
 		var key = meetingKey(eventItem)
+		startMeetingCommand(eventItem, key)
 		// The notification, full screen: a timed meeting (with a video link), not declined, not of a
 		// calendar left out of the clock's countdown.
 		// Settings > Events > When an Event Starts: the notification, full screen.
@@ -387,6 +389,64 @@ CalendarManager {
 			}
 		}
 		startDoNotDisturb(eventItem, sent, now)
+	}
+
+	//--- Your commands at a meeting's start and end (Settings > Events > Meetings), like MeetingBar's
+	// scripts: a meeting is a timed event with guests or a link, not declined (as for Do Not
+	// Disturb). The event goes to the command as arguments ($1 title, $2 link, $3 start, $4 end, ISO),
+	// never into its text: sh -c 'command' eventcalendar "$title" … Nothing about it in the log.
+	property var commandRunner: ExecUtil {}
+	property var commandMeetings: ({}) // key -> { end: ms, argv: [...] }: started, end command due
+	function meetingCommandArgs(eventItem) {
+		var link = MeetingLink.find(eventItem)
+		return [String(eventItem.summary || ''), link ? link.url : '',
+			new Date(eventItem.startDateTime).toISOString(), new Date(eventItem.endDateTime).toISOString()]
+	}
+	function runMeetingCommand(command, args) {
+		command = String(command || '').trim()
+		if (!command) {
+			return
+		}
+		commandRunner.execArgv(['sh', '-c', command, 'eventcalendar'].concat(args), function(cmd, exitCode) {
+			if (exitCode !== 0) {
+				logger.log('meeting command: exit code', exitCode)
+			}
+		})
+	}
+	function startMeetingCommand(eventItem, key) {
+		var start = plasmoid.configuration.meetingStartCommand
+		var end = plasmoid.configuration.meetingEndCommand
+		if ((!start && !end) || key in commandMeetings) {
+			return
+		}
+		if (!MeetingRules.isDoNotDisturbMeeting(eventItem, !!MeetingLink.find(eventItem), false)) {
+			return
+		}
+		var args = meetingCommandArgs(eventItem)
+		var running = Object.assign({}, commandMeetings)
+		running[key] = { end: new Date(eventItem.endDateTime).getTime(), args: args }
+		commandMeetings = running
+		logger.log('meeting command: start') // No title in the log
+		runMeetingCommand(start, args)
+	}
+	function endMeetingCommand(key) {
+		if (!(key in commandMeetings)) {
+			return
+		}
+		var args = commandMeetings[key].args
+		var running = Object.assign({}, commandMeetings)
+		delete running[key]
+		commandMeetings = running
+		logger.log('meeting command: end')
+		runMeetingCommand(plasmoid.configuration.meetingEndCommand, args)
+	}
+	function checkMeetingCommandEnds() {
+		var now = timeModel.currentTime.getTime()
+		for (var key in commandMeetings) {
+			if (commandMeetings[key].end <= now) {
+				endMeetingCommand(key)
+			}
+		}
 	}
 
 	//--- Do Not Disturb during meetings (FocusMode.qml): at the start, and on startup / sync for a
@@ -645,6 +705,7 @@ CalendarManager {
 		return !!endedEvents[endedKey(eventItem)]
 	}
 	function markEnded(eventItem) {
+		endMeetingCommand(meetingKey(eventItem)) // Its end command now, not at the planned end
 		var now = timeModel.currentTime.getTime()
 		var kept = {}
 		for (var key in endedEvents) {
@@ -802,6 +863,7 @@ CalendarManager {
 
 	function tick() {
 		checkForEventsStarting()
+		checkMeetingCommandEnds()
 		checkDailyAgenda()
 		checkTaskSummary()
 		updateNextEvent()

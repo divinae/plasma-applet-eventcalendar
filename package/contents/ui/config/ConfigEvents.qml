@@ -290,6 +290,20 @@ ConfigPage {
 			}
 
 			FormCard.FormDelegateSeparator {}
+			FormConfigText {
+				label: i18n("Command when a meeting starts")
+				configKey: 'meetingStartCommand'
+				placeholderText: i18n("Eg: notify-send \"In a meeting: $1\"")
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigText {
+				label: i18n("Command when it ends")
+				configKey: 'meetingEndCommand'
+			}
+			FormCard.FormSectionText {
+				text: i18n("Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and end. For a meeting with guests or a link, not declined; it ends when it's over or marked as ended.")
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Pause music and videos when joining a meeting")
 				description: i18n("Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts.")
