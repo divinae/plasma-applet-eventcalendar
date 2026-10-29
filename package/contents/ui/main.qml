@@ -447,7 +447,7 @@ PlasmoidItem {
 		PlasmaCore.Action {
 			text: i18n("Refresh")
 			icon.name: "view-refresh"
-			onTriggered: logic.update()
+			onTriggered: logic.reload()
 		},
 		PlasmaCore.Action {
 			id: clipboardAction

@@ -481,7 +481,7 @@ MouseArea {
 		}
 		onNewEventClicked: popup.tasksMode ? popup.newTask(null) : popup.openQuickAdd()
 		onSearchClicked: popup.openSearch()
-		onRefreshClicked: logic.update()
+		onRefreshClicked: logic.reload()
 		onGoToDateRequested: popup.openGoToDate()
 	}
 
