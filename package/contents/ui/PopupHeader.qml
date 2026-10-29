@@ -72,71 +72,67 @@ PlasmaExtras.PlasmoidHeading {
 				}
 				plasmoid.configuration.hiddenViewTabs = list
 			}
-			PlasmaComponents3.MenuItem {
-				text: i18n("Views offered")
-				enabled: false
-			}
-			Repeater {
-				model: topBar.viewTabsAll
-				PlasmaComponents3.MenuItem {
-					text: modelData.text
-					icon.name: modelData.icon
-					checkable: true
-					checked: buttonsMenu.hiddenViews.indexOf(modelData.mode) < 0
-					enabled: !checked || modelData.mode === 'tasks' || buttonsMenu.calendarViewsShown > 1
-					onTriggered: {
-						var mode = modelData.mode
-						buttonsMenu.setViewShown(mode, checked)
-						checked = Qt.binding(function() { return buttonsMenu.hiddenViews.indexOf(mode) < 0 })
+			PlasmaComponents3.Menu {
+				title: i18n("Views offered")
+				Repeater {
+					model: topBar.viewTabsAll
+					PlasmaComponents3.MenuItem {
+						text: modelData.text
+						icon.name: modelData.icon
+						checkable: true
+						checked: buttonsMenu.hiddenViews.indexOf(modelData.mode) < 0
+						enabled: !checked || modelData.mode === 'tasks' || buttonsMenu.calendarViewsShown > 1
+						onTriggered: {
+							var mode = modelData.mode
+							buttonsMenu.setViewShown(mode, checked)
+							checked = Qt.binding(function() { return buttonsMenu.hiddenViews.indexOf(mode) < 0 })
+						}
 					}
 				}
 			}
-			PlasmaComponents3.MenuSeparator {}
-			PlasmaComponents3.MenuItem {
-				text: i18n("View switcher")
-				enabled: false
-			}
-			Repeater {
-				model: [
-					{ value: 'tabs', text: i18n("Tabs") },
-					{ value: 'menu', text: i18n("Drop-down menu") },
-				]
-				PlasmaComponents3.MenuItem {
-					text: modelData.text
-					checkable: true
-					checked: header.viewSwitcher === modelData.value
-					onTriggered: {
-						var value = modelData.value
-						plasmoid.configuration.viewSwitcher = value
-						checked = Qt.binding(function() { return header.viewSwitcher === value })
+			PlasmaComponents3.Menu {
+				title: i18n("View switcher")
+				Repeater {
+					model: [
+						{ value: 'tabs', text: i18n("Tabs") },
+						{ value: 'menu', text: i18n("Drop-down menu") },
+					]
+					PlasmaComponents3.MenuItem {
+						text: modelData.text
+						checkable: true
+						autoExclusive: true // A choice: radio buttons
+						checked: header.viewSwitcher === modelData.value
+						onTriggered: {
+							var value = modelData.value
+							plasmoid.configuration.viewSwitcher = value
+							checked = Qt.binding(function() { return header.viewSwitcher === value })
+						}
 					}
 				}
 			}
-			PlasmaComponents3.MenuSeparator {}
-			PlasmaComponents3.MenuItem {
-				text: i18n("Buttons in the header")
-				enabled: false
-			}
-			Repeater {
-				model: [
-					{ key: 'calendars', text: i18n("Calendars"), icon: "view-calendar-list" },
-					{ key: 'search', text: i18n("Search"), icon: "search" },
-					{ key: 'new', text: i18n("New Event"), icon: "list-add" },
-					{ key: 'refresh', text: i18n("Refresh"), icon: "view-refresh" },
-					{ key: 'configure', text: configureButton.configureAction ? configureButton.configureAction.text : "", icon: "configure" },
-				]
-				PlasmaComponents3.MenuItem {
-					id: buttonItem
-					visible: modelData.key !== 'configure' || configureButton.available
-					height: visible ? implicitHeight : 0
-					text: modelData.text
-					icon.name: modelData.icon
-					checkable: true
-					checked: header.buttonShown(modelData.key)
-					onTriggered: {
-						var key = modelData.key
-						header.setButtonShown(key, checked)
-						checked = Qt.binding(function() { return header.buttonShown(key) })
+			PlasmaComponents3.Menu {
+				title: i18n("Buttons in the header")
+				Repeater {
+					model: [
+						{ key: 'calendars', text: i18n("Calendars"), icon: "view-calendar-list" },
+						{ key: 'search', text: i18n("Search"), icon: "search" },
+						{ key: 'new', text: i18n("New Event"), icon: "list-add" },
+						{ key: 'refresh', text: i18n("Refresh"), icon: "view-refresh" },
+						{ key: 'configure', text: configureButton.configureAction ? configureButton.configureAction.text : "", icon: "configure" },
+					]
+					PlasmaComponents3.MenuItem {
+						id: buttonItem
+						visible: modelData.key !== 'configure' || configureButton.available
+						height: visible ? implicitHeight : 0
+						text: modelData.text
+						icon.name: modelData.icon
+						checkable: true
+						checked: header.buttonShown(modelData.key)
+						onTriggered: {
+							var key = modelData.key
+							header.setButtonShown(key, checked)
+							checked = Qt.binding(function() { return header.buttonShown(key) })
+						}
 					}
 				}
 			}
