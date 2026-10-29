@@ -69,15 +69,18 @@ function pimCalendarRows(model, userRole, displayRole) {
 			})
 		}
 	}
-	for (var i = 0; i < model.rowCount(); i++) {
-		var index = model.index(i, 0)
-		push(index)
-		if (model.hasChildren(index)) {
-			for (var j = 0; j < model.rowCount(index); j++) {
-				push(model.index(j, 0, index))
+	// A tree under the accounts (Akonadi's EntityTreeModel): calendars can be folders in folders.
+	function walk(parent, depth) {
+		var count = parent ? model.rowCount(parent) : model.rowCount()
+		for (var i = 0; i < count; i++) {
+			var index = parent ? model.index(i, 0, parent) : model.index(i, 0)
+			push(index)
+			if (depth < 8 && model.hasChildren(index)) {
+				walk(index, depth + 1)
 			}
 		}
 	}
+	walk(null, 0)
 	return rows
 }
 

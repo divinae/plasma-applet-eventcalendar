@@ -40,6 +40,17 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(tree, UserRol
 	{ id: '7', name: 'Personal', checked: true },
 	{ id: '8', name: 'Birthdays', checked: false },
 ])
+// Current versions are a tree under the accounts: calendars in folders of an account too.
+const nested = model([
+	{ [UserRole + 1]: 1, [UserRole + 2]: 'Work (DAV)', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+		{ [UserRole + 1]: 2, [UserRole + 2]: 'Team', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+			{ [UserRole + 1]: 3, [UserRole + 2]: 'Releases', [UserRole + 3]: true, [UserRole + 4]: true },
+		] },
+	] },
+])
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(nested, UserRole, DisplayRole))), [
+	{ id: '3', name: 'Releases', checked: true },
+], 'a calendar two folders down')
 assert.deepStrictEqual(Array.from(U.pimCalendarRows(null, UserRole, DisplayRole)), [])
 
 console.log('PASS plasma_calendar_utils')
