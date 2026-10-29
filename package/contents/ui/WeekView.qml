@@ -710,13 +710,16 @@ Item {
 			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
 			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
 			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
+			// The week after the shown day, as far as the forecast goes; the panel shows those that fit.
+			maxHeight: weatherCard.room - weatherCard.topPadding - weatherCard.bottomPadding
 			nextDays: {
 				var list = []
-				for (var i = 1; i <= 4; i++) {
+				for (var i = 1; i <= 7; i++) {
 					var d = weekView.dayWeather(weekView.dayDate(i))
-					if (d) {
-						list.push(d)
+					if (!d) {
+						break
 					}
+					list.push(d)
 				}
 				return list
 			}
