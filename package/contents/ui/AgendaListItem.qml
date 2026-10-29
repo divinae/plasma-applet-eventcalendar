@@ -99,27 +99,34 @@ IslandCard {
 				text: i18n("New Event")
 				Layout.preferredHeight: Kirigami.Units.iconSizes.medium
 				Layout.preferredWidth: Layout.preferredHeight
+				// The menu: made on its first use, not with every day.
+				property var addMenu: null
 				onClicked: {
 					if (!newEventForm.active && popup.hasTaskLists()) {
+						if (!addMenu) {
+							addMenu = addMenuComponent.createObject(addButton)
+						}
 						addMenu.popup(addButton, 0, addButton.height)
 					} else {
 						newEventForm.active = !newEventForm.active
 					}
 				}
 				PlasmaComponents3.ToolTip.text: text
-				PlasmaComponents3.ToolTip.visible: hovered && !addMenu.visible
+				PlasmaComponents3.ToolTip.visible: hovered && !(addMenu && addMenu.visible)
 			}
-			PlasmaComponents3.Menu {
-				id: addMenu
-				PlasmaComponents3.MenuItem {
-					text: i18n("New Event")
-					icon.name: "view-calendar-day"
-					onTriggered: newEventForm.active = true
-				}
-				PlasmaComponents3.MenuItem {
-					text: i18n("New Task…")
-					icon.name: "view-task-add"
-					onTriggered: popup.newTask(agendaListItem.agendaItemDate, "")
+			Component {
+				id: addMenuComponent
+				PlasmaComponents3.Menu {
+					PlasmaComponents3.MenuItem {
+						text: i18n("New Event")
+						icon.name: "view-calendar-day"
+						onTriggered: newEventForm.active = true
+					}
+					PlasmaComponents3.MenuItem {
+						text: i18n("New Task…")
+						icon.name: "view-task-add"
+						onTriggered: popup.newTask(agendaListItem.agendaItemDate, "")
+					}
 				}
 			}
 		}
