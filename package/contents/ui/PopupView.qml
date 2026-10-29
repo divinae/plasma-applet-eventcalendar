@@ -704,10 +704,8 @@ MouseArea {
 
 	Loader {
 		id: weekViewLoader
-		// Made the first time it's shown, then kept (switching back is instant); hidden, it isn't
-		// rebuilt (weekStale, see updateUI).
-		active: popup.hourGridMode || popup.weekViewUsed
-		visible: popup.hourGridMode
+		active: popup.hourGridMode
+		visible: active
 		anchors.fill: widgetGrid
 		onLoaded: {
 			if (popup.pendingDayViewDate) {
@@ -737,9 +735,8 @@ MouseArea {
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
-		// Made the first time it's shown, then kept; hidden, it doesn't rebuild (TasksView.stale).
-		active: popup.tasksMode || popup.tasksViewUsed
-		visible: popup.tasksMode
+		active: popup.tasksMode
+		visible: active
 		anchors.top: widgetGrid.top
 		anchors.bottom: widgetGrid.bottom
 		anchors.left: widgetGrid.left
@@ -935,40 +932,9 @@ MouseArea {
 	//--- Weather for the views
 	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
 
-	//--- The Week/Day view and the Tasks tab: made when first shown, then kept.
-	property bool weekViewUsed: false
-	property bool tasksViewUsed: false
-	property bool weekStale: false
-	onHourGridModeChanged: {
-		if (!hourGridMode) {
-			return
-		}
-		var wasMade = weekViewUsed && !!weekViewLoader.item
-		weekViewUsed = true
-		if (!wasMade) {
-			return // A new view starts on today (or pendingDayViewDate, onLoaded)
-		}
-		// Shown again: on the day asked for, else today's week / day, as a new one would, built and
-		// scrolled again now that it has its size (laid out while hidden, at no size, its texts were
-		// cut off and its scroll off).
-		var item = weekViewLoader.item
-		var day = pendingDayViewDate || timeModel.currentTime
-		pendingDayViewDate = null
-		Qt.callLater(function() {
-			var start = item.startOfWeek(day)
-			if (start.getTime() !== item.weekStart.getTime()) {
-				item.weekStart = start // Rebuilt and scrolled (onWeekStartChanged)
-			} else {
-				item.rebuild()
-				item.resetScroll()
-			}
-		})
-		weekStale = false
-	}
-	onTasksModeChanged: if (tasksMode) tasksViewUsed = true
-	// Week -> Day (the same view, kept): the day asked for (a click on a day).
+	// Week -> Day (the same view, the Loader stays): the day asked for (a click on a day).
 	onDayModeChanged: {
-		if (dayMode && pendingDayViewDate && weekViewLoader.item && weekViewUsed) {
+		if (dayMode && pendingDayViewDate && weekViewLoader.item) {
 			weekViewLoader.item.weekStart = pendingDayViewDate
 			pendingDayViewDate = null
 		}
@@ -984,10 +950,7 @@ MouseArea {
 		updateAgenda()
 		updateMonth()
 		if (weekViewLoader.item) {
-			weekStale = !hourGridMode
-			if (hourGridMode) {
-				weekViewLoader.item.rebuild()
-			}
+			weekViewLoader.item.rebuild()
 		}
 		scrollToSelection()
 	}

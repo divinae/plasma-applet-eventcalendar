@@ -177,22 +177,7 @@ Item {
 	// "Add a task…" text and focus by row key, across rebuilds (they make the rows again).
 	property var addDrafts: ({})
 
-	// Kept while another view is shown (PopupView): no rebuild then, one when it's shown again.
-	property bool stale: false
-	property bool builtOnce: false
-	// Shown again: its rows made again at its size (laid out while hidden, texts were cut off).
-	onVisibleChanged: {
-		if (visible && builtOnce) {
-			Qt.callLater(rebuild)
-		}
-	}
 	function rebuild() {
-		if (builtOnce && !visible) {
-			stale = true
-			return
-		}
-		stale = false
-		builtOnce = true
 		if (!eventModel) {
 			rows = []
 			lists = []
