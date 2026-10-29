@@ -948,16 +948,21 @@ MouseArea {
 		if (!wasMade) {
 			return // A new view starts on today (or pendingDayViewDate, onLoaded)
 		}
-		// Shown again: on the day asked for, else today's week / day, as a new one would.
+		// Shown again: on the day asked for, else today's week / day, as a new one would, built and
+		// scrolled again now that it has its size (laid out while hidden, at no size, its texts were
+		// cut off and its scroll off).
 		var item = weekViewLoader.item
 		var day = pendingDayViewDate || timeModel.currentTime
 		pendingDayViewDate = null
-		var start = item.startOfWeek(day)
-		if (start.getTime() !== item.weekStart.getTime()) {
-			item.weekStart = start // Rebuilds
-		} else if (weekStale) {
-			item.rebuild()
-		}
+		Qt.callLater(function() {
+			var start = item.startOfWeek(day)
+			if (start.getTime() !== item.weekStart.getTime()) {
+				item.weekStart = start // Rebuilt and scrolled (onWeekStartChanged)
+			} else {
+				item.rebuild()
+				item.resetScroll()
+			}
+		})
 		weekStale = false
 	}
 	onTasksModeChanged: if (tasksMode) tasksViewUsed = true

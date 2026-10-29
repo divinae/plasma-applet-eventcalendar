@@ -180,9 +180,10 @@ Item {
 	// Kept while another view is shown (PopupView): no rebuild then, one when it's shown again.
 	property bool stale: false
 	property bool builtOnce: false
+	// Shown again: its rows made again at its size (laid out while hidden, texts were cut off).
 	onVisibleChanged: {
-		if (visible && stale) {
-			rebuild()
+		if (visible && builtOnce) {
+			Qt.callLater(rebuild)
 		}
 	}
 	function rebuild() {
@@ -949,13 +950,15 @@ Item {
 						visible: tasksView.showSidebar
 						Layout.leftMargin: sidebarToggle.visible ? 0 : tasksView.sideMargin
 						Layout.minimumWidth: 0
-						Layout.maximumWidth: implicitWidth
+						Layout.maximumWidth: Math.ceil(implicitWidth)
 						Layout.fillWidth: true
 						spacing: Kirigami.Units.smallSpacing
 						Kirigami.Heading {
 							Layout.alignment: Qt.AlignBaseline
 							Layout.minimumWidth: 0
-							Layout.maximumWidth: implicitWidth
+							// Rounded up: a fractional width rounded down elided even "All" to "…".
+							Layout.preferredWidth: Math.ceil(implicitWidth)
+							Layout.maximumWidth: Math.ceil(implicitWidth)
 							Layout.fillWidth: true
 							level: 2
 							font.weight: Font.Bold
@@ -977,7 +980,7 @@ Item {
 						visible: !tasksView.showSidebar
 						Layout.leftMargin: sidebarToggle.visible ? 0 : Math.max(0, tasksView.sideMargin - leftPadding)
 						Layout.minimumWidth: 0
-						Layout.maximumWidth: implicitWidth
+						Layout.maximumWidth: Math.ceil(implicitWidth)
 						Layout.fillWidth: true
 						readonly property string label: tasksView.filterName(tasksView.currentFilter)
 						text: label.replace(/&/g, "&&") // No mnemonic from a "&" in a list's name
@@ -988,7 +991,8 @@ Item {
 							Kirigami.Heading {
 								Layout.alignment: Qt.AlignBaseline
 								Layout.minimumWidth: 0
-								Layout.maximumWidth: implicitWidth
+								Layout.preferredWidth: Math.ceil(implicitWidth)
+								Layout.maximumWidth: Math.ceil(implicitWidth)
 								Layout.fillWidth: true
 								level: 2
 								font.weight: Font.Bold
