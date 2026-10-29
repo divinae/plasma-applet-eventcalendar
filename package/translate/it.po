@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 16:50+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1399,6 +1399,18 @@ msgstr "Fahrenheit"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Kelvin"
 msgstr "Kelvin"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Icons"
+msgstr "Icone"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Black and white"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Colorful"
+msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -4198,9 +4210,6 @@ msgstr "Luogo di lavoro: %1"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Temperatura negativa"
-
-#~ msgid "Icons"
-#~ msgstr "Icone"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Versione:</b> %1"

@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "./weather/WeatherApi.js" as WeatherApi
 
 Item {
@@ -383,9 +384,19 @@ Item {
 						location: PlasmaCore.Types.BottomEdge
 					}
 
+					// Settings > Weather > Icons = Colorful: the colored symbol instead of the font glyph.
+					readonly property bool colorfulIcon: WeatherIcons.colorful(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle)
+					Kirigami.Icon {
+						visible: modelData.showIcon && parent.colorfulIcon
+						anchors.centerIn: parent
+						width: appletConfig.meteogramIconSize
+						height: width
+						source: parent.colorfulIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
+						opacity: tooltip.containsMouse ? 0.1 : 1
+					}
 					FontIcon {
 						id: weatherIcon
-						visible: modelData.showIcon
+						visible: modelData.showIcon && !parent.colorfulIcon
 						anchors.centerIn: parent
 						color: appletConfig.meteogramIconColor
 						source: modelData.aggregratedIcon

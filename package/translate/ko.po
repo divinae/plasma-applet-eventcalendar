@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 16:50+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1600,6 +1600,18 @@ msgstr "화씨"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Kelvin"
 msgstr "절대온도"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Icons"
+msgstr "아이콘"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Black and white"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Colorful"
+msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -4448,9 +4460,6 @@ msgstr "근무 위치: %1"
 
 #~ msgid "Negative Temp"
 #~ msgstr "영하"
-
-#~ msgid "Icons"
-#~ msgstr "아이콘"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>버전:</b> %1"

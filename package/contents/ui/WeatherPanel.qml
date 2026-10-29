@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "lib/ColorUtil.js" as ColorUtil
 
 // Weather beside the Day view, in labeled sections: Now, Next hours, Next days.
@@ -240,7 +241,7 @@ ColumnLayout {
 				anchors.centerIn: parent
 				width: parent.width - Kirigami.Units.smallSpacing * 2
 				height: width
-				source: panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : ""
+				source: WeatherIcons.largeSource(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "", plasmoid.configuration.weatherIconStyle)
 			}
 		}
 		ColumnLayout {
@@ -401,7 +402,7 @@ ColumnLayout {
 					y: 0
 					width: Kirigami.Units.iconSizes.small
 					height: width
-					source: Shared.symbolicIcon(parent.point ? parent.point.iconName : "")
+					source: WeatherIcons.source(parent.point ? parent.point.iconName : "", plasmoid.configuration.weatherIconStyle)
 					fallback: parent.point ? parent.point.iconName : ""
 				}
 				PlasmaComponents3.Label {
@@ -439,7 +440,7 @@ ColumnLayout {
 				font.capitalization: Font.Capitalize
 			}
 			Kirigami.Icon {
-				source: Shared.symbolicIcon(modelData.iconName)
+				source: WeatherIcons.source(modelData.iconName, plasmoid.configuration.weatherIconStyle)
 				fallback: modelData.iconName
 				Layout.preferredWidth: Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth

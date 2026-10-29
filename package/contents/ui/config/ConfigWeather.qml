@@ -191,6 +191,15 @@ ConfigPage {
 				]
 			}
 			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
+				text: i18n("Icons")
+				configKey: 'weatherIconStyle'
+				model: [
+					{ value: 'monochrome', text: i18n("Black and white") },
+					{ value: 'colorful', text: i18n("Colorful") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Meteogram shows")
 				configKey: 'meteogramHours'

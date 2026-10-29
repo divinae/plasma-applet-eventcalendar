@@ -296,6 +296,8 @@ KCM.SimpleKCM {
 	property var cfg_weatherServiceDefault
 	property var cfg_weatherUnits
 	property var cfg_weatherUnitsDefault
+	property var cfg_weatherIconStyle
+	property var cfg_weatherIconStyleDefault
 	property var cfg_meteogramHours
 	property var cfg_meteogramHoursDefault
 	property var cfg_eventCacheEnabled

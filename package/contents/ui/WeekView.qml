@@ -8,6 +8,7 @@ import "EventBuckets.js" as EventBuckets
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "WeekDrag.js" as WeekDrag
@@ -926,7 +927,7 @@ Item {
 									anchors.verticalCenter: parent.verticalCenter
 									width: Kirigami.Units.iconSizes.small
 									height: width
-									source: Shared.symbolicIcon(dayHeaderCell.weather ? dayHeaderCell.weather.iconName : "")
+									source: WeatherIcons.source(dayHeaderCell.weather ? dayHeaderCell.weather.iconName : "", plasmoid.configuration.weatherIconStyle)
 									fallback: dayHeaderCell.weather ? dayHeaderCell.weather.iconName : ""
 								}
 								PlasmaComponents3.Label {
