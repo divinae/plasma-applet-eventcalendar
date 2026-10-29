@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 17:36+0530\n"
+"POT-Creation-Date: 2026-10-29 13:55+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -222,11 +222,6 @@ msgstr[1] "tra %1 min"
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "tra %1"
-
-#: ../contents/ui/ClockView.qml
-msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
-msgid "%1 · %2"
-msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
@@ -3465,6 +3460,10 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
+#~ msgid "%1 · %2"
+#~ msgstr "%1 · %2"
 
 #~ msgid "View switcher in the header"
 #~ msgstr "Selettore della vista nell'intestazione"

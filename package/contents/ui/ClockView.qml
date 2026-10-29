@@ -93,7 +93,8 @@ Item {
 	Column {
 		id: content
 		anchors.centerIn: parent
-		anchors.horizontalCenterOffset: -clock.nextEventChipWidth / 2
+		// The next event's chip is on the left of the time (Dato-like: the clock stays at the edge).
+		anchors.horizontalCenterOffset: clock.nextEventChipWidth / 2
 		spacing: Math.max(2, Math.round(clock.width / 12))
 
 		// Next meeting in a vertical panel, above the time. Before it: the time until it starts ("5m").
@@ -214,8 +215,8 @@ Item {
 	Item {
 		id: nextEventChip
 		visible: clock.showNextEventChip
-		anchors.left: content.right
-		anchors.leftMargin: Kirigami.Units.smallSpacing * 2
+		anchors.right: content.left
+		anchors.rightMargin: Kirigami.Units.smallSpacing * 2
 		anchors.verticalCenter: parent.verticalCenter
 		width: chipRow.width
 		height: chipRow.height
@@ -224,6 +225,9 @@ Item {
 		readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
 		readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
 		readonly property bool showProgress: inProgress && plasmoid.configuration.clockShowMeetingProgress
+		// A shortened title is narrower than its label: the dot and the title move right by the
+		// difference, so the time follows the title closely and the room is at the outer edge.
+		readonly property real titleShift: Math.max(0, nextEventLabel.width - nextEventLabel.contentWidth)
 
 		function whenText() {
 			if (inProgress) {
@@ -244,6 +248,7 @@ Item {
 
 			Rectangle {
 				anchors.verticalCenter: parent.verticalCenter
+				transform: Translate { x: nextEventChip.titleShift }
 				width: Math.round(nextEventChip.fontPixelSize * 0.6)
 				height: width
 				radius: width / 2
@@ -251,26 +256,34 @@ Item {
 				border.width: 1
 				border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
 			}
+			// The title, shortened at its end when long; the time ("· in 5 min") always whole.
 			PlasmaComponents3.Label {
 				id: nextEventLabel
 				anchors.verticalCenter: parent.verticalCenter
 				font.pointSize: -1
 				font.pixelSize: nextEventChip.fontPixelSize
-				text: clock.nextEvent
-					? i18nc("%1 = event title, %2 = in 5 min / 12 min left", "%1 · %2", clock.nextEvent.summary, nextEventChip.whenText())
-					: ""
+				text: clock.nextEvent ? clock.nextEvent.summary : ""
 				textFormat: Text.PlainText
-				elide: Text.ElideMiddle // Keep the time visible.
-				width: Math.min(implicitWidth, Kirigami.Units.gridUnit * 12)
+				elide: Text.ElideRight
+				transform: Translate { x: nextEventChip.titleShift }
+				width: Math.min(implicitWidth, Math.max(Kirigami.Units.gridUnit * 3, Kirigami.Units.gridUnit * 12 - nextEventWhen.implicitWidth))
+			}
+			PlasmaComponents3.Label {
+				id: nextEventWhen
+				anchors.verticalCenter: parent.verticalCenter
+				font.pointSize: -1
+				font.pixelSize: nextEventChip.fontPixelSize
+				text: clock.nextEvent ? "· " + nextEventChip.whenText() : ""
+				textFormat: Text.PlainText
 			}
 		}
 
 		// Progress of the current meeting, under the text.
 		Rectangle {
 			visible: nextEventChip.showProgress
-			x: nextEventLabel.x
+			x: nextEventLabel.x + nextEventChip.titleShift
 			y: nextEventLabel.y + nextEventLabel.height + 1
-			width: nextEventLabel.width
+			width: nextEventWhen.x + nextEventWhen.width - x
 			height: Math.max(2, Math.round(nextEventChip.fontPixelSize / 7))
 			radius: height / 2
 			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.15)

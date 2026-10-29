@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 17:36+0530\n"
+"POT-Creation-Date: 2026-10-29 13:55+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -258,11 +258,6 @@ msgstr[1] "σε %1 λεπ."
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "σε %1"
-
-#: ../contents/ui/ClockView.qml
-msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
-msgid "%1 · %2"
-msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
@@ -3767,6 +3762,10 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
+#~ msgid "%1 · %2"
+#~ msgstr "%1 · %2"
 
 #~ msgid "View switcher in the header"
 #~ msgstr "Εναλλαγή προβολής στην κεφαλίδα"

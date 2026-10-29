@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 17:36+0530\n"
+"POT-Creation-Date: 2026-10-29 13:55+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -255,11 +255,6 @@ msgstr[1] "om %1 min"
 msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "om %1"
-
-#: ../contents/ui/ClockView.qml
-msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
-msgid "%1 · %2"
-msgstr "%1 · %2"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
@@ -3714,6 +3709,10 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
+#~ msgid "%1 · %2"
+#~ msgstr "%1 · %2"
 
 #~ msgid "View switcher in the header"
 #~ msgstr "Visningsvælger i overskriften"
