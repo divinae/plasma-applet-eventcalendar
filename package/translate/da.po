@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:09+0100\n"
+"POT-Creation-Date: 2026-10-29 09:15+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 18.12.2\n"
 
-#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml
 msgid "Views"
 msgstr "Visninger"
 
@@ -1199,6 +1199,10 @@ msgstr "Faneblade"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Drop-down menu"
 msgstr "Rullemenu"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views offered"
+msgstr "Tilbudte visninger"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:09+0100\n"
+"POT-Creation-Date: 2026-10-29 09:15+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml
 msgid "Views"
 msgstr "보기"
 
@@ -1190,6 +1190,10 @@ msgstr "탭"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Drop-down menu"
 msgstr "드롭다운 메뉴"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views offered"
+msgstr "제공할 보기"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"

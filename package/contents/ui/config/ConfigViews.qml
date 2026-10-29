@@ -59,28 +59,36 @@ ConfigPage {
 					return hidden.indexOf(mode) < 0
 				}).length
 				background: null
-				contentItem: Flow {
-					spacing: Kirigami.Units.largeSpacing
-					Repeater {
-						model: [
-							{ mode: 'month', text: i18n("Month") },
-							{ mode: 'week', text: i18n("Week") },
-							{ mode: 'today', text: i18nc("calendar view showing one day", "Day") },
-							{ mode: 'classic', text: i18n("Agenda") },
-							{ mode: 'tasks', text: i18n("Tasks") },
-						]
-						QQC2.CheckBox {
-							text: modelData.text
-							checked: tabsRow.hidden.indexOf(modelData.mode) < 0
-							enabled: !checked || modelData.mode === 'tasks' || tabsRow.calendarViewsShown > 1
-							onToggled: {
-								var list = Array.prototype.slice.call(tabsRow.hidden).filter(function(mode) {
-									return mode !== modelData.mode
-								})
-								if (!checked) {
-									list.push(modelData.mode)
+				contentItem: ColumnLayout {
+					spacing: Kirigami.Units.smallSpacing
+					QQC2.Label {
+						text: i18n("Views offered")
+						textFormat: Text.PlainText
+					}
+					Flow {
+						Layout.fillWidth: true
+						spacing: Kirigami.Units.largeSpacing
+						Repeater {
+							model: [
+								{ mode: 'month', text: i18n("Month") },
+								{ mode: 'week', text: i18n("Week") },
+								{ mode: 'today', text: i18nc("calendar view showing one day", "Day") },
+								{ mode: 'classic', text: i18n("Agenda") },
+								{ mode: 'tasks', text: i18n("Tasks") },
+							]
+							QQC2.CheckBox {
+								text: modelData.text
+								checked: tabsRow.hidden.indexOf(modelData.mode) < 0
+								enabled: !checked || modelData.mode === 'tasks' || tabsRow.calendarViewsShown > 1
+								onToggled: {
+									var list = Array.prototype.slice.call(tabsRow.hidden).filter(function(mode) {
+										return mode !== modelData.mode
+									})
+									if (!checked) {
+										list.push(modelData.mode)
+									}
+									page.configBridge.write("hiddenViewTabs", list)
 								}
-								page.configBridge.write("hiddenViewTabs", list)
 							}
 						}
 					}

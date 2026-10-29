@@ -49,7 +49,14 @@ PlasmaExtras.PlasmoidHeading {
 		// change with this).
 		readonly property real buttonWidth: searchButton.implicitWidth
 		readonly property int actionCount: 4 + (configureButton.configureAction && configureButton.configureAction.enabled ? 1 : 0)
-		readonly property real switcherWidth: header.viewTabsShown ? viewTabs.length * buttonWidth : buttonWidth + Math.round(Kirigami.Units.iconSizes.small * 0.75)
+		// The drop-down: icon, arrow and, when the actions aren't in a menu, the view's name.
+		readonly property real switcherWidth: header.viewTabsShown ? viewTabs.length * buttonWidth
+			: buttonWidth + Math.round(Kirigami.Units.iconSizes.small * 0.75) + Kirigami.Units.smallSpacing + Math.ceil(viewNameMetrics.advanceWidth)
+		TextMetrics {
+			id: viewNameMetrics
+			font: viewMenuButton.font
+			text: viewMenuButton.current ? viewMenuButton.current.text : ""
+		}
 		readonly property bool menuActions: width < switcherWidth + actionCount * buttonWidth
 			+ (header.showPinButton ? buttonWidth + Kirigami.Units.smallSpacing * 3 : 0)
 			+ navWidth + Kirigami.Units.gridUnit * 6 + gap * 2 // Room for a short title ("October 2026")
@@ -72,10 +79,29 @@ PlasmaExtras.PlasmoidHeading {
 			if (header.showTasksTab) {
 				tabs.push({ mode: 'tasks', icon: "view-calendar-tasks", text: i18n("Tasks") })
 			}
-			// Settings > Views > Tabs: the ones left out. The view shown keeps its tab (the fallback
-			// when every offered one is hidden), so the switcher is never empty.
+			// Settings > Views > the views offered: the ones left out. The view shown keeps its tab (the
+			// fallback when every offered one is hidden), so the switcher is never empty.
 			var hidden = plasmoid.configuration.hiddenViewTabs || []
 			return tabs.filter(function(tab) { return hidden.indexOf(tab.mode) < 0 || tab.mode === header.currentMode })
+		}
+		// The drop-down's views: as viewTabs, but not rebuilt on each switch (a menu item would be
+		// destroyed in its own handler). A hidden view shown as the fallback is left out of it.
+		readonly property var menuViewTabs: {
+			var hidden = plasmoid.configuration.hiddenViewTabs || []
+			var offered = viewTabsAll.filter(function(tab) { return hidden.indexOf(tab.mode) < 0 })
+			return offered.length > 0 ? offered : viewTabsAll
+		}
+		readonly property var viewTabsAll: {
+			var tabs = [
+				{ mode: 'month', icon: "view-calendar-month", text: i18n("Month") },
+				{ mode: 'week', icon: "view-calendar-week", text: i18n("Week") },
+				{ mode: 'today', icon: "view-calendar-day", text: i18nc("calendar view showing one day", "Day") },
+				{ mode: 'classic', icon: "view-calendar-agenda", text: i18n("Agenda") },
+			]
+			if (header.showTasksTab) {
+				tabs.push({ mode: 'tasks', icon: "view-calendar-tasks", text: i18n("Tasks") })
+			}
+			return tabs
 		}
 		// The view switcher's width with names, measured off screen.
 		// (Not visible: false, a Row leaves out children that aren't visible and measured 0.)
@@ -151,13 +177,13 @@ PlasmaExtras.PlasmoidHeading {
 				}
 				icon.name: current.icon
 				text: current.text
-				display: topBar.compactTabs || topBar.menuActions ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+				display: topBar.menuActions ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
 				down: pressed || viewMenu.visible
 				rightPadding: leftPadding + viewMenuArrow.width
 				onClicked: viewMenu.popup(viewMenuButton, 0, viewMenuButton.height)
-				PlasmaComponents3.ToolTip.text: i18n("Views")
+				PlasmaComponents3.ToolTip.text: current.text
 				PlasmaComponents3.ToolTip.visible: hovered && !viewMenu.visible
-				Accessible.name: i18n("Views")
+				Accessible.name: current.text
 				Kirigami.Icon {
 					id: viewMenuArrow
 					anchors.right: parent.right
@@ -173,14 +199,19 @@ PlasmaExtras.PlasmoidHeading {
 				PlasmaComponents3.Menu {
 					id: viewMenu
 					Instantiator {
-						model: topBar.viewTabs
+						model: topBar.menuViewTabs
 						delegate: PlasmaComponents3.MenuItem {
+							id: viewItem
 							required property var modelData
 							text: modelData.text
 							icon.name: modelData.icon
 							checkable: true
 							checked: header.currentMode === modelData.mode
-							onTriggered: header.viewSelected(modelData.mode)
+							onTriggered: {
+								header.viewSelected(modelData.mode)
+								// A click on the view shown unticked it: follow the view shown again.
+								viewItem.checked = Qt.binding(function() { return header.currentMode === viewItem.modelData.mode })
+							}
 						}
 						onObjectAdded: function(index, object) { viewMenu.insertItem(index, object) }
 						onObjectRemoved: function(index, object) { viewMenu.removeItem(object) }

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:09+0100\n"
+"POT-Creation-Date: 2026-10-29 09:15+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml
 msgid "Views"
 msgstr "Widoki"
 
@@ -1027,6 +1027,10 @@ msgstr "Karty"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Drop-down menu"
 msgstr "Menu rozwijane"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views offered"
+msgstr "Dostępne widoki"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"

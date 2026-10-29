@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:09+0100\n"
+"POT-Creation-Date: 2026-10-29 09:15+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml
 msgid "Views"
 msgstr "视图"
 
@@ -1163,6 +1163,10 @@ msgstr "标签页"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Drop-down menu"
 msgstr "下拉菜单"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views offered"
+msgstr "提供的视图"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"

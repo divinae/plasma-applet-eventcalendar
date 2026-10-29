@@ -57,11 +57,13 @@ QtObject {
 			plasmoid.configuration.v73Migration = true
 		}
 
-		// The view switcher can't be hidden any more (1.8.2): hidden became the small one.
-		if (plasmoid.configuration.showViewTabs === false) {
-			plasmoid.configuration.viewSwitcher = 'menu'
-			plasmoid.configuration.showViewTabs = true
-			logMigration('showViewTabs false => viewSwitcher menu')
+		// Added in 1.8.2: the view switcher can't be hidden any more, hidden became the small one.
+		if (!plasmoid.configuration.v182Migration) {
+			if (plasmoid.configuration.showViewTabs === false) {
+				plasmoid.configuration.viewSwitcher = 'menu'
+				logMigration('showViewTabs false => viewSwitcher menu')
+			}
+			plasmoid.configuration.v182Migration = true
 		}
 
 		// Another (broken) Plasma 6 port stored the plugin list one character per entry: put it
