@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
 
 import "Shared.js" as Shared
 
@@ -20,7 +21,14 @@ Item {
 		spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
+		// Not flicked with the mouse (as Plasma's ScrollView); wheel and touchpad as there.
+		interactive: Kirigami.Settings.hasTransientTouchInput
 		QQC2.ScrollBar.vertical: OverlayScrollBar {}
+		Kirigami.WheelHandler {
+			target: agendaList
+			filterMouseEvents: true
+			keyNavigationEnabled: false
+		}
 
 		delegate: AgendaListItem {
 			// As wide as the list. Not width: parent.width, the parent is null while a delegate

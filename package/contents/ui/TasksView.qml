@@ -245,12 +245,17 @@ Item {
 		cards = newCards // Before the rows: their delegates read it
 		rows = newRows
 		keepKeyRow()
-		// Toggling a task rebuilds the rows: stay where the list was.
+		// Toggling a task rebuilds the rows: stay where the list was (the same row on top, or one
+		// at its place when it's gone, eg: the task checked off).
 		var newTopIndex = topKey ? rowIndex(topKey) : -1
+		if (newTopIndex < 0 && topIndex >= 0 && rows.length > 0) {
+			newTopIndex = Math.min(topIndex, rows.length - 1)
+			topOffset = 0
+		}
 		if (newTopIndex >= 0) {
 			rowsList.positionViewAtIndex(newTopIndex, ListView.Beginning)
-			rowsList.contentY += topOffset
-			rowsList.returnToBounds()
+			var lowest = rowsList.originY + Math.max(0, rowsList.contentHeight - rowsList.height)
+			rowsList.contentY = Math.max(rowsList.originY, Math.min(lowest, rowsList.contentY + topOffset))
 		}
 	}
 	// In progress: drop the marks of tasks checked off or deleted elsewhere, from the lists fetched
@@ -542,14 +547,15 @@ Item {
 		Qt.callLater(scrollToKeyRow)
 	}
 	// The delegate of the row with key (a TaskRow, "Add a task…", …), or null.
-	// Rows out of sight aren't made (a ListView): it's brought into sight first.
-	function rowItem(key) {
+	// Rows out of sight aren't made (a ListView): null for them, unless bringIntoSight (it's
+	// scrolled to first).
+	function rowItem(key, bringIntoSight) {
 		var i = rowIndex(key)
 		if (i < 0) {
 			return null
 		}
 		var slot = rowsList.itemAtIndex(i)
-		if (!slot) {
+		if (!slot && bringIntoSight) {
 			rowsList.positionViewAtIndex(i, ListView.Contain)
 			slot = rowsList.itemAtIndex(i)
 		}
@@ -580,7 +586,8 @@ Item {
 			moveKeyRow(1) // First press: highlight the first task
 			return taskRowKeys().length > 0
 		}
-		var loader = rowItem(row.key)
+		// Only checking off needs the row itself (the others: its task).
+		var loader = action === 'toggle' ? rowItem(row.key, true) : null
 		var taskRow = loader ? loader.item : null
 		switch (action) {
 			case 'open':
@@ -609,9 +616,9 @@ Item {
 		if (managing) {
 			return true // Nothing to add a task to on that page
 		}
+		rowsList.positionViewAtBeginning() // "Add a task…" is the first row
 		var loader = rowItem('add')
 		if (loader && loader.item && typeof loader.item.focusField === 'function') {
-			rowsList.positionViewAtBeginning()
 			loader.item.focusField()
 			return true
 		}
@@ -665,9 +672,13 @@ Item {
 		return -1
 	}
 	readonly property bool dragActive: !!dragRow
+	// Where the dragged row is in the list (its content): the list keeps the rows that far made
+	// while it scrolls (a row scrolled out of the list's cache is destroyed, and the drag with it).
+	property real dragSourceY: 0
 
 	function startDrag(row, rowItem, at) {
 		dragRow = row
+		dragSourceY = rowItem.mapToItem(rowsList.contentItem, 0, 0).y
 		dragWidth = rowItem.width
 		var grab = rowItem.mapFromItem(null, at.x, at.y)
 		dragGrabX = grab.x
@@ -801,7 +812,7 @@ Item {
 		repeat: true
 		running: tasksView.dragActive
 		onTriggered: {
-			var flick = rowsList
+			var flick = rowsList // Scrolled while dragging
 			var y = flick.mapFromItem(null, tasksView.dragAt.x, tasksView.dragAt.y).y
 			var edge = Kirigami.Units.gridUnit * 1.5
 			var step = y < edge ? -(edge - y) / 2 : y > flick.height - edge ? (y - flick.height + edge) / 2 : 0
@@ -1075,11 +1086,25 @@ Item {
 				Layout.fillHeight: true
 				clip: true
 				model: tasksView.rows
-				cacheBuffer: Math.max(0, height)
+				// A screen's worth around the rows in sight; while dragging, as far as the dragged row.
+				cacheBuffer: Math.max(0, height) + (tasksView.dragActive ? Math.abs(contentY - tasksView.dragSourceY) : 0)
 				boundsBehavior: Flickable.StopAtBounds
-				QQC2.ScrollBar.vertical: OverlayScrollBar {}
-				readonly property real columnWidth: Math.min(width, tasksView.maxColumnWidth)
-				readonly property real columnX: Math.round((width - columnWidth) / 2)
+				// Not flicked with the mouse (as Plasma's ScrollView): a press and drag on a row moves the
+				// task (reorder, another day or list); the wheel and the scroll bar scroll.
+				interactive: Kirigami.Settings.hasTransientTouchInput
+				QQC2.ScrollBar.vertical: OverlayScrollBar {
+					id: rowsScrollBar
+				}
+				// Wheel and touchpad like the other scroll views (Plasma's ScrollView).
+				Kirigami.WheelHandler {
+					target: rowsList
+					filterMouseEvents: true
+					keyNavigationEnabled: false
+				}
+				// A lane for the scroll bar on the right, as the ScrollView kept: not over the rows' ends.
+				readonly property real scrollBarLane: rowsScrollBar.implicitWidth
+				readonly property real columnWidth: Math.min(width - scrollBarLane, tasksView.maxColumnWidth)
+				readonly property real columnX: Math.round((width - scrollBarLane - columnWidth) / 2)
 
 				// A row: its Loader (rowLoader) with the room above and below it.
 				delegate: Item {
@@ -1741,6 +1766,12 @@ Item {
 							onCursorPositionChanged: {
 								if (restored) {
 									tasksView.renameCursor = cursorPosition
+								}
+							}
+							// Scrolled out of the list (destroyed): made again with the focus it had.
+							Component.onDestruction: {
+								if (restored) {
+									tasksView.renameHadFocus = activeFocus
 								}
 							}
 							onTextEdited: tasksView.renameDraft = text
