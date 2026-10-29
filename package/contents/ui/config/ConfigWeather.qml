@@ -156,10 +156,9 @@ ConfigPage {
 				onClicked: openWeatherMapCityDialog.open()
 			}
 			FormCard.FormDelegateSeparator {}
-			FormConfigText {
+			FormConfigPassword {
 				label: i18n("API app id")
 				configKey: 'openWeatherMapAppId'
-				echoMode: TextInput.Password
 				placeholderText: i18n("Required for OpenWeatherMap")
 			}
 		}
