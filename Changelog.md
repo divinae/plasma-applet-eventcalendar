@@ -1,3 +1,25 @@
+## v1.9.0 - October 29 2026
+
+### Meetings
+* **Full screen:** the notification when a meeting starts can be full screen (Settings > Events > When an Event Starts > Style). Every screen shows the desktop blurred behind, the meeting large in the middle and Join (Return), Snooze 1 min and Dismiss (Esc). Off by default, only for meetings with a video link unless you change it.
+* Join links are found for about 40 services instead of 6 (Zoom, Teams, Webex, Slack huddles, Discord, Chime, GoTo, Jitsi and more).
+* The event menu (right click an event or its Join button): Copy Meeting Link, and Mute Notifications for one event (no notification, clock chip or auto-join; still shown).
+* Press and hold the header's +: start a Google Meet or a Zoom meeting now.
+
+### Clock
+* The next event's chip: skip all-day events, and leave chosen calendars out (a clock button in the popup's Calendars list) (thanks to praveenpuglia, #5).
+* Only meetings with a video link, only accepted invitations, the longest title (Settings > Clock).
+* In a horizontal panel the chip is on the left of the time; a long title is shortened at its end, the time stays whole.
+
+### Popup
+* Go to date: press G (or hold Today) and type "next friday", "15 nov", "+2w".
+* An event in several calendars (yours and a shared one) is shown and notified once (Settings > Views).
+
+### Fixes
+* Opening the Agenda could freeze Plasma with the islands style (#3): the stripes of "maybe" events no longer paint with a Canvas during layout.
+* Delete in the event menu did nothing; a repeating event's Delete offers this occurrence or all of them, others delete right away (with Undo).
+* Two widgets (eg: desktop and panel) no longer share one offline cache file.
+
 ## v1.8.3 - October 29 2026
 
 ### Popup

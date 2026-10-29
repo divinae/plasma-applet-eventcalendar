@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.8.3
+    1.9.0
 
 **License**
 
@@ -104,17 +104,33 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.8.3)**
+**Changelog (1.9.0)**
 
 ```
+Meetings
+- Full-screen alert when a meeting starts (a style of the start notification): blurred desktop, Join / Snooze / Dismiss
+- Join links for about 40 services
+- Event menu: Copy Meeting Link, Mute Notifications for one event
+- Hold + in the header: start a Google Meet or Zoom now
+
+Clock
+- Next event chip: skip all-day events, leave calendars out, only meetings with a link, only accepted, longest title
+- In a horizontal panel the chip is left of the time
+
 Popup
-- Right click on the header: the views offered, tabs or a drop-down menu, and which buttons show (the others in a menu)
+- Go to date: press G and type "next friday", "+2w"
+- An event in several calendars shown once
+
+Fixes
+- Opening the Agenda could freeze Plasma (islands style)
+- Delete in the event menu works again
+- Two widgets no longer share one cache file
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.8.3-plasma6.0.plasmoid` from the
-  [v1.8.3 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.3),
+- **Product file:** `eventcalendar-v1.9.0-plasma6.0.plasmoid` from the
+  [v1.9.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.9.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
