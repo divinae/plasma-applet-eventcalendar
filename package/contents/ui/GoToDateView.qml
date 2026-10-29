@@ -18,7 +18,7 @@ Item {
 	readonly property string text: textField.text.trim()
 	// 'YYYY-MM-DD', or '' (nothing understood yet).
 	readonly property string dayString: text ? QuickParse.goToDate(text, {
-		today: Tasks.dayString(new Date()),
+		today: Tasks.dayString(timeModel.currentTime), // Follows the clock (past midnight too)
 		dayFirst: appletConfig.quickParseLocale.dayFirst,
 		dayNames: appletConfig.quickParseLocale.dayNames,
 		monthNames: appletConfig.quickParseLocale.monthNames,

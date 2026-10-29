@@ -86,6 +86,16 @@ function addDays(day, n) {
 	return dayOf(p.y, p.m, p.d + n)
 }
 
+// n months from day (negative: back), on the same day or the last of a shorter month.
+function addMonths(day, n) {
+	var t = partsOf(day)
+	var mm = t.m - 1 + n
+	var y = t.y + Math.floor(mm / 12)
+	mm = ((mm % 12) + 12) % 12 + 1
+	var last = new Date(Date.UTC(y, mm, 0)).getUTCDate()
+	return dayOf(y, mm, Math.min(t.d, last))
+}
+
 function weekdayOf(day) {
 	var p = partsOf(day)
 	return new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay()
@@ -278,12 +288,7 @@ function rules(opts) {
 	var after = function(n, f) {
 		if (f === 'DAILY') return addDays(today, n)
 		if (f === 'WEEKLY') return addDays(today, 7 * n)
-		var t = partsOf(today)
-		var mm = t.m - 1 + (f === 'YEARLY' ? 12 * n : n)
-		var y = t.y + Math.floor(mm / 12)
-		mm = mm % 12 + 1
-		var last = new Date(Date.UTC(y, mm, 0)).getUTCDate()
-		return dayOf(y, mm, Math.min(t.d, last))
+		return addMonths(today, f === 'YEARLY' ? 12 * n : n)
 	}
 	add('date', '(?:in|za)\\s+(\\d{1,3}|an?|one|jeden)\\s+(days?|weeks?|months?|years?|dni|dzień|dzien|tygodnie|tygodni|tydzień|tydzien|miesiące|miesiace|miesięcy|miesiecy|miesiąc|miesiac|lata|lat|rok)', dated(function(m) {
 		var n = numberWord(m[1])
@@ -408,34 +413,34 @@ function parse(text, opts) {
 }
 
 // "Go to date" (the popup's G key): the day text names, 'YYYY-MM-DD', or '' when none. The same
-// days as parse() (today, tomorrow, a weekday, "next week", "15 nov", "2026-11-15", …), and offsets
-// from opts.today: "+2w", "-3d", "+1m", "+1y" (d, w, m, y; also with a space: "+ 2 w").
+// days as parse() (today, tomorrow, a weekday, "next week", "15 nov", "2026-11-15", …), the whole
+// text being the day; and offsets from opts.today: "+2w", "-3d", "+1m", "+1y", also "+2 weeks".
+// Only years 1900-9999 (Date maps years 0-99 to 1900-1999).
 function goToDate(text, opts) {
 	opts = opts || {}
 	text = String(text || '').trim()
-	var offset = /^([+-])\s*(\d{1,4})\s*([dwmy])$/i.exec(text)
-	if (offset && opts.today) {
-		var parts = String(opts.today).split('-').map(Number)
-		var n = Number(offset[2]) * (offset[1] === '-' ? -1 : 1)
-		var unit = offset[3].toLowerCase()
-		var day = new Date(parts[0], parts[1] - 1, parts[2])
-		if (unit === 'd' || unit === 'w') {
-			day.setDate(day.getDate() + n * (unit === 'w' ? 7 : 1))
-		} else {
-			// Months and years: the same day, or the last of a shorter month (31 Jan + 1m: 28/29 Feb).
-			var months = unit === 'm' ? n : n * 12
-			var target = new Date(day.getFullYear(), day.getMonth() + months, 1)
-			var last = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate()
-			day = new Date(target.getFullYear(), target.getMonth(), Math.min(day.getDate(), last))
-		}
-		return day.getFullYear() + '-' + pad2(day.getMonth() + 1) + '-' + pad2(day.getDate())
+	if (!opts.today) {
+		return ''
 	}
-	var parsed = parse(text, {
-		today: opts.today,
-		kinds: ['date'],
-		dayFirst: opts.dayFirst,
-		dayNames: opts.dayNames,
-		monthNames: opts.monthNames,
-	})
-	return parsed.dueDay || ''
+	var day = ''
+	var offset = /^([+-])\s*(\d{1,5})\s*(d|days?|w|weeks?|m|months?|y|years?)$/i.exec(text)
+	if (offset) {
+		var n = Number(offset[2]) * (offset[1] === '-' ? -1 : 1)
+		var unit = offset[3].charAt(0).toLowerCase()
+		day = unit === 'd' ? addDays(opts.today, n)
+			: unit === 'w' ? addDays(opts.today, 7 * n)
+			: addMonths(opts.today, unit === 'm' ? n : 12 * n)
+	} else {
+		var parsed = parse(text, {
+			today: opts.today,
+			kinds: ['date'],
+			dayFirst: opts.dayFirst,
+			dayNames: opts.dayNames,
+			monthNames: opts.monthNames,
+		})
+		// Only the day: not a day somewhere in other text.
+		day = parsed.title ? '' : parsed.dueDay || ''
+	}
+	var year = Number(String(day).split('-')[0])
+	return /^\d{4}-\d{2}-\d{2}$/.test(day) && year >= 1900 && year <= 9999 ? day : ''
 }
