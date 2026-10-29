@@ -360,24 +360,42 @@ function akonadiPsqlLines(sql) {
 // The Akonadi calendars' colors (the collectioncolor attribute) are only in Akonadi's database
 // (akonadiPsqlLines); without it nothing (the colors and names then come from the events). Lines
 // "collection id|#aarrggbb".
+function akonadiColorsLines() {
+	return akonadiPsqlLines("SELECT collectionid, convert_from(value, 'UTF8') FROM collectionattributetable WHERE convert_from(type, 'UTF8') = 'collectioncolor'")
+}
 function akonadiColorsCommand() {
-	var script = akonadiPsqlLines("SELECT collectionid, convert_from(value, 'UTF8') FROM collectionattributetable WHERE convert_from(type, 'UTF8') = 'collectioncolor'")
-		.concat(['exit 0']).join('\n')
-	return ['sh', '-c', script]
+	return ['sh', '-c', akonadiColorsLines().concat(['exit 0']).join('\n')]
 }
 
 // The collections of Akonadi's Google resources, with the account of each: lines
 // "account|resource|email" from the resources' settings, "collection|id|resource|remote id" from the
 // database (a calendar's remote id is its Google calendar id).
-function akonadiGoogleCollectionsCommand() {
-	var script = [
-		'cd "${XDG_CONFIG_HOME:-$HOME/.config}" || exit 0',
-		'for f in akonadi_google_resource_*rc; do',
-		'[ -f "$f" ] && sed -n "s/^Account=/account|${f%rc}|/p" "$f"',
+function akonadiGoogleCollectionsLines() {
+	return [
+		'for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/akonadi_google_resource_*rc; do',
+		'r=${f##*/}; [ -f "$f" ] && sed -n "s/^Account=/account|${r%rc}|/p" "$f"',
 		'done',
 	].concat(akonadiPsqlLines("SELECT 'collection', c.id, r.name, c.remoteid FROM collectiontable c JOIN resourcetable r ON r.id = c.resourceid WHERE r.name LIKE 'akonadi_google_resource_%'"))
-		.concat(['exit 0']).join('\n')
-	return ['sh', '-c', script]
+}
+function akonadiGoogleCollectionsCommand() {
+	return ['sh', '-c', akonadiGoogleCollectionsLines().concat(['exit 0']).join('\n')]
+}
+// Both: the colors' lines and the collections' lines in one output.
+function akonadiCalendarsCommand() {
+	return ['sh', '-c', akonadiColorsLines().concat(akonadiGoogleCollectionsLines(), ['exit 0']).join('\n')]
+}
+// The widget's Google accounts (GoogleAccountsStore.accounts) for akonadiMirroredCollections:
+// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case.
+function googleCalendarIdsByAccount(accounts) {
+	var calendarIds = {}
+	;(accounts || []).forEach(function(account) {
+		var list = account && account.calendarList ? Array.prototype.slice.call(account.calendarList) : []
+		var primary = list.filter(function(calendar) { return calendar && calendar.primary })[0]
+		if (primary && primary.id) {
+			calendarIds[String(primary.id).toLowerCase()] = list.map(function(calendar) { return calendar.id })
+		}
+	})
+	return calendarIds
 }
 // The collection ids of the Google calendars that Akonadi syncs for an account also signed in to
 // in the widget: { "collection id": true }. calendarIds: { "email": ["calendar id", ...] }, the
@@ -413,6 +431,27 @@ function parseAkonadiColors(stdout) {
 	})
 	return colors
 }
+// The color keys that only mirrored calendars (akonadiMirroredCollections) among the shown ones
+// (pimCalendarRows, checked) have: { key: true }. Their events are the signed-in account's.
+function mirroredColorKeys(rows, colors, mirrored) {
+	var mirroredKeys = {}
+	var otherKeys = {}
+	;(rows || []).forEach(function(row) {
+		var key = row.checked ? colorKey((colors || {})[row.id]) : ''
+		if (key) {
+			if ((mirrored || {})[row.id]) {
+				mirroredKeys[key] = true
+			} else {
+				otherKeys[key] = true
+			}
+		}
+	})
+	Object.keys(otherKeys).forEach(function(key) {
+		delete mirroredKeys[key]
+	})
+	return mirroredKeys
+}
+
 // Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color.
 function namesByColor(rows, colors) {
 	var names = {}

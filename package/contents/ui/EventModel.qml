@@ -12,6 +12,7 @@ import "EventTypes.js" as EventTypes
 import "TaskLists.js" as TaskLists
 import "Tasks.js" as Tasks
 import "calendars/PlasmaCalendarEventState.js" as PlasmaCalendarEventState
+import "calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
 CalendarManager {
 	id: eventModel
@@ -317,6 +318,7 @@ CalendarManager {
 
 	PlasmaCalendarManager {
 		id: plasmaCalendarManager
+		googleCalendarIds: PlasmaCalendarUtils.googleCalendarIdsByAccount(googleAccountsStore.accounts)
 	}
 
 	// Tasks are placed on their day when parsed (Tasks.placementDay): place them again.

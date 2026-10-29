@@ -94,4 +94,19 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(mirrored)), { 1485: true, 1486:
 	"that account's calendars in the widget: not those it lacks, not another account's, not a resource without settings")
 assert.deepStrictEqual(JSON.parse(JSON.stringify(U.akonadiMirroredCollections('', { 'me@gmail.com': ['me@gmail.com'] }))), {}, 'no database: none')
 
+const rows = [
+	{ id: '1486', name: 'me@gmail.com', checked: true },
+	{ id: '1485', name: 'Holidays', checked: true },
+	{ id: '20', name: 'Work', checked: true },
+	{ id: '21', name: 'Off', checked: false },
+]
+const colors = { 1486: '#aaaaaa', 1485: '#bbbbbb', 20: '#bbbbbb', 21: '#cccccc' }
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.mirroredColorKeys(rows, colors, { 1486: true, 1485: true, 21: true }))), { aaaaaa: true },
+	'a color also of another shown calendar stays; not shown calendars left out')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.googleCalendarIdsByAccount([
+	{ calendarList: [{ id: 'x@group.calendar.google.com' }, { id: 'Me@Gmail.com', primary: true }] },
+	{ calendarList: [] },
+	null,
+]))), { 'me@gmail.com': ['x@group.calendar.google.com', 'Me@Gmail.com'] })
+
 console.log('PASS plasma_calendar_utils')

@@ -85,7 +85,10 @@ CalendarManager {
 		// calendar menu or the Day view): the plugin tells an event's color, not its calendar.
 		// Named after the shown calendars of that color (akonadiColors), else a few of their events;
 		// calendars of one color share one.
-		var namesByColor = PlasmaCalendarUtils.namesByColor(rows, akonadiColors)
+		// Not the Google calendars of an account signed in here: they are with that account.
+		var namesByColor = PlasmaCalendarUtils.namesByColor(rows.filter(function(row) {
+			return !mirroredCollections[row.id]
+		}), akonadiColors)
 		var separator = i18nc("separator of names in a list", ", ")
 		pimColorCalendars.forEach(function(group) {
 			var names = namesByColor[PlasmaCalendarUtils.colorKey(group.color)]
@@ -115,22 +118,44 @@ CalendarManager {
 			})
 		}
 	}
-	// Akonadi's calendar colors by collection id, from its database (PlasmaCalendarUtils.akonadiColorsCommand),
-	// read at the start and again with a fetch at most every 10 minutes.
+	// Akonadi's calendar colors by collection id and its Google calendars, from its database
+	// (PlasmaCalendarUtils.akonadiCalendarsCommand), read at the start and again with a fetch at most
+	// every 10 minutes.
 	property var akonadiColors: ({})
+	property string akonadiGoogleCollections: ""
 	property real akonadiColorsReadAt: 0
 	function readAkonadiColors() {
 		if (Date.now() - akonadiColorsReadAt < 10 * 60 * 1000) {
 			return
 		}
 		akonadiColorsReadAt = Date.now()
-		executable.execArgv(PlasmaCalendarUtils.akonadiColorsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+		executable.execArgv(PlasmaCalendarUtils.akonadiCalendarsCommand(), function(cmd, exitCode, exitStatus, stdout) {
 			var colors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
-			if (JSON.stringify(colors) !== JSON.stringify(akonadiColors)) {
-				akonadiColors = colors
-				refresh() // The calendars named anew (the colors' reading is throttled: no loop)
+			var changed = JSON.stringify(colors) !== JSON.stringify(akonadiColors)
+			akonadiColors = colors
+			akonadiGoogleCollections = String(stdout || "")
+			if (updateMirroredCollections() || changed) {
+				refresh() // The calendars named anew (the reading is throttled: no loop)
 			}
 		})
+	}
+	// The Google calendars of the accounts signed in to in the widget: { "email": ["calendar id", ...] }
+	// (set by EventModel). Akonadi's copies of them (mirroredCollections) are left out: their events
+	// come from the sign-in, and the calendar menu lists them with the account.
+	property var googleCalendarIds: ({})
+	property var mirroredCollections: ({})
+	function updateMirroredCollections() {
+		var mirrored = PlasmaCalendarUtils.akonadiMirroredCollections(akonadiGoogleCollections, googleCalendarIds)
+		if (JSON.stringify(mirrored) === JSON.stringify(mirroredCollections)) {
+			return false
+		}
+		mirroredCollections = mirrored
+		return true
+	}
+	onGoogleCalendarIdsChanged: {
+		if (updateMirroredCollections()) {
+			refresh()
+		}
 	}
 	// [{ id, color, count, titles }] from the last fetched Akonadi events, by color.
 	property var pimColorCalendars: []
@@ -374,6 +399,13 @@ CalendarManager {
 
 	onFetchAllCalendars: {
 		var allEvents = getEventsForDuration(dateMin, dateMax)
+		// Akonadi events in a color only Akonadi's copies of signed-in Google calendars have: theirs.
+		var mirroredKeys = PlasmaCalendarUtils.mirroredColorKeys(
+			PlasmaCalendarUtils.pimCalendarRows(calendarModel, Qt.UserRole, Qt.DisplayRole), akonadiColors, mirroredCollections)
+		allEvents = allEvents.filter(function(event) {
+			var prefix = calendarManagerId + "_EventsColor_"
+			return event.calendarId.indexOf(prefix) !== 0 || !mirroredKeys[event.calendarId.slice(prefix.length)]
+		})
 
 		// Filter events into seperate calendars
 		var calendarIdList = []

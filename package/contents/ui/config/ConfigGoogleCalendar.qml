@@ -136,16 +136,8 @@ ConfigPage {
 			page.akonadiGoogleCollections = String(stdout || "")
 		})
 	}
-	readonly property var mirroredPimCalendars: {
-		var calendarIds = {}
-		Shared.toArray(googleLoginManager.accounts).forEach(function(account) {
-			var email = primaryCalendarId(account).toLowerCase()
-			if (email) {
-				calendarIds[email] = Shared.toArray(account.calendarList).map(function(calendar) { return calendar.id })
-			}
-		})
-		return PlasmaCalendarUtils.akonadiMirroredCollections(akonadiGoogleCollections, calendarIds)
-	}
+	readonly property var mirroredPimCalendars: PlasmaCalendarUtils.akonadiMirroredCollections(akonadiGoogleCollections,
+		PlasmaCalendarUtils.googleCalendarIdsByAccount(Shared.toArray(googleLoginManager.accounts)))
 	readonly property var listedPimCalendars: shownPimCalendars.filter(function(row) {
 		return !mirroredPimCalendars[row.id]
 	})
