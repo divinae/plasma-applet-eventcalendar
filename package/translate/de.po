@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 21:32+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -163,15 +163,27 @@ msgstr "%1 konnte nicht geladen werden: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr "Akonadi-Kalender: %1"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 Termin"
+msgstr[1] "%1 Termine"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -848,11 +860,13 @@ msgstr "Aufgabenlisten werden auf der Seite „Aufgaben“ ausgewählt."
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+"calendar menu they are shown and hidden by color: calendars of one color "
+"together."
 msgstr ""
 "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, wird "
 "auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine > Plasma-"
-"Kalender). Im Kalendermenü des Aufklappfensters sind sie ein Eintrag."
+"Kalender). Im Kalendermenü des Aufklappfensters werden sie nach Farbe ein- "
+"und ausgeblendet: Kalender einer Farbe gemeinsam."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -3882,12 +3896,6 @@ msgid "Yesterday"
 msgstr "Gestern"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 Termin"
-msgstr[1] "%1 Termine"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3917,6 +3925,16 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are one entry."
+#~ msgstr ""
+#~ "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, "
+#~ "wird auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine "
+#~ "> Plasma-Kalender). Im Kalendermenü des Aufklappfensters sind sie ein "
+#~ "Eintrag."
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

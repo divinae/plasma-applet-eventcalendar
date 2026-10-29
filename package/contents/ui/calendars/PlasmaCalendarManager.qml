@@ -81,22 +81,61 @@ CalendarManager {
 		if (!pimEventsPluginEnabled()) {
 			return
 		}
-		// Akonadi fills the model a moment after its events may have come: named for now.
-		if (shownNames.length === 0) {
-			if (!pimEventsColor) {
-				return // No Akonadi events either
-			}
-			shownNames.push(i18n("KDE PIM (Akonadi)"))
-		}
-		// All the Akonadi events, as one calendar (eg: to hide them in the popup's calendar menu),
-		// named after the calendars shown and in the color most of its events have.
-		calendarList.push({
-			"id": calendarManagerId + "_Events",
-			"summary": shownNames.join(i18nc("separator of names in a list", ", ")),
-			"backgroundColor": pimEventsColor || Kirigami.Theme.highlightColor.toString(),
-			"accessRole": "reader",
-			"isTasklist": false,
+		// The Akonadi events by their color, a calendar each (eg: to show or hide them in the popup's
+		// calendar menu or the Day view): the plugin tells an event's color, not its calendar.
+		// Named after the shown calendars of that color (akonadiColors), else a few of their events;
+		// calendars of one color share one.
+		var namesByColor = PlasmaCalendarUtils.namesByColor(rows, akonadiColors)
+		var separator = i18nc("separator of names in a list", ", ")
+		pimColorCalendars.forEach(function(group) {
+			var names = namesByColor[PlasmaCalendarUtils.colorKey(group.color)]
+			calendarList.push({
+				"id": group.id,
+				"summary": names ? names.join(separator) : i18nc("%1 = a few event titles", "Akonadi calendar: %1", group.titles.join(separator)),
+				"description": i18np("%1 event", "%1 events", group.count),
+				"backgroundColor": group.color,
+				"accessRole": "reader",
+				"isTasklist": false,
+			})
 		})
+		// Events without a color: all the Akonadi events as one calendar, named after the calendars shown.
+		if (pimColorCalendars.length === 0) {
+			if (shownNames.length === 0) {
+				if (!pimEventsColor) {
+					return // No Akonadi events either
+				}
+				shownNames.push(i18n("KDE PIM (Akonadi)"))
+			}
+			calendarList.push({
+				"id": calendarManagerId + "_Events",
+				"summary": shownNames.join(i18nc("separator of names in a list", ", ")),
+				"backgroundColor": pimEventsColor || Kirigami.Theme.highlightColor.toString(),
+				"accessRole": "reader",
+				"isTasklist": false,
+			})
+		}
+	}
+	// Akonadi's calendar colors by collection id, from its database (PlasmaCalendarUtils.akonadiColorsCommand),
+	// read at the start and again with a fetch at most every 10 minutes.
+	property var akonadiColors: ({})
+	property real akonadiColorsReadAt: 0
+	function readAkonadiColors() {
+		if (Date.now() - akonadiColorsReadAt < 10 * 60 * 1000) {
+			return
+		}
+		akonadiColorsReadAt = Date.now()
+		executable.execArgv(PlasmaCalendarUtils.akonadiColorsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			var colors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
+			if (JSON.stringify(colors) !== JSON.stringify(akonadiColors)) {
+				akonadiColors = colors
+				refresh() // The calendars named anew (the colors' reading is throttled: no loop)
+			}
+		})
+	}
+	// [{ id, color, count, titles }] from the last fetched Akonadi events, by color.
+	property var pimColorCalendars: []
+	function updatePimColorCalendars(events) {
+		pimColorCalendars = PlasmaCalendarUtils.colorCalendars(events, calendarManagerId + "_EventsColor_", 3)
 	}
 	function pimEventsPluginEnabled() {
 		return PlasmaCalendarUtils.hasPlugin(plasmoid.configuration.enabledCalendarPlugins, "pimevents")
@@ -156,6 +195,9 @@ CalendarManager {
 
 	Component.onCompleted: {
 		syncEnabledPlugins()
+		if (pimEventsPluginEnabled()) {
+			readAkonadiColors()
+		}
 	}
 	Connections {
 		target: plasmoid.configuration
@@ -237,7 +279,9 @@ CalendarManager {
 		if (isEventType(dayItem, eventTypeLabels.holidays)) {
 			return calendarManagerId + "_Holidays"
 		} else if (isEventType(dayItem, eventTypeLabels.events)) {
-			return calendarManagerId + "_Events"
+			// By color: the closest to a calendar the plugin tells (pimColorCalendars).
+			var colorKey = PlasmaCalendarUtils.colorKey(dayItem.eventColor)
+			return calendarManagerId + (colorKey ? "_EventsColor_" + colorKey : "_Events")
 		} else if (isEventType(dayItem, eventTypeLabels.todo)) {
 			return calendarManagerId + "_Todo"
 		} else if (isEventType(dayItem, eventTypeLabels.other)) {
@@ -342,7 +386,14 @@ CalendarManager {
 			}
 			calendars[event.calendarId].push(event)
 		}
-		updatePimEventsColor(calendars[calendarManagerId + "_Events"] || [])
+		var pimEvents = allEvents.filter(function(event) {
+			return event.calendarId.indexOf(calendarManagerId + "_Events") === 0
+		})
+		updatePimEventsColor(pimEvents)
+		updatePimColorCalendars(pimEvents)
+		if (pimEvents.length > 0) {
+			readAkonadiColors()
+		}
 		for (var i = 0; i < calendarIdList.length; i++) {
 			var calendarId = calendarIdList[i]
 			var calendarEvents = calendars[calendarId]

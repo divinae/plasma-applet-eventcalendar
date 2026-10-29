@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 21:32+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -162,15 +162,29 @@ msgstr "Ni bilo mogoče naložiti %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 dogodek"
+msgstr[1] "%1 dogodka"
+msgstr[2] "%1 dogodki"
+msgstr[3] "%1 dogodkov"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -842,11 +856,9 @@ msgstr "Sezname opravil izberete na strani Opravila."
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+"calendar menu they are shown and hidden by color: calendars of one color "
+"together."
 msgstr ""
-"Prikazani samo za branje. Katere koledarje Akonadi prikazati, izberete na "
-"strani nastavitev vtičnika dogodkov PIM (Dogodki > Koledarji Plasma). V "
-"meniju koledarjev pojavnega okna so en vnos."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -3922,14 +3934,6 @@ msgid "Yesterday"
 msgstr "Včeraj"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 dogodek"
-msgstr[1] "%1 dogodka"
-msgstr[2] "%1 dogodki"
-msgstr[3] "%1 dogodkov"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3960,6 +3964,15 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are one entry."
+#~ msgstr ""
+#~ "Prikazani samo za branje. Katere koledarje Akonadi prikazati, izberete na "
+#~ "strani nastavitev vtičnika dogodkov PIM (Dogodki > Koledarji Plasma). V "
+#~ "meniju koledarjev pojavnega okna so en vnos."
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

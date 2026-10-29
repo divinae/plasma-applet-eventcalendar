@@ -307,3 +307,76 @@ function setEnabledPluginsByFilename(eventPluginsManager, pluginFilenameList, al
 	)
 	eventPluginsManager.enabledPlugins = pluginPathList
 }
+
+//--- Akonadi events by color
+// The PIM events plugin tells an event's color, not its calendar: the color stands in for it.
+// "#RRGGBB" or "#AARRGGBB" (a QColor as a string) -> "rrggbb", "" without one.
+function colorKey(color) {
+	var m = /^#(?:[0-9a-f]{2})?([0-9a-f]{6})$/i.exec(String(color || ""))
+	return m ? m[1].toLowerCase() : ""
+}
+
+// The events' calendars named idPrefix + a color key, as [{ id, color, count, titles }], with their
+// first titleCount different titles. By color: each keeps its place as the events change.
+function colorCalendars(events, idPrefix, titleCount) {
+	var byId = {}
+	var list = []
+	;(events || []).forEach(function(event) {
+		var id = String(event.calendarId || "")
+		if (id.indexOf(idPrefix) !== 0) {
+			return
+		}
+		var group = byId[id]
+		if (!group) {
+			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0, titles: [] }
+			list.push(group)
+		}
+		group.count++
+		var title = String(event.summary || "").trim()
+		if (title && group.titles.length < titleCount && group.titles.indexOf(title) < 0) {
+			group.titles.push(title)
+		}
+	})
+	return list.sort(function(a, b) {
+		return a.id < b.id ? -1 : a.id > b.id ? 1 : 0
+	})
+}
+
+// The Akonadi calendars' colors (the collectioncolor attribute) are only in Akonadi's database: read
+// there with one SELECT when it's PostgreSQL (Akonadi's default) and psql is installed; otherwise
+// nothing (the colors and names then come from the events). Lines "collection id|#aarrggbb".
+function akonadiColorsCommand() {
+	var script = [
+		'rc="${XDG_CONFIG_HOME:-$HOME/.config}/akonadi/akonadiserverrc"',
+		'[ -f "$rc" ] && command -v psql >/dev/null || exit 0',
+		'grep -q "^Driver=QPSQL" "$rc" || exit 0',
+		// Host (the socket directory) and the database name of the [QPSQL] section.
+		'host=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Host"{print substr($0,6);exit}\' "$rc")',
+		'name=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Name"{print substr($0,6);exit}\' "$rc")',
+		'timeout 5 psql ${host:+-h "$host"} -d "${name:-akonadi}" -At -c "SELECT collectionid, convert_from(value, \'UTF8\') FROM collectionattributetable WHERE convert_from(type, \'UTF8\') = \'collectioncolor\'" 2>/dev/null',
+		'exit 0',
+	].join('\n')
+	return ['sh', '-c', script]
+}
+// The command's output as { "collection id": "#rrggbb" }.
+function parseAkonadiColors(stdout) {
+	var colors = {}
+	String(stdout || '').split('\n').forEach(function(line) {
+		var m = /^(\d+)\|(#[0-9a-f]{6,8})\s*$/i.exec(line)
+		if (m) {
+			colors[m[1]] = '#' + colorKey(m[2])
+		}
+	})
+	return colors
+}
+// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color.
+function namesByColor(rows, colors) {
+	var names = {}
+	;(rows || []).forEach(function(row) {
+		var key = row.checked ? colorKey(colors[row.id]) : ''
+		if (key) {
+			names[key] = (names[key] || []).concat(row.name)
+		}
+	})
+	return names
+}

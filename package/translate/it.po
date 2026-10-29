@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 21:32+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -137,14 +137,25 @@ msgstr "Errore sconosciuto dell'helper iCalendar"
 msgid "Could not load %1: %2"
 msgstr "Impossibile caricare %1: %2"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 evento"
+msgstr[1] "%1 eventi"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
@@ -716,8 +727,8 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Gli elenchi di attività si scelgono nella pagina Attività."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr "Mostrati in sola lettura. Quali calendari Akonadi mostrare si sceglie nella pagina delle impostazioni del plugin degli eventi PIM (Eventi > Calendari Plasma). Nel menu dei calendari del popup sono una sola voce."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together."
+msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -3572,12 +3583,6 @@ msgid "Yesterday"
 msgstr "Ieri"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 evento"
-msgstr[1] "%1 eventi"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3605,6 +3610,9 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
+#~ msgstr "Mostrati in sola lettura. Quali calendari Akonadi mostrare si sceglie nella pagina delle impostazioni del plugin degli eventi PIM (Eventi > Calendari Plasma). Nel menu dei calendari del popup sono una sola voce."
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

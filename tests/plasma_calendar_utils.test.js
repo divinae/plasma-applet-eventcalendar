@@ -62,4 +62,20 @@ assert.deepStrictEqual(repair(['h', 'pimevents.so']), ['pimevents.so'], 'a stray
 assert.deepStrictEqual(repair(['x']), [], 'nothing usable')
 assert.deepStrictEqual(repair([]), [])
 
+//--- Akonadi events by color
+assert.strictEqual(U.colorKey('#9A9CFF'), '9a9cff')
+assert.strictEqual(U.colorKey('#ff9a9cff'), '9a9cff', 'with alpha')
+assert.strictEqual(U.colorKey(''), '')
+assert.strictEqual(U.colorKey('red'), '')
+const prefix = 'plasma_EventsColor_'
+const ev = (color, summary) => ({ calendarId: prefix + color, summary })
+const groups = JSON.parse(JSON.stringify(U.colorCalendars([
+	ev('aaaaaa', 'Standup'), ev('bbbbbb', 'Vacation'), ev('bbbbbb', 'Physio'), ev('bbbbbb', 'Vacation'),
+	ev('bbbbbb', 'Dentist'), ev('bbbbbb', 'Review'), { calendarId: 'plasma_Holidays', summary: 'Easter' },
+], prefix, 3)))
+assert.deepStrictEqual(groups, [
+	{ id: prefix + 'aaaaaa', color: '#aaaaaa', count: 1, titles: ['Standup'] },
+	{ id: prefix + 'bbbbbb', color: '#bbbbbb', count: 5, titles: ['Vacation', 'Physio', 'Dentist'] },
+], 'by color, different titles, other calendars left out')
+
 console.log('PASS plasma_calendar_utils')

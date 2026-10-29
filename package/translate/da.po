@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 21:32+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -161,15 +161,27 @@ msgstr "Kunne ikke indlæse %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 begivenhed"
+msgstr[1] "%1 begivenheder"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -833,11 +845,9 @@ msgstr "Opgavelister vælges på siden Opgaver."
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+"calendar menu they are shown and hidden by color: calendars of one color "
+"together."
 msgstr ""
-"Vises skrivebeskyttet. Hvilke Akonadi-kalendere der vises, vælges på "
-"indstillingssiden for PIM-begivenhedsplugin'et (Begivenheder > Plasma-"
-"kalendere). I pop op-vinduets kalendermenu er de én post."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -3831,12 +3841,6 @@ msgid "Yesterday"
 msgstr "I går"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 begivenhed"
-msgstr[1] "%1 begivenheder"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3865,6 +3869,15 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are one entry."
+#~ msgstr ""
+#~ "Vises skrivebeskyttet. Hvilke Akonadi-kalendere der vises, vælges på "
+#~ "indstillingssiden for PIM-begivenhedsplugin'et (Begivenheder > Plasma-"
+#~ "kalendere). I pop op-vinduets kalendermenu er de én post."
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

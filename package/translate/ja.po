@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-29 21:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -137,14 +137,24 @@ msgstr "不明な iCalendar ヘルパーエラー"
 msgid "Could not load %1: %2"
 msgstr "%1 を読み込めませんでした: %2"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr "、"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 件の予定"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
@@ -713,8 +723,8 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "タスクリストはタスクのページで選択します。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr "読み取り専用で表示します。表示する Akonadi カレンダーは PIM イベントプラグインの設定ページ (イベント > Plasma カレンダー) で選びます。ポップアップのカレンダーメニューでは 1 項目になります。"
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together."
+msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -3531,11 +3541,6 @@ msgid "Yesterday"
 msgstr "昨日"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 件の予定"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -3562,6 +3567,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
+#~ msgstr "読み取り専用で表示します。表示する Akonadi カレンダーは PIM イベントプラグインの設定ページ (イベント > Plasma カレンダー) で選びます。ポップアップのカレンダーメニューでは 1 項目になります。"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
