@@ -171,6 +171,9 @@ Item {
 			Canvas {
 				id: gridCanvas
 				anchors.fill: parent
+				// Painted on a thread of its own, not the GUI thread in the layout: a hang in QPainter
+				// must not freeze Plasma (#3).
+				renderStrategy: Canvas.Threaded
 				canvasSize.width: parent.width
 				canvasSize.height: parent.height
 				contextType: '2d'
