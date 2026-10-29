@@ -1526,9 +1526,16 @@ Item {
 												anchors.rightMargin: joinPill.visible ? joinPill.anchors.rightMargin + joinPill.width + Kirigami.Units.smallSpacing : 2
 												clip: true
 												PlasmaComponents3.Label {
+													id: blockTitle
 													width: parent.width
 													// Day view, block too short for a second line: put time and location after the title.
 													readonly property bool inlineDetails: weekView.singleDay && eventBlock.height < weekView.lineHeight * 2 + 4
+													// Invitation not answered yet: the question mark before the title, as in the
+													// all-day row and the month (Shared.isAwaitingAnswer); also on short blocks.
+													readonly property bool awaitingAnswer: Shared.isAwaitingAnswer(eventBlock.eventStyle.response)
+													readonly property int iconSize: 2 * Math.floor(Math.min(Kirigami.Units.iconSizes.small, weekView.lineHeight) / 2)
+													// Never wider than the label: a padding past its width crashed Qt's text layout.
+													leftPadding: awaitingAnswer ? Math.min(iconSize + 3, Math.max(0, width - 8)) : 0
 													text: {
 														var item = eventBlock.eventItem
 														if (!inlineDetails) {
@@ -1549,6 +1556,16 @@ Item {
 													elide: Text.ElideRight
 													wrapMode: Text.WordWrap
 													maximumLineCount: Math.max(1, Math.floor((eventBlock.height - 4) / weekView.lineHeight) - 1)
+													Kirigami.Icon {
+														visible: blockTitle.awaitingAnswer
+														y: Math.round((weekView.lineHeight - height) / 2)
+														width: blockTitle.iconSize
+														height: width
+														roundToIconSize: false
+														source: Shared.EVENT_INDICATOR_ICONS.needsAction
+														isMask: true
+														color: blockTitle.color
+													}
 												}
 												// Time (day view: and location), then icons for what else is set.
 												Row {
@@ -1583,6 +1600,8 @@ Item {
 														color: eventBlock.eventStyle.textColor
 														iconSize: 2 * Math.round(eventSmallFontMetrics.height / 2)
 														opacity: 0.85
+														// The question mark is before the title.
+														showNeedsAction: false
 														// The day view shows the location as text and has a Join button.
 														showLocation: !weekView.singleDay
 														showMeeting: !joinPill.visible
