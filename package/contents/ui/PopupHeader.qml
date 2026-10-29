@@ -224,6 +224,15 @@ PlasmaExtras.PlasmoidHeading {
 					visible: running
 				}
 			}
+			// Right clicks in the popup don't open the widget menu, so its "Configure…" is here.
+			PlasmaComponents3.ToolButton {
+				readonly property var configureAction: plasmoid.internalAction("configure")
+				visible: !!configureAction && configureAction.enabled
+				icon.name: "configure"
+				onClicked: configureAction.trigger()
+				PlasmaComponents3.ToolTip.text: configureAction ? configureAction.text : ""
+				PlasmaComponents3.ToolTip.visible: hovered
+			}
 			Kirigami.Separator {
 				visible: header.showPinButton
 				Layout.fillHeight: true
