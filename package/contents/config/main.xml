@@ -569,6 +569,10 @@
 		<entry name="dayShowTasks" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="dayAllDayTiles" type="bool">
+			<!-- Day view: three all-day events or more side by side, three in a row (the tooltip has the full text). -->
+			<default>true</default>
+		</entry>
 		<entry name="weatherShowInViews" type="bool">
 			<default>true</default>
 		</entry>

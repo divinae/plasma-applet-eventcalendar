@@ -14,7 +14,7 @@ function read(file) {
 const Shared = {}
 vm.runInNewContext(read('Shared.js'), Shared)
 const B = {}
-vm.runInNewContext(read('EventBuckets.js') + '\nObject.assign(out, { layoutLanes, layoutMonth, bucketByDay })', { out: B, Shared, Date })
+vm.runInNewContext(read('EventBuckets.js') + '\nObject.assign(out, { layoutLanes, layoutTiles, layoutMonth, bucketByDay })', { out: B, Shared, Date })
 
 const d = (day, h, m) => new Date(2026, 9, day, h || 0, m || 0)
 function allDay(summary, day, days) {
@@ -136,5 +136,14 @@ eq(m.dayEvents[col(d(1))].map(x => x.summary), ['Before'])
 const buckets = B.bucketByDay([conference, night, untilMidnight], dayTimes)
 eq(buckets[col(d(15))].map(x => x.summary), ['Conference', 'Late', 'Night shift'])
 eq(buckets[col(d(16))].map(x => x.summary), ['Conference', 'Night shift'])
+
+//--- layoutTiles (Day view all-day tiles)
+const six = ['a', 'b', 'c', 'd', 'e', 'f'].map(summary => ({ summary }))
+const tiles = B.layoutTiles(six, 3, 3)
+eq(tiles.bars.map(b => [b.eventItem.summary, b.lane, b.slot]), [['a', 0, 0], ['b', 0, 1], ['c', 0, 2], ['d', 1, 0], ['e', 1, 1], ['f', 1, 2]])
+eq([tiles.laneCount, tiles.hiddenCount], [2, 0], 'six: two full rows')
+eq([B.layoutTiles(six.slice(0, 4), 3, 3).laneCount, B.layoutTiles(six.slice(0, 4), 3, 3).hiddenCount], [2, 0], 'four: the second row has one')
+const many = B.layoutTiles(six.concat(six), 3, 3)
+eq([many.bars.length, many.laneCount, many.hiddenCount], [8, 3, 4], 'twelve: eight and +4 in the ninth place')
 
 console.log('lane_layout ok')

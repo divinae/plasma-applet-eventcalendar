@@ -89,6 +89,9 @@ Item {
 	readonly property bool dayWantsUpNext: plasmoid.configuration.dayShowUpNext !== false
 	readonly property bool dayWantsWeather: plasmoid.configuration.dayShowWeather !== false
 	readonly property bool dayWantsTasks: plasmoid.configuration.dayShowTasks !== false
+	// Three all-day events or more: side by side, three in a row (Settings > Views).
+	readonly property bool allDayTiles: singleDay && plasmoid.configuration.dayAllDayTiles !== false
+	onAllDayTilesChanged: layoutAllDay(days)
 	// Right of the grid, when there's room: the day's tasks and below them its weather. Left of it,
 	// when there's room for that too: a small month (MiniMonth) and below it Up next. A column whose
 	// panels are all turned off isn't there.
@@ -158,6 +161,8 @@ Item {
 	property var allDayBars: []
 	property int allDayLaneCount: 0
 	property var allDayHiddenPerDay: [] // Events per day in lanes that aren't shown.
+	property int allDayTileHidden: 0 // Day view tiles: events past the last place, a "+N" there
+	readonly property int allDayTileColumns: 3
 
 	FontMetrics {
 		id: fontMetrics
@@ -196,6 +201,14 @@ Item {
 	readonly property int gutterWidth: localGutterWidth + secondGutterWidth
 	// The day columns reach the edge: the thin scroll bar shows over the last one while in use.
 	readonly property real columnWidth: Math.max(1, (timeGrid.width - gutterWidth) / columnCount)
+	// An all-day bar from its first to its last column; a Day view tile (bar.slots) a part of the day.
+	function allDayBarX(first, bar) {
+		var x = gutterWidth + first * columnWidth + 2
+		return bar && bar.slots ? x + bar.slot * columnWidth / bar.slots : x
+	}
+	function allDayBarWidth(first, last, bar) {
+		return (bar && bar.slots ? columnWidth / bar.slots : (last - first + 1) * columnWidth) - 4
+	}
 	readonly property int allDayRowHeight: Math.round(lineHeight * 2.2) + 6 // Title + date span
 	readonly property int maxVisibleAllDayRows: 3
 	// Same faint lines as the month grid.
@@ -330,7 +343,9 @@ Item {
 					})
 				}
 			}
-			allDay.sort(function(a, b) { return a.startDateTime - b.startDateTime })
+			allDay.sort(function(a, b) { // The same start: by title, the same order at each fetch
+				return a.startDateTime - b.startDateTime || String(a.summary || '').localeCompare(String(b.summary || ''))
+			})
 			layoutTimed(timed)
 			result.push({ date: new Date(dayStart), allDay: allDay, timed: timed })
 		}
@@ -356,6 +371,16 @@ Item {
 	}
 
 	function layoutAllDay(dayList) {
+		var dayEvents = dayList.length === 1 ? dayList[0].allDay : []
+		if (allDayTiles && dayEvents.length >= allDayTileColumns) {
+			var tiles = EventBuckets.layoutTiles(dayEvents, allDayTileColumns, maxVisibleAllDayRows)
+			allDayBars = tiles.bars
+			allDayHiddenPerDay = []
+			allDayLaneCount = tiles.laneCount
+			allDayTileHidden = tiles.hiddenCount
+			return
+		}
+		allDayTileHidden = 0
 		// One bar per event from its first to its last day in this week, in lanes; too many lanes:
 		// maxVisibleAllDayRows - 1 lanes and a "+N" row.
 		var layout = EventBuckets.layoutLanes(dayList.map(function(day) { return day.allDay }), maxVisibleAllDayRows)
@@ -970,13 +995,13 @@ Item {
 							// event look, all-day events are filled in their color instead (EventStyle).
 							readonly property bool solid: appletConfig.barEventLook && eventStyle.allDay
 							readonly property bool outlined: eventStyle.unconfirmed
-							x: weekView.gutterWidth + bar.first * weekView.columnWidth + 2
+							x: weekView.allDayBarX(bar.first, bar)
 							y: 3 + bar.lane * (weekView.allDayRowHeight + 2)
 							// Being dragged: faded where it was (not for a copy); dropped: the preview stands in for it.
 							readonly property bool dragSource: !!weekView.dragState && weekView.dragState.mode === 'days' && weekView.dragState.eventItem === eventItem
 							opacity: (dragSource && !weekView.dragState.copy ? (weekView.dragState.pending ? 0 : 0.35)
 								: bar.eventItem.endDateTime <= weekView.todayStart ? appletConfig.pastOpacity : 1) * eventStyle.doneOpacity
-							width: (bar.last - bar.first + 1) * weekView.columnWidth - 4
+							width: weekView.allDayBarWidth(bar.first, bar.last, bar)
 							height: weekView.allDayRowHeight
 							// Square ends where the event continues before or after this week.
 							// Before the first or after the last shown day (work week: the weekend too).
@@ -1100,9 +1125,9 @@ Item {
 						readonly property var span: info ? Shared.eventSpan({ start: info.eventItem.start, startDateTime: info.start, endDateTime: info.end }, appletConfig.timeFormat, weekView.currentTime) : null
 						z: 3
 						visible: !!info
-						x: weekView.gutterWidth + first * weekView.columnWidth + 2
+						x: weekView.allDayBarX(first, info ? info.bar : null)
 						y: info ? 3 + Math.min(info.bar.lane, allDayArea.rows - 1) * (weekView.allDayRowHeight + 2) : 0
-						width: (last - first + 1) * weekView.columnWidth - 4
+						width: weekView.allDayBarWidth(first, last, info ? info.bar : null)
 						height: weekView.allDayRowHeight
 						radius: Math.min(8, height / 2)
 						color: Qt.tint(Kirigami.Theme.backgroundColor, ColorUtil.setAlpha(stripeColor, appletConfig.darkTheme ? 0.45 : 0.35))
@@ -1142,6 +1167,18 @@ Item {
 						}
 					}
 
+					// Day view tiles: "+N" in the last place for the events that don't fit.
+					PlasmaComponents3.Label {
+						visible: weekView.allDayTileHidden > 0
+						x: weekView.allDayBarX(0, { slot: weekView.allDayTileColumns - 1, slots: weekView.allDayTileColumns })
+						y: 3 + (allDayArea.rows - 1) * (weekView.allDayRowHeight + 2)
+						width: weekView.allDayBarWidth(0, 0, { slots: weekView.allDayTileColumns })
+						height: weekView.allDayRowHeight
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+						text: i18nc("more events not shown", "+%1", weekView.allDayTileHidden)
+						opacity: 0.7
+					}
 					// "+N" per day for events in lanes that don't fit.
 					Repeater {
 						model: allDayArea.hasHiddenRow ? weekView.columnCount : 0

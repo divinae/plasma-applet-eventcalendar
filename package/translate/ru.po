@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 21:55+0100\n"
+"POT-Creation-Date: 2026-10-29 22:13+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -1494,6 +1494,16 @@ msgstr "Маленький календарь"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "Далее"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All-day events side by side"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"In the Day view, three or more all-day events take a third of the width "
+"each, three in a row. Hovering one shows it in full."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
