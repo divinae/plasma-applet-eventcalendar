@@ -87,6 +87,10 @@ PinchArea {
 	// roles (EventBuckets.layoutMonth) and fills again when eventRowCapacity changes.
 	// Event titles in the day cells (the popup's month view), else the monthEventBadgeType setting.
 	property bool eventTitles: false // The popup's Month view: event titles in the days
+	// A small month (a small popup): dots for the events instead of titles cut to a letter or two.
+	// From the view's own size: a cell's height depends on the badge type (the compact header).
+	readonly property bool roomForTitles: width / 7 >= Kirigami.Units.gridUnit * 3 && height / 7 >= Kirigami.Units.gridUnit * 2.2
+	readonly property bool showsTitles: eventTitles && roomForTitles
 	property bool spanBarsEnabled: false
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
 	property var spanBars: []
@@ -537,7 +541,7 @@ PinchArea {
 				spanBars: root.spanBarsActive ? root.spanBars : []
 				eventDragEnabled: root.eventDragEnabled
 				eventDrag: root.eventDragState
-				eventBadgeType: root.eventTitles ? 'eventTitles' : plasmoid.configuration.monthEventBadgeType
+				eventBadgeType: root.showsTitles ? 'eventTitles' : root.eventTitles ? 'dots' : plasmoid.configuration.monthEventBadgeType
 
 				headerModel: calendarBackend.days
 				gridModel: daysModel
