@@ -270,6 +270,19 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
+				id: meetingFullScreenAlert
+				text: i18n("Full-screen alert when a meeting starts")
+				description: i18n("On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events.")
+				configKey: 'meetingFullScreenAlert'
+			}
+			FormCard.FormDelegateSeparator { visible: meetingFullScreenAlert.checked }
+			FormConfigSwitch {
+				visible: meetingFullScreenAlert.checked
+				text: i18n("Only meetings with a video link")
+				configKey: 'meetingFullScreenAlertLinkOnly'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
 				text: i18n("Pause music and videos when joining a meeting")
 				description: i18n("Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts.")
 				configKey: 'meetingPauseMedia'

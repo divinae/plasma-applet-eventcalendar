@@ -54,7 +54,7 @@ jobs:
             qt6-declarative qt6-5compat \
             kirigami kirigami-addons qqc2-desktop-style \
             libplasma plasma-workspace plasma-nm plasma5support \
-            knotifications kcmutils ksvg kitemmodels kcoreaddons kconfig
+            knotifications kcmutils ksvg kitemmodels kcoreaddons kconfig layer-shell-qt
 
       - uses: actions/checkout@v4
 

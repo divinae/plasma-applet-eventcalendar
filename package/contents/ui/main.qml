@@ -14,6 +14,7 @@ import org.kde.kcmutils as KCMUtils
 import "./lib"
 import "DayWeather.js" as DayWeather
 import "Shared.js" as Shared
+import "MeetingLink.js" as MeetingLink
 
 PlasmoidItem {
 	id: root
@@ -38,7 +39,80 @@ PlasmoidItem {
 	TimerModel { id: timerModel }
 	EventCache { id: eventCache }
 	EventModel { id: eventModel }
-	UpcomingEvents { id: upcomingEvents }
+	UpcomingEvents {
+		id: upcomingEvents
+		onMeetingAlertRequested: function(eventItem) { root.showMeetingAlert(eventItem) }
+	}
+
+	//--- Full-screen meeting alert (UpcomingEvents.meetingAlertRequested), as the Fokus plasmoid's
+	// break overlay: one window per screen, made only while the alert is up (windows made at startup
+	// are a risk to plasmashell's start). Above panels and on every desktop through layer-shell when
+	// it's installed: probed when needed, its files reached by URL only (MeetingAlertSetLayer.qml).
+	property var alertEvent: null
+	property var alertMeetingLink: null
+	property bool alertUsesLayer: false
+	property var layerShellProbed: undefined
+	function layerShellAvailable() {
+		if (layerShellProbed === undefined) {
+			var probe = Qt.createComponent(Qt.resolvedUrl("LayerShellProbe.qml"), Component.PreferSynchronous)
+			layerShellProbed = probe.status === Component.Ready
+			probe.destroy()
+		}
+		return layerShellProbed
+	}
+	function showMeetingAlert(eventItem) {
+		alertSnoozeTimer.stop()
+		alertUsesLayer = layerShellAvailable()
+		alertMeetingLink = MeetingLink.find(eventItem)
+		alertEvent = eventItem
+	}
+	function closeMeetingAlert() {
+		alertEvent = null
+	}
+	function joinMeetingAlert() {
+		if (alertMeetingLink) {
+			meetingOpener.open(alertMeetingLink.url)
+		}
+		closeMeetingAlert()
+	}
+	function snoozeMeetingAlert() {
+		alertSnoozeTimer.eventItem = alertEvent
+		closeMeetingAlert()
+		alertSnoozeTimer.restart()
+	}
+	Timer {
+		id: alertSnoozeTimer
+		property var eventItem: null
+		interval: 60 * 1000
+		onTriggered: {
+			if (eventItem && eventItem.endDateTime > new Date() && !upcomingEvents.isMuted(eventItem)) {
+				root.showMeetingAlert(eventItem)
+			}
+		}
+	}
+	Instantiator {
+		active: !!root.alertEvent && !root.alertUsesLayer
+		model: Qt.application.screens
+		delegate: MeetingAlertWindow {
+			screen: modelData
+			screenGeometry: Qt.rect(modelData.virtualX, modelData.virtualY, modelData.width, modelData.height)
+			eventItem: root.alertEvent
+			meetingLink: root.alertMeetingLink
+			onJoinRequested: root.joinMeetingAlert()
+			onSnoozeRequested: root.snoozeMeetingAlert()
+			onCloseRequested: root.closeMeetingAlert()
+		}
+	}
+	Loader {
+		source: root.alertEvent && root.alertUsesLayer ? Qt.resolvedUrl("MeetingAlertSetLayer.qml") : ""
+		onLoaded: {
+			item.eventItem = Qt.binding(function() { return root.alertEvent })
+			item.meetingLink = Qt.binding(function() { return root.alertMeetingLink })
+			item.joinRequested.connect(root.joinMeetingAlert)
+			item.snoozeRequested.connect(root.snoozeMeetingAlert)
+			item.closeRequested.connect(root.closeMeetingAlert)
+		}
+	}
 	AgendaModel {
 		id: agendaModel
 		timeModel: timeModel

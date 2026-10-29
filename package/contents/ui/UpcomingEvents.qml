@@ -347,11 +347,25 @@ CalendarManager {
 	function meetingKey(eventItem) {
 		return String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
 	}
+	// A full-screen alert for this meeting (main.qml shows it on every screen).
+	signal meetingAlertRequested(var eventItem)
+
 	function atMeetingStart(eventItem, sent, now) {
 		if (eventItem.endDateTime <= now || isMarkedEnded(eventItem) || isMuted(eventItem)) {
 			return
 		}
 		var key = meetingKey(eventItem)
+		// Settings > Events > Meetings: a timed meeting (with a video link), not declined, not of a
+		// calendar left out of the clock's countdown.
+		if (plasmoid.configuration.meetingFullScreenAlert && !sent[key + '|alert']
+				&& !(eventItem.start && eventItem.start.date)
+				&& (!plasmoid.configuration.meetingFullScreenAlertLinkOnly || !!MeetingLink.find(eventItem))
+				&& Shared.myResponse(eventItem) !== 'declined'
+				&& !Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.clockHiddenCalendarIds)) {
+			sent[key + '|alert'] = now
+			logger.log('full-screen alert', eventItem.startDateTime) // No title in the log
+			upcomingEvents.meetingAlertRequested(eventItem)
+		}
 		if (plasmoid.configuration.meetingAutoJoin && !sent[key + '|join']) {
 			var meetingLink = MeetingLink.find(eventItem)
 			if (MeetingRules.canAutoJoin(eventItem, !!meetingLink)) {

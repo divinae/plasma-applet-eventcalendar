@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -387,7 +387,7 @@ msgstr "Παράλειψη ολοήμερων συμβάντων"
 msgid "They still show in the agenda."
 msgstr "Εξακολουθούν να εμφανίζονται στην ατζέντα."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Μόνο συσκέψεις με σύνδεσμο βίντεο"
 
@@ -563,6 +563,18 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Για συσκέψεις που έχετε αποδεχτεί ή οργανώνετε και δεν έχουν σημανθεί ως "
 "ολοκληρωμένες."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Ειδοποίηση πλήρους οθόνης όταν ξεκινά μια σύσκεψη"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr ""
+"Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc). Όχι για "
+"συμβάντα σε σίγαση."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -809,6 +821,10 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
+"ορίζεται στη σελίδα ρυθμίσεων του πρόσθετου συμβάντων PIM (Συμβάντα > "
+"Ημερολόγια Plasma). Στο μενού ημερολογίων του αναδυόμενου είναι μία "
+"καταχώριση."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1775,7 +1791,8 @@ msgid "Show Details"
 msgstr "Εμφάνιση λεπτομερειών"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Συμμετοχή μέσω %1"
@@ -2751,7 +2768,7 @@ msgid_plural "%1 failed, eg: %2"
 msgstr[0] "Απέτυχε %1: %2"
 msgstr[1] "Απέτυχαν %1, π.χ.: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Συμμετοχή"
 
@@ -2963,6 +2980,26 @@ msgstr "Όνομα νέας λίστας"
 msgid "Create"
 msgstr "Δημιουργία"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Ξεκινά σύντομα"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Ξεκινά τώρα"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Αναβολή 1 λεπτό"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Απόρριψη"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Σύσκεψη"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3067,10 +3104,6 @@ msgstr "Αδυναμία σύνδεσης. Εμφανίζονται τα τελ�
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Νέα προσπάθεια τώρα"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Απόρριψη"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

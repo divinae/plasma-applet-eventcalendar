@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -339,7 +339,7 @@ msgstr "Hoppa över heldagshändelser"
 msgid "They still show in the agenda."
 msgstr "De visas fortfarande i agendan."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Endast möten med videolänk"
 
@@ -505,6 +505,14 @@ msgstr "Öppna möteslänken när ett möte börjar"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "För möten som du har accepterat eller organiserar och som inte är markerade som avslutade."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Helskärmsavisering när ett möte börjar"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+msgstr "På varje skärm, med Anslut, Snooza 1 min och Stäng (Esc). Inte för tystade händelser."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -683,7 +691,7 @@ msgstr "Uppgiftslistor väljs på sidan Uppgifter."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr ""
+msgstr "Visas skrivskyddat. Vilka Akonadi-kalendrar som visas väljs på inställningssidan för PIM-händelseinsticksprogrammet (Händelser > Plasma-kalendrar). I popupfönstrets kalendermeny är de en post."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1526,7 +1534,7 @@ msgstr "Markera som pågående"
 msgid "Show Details"
 msgstr "Visa detaljer"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Anslut till %1"
@@ -2474,7 +2482,7 @@ msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1 misslyckades: %2"
 msgstr[1] "%1 misslyckades, t.ex.: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Anslut"
 
@@ -2676,6 +2684,26 @@ msgstr "Namn på ny lista"
 msgid "Create"
 msgstr "Skapa"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Börjar snart"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Börjar nu"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Snooza 1 min"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Avfärda"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Möte"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2779,10 +2807,6 @@ msgstr "Kan inte ansluta. Visar de senast inlästa händelserna."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Försök igen nu"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Avfärda"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

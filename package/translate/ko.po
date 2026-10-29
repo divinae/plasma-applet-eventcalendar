@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -381,7 +381,7 @@ msgstr "종일 이벤트 건너뛰기"
 msgid "They still show in the agenda."
 msgstr "일정에는 계속 표시됩니다."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "화상 링크가 있는 회의만"
 
@@ -550,6 +550,18 @@ msgstr "회의가 시작되면 회의 링크 열기"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "수락했거나 주최하는 회의 중 종료로 표시하지 않은 회의."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "회의 시작 시 전체 화면 알림"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr ""
+"모든 화면에 참여, 1분 후 다시 알림, 닫기(Esc)와 함께 표시합니다. 음소거한 일"
+"정은 제외합니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -788,6 +800,9 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"읽기 전용으로 표시됩니다. 표시할 Akonadi 캘린더는 PIM 일정 플러그인의 설정 페"
+"이지(일정 > Plasma 캘린더)에서 정합니다. 팝업의 캘린더 메뉴에서는 하나의 항목"
+"입니다."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1733,7 +1748,8 @@ msgid "Show Details"
 msgstr "자세히 보기"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 참가"
@@ -2683,7 +2699,7 @@ msgid "%1 failed: %2"
 msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1개 실패: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "참가"
 
@@ -2889,6 +2905,26 @@ msgstr "새 목록 이름"
 msgid "Create"
 msgstr "만들기"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "곧 시작"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "지금 시작"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "1분 후 다시 알림"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "닫기"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "회의"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2990,10 +3026,6 @@ msgstr "연결할 수 없습니다. 마지막으로 불러온 이벤트를 표�
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "지금 다시 시도"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "닫기"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,7 +342,7 @@ msgstr "Ohita koko päivän tapahtumat"
 msgid "They still show in the agenda."
 msgstr "Ne näkyvät edelleen asialistalla."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Vain kokoukset, joissa on videolinkki"
 
@@ -508,6 +508,14 @@ msgstr "Avaa kokouslinkki, kun kokous alkaa"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "Kokouksille, jotka olet hyväksynyt tai järjestät ja joita ei ole merkitty päättyneiksi."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Koko näytön hälytys kokouksen alkaessa"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc). Ei mykistetyille tapahtumille."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -686,7 +694,7 @@ msgstr "Tehtäväluettelot valitaan Tehtävät-sivulla."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr ""
+msgstr "Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan PIM-tapahtumaliitännäisen asetussivulla (Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne ovat yksi kohta."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1529,7 +1537,7 @@ msgstr "Merkitse käynnissä olevaksi"
 msgid "Show Details"
 msgstr "Näytä tiedot"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Liity: %1"
@@ -2477,7 +2485,7 @@ msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1 epäonnistui: %2"
 msgstr[1] "%1 epäonnistui, esim.: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Liity"
 
@@ -2679,6 +2687,26 @@ msgstr "Uuden luettelon nimi"
 msgid "Create"
 msgstr "Luo"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Alkaa pian"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Alkaa nyt"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Torkku 1 min"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Hylkää"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Kokous"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2782,10 +2810,6 @@ msgstr "Yhteyttä ei saada. Näytetään viimeksi ladatut tapahtumat."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Yritä nyt uudelleen"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Hylkää"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

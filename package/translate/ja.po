@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -337,7 +337,7 @@ msgstr "終日イベントをスキップ"
 msgid "They still show in the agenda."
 msgstr "アジェンダには引き続き表示されます。"
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "ビデオリンクのある会議のみ"
 
@@ -502,6 +502,14 @@ msgstr "会議の開始時に会議リンクを開く"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "承諾した会議または主催する会議で、終了済みにしていないもの。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "会議の開始時に全画面で通知"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+msgstr "すべての画面に表示し、参加・1分後に再通知・閉じる (Esc) を選べます。ミュートしたイベントは除きます。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -680,7 +688,7 @@ msgstr "タスクリストはタスクのページで選択します。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr ""
+msgstr "読み取り専用で表示します。表示する Akonadi カレンダーは PIM イベントプラグインの設定ページ (イベント > Plasma カレンダー) で選びます。ポップアップのカレンダーメニューでは 1 項目になります。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1522,7 +1530,7 @@ msgstr "進行中にする"
 msgid "Show Details"
 msgstr "詳細を表示"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 に参加"
@@ -2449,7 +2457,7 @@ msgid "%1 failed: %2"
 msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1 件が失敗しました: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "参加"
 
@@ -2649,6 +2657,26 @@ msgstr "新しいリストの名前"
 msgid "Create"
 msgstr "作成"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "まもなく開始"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "開始します"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "1 分後に再通知"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "閉じる"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "会議"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2749,10 +2777,6 @@ msgstr "接続できません。最後に読み込んだイベントを表示し
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "今すぐ再試行"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "閉じる"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -379,7 +379,7 @@ msgstr "跳过全天事件"
 msgid "They still show in the agenda."
 msgstr "它们仍会显示在日程中。"
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "仅限有视频链接的会议"
 
@@ -548,6 +548,17 @@ msgstr "会议开始时打开会议链接"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "适用于您已接受或组织的、未标记为已结束的会议。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "会议开始时全屏提醒"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr ""
+"在每个屏幕上显示，带“加入”“1 分钟后再提醒”和“关闭”(Esc)。静音的事件除外。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -775,6 +786,8 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > "
+"Plasma 日历）中设置。在弹出窗口的日历菜单中它们是一个条目。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1702,7 +1715,8 @@ msgid "Show Details"
 msgstr "显示详情"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "加入 %1"
@@ -2647,7 +2661,7 @@ msgid "%1 failed: %2"
 msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1 个失败：%2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "加入"
 
@@ -2851,6 +2865,26 @@ msgstr "新列表名称"
 msgid "Create"
 msgstr "创建"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "即将开始"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "现在开始"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "1 分钟后再提醒"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "关闭"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "会议"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2952,10 +2986,6 @@ msgstr "无法连接。正在显示上次加载的事件。"
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "立即重试"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "关闭"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

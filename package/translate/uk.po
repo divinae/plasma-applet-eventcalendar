@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -388,7 +388,7 @@ msgstr "Пропускати події на весь день"
 msgid "They still show in the agenda."
 msgstr "Вони й далі показуються в порядку денному."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Лише зустрічі з відеопосиланням"
 
@@ -563,6 +563,18 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Для зустрічей, які ви прийняли або організовуєте і які не позначено як "
 "завершені."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Повноекранне сповіщення про початок зустрічі"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr ""
+"На кожному екрані, з кнопками «Приєднатися», «Відкласти на 1 хв» і «Закрити» "
+"(Esc). Не для подій із вимкненими сповіщеннями."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -805,6 +817,9 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"Показуються лише для читання. Які календарі Akonadi показувати, задається на "
+"сторінці налаштувань додатка подій PIM (Події > Календарі Plasma). У меню "
+"календарів вікна вони — один пункт."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1753,7 +1768,8 @@ msgid "Show Details"
 msgstr "Показати подробиці"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Приєднатися через %1"
@@ -2745,7 +2761,7 @@ msgstr[0] "Не вдалося імпортувати %1: %2"
 msgstr[1] "Не вдалося імпортувати %1, наприклад: %2"
 msgstr[2] "Не вдалося імпортувати %1, наприклад: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Приєднатися"
 
@@ -2957,6 +2973,26 @@ msgstr "Назва нового списку"
 msgid "Create"
 msgstr "Створити"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Скоро почнеться"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Починається"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Відкласти на 1 хв"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Закрити"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Зустріч"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3064,10 +3100,6 @@ msgstr "Не вдається з'єднатися. Показано останн
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Повторити зараз"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Закрити"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

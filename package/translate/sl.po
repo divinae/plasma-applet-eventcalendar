@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -387,7 +387,7 @@ msgstr "Preskoči celodnevne dogodke"
 msgid "They still show in the agenda."
 msgstr "Še vedno so prikazani v dnevnem redu."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Samo sestanki z video povezavo"
 
@@ -563,6 +563,18 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Za sestanke, ki ste jih sprejeli ali jih organizirate in niso označeni kot "
 "končani."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Celozaslonsko opozorilo ob začetku sestanka"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr ""
+"Na vsakem zaslonu, z Pridruži se, Dremež 1 min in Opusti (Esc). Ne za "
+"utišane dogodke."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -803,6 +815,9 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"Prikazani samo za branje. Katere koledarje Akonadi prikazati, izberete na "
+"strani nastavitev vtičnika dogodkov PIM (Dogodki > Koledarji Plasma). V "
+"meniju koledarjev pojavnega okna so en vnos."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1752,7 +1767,8 @@ msgid "Show Details"
 msgstr "Prikaži podrobnosti"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Pridruži se prek %1"
@@ -2765,7 +2781,7 @@ msgstr[1] "%1 nista uspela, npr.: %2"
 msgstr[2] "%1 niso uspeli, npr.: %2"
 msgstr[3] "%1 ni uspelo, npr.: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Pridruži se"
 
@@ -2981,6 +2997,26 @@ msgstr "Ime novega seznama"
 msgid "Create"
 msgstr "Ustvari"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Kmalu se začne"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Začenja se"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Dremež 1 min"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Opusti"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Sestanek"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3091,10 +3127,6 @@ msgstr "Povezava ni mogoča. Prikazani so nazadnje naloženi dogodki."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Poskusi znova zdaj"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Opusti"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

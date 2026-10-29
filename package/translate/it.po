@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -339,7 +339,7 @@ msgstr "Salta gli eventi di tutto il giorno"
 msgid "They still show in the agenda."
 msgstr "Restano visibili nell'agenda."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "Solo riunioni con link video"
 
@@ -505,6 +505,14 @@ msgstr "Apri il link della riunione quando inizia"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "Per le riunioni che hai accettato o che organizzi, non segnate come terminate."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "Avviso a schermo intero all'inizio di una riunione"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+msgstr "Su ogni schermo, con Partecipa, Posticipa 1 min e Chiudi (Esc). Non per gli eventi silenziati."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -683,7 +691,7 @@ msgstr "Gli elenchi di attività si scelgono nella pagina Attività."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
-msgstr ""
+msgstr "Mostrati in sola lettura. Quali calendari Akonadi mostrare si sceglie nella pagina delle impostazioni del plugin degli eventi PIM (Eventi > Calendari Plasma). Nel menu dei calendari del popup sono una sola voce."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1526,7 +1534,7 @@ msgstr "Segna come in corso"
 msgid "Show Details"
 msgstr "Mostra dettagli"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Partecipa con %1"
@@ -2474,7 +2482,7 @@ msgid_plural "%1 failed, eg: %2"
 msgstr[0] "%1 non riuscito: %2"
 msgstr[1] "%1 non riusciti, ad es.: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "Partecipa"
 
@@ -2676,6 +2684,26 @@ msgstr "Nome del nuovo elenco"
 msgid "Create"
 msgstr "Crea"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "Sta per iniziare"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "Inizia ora"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "Posticipa 1 min"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "Chiudi"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "Riunione"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -2779,10 +2807,6 @@ msgstr "Impossibile connettersi. Vengono mostrati gli ultimi eventi caricati."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Riprova ora"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "Chiudi"
 
 #: ../contents/ui/PopupView.qml
 msgid ""

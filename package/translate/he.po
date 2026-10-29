@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 13:59+0100\n"
+"POT-Creation-Date: 2026-10-29 14:02+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -386,7 +386,7 @@ msgstr "דילוג על אירועים של יום שלם"
 msgid "They still show in the agenda."
 msgstr "הם עדיין מוצגים בסדר היום."
 
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings with a video link"
 msgstr "רק פגישות עם קישור וידאו"
 
@@ -558,6 +558,16 @@ msgstr "פתיחת קישור הפגישה כשהפגישה מתחילה"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "לפגישות שאישרת או שארגנת, שלא סומנו כהסתיימו."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full-screen alert when a meeting starts"
+msgstr "התראה במסך מלא כשפגישה מתחילה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+"events."
+msgstr "בכל מסך, עם הצטרפות, נודניק דקה וסגירה (Esc). לא לאירועים מושתקים."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -790,6 +800,9 @@ msgid ""
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 "calendar menu they are one entry."
 msgstr ""
+"מוצגים לקריאה בלבד. אילו יומני Akonadi מוצגים נקבע בדף ההגדרות של תוסף "
+"אירועי PIM (אירועים > יומני Plasma). בתפריט היומנים של החלון הקופץ הם רשומה "
+"אחת."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1730,7 +1743,8 @@ msgid "Show Details"
 msgstr "הצגת פרטים"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "הצטרפות ל־%1"
@@ -2742,7 +2756,7 @@ msgstr[1] "%1 נכשלו, למשל: %2"
 msgstr[2] "%1 נכשלו, למשל: %2"
 msgstr[3] "%1 נכשלו, למשל: %2"
 
-#: ../contents/ui/JoinPill.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
 msgid "Join"
 msgstr "הצטרפות"
 
@@ -2952,6 +2966,26 @@ msgstr "שם הרשימה החדשה"
 msgid "Create"
 msgstr "יצירה"
 
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting soon"
+msgstr "מתחיל בקרוב"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Starting now"
+msgstr "מתחיל עכשיו"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Snooze 1 min"
+msgstr "נודניק דקה"
+
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
+msgid "Dismiss"
+msgstr "סגירה"
+
+#: ../contents/ui/MeetingAlertWindow.qml
+msgid "Meeting"
+msgstr "פגישה"
+
 #: ../contents/ui/MeteogramView.qml
 #, no-c-format
 msgid "%1mm"
@@ -3062,10 +3096,6 @@ msgstr "לא ניתן להתחבר. מוצגים האירועים שנטענו �
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "ניסיון חוזר כעת"
-
-#: ../contents/ui/PopupView.qml
-msgid "Dismiss"
-msgstr "סגירה"
 
 #: ../contents/ui/PopupView.qml
 msgid ""
