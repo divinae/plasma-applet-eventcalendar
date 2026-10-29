@@ -1,3 +1,8 @@
+## v1.8.3 - October 29 2026
+
+### Popup
+* A right click on the header: which views it offers, the view switcher (tabs or a drop-down menu) and which buttons it shows (Calendars, Search, New Event, Refresh, Configure); the buttons left out are in the "More Actions" menu.
+
 ## v1.8.2 - October 29 2026
 
 ### Faster
