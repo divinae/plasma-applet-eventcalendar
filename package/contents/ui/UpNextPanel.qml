@@ -24,8 +24,13 @@ ColumnLayout {
 	property int limit: 5
 	property int days: 3
 	property bool expanded: false
-	readonly property int shownLimit: expanded ? 15 : limit
-	readonly property int shownDays: expanded ? 7 : days
+	// Fills the height it's given (the Day view's left column): the events of the next two weeks,
+	// as many as fit, the list at the top.
+	property bool fill: false
+	readonly property int shownLimit: expanded ? Math.max(15, collapsedLimit * 2) : collapsedLimit
+	readonly property int shownDays: expanded ? Math.max(7, collapsedDays * 2) : collapsedDays
+	readonly property int collapsedLimit: fill ? 50 : limit
+	readonly property int collapsedDays: fill ? 14 : days
 	// The height it may take (0: no limit): only the events that fit whole are listed.
 	property real maxHeight: 0
 	readonly property real titleHeight: titleMetrics.height * 1.25 + spacing
@@ -69,7 +74,7 @@ ColumnLayout {
 			return true
 		}
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		var until = Shared.addDays(Shared.startOfDay(after), 7).getTime()
+		var until = Shared.addDays(Shared.startOfDay(after), Math.max(7, collapsedDays * 2)).getTime()
 		return Shared.upcomingEvents(items, after, entries.length + 1).filter(function(entry) {
 			return entry.day.getTime() < until
 		}).length > entries.length
@@ -192,6 +197,12 @@ ColumnLayout {
 				opacity: 0.75
 			}
 		}
+	}
+
+	// Filling: the room left below the list.
+	Item {
+		visible: upNext.fill
+		Layout.fillHeight: true
 	}
 
 	Component {

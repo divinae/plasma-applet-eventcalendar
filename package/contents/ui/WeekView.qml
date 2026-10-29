@@ -674,10 +674,11 @@ Item {
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
-		// As tall as its few events, at most down to the grid's bottom edge.
-		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
+		// Down to the grid's bottom edge, with as many events as fit there.
+		height: Math.max(0, weekView.sideBottom - startY)
 
 		UpNextPanel {
+			fill: true
 			// Only the events that fit whole (a short popup: fewer, not a cut row).
 			maxHeight: weekView.sideBottom - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
 			eventModel: upNextCard.visible ? weekView.eventModel : null
