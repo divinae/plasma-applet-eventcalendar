@@ -92,7 +92,26 @@ MouseArea {
 			currentView = plasmoid.configuration.popupMode
 		}
 	}
+	//--- How long a view switch takes (Settings > Advanced > debugging: the log only): from the
+	// switch to the view built (Loader) and to the first frame drawn after it. Times and view names,
+	// nothing about events.
+	property real switchStart: 0
+	property real switchBuilt: 0
+	function switchLog(what) {
+		if (switchStart > 0) {
+			logger.debug('view switch:', viewMode, what, Math.round(Date.now() - switchStart), 'ms')
+		}
+	}
+	Connections {
+		target: popup.Window.window
+		enabled: popup.switchStart > 0
+		function onFrameSwapped() {
+			popup.switchLog('first frame')
+			popup.switchStart = 0
+		}
+	}
 	onCurrentViewChanged: {
+		switchStart = Date.now()
 		closeOverlays() // Overlays belong to the view they were opened from.
 		if (openLastView) {
 			plasmoid.configuration.popupLastView = currentView
@@ -708,6 +727,7 @@ MouseArea {
 		visible: active
 		anchors.fill: widgetGrid
 		onLoaded: {
+			popup.switchLog('week/day view built')
 			if (popup.pendingDayViewDate) {
 				item.weekStart = popup.pendingDayViewDate
 				popup.pendingDayViewDate = null
@@ -741,6 +761,7 @@ MouseArea {
 		anchors.bottom: widgetGrid.bottom
 		anchors.left: widgetGrid.left
 		anchors.right: widgetGrid.right
+		onLoaded: popup.switchLog('tasks view built')
 		sourceComponent: TasksView {
 			eventModel: popup.eventModel
 		}
@@ -957,13 +978,17 @@ MouseArea {
 	function updateAgenda() {
 		agendaStale = !showAgenda
 		if (showAgenda) {
+			var t = Date.now()
 			agendaModel.parseGCalEvents(eventModel.eventsData)
+			logger.debug('agenda parsed in', Date.now() - t, 'ms')
 		}
 	}
 	function updateMonth() {
 		monthStale = !showCalendar
 		if (showCalendar) {
+			var t = Date.now()
 			monthView.parseGCalEvents(eventModel.eventsData)
+			logger.debug('month parsed in', Date.now() - t, 'ms')
 		}
 	}
 	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()
