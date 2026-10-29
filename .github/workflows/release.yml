@@ -62,5 +62,5 @@ jobs:
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" ./*.plasmoid --clobber
           else
-            gh release create "$TAG" ./*.plasmoid --title "Event Calendar ${TAG#v}" --notes-file release-notes.md --latest
+            gh release create "$TAG" ./*.plasmoid --title "Event Calendar NG ${TAG#v}" --notes-file release-notes.md --latest
           fi

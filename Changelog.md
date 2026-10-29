@@ -1,3 +1,24 @@
+## v1.10.0 - October 29 2026
+
+* The widget is called **Event Calendar NG** (in the widget list, the settings and notifications); it keeps the same id and settings.
+
+### Meetings
+* Your own commands when a meeting starts and when it ends (Settings > Events > Meetings), eg: to set your status or start recording. The title, link, start and end are passed as arguments.
+* The event menu: Copy Event Details (title, time, location, link).
+
+### Panel
+* The right-click menu on the clock: the next meeting first (Join, Copy Link, Mute, Mark as Ended), then New Event, New Task, Go to Date, Import, Open Google Calendar, then Refresh and Copy Date and Time.
+
+### Notifications
+* The daily agenda and the task summary are shorter (3 events, 2 tasks), with Show All and Show Tasks buttons that open the popup.
+
+### Popup
+* Switching views no longer fetches the weather each time; the hourly forecast is fetched only when the Day view needs it.
+* Debug logging moved to Settings > Views > Troubleshooting.
+
+### Fixes
+* The Tasks header's list name could be cut down to "…" (eg: "All").
+
 ## v1.9.0 - October 29 2026
 
 ### Meetings

@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.9.0
+    1.10.0
 
 **License**
 
@@ -125,33 +125,22 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.9.0)**
+**Changelog (1.10.0)**
 
 ```
-Meetings
-- Full-screen alert when a meeting starts (a style of the start notification): blurred desktop, Join / Snooze / Dismiss
-- Join links for about 40 services
-- Event menu: Copy Meeting Link, Mute Notifications for one event
-- Hold + in the header: start a Google Meet or Zoom now
-
-Clock
-- Next event chip: skip all-day events, leave calendars out, only meetings with a link, only accepted, longest title
-- In a horizontal panel the chip is left of the time
-
-Popup
-- Go to date: press G and type "next friday", "+2w"
-- An event in several calendars shown once
-
-Fixes
-- Opening the Agenda could freeze Plasma (islands style)
-- Delete in the event menu works again
-- Two widgets no longer share one cache file
+- New name: Event Calendar NG
+- Meetings: run your own command when a meeting starts and ends
+- Event menu: Copy Event Details
+- Panel right-click menu: the next meeting first (Join, Copy link, Mute, Mark as Ended), then New Event / Task, Go to Date, Import
+- Summary notifications: shorter, with Show All / Show Tasks
+- Faster view switching (no weather fetch on each switch)
+- Fixes: "All" in the Tasks header cut to "…"
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.9.0-plasma6.0.plasmoid` from the
-  [v1.9.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.9.0),
+- **Product file:** `eventcalendar-v1.10.0-plasma6.0.plasmoid` from the
+  [v1.10.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.10.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
