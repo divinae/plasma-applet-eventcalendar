@@ -204,6 +204,13 @@ ConfigPage {
 			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
 			FormConfigSwitch {
 				visible: clockShowNextEvent.checked
+				text: i18n("Skip all-day events")
+				description: i18n("They still show in the agenda.")
+				configKey: 'clockNextEventSkipAllDay'
+			}
+			FormCard.FormDelegateSeparator { visible: clockShowNextEvent.checked }
+			FormConfigSwitch {
+				visible: clockShowNextEvent.checked
 				text: i18n("Progress of the current meeting")
 				description: i18n("A thin bar under the meeting's name, in its calendar's color.")
 				configKey: 'clockShowMeetingProgress'

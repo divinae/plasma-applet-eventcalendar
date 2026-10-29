@@ -618,6 +618,12 @@ CalendarManager {
 			if (isEventInProgress(eventItem) && isMarkedEnded(eventItem)) {
 				continue
 			}
+			if (plasmoid.configuration.clockNextEventSkipAllDay && eventItem.start && eventItem.start.date) {
+				continue
+			}
+			if (Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.clockHiddenCalendarIds)) {
+				continue
+			}
 			var inProgress = isEventInProgress(eventItem)
 			if (!inProgress && !(now < eventItem.startDateTime && eventItem.startDateTime.getTime() <= windowEnd)) {
 				continue

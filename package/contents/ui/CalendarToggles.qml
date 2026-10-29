@@ -12,6 +12,7 @@ PlasmaComponents3.ToolButton {
 	id: calendarToggles
 
 	readonly property var hiddenIds: plasmoid.configuration.hiddenCalendarIds || []
+	readonly property var clockHiddenIds: plasmoid.configuration.clockHiddenCalendarIds || []
 	property var calendars: [] // eventModel.getSelectedCalendars(), read when opened
 	readonly property bool anyHidden: {
 		for (var i = 0; i < calendars.length; i++) {
@@ -44,17 +45,24 @@ PlasmaComponents3.ToolButton {
 		calendarPopup.open()
 	}
 
-	function setHidden(calendarId, hide) {
+	function toggledIds(currentIds, calendarId, hide) {
 		var ids = []
-		for (var i = 0; i < hiddenIds.length; i++) {
-			if (hiddenIds[i] !== calendarId) {
-				ids.push(String(hiddenIds[i]))
+		for (var i = 0; i < currentIds.length; i++) {
+			if (currentIds[i] !== calendarId) {
+				ids.push(String(currentIds[i]))
 			}
 		}
 		if (hide) {
 			ids.push(calendarId)
 		}
-		plasmoid.configuration.hiddenCalendarIds = ids
+		return ids
+	}
+	function setHidden(calendarId, hide) {
+		plasmoid.configuration.hiddenCalendarIds = toggledIds(hiddenIds, calendarId, hide)
+	}
+	// The next-event chip by the clock only; the views and reminders are unaffected.
+	function setClockHidden(calendarId, hide) {
+		plasmoid.configuration.clockHiddenCalendarIds = toggledIds(clockHiddenIds, calendarId, hide)
 	}
 
 	PlasmaComponents3.Popup {
@@ -142,6 +150,20 @@ PlasmaComponents3.ToolButton {
 								anchors.fill: parent
 								onClicked: calendarToggles.setHidden(modelData.id, calendarRow.shown)
 							}
+						}
+						PlasmaComponents3.ToolButton {
+							readonly property bool onClock: !Shared.isHiddenCalendar(modelData.id, calendarToggles.clockHiddenIds)
+							visible: plasmoid.configuration.clockShowNextEvent
+							icon.name: "clock"
+							checkable: true
+							checked: onClock
+							opacity: onClock ? 1 : 0.4
+							onToggled: calendarToggles.setClockHidden(modelData.id, !checked)
+							PlasmaComponents3.ToolTip.text: onClock
+								? i18n("In the clock's countdown. Click to leave it out.")
+								: i18n("Left out of the clock's countdown. Click to include it.")
+							PlasmaComponents3.ToolTip.visible: hovered
+							Accessible.name: i18nc("%1 = calendar name", "Include %1 in the clock's countdown", modelData.name)
 						}
 					}
 				}

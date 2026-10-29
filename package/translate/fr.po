@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:34+0100\n"
+"POT-Creation-Date: 2026-10-29 17:36+0530\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -210,6 +210,19 @@ msgid "No calendars selected in the settings."
 msgstr "Aucun calendrier sélectionné dans les paramètres."
 
 #: ../contents/ui/CalendarToggles.qml
+msgid "In the clock's countdown. Click to leave it out."
+msgstr ""
+
+#: ../contents/ui/CalendarToggles.qml
+msgid "Left out of the clock's countdown. Click to include it."
+msgstr ""
+
+#: ../contents/ui/CalendarToggles.qml
+msgctxt "%1 = calendar name"
+msgid "Include %1 in the clock's countdown"
+msgstr ""
+
+#: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
 msgstr "Tout afficher"
 
@@ -367,6 +380,14 @@ msgstr "Lorsqu'elle commence dans"
 #: ../contents/ui/config/ConfigClock.qml
 msgid " min"
 msgstr " min"
+
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+msgid "Skip all-day events"
+msgstr "Ignorer les événements sur toute la journée"
+
+#: ../contents/ui/config/ConfigClock.qml
+msgid "They still show in the agenda."
+msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -618,10 +639,6 @@ msgstr ""
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
 msgstr "À"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Skip all-day events"
-msgstr "Ignorer les événements sur toute la journée"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
