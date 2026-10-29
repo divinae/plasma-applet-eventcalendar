@@ -9,6 +9,7 @@ MeetingAlertWindow {
 	LayerShell.Window.anchors: LayerShell.Window.AnchorTop | LayerShell.Window.AnchorBottom | LayerShell.Window.AnchorLeft | LayerShell.Window.AnchorRight
 	// -1: other surfaces' exclusive zones (a panel) don't shorten it.
 	LayerShell.Window.exclusionZone: -1
-	// On demand: the keyboard when clicked (Esc, Return), without taking every key on the machine.
-	LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
+	// Exclusive: Esc and Return work right away (on demand, only after a click). The alert is up for
+	// a moment and goes with either.
+	LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityExclusive
 }

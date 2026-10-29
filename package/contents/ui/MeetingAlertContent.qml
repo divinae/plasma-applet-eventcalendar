@@ -28,6 +28,8 @@ Item {
 	Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
 
 	focus: true
+	// The keys from the start, without a click first.
+	Component.onCompleted: forceActiveFocus()
 	Keys.onEscapePressed: content.closeRequested()
 	Keys.onReturnPressed: content.meetingLink ? content.joinRequested() : content.closeRequested()
 	Keys.onEnterPressed: content.meetingLink ? content.joinRequested() : content.closeRequested()

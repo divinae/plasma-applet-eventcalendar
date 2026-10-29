@@ -5,5 +5,6 @@ MeetingAlertBlur {
 	LayerShell.Window.layer: LayerShell.Window.LayerOverlay
 	LayerShell.Window.anchors: LayerShell.Window.AnchorTop | LayerShell.Window.AnchorBottom | LayerShell.Window.AnchorLeft | LayerShell.Window.AnchorRight
 	LayerShell.Window.exclusionZone: -1
-	LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
+	// Exclusive: Esc and Return work right away (see MeetingAlertLayer.qml).
+	LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityExclusive
 }

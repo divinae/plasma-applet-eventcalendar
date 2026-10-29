@@ -35,7 +35,13 @@ Kicker.DashboardWindow {
 	Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
 	backgroundColor: Qt.alpha(Kirigami.Theme.backgroundColor, 0.72)
 
+	// DashboardWindow takes Esc itself (keyEscapePressed) and passes the other keys to its
+	// keyEventProxy: Return reaches the content.
+	onKeyEscapePressed: alertWindow.closeRequested()
+	keyEventProxy: alertContent
+
 	MeetingAlertContent {
+		id: alertContent
 		anchors.fill: parent
 		backgroundOpacity: 0
 		eventItem: alertWindow.eventItem
