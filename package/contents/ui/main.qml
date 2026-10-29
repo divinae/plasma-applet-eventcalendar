@@ -50,19 +50,25 @@ PlasmoidItem {
 	// it's installed: probed when needed, its files reached by URL only (MeetingAlertSetLayer.qml).
 	property var alertEvent: null
 	property var alertMeetingLink: null
-	property bool alertUsesLayer: false
-	property var layerShellProbed: undefined
-	function layerShellAvailable() {
-		if (layerShellProbed === undefined) {
-			var probe = Qt.createComponent(Qt.resolvedUrl("LayerShellProbe.qml"), Component.PreferSynchronous)
-			layerShellProbed = probe.status === Component.Ready
+	// The windows: blurred behind (Kicker's DashboardWindow, as Fokus) and through layer-shell when
+	// those modules are there, each probed once when first needed; '' : the plain windows below.
+	property string alertSetUrl: ""
+	property var moduleProbes: ({})
+	function moduleAvailable(probeFile) {
+		if (!(probeFile in moduleProbes)) {
+			var probe = Qt.createComponent(Qt.resolvedUrl(probeFile), Component.PreferSynchronous)
+			moduleProbes[probeFile] = probe.status === Component.Ready
 			probe.destroy()
 		}
-		return layerShellProbed
+		return moduleProbes[probeFile]
 	}
 	function showMeetingAlert(eventItem) {
 		alertSnoozeTimer.stop()
-		alertUsesLayer = layerShellAvailable()
+		var layer = moduleAvailable("LayerShellProbe.qml")
+		var blur = moduleAvailable("KickerProbe.qml")
+		alertSetUrl = blur && layer ? "MeetingAlertSetBlurLayer.qml"
+			: blur ? "MeetingAlertSetBlur.qml"
+			: layer ? "MeetingAlertSetLayer.qml" : ""
 		alertMeetingLink = MeetingLink.find(eventItem)
 		alertEvent = eventItem
 	}
@@ -91,7 +97,7 @@ PlasmoidItem {
 		}
 	}
 	Instantiator {
-		active: !!root.alertEvent && !root.alertUsesLayer
+		active: !!root.alertEvent && !root.alertSetUrl
 		model: Qt.application.screens
 		delegate: MeetingAlertWindow {
 			screen: modelData
@@ -104,7 +110,7 @@ PlasmoidItem {
 		}
 	}
 	Loader {
-		source: root.alertEvent && root.alertUsesLayer ? Qt.resolvedUrl("MeetingAlertSetLayer.qml") : ""
+		source: root.alertEvent && root.alertSetUrl ? Qt.resolvedUrl(root.alertSetUrl) : ""
 		onLoaded: {
 			item.eventItem = Qt.binding(function() { return root.alertEvent })
 			item.meetingLink = Qt.binding(function() { return root.alertMeetingLink })

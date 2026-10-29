@@ -32,10 +32,13 @@ Item {
 		onClicked: content.forceActiveFocus()
 	}
 
-	// The screen in the theme's background color (as Fokus' break overlay), nearly opaque.
+	// The screen in the theme's background color (as Fokus' break overlay): nearly opaque, or
+	// translucent over the blur a blurring window draws (backgroundOpacity 0: the window paints it).
+	property real backgroundOpacity: 0.94
 	Rectangle {
 		anchors.fill: parent
-		color: Qt.alpha(Kirigami.Theme.backgroundColor, 0.94)
+		visible: content.backgroundOpacity > 0
+		color: Qt.alpha(Kirigami.Theme.backgroundColor, content.backgroundOpacity)
 	}
 
 	// Centered and large: read from across the room.
