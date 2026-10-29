@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1850,11 +1850,6 @@ msgstr "Διαγραφή μόνο αυτής της επανάληψης του 
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "Διαγραφή «%1»"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Διαγραφή όλων των συμβάντων του «%1»"
 
@@ -3107,6 +3102,10 @@ msgid "Keep Open"
 msgstr "Να μένει ανοιχτό"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Δεν ήταν δυνατή η διαγραφή του συμβάντος"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Το επαναλαμβανόμενο συμβάν διαγράφηκε"
 
@@ -3117,6 +3116,10 @@ msgstr "Η εργασία διαγράφηκε"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Το συμβάν διαγράφηκε"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Δεν ήταν δυνατή η διαγραφή της εργασίας"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3886,6 +3889,10 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "Διαγραφή «%1»"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Ειδοποίηση πλήρους οθόνης όταν ξεκινά μια σύσκεψη"

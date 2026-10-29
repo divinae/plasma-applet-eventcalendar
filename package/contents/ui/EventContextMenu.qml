@@ -30,6 +30,9 @@ PlasmaComponents3.Menu {
 	signal showDetails(var eventItem)
 	signal editEvent(var eventItem)
 	signal duplicateEvent(var eventItem)
+	// Delete (wholeSeries: every occurrence). Not popup.deleteWithUndo(): in this Menu, "popup" is
+	// its own popup() function, and Delete did nothing.
+	signal deleteRequested(var eventItem, bool wholeSeries)
 
 	function openFor(item, parentItem, x, y) {
 		eventItem = item
@@ -41,6 +44,7 @@ PlasmaComponents3.Menu {
 		showSubMenu(priorityMenu, openTask && !!caps.priority)
 		showSubMenu(dueMenu, openTask)
 		showSubMenu(moveMenu, taskLists.length > 0)
+		showDeleteMenu(canEdit && isRecurring)
 		popup(parentItem, x, y)
 	}
 
@@ -84,7 +88,7 @@ PlasmaComponents3.Menu {
 		var shownIndex = -1
 		for (var i = 0; i < eventMenu.count; i++) {
 			var menuItem = eventMenu.itemAt(i)
-			if (menuItem && menuItem.subMenu === deleteMenu) {
+			if (menuItem === deleteItem) {
 				deleteIndex = i
 			} else if (menuItem && menuItem.subMenu === menu) {
 				shownIndex = i
@@ -98,6 +102,20 @@ PlasmaComponents3.Menu {
 		}
 		if (show && deleteIndex >= 0) {
 			eventMenu.insertMenu(deleteIndex, menu)
+		}
+	}
+
+	// The Delete submenu of a repeating event, last in the menu; taken out for other events.
+	function showDeleteMenu(show) {
+		for (var i = 0; i < eventMenu.count; i++) {
+			var menuItem = eventMenu.itemAt(i)
+			if (menuItem && menuItem.subMenu === deleteMenu) {
+				eventMenu.takeMenu(i)
+				break
+			}
+		}
+		if (show) {
+			eventMenu.addMenu(deleteMenu)
 		}
 	}
 
@@ -329,25 +347,29 @@ PlasmaComponents3.Menu {
 		icon.name: "edit-copy"
 		onTriggered: eventMenu.duplicateEvent(eventMenu.eventItem)
 	}
-	PlasmaComponents3.Menu {
-		id: deleteMenu
-		enabled: eventMenu.canEdit
+	// Delete: right away (with Undo); a repeating event: a submenu, this one or all of them
+	// (deleteMenu, added at the end when it's one).
+	PlasmaComponents3.MenuItem {
+		id: deleteItem
+		visible: eventMenu.canEdit && !eventMenu.isRecurring
+		height: visible ? implicitHeight : 0
+		text: i18n("Delete")
+		icon.name: "edit-delete"
+		onTriggered: eventMenu.deleteRequested(eventMenu.eventItem, false)
+	}
+	property PlasmaComponents3.Menu deleteMenu: PlasmaComponents3.Menu {
 		title: i18n("Delete")
 		icon.name: "edit-delete"
 		PlainMenuItem {
-			label: !eventMenu.eventItem ? ""
-				: eventMenu.isRecurring ? i18nc("%1 = event title", "Delete Only This Occurrence of “%1”", eventMenu.eventItem.summary)
-				: i18nc("%1 = event title", "Delete “%1”", eventMenu.eventItem.summary)
+			label: eventMenu.eventItem ? i18nc("%1 = event title", "Delete Only This Occurrence of “%1”", eventMenu.eventItem.summary) : ""
 			icon.name: "edit-delete"
-			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, false)
+			onTriggered: eventMenu.deleteRequested(eventMenu.eventItem, false)
 		}
 		// Repeating events: the whole series, by its id.
 		PlainMenuItem {
-			visible: eventMenu.isRecurring
-			height: visible ? implicitHeight : 0
 			label: eventMenu.eventItem ? i18nc("%1 = event title", "Delete All Events of “%1”", eventMenu.eventItem.summary) : ""
 			icon.name: "edit-delete"
-			onTriggered: popup.deleteWithUndo(eventMenu.eventItem, true)
+			onTriggered: eventMenu.deleteRequested(eventMenu.eventItem, true)
 		}
 	}
 	// Copies text to the clipboard (QML has no clipboard API of its own): a TextEdit made for it,

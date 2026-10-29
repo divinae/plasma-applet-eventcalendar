@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -1851,11 +1851,6 @@ msgstr "Nur dieses Vorkommen von „%1“ löschen"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "„%1“ löschen"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Alle Termine von „%1“ löschen"
 
@@ -3106,6 +3101,10 @@ msgid "Keep Open"
 msgstr "Geöffnet halten"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Der Termin konnte nicht gelöscht werden"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Wiederkehrender Termin gelöscht"
 
@@ -3116,6 +3115,10 @@ msgstr "Aufgabe gelöscht"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Termin gelöscht"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Die Aufgabe konnte nicht gelöscht werden"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3884,6 +3887,10 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "„%1“ löschen"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Vollbild-Hinweis, wenn eine Besprechung beginnt"

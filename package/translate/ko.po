@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1807,11 +1807,6 @@ msgstr "“%1”의 이 일정만 삭제"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "“%1” 삭제"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "“%1”의 모든 이벤트 삭제"
 
@@ -3031,6 +3026,10 @@ msgid "Keep Open"
 msgstr "열어 두기"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "일정을 삭제할 수 없습니다"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "반복 이벤트 삭제됨"
 
@@ -3041,6 +3040,10 @@ msgstr "작업 삭제됨"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "이벤트 삭제됨"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "할 일을 삭제할 수 없습니다"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3789,6 +3792,10 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "“%1” 삭제"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "회의 시작 시 전체 화면 알림"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1816,11 +1816,6 @@ msgstr "Slet kun denne forekomst af “%1”"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "Slet “%1”"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Slet alle begivenheder af “%1”"
 
@@ -3064,6 +3059,10 @@ msgid "Keep Open"
 msgstr "Hold åben"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Kunne ikke slette begivenheden"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Gentagen begivenhed slettet"
 
@@ -3074,6 +3073,10 @@ msgstr "Opgave slettet"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Begivenhed slettet"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Kunne ikke slette opgaven"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3832,6 +3835,10 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "Slet “%1”"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Fuldskærmsadvarsel, når et møde starter"

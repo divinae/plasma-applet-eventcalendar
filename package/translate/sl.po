@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1826,11 +1826,6 @@ msgstr "Izbriši samo to ponovitev »%1«"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "Izbriši »%1«"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Izbriši vse dogodke »%1«"
 
@@ -3126,6 +3121,10 @@ msgid "Keep Open"
 msgstr "Obdrži odprto"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Dogodka ni bilo mogoče izbrisati"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Ponavljajoči se dogodek izbrisan"
 
@@ -3136,6 +3135,10 @@ msgstr "Opravilo izbrisano"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Dogodek izbrisan"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Opravila ni bilo mogoče izbrisati"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3927,6 +3930,10 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "Izbriši »%1«"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Celozaslonsko opozorilo ob začetku sestanka"

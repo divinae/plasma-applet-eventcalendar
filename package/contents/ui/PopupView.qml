@@ -187,6 +187,7 @@ MouseArea {
 		onShowDetails: function(eventItem) { popup.activateEvent(eventItem) }
 		onEditEvent: function(eventItem) { popup.editEvent(eventItem) }
 		onDuplicateEvent: function(eventItem) { popup.duplicateEvent(eventItem) }
+		onDeleteRequested: function(eventItem, wholeSeries) { popup.deleteWithUndo(eventItem, wholeSeries) }
 	}
 	//--- Undo (delete, move)
 	// Show "text" with an Undo button for a while; a newer offer replaces it.
@@ -205,7 +206,9 @@ MouseArea {
 		if (wholeSeries) {
 			var seriesId = eventItem.recurringEventId
 			eventModel.deleteSeries(calendarId, seriesId, function(err) {
-				if (!err && undoable) {
+				if (err) {
+					showError(i18n("Couldn't delete the event"))
+				} else if (undoable) {
 					offerUndo(i18n("Repeating event deleted"), function() {
 						eventModel.restoreEvent(calendarId, seriesId, null, restored)
 					})
@@ -221,7 +224,9 @@ MouseArea {
 		}
 		var deletedText = Tasks.isTask(eventItem) ? i18n("Task deleted") : i18n("Event deleted")
 		eventModel.deleteEvent(calendarId, eventId, function(err) {
-			if (!err && undoable) {
+			if (err) {
+				showError(Tasks.isTask(eventItem) ? i18n("Couldn't delete the task") : i18n("Couldn't delete the event"))
+			} else if (undoable) {
 				offerUndo(deletedText, function() {
 					eventModel.restoreEvent(calendarId, eventId, copy, restored)
 				})

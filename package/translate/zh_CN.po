@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1775,11 +1775,6 @@ msgstr "仅删除“%1”的此次重复"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "删除“%1”"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "删除“%1”的所有事件"
 
@@ -2992,6 +2987,10 @@ msgid "Keep Open"
 msgstr "保持打开"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "无法删除事件"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "重复事件已删除"
 
@@ -3002,6 +3001,10 @@ msgstr "任务已删除"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "事件已删除"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "无法删除任务"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3745,6 +3748,10 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "删除“%1”"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "会议开始时全屏提醒"

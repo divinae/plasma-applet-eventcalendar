@@ -709,6 +709,9 @@ CalendarManager {
 			})
 		} else {
 			logger.log('Could not deleteEvent: no calendar manager')
+			if (done) {
+				done('no calendar manager')
+			}
 		}
 	}
 
@@ -719,6 +722,9 @@ CalendarManager {
 			calendarManager.deleteSeries(calendarId, seriesId, done)
 		} else {
 			logger.log('Could not deleteSeries: no calendar manager')
+			if (done) {
+				done('no calendar manager')
+			}
 		}
 	}
 

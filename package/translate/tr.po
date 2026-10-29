@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1821,11 +1821,6 @@ msgstr "“%1” Etkinliğinin Yalnızca Bu Tekrarını Sil"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "“%1” Sil"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Tüm “%1” Etkinliklerini Sil"
 
@@ -3070,6 +3065,10 @@ msgid "Keep Open"
 msgstr "Açık Tut"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Etkinlik silinemedi"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Yinelenen etkinlik silindi"
 
@@ -3080,6 +3079,10 @@ msgstr "Görev silindi"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Etkinlik silindi"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Görev silinemedi"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3846,6 +3849,10 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "“%1” Sil"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Toplantı başladığında tam ekran uyarı"

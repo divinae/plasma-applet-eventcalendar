@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -1836,11 +1836,6 @@ msgstr "Alleen deze herhaling van ‘%1’ verwijderen"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "‘%1’ verwijderen"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Alle afspraken van ‘%1’ verwijderen"
 
@@ -3092,6 +3087,10 @@ msgid "Keep Open"
 msgstr "Open houden"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Kan de afspraak niet verwijderen"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Terugkerende afspraak verwijderd"
 
@@ -3102,6 +3101,10 @@ msgstr "Taak verwijderd"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Afspraak verwijderd"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Kan de taak niet verwijderen"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3866,6 +3869,10 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "‘%1’ verwijderen"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Schermvullende melding als een vergadering begint"

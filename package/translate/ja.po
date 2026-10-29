@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1592,11 +1592,6 @@ msgstr "「%1」のこの回のみを削除"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "「%1」を削除"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "「%1」のすべてのイベントを削除"
 
@@ -2787,6 +2782,10 @@ msgid "Keep Open"
 msgstr "開いたままにする"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "イベントを削除できませんでした"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "繰り返しイベントを削除しました"
 
@@ -2797,6 +2796,10 @@ msgstr "タスクを削除しました"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "イベントを削除しました"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "タスクを削除できませんでした"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3536,6 +3539,10 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "「%1」を削除"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "会議の開始時に全画面で通知"

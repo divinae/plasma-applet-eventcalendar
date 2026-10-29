@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:29+0100\n"
+"POT-Creation-Date: 2026-10-29 14:38+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1599,11 +1599,6 @@ msgstr "Usuń tylko to wystąpienie „%1”"
 
 #: ../contents/ui/EventContextMenu.qml
 msgctxt "%1 = event title"
-msgid "Delete “%1”"
-msgstr "Usuń „%1”"
-
-#: ../contents/ui/EventContextMenu.qml
-msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Usuń wszystkie wydarzenia „%1”"
 
@@ -2842,6 +2837,10 @@ msgid "Keep Open"
 msgstr "Nie zamykaj"
 
 #: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the event"
+msgstr "Nie udało się usunąć wydarzenia"
+
+#: ../contents/ui/PopupView.qml
 msgid "Repeating event deleted"
 msgstr "Usunięto wydarzenie cykliczne"
 
@@ -2852,6 +2851,10 @@ msgstr "Usunięto zadanie"
 #: ../contents/ui/PopupView.qml
 msgid "Event deleted"
 msgstr "Usunięto wydarzenie"
+
+#: ../contents/ui/PopupView.qml
+msgid "Couldn't delete the task"
+msgstr "Nie udało się usunąć zadania"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"
@@ -3621,6 +3624,10 @@ msgstr "Dziś nie ma już wydarzeń"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Delete “%1”"
+#~ msgstr "Usuń „%1”"
 
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Pełnoekranowy alert na początek spotkania"
