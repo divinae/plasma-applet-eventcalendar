@@ -481,7 +481,7 @@ msgstr "Kun tapahtuma alkaa"
 msgid "Show a notification"
 msgstr "Näytä ilmoitus"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Tyyli"
 
@@ -1444,6 +1444,30 @@ msgstr "Meteogrammi näyttää"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " tuntia"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr ""
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -3593,6 +3617,11 @@ msgstr "Seuraavat 12 tuntia"
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Päivän aikana"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"

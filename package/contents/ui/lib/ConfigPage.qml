@@ -300,6 +300,12 @@ KCM.SimpleKCM {
 	property var cfg_weatherIconStyleDefault
 	property var cfg_weatherIconBackground
 	property var cfg_weatherIconBackgroundDefault
+	property var cfg_weatherChartStyle
+	property var cfg_weatherChartStyleDefault
+	property var cfg_weatherChartLargeIcons
+	property var cfg_weatherChartLargeIconsDefault
+	property var cfg_weatherChartRainAmounts
+	property var cfg_weatherChartRainAmountsDefault
 	property var cfg_meteogramHours
 	property var cfg_meteogramHoursDefault
 	property var cfg_eventCacheEnabled

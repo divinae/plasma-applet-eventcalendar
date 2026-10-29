@@ -515,6 +515,7 @@ msgid "Show a notification"
 msgstr "Benachrichtigung anzeigen"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Stil"
 
@@ -1489,6 +1490,30 @@ msgstr "Meteogramm zeigt"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " Stunden"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "Vorhersagediagramm"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "Einfach"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "Aufwendig"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "Größere Symbole"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "Regenmengen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "Die Summe über dem Diagramm, die Mengen zu den regenreichsten Stunden"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -3672,6 +3697,11 @@ msgstr "Nächste 12 Stunden"
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Im Tagesverlauf"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "Regen: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"

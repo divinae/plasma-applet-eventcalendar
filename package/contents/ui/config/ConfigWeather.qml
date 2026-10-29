@@ -232,5 +232,31 @@ ConfigPage {
 				stepSize: 3
 			}
 		}
+
+		//--- The Weather panel's hourly chart (Day view)
+		FormCard.FormHeader {
+			title: i18n("Forecast chart")
+		}
+		FormCard.FormCard {
+			FormConfigCombo {
+				text: i18n("Style")
+				configKey: 'weatherChartStyle'
+				model: [
+					{ value: 'simple', text: i18n("Simple") },
+					{ value: 'fancy', text: i18n("Fancy") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Larger icons")
+				configKey: 'weatherChartLargeIcons'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Rain amounts")
+				description: i18n("The total above the chart, the amounts at the heaviest hours")
+				configKey: 'weatherChartRainAmounts'
+			}
+		}
 	}
 }
