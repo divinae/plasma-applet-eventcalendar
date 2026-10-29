@@ -104,6 +104,8 @@ Item {
 	}
 
 	//--- Weather
+	// Every hour; force: now (a view that needs the hourly forecast, Retry, settings). The weather
+	// services' RequestCache answers repeats within 10 minutes without a request.
 	function updateWeather(force) {
 		if (WeatherApi.weatherIsSetup(plasmoid.configuration)) {
 			// update every hour
@@ -186,13 +188,14 @@ Item {
 		}
 	}
 
-	// Server errors: retried after 30 s, 1, 2, then every 5 minutes, until a forecast arrives.
+	// Server errors: retried after 30 s, 1, 2, 5, 5, 5 minutes, then every 30 minutes (a longer
+	// outage), until a forecast arrives.
 	property int weatherRetries: 0
 	function scheduleWeatherRetry() {
 		if (weatherRetryTimer.running) {
 			return // Daily and hourly both failed: one retry
 		}
-		var delays = [30, 60, 120, 300]
+		var delays = [30, 60, 120, 300, 300, 300, 1800]
 		weatherRetryTimer.interval = delays[Math.min(weatherRetries, delays.length - 1)] * 1000
 		weatherRetries++
 		weatherRetryTimer.start()

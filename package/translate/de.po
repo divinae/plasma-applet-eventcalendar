@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
-"Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
-"eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 18:53+0100\n"
+"Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
+"POT-Creation-Date: 2026-10-29 18:54+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -128,11 +127,8 @@ msgstr "Neuer Versuch in Kürze."
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
-msgid ""
-"Widget has been updated. Please logout and login to Google Calendar again."
-msgstr ""
-"Widget wurde aktualisiert. Bitte beim Google Kalender ab- und wieder "
-"anmelden."
+msgid "Widget has been updated. Please logout and login to Google Calendar again."
+msgstr "Widget wurde aktualisiert. Bitte beim Google Kalender ab- und wieder anmelden."
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
@@ -198,9 +194,7 @@ msgstr "TickTick: Erneut anmelden"
 
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Connect the account again with a new API token in the Tasks settings."
-msgstr ""
-"Verbinden Sie das Konto in den Aufgaben-Einstellungen erneut mit einem neuen "
-"API-Token."
+msgstr "Verbinden Sie das Konto in den Aufgaben-Einstellungen erneut mit einem neuen API-Token."
 
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -277,8 +271,7 @@ msgstr "Name in meiner Liste"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
-msgstr ""
-"Nur Sie sehen diesen Namen. Für andere behält der Kalender seinen Namen."
+msgstr "Nur Sie sehen diesen Namen. Für andere behält der Kalender seinen Namen."
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
@@ -339,14 +332,8 @@ msgid " px"
 msgstr " px"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid ""
-"Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-"
-"qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd "
-"d MMM."
-msgstr ""
-"Benutzerdefinierte Formate verwenden das <a href=\"https://doc.qt.io/qt-6/"
-"qml-qtqml-qt.html#formatDateTime-method\">Qt-Datums- und Zeitformat</a>, z. "
-"B.: HH:mm, ddd d MMM."
+msgid "Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd d MMM."
+msgstr "Benutzerdefinierte Formate verwenden das <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt-Datums- und Zeitformat</a>, z. B.: HH:mm, ddd d MMM."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Second Line"
@@ -419,15 +406,11 @@ msgstr "Fortschritt der aktuellen Besprechung"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "A thin bar under the meeting's name, in its calendar's color."
-msgstr ""
-"Ein schmaler Balken unter dem Namen der Besprechung, in der Farbe ihres "
-"Kalenders."
+msgstr "Ein schmaler Balken unter dem Namen der Besprechung, in der Farbe ihres Kalenders."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
-msgstr ""
-"Mittelklick auf die Uhr, um der aktuellen oder nächsten Besprechung "
-"beizutreten."
+msgstr "Mittelklick auf die Uhr, um der aktuellen oder nächsten Besprechung beizutreten."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show background"
@@ -508,13 +491,8 @@ msgid "System default"
 msgstr "Systemvorgabe"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"System default: as set in System Settings > Notifications. A reminder hidden "
-"after a set time isn't kept in the notification history."
-msgstr ""
-"Systemvorgabe: wie in den Systemeinstellungen > Benachrichtigungen "
-"eingestellt. Eine nach fester Zeit ausgeblendete Erinnerung bleibt nicht im "
-"Benachrichtigungsverlauf."
+msgid "System default: as set in System Settings > Notifications. A reminder hidden after a set time isn't kept in the notification history."
+msgstr "Systemvorgabe: wie in den Systemeinstellungen > Benachrichtigungen eingestellt. Eine nach fester Zeit ausgeblendete Erinnerung bleibt nicht im Benachrichtigungsverlauf."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"
@@ -581,9 +559,7 @@ msgstr "Besprechungslink öffnen, wenn eine Besprechung beginnt"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
-msgstr ""
-"Für Besprechungen, die Sie angenommen haben oder organisieren und die nicht "
-"als beendet markiert sind."
+msgstr "Für Besprechungen, die Sie angenommen haben oder organisieren und die nicht als beendet markiert sind."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Command when a meeting starts"
@@ -598,39 +574,24 @@ msgid "Command when it ends"
 msgstr "Befehl, wenn sie endet"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and "
-"end. For a meeting with guests or a link, not declined; it ends when it's "
-"over or marked as ended."
-msgstr ""
-"Läuft mit sh: $1 ist der Titel der Besprechung, $2 ihr Link, $3 und $4 "
-"Beginn und Ende. Für eine Besprechung mit Gästen oder Link, nicht abgelehnt; "
-"sie endet, wenn sie vorbei oder als beendet markiert ist."
+msgid "Run with sh: $1 is the meeting's title, $2 its link, $3 and $4 its start and end. For a meeting with guests or a link, not declined; it ends when it's over or marked as ended."
+msgstr "Läuft mit sh: $1 ist der Titel der Besprechung, $2 ihr Link, $3 und $4 Beginn und Ende. Für eine Besprechung mit Gästen oder Link, nicht abgelehnt; sie endet, wenn sie vorbei oder als beendet markiert ist."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
 msgstr "Musik und Videos beim Beitreten zu einer Besprechung pausieren"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Players that are playing (eg: Spotify, Elisa, a video in the browser), when "
-"a Join button opens a meeting or it opens when the meeting starts."
-msgstr ""
-"Laufende Wiedergaben (z. B. Spotify, Elisa, ein Video im Browser), wenn eine "
-"Beitreten-Schaltfläche eine Besprechung öffnet oder diese zu Beginn "
-"automatisch geöffnet wird."
+msgid "Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts."
+msgstr "Laufende Wiedergaben (z. B. Spotify, Elisa, ein Video im Browser), wenn eine Beitreten-Schaltfläche eine Besprechung öffnet oder diese zu Beginn automatisch geöffnet wird."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"
 msgstr "„Nicht stören“ während Besprechungen"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Plasma's Do Not Disturb from the start until the end of a meeting with "
-"guests or a meeting link. Mark as Ended turns it off."
-msgstr ""
-"Plasmas „Nicht stören“ vom Beginn bis zum Ende einer Besprechung mit Gästen "
-"oder einem Besprechungslink. „Als beendet markieren“ schaltet es aus."
+msgid "Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off."
+msgstr "Plasmas „Nicht stören“ vom Beginn bis zum Ende einer Besprechung mit Gästen oder einem Besprechungslink. „Als beendet markieren“ schaltet es aus."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings I accepted"
@@ -662,16 +623,8 @@ msgstr "Standard"
 
 #: ../contents/ui/config/ConfigEvents.qml
 #, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"Beitreten-Schaltflächen öffnen Google-Meet-Links hier; andere "
-"Besprechungslinks im Standardbrowser. In einem Befehl steht %u für den "
-"Besprechungslink. Google-Konto: seine Nummer (0, 1, …) oder E-Mail-Adresse "
-"wie in Googles Kontowechsler; leer: die Vorgabe der Anwendung."
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "Beitreten-Schaltflächen öffnen Google-Meet-Links hier; andere Besprechungslinks im Standardbrowser. In einem Befehl steht %u für den Besprechungslink. Google-Konto: seine Nummer (0, 1, …) oder E-Mail-Adresse wie in Googles Kontowechsler; leer: die Vorgabe der Anwendung."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other Notifications"
@@ -682,24 +635,16 @@ msgid "New invitations for today"
 msgstr "Neue Einladungen für heute"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"A notification for each meeting today you haven't answered yet, with Yes, "
-"Maybe and No."
-msgstr ""
-"Eine Benachrichtigung für jede heutige Besprechung, die Sie noch nicht "
-"beantwortet haben, mit Ja, Vielleicht und Nein."
+msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
+msgstr "Eine Benachrichtigung für jede heutige Besprechung, die Sie noch nicht beantwortet haben, mit Ja, Vielleicht und Nein."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
 msgstr "Jeden Morgen die heutigen Termine"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"A notification with today's events once a day, also when the computer is "
-"turned on later."
-msgstr ""
-"Einmal am Tag eine Benachrichtigung mit den heutigen Terminen, auch wenn der "
-"Computer erst später eingeschaltet wird."
+msgid "A notification with today's events once a day, also when the computer is turned on later."
+msgstr "Einmal am Tag eine Benachrichtigung mit den heutigen Terminen, auch wenn der Computer erst später eingeschaltet wird."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
@@ -710,12 +655,8 @@ msgid "Skip events I declined"
 msgstr "Von mir abgelehnte Termine überspringen"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Popups and sounds for each kind of notification can also be set in System "
-"Settings > Notifications > Event Calendar."
-msgstr ""
-"Pop-ups und Klänge für jede Art von Benachrichtigung lassen sich auch unter "
-"Systemeinstellungen > Benachrichtigungen > Ereigniskalender festlegen."
+msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
+msgstr "Pop-ups und Klänge für jede Art von Benachrichtigung lassen sich auch unter Systemeinstellungen > Benachrichtigungen > Ereigniskalender festlegen."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google Account"
@@ -763,45 +704,22 @@ msgid "Auto login failed: authorization code missing."
 msgstr "Automatische Anmeldung fehlgeschlagen: Autorisierungscode fehlt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"The desktop could not open the browser automatically. Use the login link in "
-"Advanced sign-in options instead."
-msgstr ""
-"Das System konnte den Browser nicht automatisch öffnen. Verwenden Sie "
-"stattdessen den Anmeldelink unter „Erweiterte Anmeldeoptionen“."
+msgid "The desktop could not open the browser automatically. Use the login link in Advanced sign-in options instead."
+msgstr "Das System konnte den Browser nicht automatisch öffnen. Verwenden Sie stattdessen den Anmeldelink unter „Erweiterte Anmeldeoptionen“."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Sign in to show your Google calendars and task lists. Your browser opens to "
-"sign in; when access is granted the widget picks it up automatically."
-msgstr ""
-"Melden Sie sich an, um Ihre Google-Kalender und Aufgabenlisten anzuzeigen. "
-"Zur Anmeldung öffnet sich Ihr Browser; sobald der Zugriff gewährt ist, "
-"übernimmt das Widget ihn automatisch."
+msgid "Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically."
+msgstr "Melden Sie sich an, um Ihre Google-Kalender und Aufgabenlisten anzuzeigen. Zur Anmeldung öffnet sich Ihr Browser; sobald der Zugriff gewährt ist, übernimmt das Widget ihn automatisch."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
-msgid ""
-"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
-"Sign in here as well to answer invitations, edit and delete events and join "
-"meetings from the widget. Events of an account synced both ways are shown "
-"once, from the sign-in here."
-msgstr ""
-"KDE PIM (Akonadi) bindet die Google-Kalender von %1 bereits ein, "
-"schreibgeschützt. Melden Sie sich zusätzlich hier an, um im Widget auf "
-"Einladungen zu antworten, Termine zu bearbeiten und zu löschen und "
-"Besprechungen beizutreten. Termine eines auf beiden Wegen synchronisierten "
-"Kontos werden nur einmal angezeigt, aus der Anmeldung hier."
+msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
+msgstr "KDE PIM (Akonadi) bindet die Google-Kalender von %1 bereits ein, schreibgeschützt. Melden Sie sich zusätzlich hier an, um im Widget auf Einladungen zu antworten, Termine zu bearbeiten und zu löschen und Besprechungen beizutreten. Termine eines auf beiden Wegen synchronisierten Kontos werden nur einmal angezeigt, aus der Anmeldung hier."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
-msgid ""
-"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
-"sign-in here, where they can be answered and edited."
-msgstr ""
-"Auch von KDE PIM (Akonadi) synchronisiert: %1. Ihre Termine werden nur "
-"einmal angezeigt, aus der Anmeldung hier, wo sie beantwortet und bearbeitet "
-"werden können."
+msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
+msgstr "Auch von KDE PIM (Akonadi) synchronisiert: %1. Ihre Termine werden nur einmal angezeigt, aus der Anmeldung hier, wo sie beantwortet und bearbeitet werden können."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"
@@ -822,38 +740,24 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Google access for this account expired or was revoked. Sign in again to "
-"reconnect it (the account and its settings are kept)."
-msgstr ""
-"Der Google-Zugriff für dieses Konto ist abgelaufen oder wurde widerrufen. "
-"Melden Sie sich erneut an, um es wieder zu verbinden (Konto und "
-"Einstellungen bleiben erhalten)."
+msgid "Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept)."
+msgstr "Der Google-Zugriff für dieses Konto ist abgelaufen oder wurde widerrufen. Melden Sie sich erneut an, um es wieder zu verbinden (Konto und Einstellungen bleiben erhalten)."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
-"Das Widget wurde aktualisiert. Melden Sie sich erneut an, damit dieses Konto "
-"synchron bleibt."
+msgstr "Das Widget wurde aktualisiert. Melden Sie sich erneut an, damit dieses Konto synchron bleibt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "No calendars loaded yet. Use the reload button."
-msgstr ""
-"Noch keine Kalender geladen. Verwenden Sie die Schaltfläche zum Neuladen."
+msgstr "Noch keine Kalender geladen. Verwenden Sie die Schaltfläche zum Neuladen."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Task lists are chosen on the Tasks page."
 msgstr "Aufgabenlisten werden auf der Seite „Aufgaben“ ausgewählt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
-msgstr ""
-"Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, wird "
-"auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine > Plasma-"
-"Kalender). Im Kalendermenü des Aufklappfensters sind sie ein Eintrag."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
+msgstr "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, wird auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine > Plasma-Kalender). Im Kalendermenü des Aufklappfensters sind sie ein Eintrag."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -880,13 +784,8 @@ msgid "Client Credentials"
 msgstr "Client-Zugangsdaten"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Using a previously stored Google OAuth client for compatibility. If login "
-"still fails, add your own client ID and client secret."
-msgstr ""
-"Aus Kompatibilitätsgründen wird ein zuvor gespeicherter Google-OAuth-Client "
-"verwendet. Wenn die Anmeldung weiterhin fehlschlägt, fügen Sie Ihre eigene "
-"Client-ID und Ihr Client-Secret hinzu."
+msgid "Using a previously stored Google OAuth client for compatibility. If login still fails, add your own client ID and client secret."
+msgstr "Aus Kompatibilitätsgründen wird ein zuvor gespeicherter Google-OAuth-Client verwendet. Wenn die Anmeldung weiterhin fehlschlägt, fügen Sie Ihre eigene Client-ID und Ihr Client-Secret hinzu."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Try desktop built-in client (no secret)"
@@ -905,25 +804,12 @@ msgid "Client Secret"
 msgstr "Client-Secret"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Leave these empty to use the built-in client. A custom client must be a "
-"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
-"redirect URI set to %1."
-msgstr ""
-"Leer lassen, um den integrierten Client zu verwenden. Ein eigener Client "
-"muss ein Google-Cloud-OAuth-Desktop-Client sein oder ein Web-Client mit "
-"Secret und auf %1 gesetzter Weiterleitungs-URI."
+msgid "Leave these empty to use the built-in client. A custom client must be a Google Cloud OAuth Desktop client, or a Web client with its secret and the redirect URI set to %1."
+msgstr "Leer lassen, um den integrierten Client zu verwenden. Ein eigener Client muss ein Google-Cloud-OAuth-Desktop-Client sein oder ein Web-Client mit Secret und auf %1 gesetzter Weiterleitungs-URI."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"For a custom OAuth client, publish the OAuth consent screen to Production. "
-"Google expires refresh tokens for external apps left in Testing after seven "
-"days; Workspace session controls can also require reauthorization."
-msgstr ""
-"Veröffentlichen Sie bei einem eigenen OAuth-Client den OAuth-"
-"Zustimmungsbildschirm auf „Production“. Google lässt Aktualisierungstoken "
-"externer Apps im Status „Testing“ nach sieben Tagen ablaufen; auch Workspace-"
-"Sitzungsrichtlinien können eine erneute Autorisierung erfordern."
+msgid "For a custom OAuth client, publish the OAuth consent screen to Production. Google expires refresh tokens for external apps left in Testing after seven days; Workspace session controls can also require reauthorization."
+msgstr "Veröffentlichen Sie bei einem eigenen OAuth-Client den OAuth-Zustimmungsbildschirm auf „Production“. Google lässt Aktualisierungstoken externer Apps im Status „Testing“ nach sieben Tagen ablaufen; auch Workspace-Sitzungsrichtlinien können eine erneute Autorisierung erfordern."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Manual Sign-in"
@@ -938,17 +824,8 @@ msgid "Login (Auto)"
 msgstr "Anmelden (automatisch)"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to a localhost URL. If auto-capture succeeds you can "
-"ignore the field below; otherwise copy the full URL (or just the code) and "
-"paste it."
-msgstr ""
-"Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu "
-"öffnen. Nach der Freigabe leitet der Browser zu einer localhost-URL weiter. "
-"Wenn die automatische Übernahme klappt, können Sie das Feld unten "
-"ignorieren; andernfalls kopieren Sie die vollständige URL (oder nur den "
-"Code) und fügen sie ein."
+msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it."
+msgstr "Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu öffnen. Nach der Freigabe leitet der Browser zu einer localhost-URL weiter. Wenn die automatische Übernahme klappt, können Sie das Feld unten ignorieren; andernfalls kopieren Sie die vollständige URL (oder nur den Code) und fügen sie ein."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
@@ -963,14 +840,8 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "Hilfsseite (optional): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If your browser shows a connection error, that's expected. Copy the URL from "
-"the address bar anyway and paste it below. If auto-capture works, you do not "
-"need to paste anything."
-msgstr ""
-"Wenn Ihr Browser einen Verbindungsfehler anzeigt, ist das normal. Kopieren "
-"Sie trotzdem die URL aus der Adressleiste und fügen Sie sie unten ein. Wenn "
-"die automatische Übernahme funktioniert, müssen Sie nichts einfügen."
+msgid "If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything."
+msgstr "Wenn Ihr Browser einen Verbindungsfehler anzeigt, ist das normal. Kopieren Sie trotzdem die URL aus der Adressleiste und fügen Sie sie unten ein. Wenn die automatische Übernahme funktioniert, müssen Sie nichts einfügen."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -981,11 +852,8 @@ msgid "Google authorization code or redirect URL"
 msgstr "Google-Autorisierungscode oder Weiterleitungs-URL"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
-"Google-Autorisierungscode oder vollständige Weiterleitungs-URL aus dem "
-"Browser einfügen"
+msgid "Paste the Google authorization code or the full redirect URL from the browser"
+msgstr "Google-Autorisierungscode oder vollständige Weiterleitungs-URL aus dem Browser einfügen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account"
@@ -1001,9 +869,7 @@ msgstr "Optionen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr ""
-"Beschreibung „Dieses Ereignis wurde aus Zielen in Google Kalender "
-"hinzugefügt“ ausblenden"
+msgstr "Beschreibung „Dieses Ereignis wurde aus Zielen in Google Kalender hinzugefügt“ ausblenden"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
@@ -1031,15 +897,11 @@ msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
-msgstr ""
-"TickTick hat das API-Token nicht akzeptiert. Überprüfen Sie es und versuchen "
-"Sie es erneut."
+msgstr "TickTick hat das API-Token nicht akzeptiert. Überprüfen Sie es und versuchen Sie es erneut."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Could not connect to TickTick. Check your connection and try again."
-msgstr ""
-"Verbindung zu TickTick nicht möglich. Überprüfen Sie Ihre Verbindung und "
-"versuchen Sie es erneut."
+msgstr "Verbindung zu TickTick nicht möglich. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick error: %1"
@@ -1051,9 +913,7 @@ msgstr "Verbindung zu TickTick wird hergestellt…"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Could not store the API token in the system keyring: %1"
-msgstr ""
-"Das API-Token konnte nicht im Schlüsselbund des Systems gespeichert werden: "
-"%1"
+msgstr "Das API-Token konnte nicht im Schlüsselbund des Systems gespeichert werden: %1"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick account added."
@@ -1083,9 +943,7 @@ msgstr "Umbenennen"
 #: ../contents/ui/config/ConfigTasks.qml
 msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
-msgstr ""
-"Die Liste „%1“ und alle ihre Aufgaben löschen? Dies kann nicht rückgängig "
-"gemacht werden."
+msgstr "Die Liste „%1“ und alle ihre Aufgaben löschen? Dies kann nicht rückgängig gemacht werden."
 
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
@@ -1113,21 +971,15 @@ msgstr "Überfällige Aufgaben unter „Heute“"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr ""
-"Offene Aufgaben, die an einem früheren Tag fällig waren, werden in jeder "
-"Ansicht unter „Heute“ angezeigt."
+msgstr "Offene Aufgaben, die an einem früheren Tag fällig waren, werden in jeder Ansicht unter „Heute“ angezeigt."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Smart recognition in Add a task"
 msgstr "Intelligente Erkennung bei „Aufgabe hinzufügen“"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
-"the new task's day, time, priority, list and repeat."
-msgstr ""
-"Wörter wie „tomorrow 17:00“, „!high“, „#List“ oder „every week“ legen Tag, "
-"Uhrzeit, Priorität, Liste und Wiederholung der neuen Aufgabe fest."
+msgid "Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set the new task's day, time, priority, list and repeat."
+msgstr "Wörter wie „tomorrow 17:00“, „!high“, „#List“ oder „every week“ legen Tag, Uhrzeit, Priorität, Liste und Wiederholung der neuen Aufgabe fest."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
@@ -1138,12 +990,8 @@ msgid "Task reminders"
 msgstr "Aufgabenerinnerungen"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"A notification when a task with a due time or a reminder is due, and the "
-"tasks due today at the daily agenda time."
-msgstr ""
-"Eine Benachrichtigung, wenn eine Aufgabe mit Fälligkeitszeit oder Erinnerung "
-"fällig wird, sowie die heute fälligen Aufgaben zur Zeit der Tagesübersicht."
+msgid "A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time."
+msgstr "Eine Benachrichtigung, wenn eine Aufgabe mit Fälligkeitszeit oder Erinnerung fällig wird, sowie die heute fälligen Aufgaben zur Zeit der Tagesübersicht."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Tasks in the daily agenda"
@@ -1151,32 +999,23 @@ msgstr "Aufgaben in der Tagesübersicht"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "The daily agenda notification also lists today's and overdue tasks."
-msgstr ""
-"Die Benachrichtigung der Tagesübersicht listet auch heutige und überfällige "
-"Aufgaben auf."
+msgstr "Die Benachrichtigung der Tagesübersicht listet auch heutige und überfällige Aufgaben auf."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Sign in on the Google Calendar page to choose the Google task lists shown "
-"here."
-msgstr ""
-"Melden Sie sich auf der Seite „Google Kalender“ an, um die hier angezeigten "
-"Google-Aufgabenlisten auszuwählen."
+msgid "Sign in on the Google Calendar page to choose the Google task lists shown here."
+msgstr "Melden Sie sich auf der Seite „Google Kalender“ an, um die hier angezeigten Google-Aufgabenlisten auszuwählen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Task Lists"
 msgstr "Aufgabenlisten"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"No task lists loaded yet. Reload the account on the Google Calendar page."
-msgstr ""
-"Noch keine Aufgabenlisten geladen. Laden Sie das Konto auf der Seite „Google "
-"Kalender“ neu."
+msgid "No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr "Noch keine Aufgabenlisten geladen. Laden Sie das Konto auf der Seite „Google Kalender“ neu."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick"
@@ -1187,17 +1026,12 @@ msgid "Reload projects"
 msgstr "Projekte neu laden"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"This account's API token is not in the system keyring. Remove the account "
-"and connect it again."
-msgstr ""
-"Das API-Token dieses Kontos ist nicht im Schlüsselbund des Systems. "
-"Entfernen Sie das Konto und verbinden Sie es erneut."
+msgid "This account's API token is not in the system keyring. Remove the account and connect it again."
+msgstr "Das API-Token dieses Kontos ist nicht im Schlüsselbund des Systems. Entfernen Sie das Konto und verbinden Sie es erneut."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "No projects loaded yet. Use the reload button."
-msgstr ""
-"Noch keine Projekte geladen. Verwenden Sie die Schaltfläche zum Neuladen."
+msgstr "Noch keine Projekte geladen. Verwenden Sie die Schaltfläche zum Neuladen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Server"
@@ -1228,15 +1062,8 @@ msgid "Connect"
 msgstr "Verbinden"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Create an API token on the TickTick website: Settings > Account > API Token "
-"(on dida365.com for Dida365). The token is kept in the system keyring "
-"(KWallet or Secret Service), not in the widget's settings."
-msgstr ""
-"Erstellen Sie ein API-Token auf der TickTick-Website: Settings > Account > "
-"API Token (für Dida365 auf dida365.com). Das Token wird im Schlüsselbund des "
-"Systems (KWallet oder Secret Service) gespeichert, nicht in den "
-"Einstellungen des Widgets."
+msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
+msgstr "Erstellen Sie ein API-Token auf der TickTick-Website: Settings > Account > API Token (für Dida365 auf dida365.com). Das Token wird im Schlüsselbund des Systems (KWallet oder Secret Service) gespeichert, nicht in den Einstellungen des Widgets."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1329,13 +1156,8 @@ msgid "Appearance"
 msgstr "Erscheinungsbild"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Islands: the calendar grids, the Day view's panels, the agenda days and the "
-"task sections each sit in a rounded card."
-msgstr ""
-"Inseln: Die Kalenderraster, die Bereiche der Tagesansicht, die Tage der "
-"Agenda und die Aufgabenabschnitte liegen jeweils auf einer abgerundeten "
-"Karte."
+msgid "Islands: the calendar grids, the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+msgstr "Inseln: Die Kalenderraster, die Bereiche der Tagesansicht, die Tage der Agenda und die Aufgabenabschnitte liegen jeweils auf einer abgerundeten Karte."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands (cards)"
@@ -1362,14 +1184,8 @@ msgid "Event colors"
 msgstr "Terminfarben"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Die Google-API liefert noch eine ältere Palette; „Wie in Google Kalender“ "
-"zeigt die aktuelle. „Dem Farbschema des Systems folgen“ verwendet die "
-"nächstliegenden Farben Ihres Plasma-Farbschemas."
+msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
+msgstr "Die Google-API liefert noch eine ältere Palette; „Wie in Google Kalender“ zeigt die aktuelle. „Dem Farbschema des Systems folgen“ verwendet die nächstliegenden Farben Ihres Plasma-Farbschemas."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "As in Google Calendar"
@@ -1438,8 +1254,7 @@ msgstr "Einen Termin in mehreren Kalendern einmal anzeigen"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "A meeting in your calendar and in a shared one, for example."
-msgstr ""
-"Zum Beispiel eine Besprechung in deinem und in einem geteilten Kalender."
+msgstr "Zum Beispiel eine Besprechung in deinem und in einem geteilten Kalender."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
@@ -1477,9 +1292,7 @@ msgstr "Keine zweite Zeitzone"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Its hours are shown next to the local ones in the Week and Day views."
-msgstr ""
-"Ihre Stunden werden in der Wochen- und Tagesansicht neben den lokalen "
-"angezeigt."
+msgstr "Ihre Stunden werden in der Wochen- und Tagesansicht neben den lokalen angezeigt."
 
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/EventEditView.qml
 msgid "Search time zones"
@@ -1487,9 +1300,7 @@ msgstr "Zeitzonen suchen"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr ""
-"Vorhersage in den Tageskopfzeilen und, in der Tagesansicht, ein "
-"Wetterbereich."
+msgstr "Vorhersage in den Tageskopfzeilen und, in der Tagesansicht, ein Wetterbereich."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Day view shows"
@@ -1540,15 +1351,8 @@ msgid "Keep events and tasks for offline start"
 msgstr "Termine und Aufgaben für den Offline-Start behalten"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"Die zuletzt geladenen Termine und Aufgaben (ohne Beschreibungen und Notizen) "
-"werden in ~/.cache/plasma-eventcalendar gespeichert und bis zur ersten "
-"Aktualisierung angezeigt. Aus: Nichts wird gespeichert, und die gespeicherte "
-"Kopie wird gelöscht."
+msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
+msgstr "Die zuletzt geladenen Termine und Aufgaben (ohne Beschreibungen und Notizen) werden in ~/.cache/plasma-eventcalendar gespeichert und bis zur ersten Aktualisierung angezeigt. Aus: Nichts wird gespeichert, und die gespeicherte Kopie wird gelöscht."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Troubleshooting"
@@ -1620,6 +1424,10 @@ msgstr "API-App-ID"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
 msgstr "Für OpenWeatherMap erforderlich"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The built-in app id is shared by everyone using this widget, and so is its request limit: the weather may stop updating at times. A free app id of your own: sign up at <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo needs none."
+msgstr "Die mitgelieferte App-ID teilen sich alle, die dieses Miniprogramm verwenden, und damit auch ihr Abruflimit: Das Wetter wird dann zeitweise nicht aktualisiert. Eine eigene, kostenlose App-ID: Registrieren Sie sich auf <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a> und kopieren Sie sie unter „API keys“. Open-Meteo braucht keine."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -2738,11 +2546,8 @@ msgid "Could not read the file."
 msgstr "Die Datei konnte nicht gelesen werden."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"Zum Lesen von .ics-Dateien wird das Python-Modul icalendar (python-"
-"icalendar) benötigt."
+msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr "Zum Lesen von .ics-Dateien wird das Python-Modul icalendar (python-icalendar) benötigt."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -2857,21 +2662,12 @@ msgid "Calendar:"
 msgstr "Kalender:"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Guests and the organizer aren't imported, and no invitations are sent. "
-"Importing the same event again updates it."
-msgstr ""
-"Gäste und Organisator werden nicht importiert, und es werden keine "
-"Einladungen versendet. Wird derselbe Termin erneut importiert, wird er "
-"aktualisiert."
+msgid "Guests and the organizer aren't imported, and no invitations are sent. Importing the same event again updates it."
+msgstr "Gäste und Organisator werden nicht importiert, und es werden keine Einladungen versendet. Wird derselbe Termin erneut importiert, wird er aktualisiert."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
-"the settings."
-msgstr ""
-"Zum Importieren wird ein Google Kalender benötigt, den Sie bearbeiten "
-"können. Melden Sie sich in den Einstellungen beim Google Kalender an."
+msgid "Importing needs a Google Calendar you can edit. Log in to Google Calendar in the settings."
+msgstr "Zum Importieren wird ein Google Kalender benötigt, den Sie bearbeiten können. Melden Sie sich in den Einstellungen beim Google Kalender an."
 
 #: ../contents/ui/ImportView.qml
 msgid "Importing… %1 of %2"
@@ -2993,13 +2789,8 @@ msgid "Weather API limit reached"
 msgstr "Limit der Wetter-API erreicht"
 
 #: ../contents/ui/Logic.qml
-msgid ""
-"Google authorization expired or was revoked. Open Event Calendar Settings > "
-"Google Calendar and sign in to that account again."
-msgstr ""
-"Die Google-Autorisierung ist abgelaufen oder wurde widerrufen. Öffnen Sie "
-"Einstellungen für Ereigniskalender > Google Kalender und melden Sie sich "
-"erneut bei diesem Konto an."
+msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
+msgstr "Die Google-Autorisierung ist abgelaufen oder wurde widerrufen. Öffnen Sie Einstellungen für Ereigniskalender > Google Kalender und melden Sie sich erneut bei diesem Konto an."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -3019,9 +2810,7 @@ msgstr "Kalender kann nicht synchronisieren"
 
 #: ../contents/ui/Logic.qml
 msgid "No connection. Showing the last loaded events; retrying automatically."
-msgstr ""
-"Keine Verbindung. Die zuletzt geladenen Termine werden angezeigt; es wird "
-"automatisch erneut versucht."
+msgstr "Keine Verbindung. Die zuletzt geladenen Termine werden angezeigt; es wird automatisch erneut versucht."
 
 #: ../contents/ui/main.qml
 msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
@@ -3086,12 +2875,8 @@ msgstr "Erledigte entfernen"
 msgctxt "%2 = task list name"
 msgid "Delete the list \"%2\" and its %1 task? This can't be undone."
 msgid_plural "Delete the list \"%2\" and its %1 tasks? This can't be undone."
-msgstr[0] ""
-"Die Liste „%2“ und ihre %1 Aufgabe löschen? Dies kann nicht rückgängig "
-"gemacht werden."
-msgstr[1] ""
-"Die Liste „%2“ und ihre %1 Aufgaben löschen? Dies kann nicht rückgängig "
-"gemacht werden."
+msgstr[0] "Die Liste „%2“ und ihre %1 Aufgabe löschen? Dies kann nicht rückgängig gemacht werden."
+msgstr[1] "Die Liste „%2“ und ihre %1 Aufgaben löschen? Dies kann nicht rückgängig gemacht werden."
 
 #: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list name"
@@ -3235,8 +3020,7 @@ msgstr[1] "Erneuter Versuch in %1 Minuten."
 
 #: ../contents/ui/PopupView.qml
 msgid "Can't connect. Showing the last loaded events."
-msgstr ""
-"Keine Verbindung möglich. Die zuletzt geladenen Termine werden angezeigt."
+msgstr "Keine Verbindung möglich. Die zuletzt geladenen Termine werden angezeigt."
 
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
@@ -3370,16 +3154,12 @@ msgstr "Der Termin wird am %1 ganztägig hinzugefügt."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "Type what, when and where. Without a day, the event is added today."
-msgstr ""
-"Was, wann und wo eingeben. Ohne Tagesangabe wird der Termin heute "
-"hinzugefügt."
+msgstr "Was, wann und wo eingeben. Ohne Tagesangabe wird der Termin heute hinzugefügt."
 
 #: ../contents/ui/QuickAddView.qml
 msgctxt "%1 = date"
 msgid "Type what, when and where. Without a day, the event is added on %1."
-msgstr ""
-"Was, wann und wo eingeben. Ohne Tagesangabe wird der Termin am %1 "
-"hinzugefügt."
+msgstr "Was, wann und wo eingeben. Ohne Tagesangabe wird der Termin am %1 hinzugefügt."
 
 #: ../contents/ui/QuickAddView.qml
 msgid "More options…"
@@ -3533,9 +3313,7 @@ msgstr "Aufgaben können nur in eine Liste desselben Kontos verschoben werden"
 
 #: ../contents/ui/TasksView.qml
 msgid "The task was copied but couldn't be removed from its old list"
-msgstr ""
-"Die Aufgabe wurde kopiert, konnte aber nicht aus ihrer alten Liste entfernt "
-"werden"
+msgstr "Die Aufgabe wurde kopiert, konnte aber nicht aus ihrer alten Liste entfernt werden"
 
 #: ../contents/ui/TasksView.qml
 msgid "Hide filters"
@@ -3903,9 +3681,7 @@ msgstr "In den nächsten Tagen ist nichts geplant."
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
-msgstr ""
-"Legen Sie unter Einstellungen > Wetter einen Ort fest, um hier die "
-"Vorhersage zu sehen."
+msgstr "Legen Sie unter Einstellungen > Wetter einen Ort fest, um hier die Vorhersage zu sehen."
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
@@ -3963,12 +3739,10 @@ msgstr[1] "%1 Termine"
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
-"The time difference changes during these days: the hours shown are those of "
-"%2."
+"The time difference changes during these days: the hours shown are those of %2."
 msgstr ""
 "%1\n"
-"Der Zeitunterschied ändert sich in diesen Tagen: Die angezeigten Stunden "
-"gelten für %2."
+"Der Zeitunterschied ändert sich in diesen Tagen: Die angezeigten Stunden gelten für %2."
 
 #: ../contents/ui/WeekView.qml
 msgid "%1 day"
@@ -4017,20 +3791,11 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Full-screen alert when a meeting starts"
 #~ msgstr "Vollbild-Hinweis, wenn eine Besprechung beginnt"
 
-#~ msgid ""
-#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
-#~ "the notification when it starts. Not for muted events."
-#~ msgstr ""
-#~ "Auf jedem Bildschirm, mit Teilnehmen, 1 Min. schlummern und Schließen "
-#~ "(Esc), statt der Benachrichtigung beim Beginn. Nicht für stummgeschaltete "
-#~ "Termine."
+#~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
+#~ msgstr "Auf jedem Bildschirm, mit Teilnehmen, 1 Min. schlummern und Schließen (Esc), statt der Benachrichtigung beim Beginn. Nicht für stummgeschaltete Termine."
 
-#~ msgid ""
-#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
-#~ "events."
-#~ msgstr ""
-#~ "Auf jedem Bildschirm, mit Teilnehmen, 1 Min. schlummern und Schließen "
-#~ "(Esc). Nicht für stummgeschaltete Termine."
+#~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+#~ msgstr "Auf jedem Bildschirm, mit Teilnehmen, 1 Min. schlummern und Schließen (Esc). Nicht für stummgeschaltete Termine."
 
 #~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 #~ msgid "%1 · %2"
@@ -4117,8 +3882,7 @@ msgstr "Arbeitsort: %1"
 #~ msgstr "Ereignisse durchsuchen…"
 
 #~ msgid "Type to search event titles, places and descriptions"
-#~ msgstr ""
-#~ "Tippen, um Titel, Orte und Beschreibungen von Ereignissen zu durchsuchen"
+#~ msgstr "Tippen, um Titel, Orte und Beschreibungen von Ereignissen zu durchsuchen"
 
 #~ msgctxt "%1 = task list name"
 #~ msgid "New task in %1"
@@ -4139,12 +3903,8 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Show completed tasks"
 #~ msgstr "Erledigte Aufgaben anzeigen"
 
-#~ msgid ""
-#~ "Islands: the Day view's panels, the agenda days and the task sections "
-#~ "each sit in a rounded card."
-#~ msgstr ""
-#~ "Inseln: Die Bereiche der Tagesansicht, die Tage der Agenda und die "
-#~ "Aufgabenabschnitte liegen jeweils auf einer abgerundeten Karte."
+#~ msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+#~ msgstr "Inseln: Die Bereiche der Tagesansicht, die Tage der Agenda und die Aufgabenabschnitte liegen jeweils auf einer abgerundeten Karte."
 
 #~ msgid "Due %1"
 #~ msgstr "Fällig %1"
@@ -4187,25 +3947,14 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Waiting for the helper page to send the code..."
 #~ msgstr "Warte, bis die Hilfsseite den Code sendet..."
 
-#~ msgid ""
-#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-#~ "the browser redirects to the helper page and will try to send the code "
-#~ "back automatically. If it fails, copy the code and paste it below."
-#~ msgstr ""
-#~ "Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu "
-#~ "öffnen. Nach der Freigabe leitet der Browser zur Hilfsseite weiter, die "
-#~ "versucht, den Code automatisch zurückzusenden. Falls das fehlschlägt, "
-#~ "kopieren Sie den Code und fügen ihn unten ein."
+#~ msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to the helper page and will try to send the code back automatically. If it fails, copy the code and paste it below."
+#~ msgstr "Klicken Sie auf „Anmelden (automatisch)“, um <a href=\"%1\">%2</a> zu öffnen. Nach der Freigabe leitet der Browser zur Hilfsseite weiter, die versucht, den Code automatisch zurückzusenden. Falls das fehlschlägt, kopieren Sie den Code und fügen ihn unten ein."
 
 #~ msgid "Helper page: <a href=\"%1\">%1</a>"
 #~ msgstr "Hilfsseite: <a href=\"%1\">%1</a>"
 
-#~ msgid ""
-#~ "If auto-capture fails, copy the code from the helper page and paste it "
-#~ "below."
-#~ msgstr ""
-#~ "Wenn die automatische Übernahme fehlschlägt, kopieren Sie den Code von "
-#~ "der Hilfsseite und fügen ihn unten ein."
+#~ msgid "If auto-capture fails, copy the code from the helper page and paste it below."
+#~ msgstr "Wenn die automatische Übernahme fehlschlägt, kopieren Sie den Code von der Hilfsseite und fügen ihn unten ein."
 
 #~ msgid "Add location"
 #~ msgstr "Ort hinzufügen"
@@ -4241,8 +3990,7 @@ msgstr "Arbeitsort: %1"
 #~ msgstr "Ein kleines Kalenderblatt mit Wochentag und Tag."
 
 #~ msgid "In a vertical panel: a dot in the meeting's color."
-#~ msgstr ""
-#~ "In einer senkrechten Leiste: ein Punkt in der Farbe der Besprechung."
+#~ msgstr "In einer senkrechten Leiste: ein Punkt in der Farbe der Besprechung."
 
 #~ msgid "First hour shown"
 #~ msgstr "Erste angezeigte Stunde"
@@ -4254,9 +4002,7 @@ msgstr "Arbeitsort: %1"
 #~ msgstr "Woche und Heute"
 
 #~ msgid "Forecast in the day headers and, in the Today view, a weather panel."
-#~ msgstr ""
-#~ "Vorhersage in den Tageskopfzeilen und in der Heute-Ansicht ein "
-#~ "Wetterbereich."
+#~ msgstr "Vorhersage in den Tageskopfzeilen und in der Heute-Ansicht ein Wetterbereich."
 
 #~ msgid "Clicking a day shows its events"
 #~ msgstr "Klick auf einen Tag zeigt seine Ereignisse"
@@ -4483,12 +4229,8 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Widgets"
 #~ msgstr "Oberflächenelemente"
 
-#~ msgid ""
-#~ "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their "
-#~ "respective tabs."
-#~ msgstr ""
-#~ "Oberflächenelemente oberhalb des Kalenders anzeigen/verstecken. Zwischen "
-#~ "Kalender und Terminen umschalten."
+#~ msgid "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their respective tabs."
+#~ msgstr "Oberflächenelemente oberhalb des Kalenders anzeigen/verstecken. Zwischen Kalender und Terminen umschalten."
 
 #~ msgid "Meteogram"
 #~ msgstr "Meteogramm"
@@ -4502,22 +4244,11 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Time Format Documentation"
 #~ msgstr "Dokumentation des Zeitformats"
 
-#~ msgid ""
-#~ "The default font for the Breeze theme is Noto Sans which is hard to read "
-#~ "with small text. Try using the Sans Serif font if you find the text too "
-#~ "small when adding a second line."
-#~ msgstr ""
-#~ "Der Standardzeichensatz Noto Sans für Breeze ist bei kleiner Schrift "
-#~ "schwer zu lesen. Probiere Sans Serif, wenn der Text in der zweiten Zeile "
-#~ "zu klein erscheint."
+#~ msgid "The default font for the Breeze theme is Noto Sans which is hard to read with small text. Try using the Sans Serif font if you find the text too small when adding a second line."
+#~ msgstr "Der Standardzeichensatz Noto Sans für Breeze ist bei kleiner Schrift schwer zu lesen. Probiere Sans Serif, wenn der Text in der zweiten Zeile zu klein erscheint."
 
-#~ msgid ""
-#~ "You can also use %1 or %2 to style a section. Note the single quotes "
-#~ "around the tags are used to bypass the time format."
-#~ msgstr ""
-#~ "Genau so kann %1 oder %2 zum gestalten eines Bereichs verwendet werden. "
-#~ "Die einfachen Anführungszeichen um die Marken werden zur Unterscheidung "
-#~ "mit der Zeitformatierung verwendet."
+#~ msgid "You can also use %1 or %2 to style a section. Note the single quotes around the tags are used to bypass the time format."
+#~ msgstr "Genau so kann %1 oder %2 zum gestalten eines Bereichs verwendet werden. Die einfachen Anführungszeichen um die Marken werden zur Unterscheidung mit der Zeitformatierung verwendet."
 
 #~ msgid "Font:"
 #~ msgstr "Zeichensatz:"
@@ -4638,11 +4369,8 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Set Language…"
 #~ msgstr "Sprache einstellen"
 
-#~ msgid ""
-#~ "Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
-#~ msgstr ""
-#~ "Miniprogramm für einen Kalender mit Ereignisansicht und Wetter, der "
-#~ "Ereignisse mit Google Kalender synchronisiert."
+#~ msgid "Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
+#~ msgstr "Miniprogramm für einen Kalender mit Ereignisansicht und Wetter, der Ereignisse mit Google Kalender synchronisiert."
 
 #~ msgid "Open City Forecast In Browser"
 #~ msgstr "Vorhersage des Ortes im Webbrowser öffnen"
@@ -4665,14 +4393,8 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Logout"
 #~ msgstr "Abmelden"
 
-#~ msgid ""
-#~ "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login "
-#~ "and give permission to access your calendar, it will give you a code to "
-#~ "paste below."
-#~ msgstr ""
-#~ "Gehe auf <a href=\"%1\">%2</a> (öffnet sich im Webbrowser), melde dich "
-#~ "an, und bestätige, dass dieses Miniprogramm auf deinen Kalender zugreifen "
-#~ "darf. Füge anschließend den angezeigten Code in das folgende Textfeld ein."
+#~ msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to access your calendar, it will give you a code to paste below."
+#~ msgstr "Gehe auf <a href=\"%1\">%2</a> (öffnet sich im Webbrowser), melde dich an, und bestätige, dass dieses Miniprogramm auf deinen Kalender zugreifen darf. Füge anschließend den angezeigten Code in das folgende Textfeld ein."
 
 #~ msgid "Enter code here (Eg: %1)"
 #~ msgstr "Code hier eingeben (z.B. %1)"
@@ -4710,12 +4432,8 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Event Summary"
 #~ msgstr "Ereignis Zusammenfassung"
 
-#~ msgid ""
-#~ "Enter the following code at <a href=\"https://www.google.com/"
-#~ "device\">https://www.google.com/device</a>."
-#~ msgstr ""
-#~ "Bitte diese Zeichenfolge bei <a href=\"https://www.google.com/"
-#~ "device\">https://www.google.com/device</a> eingeben."
+#~ msgid "Enter the following code at <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
+#~ msgstr "Bitte diese Zeichenfolge bei <a href=\"https://www.google.com/device\">https://www.google.com/device</a> eingeben."
 
 #~ msgid "Generating Code…"
 #~ msgstr "Zeichenfolge erzeugen…"

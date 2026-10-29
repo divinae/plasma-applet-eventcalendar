@@ -163,6 +163,14 @@ ConfigPage {
 				placeholderText: i18n("Required for OpenWeatherMap")
 			}
 		}
+		// The built-in app id: its request limit is shared by everyone using the widget.
+		FormCard.FormSectionText {
+			readonly property string appId: page.cfg_openWeatherMapAppId || ""
+			visible: page.service === 'OpenWeatherMap' && (!appId || appId === page.configBridge.readDefault('openWeatherMapAppId', ''))
+			text: i18n("The built-in app id is shared by everyone using this widget, and so is its request limit: the weather may stop updating at times. A free app id of your own: sign up at <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo needs none.")
+			textFormat: Text.StyledText
+			onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+		}
 
 		//--- Weather Canada
 		FormCard.FormHeader {

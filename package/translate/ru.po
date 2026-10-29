@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 18:53+0100\n"
+"POT-Creation-Date: 2026-10-29 18:54+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -1600,6 +1600,15 @@ msgstr "Идентификатор приложения API"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
 msgstr "Требуется для OpenWeatherMap"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"

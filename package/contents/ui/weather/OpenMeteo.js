@@ -1,10 +1,12 @@
 .pragma library
 
 .import "../lib/Requests.js" as Requests
+.import "RequestCache.js" as RequestCache
 
-// Open-Meteo: free, no API key. https://open-meteo.com/en/docs
+// Open-Meteo: free, no API key (10000 requests a day). https://open-meteo.com/en/docs
 // One forecast request has current, hourly and daily data; the daily and hourly
-// updates share it (cached for a few minutes).
+// updates share it (RequestCache).
+var DAILY_LIMIT = 2000
 
 function weatherIsSetup(config) {
 	return !!config.openMeteoLocationName && isFinite(config.openMeteoLatitude) && isFinite(config.openMeteoLongitude)
@@ -64,9 +66,6 @@ function parseLocalTime(s) {
 }
 
 //--- Request (shared by daily and hourly updates)
-var cache = { key: '', at: 0, data: null }
-var pending = {} // key -> [callbacks]
-
 function forecastUrl(config) {
 	var url = 'https://api.open-meteo.com/v1/forecast'
 	url += '?latitude=' + encodeURIComponent(config.openMeteoLatitude)
@@ -82,28 +81,14 @@ function forecastUrl(config) {
 }
 
 function fetchForecast(config, callback) {
-	var url = forecastUrl(config)
-	if (cache.key === url && cache.data && Date.now() - cache.at < 10 * 60 * 1000) {
-		return callback(null, cache.data, null)
-	}
-	if (pending[url]) {
-		pending[url].push(callback)
-		return
-	}
-	pending[url] = [callback]
-	Requests.getJSON({ url: url }, function(err, data, xhr) {
-		if (!err && data && data.error) {
-			err = data.reason || 'Open-Meteo error'
-		}
-		if (!err) {
-			cache = { key: url, at: Date.now(), data: data }
-		}
-		var callbacks = pending[url]
-		delete pending[url]
-		for (var i = 0; i < callbacks.length; i++) {
-			callbacks[i](err, data, xhr)
-		}
-	})
+	RequestCache.getJSON({
+		service: 'OpenMeteo',
+		url: forecastUrl(config),
+		dailyLimit: DAILY_LIMIT,
+		errorOf: function(data) {
+			return data && data.error ? data.reason || 'Open-Meteo error' : ''
+		},
+	}, callback)
 }
 
 //--- Provider API (see WeatherApi.js for the item formats)
@@ -172,9 +157,11 @@ function currentData(data, units) {
 	}
 	var info = codeInfo(data.current.weather_code, data.current.is_day)
 	return {
+		dt: parseLocalTime(data.current.time),
 		temp: temperature(data.current.temperature_2m, units),
 		iconName: info.iconName,
 		text: info.text,
+		description: info.text,
 	}
 }
 
