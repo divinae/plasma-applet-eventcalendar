@@ -13,17 +13,17 @@ const Qt = { resolvedUrl: url => 'file:///ui/' + url }
 const W = { Shared, Qt }
 vm.runInNewContext(strip(fs.readFileSync(path.join(ui, 'WeatherIcons.js'), 'utf8')), W)
 
-// Monochrome: the symbolic icon (the default), the full color theme icon for the large one.
-assert.strictEqual(W.source('weather-clear', 'monochrome'), 'weather-clear-symbolic')
+// System: the theme's symbolic icon (the default), its full color one for the large one.
+assert.strictEqual(W.source('weather-clear', 'system'), 'weather-clear-symbolic')
 assert.strictEqual(W.source('weather-clear', undefined), 'weather-clear-symbolic')
-assert.strictEqual(W.largeSource('weather-clear', 'monochrome'), 'weather-clear')
-assert.strictEqual(W.source('', 'colorful'), '')
+assert.strictEqual(W.largeSource('weather-clear', 'system'), 'weather-clear')
+assert.strictEqual(W.source('', 'yr'), '')
 
-// Colorful: a bundled Yr symbol; names without one stay monochrome.
-assert.strictEqual(W.source('weather-clouds', 'colorful'), 'file:///ui/../icons/weather/partlycloudy_day.svg')
-assert.strictEqual(W.largeSource('weather-overcast', 'colorful'), 'file:///ui/../icons/weather/cloudy.svg')
-assert.strictEqual(W.source('wi-tornado', 'colorful'), 'wi-tornado-symbolic')
-assert.strictEqual(W.colorful('weather-severe-alert', 'colorful'), false)
+// Yr: a bundled symbol; names without one stay the system's.
+assert.strictEqual(W.source('weather-clouds', 'yr'), 'file:///ui/../icons/weather/partlycloudy_day.svg')
+assert.strictEqual(W.largeSource('weather-overcast', 'yr'), 'file:///ui/../icons/weather/cloudy.svg')
+assert.strictEqual(W.source('wi-tornado', 'yr'), 'wi-tornado-symbolic')
+assert.strictEqual(W.isYr('weather-severe-alert', 'yr'), false)
 
 // Every symbol is bundled, and every bundled file is used.
 const used = new Set(Object.values(W.yrSymbols).map(f => f + '.svg'))
@@ -35,7 +35,7 @@ for (const file of fs.readdirSync(iconDir).filter(f => f.endsWith('.svg'))) {
 }
 assert.ok(fs.existsSync(path.join(iconDir, 'LICENSE')), 'license')
 
-// Every weather-* icon a weather service gives has a colorful symbol.
+// Every weather-* icon a weather service gives has a Yr symbol.
 const weatherDir = path.join(ui, 'weather')
 for (const file of fs.readdirSync(weatherDir)) {
 	const names = fs.readFileSync(path.join(weatherDir, file), 'utf8').match(/'weather-[a-z-]+'/g) || []

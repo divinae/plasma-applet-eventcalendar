@@ -12,6 +12,19 @@ import "../weather/OpenMeteo.js" as OpenMeteo
 ConfigPage {
 	id: page
 
+	// The icon theme's name for "System (Breeze)": its index.theme Name, else the directory name.
+	property string iconThemeName: ""
+	ExecUtil { id: iconThemeReader }
+	Component.onCompleted: {
+		var script = 't=$(kreadconfig6 --group Icons --key Theme); t=${t:-breeze}; '
+			+ 'for d in "${XDG_DATA_HOME:-$HOME/.local/share}" $(echo "${XDG_DATA_DIRS:-/usr/local/share:/usr/share}" | tr : " "); do '
+			+ 'if [ -f "$d/icons/$t/index.theme" ]; then kreadconfig6 --file "$d/icons/$t/index.theme" --group "Icon Theme" --key Name; exit 0; fi; '
+			+ 'done; echo "$t"'
+		iconThemeReader.execArgv(['sh', '-c', script], function(cmd, exitCode, exitStatus, stdout) {
+			page.iconThemeName = String(stdout || "").trim()
+		})
+	}
+
 	property var locationResults: []
 	property bool searchingLocations: false
 	property bool locationSearchDone: false
@@ -195,8 +208,18 @@ ConfigPage {
 				text: i18n("Icons")
 				configKey: 'weatherIconStyle'
 				model: [
-					{ value: 'monochrome', text: i18n("Black and white") },
-					{ value: 'colorful', text: i18n("Colorful") },
+					{ value: 'system', text: page.iconThemeName ? i18nc("%1 = icon theme, eg: Breeze", "System (%1)", page.iconThemeName) : i18n("System") },
+					{ value: 'yr', text: i18n("Yr (MET Norway)") },
+				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigCombo {
+				text: i18n("Current weather icon background")
+				configKey: 'weatherIconBackground'
+				model: [
+					{ value: 'sky', text: i18n("Sky, after the weather") },
+					{ value: 'subtle', text: i18n("Subtle") },
+					{ value: 'none', text: i18nc("no icon background", "None") },
 				]
 			}
 			FormCard.FormDelegateSeparator {}

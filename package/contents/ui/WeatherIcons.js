@@ -1,11 +1,12 @@
 .pragma library
 .import "Shared.js" as Shared
 
-// The weather icon for a forecast item's iconName (weather-clear, weather-showers-night, ...) in the
-// style of Settings > Weather > Icons:
-// - 'monochrome': the theme's symbolic icon (use with `fallback: name` for themes without one)
-// - 'colorful': the Yr weather symbols (MIT, https://github.com/metno/weathericons) in
-//   ../icons/weather; the names without one (alerts, tornado, dust, ...) stay monochrome.
+// The weather icon for a forecast item's iconName (weather-clear, weather-showers-night, ...) from
+// the icons of Settings > Weather > Icons:
+// - 'system': the icon theme's, symbolic (use with `fallback: name` for themes without one) but for
+//   the Weather panel's large one (largeSource)
+// - 'yr': the Yr weather symbols (MIT, https://github.com/metno/weathericons) in ../icons/weather;
+//   the names without one (alerts, tornado, dust, ...) stay the system's.
 var yrSymbols = {
 	'weather-clear': 'clearsky_day',
 	'weather-clear-night': 'clearsky_night',
@@ -30,20 +31,20 @@ var yrSymbols = {
 	'weather-storm-night': 'rainshowersandthunder_night',
 }
 
-function colorful(name, style) {
-	return style === 'colorful' && !!yrSymbols[name]
+function isYr(name, style) {
+	return style === 'yr' && !!yrSymbols[name]
 }
 
 function source(name, style) {
-	if (colorful(name, style)) {
+	if (isYr(name, style)) {
 		return Qt.resolvedUrl('../icons/weather/' + yrSymbols[name] + '.svg')
 	}
 	return Shared.symbolicIcon(name)
 }
 
-// A large icon (the Weather panel's "Now"): the theme's full color icon when monochrome.
+// A large icon (the Weather panel's "Now"): the theme's full color one with the system icons.
 function largeSource(name, style) {
-	if (colorful(name, style)) {
+	if (isYr(name, style)) {
 		return source(name, style)
 	}
 	return name || ''

@@ -1573,11 +1573,33 @@ msgid "Icons"
 msgstr "图标"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Black and white"
+msgctxt "%1 = icon theme, eg: Breeze"
+msgid "System (%1)"
 msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Colorful"
+msgid "System"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
 msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml

@@ -384,19 +384,19 @@ Item {
 						location: PlasmaCore.Types.BottomEdge
 					}
 
-					// Settings > Weather > Icons = Colorful: the colored symbol instead of the font glyph.
-					readonly property bool colorfulIcon: WeatherIcons.colorful(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle)
+					// Settings > Weather > Icons = Yr: the Yr symbol instead of the font glyph.
+					readonly property bool yrIcon: WeatherIcons.isYr(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle)
 					Kirigami.Icon {
-						visible: modelData.showIcon && parent.colorfulIcon
+						visible: modelData.showIcon && parent.yrIcon
 						anchors.centerIn: parent
 						width: appletConfig.meteogramIconSize
 						height: width
-						source: parent.colorfulIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
+						source: parent.yrIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
 						opacity: tooltip.containsMouse ? 0.1 : 1
 					}
 					FontIcon {
 						id: weatherIcon
-						visible: modelData.showIcon && !parent.colorfulIcon
+						visible: modelData.showIcon && !parent.yrIcon
 						anchors.centerIn: parent
 						color: appletConfig.meteogramIconColor
 						source: modelData.aggregratedIcon

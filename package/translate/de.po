@@ -1453,12 +1453,34 @@ msgid "Icons"
 msgstr "Symbole"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Black and white"
-msgstr "Schwarzweiß"
+msgctxt "%1 = icon theme, eg: Breeze"
+msgid "System (%1)"
+msgstr "System (%1)"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Colorful"
-msgstr "Farbig"
+msgid "System"
+msgstr "System"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "Hintergrund des Symbols fürs aktuelle Wetter"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "Himmel, je nach Wetter"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "Dezent"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "Keiner"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -3699,6 +3721,12 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Black and white"
+#~ msgstr "Schwarzweiß"
+
+#~ msgid "Colorful"
+#~ msgstr "Farbig"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

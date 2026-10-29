@@ -213,15 +213,26 @@ ColumnLayout {
 		// Right below the card's title (no section title of its own).
 		Layout.topMargin: panel.compact ? 0 : Kirigami.Units.largeSpacing
 		spacing: Kirigami.Units.largeSpacing
-		// The colored icon on a small sky (blue by day, indigo at night, grey for fog, …) with a
-		// soft shadow: light icons (clouds) vanish on a light card otherwise.
+		// The icon's background (Settings > Weather > Current weather icon background):
+		// - sky: a small sky (blue by day, indigo at night, grey for fog, …) with a soft shadow,
+		//   light icons (clouds) vanish on a light card otherwise
+		// - subtle: a faint tile of the text color
+		// - none: the icon alone, as large as the tile would be
 		Item {
 			id: iconTile
+			readonly property string background: plasmoid.configuration.weatherIconBackground || "sky"
 			readonly property var sky: panel.skyColors(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "")
 			readonly property real radius: Math.round(width * 0.3)
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
+			Rectangle {
+				visible: iconTile.background === "subtle"
+				anchors.fill: parent
+				radius: iconTile.radius
+				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.darkTheme ? 0.1 : 0.07)
+			}
 			Kirigami.ShadowedRectangle {
+				visible: iconTile.background === "sky"
 				anchors.fill: parent
 				radius: iconTile.radius
 				color: iconTile.sky[1]
@@ -230,6 +241,7 @@ ColumnLayout {
 				shadow.color: ColorUtil.setAlpha(iconTile.sky[0], appletConfig.darkTheme ? 0.5 : 0.35)
 			}
 			Rectangle {
+				visible: iconTile.background === "sky"
 				anchors.fill: parent
 				radius: iconTile.radius
 				gradient: Gradient {
@@ -239,7 +251,7 @@ ColumnLayout {
 			}
 			Kirigami.Icon {
 				anchors.centerIn: parent
-				width: parent.width - Kirigami.Units.smallSpacing * 2
+				width: iconTile.background === "none" ? parent.width : parent.width - Kirigami.Units.smallSpacing * 2
 				height: width
 				source: WeatherIcons.largeSource(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "", plasmoid.configuration.weatherIconStyle)
 			}
