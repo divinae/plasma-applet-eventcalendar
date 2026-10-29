@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:56+0100\n"
+"POT-Creation-Date: 2026-10-29 09:04+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -194,7 +194,7 @@ msgstr "Forbind kontoen igen med et nyt API-token i opgaveindstillingerne."
 
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Kalendere"
 
@@ -2897,6 +2897,10 @@ msgstr "Næste dag"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Næste uge"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "More Actions"
+msgstr "Flere handlinger"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

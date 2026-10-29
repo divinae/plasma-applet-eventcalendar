@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:56+0100\n"
+"POT-Creation-Date: 2026-10-29 09:04+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -165,7 +165,7 @@ msgstr "TickTick: zaloguj się ponownie"
 msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr "Połącz konto ponownie, używając nowego tokenu API w ustawieniach Zadań."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Kalendarze"
 
@@ -2685,6 +2685,10 @@ msgstr "Następny dzień"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Następny tydzień"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "More Actions"
+msgstr "Więcej działań"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

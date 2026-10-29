@@ -35,7 +35,11 @@ PlasmaComponents3.ToolButton {
 	PlasmaComponents3.ToolTip.visible: hovered && !calendarPopup.visible
 	Accessible.name: i18n("Calendars")
 
-	function open() {
+	// The item the list opens under: this button, or another one when it's hidden (the header's
+	// menu of actions in a small popup).
+	property Item anchorItem: calendarToggles
+	function open(item) {
+		anchorItem = item || calendarToggles
 		calendars = eventModel.getSelectedCalendars()
 		calendarPopup.open()
 	}
@@ -55,8 +59,9 @@ PlasmaComponents3.ToolButton {
 
 	PlasmaComponents3.Popup {
 		id: calendarPopup
-		x: calendarToggles.mirrored ? 0 : calendarToggles.width - width
-		y: calendarToggles.height
+		parent: calendarToggles.anchorItem
+		x: calendarToggles.mirrored ? 0 : (parent ? parent.width : 0) - width
+		y: parent ? parent.height : 0
 		// Stays open while toggling several calendars; closes on a click outside or Escape.
 		closePolicy: PlasmaComponents3.Popup.CloseOnEscape | PlasmaComponents3.Popup.CloseOnPressOutsideParent
 		padding: Kirigami.Units.smallSpacing * 2

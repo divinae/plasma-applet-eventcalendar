@@ -41,6 +41,14 @@ PlasmaExtras.PlasmoidHeading {
 		readonly property real betweenRoom: width - leftGroup.implicitWidth - rightGroup.implicitWidth - gap * 2
 		readonly property real navWidth: centerGroup.implicitWidth - titleHeading.Layout.preferredWidth
 		readonly property bool secondRow: betweenRoom < navWidth + Kirigami.Units.gridUnit * 3
+		// Little room (eg: a 320 px popup): the actions (calendars, search, new, refresh,
+		// configure) in one menu button. From fixed widths, not the groups' current ones (those
+		// change with this).
+		readonly property real buttonWidth: searchButton.implicitWidth
+		readonly property int actionCount: 4 + (configureButton.configureAction && configureButton.configureAction.enabled ? 1 : 0)
+		readonly property bool menuActions: width < viewTabs.length * buttonWidth + actionCount * buttonWidth
+			+ (header.showPinButton ? buttonWidth + Kirigami.Units.smallSpacing * 3 : 0)
+			+ navWidth + Kirigami.Units.gridUnit * 6 + gap * 2 // Room for a short title ("October 2026")
 		readonly property real rowHeight: Math.max(leftGroup.implicitHeight, rightGroup.implicitHeight, secondRow ? 0 : centerGroup.implicitHeight)
 		implicitHeight: rowHeight + (secondRow ? centerGroup.implicitHeight : 0)
 		// Not enough room for the view names next to the title: icons only (names in tooltips).
@@ -188,20 +196,25 @@ PlasmaExtras.PlasmoidHeading {
 			spacing: 0
 			CalendarToggles {
 				id: calendarToggles
+				visible: !topBar.menuActions
 			}
 			PlasmaComponents3.ToolButton {
+				id: searchButton
+				visible: !topBar.menuActions
 				icon.name: "search"
 				onClicked: header.searchClicked()
 				PlasmaComponents3.ToolTip.text: i18n("Search")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
+				visible: !topBar.menuActions
 				icon.name: "list-add"
 				onClicked: header.newEventClicked()
 				PlasmaComponents3.ToolTip.text: header.tasksMode ? i18n("New Task") : i18n("New Event")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			Item {
+				visible: !topBar.menuActions
 				Layout.preferredWidth: refreshButton.implicitWidth
 				Layout.preferredHeight: refreshButton.implicitHeight
 				Layout.alignment: Qt.AlignVCenter
@@ -226,12 +239,62 @@ PlasmaExtras.PlasmoidHeading {
 			}
 			// Right clicks in the popup don't open the widget menu, so its "Configure…" is here.
 			PlasmaComponents3.ToolButton {
+				id: configureButton
 				readonly property var configureAction: plasmoid.internalAction("configure")
-				visible: !!configureAction && configureAction.enabled
+				visible: !topBar.menuActions && !!configureAction && configureAction.enabled
 				icon.name: "configure"
 				onClicked: configureAction.trigger()
 				PlasmaComponents3.ToolTip.text: configureAction ? configureAction.text : ""
 				PlasmaComponents3.ToolTip.visible: hovered
+			}
+			// The same actions in a menu, when there's little room.
+			PlasmaComponents3.ToolButton {
+				id: actionsButton
+				visible: topBar.menuActions
+				icon.name: "overflow-menu"
+				down: pressed || actionsMenu.visible
+				onClicked: actionsMenu.popup(actionsButton, 0, actionsButton.height)
+				PlasmaComponents3.ToolTip.text: i18n("More Actions")
+				PlasmaComponents3.ToolTip.visible: hovered && !actionsMenu.visible
+				Accessible.name: i18n("More Actions")
+				PlasmaComponents3.BusyIndicator {
+					anchors.centerIn: parent
+					width: Kirigami.Units.iconSizes.small
+					height: width
+					running: header.refreshing && actionsButton.visible
+					visible: running
+				}
+			}
+			PlasmaComponents3.Menu {
+				id: actionsMenu
+				PlasmaComponents3.MenuItem {
+					text: i18n("Calendars")
+					icon.name: "view-calendar-list"
+					onTriggered: calendarToggles.open(actionsButton)
+				}
+				PlasmaComponents3.MenuItem {
+					text: i18n("Search")
+					icon.name: "search"
+					onTriggered: header.searchClicked()
+				}
+				PlasmaComponents3.MenuItem {
+					text: header.tasksMode ? i18n("New Task") : i18n("New Event")
+					icon.name: "list-add"
+					onTriggered: header.newEventClicked()
+				}
+				PlasmaComponents3.MenuItem {
+					text: i18n("Refresh")
+					icon.name: "view-refresh"
+					enabled: !header.refreshing
+					onTriggered: header.refreshClicked()
+				}
+				PlasmaComponents3.MenuItem {
+					visible: configureButton.configureAction && configureButton.configureAction.enabled
+					height: visible ? implicitHeight : 0
+					text: configureButton.configureAction ? configureButton.configureAction.text : ""
+					icon.name: "configure"
+					onTriggered: configureButton.configureAction.trigger()
+				}
 			}
 			Kirigami.Separator {
 				visible: header.showPinButton

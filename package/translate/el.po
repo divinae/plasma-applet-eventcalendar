@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:56+0100\n"
+"POT-Creation-Date: 2026-10-29 09:04+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -196,7 +196,7 @@ msgstr ""
 
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Ημερολόγια"
 
@@ -2936,6 +2936,10 @@ msgstr "Επόμενη ημέρα"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Επόμενη εβδομάδα"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "More Actions"
+msgstr "Περισσότερες ενέργειες"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

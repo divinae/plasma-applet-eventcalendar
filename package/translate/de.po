@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:56+0100\n"
+"POT-Creation-Date: 2026-10-29 09:04+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Kalender"
 
@@ -2947,6 +2947,10 @@ msgstr "Nächster Tag"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Nächste Woche"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "More Actions"
+msgstr "Weitere Aktionen"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"

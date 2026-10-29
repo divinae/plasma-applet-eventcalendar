@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 08:56+0100\n"
+"POT-Creation-Date: 2026-10-29 09:04+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -193,7 +193,7 @@ msgstr "请在任务设置中使用新的 API 令牌重新连接该账户。"
 
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "日历"
 
@@ -2827,6 +2827,10 @@ msgstr "后一天"
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "下一周"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "More Actions"
+msgstr "更多操作"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Keep Open"
