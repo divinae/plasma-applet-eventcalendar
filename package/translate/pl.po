@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:08+0100\n"
+"POT-Creation-Date: 2026-10-29 14:19+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -2749,6 +2749,14 @@ msgstr "Drzemka 1 min"
 #: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Odrzuć"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Return: join · Esc: dismiss"
+msgstr "Enter: dołącz · Esc: zamknij"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Esc: dismiss"
+msgstr "Esc: zamknij"
 
 #: ../contents/ui/MeetingAlertWindow.qml
 msgid "Meeting"

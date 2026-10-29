@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:08+0100\n"
+"POT-Creation-Date: 2026-10-29 14:19+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3005,6 +3005,14 @@ msgstr "נודניק דקה"
 #: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "סגירה"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Return: join · Esc: dismiss"
+msgstr "Enter: הצטרפות · Esc: סגירה"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Esc: dismiss"
+msgstr "Esc: סגירה"
 
 #: ../contents/ui/MeetingAlertWindow.qml
 msgid "Meeting"

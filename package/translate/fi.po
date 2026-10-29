@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:08+0100\n"
+"POT-Creation-Date: 2026-10-29 14:19+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2726,6 +2726,14 @@ msgstr "Torkku 1 min"
 #: ../contents/ui/MeetingAlertContent.qml ../contents/ui/PopupView.qml
 msgid "Dismiss"
 msgstr "Hylkää"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Return: join · Esc: dismiss"
+msgstr "Enter: liity · Esc: hylkää"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Esc: dismiss"
+msgstr "Esc: hylkää"
 
 #: ../contents/ui/MeetingAlertWindow.qml
 msgid "Meeting"

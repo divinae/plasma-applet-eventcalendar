@@ -34,11 +34,6 @@ Window {
 	color: "transparent"
 	title: i18n("Meeting")
 
-	Rectangle {
-		anchors.fill: parent
-		color: Qt.rgba(0, 0, 0, 0.6)
-	}
-
 	MeetingAlertContent {
 		anchors.fill: parent
 		eventItem: alertWindow.eventItem
