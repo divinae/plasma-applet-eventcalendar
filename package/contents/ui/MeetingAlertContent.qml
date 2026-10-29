@@ -21,6 +21,11 @@ Item {
 	signal snoozeRequested()
 	signal closeRequested()
 
+	// Dark whatever the theme (Plasma's complementary colors: dark with light text), as Fokus'
+	// dark overlay: a light screen over a blurred desktop was glaring.
+	Kirigami.Theme.inherit: false
+	Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+
 	focus: true
 	Keys.onEscapePressed: content.closeRequested()
 	Keys.onReturnPressed: content.meetingLink ? content.joinRequested() : content.closeRequested()

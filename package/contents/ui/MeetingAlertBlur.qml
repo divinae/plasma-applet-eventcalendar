@@ -30,7 +30,10 @@ Kicker.DashboardWindow {
 	Component.onCompleted: showOnItsScreen()
 
 	flags: Qt.WindowStaysOnTopHint
-	backgroundColor: Qt.alpha(Kirigami.Theme.backgroundColor, 0.6)
+	// Dark (as MeetingAlertContent's complementary colors), translucent over the blur.
+	Kirigami.Theme.inherit: false
+	Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+	backgroundColor: Qt.alpha(Kirigami.Theme.backgroundColor, 0.72)
 
 	MeetingAlertContent {
 		anchors.fill: parent
