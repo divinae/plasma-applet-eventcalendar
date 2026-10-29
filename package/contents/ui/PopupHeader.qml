@@ -32,8 +32,17 @@ PlasmaExtras.PlasmoidHeading {
 	// Left: view switcher. Center: navigation and title. Right: calendars, search, new event, refresh, pin.
 	contentItem: Item {
 		id: topBar
-		implicitHeight: Math.max(leftGroup.implicitHeight, centerGroup.implicitHeight, rightGroup.implicitHeight)
 		readonly property real sideWidth: Math.max(leftGroup.implicitWidth, rightGroup.implicitWidth)
+		// Title and arrows: centered when they fit between the sides, else in the room between
+		// the tabs and the buttons; when not even the arrows and a few letters fit there (a small
+		// popup), on a second row. Never under the side buttons.
+		readonly property real gap: Kirigami.Units.largeSpacing
+		readonly property real centeredRoom: width - sideWidth * 2 - gap * 2
+		readonly property real betweenRoom: width - leftGroup.implicitWidth - rightGroup.implicitWidth - gap * 2
+		readonly property real navWidth: centerGroup.implicitWidth - titleHeading.Layout.preferredWidth
+		readonly property bool secondRow: betweenRoom < navWidth + Kirigami.Units.gridUnit * 3
+		readonly property real rowHeight: Math.max(leftGroup.implicitHeight, rightGroup.implicitHeight, secondRow ? 0 : centerGroup.implicitHeight)
+		implicitHeight: rowHeight + (secondRow ? centerGroup.implicitHeight : 0)
 		// Not enough room for the view names next to the title: icons only (names in tooltips).
 		// Icons only when the tab names don't fit beside a short title (a long one, eg: the Day view's
 		// date, is elided first rather than taking the names away).
@@ -57,9 +66,12 @@ PlasmaExtras.PlasmoidHeading {
 			return tabs.filter(function(tab) { return hidden.indexOf(tab.mode) < 0 || tab.mode === header.currentMode })
 		}
 		// The view switcher's width with names, measured off screen.
+		// (Not visible: false, a Row leaves out children that aren't visible and measured 0.)
 		Row {
 			id: fullTabsMeasure
-			visible: false
+			opacity: 0
+			enabled: false
+			Accessible.ignored: true
 			spacing: 2
 			Repeater {
 				model: topBar.viewTabs
@@ -74,7 +86,7 @@ PlasmaExtras.PlasmoidHeading {
 		RowLayout {
 			id: leftGroup
 			anchors.left: parent.left
-			anchors.verticalCenter: parent.verticalCenter
+			y: Math.round((topBar.rowHeight - height) / 2)
 			spacing: 0
 			// View switcher: flat buttons with icon and text, the current view on a soft rounded tint.
 			RowLayout {
@@ -116,9 +128,11 @@ PlasmaExtras.PlasmoidHeading {
 
 		RowLayout {
 			id: centerGroup
-			anchors.centerIn: parent
+			readonly property bool centered: topBar.secondRow || implicitWidth <= topBar.centeredRoom
 			// Stay clear of the side groups; the title elides if needed.
-			width: Math.min(implicitWidth, parent.width - topBar.sideWidth * 2 - Kirigami.Units.largeSpacing * 2)
+			width: Math.max(0, Math.min(implicitWidth, topBar.secondRow ? topBar.width : centered ? topBar.centeredRoom : topBar.betweenRoom))
+			x: centered ? Math.round((topBar.width - width) / 2) : leftGroup.implicitWidth + topBar.gap
+			y: topBar.secondRow ? topBar.rowHeight : Math.round((topBar.rowHeight - height) / 2)
 			spacing: 0
 			// Full text width (a Text's implicitWidth ignores eliding), and the gap to the buttons as
 			// its own item: a Layout margin was taken out of that width and cut the title off.
@@ -170,7 +184,7 @@ PlasmaExtras.PlasmoidHeading {
 		RowLayout {
 			id: rightGroup
 			anchors.right: parent.right
-			anchors.verticalCenter: parent.verticalCenter
+			y: Math.round((topBar.rowHeight - height) / 2)
 			spacing: 0
 			CalendarToggles {
 				id: calendarToggles
