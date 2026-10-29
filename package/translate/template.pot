@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:15+0100\n"
+"POT-Creation-Date: 2026-10-29 09:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2909,6 +2909,10 @@ msgstr ""
 msgid "No events found"
 msgstr ""
 
+#: ../contents/ui/SearchView.qml ../contents/ui/UpNextPanel.qml
+msgid "Show more"
+msgstr ""
+
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
 msgstr ""
@@ -3370,10 +3374,6 @@ msgstr ""
 
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
-msgstr ""
-
-#: ../contents/ui/UpNextPanel.qml
-msgid "Show more"
 msgstr ""
 
 #: ../contents/ui/WeatherPanel.qml

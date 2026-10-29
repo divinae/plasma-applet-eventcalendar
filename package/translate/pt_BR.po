@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:15+0100\n"
+"POT-Creation-Date: 2026-10-29 09:17+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -3154,6 +3154,10 @@ msgstr "Pesquisando…"
 msgid "No events found"
 msgstr "Nenhum evento encontrado"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/UpNextPanel.qml
+msgid "Show more"
+msgstr "Mostrar mais"
+
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
 msgstr "Não foi possível pesquisar no Google Agenda"
@@ -3617,10 +3621,6 @@ msgstr "dddd, d MMM"
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Nada planejado para os próximos dias."
-
-#: ../contents/ui/UpNextPanel.qml
-msgid "Show more"
-msgstr "Mostrar mais"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."

@@ -21,6 +21,9 @@ Item {
 	readonly property string query: searchField.text.trim()
 	readonly property int remoteRangeDays: 365
 	readonly property int resultLimit: 100
+	// The tiles built: the first 30, more on "Show more" (each key typed rebuilt up to 100).
+	property int shownResults: 30
+	readonly property var shownResultList: results.slice(0, shownResults)
 
 	property var remoteResults: []
 	property string remoteQuery: ""
@@ -55,6 +58,7 @@ Item {
 		+ (query ? Kirigami.Units.gridUnit * 40 : resultsColumn.implicitHeight + Kirigami.Units.largeSpacing)
 
 	onQueryChanged: {
+		shownResults = 30
 		generation += 1
 		searching = false
 		remoteFailed = false
@@ -215,7 +219,7 @@ Item {
 				}
 
 				Repeater {
-					model: searchView.results
+					model: searchView.shownResultList
 					// Event tile in the event color (outlined, striped or struck through by the user's
 					// answer), like the agenda.
 					Rectangle {
@@ -304,6 +308,15 @@ Item {
 							}
 						}
 					}
+				}
+
+				PlasmaComponents3.ToolButton {
+					visible: searchView.results.length > searchView.shownResults
+					Layout.alignment: Qt.AlignHCenter
+					Layout.topMargin: Kirigami.Units.smallSpacing
+					icon.name: "arrow-down"
+					text: i18n("Show more")
+					onClicked: searchView.shownResults += 30
 				}
 
 				// Google is still being searched, or couldn't be.

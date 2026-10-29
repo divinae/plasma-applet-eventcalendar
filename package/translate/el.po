@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:15+0100\n"
+"POT-Creation-Date: 2026-10-29 09:17+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -3182,6 +3182,10 @@ msgstr "Αναζήτηση…"
 msgid "No events found"
 msgstr "Δεν βρέθηκαν συμβάντα"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/UpNextPanel.qml
+msgid "Show more"
+msgstr "Εμφάνιση περισσότερων"
+
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
 msgstr "Αδυναμία αναζήτησης στο Ημερολόγιο Google"
@@ -3650,10 +3654,6 @@ msgstr "dddd, d MMM"
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Τίποτα προγραμματισμένο τις επόμενες ημέρες."
-
-#: ../contents/ui/UpNextPanel.qml
-msgid "Show more"
-msgstr "Εμφάνιση περισσότερων"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."

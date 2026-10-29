@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:15+0100\n"
+"POT-Creation-Date: 2026-10-29 09:17+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3104,6 +3104,10 @@ msgstr "검색 중…"
 msgid "No events found"
 msgstr "이벤트를 찾을 수 없음"
 
+#: ../contents/ui/SearchView.qml ../contents/ui/UpNextPanel.qml
+msgid "Show more"
+msgstr "더 보기"
+
 #: ../contents/ui/SearchView.qml
 msgid "Couldn't search Google Calendar"
 msgstr "Google 캘린더를 검색할 수 없음"
@@ -3561,10 +3565,6 @@ msgstr "M월 d일 dddd"
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "앞으로 며칠 동안 계획된 일정이 없습니다."
-
-#: ../contents/ui/UpNextPanel.qml
-msgid "Show more"
-msgstr "더 보기"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."

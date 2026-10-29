@@ -805,14 +805,14 @@ MouseArea {
 			eventDragEnabled: true
 			eventDragModel: popup.eventModel
 
-			onDaysRebuilt: parseGCalEvents(popup.eventModel.eventsData)
+			onDaysRebuilt: popup.updateMonth()
 			// The bar lanes depend on how many event rows fit in a day cell. Refilled right away
 			// (in the same frame as the layout change): a deferred refill showed the cells first
 			// filled the other way, then reordered.
 			onEventRowCapacityChanged: if (spanBarsActive) reparseGCalEvents()
 			onSpanBarsActiveChanged: reparseGCalEvents()
 			function reparseGCalEvents() {
-				parseGCalEvents(popup.eventModel.eventsData)
+				popup.updateMonth()
 			}
 
 			function parseGCalEvents(data) {
@@ -891,17 +891,35 @@ MouseArea {
 	//--- Weather for the views
 	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
 
+	// Only the views on screen are rebuilt; the others are marked stale and rebuilt when shown
+	// (a refresh while in the Day view doesn't build the agenda and the month nobody sees).
+	property bool agendaStale: false
+	property bool monthStale: false
 	function updateUI() {
 		updateUITimer.stop()
 
-		agendaModel.parseGCalEvents(eventModel.eventsData)
 		agendaModel.parseWeatherForecast(root.weatherByDay)
-		monthView.parseGCalEvents(eventModel.eventsData)
+		updateAgenda()
+		updateMonth()
 		if (weekViewLoader.item) {
 			weekViewLoader.item.rebuild()
 		}
 		scrollToSelection()
 	}
+	function updateAgenda() {
+		agendaStale = !showAgenda
+		if (showAgenda) {
+			agendaModel.parseGCalEvents(eventModel.eventsData)
+		}
+	}
+	function updateMonth() {
+		monthStale = !showCalendar
+		if (showCalendar) {
+			monthView.parseGCalEvents(eventModel.eventsData)
+		}
+	}
+	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()
+	onShowCalendarChanged: if (showCalendar && monthStale) updateMonth()
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
