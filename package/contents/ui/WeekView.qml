@@ -121,7 +121,8 @@ Item {
 	// Day view: the weather panel follows the shown day.
 	readonly property bool showingToday: Shared.startOfDay(weekStart).getTime() === todayStart.getTime()
 	// The Day view with nothing (more) in the hours: no timed event left today, or none on another
-	// day. The grid then says so, with the next event after the day (nextEvent: { item, day }).
+	// day. The grid then says so, with the next event after the day (nextEvent: { item, day }) of the
+	// calendars in the clock's countdown.
 	readonly property bool dayFree: {
 		if (!singleDay || days.length === 0) {
 			return false
@@ -133,7 +134,11 @@ Item {
 		if (!dayFree) {
 			return null
 		}
-		var items = Tasks.withoutTasks(eventModel && eventModel.eventsData ? eventModel.eventsData.items : [])
+		// Not from the calendars left out of the clock's countdown (their clock button in the calendar menu).
+		var clockHidden = Shared.toArray(plasmoid.configuration.clockHiddenCalendarIds)
+		var items = Tasks.withoutTasks(eventModel && eventModel.eventsData ? eventModel.eventsData.items : []).filter(function(eventItem) {
+			return !Shared.isHiddenCalendar(eventItem.calendarId, clockHidden)
+		})
 		return Shared.upcomingEvents(items, dayDate(1), 1)[0] || null
 	}
 	function nextEventText(entry) {
