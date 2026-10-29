@@ -46,16 +46,7 @@ PlasmaComponents3.ToolButton {
 	}
 
 	function toggledIds(currentIds, calendarId, hide) {
-		var ids = []
-		for (var i = 0; i < currentIds.length; i++) {
-			if (currentIds[i] !== calendarId) {
-				ids.push(String(currentIds[i]))
-			}
-		}
-		if (hide) {
-			ids.push(calendarId)
-		}
-		return ids
+		return Shared.toggledCalendarIds(currentIds, calendarId, hide, calendars.map(function(calendar) { return calendar.id }))
 	}
 	function setHidden(calendarId, hide) {
 		plasmoid.configuration.hiddenCalendarIds = toggledIds(hiddenIds, calendarId, hide)

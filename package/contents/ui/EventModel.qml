@@ -27,6 +27,7 @@ CalendarManager {
 	Component.onCompleted: {
 		bindSignals(plasmaCalendarManager)
 		bindSignals(icalManager)
+		updatePlasmaGoogleCalendarIds()
 	}
 
 	//---
@@ -246,10 +247,15 @@ CalendarManager {
 	Connections {
 		target: googleAccountsStore
 		function onAccountsChanged() {
+			eventModel.updatePlasmaGoogleCalendarIds()
 			eventModel.clear()
 			deferredUpdate.restart()
 		}
+		function onAccountUpdated(accountId) {
+			eventModel.updatePlasmaGoogleCalendarIds()
+		}
 		function onSecretsLoadedChanged() {
+			eventModel.updatePlasmaGoogleCalendarIds()
 			if (googleAccountsStore.secretsLoaded) {
 				eventModel.clear()
 				deferredUpdate.restart()
@@ -318,7 +324,13 @@ CalendarManager {
 
 	PlasmaCalendarManager {
 		id: plasmaCalendarManager
-		googleCalendarIds: PlasmaCalendarUtils.googleCalendarIdsByAccount(googleAccountsStore.accounts)
+	}
+	// The selected calendars of the Google accounts that fetch (only theirs come from the sign-in),
+	// for Akonadi's copies of them. Set again on each change: an account is updated in place (no
+	// accountsChanged then, a binding wouldn't follow).
+	function updatePlasmaGoogleCalendarIds() {
+		plasmaCalendarManager.googleCalendarIds = PlasmaCalendarUtils.googleCalendarIdsByAccount(googleAccountsStore.secretsLoaded
+			? Shared.toArray(googleAccountsStore.accounts).filter(googleAccountsStore.accountCanFetch) : [])
 	}
 
 	// Tasks are placed on their day when parsed (Tasks.placementDay): place them again.

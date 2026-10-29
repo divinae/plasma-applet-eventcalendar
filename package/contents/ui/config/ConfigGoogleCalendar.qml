@@ -127,8 +127,8 @@ ConfigPage {
 			page.akonadiColors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
 		})
 	}
-	// The Google calendars Akonadi syncs for an account signed in here too: listed above with the
-	// account, so not here again.
+	// The Google calendars Akonadi syncs for an account signed in here too, and selected there:
+	// listed above with the account, so not here again.
 	ExecUtil { id: akonadiCollectionReader }
 	property string akonadiGoogleCollections: ""
 	function loadAkonadiGoogleCollections() {
@@ -477,7 +477,7 @@ ConfigPage {
 		}
 		FormCard.FormSectionText {
 			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account

@@ -385,14 +385,19 @@ function akonadiCalendarsCommand() {
 	return ['sh', '-c', akonadiColorsLines().concat(akonadiGoogleCollectionsLines(), ['exit 0']).join('\n')]
 }
 // The widget's Google accounts (GoogleAccountsStore.accounts) for akonadiMirroredCollections:
-// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case.
+// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case, and
+// only the calendars selected in the widget (calendarIdList, "primary" for the primary one): the
+// others' events don't come from the sign-in, Akonadi's copy is their only one.
 function googleCalendarIdsByAccount(accounts) {
 	var calendarIds = {}
 	;(accounts || []).forEach(function(account) {
 		var list = account && account.calendarList ? Array.prototype.slice.call(account.calendarList) : []
+		var selected = account && account.calendarIdList ? Array.prototype.slice.call(account.calendarIdList).map(String) : []
 		var primary = list.filter(function(calendar) { return calendar && calendar.primary })[0]
 		if (primary && primary.id) {
-			calendarIds[String(primary.id).toLowerCase()] = list.map(function(calendar) { return calendar.id })
+			calendarIds[String(primary.id).toLowerCase()] = list.filter(function(calendar) {
+				return calendar && (selected.indexOf(String(calendar.id)) >= 0 || (calendar.primary && selected.indexOf('primary') >= 0))
+			}).map(function(calendar) { return calendar.id })
 		}
 	})
 	return calendarIds

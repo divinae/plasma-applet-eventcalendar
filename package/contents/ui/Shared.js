@@ -269,6 +269,28 @@ function isHiddenCalendar(calendarId, hiddenCalendarIds) {
 	return false
 }
 
+// hiddenCalendarIds with one calendar hidden or shown again. allIds: the calendars listed (the
+// popup's calendar menu): showing one Akonadi color while all of Akonadi is hidden (plasma_Events,
+// see isHiddenCalendar) keeps the other colors hidden, by their own ids.
+function toggledCalendarIds(hiddenCalendarIds, calendarId, hide, allIds) {
+	var id = String(calendarId)
+	var current = (hiddenCalendarIds || []).map(String)
+	var ids = []
+	if (!hide && id.indexOf("plasma_EventsColor_") === 0 && current.indexOf("plasma_Events") >= 0) {
+		(allIds || []).map(String).forEach(function(other) {
+			if (other !== id && other.indexOf("plasma_EventsColor_") === 0 && current.indexOf(other) < 0) {
+				ids.push(other)
+			}
+		})
+		current = current.filter(function(other) { return other !== "plasma_Events" })
+	}
+	ids = current.filter(function(other) { return other !== id }).concat(ids)
+	if (hide) {
+		ids.push(id)
+	}
+	return ids
+}
+
 // Titles of the events this one overlaps (EventModel sets conflictsWith, see Conflicts.js). It holds
 // { summary } objects, not strings: a ListModel (agenda) drops plain strings from nested lists.
 function conflictTitles(eventItem) {

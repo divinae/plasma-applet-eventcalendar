@@ -45,6 +45,12 @@ assert.strictEqual(S.isHiddenCalendar('work', []), false, 'nothing hidden')
 assert.strictEqual(S.isHiddenCalendar('plasma_EventsColor_9a9cff', ['plasma_Events']), true, 'Akonadi hidden as one: every color too')
 assert.strictEqual(S.isHiddenCalendar('plasma_EventsColor_9a9cff', ['plasma_EventsColor_aaaaaa']), false, 'another color')
 assert.strictEqual(S.isHiddenCalendar('work', undefined), false, 'no config')
+const C = 'plasma_EventsColor_'
+assert.deepStrictEqual(Array.from(S.toggledCalendarIds(['work'], 'home', true, [])), ['work', 'home'], 'hidden')
+assert.deepStrictEqual(Array.from(S.toggledCalendarIds(['work', 'home'], 'work', false, [])), ['home'], 'shown again')
+assert.deepStrictEqual(Array.from(S.toggledCalendarIds(['plasma_Events', 'work'], C + 'aaaaaa', false, [C + 'aaaaaa', C + 'bbbbbb', 'work'])),
+	['work', C + 'bbbbbb'], 'one Akonadi color shown while all were hidden: the others stay hidden')
+assert.strictEqual(S.isHiddenCalendar(C + 'aaaaaa', S.toggledCalendarIds(['plasma_Events'], C + 'aaaaaa', false, [C + 'aaaaaa'])), false, 'and it shows')
 assert.strictEqual(S.isHiddenCalendar('', ['']), false, 'no calendar')
 
 console.log('my_response: ok')
