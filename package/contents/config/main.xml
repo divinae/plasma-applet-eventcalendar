@@ -338,7 +338,8 @@
 		</entry>
 		<entry name="clockHiddenCalendarIds" type="StringList">
 			<!-- Calendars whose events never take the chip (clock icon in the header calendars menu).
-			     They still show in the views and still send reminders. -->
+			     They still show in the views and still send reminders. Set from the popup: no cfg_
+			     property on the settings pages (Apply would write back a stale list). -->
 			<default></default>
 		</entry>
 		<entry name="clockShowMeetingProgress" type="bool">

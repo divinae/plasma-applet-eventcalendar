@@ -211,16 +211,16 @@ msgstr "Aucun calendrier sélectionné dans les paramètres."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "Dans le compte à rebours de l'horloge. Cliquer pour l'exclure."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Exclu du compte à rebours de l'horloge. Cliquer pour l'inclure."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "Inclure %1 dans le compte à rebours de l'horloge"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -387,7 +387,7 @@ msgstr "Ignorer les événements sur toute la journée"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "Ils restent affichés dans l'agenda."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -725,6 +725,11 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM (Akonadi) apporte déjà les agendas Google de %1, en lecture seule. "
+"Connectez-vous aussi ici pour répondre aux invitations, modifier et "
+"supprimer des événements et rejoindre des réunions depuis le widget. Les "
+"événements d'un compte synchronisé des deux façons ne s'affichent qu'une "
+"fois, depuis la connexion d'ici."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -732,6 +737,9 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"Aussi synchronisé par KDE PIM (Akonadi) : %1. Leurs événements ne "
+"s'affichent qu'une fois, depuis la connexion d'ici, où l'on peut y répondre "
+"et les modifier."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

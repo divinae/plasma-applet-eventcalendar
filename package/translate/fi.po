@@ -183,16 +183,16 @@ msgstr "Asetuksissa ei ole valittu kalentereita."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "Kellon lähtölaskennassa. Napsauta jättääksesi sen pois."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Jätetty kellon lähtölaskennan ulkopuolelle. Napsauta ottaaksesi sen mukaan."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "Ota %1 mukaan kellon lähtölaskentaan"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -345,7 +345,7 @@ msgstr "Ohita koko päivän tapahtumat"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "Ne näkyvät edelleen asialistalla."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -625,12 +625,12 @@ msgstr "Kirjaudu sisään, niin Google-kalenterisi ja tehtäväluettelosi näyte
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
 msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
-msgstr ""
+msgstr "KDE PIM (Akonadi) tuo jo tilin %1 Google-kalenterit, vain luku. Kirjaudu myös tässä, jotta voit vastata kutsuihin, muokata ja poistaa tapahtumia sekä liittyä kokouksiin sovelmasta. Molempia teitä synkronoidun tilin tapahtumat näytetään kerran, tämän kirjautumisen kautta."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
 msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
-msgstr ""
+msgstr "Myös KDE PIM (Akonadi) synkronoi: %1. Niiden tapahtumat näytetään kerran, tämän kirjautumisen kautta, jossa niihin voi vastata ja niitä voi muokata."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

@@ -209,16 +209,16 @@ msgstr "לא נבחרו לוחות שנה בהגדרות."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "בספירה לאחור של השעון. לחיצה תוציא אותו."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "מחוץ לספירה לאחור של השעון. לחיצה תכליל אותו."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "הכללת %1 בספירה לאחור של השעון"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -389,7 +389,7 @@ msgstr "דילוג על אירועים של יום שלם"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "הם עדיין מוצגים בסדר היום."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -713,6 +713,9 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM (Akonadi) כבר מביא את יומני Google של %1, לקריאה בלבד. יש להתחבר גם "
+"כאן כדי לענות להזמנות, לערוך ולמחוק אירועים ולהצטרף לפגישות מהווידג׳ט. "
+"אירועים של חשבון המסונכרן בשתי הדרכים מוצגים פעם אחת, מההתחברות כאן."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -720,6 +723,8 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"מסונכרן גם על ידי KDE PIM (Akonadi): %1. האירועים שלהם מוצגים פעם אחת, "
+"מההתחברות כאן, שם ניתן לענות עליהם ולערוך אותם."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

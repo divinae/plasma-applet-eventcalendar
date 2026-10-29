@@ -210,16 +210,16 @@ msgstr "Geen agenda's geselecteerd in de instellingen."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "In het aftellen van de klok. Klik om het weg te laten."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Weggelaten uit het aftellen van de klok. Klik om het op te nemen."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "%1 opnemen in het aftellen van de klok"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -387,7 +387,7 @@ msgstr "Afspraken van een hele dag overslaan"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "Ze blijven zichtbaar in de agenda."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -720,6 +720,11 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM (Akonadi) haalt de Google-agenda's van %1 al op, alleen-lezen. Meld "
+"u ook hier aan om uitnodigingen te beantwoorden, afspraken te bewerken en te "
+"verwijderen en vanuit de widget aan vergaderingen deel te nemen. Afspraken "
+"van een account die op beide manieren gesynchroniseerd wordt, worden één "
+"keer getoond, via de aanmelding hier."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -727,6 +732,9 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"Ook gesynchroniseerd door KDE PIM (Akonadi): %1. Hun afspraken worden één "
+"keer getoond, via de aanmelding hier, waar ze beantwoord en bewerkt kunnen "
+"worden."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

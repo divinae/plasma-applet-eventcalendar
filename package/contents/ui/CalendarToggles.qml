@@ -158,7 +158,11 @@ PlasmaComponents3.ToolButton {
 							checkable: true
 							checked: onClock
 							opacity: onClock ? 1 : 0.4
-							onToggled: calendarToggles.setClockHidden(modelData.id, !checked)
+							onToggled: {
+								var calendarId = modelData.id
+								calendarToggles.setClockHidden(calendarId, !checked)
+								checked = Qt.binding(function() { return !Shared.isHiddenCalendar(calendarId, calendarToggles.clockHiddenIds) })
+							}
 							PlasmaComponents3.ToolTip.text: onClock
 								? i18n("In the clock's countdown. Click to leave it out.")
 								: i18n("Left out of the clock's countdown. Click to include it.")

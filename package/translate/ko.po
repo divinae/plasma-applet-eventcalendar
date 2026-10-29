@@ -209,16 +209,16 @@ msgstr "설정에서 선택한 달력이 없습니다."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "시계 카운트다운에 포함됨. 클릭하면 제외합니다."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "시계 카운트다운에서 제외됨. 클릭하면 포함합니다."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "%1을(를) 시계 카운트다운에 포함"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -384,7 +384,7 @@ msgstr "종일 이벤트 건너뛰기"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "일정에는 계속 표시됩니다."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -709,6 +709,10 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM(Akonadi)이 이미 %1의 Google 캘린더를 읽기 전용으로 가져옵니다. 여기에"
+"서도 로그인하면 위젯에서 초대에 응답하고, 일정을 편집·삭제하고, 회의에 참여"
+"할 수 있습니다. 양쪽으로 동기화되는 계정의 일정은 여기 로그인에서 한 번만 표"
+"시됩니다."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -716,6 +720,8 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"KDE PIM(Akonadi)에서도 동기화됨: %1. 해당 일정은 여기 로그인에서 한 번만 표시"
+"되며, 응답하고 편집할 수 있습니다."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

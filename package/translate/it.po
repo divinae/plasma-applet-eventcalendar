@@ -180,16 +180,16 @@ msgstr "Nessun calendario selezionato nelle impostazioni."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "Nel conto alla rovescia dell'orologio. Fai clic per escluderlo."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Escluso dal conto alla rovescia dell'orologio. Fai clic per includerlo."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "Includi %1 nel conto alla rovescia dell'orologio"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -342,7 +342,7 @@ msgstr "Salta gli eventi di tutto il giorno"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "Restano visibili nell'agenda."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -622,12 +622,12 @@ msgstr "Accedi per mostrare i tuoi calendari ed elenchi di attività Google. Il 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
 msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
-msgstr ""
+msgstr "KDE PIM (Akonadi) porta già i calendari Google di %1, in sola lettura. Accedi anche qui per rispondere agli inviti, modificare ed eliminare eventi e partecipare alle riunioni dal widget. Gli eventi di un account sincronizzato in entrambi i modi sono mostrati una volta sola, dall'accesso qui."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
 msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
-msgstr ""
+msgstr "Sincronizzato anche da KDE PIM (Akonadi): %1. I loro eventi sono mostrati una volta sola, dall'accesso qui, dove si può rispondere e modificarli."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

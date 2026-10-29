@@ -213,16 +213,16 @@ msgstr "In den Einstellungen sind keine Kalender ausgewählt."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "Im Countdown der Uhr. Klicken, um ihn auszulassen."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Nicht im Countdown der Uhr. Klicken, um ihn aufzunehmen."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "%1 in den Countdown der Uhr aufnehmen"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -390,7 +390,7 @@ msgstr "Ganztägige Termine überspringen"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "Sie bleiben in der Agenda sichtbar."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"

@@ -208,16 +208,16 @@ msgstr "设置中未选择任何日历。"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "在时钟倒计时中。点击以排除。"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "已排除在时钟倒计时之外。点击以包含。"
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "将 %1 包含在时钟倒计时中"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -382,7 +382,7 @@ msgstr "跳过全天事件"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "它们仍会显示在日程中。"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -698,6 +698,9 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM (Akonadi) 已以只读方式引入 %1 的 Google 日历。在此也登录后，即可在小"
+"部件中回复邀请、编辑和删除事件以及加入会议。双向同步的账户的事件只显示一次，"
+"来自此处的登录。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -705,6 +708,8 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"也由 KDE PIM (Akonadi) 同步：%1。其事件只显示一次，来自此处的登录，可在此回复"
+"和编辑。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"

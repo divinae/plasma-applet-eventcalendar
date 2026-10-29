@@ -209,16 +209,16 @@ msgstr "Ingen kalendere valgt i indstillingerne."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "In the clock's countdown. Click to leave it out."
-msgstr ""
+msgstr "I urets nedtælling. Klik for at udelade den."
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Left out of the clock's countdown. Click to include it."
-msgstr ""
+msgstr "Udeladt af urets nedtælling. Klik for at medtage den."
 
 #: ../contents/ui/CalendarToggles.qml
 msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
-msgstr ""
+msgstr "Medtag %1 i urets nedtælling"
 
 #: ../contents/ui/CalendarToggles.qml
 msgid "Show All"
@@ -385,7 +385,7 @@ msgstr "Spring heldagsbegivenheder over"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "They still show in the agenda."
-msgstr ""
+msgstr "De vises stadig i dagsordenen."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Progress of the current meeting"
@@ -714,6 +714,10 @@ msgid ""
 "meetings from the widget. Events of an account synced both ways are shown "
 "once, from the sign-in here."
 msgstr ""
+"KDE PIM (Akonadi) henter allerede Google-kalenderne for %1, skrivebeskyttet. "
+"Log også ind her for at svare på invitationer, redigere og slette "
+"begivenheder og deltage i møder fra widgetten. Begivenheder fra en konto, "
+"der synkroniseres begge veje, vises én gang, fra login her."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
@@ -721,6 +725,8 @@ msgid ""
 "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
 "sign-in here, where they can be answered and edited."
 msgstr ""
+"Synkroniseres også af KDE PIM (Akonadi): %1. Deres begivenheder vises én "
+"gang, fra login her, hvor de kan besvares og redigeres."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Sign In Again"
