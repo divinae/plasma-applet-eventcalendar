@@ -3,14 +3,42 @@
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
-A calendar, agenda and weather widget for the KDE Plasma 6 panel that syncs with Google Calendar,
-Plasma (Akonadi / holiday) calendars and iCalendar (.ics) files.
+**Your day, one click from the clock.** Calendar, agenda, tasks, meetings and weather in the
+Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting
+again.
+
+![Day view](docs/screenshots/today.png)
+
+### Why you'll like it
+
+- 🗓️ **Every view you need.** Month, Week, Day and Agenda, each a click away. The Day view puts
+  your hours, a small month, what's up next, today's tasks and the weather side by side.
+- ⏰ **Never late again.** The clock shows your next meeting ("in 5 min") and a progress bar while
+  it runs. When it starts, a full-screen alert (optional) dims every screen with one big **Join**
+  button.
+- 🎥 **One-click Join** for Google Meet, Zoom, Teams, Webex, Slack huddles and about 35 more,
+  straight from the agenda, the clock or the notification.
+- ✅ **Your tasks too.** Google Tasks and TickTick in their own tab, with smart lists (Today,
+  Overdue, Next 7 days…), priorities, subtasks and drag and drop. Type "Call mom tomorrow 17:00
+  !high" and it knows the day, the time and the priority.
+- ✍️ **Plan without leaving the panel.** Create, edit, move and answer events right in the widget;
+  quick add understands plain sentences ("Lunch with Anna tomorrow 13:00"), and *Go to date* takes
+  "next friday" or "+2w".
+- ☁️ **All your calendars.** Several Google accounts, KDE PIM (Akonadi), holidays and .ics files;
+  an event that's in two calendars shows once.
+- ⚡ **Fast and offline-ready.** It opens instantly with your last events and tasks, even without a
+  network, and stays quick with busy calendars and long task lists.
+- 🎨 **Looks at home in Plasma.** Rounded "islands" cards or a flat look, light and dark themes,
+  calendar colors that stay readable, translated into 20 languages.
+- 🔒 **Private by design.** Sign-in tokens stay in your system keyring; no tracking, no servers of
+  ours in between.
 
 This is a maintained fork of [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar)
 by Chris Holland (Zren), via [ALikesToCode's Plasma 6 port](https://github.com/ALikesToCode/plasma-applet-eventcalendar).
 It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings.
 
-## Features
+<details>
+<summary><b>All features</b></summary>
 
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days,
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
@@ -67,6 +95,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - Invitations look like in Google Calendar (outlined / striped / struck through), events filled
   in their color or timed ones light with a color bar, icons for what an event has set, adjustable event text size, event locations open in Google Maps, dark theme
   friendly event colors, right-click menus on events, translated into 20 languages.
+
+</details>
 
 ## Screenshots
 
