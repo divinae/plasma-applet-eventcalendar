@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:02+0100\n"
+"POT-Creation-Date: 2026-10-29 14:07+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -2610,6 +2610,22 @@ msgstr "ddd d MMM"
 msgid "Next day"
 msgstr "Jour suivant"
 
+#: ../contents/ui/GoToDateView.qml
+msgid "Go to Date"
+msgstr "Aller à la date"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Go"
+msgstr "Aller"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Eg: next friday, 15 nov, +2w"
+msgstr "Ex. : vendredi, 15 nov, +2w"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "No day found in the text"
+msgstr "Aucun jour trouvé dans le texte"
+
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Impossible de lire le fichier."
@@ -3031,10 +3047,9 @@ msgstr "Jour précédent"
 msgid "Previous Week"
 msgstr "Semaine précédente"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Today"
-msgstr "Aujourd'hui"
+#: ../contents/ui/PopupHeader.qml
+msgid "Today (press and hold, or G: go to a date)"
+msgstr "Aujourd'hui (appui long ou G : aller à une date)"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -3113,6 +3128,11 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "Erreur lors de la récupération de la météo"
+
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Today"
+msgstr "Aujourd'hui"
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml

@@ -46,6 +46,7 @@ PlasmaExtras.PlasmoidHeading {
 	signal newEventClicked()
 	signal searchClicked()
 	signal refreshClicked()
+	signal goToDateRequested()
 
 	// Left: view switcher. Center: navigation and title. Right: calendars, search, new event, refresh, pin.
 	contentItem: Item {
@@ -368,7 +369,8 @@ PlasmaExtras.PlasmoidHeading {
 				visible: !header.tasksMode
 				icon.name: "go-jump-today"
 				onClicked: header.weekViewItem ? header.weekViewItem.goToday() : header.monthViewItem.resetToToday()
-				PlasmaComponents3.ToolTip.text: i18n("Today")
+				onPressAndHold: header.goToDateRequested()
+				PlasmaComponents3.ToolTip.text: i18n("Today (press and hold, or G: go to a date)")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {

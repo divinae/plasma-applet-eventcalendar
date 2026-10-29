@@ -226,4 +226,16 @@ assert.strictEqual(Q.parse('a tomorrow', { today: '2026-12-31' }).dueDay, '2027-
 assert.strictEqual(Q.parse('a 1.1', { today: '2026-12-31' }).dueDay, '2027-01-01')
 assert.strictEqual(Q.parse('a 31.12', { today: '2026-12-31' }).dueDay, '2026-12-31')
 
+// Go to date: the days parse() reads, and offsets from today.
+const go = (text, today) => Q.goToDate(text, { today: today || '2026-10-29' })
+assert.strictEqual(go('+2w'), '2026-11-12')
+assert.strictEqual(go('-3d'), '2026-10-26')
+assert.strictEqual(go('+ 1 y'), '2027-10-29')
+assert.strictEqual(go('+1m', '2027-01-31'), '2027-02-28', 'the last day of a shorter month')
+assert.strictEqual(go('tomorrow'), '2026-10-30')
+assert.strictEqual(go('15 nov'), '2026-11-15')
+assert.strictEqual(go('2026-12-24'), '2026-12-24')
+assert.strictEqual(go('garbage'), '')
+assert.strictEqual(go(''), '')
+
 console.log('quick_parse tests passed')

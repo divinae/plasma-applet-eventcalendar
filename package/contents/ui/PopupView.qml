@@ -270,6 +270,26 @@ MouseArea {
 		searchOpen = false
 	}
 	property bool quickAddOpen: false
+	//--- Go to date (the G key): the view goes to the day typed.
+	property bool goToDateOpen: false
+	function openGoToDate() {
+		closeOverlays()
+		goToDateOpen = true
+	}
+	function goToDay(day) {
+		goToDateOpen = false
+		day = Shared.startOfDay(day)
+		if (hourGridMode && weekViewLoader.item) {
+			weekViewLoader.item.weekStart = weekViewLoader.item.startOfWeek(day)
+			return
+		}
+		// Month and Agenda: the day selected (the agenda scrolls to it).
+		if (day.getFullYear() !== monthViewDate.getFullYear() || day.getMonth() !== monthViewDate.getMonth()) {
+			monthViewDate = day
+		}
+		monthView.setSelectedDate(day)
+		scrollToSelection()
+	}
 	function openQuickAdd() {
 		quickAddOpen = true
 	}
@@ -366,6 +386,7 @@ MouseArea {
 		detailsEvent = null
 		searchOpen = false
 		quickAddOpen = false
+		goToDateOpen = false
 		closeImport()
 		if (tasksViewLoader.item) {
 			tasksViewLoader.item.closeManaging()
@@ -437,6 +458,7 @@ MouseArea {
 		onNewEventClicked: popup.tasksMode ? popup.newTask(null) : popup.openQuickAdd()
 		onSearchClicked: popup.openSearch()
 		onRefreshClicked: logic.update()
+		onGoToDateRequested: popup.openGoToDate()
 	}
 
 	// Problems fetching data, above every view. Offline: the last loaded events stay visible and
@@ -590,6 +612,20 @@ MouseArea {
 					onCloseRequested: popup.closeEventDetails()
 					onEditRequested: popup.editEvent(popup.detailsEvent)
 					onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
+				}
+			}
+		}
+
+		OverlayCard {
+			visible: popup.goToDateOpen
+			anchors.fill: parent
+			onOutsideClicked: popup.goToDateOpen = false
+			cardComponent: visible ? goToDateCard : null
+			Component {
+				id: goToDateCard
+				GoToDateView {
+					onCloseRequested: popup.goToDateOpen = false
+					onDayChosen: function(day) { popup.goToDay(day) }
 				}
 			}
 		}
@@ -924,7 +960,7 @@ MouseArea {
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
 	// Enter, Space, E and Delete act on its highlighted task, N goes to "Add a task…".
-	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen
+	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen || goToDateOpen
 	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : tasksMode ? 'tasks' : 'classic'
 	// Take the keys when the popup opens and when the last card closes (its focus is gone).
 	function focusForKeys() {
@@ -969,6 +1005,9 @@ MouseArea {
 				return true
 			case 'today':
 				if (nav) nav.goToday(); else monthView.resetToToday()
+				return true
+			case 'goToDate':
+				openGoToDate()
 				return true
 			case 'move':
 				var date = Shared.startOfDay(Shared.addDays(selectedDate, action.days))

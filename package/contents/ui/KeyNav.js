@@ -21,6 +21,7 @@ var Key = {
 	Digit1: 0x31,
 	E: 0x45,
 	F: 0x46,
+	G: 0x47,
 	N: 0x4e,
 	T: 0x54,
 }
@@ -41,7 +42,7 @@ var VIEW_MODES = ['month', 'week', 'today', 'classic', 'tasks']
 //   { type: 'move', days: n }: move the selected day by n days
 //   { type: 'open' }: open the selected day (Day view)
 //   { type: 'new' }: new event on the selected day
-//   { type: 'search' }, { type: 'today' }
+//   { type: 'search' }, { type: 'today' }, { type: 'goToDate' } (G: type the day to go to)
 //   { type: 'view', mode: 'month' }: switch the view
 //   Tasks tab: { type: 'taskMove', delta: -1 | 1 } (Up / Down: the highlighted task), 'taskOpen'
 //   (Enter), 'taskToggle' (Space), 'taskEdit' (E), 'taskDelete' (Delete); N ('new') is "Add a task…"
@@ -100,6 +101,8 @@ function actionFor(key, modifiers, mode) {
 			return grid ? { type: 'open' } : null
 		case Key.N:
 			return { type: 'new' }
+		case Key.G:
+			return dated ? { type: 'goToDate' } : null
 		case Key.T:
 		case Key.Home:
 			return dated ? { type: 'today' } : null

@@ -102,4 +102,9 @@ assert.deepStrictEqual(ymd(moveDays(new Date(2026, 2, 3), -7)), [2026, 2, 24, 0]
 assert.deepStrictEqual(ymd(moveDays(new Date(2026, 2, 28), 1)), [2026, 3, 29, 0])
 assert.deepStrictEqual(ymd(moveDays(new Date(2026, 11, 28), 7)), [2027, 1, 4, 0])
 
+// G: go to a date, in the views with days (not Tasks).
+assert.deepStrictEqual(act(Key.G, 0, 'month'), { type: 'goToDate' })
+assert.deepStrictEqual(act(Key.G, 0, 'week'), { type: 'goToDate' })
+assert.strictEqual(K.actionFor(Key.G, 0, 'tasks'), null)
+
 console.log('key_nav ok')

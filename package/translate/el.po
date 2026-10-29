@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:02+0100\n"
+"POT-Creation-Date: 2026-10-29 14:07+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -2613,6 +2613,22 @@ msgstr "ddd d MMM"
 msgid "Next day"
 msgstr "Επόμενη ημέρα"
 
+#: ../contents/ui/GoToDateView.qml
+msgid "Go to Date"
+msgstr "Μετάβαση σε ημερομηνία"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Go"
+msgstr "Μετάβαση"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Eg: next friday, 15 nov, +2w"
+msgstr "Π.χ.: Παρασκευή, 15 Νοε, +2w"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "No day found in the text"
+msgstr "Δεν βρέθηκε ημέρα στο κείμενο"
+
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Αδυναμία ανάγνωσης του αρχείου."
@@ -3036,10 +3052,9 @@ msgstr "Προηγούμενη ημέρα"
 msgid "Previous Week"
 msgstr "Προηγούμενη εβδομάδα"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Today"
-msgstr "Σήμερα"
+#: ../contents/ui/PopupHeader.qml
+msgid "Today (press and hold, or G: go to a date)"
+msgstr "Σήμερα (πατήστε παρατεταμένα ή G: μετάβαση σε ημερομηνία)"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -3120,6 +3135,11 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "Σφάλμα λήψης καιρού."
+
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Today"
+msgstr "Σήμερα"
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml

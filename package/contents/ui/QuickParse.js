@@ -406,3 +406,36 @@ function parse(text, opts) {
 		tokens: tokens,
 	}
 }
+
+// "Go to date" (the popup's G key): the day text names, 'YYYY-MM-DD', or '' when none. The same
+// days as parse() (today, tomorrow, a weekday, "next week", "15 nov", "2026-11-15", …), and offsets
+// from opts.today: "+2w", "-3d", "+1m", "+1y" (d, w, m, y; also with a space: "+ 2 w").
+function goToDate(text, opts) {
+	opts = opts || {}
+	text = String(text || '').trim()
+	var offset = /^([+-])\s*(\d{1,4})\s*([dwmy])$/i.exec(text)
+	if (offset && opts.today) {
+		var parts = String(opts.today).split('-').map(Number)
+		var n = Number(offset[2]) * (offset[1] === '-' ? -1 : 1)
+		var unit = offset[3].toLowerCase()
+		var day = new Date(parts[0], parts[1] - 1, parts[2])
+		if (unit === 'd' || unit === 'w') {
+			day.setDate(day.getDate() + n * (unit === 'w' ? 7 : 1))
+		} else {
+			// Months and years: the same day, or the last of a shorter month (31 Jan + 1m: 28/29 Feb).
+			var months = unit === 'm' ? n : n * 12
+			var target = new Date(day.getFullYear(), day.getMonth() + months, 1)
+			var last = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate()
+			day = new Date(target.getFullYear(), target.getMonth(), Math.min(day.getDate(), last))
+		}
+		return day.getFullYear() + '-' + pad2(day.getMonth() + 1) + '-' + pad2(day.getDate())
+	}
+	var parsed = parse(text, {
+		today: opts.today,
+		kinds: ['date'],
+		dayFirst: opts.dayFirst,
+		dayNames: opts.dayNames,
+		monthNames: opts.monthNames,
+	})
+	return parsed.dueDay || ''
+}

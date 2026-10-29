@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:02+0100\n"
+"POT-Creation-Date: 2026-10-29 14:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2325,6 +2325,22 @@ msgstr "M月 d日 (ddd)"
 msgid "Next day"
 msgstr "次の日"
 
+#: ../contents/ui/GoToDateView.qml
+msgid "Go to Date"
+msgstr "日付へ移動"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Go"
+msgstr "移動"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Eg: next friday, 15 nov, +2w"
+msgstr "例: 2026-11-15, tomorrow, +2w"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "No day found in the text"
+msgstr "テキストに日付が見つかりません"
+
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "ファイルを読み込めませんでした。"
@@ -2712,9 +2728,9 @@ msgstr "前の日"
 msgid "Previous Week"
 msgstr "前の週"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Today"
-msgstr "今日"
+#: ../contents/ui/PopupHeader.qml
+msgid "Today (press and hold, or G: go to a date)"
+msgstr "今日 (長押しまたは G: 日付へ移動)"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -2791,6 +2807,10 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "エラー天気を取得できませんでした。"
+
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+msgid "Today"
+msgstr "今日"
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"

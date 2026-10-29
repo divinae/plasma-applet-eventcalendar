@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:02+0100\n"
+"POT-Creation-Date: 2026-10-29 14:07+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2609,6 +2609,22 @@ msgstr "ddd, d. MMM"
 msgid "Next day"
 msgstr "Naslednji dan"
 
+#: ../contents/ui/GoToDateView.qml
+msgid "Go to Date"
+msgstr "Pojdi na datum"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Go"
+msgstr "Pojdi"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "Eg: next friday, 15 nov, +2w"
+msgstr "Npr.: petek, 15 nov, +2w"
+
+#: ../contents/ui/GoToDateView.qml
+msgid "No day found in the text"
+msgstr "V besedilu ni najdenega dneva"
+
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Datoteke ni bilo mogoče prebrati."
@@ -3055,10 +3071,9 @@ msgstr "Prejšnji dan"
 msgid "Previous Week"
 msgstr "Prejšnji teden"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
-msgid "Today"
-msgstr "Danes"
+#: ../contents/ui/PopupHeader.qml
+msgid "Today (press and hold, or G: go to a date)"
+msgstr "Danes (pridržite ali G: pojdi na datum)"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Next Day"
@@ -3141,6 +3156,11 @@ msgstr ""
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
 msgstr "Napaka pri prenosu podatkov o vremenu."
+
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/TasksView.qml
+msgid "Today"
+msgstr "Danes"
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
