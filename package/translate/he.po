@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:05+0100\n"
+"POT-Creation-Date: 2026-10-29 15:11+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -220,7 +220,7 @@ msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
 msgstr "הכללת %1 בספירה לאחור של השעון"
 
-#: ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "הצגת הכול"
 
@@ -3708,10 +3708,6 @@ msgid "Nothing planned today"
 msgstr "אין תוכניות להיום"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open Agenda"
-msgstr "פתיחת סדר היום"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgctxt "task reminder"
 msgid "Overdue"
 msgstr "באיחור"
@@ -3784,6 +3780,10 @@ msgstr[0] "+%1 נוספת"
 msgstr[1] "+%1 נוספות"
 msgstr[2] "+%1 נוספות"
 msgstr[3] "+%1 נוספות"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Show Tasks"
+msgstr "הצגת משימות"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
@@ -3898,6 +3898,9 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Open Agenda"
+#~ msgstr "פתיחת סדר היום"
 
 #~ msgid "Event Calendar"
 #~ msgstr "לוח שנה עם אירועים"

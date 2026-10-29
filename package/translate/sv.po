@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:05+0100\n"
+"POT-Creation-Date: 2026-10-29 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -191,7 +191,7 @@ msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
 msgstr "Ta med %1 i klockans nedräkning"
 
-#: ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "Visa alla"
 
@@ -3405,10 +3405,6 @@ msgid "Nothing planned today"
 msgstr "Inget planerat idag"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open Agenda"
-msgstr "Öppna dagordning"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgctxt "task reminder"
 msgid "Overdue"
 msgstr "Försenad"
@@ -3473,6 +3469,10 @@ msgid "+%1 more"
 msgid_plural "+%1 more"
 msgstr[0] "+%1 till"
 msgstr[1] "+%1 till"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Show Tasks"
+msgstr "Visa uppgifter"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
@@ -3582,6 +3582,9 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Open Agenda"
+#~ msgstr "Öppna dagordning"
 
 #~ msgid "Event Calendar"
 #~ msgstr "Event Calendar"

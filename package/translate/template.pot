@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:05+0100\n"
+"POT-Creation-Date: 2026-10-29 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,7 +192,7 @@ msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
 msgstr ""
 
-#: ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr ""
 
@@ -3416,10 +3416,6 @@ msgid "Nothing planned today"
 msgstr ""
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open Agenda"
-msgstr ""
-
-#: ../contents/ui/UpcomingEvents.qml
 msgctxt "task reminder"
 msgid "Overdue"
 msgstr ""
@@ -3484,6 +3480,10 @@ msgid "+%1 more"
 msgid_plural "+%1 more"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Show Tasks"
+msgstr ""
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"

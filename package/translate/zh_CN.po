@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:05+0100\n"
+"POT-Creation-Date: 2026-10-29 15:11+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -219,7 +219,7 @@ msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
 msgstr "将 %1 包含在时钟倒计时中"
 
-#: ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "全部显示"
 
@@ -3576,10 +3576,6 @@ msgid "Nothing planned today"
 msgstr "今天没有安排"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open Agenda"
-msgstr "打开日程"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgctxt "task reminder"
 msgid "Overdue"
 msgstr "已逾期"
@@ -3640,6 +3636,10 @@ msgctxt "task summary, more tasks"
 msgid "+%1 more"
 msgid_plural "+%1 more"
 msgstr[0] "还有 +%1 个"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Show Tasks"
+msgstr "显示任务"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
@@ -3748,6 +3748,9 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Open Agenda"
+#~ msgstr "打开日程"
 
 #~ msgid "Event Calendar"
 #~ msgstr "事件日历"

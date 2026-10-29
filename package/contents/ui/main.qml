@@ -44,6 +44,21 @@ PlasmoidItem {
 		onMeetingAlertRequested: function(eventItem) { root.showMeetingAlert(eventItem) }
 	}
 
+	// The popup opened in a view (a notification's Show All / Show Tasks): after it opens in the
+	// Default view, this one.
+	function openPopupIn(view) {
+		root.expanded = true
+		Qt.callLater(function() {
+			var popupItem = root.fullRepresentationItem
+			if (popupItem && typeof popupItem.viewOffered === 'function' && popupItem.viewOffered(view)) {
+				popupItem.currentView = view
+				if (view === 'today') {
+					Qt.callLater(function() { popupItem.goToDay(new Date()) }) // Today, not the day last shown
+				}
+			}
+		})
+	}
+
 	//--- Full-screen meeting alert (UpcomingEvents.meetingAlertRequested), as the Fokus plasmoid's
 	// break overlay: one window per screen, made only while the alert is up (windows made at startup
 	// are a risk to plasmashell's start). Above panels and on every desktop through layer-shell when

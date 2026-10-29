@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:05+0100\n"
+"POT-Creation-Date: 2026-10-29 15:11+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -223,7 +223,7 @@ msgctxt "%1 = calendar name"
 msgid "Include %1 in the clock's countdown"
 msgstr "Συμπερίληψη του %1 στην αντίστροφη μέτρηση του ρολογιού"
 
-#: ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "Εμφάνιση όλων"
 
@@ -3709,10 +3709,6 @@ msgid "Nothing planned today"
 msgstr "Τίποτα προγραμματισμένο σήμερα"
 
 #: ../contents/ui/UpcomingEvents.qml
-msgid "Open Agenda"
-msgstr "Άνοιγμα ατζέντας"
-
-#: ../contents/ui/UpcomingEvents.qml
 msgctxt "task reminder"
 msgid "Overdue"
 msgstr "Εκπρόθεσμο"
@@ -3777,6 +3773,10 @@ msgid "+%1 more"
 msgid_plural "+%1 more"
 msgstr[0] "+%1 ακόμη"
 msgstr[1] "+%1 ακόμη"
+
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Show Tasks"
+msgstr "Εμφάνιση εργασιών"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = time"
@@ -3889,6 +3889,9 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Open Agenda"
+#~ msgstr "Άνοιγμα ατζέντας"
 
 #~ msgid "Event Calendar"
 #~ msgstr "Ημερολόγιο Συμβάντων"

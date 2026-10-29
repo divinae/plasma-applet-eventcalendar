@@ -256,13 +256,14 @@ CalendarManager {
 		var dayKey = DailyAgenda.dayKey(now)
 		plasmoid.configuration.dailyAgendaDay = dayKey
 		var items = allEventItems()
-		var agenda = DailyAgenda.summarize(items, now, 5)
+		// Short: a few lines, "+N more", and Show All (the Day view) for the rest.
+		var agenda = DailyAgenda.summarize(items, now, 3)
 		// Today's and overdue tasks: all of them with dailyAgendaTasks, else the morning task
 		// summary (checkTaskSummary), merged here so there's one notification.
 		var tasks = null
 		var withTasks = !!plasmoid.configuration.dailyAgendaTasks
 		if (withTasks || plasmoid.configuration.taskRemindersEnabled) {
-			tasks = DailyAgenda.summarizeTasks(items, now, 3, withTasks)
+			tasks = DailyAgenda.summarizeTasks(items, now, 2, withTasks)
 			plasmoid.configuration.taskSummaryDay = dayKey
 		}
 		logger.log('notification: daily agenda,', agenda.count, 'events,', tasks ? tasks.count : 0, 'tasks') // No titles in the log
@@ -296,10 +297,10 @@ CalendarManager {
 				: hasTasks ? taskSummaryTitle(tasks)
 				: i18n("Nothing planned today"),
 			body: lines.join('<br />'),
-			actions: ['agenda,' + i18n("Open Agenda")],
+			actions: ['all,' + i18n("Show All")],
 		}, function(actionId) {
-			if (actionId === 'default' || actionId === 'agenda') {
-				root.expanded = true
+			if (actionId === 'default' || actionId === 'all') {
+				root.openPopupIn('today') // The Day view: today's events and tasks
 			}
 		})
 	}
@@ -579,7 +580,7 @@ CalendarManager {
 			return
 		}
 		plasmoid.configuration.taskSummaryDay = DailyAgenda.dayKey(now)
-		var tasks = DailyAgenda.summarizeTasks(allEventItems(), now, 3, false)
+		var tasks = DailyAgenda.summarizeTasks(allEventItems(), now, 2, false)
 		logger.log('notification: task summary,', tasks.count, 'tasks') // No titles in the log
 		if (tasks.count > 0) {
 			sendTaskSummaryNotification(tasks)
@@ -617,9 +618,10 @@ CalendarManager {
 			expireTimeout: -1,
 			summary: taskSummaryTitle(tasks),
 			body: taskSummaryLines(tasks).join('<br />'),
+			actions: ['tasks,' + i18n("Show Tasks")],
 		}, function(actionId) {
-			if (actionId === 'default') {
-				root.expanded = true
+			if (actionId === 'default' || actionId === 'tasks') {
+				root.openPopupIn('tasks')
 			}
 		})
 	}
