@@ -56,6 +56,15 @@ QtObject {
 
 			plasmoid.configuration.v73Migration = true
 		}
+
+		// Another (broken) Plasma 6 port stored the plugin list one character per entry: put it
+		// back together, or the default plugins when nothing usable is left.
+		var plugins = PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins)
+		var repairedPlugins = PlasmaCalendarUtils.repairPluginList(plugins)
+		if (plugins.length > 0 && JSON.stringify(repairedPlugins) !== JSON.stringify(Array.prototype.slice.call(plugins))) {
+			plasmoid.configuration.enabledCalendarPlugins = repairedPlugins.length > 0 ? repairedPlugins : ['holidaysevents.so', 'pimevents.so']
+			logMigration('repair enabledCalendarPlugins (' + plugins + ' => ' + plasmoid.configuration.enabledCalendarPlugins + ')')
+		}
 	}
 
 }

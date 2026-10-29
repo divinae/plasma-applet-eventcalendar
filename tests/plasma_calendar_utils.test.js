@@ -53,4 +53,13 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(nested, UserR
 ], 'a calendar two folders down')
 assert.deepStrictEqual(Array.from(U.pimCalendarRows(null, UserRole, DisplayRole)), [])
 
+// enabledCalendarPlugins left one character per entry by another port: joined back.
+const repair = list => Array.from(U.repairPluginList(list))
+assert.deepStrictEqual(repair('holidaysevents.so,pimevents.so'.split('')), ['holidaysevents.so', 'pimevents.so'], 'one character each')
+assert.deepStrictEqual(repair(['holidaysevents.so,pimevents.so']), ['holidaysevents.so', 'pimevents.so'], 'several in one entry')
+assert.deepStrictEqual(repair(['holidaysevents.so', 'pimevents.so']), ['holidaysevents.so', 'pimevents.so'], 'a sound list as it is')
+assert.deepStrictEqual(repair(['h', 'pimevents.so']), ['pimevents.so'], 'a stray letter left out')
+assert.deepStrictEqual(repair(['x']), [], 'nothing usable')
+assert.deepStrictEqual(repair([]), [])
+
 console.log('PASS plasma_calendar_utils')

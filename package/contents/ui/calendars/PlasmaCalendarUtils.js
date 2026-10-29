@@ -114,6 +114,34 @@ function getStoredPluginFilename(pluginRef) {
 	return pluginStem + '.so'
 }
 
+// enabledCalendarPlugins as another (broken) Plasma 6 port may have left it: one character per
+// entry ("h", "o", "l", ...: the characters joined back are the comma-separated list it was), or
+// several plugins in one entry ("holidaysevents.so,pimevents.so"). Returns the plugin filenames,
+// one-letter names (never a plugin) left out; a sound list comes back the same.
+function repairPluginList(pluginList) {
+	var entries = toArray(pluginList).map(function(entry) {
+		return String(entry)
+	})
+	var oneCharacterEach = entries.length > 1 && entries.every(function(entry) {
+		return entry.length === 1
+	})
+	if (oneCharacterEach) {
+		entries = [entries.join('')]
+	}
+	var split = []
+	entries.forEach(function(entry) {
+		entry.split(',').forEach(function(part) {
+			part = part.trim()
+			if (part) {
+				split.push(part)
+			}
+		})
+	})
+	return pluginPathToFilenameList(split).filter(function(filename) {
+		return getPluginStem(filename).length > 1
+	})
+}
+
 function pluginPathToFilenameList(pluginPathList) {
 	var pluginFilenameList = []
 	pluginPathList = toArray(pluginPathList)
