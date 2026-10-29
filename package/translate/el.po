@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "Προβολές"
 
@@ -158,6 +158,11 @@ msgstr "Άγνωστο σφάλμα βοηθού iCalendar"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "Αδυναμία φόρτωσης %1: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -753,10 +758,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Οι λίστες εργασιών επιλέγονται στη σελίδα Εργασίες."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
@@ -1211,8 +1212,16 @@ msgid "Open in the last used view"
 msgstr "Άνοιγμα στην τελευταία προβολή"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "Εναλλαγή προβολής στην κεφαλίδα"
+msgid "View switcher"
+msgstr "Εναλλαγή προβολής"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "Καρτέλες"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "Αναπτυσσόμενο μενού"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3724,6 +3733,9 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "Εναλλαγή προβολής στην κεφαλίδα"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

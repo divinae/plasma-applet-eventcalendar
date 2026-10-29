@@ -152,8 +152,8 @@ KCM.SimpleKCM {
 	property var cfg_weekViewSecondTimeZoneDefault
 	property var cfg_hiddenViewTabs
 	property var cfg_hiddenViewTabsDefault
-	property var cfg_showViewTabs
-	property var cfg_showViewTabsDefault
+	property var cfg_viewSwitcher
+	property var cfg_viewSwitcherDefault
 	property var cfg_popupMode
 	property var cfg_popupModeDefault
 	property var cfg_popupOpenLastView

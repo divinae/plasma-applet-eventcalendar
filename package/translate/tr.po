@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "Görünümler"
 
@@ -158,6 +158,11 @@ msgstr "Bilinmeyen iCalendar yardımcısı hatası"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "%1 yüklenemedi: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -743,10 +748,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Görev listeleri Görevler sayfasında seçilir."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
@@ -1190,8 +1191,16 @@ msgid "Open in the last used view"
 msgstr "Son kullanılan görünümde aç"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "Başlıkta görünüm değiştirici"
+msgid "View switcher"
+msgstr "Görünüm değiştirici"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "Sekmeler"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "Açılır menü"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3687,6 +3696,9 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "Başlıkta görünüm değiştirici"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

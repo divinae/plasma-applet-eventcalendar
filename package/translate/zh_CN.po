@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "视图"
 
@@ -156,6 +156,11 @@ msgstr "未知的 iCalendar 辅助程序错误"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "无法加载 %1：%2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -723,10 +728,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "任务列表在“任务”页面中选择。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
@@ -1152,8 +1153,16 @@ msgid "Open in the last used view"
 msgstr "以上次使用的视图打开"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "标题栏中的视图切换器"
+msgid "View switcher"
+msgstr "视图切换器"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "标签页"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "下拉菜单"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3589,6 +3598,9 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "标题栏中的视图切换器"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

@@ -57,6 +57,13 @@ QtObject {
 			plasmoid.configuration.v73Migration = true
 		}
 
+		// The view switcher can't be hidden any more (1.8.2): hidden became the small one.
+		if (plasmoid.configuration.showViewTabs === false) {
+			plasmoid.configuration.viewSwitcher = 'menu'
+			plasmoid.configuration.showViewTabs = true
+			logMigration('showViewTabs false => viewSwitcher menu')
+		}
+
 		// Another (broken) Plasma 6 port stored the plugin list one character per entry: put it
 		// back together, or the default plugins when nothing usable is left.
 		var plugins = PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins)

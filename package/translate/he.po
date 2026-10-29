@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "2 : 3);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "תצוגות"
 
@@ -157,6 +157,11 @@ msgstr "שגיאה לא ידועה ברכיב העזר של iCalendar"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "לא ניתן לטעון את %1: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -738,10 +743,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "רשימות המשימות נבחרות בעמוד המשימות."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
@@ -1175,8 +1176,16 @@ msgid "Open in the last used view"
 msgstr "פתיחה בתצוגה האחרונה שהייתה בשימוש"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "בורר תצוגות בכותרת"
+msgid "View switcher"
+msgstr "בורר תצוגה"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "לשוניות"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "תפריט נפתח"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3738,6 +3747,9 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "בורר תצוגות בכותרת"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

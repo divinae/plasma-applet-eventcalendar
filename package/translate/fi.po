@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Language: fi_FI\n"
 "X-Source-Language: C\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "Näkymät"
 
@@ -139,6 +139,10 @@ msgstr "Tuntematon iCalendar-apuohjelman virhe"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "Kohteen %1 lataaminen epäonnistui: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
@@ -644,10 +648,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Tehtäväluettelot valitaan Tehtävät-sivulla."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 msgstr ""
 
@@ -1018,8 +1018,16 @@ msgid "Open in the last used view"
 msgstr "Avaa viimeksi käytetyssä näkymässä"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "Näkymän vaihdin otsakkeessa"
+msgid "View switcher"
+msgstr "Näkymän valitsin"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "Välilehdet"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "Pudotusvalikko"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3435,6 +3443,9 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "Näkymän vaihdin otsakkeessa"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

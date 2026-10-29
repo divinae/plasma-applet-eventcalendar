@@ -131,7 +131,7 @@ MouseArea {
 	// is the calendar.
 	property bool showAgenda: !fullViewMode
 	property bool showCalendar: monthMode
-	readonly property bool showViewTabs: plasmoid.configuration.showViewTabs
+	readonly property string viewSwitcher: plasmoid.configuration.viewSwitcher
 	// The agenda view (and its meteogram / timer) is a list: cap its width and center it.
 	readonly property real agendaMaxWidth: Kirigami.Units.gridUnit * 32
 	// Month and week views put the top bar inside their header row, the agenda layout above.
@@ -427,7 +427,7 @@ MouseArea {
 		currentMode: popup.viewMode
 		showTasksTab: popup.taskListsSelected
 		tasksMode: popup.tasksMode
-		showViewTabs: popup.showViewTabs
+		viewSwitcher: popup.viewSwitcher
 		showPinButton: popup.showPinButton
 		refreshing: popup.refreshing
 		onViewSelected: function(mode) {

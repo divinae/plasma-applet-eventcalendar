@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 09:04+0100\n"
+"POT-Creation-Date: 2026-10-29 09:09+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../contents/config/config.qml
+#: ../contents/config/config.qml ../contents/ui/PopupHeader.qml
 msgid "Views"
 msgstr "Ansichten"
 
@@ -159,6 +159,11 @@ msgstr "Unbekannter Fehler im iCalendar-Hilfsprogramm"
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Could not load %1: %2"
 msgstr "%1 konnte nicht geladen werden: %2"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -762,10 +767,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Aufgabenlisten werden auf der Seite „Aufgaben“ ausgewählt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
@@ -1225,8 +1226,16 @@ msgid "Open in the last used view"
 msgstr "In der zuletzt verwendeten Ansicht öffnen"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "View switcher in the header"
-msgstr "Ansichtsumschalter in der Kopfzeile"
+msgid "View switcher"
+msgstr "Ansichtsumschalter"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Tabs"
+msgstr "Reiter"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Drop-down menu"
+msgstr "Aufklappmenü"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Popup size"
@@ -3734,6 +3743,9 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "View switcher in the header"
+#~ msgstr "Ansichtsumschalter in der Kopfzeile"
 
 #~ msgctxt "calendar title format for current month"
 #~ msgid "MMMM d, yyyy"

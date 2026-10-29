@@ -76,7 +76,12 @@
 			<default></default>
 		</entry>
 		<entry name="showViewTabs" type="bool">
+			<!-- Before 1.8.2: false hid the view switcher; now migrated to viewSwitcher = menu -->
 			<default>true</default>
+		</entry>
+		<entry name="viewSwitcher" type="string">
+			<!-- tabs: a button per view; menu: one button with the view shown, the others in its menu -->
+			<default>tabs</default>
 		</entry>
 		<entry name="hiddenViewTabs" type="StringList">
 			<!-- Views left out of the header's view switcher: month, week, today, classic, tasks -->

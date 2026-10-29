@@ -41,16 +41,19 @@ ConfigPage {
 				configKey: 'popupOpenLastView'
 			}
 			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				id: showViewTabsSwitch
-				text: i18n("View switcher in the header")
-				configKey: 'showViewTabs'
+			FormConfigCombo {
+				text: i18n("View switcher")
+				configKey: 'viewSwitcher'
+				model: [
+					{ value: 'tabs', text: i18n("Tabs") },
+					// One button with the view shown and a menu: little room taken.
+					{ value: 'menu', text: i18n("Drop-down menu") },
+				]
 			}
 			// The views the switcher offers, as one row of checkboxes (at least one calendar view
 			// stays; Tasks is only offered with task lists selected).
 			FormCard.AbstractFormDelegate {
 				id: tabsRow
-				visible: showViewTabsSwitch.checked
 				readonly property var hidden: page.configBridge.read("hiddenViewTabs", []) || []
 				readonly property int calendarViewsShown: ['month', 'week', 'today', 'classic'].filter(function(mode) {
 					return hidden.indexOf(mode) < 0

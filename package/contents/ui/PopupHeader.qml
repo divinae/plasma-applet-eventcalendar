@@ -14,7 +14,10 @@ PlasmaExtras.PlasmoidHeading {
 	// Week and Day views (their own title and navigation: goPrevious, goNext, goToday), null: the
 	// month view.
 	property Item weekViewItem
-	property bool showViewTabs: true
+	// 'tabs': a button per view; 'menu': one button with the view shown, the others in its menu
+	// (little room taken).
+	property string viewSwitcher: 'tabs'
+	readonly property bool viewTabsShown: viewSwitcher !== 'menu'
 	// The view shown ('month', 'week', 'today', 'classic', 'tasks').
 	property string currentMode: plasmoid.configuration.popupMode
 	// The Tasks tab (task lists selected).
@@ -46,7 +49,8 @@ PlasmaExtras.PlasmoidHeading {
 		// change with this).
 		readonly property real buttonWidth: searchButton.implicitWidth
 		readonly property int actionCount: 4 + (configureButton.configureAction && configureButton.configureAction.enabled ? 1 : 0)
-		readonly property bool menuActions: width < viewTabs.length * buttonWidth + actionCount * buttonWidth
+		readonly property real switcherWidth: header.viewTabsShown ? viewTabs.length * buttonWidth : buttonWidth + Math.round(Kirigami.Units.iconSizes.small * 0.75)
+		readonly property bool menuActions: width < switcherWidth + actionCount * buttonWidth
 			+ (header.showPinButton ? buttonWidth + Kirigami.Units.smallSpacing * 3 : 0)
 			+ navWidth + Kirigami.Units.gridUnit * 6 + gap * 2 // Room for a short title ("October 2026")
 		readonly property real rowHeight: Math.max(leftGroup.implicitHeight, rightGroup.implicitHeight, secondRow ? 0 : centerGroup.implicitHeight)
@@ -54,7 +58,7 @@ PlasmaExtras.PlasmoidHeading {
 		// Not enough room for the view names next to the title: icons only (names in tooltips).
 		// Icons only when the tab names don't fit beside a short title (a long one, eg: the Day view's
 		// date, is elided first rather than taking the names away).
-		readonly property bool compactTabs: header.showViewTabs
+		readonly property bool compactTabs: header.viewTabsShown
 			&& width < Math.max(fullTabsMeasure.implicitWidth, rightGroup.implicitWidth) * 2
 				+ Math.min(centerGroup.implicitWidth, Kirigami.Units.gridUnit * 8) + Kirigami.Units.largeSpacing * 2
 
@@ -98,7 +102,7 @@ PlasmaExtras.PlasmoidHeading {
 			spacing: 0
 			// View switcher: flat buttons with icon and text, the current view on a soft rounded tint.
 			RowLayout {
-				visible: header.showViewTabs
+				visible: header.viewTabsShown
 				Layout.alignment: Qt.AlignVCenter
 				spacing: 2
 
@@ -129,6 +133,57 @@ PlasmaExtras.PlasmoidHeading {
 							onClicked: header.viewSelected(modelData.mode)
 							Accessible.name: modelData.text
 						}
+					}
+				}
+			}
+			// View switcher as one button: the view shown (its icon, and its name when there's room)
+			// and a small arrow; the views in its menu.
+			PlasmaComponents3.ToolButton {
+				id: viewMenuButton
+				visible: !header.viewTabsShown
+				readonly property var current: {
+					for (var i = 0; i < topBar.viewTabs.length; i++) {
+						if (topBar.viewTabs[i].mode === header.currentMode) {
+							return topBar.viewTabs[i]
+						}
+					}
+					return topBar.viewTabs[0]
+				}
+				icon.name: current.icon
+				text: current.text
+				display: topBar.compactTabs || topBar.menuActions ? QQC2.AbstractButton.IconOnly : QQC2.AbstractButton.TextBesideIcon
+				down: pressed || viewMenu.visible
+				rightPadding: leftPadding + viewMenuArrow.width
+				onClicked: viewMenu.popup(viewMenuButton, 0, viewMenuButton.height)
+				PlasmaComponents3.ToolTip.text: i18n("Views")
+				PlasmaComponents3.ToolTip.visible: hovered && !viewMenu.visible
+				Accessible.name: i18n("Views")
+				Kirigami.Icon {
+					id: viewMenuArrow
+					anchors.right: parent.right
+					anchors.rightMargin: Math.round(parent.leftPadding / 2)
+					anchors.verticalCenter: parent.verticalCenter
+					width: Math.round(Kirigami.Units.iconSizes.small * 0.75)
+					height: width
+					source: "arrow-down"
+					color: Kirigami.Theme.textColor
+					isMask: true
+					opacity: 0.7
+				}
+				PlasmaComponents3.Menu {
+					id: viewMenu
+					Instantiator {
+						model: topBar.viewTabs
+						delegate: PlasmaComponents3.MenuItem {
+							required property var modelData
+							text: modelData.text
+							icon.name: modelData.icon
+							checkable: true
+							checked: header.currentMode === modelData.mode
+							onTriggered: header.viewSelected(modelData.mode)
+						}
+						onObjectAdded: function(index, object) { viewMenu.insertItem(index, object) }
+						onObjectRemoved: function(index, object) { viewMenu.removeItem(object) }
 					}
 				}
 			}
