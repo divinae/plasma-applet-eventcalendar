@@ -60,12 +60,16 @@ Item {
 		RowLayout {
 			Layout.alignment: Qt.AlignHCenter
 			spacing: Kirigami.Units.largeSpacing
+			// The calendar's color in a light ring: a dark calendar color still stands out on the dark
+			// screen.
 			Rectangle {
 				Layout.alignment: Qt.AlignVCenter
-				implicitWidth: Math.round(startingLabel.font.pixelSize * 0.8)
+				implicitWidth: Math.round(startingLabel.font.pixelSize * 1.1)
 				implicitHeight: implicitWidth
 				radius: width / 2
-				color: content.eventItem ? appletConfig.eventBarColor(appletConfig.eventColor(content.eventItem.backgroundColor)) : Kirigami.Theme.highlightColor
+				color: content.eventItem ? appletConfig.eventColor(content.eventItem.backgroundColor) : Kirigami.Theme.highlightColor
+				border.width: Math.max(2, Math.round(width / 7))
+				border.color: Qt.alpha(Kirigami.Theme.textColor, 0.85)
 			}
 			PlasmaComponents3.Label {
 				id: startingLabel
