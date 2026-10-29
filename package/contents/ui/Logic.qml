@@ -135,7 +135,8 @@ Item {
 
 		// Hourly data feeds the meteogram (agenda view) and the Day view's weather panel.
 		var meteogramShown = popup ? popup.showMeteogram : plasmoid.configuration.widgetShowMeteogram && plasmoid.configuration.popupMode === 'classic' // popup exists after first open
-		if (meteogramShown || plasmoid.configuration.popupMode === 'today') {
+		var viewMode = popup ? popup.viewMode : plasmoid.configuration.popupMode
+		if (meteogramShown || viewMode === 'today') {
 			logic.updateHourlyWeather()
 		}
 	}
@@ -269,7 +270,6 @@ Item {
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenMeteoLatitudeChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenMeteoLongitudeChanged() { logic.resetWeatherAndUpdate() }
-		function onPopupModeChanged() { logic.updateWeather(true) } // Today needs hourly data
 		function onOpenWeatherMapAppIdChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }

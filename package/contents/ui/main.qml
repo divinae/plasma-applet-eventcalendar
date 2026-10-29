@@ -184,6 +184,7 @@ PlasmoidItem {
 				closeOverlays() // Don't come back to a stale search or event card.
 			}
 			if (isExpanded) {
+				showDefaultView() // Each time it opens: Settings > Views > Default view
 				updateToday()
 				logic.updateWeather()
 				Qt.callLater(focusForKeys) // Keyboard shortcuts (PopupView Keys)

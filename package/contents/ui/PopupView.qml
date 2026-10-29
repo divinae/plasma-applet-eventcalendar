@@ -80,8 +80,18 @@ MouseArea {
 	function viewOffered(mode) {
 		return hiddenViewTabs.indexOf(mode) < 0 && (mode !== 'tasks' || taskListsSelected)
 	}
+	// The view shown: Settings > Views > Default view (popupMode) when the popup opens; switching
+	// views (tabs, a click on a month's day, keys) changes only this, not the setting.
+	property string currentView: plasmoid.configuration.popupMode
+	function showDefaultView() {
+		currentView = plasmoid.configuration.popupMode
+	}
+	// Overlays belong to the view they were opened from.
+	onCurrentViewChanged: closeOverlays()
+	// The Day view needs the hourly forecast.
+	onViewModeChanged: logic.updateWeather(true)
 	readonly property string viewMode: {
-		var mode = plasmoid.configuration.popupMode
+		var mode = currentView
 		if (viewOffered(mode)) {
 			return mode
 		}
@@ -271,7 +281,7 @@ MouseArea {
 			return
 		}
 		pendingDayViewDate = day
-		plasmoid.configuration.popupMode = 'today'
+		currentView = 'today'
 	}
 
 	//--- New / edit event form, on top of everything.
@@ -342,10 +352,10 @@ MouseArea {
 			tasksViewLoader.item.closeManaging()
 		}
 	}
-	// Overlays belong to the view they were opened from.
+	// The Default view changed in Settings: show it.
 	Connections {
 		target: plasmoid.configuration
-		function onPopupModeChanged() { popup.closeOverlays() }
+		function onPopupModeChanged() { popup.showDefaultView() }
 	}
 	// The open event may have been edited (or deleted) meanwhile: show the current version.
 	Connections {
@@ -403,7 +413,7 @@ MouseArea {
 		refreshing: popup.refreshing
 		onViewSelected: function(mode) {
 			popup.closeOverlays()
-			plasmoid.configuration.popupMode = mode
+			popup.currentView = mode
 		}
 		onNewEventClicked: popup.tasksMode ? popup.newTask(null) : popup.openQuickAdd()
 		onSearchClicked: popup.openSearch()
@@ -966,9 +976,9 @@ MouseArea {
 				if (!viewOffered(action.mode)) {
 					return false
 				}
-				if (action.mode !== plasmoid.configuration.popupMode) {
+				if (action.mode !== currentView) {
 					closeOverlays()
-					plasmoid.configuration.popupMode = action.mode
+					currentView = action.mode
 				}
 				return true
 		}

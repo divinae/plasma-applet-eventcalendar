@@ -86,7 +86,7 @@ PinchArea {
 	// their title in every day. The owner fills spanBars and the reservedRows / hiddenSpanCount
 	// roles (EventBuckets.layoutMonth) and fills again when eventRowCapacity changes.
 	// Event titles in the day cells (the popup's month view), else the monthEventBadgeType setting.
-	property bool eventTitles: plasmoid.configuration.popupMode === 'month'
+	property bool eventTitles: false // The popup's Month view: event titles in the days
 	property bool spanBarsEnabled: false
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
 	property var spanBars: []
