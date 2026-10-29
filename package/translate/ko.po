@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:38+0100\n"
+"POT-Creation-Date: 2026-10-29 15:05+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2840,8 +2840,8 @@ msgid "Logged out of Google. Please login again."
 msgstr "Google에 로그아웃되었습니다. 다시 로그인하십시오."
 
 #: ../contents/ui/Logic.qml ../contents/ui/UpcomingEvents.qml
-msgid "Event Calendar"
-msgstr "이벤트 달력"
+msgid "Event Calendar NG"
+msgstr "이벤트 달력 NG"
 
 #: ../contents/ui/Logic.qml
 msgid "Calendar is back in sync"
@@ -3792,6 +3792,9 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Event Calendar"
+#~ msgstr "이벤트 달력"
 
 #~ msgctxt "%1 = event title"
 #~ msgid "Delete “%1”"

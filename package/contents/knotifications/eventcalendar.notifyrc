@@ -1,7 +1,7 @@
 [Global]
 IconName=view-calendar
-Name=Event Calendar
-Comment=Event Calendar widget
+Name=Event Calendar NG
+Comment=Event Calendar NG widget
 
 [Event/reminder]
 Name=Event reminder

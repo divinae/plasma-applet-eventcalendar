@@ -19,7 +19,7 @@ version, the changelog and the file for each release.
 
 **Title**
 
-    Event Calendar (Plasma 6)
+    Event Calendar NG
 
 **Category**
 

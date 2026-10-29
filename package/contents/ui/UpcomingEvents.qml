@@ -144,7 +144,7 @@ CalendarManager {
 		}
 
 		notificationManager.notify({
-			appName: i18n("Event Calendar"),
+			appName: i18n("Event Calendar NG"),
 			appIcon: "view-calendar-upcoming-events",
 			event: args.event,
 			expireTimeout: args.expireTimeout,
@@ -288,7 +288,7 @@ CalendarManager {
 			lines = lines.concat(taskSummaryLines(tasks))
 		}
 		notificationManager.notify({
-			appName: i18n("Event Calendar"),
+			appName: i18n("Event Calendar NG"),
 			appIcon: "view-calendar-day",
 			event: 'dailyAgenda',
 			expireTimeout: -1,
@@ -509,7 +509,7 @@ CalendarManager {
 			actions.push('snooze,' + i18np("Snooze 1 minute", "Snooze %1 minutes", upcomingEvents.snoozeMinutes))
 		}
 		notificationManager.notify({
-			appName: i18n("Event Calendar"),
+			appName: i18n("Event Calendar NG"),
 			appIcon: "view-task",
 			event: 'taskReminder',
 			expireTimeout: upcomingEvents.reminderExpireTimeout(),
@@ -611,7 +611,7 @@ CalendarManager {
 
 	function sendTaskSummaryNotification(tasks) {
 		notificationManager.notify({
-			appName: i18n("Event Calendar"),
+			appName: i18n("Event Calendar NG"),
 			appIcon: "view-task",
 			event: 'taskReminder',
 			expireTimeout: -1,

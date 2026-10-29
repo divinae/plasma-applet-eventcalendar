@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:38+0100\n"
+"POT-Creation-Date: 2026-10-29 15:05+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -2909,8 +2909,8 @@ msgid "Logged out of Google. Please login again."
 msgstr "Αποσυνδεθήκατε από το Google. Συνδεθείτε ξανά."
 
 #: ../contents/ui/Logic.qml ../contents/ui/UpcomingEvents.qml
-msgid "Event Calendar"
-msgstr "Ημερολόγιο Συμβάντων"
+msgid "Event Calendar NG"
+msgstr "Ημερολόγιο Συμβάντων NG"
 
 #: ../contents/ui/Logic.qml
 msgid "Calendar is back in sync"
@@ -3889,6 +3889,9 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Event Calendar"
+#~ msgstr "Ημερολόγιο Συμβάντων"
 
 #~ msgctxt "%1 = event title"
 #~ msgid "Delete “%1”"

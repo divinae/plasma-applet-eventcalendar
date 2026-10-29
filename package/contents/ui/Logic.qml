@@ -469,7 +469,7 @@ Item {
 			outageNotified = false
 			notificationManager.notify({
 				event: "syncProblem",
-				appName: i18n("Event Calendar"),
+				appName: i18n("Event Calendar NG"),
 				appIcon: "network-connect",
 				summary: i18n("Calendar is back in sync"),
 				expireTimeout: 4000,
@@ -514,7 +514,7 @@ Item {
 				logic.outageNotified = true
 				notificationManager.notify({
 					event: "syncProblem",
-					appName: i18n("Event Calendar"),
+					appName: i18n("Event Calendar NG"),
 					appIcon: "network-disconnect",
 					summary: i18n("Calendar can't sync"),
 					body: i18n("No connection. Showing the last loaded events; retrying automatically."),

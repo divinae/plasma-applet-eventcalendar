@@ -1,4 +1,4 @@
-# Event Calendar for Plasma 6
+# Event Calendar NG for Plasma 6
 
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
@@ -46,7 +46,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **Notifications** through KDE's notification system: reminders before events (with Snooze,
   optionally hidden after N seconds), when an event starts (optionally critical / persistent),
   new invitations for today (with Yes / Maybe / No) and a daily agenda, each configurable in
-  System Settings > Notifications > Event Calendar. Clicking one opens the event in the widget.
+  System Settings > Notifications > Event Calendar NG. Clicking one opens the event in the widget.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap / Weather Canada.
 - **Starts instantly and works offline**: the last loaded events and tasks are shown right away
@@ -79,7 +79,7 @@ kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.9.0-plasma6.0.plasmoid
 kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.9.0-plasma6.0.plasmoid
 ```
 
-Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar** to a
+Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a
 panel (right click the panel > Add or Manage Widgets), or replace the Digital Clock with it.
 
 ### From source
@@ -112,7 +112,7 @@ Optional:
 
 ## Setup
 
-1. Right click the widget > Configure Event Calendar.
+1. Right click the widget > Configure Event Calendar NG.
 2. **Google Calendar**: Sign in with Google. Your browser opens; after you allow access, the
    widget picks it up. Then choose the calendars to show for each account.
 3. **Tasks**: choose the Google task lists to show. For **TickTick**, create an API token on the

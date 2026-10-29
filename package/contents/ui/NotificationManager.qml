@@ -9,7 +9,7 @@ import "./NotificationState.js" as NotificationState
 //
 // notify({ summary, body, appName, appIcon, event, urgency, expireTimeout, soundFile, actions }, callback)
 // - event: notifyrc event id (reminder, eventStarting, invitation, dailyAgenda, taskReminder, timer, syncProblem); each can be
-//   configured in System Settings > Notifications > Event Calendar.
+//   configured in System Settings > Notifications > Event Calendar NG.
 // - expireTimeout: 0 = keep until dismissed; > 0 = closed after that many ms; else (-1) Plasma's
 //   popup timeout.
 // - urgency: 'low' | 'normal' | 'critical'.
