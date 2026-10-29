@@ -148,8 +148,15 @@ Item {
 		rightPadding: Kirigami.Units.gridUnit * 1.5
 		background: Rectangle {
 			radius: height / 2
-			readonly property color base: alertButton.accent ? Kirigami.Theme.highlightColor : Qt.alpha(Kirigami.Theme.textColor, 0.08)
-			color: alertButton.pressed ? Qt.darker(base, 1.15) : alertButton.hovered ? Qt.lighter(base, 1.08) : base
+			// The accent one darker / lighter; the others a stronger tint (lighter() does nothing to a
+			// light, translucent tint).
+			color: alertButton.accent
+				? (alertButton.pressed ? Qt.darker(Kirigami.Theme.highlightColor, 1.15)
+					: alertButton.hovered ? Qt.lighter(Kirigami.Theme.highlightColor, 1.12) : Kirigami.Theme.highlightColor)
+				: Qt.alpha(Kirigami.Theme.textColor, alertButton.pressed ? 0.28 : alertButton.hovered ? 0.18 : 0.08)
+			Behavior on color {
+				ColorAnimation { duration: Kirigami.Units.shortDuration }
+			}
 			border.width: alertButton.visualFocus ? 2 : 0
 			border.color: Kirigami.Theme.focusColor
 		}
