@@ -1362,6 +1362,45 @@ msgid "Debug logging and extra settings pages"
 msgstr "Debug-Protokollierung und zusätzliche Einstellungsseiten"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "ja"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "nein"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "fehlgeschlagen (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "Aktuelles Wetter, 3-Stunden-Schritte: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 Tage (kostenpflichtiger Tarif): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr "OpenWeatherMap kennt diese App-ID nicht (eine neue braucht bis zu 2 Stunden)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "Wählen Sie oben One Call 3.0: stündlich und 8 Tage."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "One Call 3.0 ist nicht abonniert: Wählen Sie oben Kostenlos (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Quelle"
 
@@ -1422,6 +1461,38 @@ msgstr "API-App-ID"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
 msgstr "Für OpenWeatherMap erforderlich"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Kostenlos (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "Wird geprüft …"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "App-ID prüfen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5) works with any app id: the current weather and a forecast in 3 hour steps for 5 days. Its forecast for 16 days needs a paid plan; without one, the days are made from the 3 hour steps."
+msgstr "Kostenlos (2.5) funktioniert mit jeder App-ID: das aktuelle Wetter und eine Vorhersage in 3-Stunden-Schritten für 5 Tage. Die Vorhersage für 16 Tage braucht einen kostenpflichtigen Tarif; ohne ihn werden die Tage aus den 3-Stunden-Schritten gebildet."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0 needs the \"One Call by Call\" subscription on <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 calls a day are free, a payment card is required): the current weather, 48 hours by the hour and 8 days, in one call. The widget asks at most every 10 minutes, about 150 calls a day."
+msgstr "One Call 3.0 braucht das Abonnement „One Call by Call“ auf <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 Abrufe am Tag sind kostenlos, eine Zahlungskarte ist nötig): das aktuelle Wetter, 48 Stunden stündlich und 8 Tage in einem Abruf. Das Miniprogramm fragt höchstens alle 10 Minuten, etwa 150 Abrufe am Tag."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr "Eine App-ID gilt für beide: „App-ID prüfen“ zeigt, was Ihre nutzen darf."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "The built-in app id is shared by everyone using this widget, and so is its request limit: the weather may stop updating at times. A free app id of your own: sign up at <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo needs none."
@@ -2830,6 +2901,14 @@ msgid "Weather API limit reached"
 msgstr "Limit der Wetter-API erreicht"
 
 #: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather."
+msgstr "OpenWeatherMap hat die App-ID für One Call 3.0 abgelehnt: Abonnieren Sie es oder wählen Sie Kostenlos (2.5) unter Einstellungen > Wetter."
+
+#: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather."
+msgstr "OpenWeatherMap hat die App-ID abgelehnt. Eine neue funktioniert erst nach bis zu 2 Stunden; prüfen Sie sie unter Einstellungen > Wetter."
+
+#: ../contents/ui/Logic.qml
 msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 msgstr "Die Google-Autorisierung ist abgelaufen oder wurde widerrufen. Öffnen Sie Einstellungen für Ereigniskalender > Google Kalender und melden Sie sich erneut bei diesem Konto an."
 
@@ -3743,8 +3822,10 @@ msgid "No forecast for this day."
 msgstr "Keine Vorhersage für diesen Tag."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Nächste 12 Stunden"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "Nächste Stunde"
+msgstr[1] "Nächste %1 Stunden"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -3804,6 +3885,9 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Nächste 12 Stunden"
 
 #~ msgid "Black and white"
 #~ msgstr "Schwarzweiß"

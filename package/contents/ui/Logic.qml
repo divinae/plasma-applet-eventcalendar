@@ -182,6 +182,13 @@ Item {
 			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
 			errorMessage += '\n' + i18n("Will try again soon.")
 			logic.lastForecastErr = errorMessage
+		} else if (xhr && xhr.status === 401 && plasmoid.configuration.weatherService === 'OpenWeatherMap') {
+			// "Invalid API key" also when the key is fine but not for this API (One Call 3.0 without
+			// the subscription).
+			lastForecastAt = Date.now()
+			logic.lastForecastErr = plasmoid.configuration.openWeatherMapApi === 'onecall'
+				? i18n("OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather.")
+				: i18n("OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather.")
 		} else {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			logic.lastForecastErr = err
@@ -294,6 +301,7 @@ Item {
 		function onOpenMeteoLongitudeChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapAppIdChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapCityIdChanged() { logic.resetWeatherAndUpdate() }
+		function onOpenWeatherMapApiChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherUnitsChanged() { logic.updateWeather(true) }
 		function onWidgetShowMeteogramChanged() {

@@ -341,7 +341,9 @@ ColumnLayout {
 	readonly property bool chartRainAmounts: plasmoid.configuration.weatherChartRainAmounts
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
-		text: panel.isToday ? i18n("Next 12 hours") : i18nc("weather by hour of the shown day", "During the day")
+		// The hours the chart spans: 12 by the hour, 36 in 3 hour steps (OpenWeatherMap's free API).
+		readonly property int hours: hourChart.points.length > 1 ? Math.round((hourChart.points[hourChart.points.length - 1].dt - hourChart.points[0].dt) / 3600) : 0
+		text: panel.isToday ? i18np("Next hour", "Next %1 hours", hours) : i18nc("weather by hour of the shown day", "During the day")
 		readonly property real rain: ForecastChart.rainTotal(hourChart.points)
 		detail: panel.chartRainAmounts && rain > 0 ? i18nc("precipitation during the hours of the chart", "Rain: %1", panel.precipitationText(rain)) : ""
 	}

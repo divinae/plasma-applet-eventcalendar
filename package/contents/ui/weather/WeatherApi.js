@@ -3,12 +3,13 @@
 .import "OpenWeatherMap.js" as OpenWeatherMap
 .import "WeatherCanada.js" as WeatherCanada
 .import "OpenMeteo.js" as OpenMeteo
+.import "IconSeverity.js" as IconSeverity
 
 /* How many hours each data point represents */
 function getDataPointDuration(config) {
 	var weatherService = config.weatherService
 	if (weatherService == 'OpenWeatherMap') {
-		return 3
+		return OpenWeatherMap.dataPointDuration(config)
 	} else if (weatherService == 'OpenMeteo') {
 		return 1
 	} else if (weatherService == 'WeatherCanada') {
@@ -108,39 +109,7 @@ function weatherIsSetup(config) {
 	}
 }
 
-var weatherIconBySeverity = [
-	// Least Severe
-	'weather-clear-night',
-	'weather-clear',
-	'weather-few-clouds-night',
-	'weather-few-clouds',
-	'weather-clouds-night',
-	'weather-clouds',
-	'weather-fog',
-	'weather-overcast',
-	'weather-showers-scattered-night',
-	'weather-showers-scattered',
-	'weather-snow-scattered-night',
-	'weather-snow-scattered-day',
-	'weather-snow',
-	'weather-snow-rain-night',
-	'weather-snow-rain',
-	'weather-showers-night',
-	'weather-showers',
-	'weather-storm-night',
-	'weather-storm',
-	'weather-severe-alert',
-	// Most severe
-]
-
+// The most severe of the icons (eg: a day's from its hours): see IconSeverity.js.
 function getMostSevereIcon(weatherIconList) {
-	var mostSevereIndex = weatherIconBySeverity.indexOf(weatherIconList[0])
-	for (var i = 1; i < weatherIconList.length; i++) {
-		var index = weatherIconBySeverity.indexOf(weatherIconList[i])
-		mostSevereIndex = Math.max(mostSevereIndex, index)
-	}
-	if (mostSevereIndex === -1) {
-		return weatherIconList[0]
-	}
-	return weatherIconBySeverity[mostSevereIndex]
+	return IconSeverity.mostSevere(weatherIconList)
 }
