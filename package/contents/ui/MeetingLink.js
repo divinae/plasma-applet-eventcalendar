@@ -3,23 +3,57 @@
 // Finds a video meeting link for an event.
 // Returns { url, label } or null.
 
+// Video meeting services by the link's host (and, for a few that share a host with other pages,
+// its path): about the services Dato and MeetingBar know.
 var knownHosts = [
 	{ pattern: /^(.+\.)?meet\.google\.com$/, label: "Google Meet" },
-	{ pattern: /^(.+\.)?zoom\.us$/, label: "Zoom" },
-	{ pattern: /^teams\.(microsoft|live)\.com$/, label: "Microsoft Teams" },
+	{ pattern: /^(.+\.)?zoom(gov)?\.(us|com)$/, label: "Zoom" },
+	{ pattern: /^(teams\.(microsoft|live)\.com|gov\.teams\.microsoft\.us|dod\.teams\.microsoft\.us)$/, label: "Microsoft Teams" },
 	{ pattern: /^(.+\.)?webex\.com$/, label: "Webex" },
 	{ pattern: /^(.+\.)?whereby\.com$/, label: "Whereby" },
-	{ pattern: /^meet\.jit\.si$/, label: "Jitsi Meet" },
+	{ pattern: /^(meet\.jit\.si|8x8\.vc)$/, label: "Jitsi Meet" },
+	{ pattern: /^((global|app)\.)?gotomeeting\.com$|^meet\.goto\.com$|^(.+\.)?gotowebinar\.com$/, label: "GoTo Meeting" },
+	{ pattern: /^(.+\.)?bluejeans\.com$/, label: "BlueJeans" },
+	{ pattern: /^(meetings|v|video)\.ringcentral\.com$/, label: "RingCentral" },
+	{ pattern: /^(.+\.)?chime\.aws$/, label: "Amazon Chime" },
+	{ pattern: /^app\.slack\.com$/, path: /^\/huddle\//, label: "Slack Huddle" },
+	{ pattern: /^discord\.gg$/, label: "Discord" },
+	{ pattern: /^(.+\.)?discord\.com$/, path: /^\/(channels|invite)\//, label: "Discord" },
+	{ pattern: /^join\.skype\.com$/, label: "Skype" },
+	{ pattern: /^meet\.lync\.com$/, label: "Skype for Business" },
+	{ pattern: /^facetime\.apple\.com$/, label: "FaceTime" },
+	{ pattern: /^(.+\.)?around\.co$/, label: "Around" },
+	{ pattern: /^app\.gather\.town$/, label: "Gather" },
+	{ pattern: /^app\.livestorm\.co$/, label: "Livestorm" },
+	{ pattern: /^call\.lifesizecloud\.com$/, label: "Lifesize" },
+	{ pattern: /^meeting\.zoho\.(com|eu|in|com\.au|jp)$/, label: "Zoho Meeting" },
+	{ pattern: /^meetings\.dialpad\.com$/, label: "Dialpad" },
+	{ pattern: /^vc\.(larksuite\.com|feishu\.cn)$/, label: "Lark" },
+	{ pattern: /^meeting\.tencent\.com$/, label: "Tencent Meeting" },
+	{ pattern: /^(.+\.)?voovmeeting\.com$/, label: "VooV Meeting" },
+	{ pattern: /^telemost\.yandex\.(ru|com)$/, label: "Yandex Telemost" },
+	{ pattern: /^call\.element\.io$/, label: "Element Call" },
+	{ pattern: /^call\.whatsapp\.com$/, label: "WhatsApp" },
+	{ pattern: /^meet\.livekit\.io$/, label: "LiveKit Meet" },
+	{ pattern: /^kmeet\.infomaniak\.com$/, label: "kMeet" },
+	{ pattern: /^(.+\.)?riverside\.fm$/, label: "Riverside" },
+	{ pattern: /^(.+\.)?streamyard\.com$/, label: "StreamYard" },
+	{ pattern: /^(.+\.)?vowel\.com$/, label: "Vowel" },
+	{ pattern: /^(.+\.)?butter\.us$/, label: "Butter" },
+	{ pattern: /^(.+\.)?pop\.com$/, label: "Pop" },
+	{ pattern: /^(.+\.)?demio\.com$/, label: "Demio" },
+	{ pattern: /^(.+\.)?vimeo\.com$/, path: /^\/event\//, label: "Vimeo" },
 ]
 
 function hostLabel(url) {
-	var match = /^https?:\/\/([^\/:?#]+)/i.exec(url)
+	var match = /^https?:\/\/([^\/:?#]+)(:\d+)?([^?#]*)/i.exec(url)
 	if (!match) {
 		return ""
 	}
 	var host = match[1].toLowerCase()
+	var path = match[3] || "/"
 	for (var i = 0; i < knownHosts.length; i++) {
-		if (knownHosts[i].pattern.test(host)) {
+		if (knownHosts[i].pattern.test(host) && (!knownHosts[i].path || knownHosts[i].path.test(path))) {
 			return knownHosts[i].label
 		}
 	}

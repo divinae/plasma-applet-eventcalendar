@@ -47,3 +47,19 @@ assert.deepStrictEqual(list(M.launchArgv('app %f --x=100%% %u', url)), ['app', '
 assert.strictEqual(M.launchArgv('%F', url), null)
 
 console.log('meeting_open: ok')
+// Services found in a location or the notes (hostLabel): by host, a few by path too.
+const label = url => M.hostLabel(url)
+assert.strictEqual(label('https://us02web.zoom.us/j/123'), 'Zoom')
+assert.strictEqual(label('https://agency.zoomgov.com/j/123'), 'Zoom')
+assert.strictEqual(label('https://teams.microsoft.com/l/meetup-join/x'), 'Microsoft Teams')
+assert.strictEqual(label('https://meet.goto.com/123456789'), 'GoTo Meeting')
+assert.strictEqual(label('https://app.slack.com/huddle/T1/C1'), 'Slack Huddle')
+assert.strictEqual(label('https://app.slack.com/client/T1/C1'), '', 'a Slack page that is no huddle')
+assert.strictEqual(label('https://discord.gg/abc'), 'Discord')
+assert.strictEqual(label('https://discord.com/channels/1/2'), 'Discord')
+assert.strictEqual(label('https://discord.com/app'), '', 'a Discord page that is no call')
+assert.strictEqual(label('https://chime.aws/1234567890'), 'Amazon Chime')
+assert.strictEqual(label('https://8x8.vc/company/room'), 'Jitsi Meet')
+assert.strictEqual(label('https://zoom.us.evil.example/j/1'), '', 'a look-alike host')
+assert.strictEqual(M.find({ location: 'Room 1, https://whereby.com/team' }).label, 'Whereby')
+
