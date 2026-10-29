@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:19+0100\n"
+"POT-Creation-Date: 2026-10-29 14:27+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -514,8 +514,8 @@ msgid "Full-screen alert when a meeting starts"
 msgstr "Koko näytön hälytys kokouksen alkaessa"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
-msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc). Ei mykistetyille tapahtumille."
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
+msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc), alkamisilmoituksen sijaan. Ei mykistetyille tapahtumille."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -3572,6 +3572,9 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+#~ msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc). Ei mykistetyille tapahtumille."
 
 #~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 #~ msgid "%1 · %2"

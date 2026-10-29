@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:19+0100\n"
+"POT-Creation-Date: 2026-10-29 14:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -508,8 +508,8 @@ msgid "Full-screen alert when a meeting starts"
 msgstr "会議の開始時に全画面で通知"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
-msgstr "すべての画面に表示し、参加・1分後に再通知・閉じる (Esc) を選べます。ミュートしたイベントは除きます。"
+msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
+msgstr "開始時の通知の代わりに、すべての画面に表示し、参加・1分後に再通知・閉じる (Esc) を選べます。ミュートしたイベントは除きます。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -3526,6 +3526,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
+#~ msgstr "すべての画面に表示し、参加・1分後に再通知・閉じる (Esc) を選べます。ミュートしたイベントは除きます。"
 
 #~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 #~ msgid "%1 · %2"

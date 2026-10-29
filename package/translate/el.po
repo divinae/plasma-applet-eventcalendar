@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:19+0100\n"
+"POT-Creation-Date: 2026-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -570,11 +570,11 @@ msgstr "Ειδοποίηση πλήρους οθόνης όταν ξεκινά �
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
-"events."
+"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
+"notification when it starts. Not for muted events."
 msgstr ""
-"Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc). Όχι για "
-"συμβάντα σε σίγαση."
+"Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc), αντί για "
+"την ειδοποίηση έναρξης. Όχι για συμβάντα σε σίγαση."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -3880,6 +3880,13 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "
+#~ "events."
+#~ msgstr ""
+#~ "Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc). Όχι για "
+#~ "συμβάντα σε σίγαση."
 
 #~ msgctxt "%1 = event title, %2 = in 5 min / 12 min left"
 #~ msgid "%1 · %2"

@@ -272,7 +272,7 @@ ConfigPage {
 			FormConfigSwitch {
 				id: meetingFullScreenAlert
 				text: i18n("Full-screen alert when a meeting starts")
-				description: i18n("On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events.")
+				description: i18n("On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events.")
 				configKey: 'meetingFullScreenAlert'
 			}
 			FormCard.FormDelegateSeparator { visible: meetingFullScreenAlert.checked }

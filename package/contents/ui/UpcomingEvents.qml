@@ -439,6 +439,11 @@ CalendarManager {
 				// Logged without the title, to tell this widget's notifications apart from others
 				// (eg: Google Calendar's own in a browser).
 				if (due[i].kind === 'start') {
+					// The full-screen alert came up for it (atMeetingStart, above): no second one.
+					if (sent[meetingKey(eventItem) + '|alert']) {
+						sent[due[i].key] = now
+						continue
+					}
 					if (plasmoid.configuration.eventStartingNotificationEnabled) {
 						sent[due[i].key] = now
 						logger.log('notification: event starting', eventItem.startDateTime)
