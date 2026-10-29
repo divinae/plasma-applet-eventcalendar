@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,7 +342,7 @@ msgstr "Ohita koko päivän tapahtumat"
 msgid "They still show in the agenda."
 msgstr "Ne näkyvät edelleen asialistalla."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Vain kokoukset, joissa on videolinkki"
 
@@ -485,6 +485,28 @@ msgstr "Kun tapahtuma alkaa"
 msgid "Show a notification"
 msgstr "Näytä ilmoitus"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Tyyli"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Ilmoitus"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "Koko näyttö"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "Koko näyttö vain kokouksille, joissa on videolinkki"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Muut tapahtumat: ilmoitus. Mykistetyt: ei mitään."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Kriittinen"
@@ -508,14 +530,6 @@ msgstr "Avaa kokouslinkki, kun kokous alkaa"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "Kokouksille, jotka olet hyväksynyt tai järjestät ja joita ei ole merkitty päättyneiksi."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Koko näytön hälytys kokouksen alkaessa"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
-msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc), alkamisilmoituksen sijaan. Ei mykistetyille tapahtumille."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1085,10 +1099,6 @@ msgstr "Ponnahdusikkunan koko"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Ulkoasu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Tyyli"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands: the calendar grids, the Day view's panels, the agenda days and the task sections each sit in a rounded card."
@@ -3572,6 +3582,12 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Koko näytön hälytys kokouksen alkaessa"
+
+#~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
+#~ msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc), alkamisilmoituksen sijaan. Ei mykistetyille tapahtumille."
 
 #~ msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted events."
 #~ msgstr "Kaikilla näytöillä: Liity, Torkku 1 min ja Hylkää (Esc). Ei mykistetyille tapahtumille."

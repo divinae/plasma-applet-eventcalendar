@@ -230,6 +230,26 @@ ConfigPage {
 				text: i18n("Show a notification")
 				configKey: 'eventStartingNotificationEnabled'
 			}
+			// The same notification in another form: full screen (MeetingAlertContent), on every
+			// screen, with Join, Snooze 1 min and Dismiss.
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+			FormConfigCombo {
+				id: startingStyle
+				visible: startingEnabled.checked
+				text: i18n("Style")
+				configKey: 'meetingFullScreenAlert'
+				model: [
+					{ value: false, text: i18nc("the notification's style", "Notification") },
+					{ value: true, text: i18nc("the notification's style", "Full screen") },
+				]
+			}
+			FormCard.FormDelegateSeparator { visible: startingEnabled.checked && startingStyle.configValue === true }
+			FormConfigSwitch {
+				visible: startingEnabled.checked && startingStyle.configValue === true
+				text: i18n("Full screen only for meetings with a video link")
+				description: i18n("Other events: a notification. Muted events: none.")
+				configKey: 'meetingFullScreenAlertLinkOnly'
+			}
 			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
 			FormConfigSwitch {
 				visible: startingEnabled.checked
@@ -268,19 +288,7 @@ ConfigPage {
 				description: i18n("For meetings you accepted or organize, not marked as ended.")
 				configKey: 'meetingAutoJoin'
 			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				id: meetingFullScreenAlert
-				text: i18n("Full-screen alert when a meeting starts")
-				description: i18n("On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events.")
-				configKey: 'meetingFullScreenAlert'
-			}
-			FormCard.FormDelegateSeparator { visible: meetingFullScreenAlert.checked }
-			FormConfigSwitch {
-				visible: meetingFullScreenAlert.checked
-				text: i18n("Only meetings with a video link")
-				configKey: 'meetingFullScreenAlertLinkOnly'
-			}
+
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Pause music and videos when joining a meeting")

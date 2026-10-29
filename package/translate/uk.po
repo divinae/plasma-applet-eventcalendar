@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -388,7 +388,7 @@ msgstr "Пропускати події на весь день"
 msgid "They still show in the agenda."
 msgstr "Вони й далі показуються в порядку денному."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Лише зустрічі з відеопосиланням"
 
@@ -538,6 +538,28 @@ msgstr "Під час початку події"
 msgid "Show a notification"
 msgstr "Показувати сповіщення"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Стиль"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Сповіщення"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "На весь екран"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "На весь екран лише для зустрічей з відеопосиланням"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Інші події: сповіщення. З вимкненими сповіщеннями: нічого."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Критичне"
@@ -563,19 +585,6 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Для зустрічей, які ви прийняли або організовуєте і які не позначено як "
 "завершені."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Повноекранне сповіщення про початок зустрічі"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"На кожному екрані, з кнопками «Приєднатися», «Відкласти на 1 хв» і «Закрити» "
-"(Esc), замість сповіщення про початок. Не для подій із вимкненими "
-"сповіщеннями."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1280,10 +1289,6 @@ msgstr "Розмір вікна"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Вигляд"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Стиль"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3885,6 +3890,17 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Повноекранне сповіщення про початок зустрічі"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "На кожному екрані, з кнопками «Приєднатися», «Відкласти на 1 хв» і "
+#~ "«Закрити» (Esc), замість сповіщення про початок. Не для подій із "
+#~ "вимкненими сповіщеннями."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

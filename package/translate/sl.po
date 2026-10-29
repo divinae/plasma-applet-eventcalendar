@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -387,7 +387,7 @@ msgstr "Preskoči celodnevne dogodke"
 msgid "They still show in the agenda."
 msgstr "Še vedno so prikazani v dnevnem redu."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Samo sestanki z video povezavo"
 
@@ -538,6 +538,28 @@ msgstr "Ko se dogodek začne"
 msgid "Show a notification"
 msgstr "Prikaži obvestilo"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Slog"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Obvestilo"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "Celozaslonsko"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "Celozaslonsko samo za sestanke z video povezavo"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Drugi dogodki: obvestilo. Utišani: nič."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Kritično"
@@ -563,18 +585,6 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Za sestanke, ki ste jih sprejeli ali jih organizirate in niso označeni kot "
 "končani."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Celozaslonsko opozorilo ob začetku sestanka"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"Na vsakem zaslonu, z Pridruži se, Dremež 1 min in Opusti (Esc), namesto "
-"obvestila ob začetku. Ne za utišane dogodke."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1276,10 +1286,6 @@ msgstr "Velikost okna"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Videz"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Slog"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3921,6 +3927,16 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Celozaslonsko opozorilo ob začetku sestanka"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "Na vsakem zaslonu, z Pridruži se, Dremež 1 min in Opusti (Esc), namesto "
+#~ "obvestila ob začetku. Ne za utišane dogodke."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

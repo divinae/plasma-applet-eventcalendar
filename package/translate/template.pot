@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "They still show in the agenda."
 msgstr ""
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr ""
 
@@ -484,6 +484,28 @@ msgstr ""
 msgid "Show a notification"
 msgstr ""
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr ""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr ""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr ""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr ""
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr ""
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr ""
@@ -506,14 +528,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the notification when it starts. Not for muted events."
 msgstr ""
 
 #: ../contents/ui/config/ConfigEvents.qml
@@ -1094,10 +1108,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
-msgstr ""
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
 msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml

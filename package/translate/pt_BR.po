@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -386,7 +386,7 @@ msgstr "Ignorar eventos de dia inteiro"
 msgid "They still show in the agenda."
 msgstr "Eles continuam aparecendo na agenda."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Só reuniões com link de vídeo"
 
@@ -535,6 +535,28 @@ msgstr "Quando um evento começar"
 msgid "Show a notification"
 msgstr "Mostrar uma notificação"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Estilo"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Notificação"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "Tela cheia"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "Tela cheia só para reuniões com link de vídeo"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Outros eventos: uma notificação. Silenciados: nenhuma."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Crítica"
@@ -559,18 +581,6 @@ msgstr "Abrir o link da reunião quando ela começar"
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Para reuniões que você aceitou ou organiza, não marcadas como encerradas."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Alerta em tela cheia quando uma reunião começa"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"Em todas as telas, com Entrar, Adiar 1 min e Dispensar (Esc), no lugar da "
-"notificação de início. Não para eventos silenciados."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1279,10 +1289,6 @@ msgstr "Tamanho da janela"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Aparência"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Estilo"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3842,6 +3848,16 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Alerta em tela cheia quando uma reunião começa"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "Em todas as telas, com Entrar, Adiar 1 min e Dispensar (Esc), no lugar da "
+#~ "notificação de início. Não para eventos silenciados."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

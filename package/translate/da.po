@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -382,7 +382,7 @@ msgstr "Spring heldagsbegivenheder over"
 msgid "They still show in the agenda."
 msgstr "De vises stadig i dagsordenen."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Kun møder med et videolink"
 
@@ -530,6 +530,28 @@ msgstr "Når en begivenhed starter"
 msgid "Show a notification"
 msgstr "Vis en bekendtgørelse"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Stil"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Notifikation"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "Fuld skærm"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "Fuld skærm kun for møder med et videolink"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Andre begivenheder: en notifikation. Slåede fra begivenheder: ingen."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Kritisk"
@@ -555,18 +577,6 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "For møder, du har accepteret eller arrangerer, og som ikke er markeret som "
 "afsluttet."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Fuldskærmsadvarsel, når et møde starter"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"På alle skærme, med Deltag, Udsæt 1 min og Afvis (Esc), i stedet for "
-"notifikationen, når det starter. Ikke for slåede fra begivenheder."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1269,10 +1279,6 @@ msgstr "Pop op-størrelse"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Udseende"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Stil"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3826,6 +3832,16 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Fuldskærmsadvarsel, når et møde starter"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "På alle skærme, med Deltag, Udsæt 1 min og Afvis (Esc), i stedet for "
+#~ "notifikationen, når det starter. Ikke for slåede fra begivenheder."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

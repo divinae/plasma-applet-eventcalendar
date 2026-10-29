@@ -349,11 +349,11 @@
 			<default>0</default>
 		</entry>
 		<entry name="meetingFullScreenAlert" type="bool">
-			<!-- A full-screen alert (every screen) when a meeting starts, with Join, Snooze 1 min, Dismiss -->
+			<!-- The notification when an event starts, full screen (every screen) with Join, Snooze 1 min, Dismiss (eventStartingNotificationEnabled on) -->
 			<default>false</default>
 		</entry>
 		<entry name="meetingFullScreenAlertLinkOnly" type="bool">
-			<!-- Only for meetings with a video link -->
+			<!-- Full screen only for meetings with a video link (other events: a notification) -->
 			<default>true</default>
 		</entry>
 		<entry name="hideDuplicateEvents" type="bool">

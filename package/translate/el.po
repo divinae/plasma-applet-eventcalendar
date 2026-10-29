@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -387,7 +387,7 @@ msgstr "Παράλειψη ολοήμερων συμβάντων"
 msgid "They still show in the agenda."
 msgstr "Εξακολουθούν να εμφανίζονται στην ατζέντα."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "Μόνο συσκέψεις με σύνδεσμο βίντεο"
 
@@ -538,6 +538,28 @@ msgstr "Όταν ξεκινά ένα συμβάν"
 msgid "Show a notification"
 msgstr "Εμφάνιση ειδοποίησης"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "Στιλ"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "Ειδοποίηση"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "Πλήρης οθόνη"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "Πλήρης οθόνη μόνο για συσκέψεις με σύνδεσμο βίντεο"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "Άλλα συμβάντα: ειδοποίηση. Σε σίγαση: καμία."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "Κρίσιμη"
@@ -563,18 +585,6 @@ msgid "For meetings you accepted or organize, not marked as ended."
 msgstr ""
 "Για συσκέψεις που έχετε αποδεχτεί ή οργανώνετε και δεν έχουν σημανθεί ως "
 "ολοκληρωμένες."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "Ειδοποίηση πλήρους οθόνης όταν ξεκινά μια σύσκεψη"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc), αντί για "
-"την ειδοποίηση έναρξης. Όχι για συμβάντα σε σίγαση."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1296,10 +1306,6 @@ msgstr "Μέγεθος αναδυόμενου"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "Εμφάνιση"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "Στιλ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3880,6 +3886,16 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "Ειδοποίηση πλήρους οθόνης όταν ξεκινά μια σύσκεψη"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "Σε κάθε οθόνη, με Συμμετοχή, Αναβολή 1 λεπτό και Απόρριψη (Esc), αντί για "
+#~ "την ειδοποίηση έναρξης. Όχι για συμβάντα σε σίγαση."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

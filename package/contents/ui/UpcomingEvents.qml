@@ -360,9 +360,10 @@ CalendarManager {
 			return
 		}
 		var key = meetingKey(eventItem)
-		// Settings > Events > Meetings: a timed meeting (with a video link), not declined, not of a
+		// The notification, full screen: a timed meeting (with a video link), not declined, not of a
 		// calendar left out of the clock's countdown.
-		if (plasmoid.configuration.meetingFullScreenAlert && !sent[key + '|alert']
+		// Settings > Events > When an Event Starts: the notification, full screen.
+		if (plasmoid.configuration.eventStartingNotificationEnabled && plasmoid.configuration.meetingFullScreenAlert && !sent[key + '|alert']
 				&& !(eventItem.start && eventItem.start.date)
 				&& (!plasmoid.configuration.meetingFullScreenAlertLinkOnly || !!MeetingLink.find(eventItem))
 				&& Shared.myResponse(eventItem) !== 'declined'

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -381,7 +381,7 @@ msgstr "종일 이벤트 건너뛰기"
 msgid "They still show in the agenda."
 msgstr "일정에는 계속 표시됩니다."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "화상 링크가 있는 회의만"
 
@@ -527,6 +527,28 @@ msgstr "이벤트 시작 시"
 msgid "Show a notification"
 msgstr "알림 표시"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "스타일"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "알림"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "전체 화면"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "화상 링크가 있는 회의만 전체 화면"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "다른 일정: 알림. 음소거한 일정: 없음."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "중요"
@@ -550,18 +572,6 @@ msgstr "회의가 시작되면 회의 링크 열기"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "수락했거나 주최하는 회의 중 종료로 표시하지 않은 회의."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "회의 시작 시 전체 화면 알림"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"시작 알림 대신 모든 화면에 참여, 1분 후 다시 알림, 닫기(Esc)와 함께 표시합니"
-"다. 음소거한 일정은 제외합니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1260,10 +1270,6 @@ msgstr "팝업 크기"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "모양"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "스타일"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3783,6 +3789,16 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "회의 시작 시 전체 화면 알림"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "시작 알림 대신 모든 화면에 참여, 1분 후 다시 알림, 닫기(Esc)와 함께 표시합"
+#~ "니다. 음소거한 일정은 제외합니다."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

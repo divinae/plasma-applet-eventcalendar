@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:27+0100\n"
+"POT-Creation-Date: 2026-10-29 14:29+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -386,7 +386,7 @@ msgstr "דילוג על אירועים של יום שלם"
 msgid "They still show in the agenda."
 msgstr "הם עדיין מוצגים בסדר היום."
 
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/config/ConfigEvents.qml
+#: ../contents/ui/config/ConfigClock.qml
 msgid "Only meetings with a video link"
 msgstr "רק פגישות עם קישור וידאו"
 
@@ -535,6 +535,28 @@ msgstr "כשאירוע מתחיל"
 msgid "Show a notification"
 msgstr "הצגת התראה"
 
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+msgid "Style"
+msgstr "סגנון"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Notification"
+msgstr "התראה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgctxt "the notification's style"
+msgid "Full screen"
+msgstr "מסך מלא"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Full screen only for meetings with a video link"
+msgstr "מסך מלא רק לפגישות עם קישור וידאו"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Other events: a notification. Muted events: none."
+msgstr "אירועים אחרים: התראה. מושתקים: ללא."
+
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
 msgstr "קריטי"
@@ -558,18 +580,6 @@ msgstr "פתיחת קישור הפגישה כשהפגישה מתחילה"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
 msgstr "לפגישות שאישרת או שארגנת, שלא סומנו כהסתיימו."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Full-screen alert when a meeting starts"
-msgstr "התראה במסך מלא כשפגישה מתחילה"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of the "
-"notification when it starts. Not for muted events."
-msgstr ""
-"בכל מסך, עם הצטרפות, נודניק דקה וסגירה (Esc), במקום ההתראה בתחילתה. לא "
-"לאירועים מושתקים."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
@@ -1255,10 +1265,6 @@ msgstr "גודל החלון"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Appearance"
 msgstr "מראה"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Style"
-msgstr "סגנון"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
@@ -3889,6 +3895,16 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Full-screen alert when a meeting starts"
+#~ msgstr "התראה במסך מלא כשפגישה מתחילה"
+
+#~ msgid ""
+#~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc), instead of "
+#~ "the notification when it starts. Not for muted events."
+#~ msgstr ""
+#~ "בכל מסך, עם הצטרפות, נודניק דקה וסגירה (Esc), במקום ההתראה בתחילתה. לא "
+#~ "לאירועים מושתקים."
 
 #~ msgid ""
 #~ "On every screen, with Join, Snooze 1 min and Dismiss (Esc). Not for muted "

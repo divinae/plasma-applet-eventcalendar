@@ -7,10 +7,11 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Shared.js" as Shared
 import "LocaleFuncs.js" as LocaleFuncs
 
-// What a full-screen meeting alert shows (Settings > Events > Full-screen alert): the screen in the
-// theme's background, the meeting large in its middle (its calendar's color, title, time, where
-// it's held) and Join, Snooze 1 min, Dismiss. Esc dismisses, Return joins. Shared by the plain and the layer-shell
-// window (MeetingAlertWindow, MeetingAlertLayer), like the Fokus plasmoid's break overlay.
+// The notification when a meeting starts, full screen (Settings > Events > When an Event Starts >
+// Style): the screen in the theme's background, the meeting large in its middle (its calendar's
+// color, title, time, where it's held) and Join, Snooze 1 min, Dismiss. Esc dismisses, Return
+// joins. Shared by the alert windows (plain, blurred, layer-shell), like the Fokus plasmoid's break
+// overlay.
 Item {
 	id: content
 
