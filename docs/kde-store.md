@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.8.1
+    1.8.2
 
 **License**
 
@@ -104,17 +104,32 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.8.1)**
+**Changelog (1.8.2)**
 
 ```
+Faster
+- The Agenda and the Tasks tab build only what's on screen (opening them could freeze Plasma)
+- A refresh rebuilds only the view shown; search shows 30 results, then "Show more"
+
+Popup
+- Switching views no longer changes the Default view; option to open in the last used view
+- View switcher as tabs or a drop-down menu
+- Small popups: no labels under the buttons, actions in one menu, dots in the month
+- A Configure button in the header
+
+Calendars
+- KDE PIM (Akonadi) events work again on Plasma 6, shown once with a direct Google sign-in
+- A question mark before unanswered invitations in the Week and Day views
+- Colored dots in the Day view's small month
+
 Fixes
-- Switching to the Agenda could freeze Plasma (Qt 6.12)
+- German translation, a broken calendar plugin list repaired, an Agenda endless loop
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.8.1-plasma6.0.plasmoid` from the
-  [v1.8.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.1),
+- **Product file:** `eventcalendar-v1.8.2-plasma6.0.plasmoid` from the
+  [v1.8.2 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.8.2),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

@@ -1,3 +1,25 @@
+## v1.8.2 - October 29 2026
+
+### Faster
+* The Agenda and the Tasks tab build only what's on screen: opening them with a busy calendar or hundreds of tasks takes a fraction of a second instead of seconds (it could freeze Plasma, #3).
+* A refresh rebuilds only the view shown; search builds the first 30 results ("Show more" for the rest).
+
+### Popup
+* Switching views no longer changes the Default view setting: the popup opens in the Default view, or with the new "Open in the last used view" in the view used last.
+* The view switcher can be a drop-down menu (Settings > Views > View switcher) instead of tabs; it can't be hidden any more.
+* A small popup: nothing under the header's buttons any more, the actions go into one menu and the title onto a second row when needed; the Month view shows dots instead of cut-off titles.
+* A Configure button in the header (thanks to frispete).
+
+### Calendars
+* KDE PIM (Akonadi) events and holidays work again on Plasma 6, Akonadi calendars are one entry in the calendar menu, and an event also signed in to directly is shown once (thanks to frispete).
+* Week and Day views: a question mark before an unanswered invitation's title.
+* The Day view's small month: dots in the colors of the day's events (thanks to frispete).
+
+### Fixes
+* German translation fixes (thanks to frispete).
+* A calendar plugin list left one letter per entry by another Plasma 6 port is repaired.
+* The Agenda no longer loops forever over an event with an invalid date (with multi-day events broken up).
+
 ## v1.8.1 - October 28 2026
 
 ### Fixes
