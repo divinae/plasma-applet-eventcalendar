@@ -6,8 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
-"Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
-"eventcalendar\n"
+"Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
 "POT-Creation-Date: 2026-10-29 08:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
@@ -26,9 +25,7 @@ msgstr "Vyer"
 msgid "Clock"
 msgstr "Klocka"
 
-#: ../contents/config/config.qml
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Händelser"
 
@@ -40,14 +37,11 @@ msgstr "ICalendar (.ics)"
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
-#: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
 msgstr "Uppgifter"
 
-#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
-#: ../contents/ui/WeatherPanel.qml
+#: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/WeatherPanel.qml
 msgid "Weather"
 msgstr "Väder"
 
@@ -77,8 +71,7 @@ msgctxt "agenda day header, %1 = Sat, 17 Oct"
 msgid "Tomorrow · %1"
 msgstr "Imorgon · %1"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/EventEditView.qml ../contents/ui/PopupHeader.qml
 msgid "New Event"
 msgstr "Ny händelse"
 
@@ -104,39 +97,27 @@ msgstr "(Ingen titel)"
 msgid "[No Calendars]"
 msgstr "[Inga Kalendrar]"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "HTTP-Fel %1: %2"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/ICalManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Kunde inte ansluta"
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
 msgstr "Försöker igen snart."
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
-msgid ""
-"Widget has been updated. Please logout and login to Google Calendar again."
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/Logic.qml
+msgid "Widget has been updated. Please logout and login to Google Calendar again."
 msgstr "Widgeten har uppdaterats. Logga ut och sedan in från Google Kalender."
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Too many web requests. Will try again soon."
 msgstr "För många anslutsförfrågningar. Försöker igen snart."
 
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml
 msgid "Google authentication failed: %1"
 msgstr "Google-autentisering misslyckades: %1"
 
@@ -156,15 +137,12 @@ msgstr "Okänt fel i iCalendar-hjälpprogrammet"
 msgid "Could not load %1: %2"
 msgstr "Kunde inte läsa in %1: %2"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/FindTimeView.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/EventModel.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
 msgstr "Helgdagar"
 
@@ -172,13 +150,11 @@ msgstr "Helgdagar"
 msgid "Todo"
 msgstr "Att göra"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Övrigt"
 
-#: ../contents/ui/calendars/TickTickTasksManager.qml
-#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Inbox"
 msgstr "Inkorg"
 
@@ -188,12 +164,9 @@ msgstr "TickTick: logga in igen"
 
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Connect the account again with a new API token in the Tasks settings."
-msgstr ""
-"Anslut kontot igen med en ny API-token i inställningarna för uppgifter."
+msgstr "Anslut kontot igen med en ny API-token i inställningarna för uppgifter."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
 msgid "Calendars"
 msgstr "Kalendrar"
 
@@ -205,11 +178,7 @@ msgstr "Inga kalendrar valda i inställningarna."
 msgid "Show All"
 msgstr "Visa alla"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -246,9 +215,7 @@ msgstr "%1 · %2"
 msgid "Edit Calendar"
 msgstr "Redigera kalender"
 
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Namn"
 
@@ -260,13 +227,11 @@ msgstr "Namn i min lista"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Bara du ser det här namnet. Kalendern behåller sitt namn för andra."
 
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Color"
 msgstr "Färg"
 
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Spara"
 
@@ -319,14 +284,8 @@ msgid " px"
 msgstr " px"
 
 #: ../contents/ui/config/ConfigClock.qml
-msgid ""
-"Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-"
-"qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd "
-"d MMM."
-msgstr ""
-"Anpassade format använder <a href=\"https://doc.qt.io/qt-6/qml-qtqml-"
-"qt.html#formatDateTime-method\">Qt:s datum- och tidsformat</a>, t.ex. HH:mm, "
-"ddd d MMM."
+msgid "Custom formats use the <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt date and time format</a>, eg: HH:mm, ddd d MMM."
+msgstr "Anpassade format använder <a href=\"https://doc.qt.io/qt-6/qml-qtqml-qt.html#formatDateTime-method\">Qt:s datum- och tidsformat</a>, t.ex. HH:mm, ddd d MMM."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Second Line"
@@ -370,8 +329,7 @@ msgstr "En tunn stapel under mötets namn, i kalenderns färg."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Middle-click the clock to join the current or next meeting."
-msgstr ""
-"Mittenklicka på klockan för att ansluta till pågående eller nästa möte."
+msgstr "Mittenklicka på klockan för att ansluta till pågående eller nästa möte."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Show background"
@@ -456,13 +414,8 @@ msgid "System default"
 msgstr "Systemets standard"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"System default: as set in System Settings > Notifications. A reminder hidden "
-"after a set time isn't kept in the notification history."
-msgstr ""
-"Systemets standard: som inställt i Systeminställningar > Underrättelser. En "
-"påminnelse som döljs efter en bestämd tid sparas inte i "
-"underrättelsehistoriken."
+msgid "System default: as set in System Settings > Notifications. A reminder hidden after a set time isn't kept in the notification history."
+msgstr "Systemets standard: som inställt i Systeminställningar > Underrättelser. En påminnelse som döljs efter en bestämd tid sparas inte i underrättelsehistoriken."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Snooze"
@@ -506,33 +459,23 @@ msgstr "Öppna möteslänken när ett möte börjar"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "For meetings you accepted or organize, not marked as ended."
-msgstr ""
-"För möten som du har accepterat eller organiserar och som inte är markerade "
-"som avslutade."
+msgstr "För möten som du har accepterat eller organiserar och som inte är markerade som avslutade."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Pause music and videos when joining a meeting"
 msgstr "Pausa musik och videor när du ansluter till ett möte"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Players that are playing (eg: Spotify, Elisa, a video in the browser), when "
-"a Join button opens a meeting or it opens when the meeting starts."
-msgstr ""
-"Spelare som spelar (t.ex. Spotify, Elisa, en video i webbläsaren), när en "
-"Anslut-knapp öppnar ett möte eller det öppnas när mötet börjar."
+msgid "Players that are playing (eg: Spotify, Elisa, a video in the browser), when a Join button opens a meeting or it opens when the meeting starts."
+msgstr "Spelare som spelar (t.ex. Spotify, Elisa, en video i webbläsaren), när en Anslut-knapp öppnar ett möte eller det öppnas när mötet börjar."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Do Not Disturb during meetings"
 msgstr "Stör ej under möten"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Plasma's Do Not Disturb from the start until the end of a meeting with "
-"guests or a meeting link. Mark as Ended turns it off."
-msgstr ""
-"Plasmas Stör ej från början till slutet av ett möte med gäster eller en "
-"möteslänk. Markera som avslutat stänger av det."
+msgid "Plasma's Do Not Disturb from the start until the end of a meeting with guests or a meeting link. Mark as Ended turns it off."
+msgstr "Plasmas Stör ej från början till slutet av ett möte med gäster eller en möteslänk. Markera som avslutat stänger av det."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Only meetings I accepted"
@@ -564,16 +507,8 @@ msgstr "Standard"
 
 #: ../contents/ui/config/ConfigEvents.qml
 #, c-format
-msgid ""
-"Join buttons open Google Meet links there; other meeting links open in the "
-"default browser. In a command, %u stands for the meeting link. Google "
-"account: its number (0, 1, …) or email, as in Google's account switcher; "
-"empty uses the app's default."
-msgstr ""
-"Anslut-knappar öppnar Google Meet-länkar där; andra möteslänkar öppnas i "
-"standardwebbläsaren. I ett kommando står %u för möteslänken. Google-konto: "
-"dess nummer (0, 1, …) eller e-post, som i Googles kontoväxlare; tomt "
-"använder appens standard."
+msgid "Join buttons open Google Meet links there; other meeting links open in the default browser. In a command, %u stands for the meeting link. Google account: its number (0, 1, …) or email, as in Google's account switcher; empty uses the app's default."
+msgstr "Anslut-knappar öppnar Google Meet-länkar där; andra möteslänkar öppnas i standardwebbläsaren. I ett kommando står %u för möteslänken. Google-konto: dess nummer (0, 1, …) eller e-post, som i Googles kontoväxlare; tomt använder appens standard."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other Notifications"
@@ -584,24 +519,16 @@ msgid "New invitations for today"
 msgstr "Nya inbjudningar för idag"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"A notification for each meeting today you haven't answered yet, with Yes, "
-"Maybe and No."
-msgstr ""
-"En underrättelse för varje möte idag som du inte har svarat på, med Ja, "
-"Kanske och Nej."
+msgid "A notification for each meeting today you haven't answered yet, with Yes, Maybe and No."
+msgstr "En underrättelse för varje möte idag som du inte har svarat på, med Ja, Kanske och Nej."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Today's events every morning"
 msgstr "Dagens händelser varje morgon"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"A notification with today's events once a day, also when the computer is "
-"turned on later."
-msgstr ""
-"En avisering med dagens händelser en gång om dagen, även när datorn startas "
-"senare."
+msgid "A notification with today's events once a day, also when the computer is turned on later."
+msgstr "En avisering med dagens händelser en gång om dagen, även när datorn startas senare."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "At"
@@ -616,19 +543,14 @@ msgid "Skip events I declined"
 msgstr "Hoppa över händelser jag har tackat nej till"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Popups and sounds for each kind of notification can also be set in System "
-"Settings > Notifications > Event Calendar."
-msgstr ""
-"Poppuppfönster och ljud för varje typ av underrättelse kan också ställas in "
-"i Systeminställningar > Underrättelser > Event Calendar."
+msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
+msgstr "Poppuppfönster och ljud för varje typ av underrättelse kan också ställas in i Systeminställningar > Underrättelser > Event Calendar."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Google Account"
 msgstr "Google-konto"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Google Account %1"
 msgstr "Google-konto %1"
 
@@ -669,36 +591,21 @@ msgid "Auto login failed: authorization code missing."
 msgstr "Automatisk inloggning misslyckades: auktoriseringskod saknas."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"The desktop could not open the browser automatically. Use the login link in "
-"Advanced sign-in options instead."
-msgstr ""
-"Skrivbordet kunde inte öppna webbläsaren automatiskt. Använd "
-"inloggningslänken under Avancerade inloggningsalternativ i stället."
+msgid "The desktop could not open the browser automatically. Use the login link in Advanced sign-in options instead."
+msgstr "Skrivbordet kunde inte öppna webbläsaren automatiskt. Använd inloggningslänken under Avancerade inloggningsalternativ i stället."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Sign in to show your Google calendars and task lists. Your browser opens to "
-"sign in; when access is granted the widget picks it up automatically."
-msgstr ""
-"Logga in för att visa dina Google-kalendrar och uppgiftslistor. Webbläsaren "
-"öppnas för inloggning; när åtkomst har beviljats upptäcker komponenten det "
-"automatiskt."
+msgid "Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically."
+msgstr "Logga in för att visa dina Google-kalendrar och uppgiftslistor. Webbläsaren öppnas för inloggning; när åtkomst har beviljats upptäcker komponenten det automatiskt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
-msgid ""
-"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
-"Sign in here as well to answer invitations, edit and delete events and join "
-"meetings from the widget. Events of an account synced both ways are shown "
-"once, from the sign-in here."
+msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgctxt "%1 = email addresses"
-msgid ""
-"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
-"sign-in here, where they can be answered and edited."
+msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -709,29 +616,21 @@ msgstr "Logga in igen"
 msgid "Reload calendars and task lists"
 msgstr "Läs in kalendrar och uppgiftslistor igen"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Ta bort konto"
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Ta bort"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Google access for this account expired or was revoked. Sign in again to "
-"reconnect it (the account and its settings are kept)."
-msgstr ""
-"Googleåtkomsten för det här kontot har gått ut eller återkallats. Logga in "
-"igen för att återansluta det (kontot och dess inställningar behålls)."
+msgid "Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept)."
+msgstr "Googleåtkomsten för det här kontot har gått ut eller återkallats. Logga in igen för att återansluta det (kontot och dess inställningar behålls)."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
-"Komponenten har uppdaterats. Logga in igen för att hålla kontot "
-"synkroniserat."
+msgstr "Komponenten har uppdaterats. Logga in igen för att hålla kontot synkroniserat."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "No calendars loaded yet. Use the reload button."
@@ -746,10 +645,7 @@ msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -770,21 +666,15 @@ msgstr "Avancerade inloggningsalternativ"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr ""
-"Din egen Google OAuth-klient, eller klistra in inloggningskoden för hand"
+msgstr "Din egen Google OAuth-klient, eller klistra in inloggningskoden för hand"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Client Credentials"
 msgstr "Klientuppgifter"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Using a previously stored Google OAuth client for compatibility. If login "
-"still fails, add your own client ID and client secret."
-msgstr ""
-"Använder en tidigare sparad Google OAuth-klient för kompatibilitet. Om "
-"inloggningen fortfarande misslyckas, lägg till ditt eget klient-id och din "
-"klienthemlighet."
+msgid "Using a previously stored Google OAuth client for compatibility. If login still fails, add your own client ID and client secret."
+msgstr "Använder en tidigare sparad Google OAuth-klient för kompatibilitet. Om inloggningen fortfarande misslyckas, lägg till ditt eget klient-id och din klienthemlighet."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Try desktop built-in client (no secret)"
@@ -803,25 +693,12 @@ msgid "Client Secret"
 msgstr "Klienthemlighet"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Leave these empty to use the built-in client. A custom client must be a "
-"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
-"redirect URI set to %1."
-msgstr ""
-"Lämna dessa tomma för att använda den inbyggda klienten. En anpassad klient "
-"måste vara en Google Cloud OAuth-skrivbordsklient, eller en webbklient med "
-"sin hemlighet och omdirigerings-URI:n inställd till %1."
+msgid "Leave these empty to use the built-in client. A custom client must be a Google Cloud OAuth Desktop client, or a Web client with its secret and the redirect URI set to %1."
+msgstr "Lämna dessa tomma för att använda den inbyggda klienten. En anpassad klient måste vara en Google Cloud OAuth-skrivbordsklient, eller en webbklient med sin hemlighet och omdirigerings-URI:n inställd till %1."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"For a custom OAuth client, publish the OAuth consent screen to Production. "
-"Google expires refresh tokens for external apps left in Testing after seven "
-"days; Workspace session controls can also require reauthorization."
-msgstr ""
-"För en anpassad OAuth-klient, publicera OAuth-medgivandeskärmen till "
-"Production. Google låter uppdateringstoken för externa appar som lämnas i "
-"Testing gå ut efter sju dagar; sessionskontroller i Workspace kan också "
-"kräva ny auktorisering."
+msgid "For a custom OAuth client, publish the OAuth consent screen to Production. Google expires refresh tokens for external apps left in Testing after seven days; Workspace session controls can also require reauthorization."
+msgstr "För en anpassad OAuth-klient, publicera OAuth-medgivandeskärmen till Production. Google låter uppdateringstoken för externa appar som lämnas i Testing gå ut efter sju dagar; sessionskontroller i Workspace kan också kräva ny auktorisering."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Manual Sign-in"
@@ -836,16 +713,8 @@ msgid "Login (Auto)"
 msgstr "Logga in (auto)"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to a localhost URL. If auto-capture succeeds you can "
-"ignore the field below; otherwise copy the full URL (or just the code) and "
-"paste it."
-msgstr ""
-"Klicka på Logga in (auto) för att öppna <a href=\"%1\">%2</a>. När du har "
-"beviljat åtkomst omdirigerar webbläsaren till en localhost-URL. Om "
-"automatisk hämtning lyckas kan du ignorera fältet nedan; annars kopierar du "
-"hela URL:en (eller bara koden) och klistrar in den."
+msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it."
+msgstr "Klicka på Logga in (auto) för att öppna <a href=\"%1\">%2</a>. När du har beviljat åtkomst omdirigerar webbläsaren till en localhost-URL. Om automatisk hämtning lyckas kan du ignorera fältet nedan; annars kopierar du hela URL:en (eller bara koden) och klistrar in den."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "The desktop could not open the browser automatically."
@@ -860,14 +729,8 @@ msgid "Helper page (optional): <a href=\"%1\">%1</a>"
 msgstr "Hjälpsida (valfri): <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If your browser shows a connection error, that's expected. Copy the URL from "
-"the address bar anyway and paste it below. If auto-capture works, you do not "
-"need to paste anything."
-msgstr ""
-"Om webbläsaren visar ett anslutningsfel är det väntat. Kopiera ändå URL:en "
-"från adressfältet och klistra in den nedan. Om automatisk hämtning fungerar "
-"behöver du inte klistra in något."
+msgid "If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything."
+msgstr "Om webbläsaren visar ett anslutningsfel är det väntat. Kopiera ändå URL:en från adressfältet och klistra in den nedan. Om automatisk hämtning fungerar behöver du inte klistra in något."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Paste the authorization code or redirect URL here"
@@ -878,11 +741,8 @@ msgid "Google authorization code or redirect URL"
 msgstr "Google-auktoriseringskod eller omdirigerings-URL"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
-"Klistra in Google-auktoriseringskoden eller hela omdirigerings-URL:en från "
-"webbläsaren"
+msgid "Paste the Google authorization code or the full redirect URL from the browser"
+msgstr "Klistra in Google-auktoriseringskoden eller hela omdirigerings-URL:en från webbläsaren"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account"
@@ -898,9 +758,7 @@ msgstr "Alternativ"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr ""
-"Dölj beskrivningen \"Den här händelsen lades till från Mål i Google "
-"Kalender\""
+msgstr "Dölj beskrivningen \"Den här händelsen lades till från Mål i Google Kalender\""
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
@@ -932,8 +790,7 @@ msgstr "TickTick godtog inte API-token. Kontrollera den och försök igen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Could not connect to TickTick. Check your connection and try again."
-msgstr ""
-"Kunde inte ansluta till TickTick. Kontrollera anslutningen och försök igen."
+msgstr "Kunde inte ansluta till TickTick. Kontrollera anslutningen och försök igen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick error: %1"
@@ -963,8 +820,7 @@ msgstr "Det gick inte att ta bort listan"
 msgid "Couldn't create the list"
 msgstr "Det gick inte att skapa listan"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "List name"
 msgstr "Listnamn"
 
@@ -977,19 +833,15 @@ msgctxt "%1 = task list name"
 msgid "Delete the list \"%1\" and all its tasks? This can't be undone."
 msgstr "Ta bort listan \"%1\" och alla dess uppgifter? Detta kan inte ångras."
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Delete"
 msgstr "Ta bort"
 
-#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "New list"
 msgstr "Ny lista"
 
-#: ../contents/ui/config/ConfigTasks.qml
-#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/config/ConfigTasks.qml ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Lägg till"
 
@@ -1003,21 +855,15 @@ msgstr "Försenade uppgifter på dagens datum"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Open tasks due on an earlier day are shown on today, in every view."
-msgstr ""
-"Öppna uppgifter som förföll en tidigare dag visas på dagens datum i alla "
-"vyer."
+msgstr "Öppna uppgifter som förföll en tidigare dag visas på dagens datum i alla vyer."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Smart recognition in Add a task"
 msgstr "Smart igenkänning i Lägg till en uppgift"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set "
-"the new task's day, time, priority, list and repeat."
-msgstr ""
-"Ord som \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" anger den "
-"nya uppgiftens dag, tid, prioritet, lista och upprepning."
+msgid "Words like \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" set the new task's day, time, priority, list and repeat."
+msgstr "Ord som \"tomorrow 17:00\", \"!high\", \"#List\" or \"every week\" anger den nya uppgiftens dag, tid, prioritet, lista och upprepning."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Notifications"
@@ -1028,12 +874,8 @@ msgid "Task reminders"
 msgstr "Uppgiftspåminnelser"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"A notification when a task with a due time or a reminder is due, and the "
-"tasks due today at the daily agenda time."
-msgstr ""
-"En avisering när en uppgift med förfallotid eller påminnelse förfaller, samt "
-"dagens uppgifter vid tiden för den dagliga dagordningen."
+msgid "A notification when a task with a due time or a reminder is due, and the tasks due today at the daily agenda time."
+msgstr "En avisering när en uppgift med förfallotid eller påminnelse förfaller, samt dagens uppgifter vid tiden för den dagliga dagordningen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Tasks in the daily agenda"
@@ -1041,32 +883,23 @@ msgstr "Uppgifter i den dagliga dagordningen"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "The daily agenda notification also lists today's and overdue tasks."
-msgstr ""
-"Aviseringen för den dagliga dagordningen listar även dagens och försenade "
-"uppgifter."
+msgstr "Aviseringen för den dagliga dagordningen listar även dagens och försenade uppgifter."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Google Tasks"
 msgstr "Google Tasks"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Sign in on the Google Calendar page to choose the Google task lists shown "
-"here."
-msgstr ""
-"Logga in på sidan Google Kalender för att välja vilka Google-uppgiftslistor "
-"som visas här."
+msgid "Sign in on the Google Calendar page to choose the Google task lists shown here."
+msgstr "Logga in på sidan Google Kalender för att välja vilka Google-uppgiftslistor som visas här."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Task Lists"
 msgstr "Uppgiftslistor"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"No task lists loaded yet. Reload the account on the Google Calendar page."
-msgstr ""
-"Inga uppgiftslistor har lästs in än. Läs in kontot igen på sidan Google "
-"Kalender."
+msgid "No task lists loaded yet. Reload the account on the Google Calendar page."
+msgstr "Inga uppgiftslistor har lästs in än. Läs in kontot igen på sidan Google Kalender."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick"
@@ -1077,12 +910,8 @@ msgid "Reload projects"
 msgstr "Läs in projekt igen"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"This account's API token is not in the system keyring. Remove the account "
-"and connect it again."
-msgstr ""
-"Kontots API-token finns inte i systemets nyckelring. Ta bort kontot och "
-"anslut det igen."
+msgid "This account's API token is not in the system keyring. Remove the account and connect it again."
+msgstr "Kontots API-token finns inte i systemets nyckelring. Ta bort kontot och anslut det igen."
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "No projects loaded yet. Use the reload button."
@@ -1117,14 +946,8 @@ msgid "Connect"
 msgstr "Anslut"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid ""
-"Create an API token on the TickTick website: Settings > Account > API Token "
-"(on dida365.com for Dida365). The token is kept in the system keyring "
-"(KWallet or Secret Service), not in the widget's settings."
-msgstr ""
-"Skapa en API-token på TickTicks webbplats: Settings > Account > API Token "
-"(på dida365.com för Dida365). Token lagras i systemets nyckelring (KWallet "
-"eller Secret Service), inte i komponentens inställningar."
+msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
+msgstr "Skapa en API-token på TickTicks webbplats: Settings > Account > API Token (på dida365.com för Dida365). Token lagras i systemets nyckelring (KWallet eller Secret Service), inte i komponentens inställningar."
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Local"
@@ -1146,8 +969,7 @@ msgstr "Lägg till en tidszon, t.ex. America/New_York"
 msgid "Zones with the same time as yours are not shown."
 msgstr "Zoner med samma tid som din visas inte."
 
-#: ../contents/ui/config/ConfigTimezones.qml
-#: ../contents/ui/config/ConfigWeather.qml
+#: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Display"
 msgstr "Visning"
 
@@ -1209,12 +1031,8 @@ msgid "Style"
 msgstr "Stil"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Islands: the calendar grids, the Day view's panels, the agenda days and the "
-"task sections each sit in a rounded card."
-msgstr ""
-"Öar: kalenderrutnäten, dagvyns paneler, agendans dagar och uppgiftsavsnitten "
-"ligger var och en på ett eget rundat kort."
+msgid "Islands: the calendar grids, the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+msgstr "Öar: kalenderrutnäten, dagvyns paneler, agendans dagar och uppgiftsavsnitten ligger var och en på ett eget rundat kort."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands (cards)"
@@ -1241,14 +1059,8 @@ msgid "Event colors"
 msgstr "Händelsefärger"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Google's API still returns an older palette; \"As in Google Calendar\" shows "
-"the current one. \"Follow the system color scheme\" uses the nearest colors "
-"of your Plasma color scheme."
-msgstr ""
-"Googles API returnerar fortfarande en äldre palett; ”Som i Google Kalender” "
-"visar den nuvarande. ”Följ systemets färgschema” använder de närmaste "
-"färgerna i ditt Plasma-färgschema."
+msgid "Google's API still returns an older palette; \"As in Google Calendar\" shows the current one. \"Follow the system color scheme\" uses the nearest colors of your Plasma color scheme."
+msgstr "Googles API returnerar fortfarande en äldre palett; ”Som i Google Kalender” visar den nuvarande. ”Följ systemets färgschema” använder de närmaste färgerna i ditt Plasma-färgschema."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "As in Google Calendar"
@@ -1406,14 +1218,8 @@ msgid "Keep events and tasks for offline start"
 msgstr "Behåll händelser och uppgifter för start offline"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"De senast inlästa händelserna och uppgifterna (utan beskrivningar eller "
-"anteckningar) sparas i ~/.cache/plasma-eventcalendar och visas till första "
-"uppdateringen. Av: inget sparas och den sparade kopian tas bort."
+msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
+msgstr "De senast inlästa händelserna och uppgifterna (utan beskrivningar eller anteckningar) sparas i ~/.cache/plasma-eventcalendar och visas till första uppdateringen. Av: inget sparas och den sparade kopian tas bort."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
@@ -1443,10 +1249,7 @@ msgstr "Inte inställd"
 msgid "City name, eg: Warszawa"
 msgstr "Stadsnamn, t.ex. Warszawa"
 
-#: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
 msgid "Search"
 msgstr "Sök"
 
@@ -1518,28 +1321,23 @@ msgstr "Inte inloggad på det här Google-kontot. Logga in igen."
 msgid "Could not save the calendar: %1"
 msgstr "Kunde inte spara kalendern: %1"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Select city"
 msgstr "Välj stad"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Hämtat från <a href=\"%1\">%1</a>"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Id"
 msgstr "Identifikation"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "City Webpage"
 msgstr "Länk stad"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Open Link"
 msgstr "Öppna länk"
 
@@ -1551,8 +1349,7 @@ msgstr "Redigera kalender…"
 msgid "Rename list…"
 msgstr "Byt namn på lista…"
 
-#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Ta bort lista…"
 
@@ -1569,8 +1366,7 @@ msgstr "Dölj uppgifter"
 msgid "Show tasks"
 msgstr "Visa uppgifter"
 
-#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/PopupHeader.qml
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/EventEditView.qml ../contents/ui/PopupHeader.qml
 msgid "New Task"
 msgstr "Ny uppgift"
 
@@ -1616,23 +1412,19 @@ msgstr "Kunde inte spara uppgiften"
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "High priority"
 msgstr "Hög prioritet"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Medium priority"
 msgstr "Medelhög prioritet"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TaskRow.qml
 msgid "Low priority"
 msgstr "Låg prioritet"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventEditView.qml ../contents/ui/TaskDetailsBody.qml
 msgctxt "task priority"
 msgid "No priority"
 msgstr "Ingen prioritet"
@@ -1641,16 +1433,12 @@ msgstr "Ingen prioritet"
 msgid "Due date"
 msgstr "Förfallodatum"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Today"
 msgstr "I dag"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgctxt "tasks filter"
 msgid "Tomorrow"
 msgstr "I morgon"
@@ -1659,8 +1447,7 @@ msgstr "I morgon"
 msgid "Next week"
 msgstr "Nästa vecka"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "No date"
 msgstr "Inget datum"
@@ -1690,8 +1477,7 @@ msgstr "Markera som pågående"
 msgid "Show Details"
 msgstr "Visa detaljer"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Anslut till %1"
@@ -1731,8 +1517,7 @@ msgctxt "%1 = event title"
 msgid "Delete All Events of “%1”"
 msgstr "Ta bort alla händelser i ”%1”"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/EventModel.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventModel.qml
 msgid "No due date"
 msgstr "Inget förfallodatum"
 
@@ -1741,8 +1526,7 @@ msgctxt "a task's due date in its details"
 msgid "dddd, d MMMM"
 msgstr "dddd d MMMM"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml
-#: ../contents/ui/LocaleFuncs.js
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
 msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr "%1, %2"
@@ -1751,13 +1535,11 @@ msgstr "%1, %2"
 msgid "Overdue"
 msgstr "Försenad"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/EventMover.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "This event"
 msgstr "Den här händelsen"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/EventMover.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/EventMover.qml
 msgid "All events in the series"
 msgstr "Alla händelser i serien"
 
@@ -1797,8 +1579,7 @@ msgctxt "%1 = 10m, 2m"
 msgid "Reminders: %1 before"
 msgstr "Påminnelser: %1 före"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/FindTimeView.qml ../contents/ui/ManageListsView.qml ../contents/ui/SearchView.qml
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -1846,13 +1627,11 @@ msgstr "Duplicera"
 msgid "Private event"
 msgstr "Privat händelse"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml
-#: ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/EventEditView.qml ../contents/ui/UpNextPanel.qml ../contents/ui/WeekView.qml
 msgid "All day"
 msgstr "Hela dagen"
 
-#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Repeats"
 msgstr "Upprepas"
 
@@ -2151,8 +1930,7 @@ msgstr "Tidszon"
 msgid "Does not repeat"
 msgstr "Upprepas inte"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Daily"
 msgstr "Dagligen"
 
@@ -2255,8 +2033,7 @@ msgstr "Lägg till videokonferens i Google Meet"
 msgid "Video conferencing will be removed when you save"
 msgstr "Videokonferensen tas bort när du sparar"
 
-#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml
-#: ../contents/ui/TaskUndoBar.qml
+#: ../contents/ui/EventEditView.qml ../contents/ui/PopupView.qml ../contents/ui/TaskUndoBar.qml
 msgid "Undo"
 msgstr "Ångra"
 
@@ -2413,8 +2190,7 @@ msgstr "Anteckningar"
 msgid "Description"
 msgstr "Beskrivning"
 
-#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
+#: ../contents/ui/EventModel.qml ../contents/ui/LocaleFuncs.js ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 msgctxt "short month+date format"
 msgid "MMM d"
 msgstr "d MMM"
@@ -2501,10 +2277,8 @@ msgid "Could not read the file."
 msgstr "Det gick inte att läsa filen."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"För att läsa .ics-filer behövs Python-modulen icalendar (python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgstr "För att läsa .ics-filer behövs Python-modulen icalendar (python-icalendar)."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -2526,8 +2300,7 @@ msgid_plural "Every %1 weeks"
 msgstr[0] "Var %1:e vecka"
 msgstr[1] "Var %1:e vecka"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Weekly"
 msgstr "Varje vecka"
 
@@ -2542,8 +2315,7 @@ msgid_plural "Every %1 months"
 msgstr[0] "Var %1:e månad"
 msgstr[1] "Var %1:e månad"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Monthly"
 msgstr "Varje månad"
 
@@ -2553,8 +2325,7 @@ msgid_plural "Every %1 years"
 msgstr[0] "Vart %1:e år"
 msgstr[1] "Vart %1:e år"
 
-#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskDetailsBody.qml
+#: ../contents/ui/ImportView.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskDetailsBody.qml
 msgid "Yearly"
 msgstr "Varje år"
 
@@ -2619,20 +2390,12 @@ msgid "Calendar:"
 msgstr "Kalender:"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Guests and the organizer aren't imported, and no invitations are sent. "
-"Importing the same event again updates it."
-msgstr ""
-"Gäster och organisatören importeras inte, och inga inbjudningar skickas. Om "
-"samma händelse importeras igen uppdateras den."
+msgid "Guests and the organizer aren't imported, and no invitations are sent. Importing the same event again updates it."
+msgstr "Gäster och organisatören importeras inte, och inga inbjudningar skickas. Om samma händelse importeras igen uppdateras den."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Importing needs a Google Calendar you can edit. Log in to Google Calendar in "
-"the settings."
-msgstr ""
-"Import kräver en Google Kalender som du kan redigera. Logga in i Google "
-"Kalender i inställningarna."
+msgid "Importing needs a Google Calendar you can edit. Log in to Google Calendar in the settings."
+msgstr "Import kräver en Google Kalender som du kan redigera. Logga in i Google Kalender i inställningarna."
 
 #: ../contents/ui/ImportView.qml
 msgid "Importing… %1 of %2"
@@ -2754,12 +2517,8 @@ msgid "Weather API limit reached"
 msgstr "Väder-API-gräns uppnådd"
 
 #: ../contents/ui/Logic.qml
-msgid ""
-"Google authorization expired or was revoked. Open Event Calendar Settings > "
-"Google Calendar and sign in to that account again."
-msgstr ""
-"Googles auktorisering har gått ut eller återkallats. Öppna inställningarna "
-"för Event Calendar > Google Kalender och logga in på kontot igen."
+msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
+msgstr "Googles auktorisering har gått ut eller återkallats. Öppna inställningarna för Event Calendar > Google Kalender och logga in på kontot igen."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -2779,9 +2538,7 @@ msgstr "Kalendern kan inte synkroniseras"
 
 #: ../contents/ui/Logic.qml
 msgid "No connection. Showing the last loaded events; retrying automatically."
-msgstr ""
-"Ingen anslutning. Visar de senast inlästa händelserna; försöker igen "
-"automatiskt."
+msgstr "Ingen anslutning. Visar de senast inlästa händelserna; försöker igen automatiskt."
 
 #: ../contents/ui/main.qml
 msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
@@ -2890,8 +2647,7 @@ msgstr "Föregående dag"
 msgid "Previous Week"
 msgstr "Föregående vecka"
 
-#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml
-#: ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/PopupHeader.qml ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
 msgstr "Idag"
 
@@ -2961,8 +2717,7 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "Det gick inte att hämta väder."
 
-#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Tomorrow"
 msgstr "I morgon"
 
@@ -3143,8 +2898,7 @@ msgstr "Markera som inte klar"
 msgid "Mark as done"
 msgstr "Markera som klar"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
+#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgctxt "tasks filter"
 msgid "In progress"
 msgstr "Pågående"
@@ -3416,8 +3170,7 @@ msgstr "Stoppur, %1 kvar. Aktivera för att starta."
 
 #: ../contents/ui/TimerView.qml
 msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr ""
-"Stoppuret är inställt på %1. Använd plus eller minus för att ändra längden."
+msgstr "Stoppuret är inställt på %1. Använd plus eller minus för att ändra längden."
 
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
@@ -3651,8 +3404,7 @@ msgstr[1] "%1 händelser"
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
-"The time difference changes during these days: the hours shown are those of "
-"%2."
+"The time difference changes during these days: the hours shown are those of %2."
 msgstr ""
 "%1\n"
 "Tidsskillnaden ändras under de här dagarna: de visade timmarna gäller %2."
@@ -3776,12 +3528,8 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Show completed tasks"
 #~ msgstr "Visa slutförda uppgifter"
 
-#~ msgid ""
-#~ "Islands: the Day view's panels, the agenda days and the task sections "
-#~ "each sit in a rounded card."
-#~ msgstr ""
-#~ "Öar: dagvyns paneler, agendans dagar och uppgiftsavsnitten ligger var och "
-#~ "en på ett eget rundat kort."
+#~ msgid "Islands: the Day view's panels, the agenda days and the task sections each sit in a rounded card."
+#~ msgstr "Öar: dagvyns paneler, agendans dagar och uppgiftsavsnitten ligger var och en på ett eget rundat kort."
 
 #~ msgid "Due %1"
 #~ msgstr "Förfaller %1"
@@ -3824,25 +3572,14 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Waiting for the helper page to send the code..."
 #~ msgstr "Väntar på att hjälpsidan ska skicka koden..."
 
-#~ msgid ""
-#~ "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-#~ "the browser redirects to the helper page and will try to send the code "
-#~ "back automatically. If it fails, copy the code and paste it below."
-#~ msgstr ""
-#~ "Klicka på Logga in (auto) för att öppna <a href=\"%1\">%2</a>. När du har "
-#~ "beviljat åtkomst omdirigerar webbläsaren till hjälpsidan och försöker "
-#~ "skicka tillbaka koden automatiskt. Om det misslyckas kopierar du koden "
-#~ "och klistrar in den nedan."
+#~ msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to the helper page and will try to send the code back automatically. If it fails, copy the code and paste it below."
+#~ msgstr "Klicka på Logga in (auto) för att öppna <a href=\"%1\">%2</a>. När du har beviljat åtkomst omdirigerar webbläsaren till hjälpsidan och försöker skicka tillbaka koden automatiskt. Om det misslyckas kopierar du koden och klistrar in den nedan."
 
 #~ msgid "Helper page: <a href=\"%1\">%1</a>"
 #~ msgstr "Hjälpsida: <a href=\"%1\">%1</a>"
 
-#~ msgid ""
-#~ "If auto-capture fails, copy the code from the helper page and paste it "
-#~ "below."
-#~ msgstr ""
-#~ "Om automatisk hämtning misslyckas kopierar du koden från hjälpsidan och "
-#~ "klistrar in den nedan."
+#~ msgid "If auto-capture fails, copy the code from the helper page and paste it below."
+#~ msgstr "Om automatisk hämtning misslyckas kopierar du koden från hjälpsidan och klistrar in den nedan."
 
 #~ msgid "Add location"
 #~ msgstr "Lägg till plats"
@@ -3988,8 +3725,7 @@ msgstr "Arbetsplats: %1"
 #~ msgstr "Dölj slutförda händelser"
 
 #~ msgid "Show all events of the current day (including completed events)"
-#~ msgstr ""
-#~ "Visa alla händelser för den aktuella dagen (inklusive slutförda händelser)"
+#~ msgstr "Visa alla händelser för den aktuella dagen (inklusive slutförda händelser)"
 
 #~ msgid "Colors"
 #~ msgstr "Färger"
@@ -4081,12 +3817,8 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Event Starting"
 #~ msgstr "Händelse startad"
 
-#~ msgid ""
-#~ "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their "
-#~ "respective tabs."
-#~ msgstr ""
-#~ "Visa/dölj widgetar ovanför kalendern. Växla Agenda/Kalender på respektive "
-#~ "flik."
+#~ msgid "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their respective tabs."
+#~ msgstr "Visa/dölj widgetar ovanför kalendern. Växla Agenda/Kalender på respektive flik."
 
 #~ msgid "Time Format"
 #~ msgstr "Tidsformat"
@@ -4094,21 +3826,11 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Time Format Documentation"
 #~ msgstr "Dokumentation för Tidsformat"
 
-#~ msgid ""
-#~ "The default font for the Breeze theme is Noto Sans which is hard to read "
-#~ "with small text. Try using the Sans Serif font if you find the text too "
-#~ "small when adding a second line."
-#~ msgstr ""
-#~ "Standardteckensnittet för Breeze-temat är Noto Sans vilket är svårt att "
-#~ "läsa med liten text. Pröva att använda teckensnittet Sans Serif om du "
-#~ "tycker att texten är för liten när du lägger till en andra rad."
+#~ msgid "The default font for the Breeze theme is Noto Sans which is hard to read with small text. Try using the Sans Serif font if you find the text too small when adding a second line."
+#~ msgstr "Standardteckensnittet för Breeze-temat är Noto Sans vilket är svårt att läsa med liten text. Pröva att använda teckensnittet Sans Serif om du tycker att texten är för liten när du lägger till en andra rad."
 
-#~ msgid ""
-#~ "You can also use %1 or %2 to style a section. Note the single quotes "
-#~ "around the tags are used to bypass the time format."
-#~ msgstr ""
-#~ "Du kan också använda %1 eller %2 för att utforma en sektion. Observera "
-#~ "att de enskilda citaten runt taggarna används för att kringgå tidsformat."
+#~ msgid "You can also use %1 or %2 to style a section. Note the single quotes around the tags are used to bypass the time format."
+#~ msgstr "Du kan också använda %1 eller %2 för att utforma en sektion. Observera att de enskilda citaten runt taggarna används för att kringgå tidsformat."
 
 #~ msgid "Font:"
 #~ msgstr "Teckensnitt:"
@@ -4226,11 +3948,8 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Set Language…"
 #~ msgstr "Ställ in språk…"
 
-#~ msgid ""
-#~ "Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
-#~ msgstr ""
-#~ "Plasmoid för kalender och agenda med väder som synkroniseras med Google "
-#~ "Kalender."
+#~ msgid "Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
+#~ msgstr "Plasmoid för kalender och agenda med väder som synkroniseras med Google Kalender."
 
 #~ msgid "Open City Forecast In Browser"
 #~ msgstr "Öppna väderprognos i webbläsare"
@@ -4253,14 +3972,8 @@ msgstr "Arbetsplats: %1"
 #~ msgid "Logout"
 #~ msgstr "Logga ut"
 
-#~ msgid ""
-#~ "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login "
-#~ "and give permission to access your calendar, it will give you a code to "
-#~ "paste below."
-#~ msgstr ""
-#~ "Besök <a href=\"%1\">%2</a> (öppnas i din webbläsare). När du har loggat "
-#~ "in och gett behörighet att komma åt din kalender kommer den att ge dig en "
-#~ "kod att klistra in nedan."
+#~ msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to access your calendar, it will give you a code to paste below."
+#~ msgstr "Besök <a href=\"%1\">%2</a> (öppnas i din webbläsare). När du har loggat in och gett behörighet att komma åt din kalender kommer den att ge dig en kod att klistra in nedan."
 
 #~ msgid "Enter code here (Eg: %1)"
 #~ msgstr "Ange koden här (t.ex. %1)"
