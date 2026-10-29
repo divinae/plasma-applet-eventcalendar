@@ -267,6 +267,9 @@ Item {
 		function onShowDeclinedEventsChanged() { logic.refilterEvents() }
 		// Calendars hidden in the popup header's menu: a view filter, nothing is fetched again.
 		function onHiddenCalendarIdsChanged() { logic.refilterEvents() }
+		// The clock's next-event chip only.
+		function onClockHiddenCalendarIdsChanged() { upcomingEvents.updateNextEvent() }
+		function onClockNextEventSkipAllDayChanged() { upcomingEvents.updateNextEvent() }
 
 		//--- Weather
 		function onWeatherServiceChanged() { logic.resetWeatherAndUpdate() }

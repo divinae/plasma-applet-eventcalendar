@@ -332,6 +332,15 @@
 		<entry name="clockNextEventMinutes" type="int">
 			<default>15</default>
 		</entry>
+		<entry name="clockNextEventSkipAllDay" type="bool">
+			<!-- All-day events (holidays, out of office) never take the chip; they stay in the agenda -->
+			<default>true</default>
+		</entry>
+		<entry name="clockHiddenCalendarIds" type="StringList">
+			<!-- Calendars whose events never take the chip (clock icon in the header calendars menu).
+			     They still show in the views and still send reminders. -->
+			<default></default>
+		</entry>
 		<entry name="clockShowMeetingProgress" type="bool">
 			<!-- A progress bar under the next meeting chip while the meeting is on -->
 			<default>true</default>
