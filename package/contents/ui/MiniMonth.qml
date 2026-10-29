@@ -157,7 +157,9 @@ ColumnLayout {
 								width: 4
 								height: 4
 								radius: 2
-								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor : (modelData || Kirigami.Theme.highlightColor)
+								// The events' colors as their bars elsewhere (the Google palette setting).
+								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor
+									: modelData ? appletConfig.eventBarColor(appletConfig.eventColor(modelData)) : Kirigami.Theme.highlightColor
 								opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
 							}
 						}
