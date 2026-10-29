@@ -16,7 +16,10 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
   the whole day; drag events to move or resize them; beside the Day view's hours: a small month
   with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
-  show or hide calendars from the header, a work week, a second time zone, keyboard navigation.
+  show or hide calendars from the header, a work week, a second time zone, keyboard navigation,
+  **Go to date** (G: "next friday", "15 nov", "+2w"). The popup opens in your default view or the
+  last one used; the view switcher is tabs or a drop-down, and a right click on the header picks
+  the views and buttons it shows (in a small popup they fold into one menu).
 - **Islands style** (default, or flat): the month grid, the Week view's grid, the Day view's
   weather, hour grid and tasks, each agenda day and each section of the Tasks tab sit in their own
   rounded cards; task sections fold, and the done tasks wait in a folded "Completed" card.
@@ -27,7 +30,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   invitations (Yes / Maybe / No), undo after a delete or move, rename and recolor calendars.
   Move events between calendars, busy / free and visibility, the event's time zone, out of office,
   focus time and working locations, attachments, Email Guests, Find a time (free slots for you and
-  the guests), import .ics files. Tokens are kept in the system keyring.
+  the guests), import .ics files. An event in several calendars (yours and a shared one) shows once.
+  Tokens are kept in the system keyring.
 - **Tasks** from Google Tasks and **TickTick** (or Dida365) in their own tab: smart filters (All,
   Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by
   due date, title, list or priority. **Add a task…** recognizes "tomorrow 17:00 !high #Work every
@@ -37,20 +41,29 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
   lists). Task reminders, a morning summary, and the day's tasks in the Day view. TickTick signs in
   with an API token, kept in the system keyring.
-- **Meetings**: Join buttons for Google Meet, Zoom, Teams and other links, in the agenda, the
-  Day view, the event details, notifications and the panel's right-click menu; Google Meet links
-  can open in a Meet web app with a chosen Google account. The panel clock shows the next meeting
-  ("in 5 min" / "12 min left", or above the time in a vertical panel); a meeting that ended early
-  can be marked as ended. Music and videos pause when you join; optional Do Not Disturb during
-  meetings and auto-join; overlapping meetings are marked.
+- **Meetings**: Join buttons for about 40 services (Google Meet, Zoom, Teams, Webex, Slack huddles,
+  Discord, Chime, GoTo, Jitsi…), in the agenda, the Day view, the event details, notifications and
+  the panel's right-click menu; Google Meet links can open in a Meet web app with a chosen Google
+  account. A **full-screen alert** when a meeting starts (optional: the desktop blurred behind,
+  Join / Snooze / Dismiss). The panel clock shows the next meeting ("in 5 min" / "12 min left", left
+  of the time, or above it in a vertical panel), with filters: skip all-day events, chosen
+  calendars, only meetings with a link, only accepted ones. Copy a meeting's link, mute one event's
+  notifications, start a Meet or Zoom right away (hold +); a meeting that ended early can be marked
+  as ended. Music and videos pause when you join; optional Do Not Disturb during meetings and
+  auto-join; overlapping meetings are marked.
 - **Notifications** through KDE's notification system: reminders before events (with Snooze,
-  optionally hidden after N seconds), when an event starts (optionally critical / persistent),
+  optionally hidden after N seconds), when an event starts (optionally critical / persistent, or
+  full screen),
   new invitations for today (with Yes / Maybe / No) and a daily agenda, each configurable in
   System Settings > Notifications > Event Calendar NG. Clicking one opens the event in the widget.
+- **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
+  direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap / Weather Canada.
 - **Starts instantly and works offline**: the last loaded events and tasks are shown right away
-  and stay visible offline (Settings > Views > Offline turns it off), fetches are retried automatically, and a banner shows when it can't connect.
+  and stay visible offline (Settings > Views > Offline turns it off; each widget keeps its own), fetches
+  are retried automatically, and a banner shows when it can't connect. The Agenda and the Tasks tab
+  build only what's on screen, so they open fast with busy calendars and long task lists.
 - Invitations look like in Google Calendar (outlined / striped / struck through), events filled
   in their color or timed ones light with a color bar, icons for what an event has set, adjustable event text size, event locations open in Google Maps, dark theme
   friendly event colors, right-click menus on events, translated into 20 languages.

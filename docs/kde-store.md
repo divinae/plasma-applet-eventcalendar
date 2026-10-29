@@ -47,7 +47,7 @@ version, the changelog and the file for each release.
 
 **Summary (one line)**
 
-    Calendar, agenda, week and day views for the panel, with Google Calendar, meeting Join buttons, notifications and weather.
+    Calendar, agenda, week and day views, tasks and meetings for the panel: Google Calendar, Google Tasks, TickTick, Join buttons, notifications and weather.
 
 **Description**
 
@@ -64,6 +64,8 @@ Views (switch from the popup's header)
 - Tasks: your Google Tasks and TickTick lists
 - Islands style (rounded cards, the default) or flat
 - Drag events between days (Ctrl + drag copies), calendar toggles, work week, a second time zone, keyboard navigation
+- Go to date: press G and type "next friday", "15 nov", "+2w"
+- Opens in your default view or the last one used; tabs or a drop-down view switcher; right click the header to pick its views and buttons
 
 Google Calendar
 - Several accounts; choose calendars and task lists per account
@@ -72,6 +74,8 @@ Google Calendar
 - Move events between calendars, busy / free, visibility, time zones, out of office, focus time, working locations
 - Find a time (free slots for you and the guests), attachments, Email Guests, import .ics files
 - Rename and recolor calendars
+- An event in several calendars (yours and a shared one) shows once
+- KDE PIM (Akonadi) calendars and holidays side by side with a direct Google sign-in
 - Tokens are kept in the system keyring
 
 Tasks
@@ -82,17 +86,19 @@ Tasks
 - Task reminders, a morning summary, and the day's tasks in the Day view
 
 Meetings
-- Join buttons for Google Meet, Zoom, Teams and other links; Google Meet links can open in a Meet web app with a chosen Google account
-- The panel clock shows the next meeting ("in 5 min" / "12 min left"); a meeting that ended early can be marked as ended
+- Join buttons for about 40 services (Google Meet, Zoom, Teams, Webex, Slack huddles, Discord, Chime, GoTo, Jitsi…); Google Meet links can open in a Meet web app with a chosen Google account
+- Optional full-screen alert when a meeting starts: the desktop blurred behind, Join / Snooze / Dismiss
+- The panel clock shows the next meeting ("in 5 min" / "12 min left"), with filters: skip all-day events, chosen calendars, only meetings with a link, only accepted
+- Copy a meeting's link, mute one event's notifications, start a Meet or Zoom right away (hold +); a meeting that ended early can be marked as ended
 - Music and videos pause when you join; optional Do Not Disturb during meetings and auto-join; overlapping meetings are marked
 
 Notifications (KDE's notification system)
-- Reminders before events (with Snooze, optionally hidden after N seconds) and when an event starts (optionally critical / persistent)
+- Reminders before events (with Snooze, optionally hidden after N seconds) and when an event starts (optionally critical / persistent, or full screen)
 - New invitations for today (Yes / Maybe / No) and a daily agenda
 
 Weather from Open-Meteo (free, no API key), OpenWeatherMap or Weather Canada.
 
-Starts instantly and works offline: the last loaded events and tasks are shown right away.
+Starts instantly and works offline: the last loaded events and tasks are shown right away. The Agenda and the Tasks tab open fast even with busy calendars and long task lists.
 
 Translated into 20 languages.
 
