@@ -575,3 +575,37 @@ function eventSpan(e, timeFormat, now) {
 	}
 	return result
 }
+
+// The same event in more than one calendar (a meeting in your calendar and a shared one, or a
+// calendar subscribed twice): { index: true } for the copies to leave out. Same iCalUID (else id)
+// and start; the copy kept is one you can edit, else one with your answer, else the first. Tasks
+// are left alone.
+function duplicateEvents(events) {
+	var best = {}
+	var drop = {}
+	function rank(e) {
+		return e.canEdit ? 2 : (myResponse(e) ? 1 : 0)
+	}
+	for (var i = 0; i < events.length; i++) {
+		var e = events[i]
+		if (!e || e.kind === 'tasks#task' || !(e.iCalUID || e.id)) {
+			continue
+		}
+		var start = new Date(e.startDateTime).getTime()
+		if (!isFinite(start)) {
+			continue
+		}
+		var key = String(e.iCalUID || e.id) + '|' + start
+		if (!(key in best)) {
+			best[key] = i
+		} else if (events[best[key]].calendarId === e.calendarId) {
+			continue // The same calendar: not a copy of another one
+		} else if (rank(e) > rank(events[best[key]])) {
+			drop[best[key]] = true
+			best[key] = i
+		} else {
+			drop[i] = true
+		}
+	}
+	return drop
+}

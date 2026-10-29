@@ -356,6 +356,10 @@
 			<!-- Only for meetings with a video link -->
 			<default>true</default>
 		</entry>
+		<entry name="hideDuplicateEvents" type="bool">
+			<!-- The same event in two calendars (same iCalUID and start) shown once -->
+			<default>true</default>
+		</entry>
 		<entry name="mutedEventKeys" type="StringList">
 			<!-- Events muted from the event menu (calendarId|id|start ms): no notifications, no clock chip, no auto-join or full-screen alert; still in the views. Set from the popup: no cfg_ property on the settings pages. -->
 			<default></default>

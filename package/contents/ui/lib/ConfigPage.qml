@@ -202,6 +202,8 @@ KCM.SimpleKCM {
 	property var cfg_clockNextEventMinutesDefault
 	property var cfg_clockNextEventSkipAllDay
 	property var cfg_clockNextEventSkipAllDayDefault
+	property var cfg_hideDuplicateEvents
+	property var cfg_hideDuplicateEventsDefault
 	property var cfg_meetingFullScreenAlert
 	property var cfg_meetingFullScreenAlertDefault
 	property var cfg_meetingFullScreenAlertLinkOnly

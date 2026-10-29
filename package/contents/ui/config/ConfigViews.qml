@@ -200,6 +200,12 @@ ConfigPage {
 					{ value: false, text: i18nc("declined events", "Hide") },
 				]
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Show an event in several calendars once")
+				description: i18n("A meeting in your calendar and in a shared one, for example.")
+				configKey: 'hideDuplicateEvents'
+			}
 		}
 
 		//--- Week and Day

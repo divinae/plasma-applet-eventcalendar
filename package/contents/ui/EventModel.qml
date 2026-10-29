@@ -600,14 +600,18 @@ CalendarManager {
 		var pimDuplicates = PlasmaCalendarEventState.pimDuplicates(all, function(eventItem) {
 			return !!eventItem.canEdit || !!Shared.myResponse(eventItem)
 		})
-		var items = []
+		var shown = []
 		for (var i = 0; i < all.length; i++) {
 			var titles = conflicts[Conflicts.eventKey(all[i])] || []
 			all[i].conflictsWith = titles.map(function(title) { return { summary: title } })
 			if (!inHiddenCalendar[i] && !pimDuplicates[i] && !Shared.isHiddenDeclined(all[i], showDeclined)) {
-				items.push(all[i])
+				shown.push(all[i])
 			}
 		}
+		// Settings > Views: the same event in two calendars shown once (among the ones shown, so a
+		// hidden calendar's copy never takes the shown one's place).
+		var duplicates = plasmoid.configuration.hideDuplicateEvents ? Shared.duplicateEvents(shown) : {}
+		var items = shown.filter(function(eventItem, index) { return !duplicates[index] })
 		eventModel.workingLocations = EventTypes.workingLocationMap(workingLocationItems, {
 			home: i18nc("working location", "Home"),
 			office: i18nc("working location", "Office"),

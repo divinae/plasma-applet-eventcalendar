@@ -82,6 +82,11 @@ CalendarManager {
 		for (var calendarId in eventsByCalendar) {
 			items = items.concat(Shared.toArray(eventsByCalendar[calendarId].items))
 		}
+		// The same event in two calendars: one notification (Settings > Views, as in the views).
+		if (plasmoid.configuration.hideDuplicateEvents) {
+			var duplicates = Shared.duplicateEvents(items)
+			items = items.filter(function(eventItem, index) { return !duplicates[index] })
+		}
 		return items
 	}
 

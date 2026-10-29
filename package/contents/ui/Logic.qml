@@ -265,6 +265,7 @@ Item {
 			if (popup) popup.updateUI()
 		}
 		function onShowDeclinedEventsChanged() { logic.refilterEvents() }
+		function onHideDuplicateEventsChanged() { logic.refilterEvents() }
 		// Calendars hidden in the popup header's menu: a view filter, nothing is fetched again.
 		function onHiddenCalendarIdsChanged() { logic.refilterEvents() }
 		// The clock's next-event chip only.

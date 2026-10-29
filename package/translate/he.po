@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 14:07+0100\n"
+"POT-Creation-Date: 2026-10-29 14:08+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1360,6 +1360,14 @@ msgstr "הצגה (עם קו חוצה)"
 msgctxt "declined events"
 msgid "Hide"
 msgstr "הסתרה"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show an event in several calendars once"
+msgstr "הצגת אירוע שנמצא בכמה יומנים פעם אחת"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "A meeting in your calendar and in a shared one, for example."
+msgstr "לדוגמה, פגישה ביומן שלך וביומן משותף."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week and Day"
