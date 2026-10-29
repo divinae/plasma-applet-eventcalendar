@@ -80,14 +80,29 @@ MouseArea {
 	function viewOffered(mode) {
 		return hiddenViewTabs.indexOf(mode) < 0 && (mode !== 'tasks' || taskListsSelected)
 	}
-	// The view shown: Settings > Views > Default view (popupMode) when the popup opens; switching
-	// views (tabs, a click on a month's day, keys) changes only this, not the setting.
-	property string currentView: plasmoid.configuration.popupMode
+	// The view shown: Settings > Views > Default view (popupMode) when the popup opens, or with
+	// "Open in the last used view" (popupOpenLastView) the one used last (popupLastView, kept over
+	// restarts). Switching views (tabs, a click on a month's day, keys) changes only this, not the
+	// Default view.
+	readonly property bool openLastView: plasmoid.configuration.popupOpenLastView
+	property string currentView: openLastView && plasmoid.configuration.popupLastView
+		? plasmoid.configuration.popupLastView : plasmoid.configuration.popupMode
 	function showDefaultView() {
-		currentView = plasmoid.configuration.popupMode
+		if (!openLastView) {
+			currentView = plasmoid.configuration.popupMode
+		}
 	}
-	// Overlays belong to the view they were opened from.
-	onCurrentViewChanged: closeOverlays()
+	onCurrentViewChanged: {
+		closeOverlays() // Overlays belong to the view they were opened from.
+		if (openLastView) {
+			plasmoid.configuration.popupLastView = currentView
+		}
+	}
+	onOpenLastViewChanged: {
+		if (openLastView) {
+			plasmoid.configuration.popupLastView = currentView
+		}
+	}
 	// The Day view needs the hourly forecast.
 	onViewModeChanged: logic.updateWeather(true)
 	readonly property string viewMode: {
@@ -355,7 +370,7 @@ MouseArea {
 	// The Default view changed in Settings: show it.
 	Connections {
 		target: plasmoid.configuration
-		function onPopupModeChanged() { popup.showDefaultView() }
+		function onPopupModeChanged() { popup.currentView = plasmoid.configuration.popupMode }
 	}
 	// The open event may have been edited (or deleted) meanwhile: show the current version.
 	Connections {

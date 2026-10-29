@@ -35,6 +35,12 @@ ConfigPage {
 				]
 			}
 			FormCard.FormDelegateSeparator {}
+			// On: the Default view is only for the first time it opens.
+			FormConfigSwitch {
+				text: i18n("Open in the last used view")
+				configKey: 'popupOpenLastView'
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				id: showViewTabsSwitch
 				text: i18n("View switcher in the header")

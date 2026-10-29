@@ -67,6 +67,14 @@
 			<!-- classic: agenda + calendar widgets. month: full month view with event titles, like mobile calendar apps. week: week view. today: one day. -->
 			<default>month</default>
 		</entry>
+		<entry name="popupOpenLastView" type="bool">
+			<!-- true: the popup opens in the view used last (popupLastView) instead of popupMode -->
+			<default>false</default>
+		</entry>
+		<entry name="popupLastView" type="string">
+			<!-- The view shown last, kept with popupOpenLastView (set by the popup, not in Settings) -->
+			<default></default>
+		</entry>
 		<entry name="showViewTabs" type="bool">
 			<default>true</default>
 		</entry>

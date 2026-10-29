@@ -156,6 +156,10 @@ KCM.SimpleKCM {
 	property var cfg_showViewTabsDefault
 	property var cfg_popupMode
 	property var cfg_popupModeDefault
+	property var cfg_popupOpenLastView
+	property var cfg_popupOpenLastViewDefault
+	property var cfg_popupLastView
+	property var cfg_popupLastViewDefault
 	property var cfg_monthModeWidth
 	property var cfg_monthModeWidthDefault
 	property var cfg_monthModeHeight
