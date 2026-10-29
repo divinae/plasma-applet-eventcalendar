@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr "Imorgon · %1"
 msgid "New Event"
 msgstr "Ny händelse"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Ny uppgift…"
 
@@ -199,7 +199,7 @@ msgstr "Visa alla"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -211,7 +211,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "%1 kvar"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1568,7 +1568,7 @@ msgstr "Markera som pågående"
 msgid "Show Details"
 msgstr "Visa detaljer"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Anslut till %1"
@@ -1577,7 +1577,7 @@ msgstr "Anslut till %1"
 msgid "Copy Event Details"
 msgstr "Kopiera händelseinformation"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "Kopiera möteslänk"
 
@@ -1585,7 +1585,7 @@ msgstr "Kopiera möteslänk"
 msgid "Unmute Notifications"
 msgstr "Slå på aviseringar igen"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "Stäng av aviseringar"
 
@@ -1593,7 +1593,7 @@ msgstr "Stäng av aviseringar"
 msgid "Open in Google Calendar"
 msgstr "Öppna i Google Kalender"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "Markera som avslutat"
 
@@ -2659,18 +2659,17 @@ msgid "No connection. Showing the last loaded events; retrying automatically."
 msgstr "Ingen anslutning. Visar de senast inlästa händelserna; försöker igen automatiskt."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "Anslut till %1: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "Markera ”%1” som avslutat"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Ny händelse…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "Gå till datum…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3602,6 +3601,14 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "Anslut till %1: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "Markera ”%1” som avslutat"
 
 #~ msgid "Open Agenda"
 #~ msgstr "Öppna dagordning"

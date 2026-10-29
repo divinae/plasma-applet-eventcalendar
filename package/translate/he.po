@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -84,7 +84,8 @@ msgstr "מחר · %1"
 msgid "New Event"
 msgstr "אירוע חדש"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "משימה חדשה…"
 
@@ -232,7 +233,7 @@ msgstr "הצגת הכול"
 msgid "Cancel"
 msgstr "ביטול"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -246,7 +247,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "נותרו %1"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1780,8 +1781,8 @@ msgid "Show Details"
 msgstr "הצגת פרטים"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "הצטרפות ל־%1"
@@ -1790,7 +1791,7 @@ msgstr "הצטרפות ל־%1"
 msgid "Copy Event Details"
 msgstr "העתקת פרטי האירוע"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "העתקת קישור הפגישה"
 
@@ -1798,7 +1799,7 @@ msgstr "העתקת קישור הפגישה"
 msgid "Unmute Notifications"
 msgstr "ביטול השתקת התראות"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "השתקת התראות"
 
@@ -1806,7 +1807,7 @@ msgstr "השתקת התראות"
 msgid "Open in Google Calendar"
 msgstr "פתיחה ב־Google Calendar"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "סימון כהסתיים"
 
@@ -2940,18 +2941,17 @@ msgid "No connection. Showing the last loaded events; retrying automatically."
 msgstr "אין חיבור. מוצגים האירועים שנטענו לאחרונה; ניסיון חוזר יתבצע אוטומטית."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "הצטרפות ל־%1: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "סימון “%1” כהסתיים"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "אירוע חדש…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "מעבר לתאריך…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3923,6 +3923,14 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "הצטרפות ל־%1: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "סימון “%1” כהסתיים"
 
 #~ msgid "Open Agenda"
 #~ msgstr "פתיחת סדר היום"

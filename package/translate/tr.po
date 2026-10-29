@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -83,7 +83,8 @@ msgstr "Yarın · %1"
 msgid "New Event"
 msgstr "Yeni Etkinlik"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Yeni Görev…"
 
@@ -234,7 +235,7 @@ msgstr "Tümünü Göster"
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -246,7 +247,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "%1 kaldı"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1798,8 +1799,8 @@ msgid "Show Details"
 msgstr "Ayrıntıları Göster"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 ile Katıl"
@@ -1808,7 +1809,7 @@ msgstr "%1 ile Katıl"
 msgid "Copy Event Details"
 msgstr "Etkinlik ayrıntılarını kopyala"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "Toplantı bağlantısını kopyala"
 
@@ -1816,7 +1817,7 @@ msgstr "Toplantı bağlantısını kopyala"
 msgid "Unmute Notifications"
 msgstr "Bildirimlerin sesini aç"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "Bildirimleri sessize al"
 
@@ -1824,7 +1825,7 @@ msgstr "Bildirimleri sessize al"
 msgid "Open in Google Calendar"
 msgstr "Google Takvim'de Aç"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "Bitti olarak işaretle"
 
@@ -2920,18 +2921,17 @@ msgstr ""
 "denenecek."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "%1 ile katıl: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "“%1” etkinliğini bitti olarak işaretle"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Yeni Etkinlik…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "Tarihe git…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3875,6 +3875,14 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "%1 ile katıl: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "“%1” etkinliğini bitti olarak işaretle"
 
 #~ msgid "Open Agenda"
 #~ msgstr "Ajandayı Aç"

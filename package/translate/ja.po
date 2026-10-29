@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -75,7 +75,7 @@ msgstr "明日 · %1"
 msgid "New Event"
 msgstr "新しいイベント"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "新しいタスク…"
 
@@ -199,7 +199,7 @@ msgstr "すべて表示"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -210,7 +210,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "残り %1"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1564,7 +1564,7 @@ msgstr "進行中にする"
 msgid "Show Details"
 msgstr "詳細を表示"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 に参加"
@@ -1573,7 +1573,7 @@ msgstr "%1 に参加"
 msgid "Copy Event Details"
 msgstr "イベントの詳細をコピー"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "会議のリンクをコピー"
 
@@ -1581,7 +1581,7 @@ msgstr "会議のリンクをコピー"
 msgid "Unmute Notifications"
 msgstr "通知のミュートを解除"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "通知をミュート"
 
@@ -1589,7 +1589,7 @@ msgstr "通知をミュート"
 msgid "Open in Google Calendar"
 msgstr "Google Calendar で開く"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "終了済みにする"
 
@@ -2634,18 +2634,17 @@ msgid "No connection. Showing the last loaded events; retrying automatically."
 msgstr "接続がありません。最後に読み込んだイベントを表示しています。自動的に再試行します。"
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "%1 に参加: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "「%1」を終了済みにする"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "新しいイベント…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "日付へ移動…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3559,6 +3558,14 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "%1 に参加: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "「%1」を終了済みにする"
 
 #~ msgid "Open Agenda"
 #~ msgstr "予定を開く"

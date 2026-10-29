@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -83,7 +83,8 @@ msgstr "내일 · %1"
 msgid "New Event"
 msgstr "새 이벤트"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "새 작업…"
 
@@ -232,7 +233,7 @@ msgstr "모두 표시"
 msgid "Cancel"
 msgstr "취소"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -243,7 +244,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "%1 남음"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1784,8 +1785,8 @@ msgid "Show Details"
 msgstr "자세히 보기"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "%1 참가"
@@ -1794,7 +1795,7 @@ msgstr "%1 참가"
 msgid "Copy Event Details"
 msgstr "일정 세부 정보 복사"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "회의 링크 복사"
 
@@ -1802,7 +1803,7 @@ msgstr "회의 링크 복사"
 msgid "Unmute Notifications"
 msgstr "알림 음소거 해제"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "알림 음소거"
 
@@ -1810,7 +1811,7 @@ msgstr "알림 음소거"
 msgid "Open in Google Calendar"
 msgstr "Google 캘린더에서 열기"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "종료로 표시"
 
@@ -2883,18 +2884,17 @@ msgstr ""
 "연결 없음. 마지막으로 불러온 이벤트를 표시하며 자동으로 다시 시도합니다."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "%1 참가: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "“%1” 종료로 표시"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "새 이벤트…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "날짜로 이동…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3818,6 +3818,14 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "%1 참가: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "“%1” 종료로 표시"
 
 #~ msgid "Open Agenda"
 #~ msgstr "일정 열기"

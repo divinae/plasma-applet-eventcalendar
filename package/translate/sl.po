@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -84,7 +84,8 @@ msgstr "Jutri · %1"
 msgid "New Event"
 msgstr "Nov dogodek"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Novo opravilo…"
 
@@ -233,7 +234,7 @@ msgstr "Prikaži vse"
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -247,7 +248,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "še %1"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1803,8 +1804,8 @@ msgid "Show Details"
 msgstr "Prikaži podrobnosti"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Pridruži se prek %1"
@@ -1813,7 +1814,7 @@ msgstr "Pridruži se prek %1"
 msgid "Copy Event Details"
 msgstr "Kopiraj podrobnosti dogodka"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "Kopiraj povezavo do sestanka"
 
@@ -1821,7 +1822,7 @@ msgstr "Kopiraj povezavo do sestanka"
 msgid "Unmute Notifications"
 msgstr "Vklopi obvestila"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "Utišaj obvestila"
 
@@ -1829,7 +1830,7 @@ msgstr "Utišaj obvestila"
 msgid "Open in Google Calendar"
 msgstr "Odpri v Googlovem koledarju"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "Označi kot končano"
 
@@ -2966,18 +2967,17 @@ msgstr ""
 "samodejen."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "Pridruži se prek %1: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "Označi »%1« kot končano"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Nov dogodek…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "Pojdi na datum…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3956,6 +3956,14 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "Pridruži se prek %1: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "Označi »%1« kot končano"
 
 #~ msgid "Open Agenda"
 #~ msgstr "Odpri dnevni red"

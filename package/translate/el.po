@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -83,7 +83,8 @@ msgstr "Αύριο · %1"
 msgid "New Event"
 msgstr "Νέο συμβάν"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Νέα εργασία…"
 
@@ -235,7 +236,7 @@ msgstr "Εμφάνιση όλων"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -247,7 +248,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "απομένουν %1"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1827,8 +1828,8 @@ msgid "Show Details"
 msgstr "Εμφάνιση λεπτομερειών"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "Συμμετοχή μέσω %1"
@@ -1837,7 +1838,7 @@ msgstr "Συμμετοχή μέσω %1"
 msgid "Copy Event Details"
 msgstr "Αντιγραφή λεπτομερειών συμβάντος"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "Αντιγραφή συνδέσμου σύσκεψης"
 
@@ -1845,7 +1846,7 @@ msgstr "Αντιγραφή συνδέσμου σύσκεψης"
 msgid "Unmute Notifications"
 msgstr "Επαναφορά ειδοποιήσεων"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "Σίγαση ειδοποιήσεων"
 
@@ -1853,7 +1854,7 @@ msgstr "Σίγαση ειδοποιήσεων"
 msgid "Open in Google Calendar"
 msgstr "Άνοιγμα στο Ημερολόγιο Google"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "Σήμανση ως ολοκληρωμένης"
 
@@ -2953,18 +2954,17 @@ msgstr ""
 "γίνεται αυτόματα."
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "Συμμετοχή μέσω %1: %2 (%3)"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "Σήμανση «%1» ως ολοκληρωμένης"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Νέο συμβάν…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "Μετάβαση σε ημερομηνία…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3915,6 +3915,14 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "Συμμετοχή μέσω %1: %2 (%3)"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "Σήμανση «%1» ως ολοκληρωμένης"
 
 #~ msgid "Open Agenda"
 #~ msgstr "Άνοιγμα ατζέντας"

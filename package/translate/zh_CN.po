@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 15:20+0100\n"
+"POT-Creation-Date: 2026-10-29 15:24+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -83,7 +83,8 @@ msgstr "明天 · %1"
 msgid "New Event"
 msgstr "新建事件"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
+#: ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "新建任务…"
 
@@ -231,7 +232,7 @@ msgstr "全部显示"
 msgid "Cancel"
 msgstr "取消"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "time left in the current meeting"
 msgid "%1 min left"
 msgid_plural "%1 min left"
@@ -242,7 +243,7 @@ msgctxt "time left in the current meeting, %1 = 1h20m"
 msgid "%1 left"
 msgstr "剩余 %1"
 
-#: ../contents/ui/ClockView.qml
+#: ../contents/ui/ClockView.qml ../contents/ui/main.qml
 msgctxt "meeting starts in"
 msgid "in %1 min"
 msgid_plural "in %1 min"
@@ -1751,8 +1752,8 @@ msgid "Show Details"
 msgstr "显示详情"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/MeetingAlertContent.qml
-#: ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
+#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
 msgstr "加入 %1"
@@ -1761,7 +1762,7 @@ msgstr "加入 %1"
 msgid "Copy Event Details"
 msgstr "复制事件详情"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Copy Meeting Link"
 msgstr "复制会议链接"
 
@@ -1769,7 +1770,7 @@ msgstr "复制会议链接"
 msgid "Unmute Notifications"
 msgstr "取消通知静音"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mute Notifications"
 msgstr "将通知静音"
 
@@ -1777,7 +1778,7 @@ msgstr "将通知静音"
 msgid "Open in Google Calendar"
 msgstr "在 Google 日历中打开"
 
-#: ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/main.qml
 msgid "Mark as Ended"
 msgstr "标记为已结束"
 
@@ -2844,18 +2845,17 @@ msgid "No connection. Showing the last loaded events; retrying automatically."
 msgstr "无网络连接。正在显示上次加载的事件；将自动重试。"
 
 #: ../contents/ui/main.qml
-msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
-msgid "Join %1: %2 (%3)"
-msgstr "加入 %1：%2（%3）"
-
-#: ../contents/ui/main.qml
-msgctxt "%1 = event title"
-msgid "Mark “%1” as Ended"
-msgstr "将“%1”标记为已结束"
+msgctxt "%1 = event title, %2 = in 12 min / 25 min left"
+msgid "%1 · %2"
+msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "新建事件…"
+
+#: ../contents/ui/main.qml
+msgid "Go to Date…"
+msgstr "转到日期…"
 
 #: ../contents/ui/main.qml
 msgid "Import Events…"
@@ -3773,6 +3773,14 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
+#~ msgid "Join %1: %2 (%3)"
+#~ msgstr "加入 %1：%2（%3）"
+
+#~ msgctxt "%1 = event title"
+#~ msgid "Mark “%1” as Ended"
+#~ msgstr "将“%1”标记为已结束"
 
 #~ msgid "Open Agenda"
 #~ msgstr "打开日程"
