@@ -47,14 +47,29 @@ version, the changelog and the file for each release.
 
 **Summary (one line)**
 
-    Calendar, agenda, week and day views, tasks and meetings for the panel: Google Calendar, Google Tasks, TickTick, Join buttons, notifications and weather.
+    Your day, one click from the clock: calendar, agenda, tasks, meetings and weather in the Plasma panel.
 
 **Description**
 
 ```
-A calendar, agenda and weather widget for the Plasma 6 panel that syncs with Google Calendar, Plasma (Akonadi / holiday) calendars and iCalendar (.ics) files.
+Your day, one click from the clock.
 
-This is a maintained Plasma 6 fork of Event Calendar by Chris Holland (Zren), via ALikesToCode's Plasma 6 port. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
+Calendar, agenda, tasks, meetings and weather in the Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting again.
+
+Why you'll like it
+🗓️ Every view you need: Month, Week, Day and Agenda. The Day view puts your hours, a small month, what's up next, today's tasks and the weather side by side.
+⏰ Never late again: the clock shows your next meeting ("in 5 min") and its progress; when it starts, an optional full-screen alert with one big Join button.
+🎥 One-click Join for Google Meet, Zoom, Teams, Webex, Slack huddles and about 35 more.
+✅ Your tasks too: Google Tasks and TickTick with smart lists, priorities, subtasks and drag and drop. Type "Call mom tomorrow 17:00 !high" and it knows the day, time and priority.
+✍️ Plan without leaving the panel: create, edit, move and answer events; quick add understands plain sentences, and Go to date takes "next friday" or "+2w".
+☁️ All your calendars: several Google accounts, KDE PIM (Akonadi), holidays and .ics files; an event in two calendars shows once.
+⚡ Fast and offline-ready: opens instantly with your last events and tasks, even without a network.
+🎨 At home in Plasma: rounded cards or flat, light and dark themes, 20 languages.
+🔒 Private: sign-in tokens stay in your system keyring.
+
+A maintained Plasma 6 fork of Event Calendar by Chris Holland (Zren), via ALikesToCode's Plasma 6 port. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
+
+In detail
 
 Views (switch from the popup's header)
 - Month: event titles in the days, multi-day events as bars across them
