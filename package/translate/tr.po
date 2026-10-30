@@ -1339,7 +1339,9 @@ msgstr "Animasyonlar"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Views slide and fade in, cards open, the small month's days ease."
-msgstr "Görünümler kayarak ve belirerek açılır, kartlar açılır, küçük ayın günleri yumuşakça değişir."
+msgstr ""
+"Görünümler kayarak ve belirerek açılır, kartlar açılır, küçük ayın günleri "
+"yumuşakça değişir."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

@@ -1348,7 +1348,9 @@ msgstr "Анімація"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Views slide and fade in, cards open, the small month's days ease."
-msgstr "Подання плавно з'являються зі зсувом, картки розкриваються, дні малого місяця змінюються плавно."
+msgstr ""
+"Подання плавно з'являються зі зсувом, картки розкриваються, дні малого "
+"місяця змінюються плавно."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

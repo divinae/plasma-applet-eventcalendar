@@ -1326,7 +1326,9 @@ msgstr "애니메이션"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Views slide and fade in, cards open, the small month's days ease."
-msgstr "보기가 미끄러지듯 나타나고, 카드가 열리며, 작은 달력의 날짜가 부드럽게 바뀝니다."
+msgstr ""
+"보기가 미끄러지듯 나타나고, 카드가 열리며, 작은 달력의 날짜가 부드럽게 바뀝니"
+"다."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

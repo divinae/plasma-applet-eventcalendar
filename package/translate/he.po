@@ -1323,7 +1323,8 @@ msgstr "הנפשות"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Views slide and fade in, cards open, the small month's days ease."
-msgstr "התצוגות מחליקות ומופיעות בהדרגה, כרטיסים נפתחים, ימי החודש הקטן משתנים ברכות."
+msgstr ""
+"התצוגות מחליקות ומופיעות בהדרגה, כרטיסים נפתחים, ימי החודש הקטן משתנים ברכות."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
