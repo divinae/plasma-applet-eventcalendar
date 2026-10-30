@@ -342,7 +342,7 @@ function colorCalendars(events, idPrefix, titleCount) {
 	})
 }
 
-// Akonadi's database, read with psql when it's PostgreSQL (Akonadi's default) and psql is
+// Akonadi's database, read with psql when it's PostgreSQL and psql is
 // installed: the script lines that run one SELECT, its rows as "column|column" lines; nothing
 // otherwise.
 function akonadiPsqlLines(sql) {
@@ -385,14 +385,19 @@ function akonadiCalendarsCommand() {
 	return ['sh', '-c', akonadiColorsLines().concat(akonadiGoogleCollectionsLines(), ['exit 0']).join('\n')]
 }
 // The widget's Google accounts (GoogleAccountsStore.accounts) for akonadiMirroredCollections:
-// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case.
+// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case. Only
+// the calendars shown in the widget (calendarIdList, "primary" as the primary's id): Akonadi's copy
+// of one left out here stays (its events come from nowhere else).
 function googleCalendarIdsByAccount(accounts) {
 	var calendarIds = {}
 	;(accounts || []).forEach(function(account) {
 		var list = account && account.calendarList ? Array.prototype.slice.call(account.calendarList) : []
 		var primary = list.filter(function(calendar) { return calendar && calendar.primary })[0]
 		if (primary && primary.id) {
-			calendarIds[String(primary.id).toLowerCase()] = list.map(function(calendar) { return calendar.id })
+			var shown = account.calendarIdList ? Array.prototype.slice.call(account.calendarIdList) : []
+			calendarIds[String(primary.id).toLowerCase()] = shown.map(function(id) {
+				return id === 'primary' ? primary.id : id
+			})
 		}
 	})
 	return calendarIds

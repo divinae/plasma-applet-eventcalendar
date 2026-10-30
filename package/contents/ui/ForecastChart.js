@@ -171,10 +171,11 @@ function mix(colorA, colorB, t) {
 
 //--- Rain
 // The rain peaks worth a label: the points with more rain than both neighbours (a plateau: its
-// first point), at least `gap` points apart (the larger peak wins).
-function rainPeaks(points, gap) {
+// first point), at least `gap` points apart (the larger peak wins); minAmount or less: no label.
+function rainPeaks(points, gap, minAmount) {
 	var rain = points.map(function(point) {
-		return point.precipitation || 0
+		var amount = point.precipitation || 0
+		return amount > (minAmount || 0) ? amount : 0 // Too little to be worth a label: none
 	})
 	var peaks = []
 	for (var i = 0; i < rain.length; i++) {

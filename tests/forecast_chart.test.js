@@ -63,6 +63,7 @@ const rain = values => values.map((precipitation, i) => at(i, { precipitation })
 assert.deepStrictEqual(plain(C.rainPeaks(rain([0, 0.2, 0.8, 0.3, 0, 0, 1.5, 1.5, 0]), 3)), [2, 6], 'a plateau: its first point')
 assert.deepStrictEqual(plain(C.rainPeaks(rain([0.5, 0, 0.9, 0, 0.4]), 3)), [2], 'close peaks: the larger one')
 assert.deepStrictEqual(plain(C.rainPeaks(rain([0, 0, 0]), 3)), [])
+assert.deepStrictEqual(plain(C.rainPeaks(rain([0, 0.2, 0, 0, 0.9, 0]), 1, 0.3)), [4], 'too little: no label')
 assert.ok(Math.abs(C.rainTotal(rain([0.2, 0, 1.3, undefined])) - 1.5) < 1e-9)
 
 console.log('PASS forecast_chart')

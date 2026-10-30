@@ -259,8 +259,10 @@ function configArgs(config) {
 }
 
 //--- Free API (2.5)
-// App ids /forecast/daily refused (no paid plan): their days come from the 3 hour steps right away.
+// App ids /forecast/daily refused (no paid plan): their days come from the 3 hour steps right away,
+// for 6 hours (then asked again: the plan may have changed).
 var dailyRefused = {}
+var dailyRefusedFor = 6 * 60 * 60 * 1000
 
 // The forecast, then the current weather; without the current weather (it failed): the forecast
 // alone, the panel shows its first step then.
@@ -282,13 +284,13 @@ function updateFreeDaily(config, callback) {
 			withCurrent(args, daysFromSteps(parseHourlyData(data, args.units)), xhr, callback)
 		})
 	}
-	if (dailyRefused[args.appId]) {
+	if (dailyRefused[args.appId] && Date.now() - dailyRefused[args.appId] < dailyRefusedFor) {
 		return fromSteps()
 	}
 	fetch('forecast/daily', args, function(err, data, xhr) {
 		if (err && xhr && xhr.status === 401) {
 			// The app id is fine (else /forecast fails too): the days aren't in its plan.
-			dailyRefused[args.appId] = true
+			dailyRefused[args.appId] = Date.now()
 			return fromSteps()
 		}
 		if (err) return handleError('OpenWeatherMap.forecast/daily', callback, err, data, xhr)

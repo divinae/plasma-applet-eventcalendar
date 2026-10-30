@@ -272,7 +272,7 @@ Item {
 					})
 
 					// The scale: faint lines, the temperatures on the left, the hours below
-					ctx.font = "12px sans-serif"
+					ctx.font = "12px \"" + Kirigami.Theme.defaultFont.family + "\""
 					ctx.lineWidth = 1
 					ctx.strokeStyle = ColorUtil.setAlpha(textColor, dark ? 0.14 : 0.12)
 					ctx.fillStyle = ColorUtil.setAlpha(textColor, 0.7)
@@ -375,7 +375,7 @@ Item {
 					// The high and the low: a ring, the temperature in bold (the low below the line when
 					// there's room)
 					if (maxTemp - minTemp >= 2) {
-						ctx.font = "bold 12px sans-serif"
+						ctx.font = "bold 12px \"" + Kirigami.Theme.defaultFont.family + "\""
 						ctx.textAlign = 'left'
 						;[temps.indexOf(maxTemp), temps.indexOf(minTemp)].forEach(function(k, nth) {
 							ctx.beginPath()
@@ -396,15 +396,12 @@ Item {
 					}
 
 					// Rain amounts at the peaks, above their bars, far enough apart not to overlap
-					ctx.font = "12px sans-serif"
+					ctx.font = "12px \"" + Kirigami.Theme.defaultFont.family + "\""
 					ctx.textAlign = 'center'
-					ctx.fillStyle = dark ? "#8fc1ff" : "#2a6fd6"
+					ctx.fillStyle = String(Kirigami.Theme.linkColor)
 					var gap = Math.max(1, Math.ceil(36 / Math.max(1, areaWidth)))
-					ForecastChart.rainPeaks(points, gap).forEach(function(k) {
+					ForecastChart.rainPeaks(points, gap, graph.rainUnits === 'mm' ? 0.3 : 0).forEach(function(k) {
 						var rain = points[k].precipitation
-						if (graph.rainUnits === 'mm' && rain <= 0.3) {
-							return
-						}
 						var label = formatPrecipitation(rain)
 						var labelWidth = ctx.measureText(label).width
 						var cx = (xs[k - 1] + xs[k]) / 2
@@ -454,7 +451,7 @@ Item {
 						// yAxis label: temp
 						var p = graph.gridPoint(graph.xAxisMin, y)
 						context.fillStyle = appletConfig.meteogramTextColor
-						context.font = "12px sans-serif"
+						context.font = "12px \"" + Kirigami.Theme.defaultFont.family + "\""
 						context.textAlign = 'end'
 						var labelText = y + '°'
 						context.fillText(labelText, p.x - 2, p.y + 6)
@@ -471,7 +468,7 @@ Item {
 						var p = graph.gridPoint(i, graph.yAxisMin)
 
 						context.fillStyle = appletConfig.meteogramTextColor
-						context.font = "12px sans-serif"
+						context.font = "12px \"" + Kirigami.Theme.defaultFont.family + "\""
 						context.textAlign = 'center'
 
 						if (item.xLabel) {
@@ -528,7 +525,7 @@ Item {
 							}
 
 							context.fillStyle = appletConfig.meteogramPrecipitationTextColor
-							context.font = "12px sans-serif"
+							context.font = "12px \"" + Kirigami.Theme.defaultFont.family + "\""
 
 							var labelWidth = context.measureText(labelText).width
 							var p
@@ -589,9 +586,11 @@ Item {
 						location: PlasmaCore.Types.BottomEdge
 					}
 
-					// The icons of Settings > Weather > Icons (the system's or Yr); the font only has the
-					// few without one (wi-tornado, wi-dust, ... from Weather Canada).
-					readonly property bool styledIcon: /^weather-/.test(modelData.aggregratedIcon || "")
+					// Yr icons (Settings > Weather > Icons) or the fancy chart: the icons of that setting.
+					// Otherwise the Weather Icons font, as before (it also has the few without an icon:
+					// wi-tornado, wi-dust, ... from Weather Canada).
+					readonly property bool styledIcon: (meteogramView.fancy || plasmoid.configuration.weatherIconStyle === "yr")
+						&& /^weather-/.test(modelData.aggregratedIcon || "")
 					Kirigami.Icon {
 						visible: modelData.showIcon && parent.styledIcon
 						anchors.centerIn: parent

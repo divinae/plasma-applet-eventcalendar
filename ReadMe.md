@@ -89,7 +89,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
   direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
-  OpenWeatherMap / Weather Canada.
+  OpenWeatherMap (free or One Call 3.0) / Weather Canada; the system's icons or Yr's colored ones,
+  a simple or a fancy forecast chart.
 - **Starts instantly and works offline**: the last loaded events and tasks are shown right away
   and stay visible offline (Settings > Views > Offline turns it off; each widget keeps its own), fetches
   are retried automatically, and a banner shows when it can't connect. The Agenda and the Tasks tab
@@ -189,4 +190,6 @@ and `python3 tests/*_test.py`. Translations live in `package/translate/` (see it
 
 ## License
 
-GPL-2.0-or-later, like the original widget.
+GPL-2.0-or-later, like the original widget. The Yr weather icons (`package/contents/icons/weather`)
+are by Yr / MET Norway, MIT licensed ([metno/weathericons](https://github.com/metno/weathericons));
+their `<symbol>`s are inlined, for Qt before 6.7.

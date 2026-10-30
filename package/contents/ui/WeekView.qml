@@ -705,8 +705,8 @@ Item {
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
-		// Down to the grid's bottom edge, with as many events as fit there.
-		height: Math.max(0, weekView.sideBottom - startY)
+		// As tall as its events, at most down to the grid's bottom edge (as many as fit there).
+		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
 
 		UpNextPanel {
 			fill: true

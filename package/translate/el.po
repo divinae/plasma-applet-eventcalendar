@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:37+0100\n"
+"POT-Creation-Date: 2026-10-30 08:42+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1754,11 +1754,6 @@ msgstr "Κέλβιν"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Icons"
 msgstr "Εικονίδια"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgctxt "%1 = icon theme, eg: Breeze"
-msgid "System (%1)"
-msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "System"

@@ -363,7 +363,7 @@ ColumnLayout {
 		readonly property real minTemp: Math.min.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxTemp: Math.max.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxRain: Math.max(1, Math.max.apply(null, points.map(function(p) { return p.precipitation || 0 })))
-		readonly property var rainPeaks: panel.chartRainAmounts ? ForecastChart.rainPeaks(points, 3) : []
+		readonly property var rainPeaks: panel.chartRainAmounts ? ForecastChart.rainPeaks(points, 3, 0.3) : []
 		readonly property string units: plasmoid.configuration.weatherUnits
 		// The current time: the shown day is today, and it's within the chart.
 		readonly property var now: typeof timeModel !== "undefined" ? timeModel.currentTime : new Date()
@@ -549,9 +549,9 @@ ColumnLayout {
 			}
 		}
 
-		// The current time: a vertical line over the plot (red with a dot on the fancy chart).
+		// The current time on the fancy chart: a red vertical line with a dot (the simple one as before).
 		Rectangle {
-			visible: hourChart.nowIndex >= 0
+			visible: panel.fancyChart && hourChart.nowIndex >= 0
 			x: Math.round(hourChart.xAt(Math.max(0, hourChart.nowIndex)) - width / 2)
 			y: hourChart.plotTop - 4
 			width: panel.fancyChart ? 2 : 1
@@ -616,7 +616,7 @@ ColumnLayout {
 				y: hourChart.plotBottom - hourChart.rainHeight(point.precipitation) - implicitHeight
 				text: panel.precipitationText(point.precipitation)
 				font: Kirigami.Theme.smallFont
-				color: appletConfig.darkTheme ? "#8cc0ff" : "#1f6fd6"
+				color: Kirigami.Theme.linkColor
 			}
 		}
 	}

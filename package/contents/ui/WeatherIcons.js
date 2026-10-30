@@ -5,7 +5,8 @@
 // the icons of Settings > Weather > Icons:
 // - 'system': the icon theme's, symbolic (use with `fallback: name` for themes without one) but for
 //   the Weather panel's large one (largeSource)
-// - 'yr': the Yr weather symbols (MIT, https://github.com/metno/weathericons) in ../icons/weather;
+// - 'yr': the Yr weather symbols (MIT, https://github.com/metno/weathericons) in ../icons/weather,
+//   their <symbol>s inlined (Qt SVG draws them only from 6.7);
 //   the names without one (alerts, tornado, dust, ...) stay the system's.
 var yrSymbols = {
 	'weather-clear': 'clearsky_day',

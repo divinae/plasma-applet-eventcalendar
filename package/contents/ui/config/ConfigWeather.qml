@@ -46,19 +46,6 @@ ConfigPage {
 		})
 	}
 
-	// The icon theme's name for "System (Breeze)": its index.theme Name, else the directory name.
-	property string iconThemeName: ""
-	ExecUtil { id: iconThemeReader }
-	Component.onCompleted: {
-		var script = 't=$(kreadconfig6 --group Icons --key Theme); t=${t:-breeze}; '
-			+ 'for d in "${XDG_DATA_HOME:-$HOME/.local/share}" $(echo "${XDG_DATA_DIRS:-/usr/local/share:/usr/share}" | tr : " "); do '
-			+ 'if [ -f "$d/icons/$t/index.theme" ]; then kreadconfig6 --file "$d/icons/$t/index.theme" --group "Icon Theme" --key Name; exit 0; fi; '
-			+ 'done; echo "$t"'
-		iconThemeReader.execArgv(['sh', '-c', script], function(cmd, exitCode, exitStatus, stdout) {
-			page.iconThemeName = String(stdout || "").trim()
-		})
-	}
-
 	property var locationResults: []
 	property bool searchingLocations: false
 	property bool locationSearchDone: false
@@ -210,7 +197,9 @@ ConfigPage {
 				icon.name: "dialog-ok-apply"
 				text: page.owmChecking ? i18n("Checking…") : i18n("Check App Id")
 				description: page.owmCheckText
+				// Not the built-in app id: its requests count against everyone's shared limit.
 				enabled: !page.owmChecking && !!page.cfg_openWeatherMapAppId
+					&& page.cfg_openWeatherMapAppId !== page.configBridge.readDefault('openWeatherMapAppId', '')
 				onClicked: page.checkOpenWeatherMapAppId()
 			}
 		}
@@ -276,7 +265,7 @@ ConfigPage {
 				text: i18n("Icons")
 				configKey: 'weatherIconStyle'
 				model: [
-					{ value: 'system', text: page.iconThemeName ? i18nc("%1 = icon theme, eg: Breeze", "System (%1)", page.iconThemeName) : i18n("System") },
+					{ value: 'system', text: i18n("System") },
 					{ value: 'yr', text: i18n("Yr (MET Norway)") },
 				]
 			}
