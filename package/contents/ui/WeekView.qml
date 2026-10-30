@@ -159,7 +159,9 @@ Item {
 			return t >= from && t <= to
 		})
 	}
-	onDayCountChanged: goToday()
+	// After the columns follow (columnDays): right away the rebuild saw the old count (Day -> Week
+	// filled only the first column).
+	onDayCountChanged: Qt.callLater(goToday)
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []
@@ -443,7 +445,7 @@ Item {
 		resetScroll()
 		rebuild()
 	}
-	onWorkWeekChanged: rebuild()
+	onWorkWeekChanged: Qt.callLater(rebuild) // As above: once columnDays follows
 	Component.onCompleted: {
 		rebuild()
 		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
