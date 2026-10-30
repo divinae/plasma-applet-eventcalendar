@@ -42,6 +42,7 @@ Dialog {
 
 	onOpened: {
 		selectedCityId = ""
+		cityListView.currentIndex = -1 // A click on the last pick's row picks it again
 		cityNameInput.forceActiveFocus()
 		cityNameInput.selectAll()
 	}

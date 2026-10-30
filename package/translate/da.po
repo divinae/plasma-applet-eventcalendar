@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1769,14 +1769,6 @@ msgid "None"
 msgstr "Ingen"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogram viser"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " timer"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Prognosediagram"
 
@@ -1791,6 +1783,18 @@ msgstr "Simpelt"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Avanceret"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Viste timer"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Dagens graf i dagsvisningen og meteogrammet over dagsordenen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " timer"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4241,6 +4245,9 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogram viser"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

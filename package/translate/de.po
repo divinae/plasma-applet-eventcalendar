@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -1808,14 +1808,6 @@ msgid "None"
 msgstr "Keiner"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogramm zeigt"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " Stunden"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Vorhersagediagramm"
 
@@ -1830,6 +1822,18 @@ msgstr "Einfach"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Aufwendig"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Angezeigte Stunden"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Das heutige Diagramm in der Tagesansicht und das Meteogramm über der Agenda"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " Stunden"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4297,6 +4301,9 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogramm zeigt"
 
 #~ msgctxt "%1 = icon theme, eg: Breeze"
 #~ msgid "System (%1)"

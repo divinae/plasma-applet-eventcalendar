@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1779,14 +1779,6 @@ msgid "None"
 msgstr "Yok"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogramda gösterilen"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " saat"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Tahmin grafiği"
 
@@ -1801,6 +1793,18 @@ msgstr "Basit"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Gösterişli"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Gösterilen saatler"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Gün görünümündeki bugünün grafiği ve ajandanın üstündeki meteogram"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " saat"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4260,6 +4264,9 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogramda gösterilen"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

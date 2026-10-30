@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1762,14 +1762,6 @@ msgid "None"
 msgstr "없음"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "기상 그래프 표시 기간"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " 시간"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "예보 차트"
 
@@ -1784,6 +1776,18 @@ msgstr "간단"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "화려"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "표시할 시간"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "일 보기의 오늘 차트와 일정 위의 기상도"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " 시간"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4199,6 +4203,9 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "기상 그래프 표시 기간"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

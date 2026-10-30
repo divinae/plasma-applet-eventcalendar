@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1757,14 +1757,6 @@ msgid "None"
 msgstr "ללא"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "המטאוגרמה מציגה"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " שעות"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "תרשים תחזית"
 
@@ -1779,6 +1771,18 @@ msgstr "פשוט"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "מהודר"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "שעות מוצגות"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "התרשים של היום בתצוגת היום והמטאוגרמה מעל סדר היום"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " שעות"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4306,6 +4310,9 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "המטאוגרמה מציגה"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

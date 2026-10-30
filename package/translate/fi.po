@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1527,14 +1527,6 @@ msgid "None"
 msgstr "Ei mitään"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogrammi näyttää"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " tuntia"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Ennustekaavio"
 
@@ -1549,6 +1541,18 @@ msgstr "Yksinkertainen"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Näyttävä"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Näytettävät tunnit"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Tämän päivän kaavio päivänäkymässä ja meteogrammi asialistan yläpuolella"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " tuntia"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -3939,6 +3943,9 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogrammi näyttää"
 
 #~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 #~ msgstr "Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan PIM-tapahtumaliitännäisen asetussivulla (Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne ovat yksi kohta."

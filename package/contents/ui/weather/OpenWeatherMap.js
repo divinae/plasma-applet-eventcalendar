@@ -280,9 +280,14 @@ function withCurrent(args, list, xhr, callback) {
 
 function updateFreeDaily(config, callback) {
 	var args = configArgs(config)
-	function fromSteps() {
+	// dailyRefusedNow: /forecast/daily answered 401; the app id is fine (the days aren't in its
+	// plan) only if /forecast works.
+	function fromSteps(dailyRefusedNow) {
 		fetch('forecast', args, function(err, data, xhr) {
 			if (err) return handleError('OpenWeatherMap.forecast', callback, err, data, xhr)
+			if (dailyRefusedNow) {
+				dailyRefused[args.appId] = Date.now()
+			}
 			withCurrent(args, daysFromSteps(parseHourlyData(data, args.units)), xhr, callback)
 		})
 	}
@@ -291,9 +296,7 @@ function updateFreeDaily(config, callback) {
 	}
 	fetch('forecast/daily', args, function(err, data, xhr) {
 		if (err && xhr && xhr.status === 401) {
-			// The app id is fine (else /forecast fails too): the days aren't in its plan.
-			dailyRefused[args.appId] = Date.now()
-			return fromSteps()
+			return fromSteps(true)
 		}
 		if (err) return handleError('OpenWeatherMap.forecast/daily', callback, err, data, xhr)
 		withCurrent(args, parseDailyData(data, args.units), xhr, callback)

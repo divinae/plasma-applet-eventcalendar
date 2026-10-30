@@ -610,7 +610,7 @@
 			<default>sky</default>
 		</entry>
 		<entry name="meteogramHours" type="uint">
-			<default>30</default>
+			<default>24</default>
 		</entry>
 	</group>
 

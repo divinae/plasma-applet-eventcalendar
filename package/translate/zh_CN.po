@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1722,14 +1722,6 @@ msgid "None"
 msgstr "无"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "气象图显示时长"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " 小时"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "预报图表"
 
@@ -1744,6 +1736,18 @@ msgstr "简单"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "精美"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "显示的小时数"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "日视图中今天的图表和议程上方的气象图"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " 小时"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4147,6 +4151,9 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "气象图显示时长"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

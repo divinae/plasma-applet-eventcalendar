@@ -279,15 +279,6 @@ ConfigPage {
 					{ value: 'none', text: i18nc("no icon background", "None") },
 				]
 			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSpin {
-				label: i18n("Meteogram shows")
-				configKey: 'meteogramHours'
-				suffix: i18n(" hours")
-				from: 9
-				to: 48
-				stepSize: 3
-			}
 		}
 
 		//--- The Weather panel's hourly chart (Day view)
@@ -303,6 +294,16 @@ ConfigPage {
 					{ value: 'simple', text: i18n("Simple") },
 					{ value: 'fancy', text: i18n("Fancy") },
 				]
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
+				label: i18n("Hours shown")
+				hint: i18n("Today's chart in the Day view and the meteogram above the agenda")
+				configKey: 'meteogramHours'
+				suffix: i18n(" hours")
+				from: 9
+				to: 48
+				stepSize: 3
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {

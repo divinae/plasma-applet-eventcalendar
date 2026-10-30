@@ -14,6 +14,7 @@ var LIMITED_MAX_AGE = 60 * 60 * 1000
 
 var cache = {} // url -> { at, data }
 var pending = {} // url -> [callbacks]
+var failedAt = {} // url -> when it last failed
 var budget = { day: '', counts: {}, warned: {} }
 
 function now() {
@@ -64,6 +65,10 @@ function getJSON(opt, callback) {
 	if (cached && at - cached.at < maxAge) {
 		return callback(null, cached.data, null)
 	}
+	// Past the budget a failing URL too is asked at most once an hour (failures aren't cached).
+	if (overBudget && failedAt[url] && at - failedAt[url] < LIMITED_MAX_AGE) {
+		return callback('Over the daily request budget', null, null)
+	}
 	if (pending[url]) {
 		pending[url].push(callback)
 		return
@@ -77,6 +82,9 @@ function getJSON(opt, callback) {
 		if (!err) {
 			pruneCache(at)
 			cache[url] = { at: now(), data: data }
+			delete failedAt[url]
+		} else {
+			failedAt[url] = now()
 		}
 		var callbacks = pending[url]
 		delete pending[url]

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1524,14 +1524,6 @@ msgid "None"
 msgstr "Nessuno"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Il meteogramma mostra"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " ore"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Grafico delle previsioni"
 
@@ -1546,6 +1538,18 @@ msgstr "Semplice"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Elaborato"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Ore mostrate"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Il grafico di oggi nella vista Giorno e il meteogramma sopra l'agenda"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " ore"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -3936,6 +3940,9 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Il meteogramma mostra"
 
 #~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 #~ msgstr "Mostrati in sola lettura. Quali calendari Akonadi mostrare si sceglie nella pagina delle impostazioni del plugin degli eventi PIM (Eventi > Calendari Plasma). Nel menu dei calendari del popup sono una sola voce."

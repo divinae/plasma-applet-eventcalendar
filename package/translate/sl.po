@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:42+0100\n"
+"POT-Creation-Date: 2026-10-30 09:01+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1782,14 +1782,6 @@ msgid "None"
 msgstr "Brez"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogram prikazuje"
-
-#: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
-msgstr " ur"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
 msgstr "Graf napovedi"
 
@@ -1804,6 +1796,18 @@ msgstr "Preprost"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
 msgstr "Podroben"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Prikazane ure"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Današnji graf v dnevnem pogledu in meteogram nad dnevnim redom"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid " hours"
+msgstr " ur"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
@@ -4341,6 +4345,9 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogram prikazuje"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "

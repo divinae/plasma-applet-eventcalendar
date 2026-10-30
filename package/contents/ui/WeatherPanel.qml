@@ -286,21 +286,23 @@ ColumnLayout {
 				textFormat: Text.PlainText // User text: never parsed as HTML
 				opacity: panel.dimOpacity
 			}
-			// Today: the high and the low, then the rain (when there is any), in words.
+		}
+		// Today: the high and the low, then the rain (when there is any), on the right, in the room
+		// beside the temperature.
+		ColumnLayout {
+			visible: !panel.compact && !!panel.today && panel.isToday
+			Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+			spacing: 2
 			PlasmaComponents3.Label {
-				visible: !panel.compact && !!panel.today && panel.isToday
-				Layout.fillWidth: true
-				Layout.topMargin: 2
-				elide: Text.ElideRight
+				Layout.alignment: Qt.AlignRight
 				textFormat: Text.PlainText
-				text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
-				opacity: panel.dimOpacity
+				text: panel.today ? "↑ " + Shared.formatTemp(panel.today.temp.max) + "   ↓ " + Shared.formatTemp(panel.today.temp.min) : ""
+				Accessible.name: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			}
 			PlasmaComponents3.Label {
 				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
-				visible: !panel.compact && !!panel.today && panel.isToday && !!rain
-				Layout.fillWidth: true
-				elide: Text.ElideRight
+				visible: !!rain
+				Layout.alignment: Qt.AlignRight
 				textFormat: Text.PlainText
 				text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
 				opacity: panel.dimOpacity
@@ -332,16 +334,16 @@ ColumnLayout {
 		opacity: panel.dimOpacity
 	}
 
-	//--- Next hours: temperature line with rain bars, labels every 3 hours (Settings > Weather >
+	//--- Next hours: temperature line with rain bars, labels every few hours (Settings > Weather >
 	// Forecast chart):
-	// - simple: a line in the accent color, plain rain bars, a grey line at the current time
+	// - simple: a line in the accent color, plain rain bars
 	// - fancy: a smooth line colored by the temperature over a soft area, the nights shaded, a dashed
 	//   line at freezing, rounded rain bars, the high and the low in bold, a red line at the current time
 	readonly property bool fancyChart: plasmoid.configuration.weatherChartStyle === "fancy"
 	readonly property bool chartRainAmounts: plasmoid.configuration.weatherChartRainAmounts
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
-		// The hours the chart spans: 12 by the hour, 36 in 3 hour steps (OpenWeatherMap's free API).
+		// The hours the chart spans (Settings > Weather > "Meteogram shows").
 		readonly property int hours: hourChart.points.length > 1 ? Math.round((hourChart.points[hourChart.points.length - 1].dt - hourChart.points[0].dt) / 3600) : 0
 		text: panel.isToday ? i18np("Next hour", "Next %1 hours", hours) : i18nc("weather by hour of the shown day", "During the day")
 		readonly property real rain: ForecastChart.rainTotal(hourChart.points)
@@ -353,7 +355,27 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.preferredHeight: Kirigami.Units.gridUnit * 7 + iconSize - Kirigami.Units.iconSizes.small
 
-		readonly property var points: panel.hourly.slice(0, 13)
+		// Today: the next hours of Settings > Weather > "Meteogram shows" (as the agenda's meteogram);
+		// another day: its hours.
+		readonly property int hoursShown: Math.max(9, plasmoid.configuration.meteogramHours || 24)
+		readonly property var points: {
+			if (!panel.isToday || panel.hourly.length === 0) {
+				return panel.hourly
+			}
+			var last = panel.hourly[0].dt + hoursShown * 3600
+			return panel.hourly.filter(function(point) { return point.dt <= last })
+		}
+		// Every labelStep-th point labeled (icon, temperature, time): about 45 px apart at least.
+		readonly property int labelStep: {
+			var spacing = points.length > 1 ? (width - 12) / (points.length - 1) : width
+			var steps = [1, 2, 3, 6, 12]
+			for (var i = 0; i < steps.length; i++) {
+				if (steps[i] * spacing >= Kirigami.Units.gridUnit * 2.5) {
+					return steps[i]
+				}
+			}
+			return 12
+		}
 		readonly property int iconSize: plasmoid.configuration.weatherChartLargeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
 		readonly property real iconRow: iconSize + 2
 		readonly property real labelRow: Math.ceil(chartFontMetrics.height) + 2
@@ -363,12 +385,12 @@ ColumnLayout {
 		readonly property real minTemp: Math.min.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxTemp: Math.max.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxRain: Math.max(1, Math.max.apply(null, points.map(function(p) { return p.precipitation || 0 })))
-		readonly property var rainPeaks: panel.chartRainAmounts ? ForecastChart.rainPeaks(points, 3, 0.3) : []
+		readonly property var rainPeaks: panel.chartRainAmounts ? ForecastChart.rainPeaks(points, labelStep, 0.3) : []
 		readonly property string units: plasmoid.configuration.weatherUnits
 		// The current time: the shown day is today, and it's within the chart.
 		readonly property var now: typeof timeModel !== "undefined" ? timeModel.currentTime : new Date()
 		readonly property real nowIndex: panel.isToday ? ForecastChart.nowIndex(points, now.getTime()) : -1
-		readonly property color nowColor: panel.fancyChart ? "#e0403a" : ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
+		readonly property color nowColor: "#e0403a"
 		function xAt(i) {
 			return points.length > 1 ? 6 + i * (width - 12) / (points.length - 1) : width / 2
 		}
@@ -386,8 +408,8 @@ ColumnLayout {
 				&& points.findIndex(function(p) { return p.temp === t }) === i
 		}
 		function isLabeled(i) {
-			// An extreme replaces the 3-hourly label next to it, so they don't overlap.
-			if (i % 3 !== 0) {
+			// An extreme replaces the regular label next to it, so they don't overlap.
+			if (i % labelStep !== 0) {
 				return isExtreme(i)
 			}
 			return isExtreme(i) || !(i > 0 && isExtreme(i - 1)) && !(i + 1 < points.length && isExtreme(i + 1))
@@ -554,11 +576,10 @@ ColumnLayout {
 			visible: panel.fancyChart && hourChart.nowIndex >= 0
 			x: Math.round(hourChart.xAt(Math.max(0, hourChart.nowIndex)) - width / 2)
 			y: hourChart.plotTop - 4
-			width: panel.fancyChart ? 2 : 1
+			width: 2
 			height: hourChart.plotBottom - y
 			color: hourChart.nowColor
 			Rectangle {
-				visible: panel.fancyChart
 				anchors.horizontalCenter: parent.horizontalCenter
 				y: -height / 2
 				width: 7
@@ -568,11 +589,11 @@ ColumnLayout {
 			}
 		}
 
-		// Every 3 hours: icon on top, temperature above the point, time at the bottom.
+		// Every labelStep points: icon on top, temperature above the point, time at the bottom.
 		Repeater {
 			model: hourChart.points.length
 			Item {
-				visible: index % 3 === 0
+				visible: index % hourChart.labelStep === 0
 				readonly property var point: hourChart.points[index]
 				x: hourChart.xAt(index)
 				width: 0
