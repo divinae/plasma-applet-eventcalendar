@@ -11,16 +11,25 @@ Item {
 	signal submitNewEventForm(string calendarId, var date, string text)
 	// Scrolled to the end: the next month below (Logic.loadMoreAgenda).
 	signal endReached()
-	// The first day in sight at the top of the list (the small month beside it follows it).
+	// The first and last day in sight (the small month beside it marks them).
 	property date topDate: new Date(NaN)
-	function updateTopDate() {
-		var index = agendaList.indexAt(0, agendaList.contentY + 1)
+	property date bottomDate: new Date(NaN)
+	function dateAt(y) {
+		var index = agendaList.indexAt(0, y)
 		if (index < 0) {
-			index = agendaList.indexAt(0, agendaList.contentY + agendaList.spacing + 1)
+			index = agendaList.indexAt(0, y + agendaList.spacing + 1)
 		}
 		var agendaItem = index >= 0 && index < root.agendaModel.count ? root.agendaModel.get(index) : null
-		if (agendaItem && agendaItem.date && agendaItem.date.getTime() !== topDate.getTime()) {
-			topDate = agendaItem.date
+		return agendaItem && agendaItem.date ? agendaItem.date : null
+	}
+	function updateTopDate() {
+		var top = dateAt(agendaList.contentY + 1)
+		var bottom = dateAt(agendaList.contentY + agendaList.height - agendaList.spacing - 2) || (agendaList.count > 0 ? root.agendaModel.get(agendaList.count - 1).date : null)
+		if (top && top.getTime() !== topDate.getTime()) {
+			topDate = top
+		}
+		if (bottom && bottom.getTime() !== bottomDate.getTime()) {
+			bottomDate = bottom
 		}
 	}
 
@@ -38,6 +47,7 @@ Item {
 		// At the end after scrolling (not a short list that fits): the next month.
 		onContentYChanged: agendaView.updateTopDate()
 		onCountChanged: Qt.callLater(agendaView.updateTopDate)
+		onHeightChanged: Qt.callLater(agendaView.updateTopDate)
 		onAtYEndChanged: {
 			if (atYEnd && contentHeight > height && count > 0) {
 				agendaView.endReached()

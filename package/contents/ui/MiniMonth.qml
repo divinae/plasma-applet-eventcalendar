@@ -62,6 +62,11 @@ ColumnLayout {
 		return count >= 5 ? 3 : count >= 3 ? 2 : count > 0 ? 1 : 0
 	}
 
+	// The days in sight elsewhere (the Agenda): a band across them, no shown-day circle.
+	property date rangeStart: new Date(NaN)
+	property date rangeEnd: new Date(NaN)
+	readonly property bool hasRange: !isNaN(rangeStart.getTime()) && !isNaN(rangeEnd.getTime())
+	readonly property bool showSelection: !hasRange
 	readonly property real cellSize: Math.floor(width / 7)
 	readonly property real rowHeight: Math.round(Kirigami.Units.gridUnit * 1.75)
 	spacing: 2
@@ -135,27 +140,60 @@ ColumnLayout {
 				Accessible.name: eventCount > 0 ? i18ncp("%2 = date", "%2, %1 event", "%2, %1 events", eventCount, text) : text
 				onClicked: miniMonth.dayClicked(day)
 
-				background: Rectangle {
-					anchors.centerIn: parent
-					width: Math.min(parent.width, parent.height) - 2
-					height: width
-					radius: width / 2
-					color: dayButton.isToday ? Kirigami.Theme.highlightColor
-						: dayButton.hovered ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.1)
-						: "transparent"
-					// The shown day: a ring in the accent color (today too: then a light one around it,
-					// see the ring below).
-					border.width: dayButton.selected && !dayButton.isToday ? 2 : 0
-					border.color: Kirigami.Theme.highlightColor
+				// Today: a solid accent circle, the only solid one. The shown day: a pale accent circle,
+				// its number in the accent color (as Google Calendar). The days in sight (rangeStart ..
+				// rangeEnd, the Agenda): a soft band across the row instead.
+				readonly property color accent: Kirigami.Theme.highlightColor
+				readonly property bool marked: selected && miniMonth.showSelection
+				readonly property bool inRange: miniMonth.hasRange && day >= Shared.startOfDay(miniMonth.rangeStart) && day <= Shared.startOfDay(miniMonth.rangeEnd)
+				readonly property bool rangeLeftEnd: inRange && (index % 7 === 0 || Shared.isSameDate(day, miniMonth.rangeStart))
+				readonly property bool rangeRightEnd: inRange && (index % 7 === 6 || Shared.isSameDate(day, miniMonth.rangeEnd))
+				readonly property color numberColor: isToday ? Kirigami.Theme.highlightedTextColor
+					: marked ? (appletConfig.darkTheme ? Qt.lighter(accent, 1.3) : Qt.darker(accent, 1.3))
+					: Kirigami.Theme.textColor
+				background: Item {
+					// The band: rounded at its ends (a rounded piece and a square one over its inner half).
+					Item {
+						visible: dayButton.inRange
+						anchors.fill: parent
+						anchors.topMargin: 1
+						anchors.bottomMargin: 1
+						readonly property color bandColor: Qt.rgba(dayButton.accent.r, dayButton.accent.g, dayButton.accent.b, 0.14)
+						readonly property bool bothEnds: dayButton.rangeLeftEnd && dayButton.rangeRightEnd
+						readonly property bool oneEnd: dayButton.rangeLeftEnd || dayButton.rangeRightEnd
+						// The rounded end: a pill, only its outer half shown (no overlap, an even tint).
+						Item {
+							visible: parent.oneEnd
+							clip: !parent.bothEnds
+							x: dayButton.rangeLeftEnd ? 0 : parent.width / 2
+							width: parent.bothEnds ? parent.width : parent.width / 2
+							height: parent.height
+							Rectangle {
+								x: -parent.x
+								width: dayButton.width
+								height: parent.height
+								radius: height / 2
+								color: parent.parent.bandColor
+							}
+						}
+						Rectangle {
+							visible: !parent.bothEnds
+							x: dayButton.rangeLeftEnd ? parent.width / 2 : 0
+							width: parent.oneEnd ? parent.width / 2 : parent.width
+							height: parent.height
+							color: parent.bandColor
+						}
+					}
 					Rectangle {
-						visible: dayButton.selected && dayButton.isToday
 						anchors.centerIn: parent
-						width: parent.width + 4
+						anchors.verticalCenterOffset: -Math.round(parent.height * 0.08)
+						width: Math.min(parent.width, parent.height) - 6
 						height: width
 						radius: width / 2
-						color: "transparent"
-						border.width: 2
-						border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.45)
+						color: dayButton.isToday ? dayButton.accent
+							: dayButton.marked ? Qt.rgba(dayButton.accent.r, dayButton.accent.g, dayButton.accent.b, dayButton.hovered ? 0.3 : 0.2)
+							: dayButton.hovered ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.1)
+							: "transparent"
 					}
 				}
 				contentItem: Item {
@@ -165,11 +203,9 @@ ColumnLayout {
 						text: dayButton.day.getDate()
 						textFormat: Text.PlainText
 						font.pointSize: Kirigami.Theme.smallFont.pointSize
-						font.weight: dayButton.isToday || dayButton.selected ? Font.Bold : Font.Normal
-						color: dayButton.isToday ? Kirigami.Theme.highlightedTextColor
-							: dayButton.selected ? Kirigami.Theme.highlightColor
-							: Kirigami.Theme.textColor
-						opacity: dayButton.inMonth || dayButton.selected || dayButton.isToday ? 1 : 0.45
+						font.weight: dayButton.isToday || dayButton.marked ? Font.Bold : Font.Normal
+						color: dayButton.numberColor
+						opacity: dayButton.inMonth || dayButton.marked || dayButton.isToday ? 1 : 0.45
 					}
 					// How busy: 1-3 small dots under the number, in the colors of the day's events.
 					Row {
@@ -186,7 +222,7 @@ ColumnLayout {
 								// The events' colors as their bars elsewhere (the Google palette setting).
 								color: dayButton.isToday ? Kirigami.Theme.highlightedTextColor
 									: modelData ? appletConfig.eventBarColor(appletConfig.eventColor(modelData)) : Kirigami.Theme.highlightColor
-								opacity: dayButton.inMonth || dayButton.selected || dayButton.isToday ? 1 : 0.45
+								opacity: dayButton.inMonth || dayButton.marked || dayButton.isToday ? 1 : 0.45
 							}
 						}
 					}
