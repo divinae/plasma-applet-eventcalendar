@@ -575,6 +575,10 @@
 		<entry name="dayShowUpNext" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="dayUpNextCount" type="uint">
+			<!-- Day view's Up next: how many events it lists before "Show more" (0: as many as fit) -->
+			<default>0</default>
+		</entry>
 		<entry name="dayShowWeather" type="bool">
 			<default>true</default>
 		</entry>

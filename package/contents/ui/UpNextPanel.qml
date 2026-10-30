@@ -29,7 +29,9 @@ ColumnLayout {
 	property bool fill: false
 	readonly property int shownLimit: expanded ? Math.max(15, collapsedLimit * 2) : collapsedLimit
 	readonly property int shownDays: expanded ? Math.max(7, collapsedDays * 2) : collapsedDays
-	readonly property int collapsedLimit: fill ? 50 : limit
+	// Filling: as many as fit, or at most Settings > Views > "Up next lists" before "Show more".
+	readonly property int fillLimit: plasmoid.configuration.dayUpNextCount > 0 ? plasmoid.configuration.dayUpNextCount : 50
+	readonly property int collapsedLimit: fill ? fillLimit : limit
 	readonly property int collapsedDays: fill ? 14 : days
 	// The height it may take (0: no limit): only the events that fit whole are listed.
 	property real maxHeight: 0

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:26+0100\n"
+"POT-Creation-Date: 2026-10-30 10:52+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1483,6 +1483,19 @@ msgstr "작은 달력"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "다음 일정"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Up next lists"
+msgstr "다음 일정 표시 개수"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "0 = as many as fit; the rest under \"Show more\""
+msgstr "0 = 들어가는 만큼, 나머지는 \"더 보기\"에서"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of events"
+msgid " events"
+msgstr "개"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"

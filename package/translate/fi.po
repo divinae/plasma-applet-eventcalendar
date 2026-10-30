@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:26+0100\n"
+"POT-Creation-Date: 2026-10-30 10:52+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1289,6 +1289,19 @@ msgstr "Pieni kalenteri"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "Seuraavaksi"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Up next lists"
+msgstr "Seuraavaksi näyttää"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "0 = as many as fit; the rest under \"Show more\""
+msgstr "0 = niin monta kuin mahtuu; loput kohdassa \"Näytä lisää\""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of events"
+msgid " events"
+msgstr " tapahtumaa"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"

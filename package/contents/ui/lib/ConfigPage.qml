@@ -281,6 +281,8 @@ KCM.SimpleKCM {
 	property var cfg_uiStyle
 	property var cfg_uiStyleDefault
 	property var cfg_animationsEnabled
+	property var cfg_dayUpNextCount
+	property var cfg_dayUpNextCountDefault
 	property var cfg_animationsEnabledDefault
 	property var cfg_googleColorPalette
 	property var cfg_googleColorPaletteDefault

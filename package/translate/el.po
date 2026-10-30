@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:26+0100\n"
+"POT-Creation-Date: 2026-10-30 10:52+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1526,6 +1526,19 @@ msgstr "Μικρό ημερολόγιο"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "Επόμενα"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Up next lists"
+msgstr "Τα επόμενα δείχνουν"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "0 = as many as fit; the rest under \"Show more\""
+msgstr "0 = όσα χωράνε· τα υπόλοιπα στο «Εμφάνιση περισσότερων»"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of events"
+msgid " events"
+msgstr " γεγονότα"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:26+0100\n"
+"POT-Creation-Date: 2026-10-30 10:52+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1478,6 +1478,19 @@ msgstr "לוח שנה קטן"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "הבא בתור"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Up next lists"
+msgstr "הבא מציג"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "0 = as many as fit; the rest under \"Show more\""
+msgstr "0 = כמה שנכנסים; השאר תחת „הצג עוד”"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of events"
+msgid " events"
+msgstr " אירועים"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"

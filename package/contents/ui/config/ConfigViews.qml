@@ -334,6 +334,15 @@ ConfigPage {
 				}
 			}
 			FormCard.FormDelegateSeparator {}
+			FormConfigSpin {
+				label: i18n("Up next lists")
+				hint: i18n("0 = as many as fit; the rest under \"Show more\"")
+				configKey: 'dayUpNextCount'
+				suffix: i18nc("number of events", " events")
+				from: 0
+				to: 50
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("All-day events side by side")
 				description: i18n("In the Day view, three or more all-day events take a third of the width each, three in a row. Hovering one shows it in full.")
