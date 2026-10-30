@@ -94,7 +94,7 @@ CalendarManager {
 			var names = namesByColor[PlasmaCalendarUtils.colorKey(group.color)]
 			calendarList.push({
 				"id": group.id,
-				"summary": names ? names.join(separator) : i18n("KDE PIM (Akonadi)"),
+				"summary": names ? akonadiCalendarName(names.join(separator)) : i18n("KDE PIM (Akonadi)"),
 				"description": i18np("%1 event", "%1 events", group.count),
 				"backgroundColor": group.color,
 				"accessRole": "reader",
@@ -103,15 +103,12 @@ CalendarManager {
 		})
 		// Events without a color: all the Akonadi events as one calendar, named after the calendars shown.
 		if (pimColorCalendars.length === 0) {
-			if (shownNames.length === 0) {
-				if (!pimEventsColor) {
-					return // No Akonadi events either
-				}
-				shownNames.push(i18n("KDE PIM (Akonadi)"))
+			if (shownNames.length === 0 && !pimEventsColor) {
+				return // No Akonadi events either
 			}
 			calendarList.push({
 				"id": calendarManagerId + "_Events",
-				"summary": shownNames.join(i18nc("separator of names in a list", ", ")),
+				"summary": shownNames.length ? akonadiCalendarName(shownNames.join(separator)) : i18n("KDE PIM (Akonadi)"),
 				"backgroundColor": pimEventsColor || Kirigami.Theme.highlightColor.toString(),
 				"accessRole": "reader",
 				"isTasklist": false,
@@ -157,6 +154,11 @@ CalendarManager {
 			refresh()
 		}
 	}
+	// "Akonadi: <calendar names>", to tell them from the Google calendars of the same name.
+	function akonadiCalendarName(names) {
+		return i18nc("%1 = calendar names", "Akonadi: %1", names)
+	}
+
 	// [{ id, color, count }] from the last fetched Akonadi events, by color.
 	property var pimColorCalendars: []
 	function updatePimColorCalendars(events) {

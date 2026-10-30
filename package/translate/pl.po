@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 18:11+0100\n"
+"POT-Creation-Date: 2026-10-30 18:36+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -151,6 +151,11 @@ msgid_plural "%1 events"
 msgstr[0] "%1 wydarzenie"
 msgstr[1] "%1 wydarzenia"
 msgstr[2] "%1 wydarzeń"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr ""
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
