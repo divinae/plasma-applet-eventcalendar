@@ -43,7 +43,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days,
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
   the whole day; drag events to move or resize them; beside the Day view's hours: a small month
-  with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
+  with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days, with the Day view's small month, tasks and weather beside it; more months as you scroll), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
   show or hide calendars from the header, a work week, a second time zone, keyboard navigation,
   **Go to date** (G: "next friday", "15 nov", "+2w"). The popup opens in your default view or the
   last one used; the view switcher is tabs or a drop-down, and a right click on the header picks
@@ -120,9 +120,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.11.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.12.0-plasma6.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.11.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.12.0-plasma6.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a

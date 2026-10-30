@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.11.0
+    1.12.0
 
 **License**
 
@@ -125,30 +125,22 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.11.0)**
+**Changelog (1.12.0)**
 
 ```
-Weather
-- Colorful Yr icons or the system's; a fancy forecast chart (temperature colors, nights, rain amounts)
-- Now: high, low and rain beside the temperature; the location opens the full forecast on the web
-- Chart hours setting (24 by default), up to a week of next days
-- OpenWeatherMap: the current weather, One Call 3.0, the days without a paid plan, a working city search, far fewer requests
-
-Tasks
-- Day view: all open tasks of a list, In progress and To do
-- A ticket link in a task's name shows as its key (Jira CSS-2175, GitHub repo#12)
-
-Calendars
-- KDE PIM (Akonadi): Refresh reloads it, calendars shown and hidden by color, a Google calendar synced both ways listed once
-- Day view: all-day events side by side (option), Up next as tall as its events
-
-Thanks to frispete for the weather and Akonadi work
+- Faster: views open 2-3x faster; months seen stay in memory and the next ones load ahead
+- Agenda: the Day view's layout (small month, today's tasks and weather beside the list), more months when scrolled to the end
+- Small month: today a solid tile, the shown day a pale one, the Agenda's days in sight a band
+- Gentle animations (month paging, cards, ticking off a task, the clock's chip), can be turned off
+- Up next: choose how many days it covers
+- Weather: high, low and rain beside the temperature, the location opens the full forecast
+- Fixes: Day -> Week showed only the first column
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.11.0-plasma6.0.plasmoid` from the
-  [v1.11.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.11.0),
+- **Product file:** `eventcalendar-v1.12.0-plasma6.0.plasmoid` from the
+  [v1.12.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.12.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

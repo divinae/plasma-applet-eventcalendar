@@ -1,3 +1,25 @@
+## v1.12.0 - October 30 2026
+
+### Faster
+* Views open 2–3× faster: hidden parts are no longer built (the "maybe" stripes of every event, a menu for every row, a task row's buttons, the Day view's hidden task panels), and the month view's events aren't copied for every day.
+* Months seen stay in memory for the session, and a fetch also loads the month before and after: paging shows the events at once. Refresh, the poll and changes made here fetch again.
+
+### Agenda
+* The Day view's layout: the small month on the left (it follows the list as it scrolls, the days in sight as a band), today's tasks and weather on the right, the list between them.
+* Scrolled to its end, it adds the next month (up to 12).
+
+### Look and feel
+* Small month: today is a solid tile, the shown day a pale one; bolder numbers.
+* Gentle animations: month and week paging, cards opening and closing, a task ticked off (it's struck through before it moves), the clock's chip, folding the Day view's tasks. Settings > Views > Animations turns them off (also off with Plasma's animation speed at instant).
+* The header's title keeps its width while paging: the arrows stay put.
+* Weather: high, low and rain (on a blue pill) beside the temperature; the location opens the full forecast on the web (meteoblue, OpenWeatherMap or Weather Canada); OpenWeatherMap's city as the location.
+* Day view: Settings > Views > "Up next shows" sets how many days Up next covers (14).
+
+### Fixes
+* Switching from Day to Week showed events only in the first column.
+* The fancy forecast chart shaded nights from the morning; freezing rain and hail count as severe weather.
+* Find City (OpenWeatherMap): picking the last chosen city again saved an empty one.
+
 ## v1.11.0 - October 30 2026
 
 ### Weather (thanks to frispete, #7, #8)
