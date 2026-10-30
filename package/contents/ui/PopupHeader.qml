@@ -336,10 +336,34 @@ PlasmaExtras.PlasmoidHeading {
 			spacing: 0
 			// Full text width (a Text's implicitWidth ignores eliding), and the gap to the buttons as
 			// its own item: a Layout margin was taken out of that width and cut the title off.
+			// The title keeps its width while paging (the arrows didn't stay put under the pointer):
+			// in the month view as wide as the widest month's title, in the others as the widest
+			// title seen since the view was shown. Its text ends at the arrows.
+			FontMetrics {
+				id: titleMetrics
+				font: titleHeading.font
+			}
+			readonly property real widestMonthTitle: {
+				var year = " " + new Date().getFullYear()
+				var widest = 0
+				for (var i = 0; i < 12; i++) {
+					var name = Qt.locale().standaloneMonthName(i, Locale.LongFormat)
+					name = name.charAt(0).toUpperCase() + name.slice(1)
+					widest = Math.max(widest, titleMetrics.advanceWidth(name + year))
+				}
+				return widest
+			}
+			property real widestTitleSeen: 0
+			readonly property string titleMode: header.tasksMode ? "tasks" : header.weekViewItem ? (header.weekViewItem.singleDay ? "day" : "week") : "month"
+			onTitleModeChanged: widestTitleSeen = 0
+			readonly property real titleWidth: Math.ceil(Math.max(titleHeading.implicitWidth, widestTitleSeen,
+				titleMode === "month" ? widestMonthTitle : 0))
 			Kirigami.Heading {
 				id: titleHeading
-				Layout.preferredWidth: Math.ceil(implicitWidth) // Fractional at 2x scale: rounding down elided it
-				Layout.maximumWidth: Math.ceil(implicitWidth)
+				Layout.preferredWidth: centerGroup.titleWidth // Fractional at 2x scale: rounding down elided it
+				Layout.maximumWidth: centerGroup.titleWidth
+				horizontalAlignment: Text.AlignRight
+				onImplicitWidthChanged: centerGroup.widestTitleSeen = Math.max(centerGroup.widestTitleSeen, implicitWidth)
 				Layout.minimumWidth: 0
 				Layout.fillWidth: true
 				level: 2

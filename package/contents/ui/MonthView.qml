@@ -478,6 +478,7 @@ PinchArea {
 	IslandCard {
 		id: gridCard
 		shown: root.islands
+		clipContent: true // The month sliding in while paging
 		// Edge to edge: the popup's own padding is the margin (a card margin on top of it doubled it).
 		anchors.fill: parent
 
@@ -486,10 +487,13 @@ PinchArea {
 			id: stack
 			// Paging (previous / next): the new month slides in from its side.
 			transform: Translate { id: pageShift }
+			// Paging: the new month slides in across the card from its side.
 			SlideIn {
 				id: pageSlide
 				target: stack
 				shift: pageShift
+				distance: stack.width
+				fade: false
 			}
 
 			pushEnter: Transition {

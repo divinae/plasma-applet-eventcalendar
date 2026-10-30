@@ -11,6 +11,8 @@ ParallelAnimation {
 	property Item target: null
 	property Translate shift: null // The target's transform
 	property real distance: Kirigami.Units.gridUnit * 1.2
+	// false: a plain slide (eg: a whole month across the card), no fade.
+	property bool fade: true
 
 	function run(dx, dy) {
 		if (!target || !appletConfig.animations) {
@@ -25,7 +27,7 @@ ParallelAnimation {
 	}
 
 	NumberAnimation {
-		target: slideIn.target
+		target: slideIn.fade ? slideIn.target : null
 		property: "opacity"
 		from: 0
 		to: 1
