@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 22:56+0100\n"
+"POT-Creation-Date: 2026-10-30 12:48+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -844,6 +844,30 @@ msgstr "Nenhum calendário carregado ainda. Use o botão de recarregar."
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Task lists are chosen on the Tasks page."
 msgstr "As listas de tarefas são escolhidas na página Tarefas."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""

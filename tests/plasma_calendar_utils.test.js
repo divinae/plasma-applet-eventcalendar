@@ -52,6 +52,19 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(nested, UserR
 	{ id: '3', name: 'Releases', checked: true },
 ], 'a calendar two folders down')
 assert.deepStrictEqual(Array.from(U.pimCalendarRows(null, UserRole, DisplayRole)), [])
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(flat, UserRole, DisplayRole, true))), [
+	{ id: '1490', name: 'me@example.com', checked: false, account: true },
+	{ id: '1506', name: 'me@example.com', checked: true },
+	{ id: '1505', name: 'Support', checked: false },
+], 'with the accounts')
+
+// The plugin's saved selection: ids Akonadi no longer has (an account set up anew).
+assert.deepStrictEqual(Array.from(U.parsePimSelection('1386,1486,1501,1486\n')), ['1386', '1486', '1501'])
+assert.deepStrictEqual(Array.from(U.parsePimSelection('')), [], 'no selection saved')
+const allRows = U.pimCalendarRows(flat, UserRole, DisplayRole, true)
+assert.deepStrictEqual(Array.from(U.stalePimSelection(['1490', '1506', '1501', '1386'], allRows)), ['1501', '1386'],
+	'an account id saved is not missing')
+assert.deepStrictEqual(Array.from(U.stalePimSelection(['1501'], [])), [], 'none before Akonadi is read')
 
 // enabledCalendarPlugins left one character per entry by another port: joined back.
 const repair = list => Array.from(U.repairPluginList(list))
