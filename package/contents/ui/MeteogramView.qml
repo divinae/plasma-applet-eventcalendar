@@ -2,7 +2,10 @@ import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
 
+import "ForecastChart.js" as ForecastChart
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
+import "lib/ColorUtil.js" as ColorUtil
 import "./weather/WeatherApi.js" as WeatherApi
 
 Item {
@@ -16,6 +19,15 @@ Item {
 	property alias rainUnits: graph.rainUnits
 
 	property bool populated: false
+
+	// Settings > Weather > Forecast chart > Style, like the Weather panel's chart: "fancy" draws a smooth
+	// line colored by the temperature over a soft area, the nights shaded, a dashed line at freezing,
+	// rounded rain bars with the amounts at their peaks, the high and the low in bold, on a round scale.
+	readonly property bool fancy: plasmoid.configuration.weatherChartStyle === "fancy"
+	onFancyChanged: {
+		graph.updateScale()
+		graph.update()
+	}
 
 	onClock24hChanged: {
 		graph.gridData = formatXAxisLabels(graph.gridData)
@@ -81,6 +93,10 @@ Item {
 
 		onGridDataChanged: {
 			xAxisMax = Math.max(1, gridData.length - 1)
+			updateScale()
+		}
+
+		function updateScale() {
 
 			yData = []
 			var yDataMin = 0
@@ -105,9 +121,28 @@ Item {
 				yAxisRainMax = 100
 			}
 
+			if (meteogramView.fancy) {
+				// A round step (1, 2, 5, 10, 20, ...) and the scale's ends on it: the highest and the
+				// lowest temperature within the labeled lines.
+				var step = niceStep((yDataMax - yDataMin) / (yAxisScaleCount + 1))
+				yAxisScale = step
+				yAxisMin = Math.floor(yDataMin / step) * step
+				yAxisMax = Math.max(yAxisMin + step, Math.ceil(yDataMax / step) * step)
+				return
+			}
 			yAxisScale = Math.ceil((yDataMax-yDataMin) / (yAxisScaleCount))
 			yAxisMin = Math.floor(yDataMin)
 			yAxisMax = Math.ceil(yDataMax)
+		}
+		function niceStep(rough) {
+			var magnitude = Math.pow(10, Math.floor(Math.log(Math.max(1, rough)) / Math.LN10))
+			var steps = [1, 2, 5, 10]
+			for (var i = 0; i < steps.length; i++) {
+				if (steps[i] * magnitude >= rough) {
+					return steps[i] * magnitude
+				}
+			}
+			return 10 * magnitude
 		}
 
 		function iconsInRange(gData, s, e) {
@@ -213,6 +248,172 @@ Item {
 					context.stroke()
 				}
 
+				function paintFancy(ctx) {
+					var data = graph.gridData
+					var dark = appletConfig.darkTheme
+					var units = plasmoid.configuration.weatherUnits
+					var textColor = appletConfig.meteogramTextColor
+					var xs = data.map(function(item, i) { return graph.gridPoint(i, graph.yAxisMin).x })
+					var ys = data.map(function(item) { return graph.gridPoint(0, item.y).y })
+					var temps = data.map(function(item) { return item.y })
+					var minTemp = Math.min.apply(null, temps)
+					var maxTemp = Math.max.apply(null, temps)
+					// The rain of an hour is drawn between its point and the one before.
+					var points = data.map(function(item, i) {
+						return { iconName: item.weatherIcon, precipitation: i > 0 ? item.precipitation || 0 : 0 }
+					})
+
+					// Nights
+					ctx.fillStyle = dark ? "rgba(0, 0, 0, 0.22)" : "rgba(40, 60, 140, 0.08)"
+					ForecastChart.nightRanges(points).forEach(function(range) {
+						var x1 = range.from === 0 ? graph.gridX : graph.gridPoint(range.from, 0).x
+						var x2 = range.to === data.length - 1 ? graph.gridX2 : graph.gridPoint(range.to, 0).x
+						ctx.fillRect(x1, graph.gridY, x2 - x1, graph.gridHeight)
+					})
+
+					// The scale: faint lines, the temperatures on the left, the hours below
+					ctx.font = "12px sans-serif"
+					ctx.lineWidth = 1
+					ctx.strokeStyle = ColorUtil.setAlpha(textColor, dark ? 0.14 : 0.12)
+					ctx.fillStyle = ColorUtil.setAlpha(textColor, 0.7)
+					ctx.textAlign = 'end'
+					// Lines closer than a label's height: every other one labeled, from the top.
+					var lineSpacing = graph.gridHeight * graph.yAxisScale / (graph.yAxisMax - graph.yAxisMin)
+					var labelEvery = lineSpacing < 16 ? 2 : 1
+					for (var y = graph.yAxisMin; y <= graph.yAxisMax; y += graph.yAxisScale) {
+						var py = Math.round(graph.gridPoint(0, y).y) + 0.5
+						ctx.beginPath()
+						ctx.moveTo(graph.gridX, py)
+						ctx.lineTo(graph.gridX2, py)
+						ctx.stroke()
+						if (Math.round((graph.yAxisMax - y) / graph.yAxisScale) % labelEvery === 0) {
+							ctx.fillText(y + '°', graph.gridX - 3, Math.max(10, py + 4))
+						}
+					}
+					ctx.textAlign = 'center'
+					for (var h = 0; h < data.length; h++) {
+						if (data[h].xLabel) {
+							ctx.fillText(data[h].xLabel, xs[h], graph.gridY2 + 14)
+						}
+					}
+
+					// Rain bars, rounded, at most 70 % of the height (room for the amounts)
+					var rainTop = graph.gridY + 14
+					var rainGradient = ctx.createLinearGradient(0, rainTop, 0, graph.gridY2)
+					rainGradient.addColorStop(0, dark ? "rgba(90, 160, 255, 0.75)" : "rgba(40, 120, 230, 0.8)")
+					rainGradient.addColorStop(1, dark ? "rgba(90, 160, 255, 0.3)" : "rgba(40, 120, 230, 0.35)")
+					ctx.fillStyle = rainGradient
+					var barTops = []
+					var areaWidth = xs[1] - xs[0]
+					for (var i = 1; i < data.length; i++) {
+						var rain = points[i].precipitation
+						if (!rain) {
+							continue
+						}
+						var barHeight = Math.min(rain, graph.yAxisRainMax) / graph.yAxisRainMax * (graph.gridY2 - rainTop) * 0.7
+						var barWidth = Math.max(2, areaWidth * 0.7)
+						var left = (xs[i - 1] + xs[i]) / 2 - barWidth / 2
+						var top = graph.gridY2 - barHeight
+						var r = Math.min(barWidth / 2, barHeight, 4)
+						ctx.beginPath()
+						ctx.moveTo(left, graph.gridY2)
+						ctx.lineTo(left, top + r)
+						ctx.arcTo(left, top, left + r, top, r)
+						ctx.lineTo(left + barWidth - r, top)
+						ctx.arcTo(left + barWidth, top, left + barWidth, top + r, r)
+						ctx.lineTo(left + barWidth, graph.gridY2)
+						ctx.closePath()
+						ctx.fill()
+						barTops[i] = top
+					}
+
+					// Freezing: dashed, where the temperatures cross it
+					if (minTemp < graph.freezingPoint && maxTemp > graph.freezingPoint) {
+						var fy = graph.gridPoint(0, graph.freezingPoint).y
+						ctx.strokeStyle = dark ? "rgba(120, 180, 255, 0.7)" : "rgba(40, 110, 220, 0.7)"
+						ctx.setLineDash([4, 3])
+						ctx.beginPath()
+						ctx.moveTo(graph.gridX, fy)
+						ctx.lineTo(graph.gridX2, fy)
+						ctx.stroke()
+						ctx.setLineDash([])
+					}
+
+					// Temperature: a smooth line in the temperatures' colors over the warmest one fading out
+					var stops = ForecastChart.temperatureStops(minTemp, maxTemp, units)
+					var lineTop = graph.gridPoint(0, maxTemp).y
+					var lineBottom = graph.gridPoint(0, minTemp).y
+					var lineStyle = ctx.createLinearGradient(0, lineTop, 0, Math.max(lineBottom, lineTop + 1))
+					stops.forEach(function(stop) {
+						lineStyle.addColorStop(stop.position, stop.color)
+					})
+					var area = ctx.createLinearGradient(0, lineTop, 0, graph.gridY2)
+					area.addColorStop(0, ColorUtil.setAlpha(stops[0].color, dark ? 0.35 : 0.18))
+					area.addColorStop(1, ColorUtil.setAlpha(stops[0].color, 0))
+					var segments = ForecastChart.smoothSegments(xs, ys)
+					function tracePath() {
+						ctx.moveTo(xs[0], ys[0])
+						segments.forEach(function(s) {
+							ctx.bezierCurveTo(s.cp1x, s.cp1y, s.cp2x, s.cp2y, s.x, s.y)
+						})
+					}
+					ctx.beginPath()
+					tracePath()
+					ctx.lineTo(xs[xs.length - 1], graph.gridY2)
+					ctx.lineTo(xs[0], graph.gridY2)
+					ctx.closePath()
+					ctx.fillStyle = area
+					ctx.fill()
+					ctx.beginPath()
+					tracePath()
+					ctx.lineWidth = 3
+					ctx.lineJoin = "round"
+					ctx.lineCap = "round"
+					ctx.strokeStyle = lineStyle
+					ctx.stroke()
+
+					// The high and the low: a ring, the temperature in bold (the low below the line when
+					// there's room)
+					if (maxTemp - minTemp >= 2) {
+						ctx.font = "bold 12px sans-serif"
+						ctx.textAlign = 'left'
+						;[temps.indexOf(maxTemp), temps.indexOf(minTemp)].forEach(function(k, nth) {
+							ctx.beginPath()
+							ctx.arc(xs[k], ys[k], 4, 0, Math.PI * 2)
+							ctx.fillStyle = Kirigami.Theme.backgroundColor
+							ctx.fill()
+							ctx.lineWidth = 2
+							ctx.strokeStyle = ForecastChart.colorAt(ForecastChart.toCelsius(temps[k], units))
+							ctx.stroke()
+							var label = Shared.formatTemp(temps[k])
+							var labelWidth = ctx.measureText(label).width
+							var below = nth === 1 && ys[k] + 20 <= graph.gridY2
+							ctx.fillStyle = textColor
+							ctx.fillText(label,
+								Math.max(graph.gridX + 2, Math.min(xs[k] - labelWidth / 2, graph.gridX2 - labelWidth)),
+								below ? ys[k] + 18 : Math.max(12, ys[k] - 8))
+						})
+					}
+
+					// Rain amounts at the peaks, above their bars, far enough apart not to overlap
+					ctx.font = "12px sans-serif"
+					ctx.textAlign = 'center'
+					ctx.fillStyle = dark ? "#8fc1ff" : "#2a6fd6"
+					var gap = Math.max(1, Math.ceil(36 / Math.max(1, areaWidth)))
+					ForecastChart.rainPeaks(points, gap).forEach(function(k) {
+						var rain = points[k].precipitation
+						if (graph.rainUnits === 'mm' && rain <= 0.3) {
+							return
+						}
+						var label = formatPrecipitation(rain)
+						var labelWidth = ctx.measureText(label).width
+						var cx = (xs[k - 1] + xs[k]) / 2
+						ctx.fillText(label,
+							Math.max(graph.gridX + labelWidth / 2, Math.min(cx, graph.gridX2 - labelWidth / 2)),
+							Math.max(12, barTops[k] - 4))
+					})
+				}
+
 				onPaint: {
 					if (!context) {
 						var ctx = gridCanvas.getContext("2d")
@@ -221,6 +422,11 @@ Item {
 					context.reset()
 					if (graph.gridData.length < 2) return
 					if (graph.yAxisMin === graph.yAxisMax) return
+					if (meteogramView.fancy) {
+						paintFancy(context)
+						Qt.callLater(graph.updateGridItemAreas)
+						return
+					}
 
 					// rain
 					graph.showYAxisRainMax = false
@@ -377,15 +583,28 @@ Item {
 					PlasmaCore.ToolTipArea {
 						id: tooltip
 						anchors.fill: parent
-						icon: modelData.gridItem.weatherIcon
+						icon: WeatherIcons.largeSource(modelData.gridItem.weatherIcon, plasmoid.configuration.weatherIconStyle)
 						mainText: modelData.gridItem.tooltipMainText
 						subText: modelData.gridItem.tooltipSubText
 						location: PlasmaCore.Types.BottomEdge
 					}
 
+					// The icons of Settings > Weather > Icons (the system's or Yr); the font only has the
+					// few without one (wi-tornado, wi-dust, ... from Weather Canada).
+					readonly property bool styledIcon: /^weather-/.test(modelData.aggregratedIcon || "")
+					Kirigami.Icon {
+						visible: modelData.showIcon && parent.styledIcon
+						anchors.centerIn: parent
+						width: appletConfig.meteogramIconSize
+						height: width
+						source: parent.styledIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
+						fallback: parent.styledIcon ? modelData.aggregratedIcon : ""
+						color: appletConfig.meteogramIconColor
+						opacity: tooltip.containsMouse ? 0.1 : 1
+					}
 					FontIcon {
 						id: weatherIcon
-						visible: modelData.showIcon
+						visible: modelData.showIcon && !parent.styledIcon
 						anchors.centerIn: parent
 						color: appletConfig.meteogramIconColor
 						source: modelData.aggregratedIcon

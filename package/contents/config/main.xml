@@ -583,6 +583,24 @@
 		<entry name="weatherUnits" type="string">
 			<default>metric</default>
 		</entry>
+		<entry name="weatherIconStyle" type="string">
+			<!-- enum: system (the icon theme's), yr (bundled) -->
+			<default>system</default>
+		</entry>
+		<entry name="weatherChartStyle" type="string">
+			<!-- The Weather panel's hourly chart. enum: simple, fancy -->
+			<default>simple</default>
+		</entry>
+		<entry name="weatherChartLargeIcons" type="bool">
+			<default>false</default>
+		</entry>
+		<entry name="weatherChartRainAmounts" type="bool">
+			<default>false</default>
+		</entry>
+		<entry name="weatherIconBackground" type="string">
+			<!-- The Weather panel's current weather icon. enum: sky (colors after the weather), subtle, none -->
+			<default>sky</default>
+		</entry>
 		<entry name="meteogramHours" type="uint">
 			<default>30</default>
 		</entry>

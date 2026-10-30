@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 08:31+0100\n"
+"POT-Creation-Date: 2026-10-30 08:37+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -480,7 +480,7 @@ msgstr "Gdy zaczyna się wydarzenie"
 msgid "Show a notification"
 msgstr "Pokaż powiadomienie"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Styl"
 
@@ -1403,12 +1403,78 @@ msgid "Kelvin"
 msgstr "Kelwin"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "Icons"
+msgstr "Ikony"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = icon theme, eg: Breeze"
+msgid "System (%1)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
 msgstr "Meteogram pokazuje"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " godz."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr ""
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -3615,6 +3681,11 @@ msgid "During the day"
 msgstr "W ciągu dnia"
 
 #: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr ""
+
+#: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
 msgstr "Kolejne dni"
 
@@ -4207,9 +4278,6 @@ msgstr "Miejsce pracy: %1"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Ujemna temp."
-
-#~ msgid "Icons"
-#~ msgstr "Ikony"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Wersja:</b> %1"

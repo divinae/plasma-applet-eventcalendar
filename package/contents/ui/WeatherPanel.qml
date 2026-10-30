@@ -3,7 +3,9 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
+import "ForecastChart.js" as ForecastChart
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "lib/ColorUtil.js" as ColorUtil
 
 // Weather beside the Day view, in labeled sections: Now, Next hours, Next days.
@@ -48,17 +50,28 @@ ColumnLayout {
 	// The section name, underlined: a line below it, then the section's content.
 	component SectionTitle: ColumnLayout {
 		property alias text: titleLabel.text
+		property alias detail: detailLabel.text // On the right, dimmed (eg: the rain to come)
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.largeSpacing * 2
 		Layout.bottomMargin: Kirigami.Units.smallSpacing
 		spacing: Kirigami.Units.smallSpacing
-		PlasmaComponents3.Label {
-			id: titleLabel
+		RowLayout {
 			Layout.fillWidth: true
-			textFormat: Text.PlainText
-			// Above the text below it: larger and bolder, not dimmed.
-			font.weight: Font.DemiBold
-			font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.1
+			PlasmaComponents3.Label {
+				id: titleLabel
+				Layout.fillWidth: true
+				elide: Text.ElideRight
+				textFormat: Text.PlainText
+				// Above the text below it: larger and bolder, not dimmed.
+				font.weight: Font.DemiBold
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.1
+			}
+			PlasmaComponents3.Label {
+				id: detailLabel
+				visible: !!text
+				textFormat: Text.PlainText
+				opacity: panel.dimOpacity
+			}
 		}
 		Kirigami.Separator {
 			Layout.fillWidth: true
@@ -212,15 +225,26 @@ ColumnLayout {
 		// Right below the card's title (no section title of its own).
 		Layout.topMargin: panel.compact ? 0 : Kirigami.Units.largeSpacing
 		spacing: Kirigami.Units.largeSpacing
-		// The colored icon on a small sky (blue by day, indigo at night, grey for fog, …) with a
-		// soft shadow: light icons (clouds) vanish on a light card otherwise.
+		// The icon's background (Settings > Weather > Current weather icon background):
+		// - sky: a small sky (blue by day, indigo at night, grey for fog, …) with a soft shadow,
+		//   light icons (clouds) vanish on a light card otherwise
+		// - subtle: a faint tile of the text color
+		// - none: the icon alone, as large as the tile would be
 		Item {
 			id: iconTile
+			readonly property string background: plasmoid.configuration.weatherIconBackground || "sky"
 			readonly property var sky: panel.skyColors(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "")
 			readonly property real radius: Math.round(width * 0.3)
 			Layout.preferredWidth: (panel.compact ? Kirigami.Units.iconSizes.medium : Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2
 			Layout.preferredHeight: Layout.preferredWidth
+			Rectangle {
+				visible: iconTile.background === "subtle"
+				anchors.fill: parent
+				radius: iconTile.radius
+				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, appletConfig.darkTheme ? 0.1 : 0.07)
+			}
 			Kirigami.ShadowedRectangle {
+				visible: iconTile.background === "sky"
 				anchors.fill: parent
 				radius: iconTile.radius
 				color: iconTile.sky[1]
@@ -229,6 +253,7 @@ ColumnLayout {
 				shadow.color: ColorUtil.setAlpha(iconTile.sky[0], appletConfig.darkTheme ? 0.5 : 0.35)
 			}
 			Rectangle {
+				visible: iconTile.background === "sky"
 				anchors.fill: parent
 				radius: iconTile.radius
 				gradient: Gradient {
@@ -238,9 +263,9 @@ ColumnLayout {
 			}
 			Kirigami.Icon {
 				anchors.centerIn: parent
-				width: parent.width - Kirigami.Units.smallSpacing * 2
+				width: iconTile.background === "none" ? parent.width : parent.width - Kirigami.Units.smallSpacing * 2
 				height: width
-				source: panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : ""
+				source: WeatherIcons.largeSource(panel.current ? panel.current.iconName : panel.showDaySummary ? panel.today.iconName : "", plasmoid.configuration.weatherIconStyle)
 			}
 		}
 		ColumnLayout {
@@ -307,19 +332,28 @@ ColumnLayout {
 		opacity: panel.dimOpacity
 	}
 
-	//--- Next hours: temperature line with rain bars, labels every 3 hours
+	//--- Next hours: temperature line with rain bars, labels every 3 hours (Settings > Weather >
+	// Forecast chart):
+	// - simple: a line in the accent color, plain rain bars, a grey line at the current time
+	// - fancy: a smooth line colored by the temperature over a soft area, the nights shaded, a dashed
+	//   line at freezing, rounded rain bars, the high and the low in bold, a red line at the current time
+	readonly property bool fancyChart: plasmoid.configuration.weatherChartStyle === "fancy"
+	readonly property bool chartRainAmounts: plasmoid.configuration.weatherChartRainAmounts
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
 		text: panel.isToday ? i18n("Next 12 hours") : i18nc("weather by hour of the shown day", "During the day")
+		readonly property real rain: ForecastChart.rainTotal(hourChart.points)
+		detail: panel.chartRainAmounts && rain > 0 ? i18nc("precipitation during the hours of the chart", "Rain: %1", panel.precipitationText(rain)) : ""
 	}
 	Item {
 		id: hourChart
 		visible: panel.showData && !panel.compact && panel.showHourly && points.length > 1
 		Layout.fillWidth: true
-		Layout.preferredHeight: Kirigami.Units.gridUnit * 7
+		Layout.preferredHeight: Kirigami.Units.gridUnit * 7 + iconSize - Kirigami.Units.iconSizes.small
 
 		readonly property var points: panel.hourly.slice(0, 13)
-		readonly property real iconRow: Kirigami.Units.iconSizes.small + 2
+		readonly property int iconSize: plasmoid.configuration.weatherChartLargeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
+		readonly property real iconRow: iconSize + 2
 		readonly property real labelRow: Math.ceil(chartFontMetrics.height) + 2
 		// Plot area for the line: below the icons and temperature labels, above the hour labels.
 		readonly property real plotTop: iconRow + labelRow
@@ -327,6 +361,12 @@ ColumnLayout {
 		readonly property real minTemp: Math.min.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxTemp: Math.max.apply(null, points.map(function(p) { return p.temp }))
 		readonly property real maxRain: Math.max(1, Math.max.apply(null, points.map(function(p) { return p.precipitation || 0 })))
+		readonly property var rainPeaks: panel.chartRainAmounts ? ForecastChart.rainPeaks(points, 3) : []
+		readonly property string units: plasmoid.configuration.weatherUnits
+		// The current time: the shown day is today, and it's within the chart.
+		readonly property var now: typeof timeModel !== "undefined" ? timeModel.currentTime : new Date()
+		readonly property real nowIndex: panel.isToday ? ForecastChart.nowIndex(points, now.getTime()) : -1
+		readonly property color nowColor: panel.fancyChart ? "#e0403a" : ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.45)
 		function xAt(i) {
 			return points.length > 1 ? 6 + i * (width - 12) / (points.length - 1) : width / 2
 		}
@@ -334,9 +374,30 @@ ColumnLayout {
 			var range = Math.max(2, maxTemp - minTemp)
 			return plotBottom - 4 - (temp - minTemp) / range * (plotBottom - plotTop - 8)
 		}
+		function rainHeight(rain) {
+			return rain / maxRain * (plotBottom - plotTop) * 0.6
+		}
+		// The labeled points: every 3 hours, with the fancy chart also the high and the low.
+		function isExtreme(i) {
+			var t = points[i].temp
+			return panel.fancyChart && maxTemp - minTemp >= 2 && (t === maxTemp || t === minTemp)
+				&& points.findIndex(function(p) { return p.temp === t }) === i
+		}
+		function isLabeled(i) {
+			// An extreme replaces the 3-hourly label next to it, so they don't overlap.
+			if (i % 3 !== 0) {
+				return isExtreme(i)
+			}
+			return isExtreme(i) || !(i > 0 && isExtreme(i - 1)) && !(i + 1 < points.length && isExtreme(i + 1))
+		}
 		onPointsChanged: chartCanvas.requestPaint()
 		onWidthChanged: chartCanvas.requestPaint()
 		onHeightChanged: chartCanvas.requestPaint()
+		Connections {
+			target: panel
+			function onFancyChartChanged() { chartCanvas.requestPaint() }
+			function onLineColorChanged() { chartCanvas.requestPaint() }
+		}
 
 		FontMetrics {
 			id: chartFontMetrics
@@ -353,37 +414,155 @@ ColumnLayout {
 				if (pts.length < 2) {
 					return
 				}
+				var fancy = panel.fancyChart
+				var dark = appletConfig.darkTheme
+				var xs = pts.map(function(p, i) { return hourChart.xAt(i) })
+				var ys = pts.map(function(p) { return hourChart.yAt(p.temp) })
+				var step = xs[1] - xs[0]
+
+				// Nights: shaded from the top of the plot to the hour labels.
+				if (fancy) {
+					ctx.fillStyle = dark ? "rgba(0, 0, 0, 0.22)" : "rgba(40, 60, 140, 0.08)"
+					ForecastChart.nightRanges(pts).forEach(function(range) {
+						var x1 = range.from === 0 ? 0 : hourChart.xAt(range.from)
+						var x2 = range.to === pts.length - 1 ? width : hourChart.xAt(range.to)
+						ctx.fillRect(x1, hourChart.plotTop - 4, x2 - x1, hourChart.plotBottom - hourChart.plotTop + 4)
+					})
+				}
+
 				// Rain bars
-				var barWidth = Math.max(2, (width - 12) / (pts.length - 1) * 0.5)
-				ctx.fillStyle = Qt.rgba(0.2, 0.5, 0.9, appletConfig.darkTheme ? 0.35 : 0.5)
+				var barWidth = Math.max(2, step * 0.5)
+				if (fancy) {
+					var rainGradient = ctx.createLinearGradient(0, hourChart.plotTop, 0, hourChart.plotBottom)
+					rainGradient.addColorStop(0, dark ? "rgba(90, 160, 255, 0.75)" : "rgba(40, 120, 230, 0.8)")
+					rainGradient.addColorStop(1, dark ? "rgba(90, 160, 255, 0.3)" : "rgba(40, 120, 230, 0.35)")
+					ctx.fillStyle = rainGradient
+				} else {
+					ctx.fillStyle = Qt.rgba(0.2, 0.5, 0.9, dark ? 0.35 : 0.5)
+				}
 				for (var i = 0; i < pts.length; i++) {
-					var rain = pts[i].precipitation || 0
-					if (rain > 0) {
-						var h = rain / hourChart.maxRain * (hourChart.plotBottom - hourChart.plotTop) * 0.6
-						ctx.fillRect(hourChart.xAt(i) - barWidth / 2, hourChart.plotBottom - h, barWidth, h)
+					var h = hourChart.rainHeight(pts[i].precipitation || 0)
+					if (h <= 0) {
+						continue
 					}
-				}
-				// Temperature line
-				ctx.strokeStyle = panel.lineColor
-				ctx.lineWidth = 2
-				ctx.beginPath()
-				for (var j = 0; j < pts.length; j++) {
-					var x = hourChart.xAt(j)
-					var y = hourChart.yAt(pts[j].temp)
-					if (j === 0) {
-						ctx.moveTo(x, y)
+					var left = xs[i] - barWidth / 2
+					var top = hourChart.plotBottom - h
+					if (fancy) {
+						var r = Math.min(barWidth / 2, h, 4)
+						ctx.beginPath()
+						ctx.moveTo(left, hourChart.plotBottom)
+						ctx.lineTo(left, top + r)
+						ctx.arcTo(left, top, left + r, top, r)
+						ctx.lineTo(left + barWidth - r, top)
+						ctx.arcTo(left + barWidth, top, left + barWidth, top + r, r)
+						ctx.lineTo(left + barWidth, hourChart.plotBottom)
+						ctx.closePath()
+						ctx.fill()
 					} else {
-						ctx.lineTo(x, y)
+						ctx.fillRect(left, top, barWidth, h)
 					}
 				}
-				ctx.stroke()
-				// Points every 3 hours
-				ctx.fillStyle = panel.lineColor
-				for (var k = 0; k < pts.length; k += 3) {
+
+				// Freezing: a dashed line where the temperatures cross it.
+				var freezing = ForecastChart.fromCelsius(0, hourChart.units)
+				if (fancy && hourChart.minTemp < freezing && hourChart.maxTemp > freezing) {
+					var fy = hourChart.yAt(freezing)
+					ctx.strokeStyle = dark ? "rgba(120, 180, 255, 0.7)" : "rgba(40, 110, 220, 0.7)"
+					ctx.lineWidth = 1
+					ctx.setLineDash([4, 3])
 					ctx.beginPath()
-					ctx.arc(hourChart.xAt(k), hourChart.yAt(pts[k].temp), 3, 0, Math.PI * 2)
-					ctx.fill()
+					ctx.moveTo(0, fy)
+					ctx.lineTo(width, fy)
+					ctx.stroke()
+					ctx.setLineDash([])
 				}
+
+				// Temperature line
+				var lineStyle = panel.lineColor
+				if (fancy) {
+					var stops = ForecastChart.temperatureStops(hourChart.minTemp, hourChart.maxTemp, hourChart.units)
+					var top = hourChart.yAt(hourChart.maxTemp)
+					var bottom = hourChart.yAt(hourChart.minTemp)
+					lineStyle = ctx.createLinearGradient(0, top, 0, Math.max(bottom, top + 1))
+					var area = ctx.createLinearGradient(0, top, 0, hourChart.plotBottom)
+					stops.forEach(function(stop) {
+						lineStyle.addColorStop(stop.position, stop.color)
+					})
+					// The area: the warmest color fading out (a blend towards the coldest one turns muddy).
+					area.addColorStop(0, ColorUtil.setAlpha(stops[0].color, dark ? 0.35 : 0.18))
+					area.addColorStop(1, ColorUtil.setAlpha(stops[0].color, 0))
+					var segments = ForecastChart.smoothSegments(xs, ys)
+					var tracePath = function() {
+						ctx.moveTo(xs[0], ys[0])
+						segments.forEach(function(s) {
+							ctx.bezierCurveTo(s.cp1x, s.cp1y, s.cp2x, s.cp2y, s.x, s.y)
+						})
+					}
+					ctx.beginPath()
+					tracePath()
+					ctx.lineTo(xs[xs.length - 1], hourChart.plotBottom)
+					ctx.lineTo(xs[0], hourChart.plotBottom)
+					ctx.closePath()
+					ctx.fillStyle = area
+					ctx.fill()
+					ctx.beginPath()
+					tracePath()
+					ctx.lineWidth = 2.5
+					ctx.lineJoin = "round"
+					ctx.lineCap = "round"
+					ctx.strokeStyle = lineStyle
+					ctx.stroke()
+				} else {
+					ctx.strokeStyle = lineStyle
+					ctx.lineWidth = 2
+					ctx.beginPath()
+					for (var j = 0; j < pts.length; j++) {
+						if (j === 0) {
+							ctx.moveTo(xs[j], ys[j])
+						} else {
+							ctx.lineTo(xs[j], ys[j])
+						}
+					}
+					ctx.stroke()
+				}
+
+				// Points at the labels: filled (simple), rings in the line's color (fancy).
+				for (var k = 0; k < pts.length; k++) {
+					if (!hourChart.isLabeled(k)) {
+						continue
+					}
+					ctx.beginPath()
+					ctx.arc(xs[k], ys[k], fancy ? 3.5 : 3, 0, Math.PI * 2)
+					if (fancy) {
+						ctx.fillStyle = Kirigami.Theme.backgroundColor
+						ctx.fill()
+						ctx.lineWidth = 2
+						ctx.strokeStyle = ForecastChart.colorAt(ForecastChart.toCelsius(pts[k].temp, hourChart.units))
+						ctx.stroke()
+					} else {
+						ctx.fillStyle = lineStyle
+						ctx.fill()
+					}
+				}
+			}
+		}
+
+		// The current time: a vertical line over the plot (red with a dot on the fancy chart).
+		Rectangle {
+			visible: hourChart.nowIndex >= 0
+			x: Math.round(hourChart.xAt(Math.max(0, hourChart.nowIndex)) - width / 2)
+			y: hourChart.plotTop - 4
+			width: panel.fancyChart ? 2 : 1
+			height: hourChart.plotBottom - y
+			color: hourChart.nowColor
+			Rectangle {
+				visible: panel.fancyChart
+				anchors.horizontalCenter: parent.horizontalCenter
+				y: -height / 2
+				width: 7
+				height: width
+				radius: width / 2
+				color: parent.color
 			}
 		}
 
@@ -399,16 +578,10 @@ ColumnLayout {
 				Kirigami.Icon {
 					x: -width / 2
 					y: 0
-					width: Kirigami.Units.iconSizes.small
+					width: hourChart.iconSize
 					height: width
-					source: Shared.symbolicIcon(parent.point ? parent.point.iconName : "")
+					source: WeatherIcons.source(parent.point ? parent.point.iconName : "", plasmoid.configuration.weatherIconStyle)
 					fallback: parent.point ? parent.point.iconName : ""
-				}
-				PlasmaComponents3.Label {
-					x: -implicitWidth / 2
-					y: hourChart.yAt(parent.point ? parent.point.temp : 0) - implicitHeight - 3
-					text: parent.point ? Shared.formatTemp(parent.point.temp) : ""
-					font: Kirigami.Theme.smallFont
 				}
 				PlasmaComponents3.Label {
 					x: Math.max(-parent.x, Math.min(-implicitWidth / 2, hourChart.width - parent.x - implicitWidth))
@@ -419,9 +592,37 @@ ColumnLayout {
 				}
 			}
 		}
+		// The temperatures: at the labeled points, the high and the low in bold (fancy).
+		Repeater {
+			model: hourChart.points.length
+			PlasmaComponents3.Label {
+				readonly property var point: hourChart.points[index]
+				visible: !!point && hourChart.isLabeled(index)
+				x: Math.max(0, Math.min(hourChart.xAt(index) - implicitWidth / 2, hourChart.width - implicitWidth))
+				y: hourChart.yAt(point ? point.temp : 0) - implicitHeight - 3
+				text: point ? Shared.formatTemp(point.temp) : ""
+				font.pointSize: Kirigami.Theme.smallFont.pointSize
+				font.weight: hourChart.isExtreme(index) ? Font.Bold : Font.Normal
+			}
+		}
+		// Rain amounts at the peaks, above their bars.
+		Repeater {
+			model: hourChart.rainPeaks
+			PlasmaComponents3.Label {
+				readonly property var point: hourChart.points[modelData]
+				x: Math.max(0, Math.min(hourChart.xAt(modelData) - implicitWidth / 2, hourChart.width - implicitWidth))
+				y: hourChart.plotBottom - hourChart.rainHeight(point.precipitation) - implicitHeight
+				text: panel.precipitationText(point.precipitation)
+				font: Kirigami.Theme.smallFont
+				color: appletConfig.darkTheme ? "#8cc0ff" : "#1f6fd6"
+			}
+		}
 	}
 
-	//--- Next days: day, icon, high / low
+	//--- Next days: day, icon, high / low. With the chart's larger icons, larger here too and the
+	// text to fit them.
+	readonly property bool largeIcons: plasmoid.configuration.weatherChartLargeIcons
+	readonly property real nextDaysFontScale: largeIcons ? 1.15 : 1
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showNextDays && panel.nextDays.length > 0
 		text: i18n("Next days")
@@ -437,17 +638,19 @@ ColumnLayout {
 				elide: Text.ElideRight
 				text: Qt.locale().dayName(new Date(modelData.dt * 1000).getDay(), Locale.LongFormat)
 				font.capitalization: Font.Capitalize
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
 			}
 			Kirigami.Icon {
-				source: Shared.symbolicIcon(modelData.iconName)
+				source: WeatherIcons.source(modelData.iconName, plasmoid.configuration.weatherIconStyle)
 				fallback: modelData.iconName
-				Layout.preferredWidth: Kirigami.Units.iconSizes.small
+				Layout.preferredWidth: panel.largeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
 				Layout.preferredHeight: Layout.preferredWidth
 			}
 			PlasmaComponents3.Label {
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 4
+				Layout.preferredWidth: Math.round(Kirigami.Units.gridUnit * 4 * panel.nextDaysFontScale)
 				horizontalAlignment: Text.AlignRight
 				text: Shared.formatTemp(modelData.temp.max) + " / " + Shared.formatTemp(modelData.temp.min)
+				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
 			}
 		}
 	}
