@@ -44,7 +44,7 @@ Item {
 		spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
-		// Days added (the next month at the end, a day with a new event) fade in.
+		// Days added at the end (the next month, by scrolling there) fade in.
 		add: Transition {
 			NumberAnimation { property: "opacity"; from: 0; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
 		}

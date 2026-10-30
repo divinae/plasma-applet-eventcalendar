@@ -11,8 +11,10 @@ Item {
 
 	property Component cardComponent
 	property bool framed: true
-	// Shown while open, and while it fades out after closing.
+	// Shown while open, and while it fades out after closing (fadeOut). Fading out its buttons
+	// take no clicks (they would act on the closed event, see the blocker at the end).
 	property bool open: false
+	property bool fadeOut: true
 	visible: open || closeAnimation.running
 	readonly property Item card: cardLoader.item
 	signal outsideClicked()
@@ -31,13 +33,18 @@ Item {
 	}
 	onOpenChanged: {
 		if (open) {
-			closeAnimation.stop()
+			// Opened again while still fading out: a fresh card (not the closed one's fields).
+			if (closeAnimation.running) {
+				closeAnimation.stop()
+				cardLoader.active = false
+				cardLoader.active = true
+			}
 			if (appletConfig.animations) {
 				openAnimation.restart()
 			} else {
 				overlay.opacity = 1
 			}
-		} else if (appletConfig.animations) {
+		} else if (appletConfig.animations && fadeOut) {
 			openAnimation.stop()
 			closeAnimation.restart()
 		}
@@ -88,6 +95,15 @@ Item {
 		width: Math.min(Kirigami.Units.gridUnit * 30, overlay.width - Kirigami.Units.gridUnit * 2)
 		height: item ? Math.min(item.implicitHeight, overlay.height - Kirigami.Units.gridUnit * 2) : 0
 		sourceComponent: overlay.cardComponent
+	}
+
+	// While fading out: over the card, so its buttons take no clicks.
+	MouseArea {
+		anchors.fill: parent
+		z: 100
+		visible: !overlay.open
+		acceptedButtons: Qt.AllButtons
+		hoverEnabled: true
 	}
 
 	// Give keyboard focus (Esc) back to the card, eg: after a card above it closes.

@@ -92,13 +92,22 @@ Item {
 		if (!navigation) {
 			fetchNeeded = true
 		}
-		// A month in memory: shown right away (paging slides it in already filled).
+		// A month in memory: shown right away (paging slides it in already filled); a fetch it may
+		// still need (an older one, or around another month) waits as usual, so quick paging
+		// fetches once.
 		if (navigation && !fetchNeeded && !eventModel.fetchRound) {
-			var range = agendaModel.getDateRange(agendaModel.currentMonth)
-			if (eventModel.cachedRange(range.min, range.max)) {
-				updateEventsTimer.stop()
-				deferredUpdateEvents()
-				return
+			var month = agendaModel.currentMonth
+			var range = agendaModel.getDateRange(month)
+			var entry = eventModel.cachedRange(range.min, range.max)
+			if (entry) {
+				agendaModel.visibleDateMin = range.min
+				agendaModel.visibleDateMax = range.max
+				eventModel.showRange(entry)
+				var center = month.getFullYear() + '-' + month.getMonth()
+				if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
+					updateEventsTimer.stop()
+					return
+				}
 			}
 		}
 		updateEventsTimer.restart()
@@ -133,7 +142,9 @@ Item {
 		}
 		var entry = force ? null : eventModel.cachedRange(range.min, range.max)
 		if (entry && !eventModel.fetchRound) {
-			eventModel.showRange(entry)
+			if (eventModel.shownRange !== entry) { // Not again when updateEvents showed it already
+				eventModel.showRange(entry)
+			}
 			if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
 				return
 			}

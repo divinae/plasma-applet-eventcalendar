@@ -137,7 +137,8 @@ QtObject {
 		return Math.round(Math.min(Kirigami.Units.gridUnit * 17, Math.max(Kirigami.Units.gridUnit * 12, viewWidth * 0.27)))
 	}
 	// Animations (Settings > Views > Animations): their durations, 0 when off.
-	readonly property bool animations: plasmoid.configuration.animationsEnabled !== false
+	// Also off with Plasma's animation speed at instant (durations of 0 or 1 ms).
+	readonly property bool animations: plasmoid.configuration.animationsEnabled !== false && Kirigami.Units.longDuration > 1
 	readonly property int shortDuration: animations ? Kirigami.Units.shortDuration : 0
 	readonly property int longDuration: animations ? Kirigami.Units.longDuration : 0
 	// A card: a bit lighter than the popup (light and dark themes) and nearly opaque, so it adds

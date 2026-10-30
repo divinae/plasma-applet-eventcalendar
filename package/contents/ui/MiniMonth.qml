@@ -113,19 +113,11 @@ ColumnLayout {
 		}
 	}
 
+	// Weekday initials: they stay put while the days below page.
 	Grid {
-		id: daysGrid
 		Layout.alignment: Qt.AlignHCenter
 		columns: 7
 		spacing: 0
-		// Paging: the new month slides in from the side it comes from.
-		transform: Translate { id: daysShift }
-		SlideIn {
-			id: daysSlide
-			target: daysGrid
-			shift: daysShift
-		}
-
 		// Weekday initials.
 		Repeater {
 			model: 7
@@ -137,6 +129,20 @@ ColumnLayout {
 				font: Kirigami.Theme.smallFont
 				opacity: 0.7
 			}
+		}
+	}
+
+	Grid {
+		id: daysGrid
+		Layout.alignment: Qt.AlignHCenter
+		columns: 7
+		spacing: 0
+		// Paging: the new month slides in from the side it comes from.
+		transform: Translate { id: daysShift }
+		SlideIn {
+			id: daysSlide
+			target: daysGrid
+			shift: daysShift
 		}
 
 		Repeater {

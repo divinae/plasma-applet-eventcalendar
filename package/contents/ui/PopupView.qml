@@ -688,6 +688,7 @@ MouseArea {
 		OverlayCard {
 			id: eventEditorOverlay
 			open: popup.editorOpen
+			fadeOut: false // Its form's other inputs (template, title) are cleared on closing
 			anchors.fill: parent
 			framed: false // The card draws its own frame
 			onOutsideClicked: {} // Don't lose typed input on a stray click.

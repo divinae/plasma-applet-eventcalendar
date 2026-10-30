@@ -353,21 +353,14 @@ CalendarManager {
 		fetchAll()
 	}
 
-	// Runs fn a moment later (a task marked done: its row shows it before it moves), once for all
-	// queued meanwhile. Here, not in the row: the row may be rebuilt before.
-	property var laterQueue: []
-	function later(fn) {
-		laterQueue.push(fn)
-		laterTimer.restart()
+	// A task just marked done: saved at once, but the task views rebuild (and the row moves to
+	// Completed) only after this time, so its row shows it done first (holdTaskMoves).
+	property real taskMovesHeldUntil: 0
+	function holdTaskMoves(ms) {
+		taskMovesHeldUntil = Date.now() + ms
 	}
-	Timer {
-		id: laterTimer
-		interval: 350
-		onTriggered: {
-			var queue = eventModel.laterQueue
-			eventModel.laterQueue = []
-			queue.forEach(function(fn) { fn() })
-		}
+	function taskMovesHeldFor() {
+		return Math.max(0, taskMovesHeldUntil - Date.now())
 	}
 
 	//--- Months seen this session, in memory (no network for a month shown again): what each fetch
@@ -404,7 +397,9 @@ CalendarManager {
 		rangeCache = []
 	}
 	// Shows a remembered round right away (the views rebuild from it, see cachedRangeShown).
+	property var shownRange: null // The kept round showRange showed last (until the next fetch)
 	function showRange(entry) {
+		shownRange = entry
 		eventModel.eventsByCalendar = Object.assign({}, entry.eventsByCalendar)
 		dateMin = new Date(entry.min)
 		dateMax = new Date(entry.max)
@@ -449,6 +444,7 @@ CalendarManager {
 	property bool fetchRound: false
 	onFetchingData: {
 		fetchRound = true
+		shownRange = null
 		restoredCachedInRound = false
 	}
 	// A calendar's loaded data for a view that reads it directly (the Tasks tab, the Day view's

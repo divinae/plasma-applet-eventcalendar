@@ -107,13 +107,13 @@ Item {
 		}
 		if (subtaskId) {
 			eventModel.toggleSubtask(item, subtaskId, next, saved)
-		} else if (next && appletConfig.animations && typeof eventModel.later === "function") {
-			// Done: the check pops and the title is struck through here first, then the task moves
-			// (to Completed) a moment later (EventModel.later: saved even if this row is gone).
-			var model = eventModel
-			popAnimation.restart()
-			model.later(function() { model.toggleTask(item, next, saved) })
 		} else {
+			if (next && appletConfig.animations) {
+				// Done: saved now, but the check pops and the title is struck through here first;
+				// the task views move it (to Completed) a moment later (EventModel.holdTaskMoves).
+				popAnimation.restart()
+				eventModel.holdTaskMoves(350)
+			}
 			eventModel.toggleTask(item, next, saved)
 		}
 		toggled(next)

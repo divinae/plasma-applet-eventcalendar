@@ -119,7 +119,18 @@ ColumnLayout {
 		tasks = rows.map(function(row) { return row.item })
 	}
 	function deferredRebuild() {
-		Qt.callLater(rebuild)
+		// A task just marked done keeps its row a moment (EventModel.holdTaskMoves).
+		var held = eventModel && typeof eventModel.taskMovesHeldFor === "function" ? eventModel.taskMovesHeldFor() : 0
+		if (held > 0) {
+			heldRebuild.interval = held
+			heldRebuild.restart()
+		} else {
+			Qt.callLater(rebuild)
+		}
+	}
+	Timer {
+		id: heldRebuild
+		onTriggered: dayTasks.rebuild()
 	}
 	// A change of calendarId concerns the panel: one of the task lists (selected now: maybe since
 	// the last rebuild).

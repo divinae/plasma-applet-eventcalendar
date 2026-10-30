@@ -283,7 +283,18 @@ Item {
 		}
 	}
 	function deferredRebuild() {
-		Qt.callLater(rebuild)
+		// A task just marked done keeps its row a moment (EventModel.holdTaskMoves).
+		var held = eventModel && typeof eventModel.taskMovesHeldFor === "function" ? eventModel.taskMovesHeldFor() : 0
+		if (held > 0) {
+			heldRebuild.interval = held
+			heldRebuild.restart()
+		} else {
+			Qt.callLater(rebuild)
+		}
+	}
+	Timer {
+		id: heldRebuild
+		onTriggered: tasksView.rebuild()
 	}
 	// Set a property to value only when it's different (by its JSON).
 	function setIfChanged(name, value) {
