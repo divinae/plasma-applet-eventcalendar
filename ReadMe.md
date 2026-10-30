@@ -64,7 +64,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by
   due date, title, list or priority. **Add a task…** recognizes "tomorrow 17:00 !high #Work every
   week" as the day, time, priority, list and repeat. Priorities, due times, repeats, reminders,
-  checklists (TickTick) and subtasks (Google); mark tasks in progress; set the priority and due
+  checklists (TickTick) and subtasks (Google); a ticket's link in a task's name shows as a link
+  named after it (Jira "CSS-2175", Linear, GitHub, GitLab); mark tasks in progress; set the priority and due
   date from the right-click menu; drag tasks between days, lists and accounts; undo,
   keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
   lists). Task reminders, a morning summary, and in the Day view the day's tasks, or all open tasks of a

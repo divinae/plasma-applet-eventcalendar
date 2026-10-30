@@ -124,6 +124,8 @@ LinkRect {
 	// The due date and notes: a bit smaller than the title, larger than the views' small font.
 	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
+	// The title with its links (eg: a ticket's URL shown as "CSS-2175"), '' without one.
+	readonly property string linkedTitle: Shared.linkifiedText(title)
 	readonly property bool canEdit: !!eventItem && eventItem.canEdit !== false
 	// TickTick's checklist items ([{ id, title, done }]) and how many are done.
 	readonly property var subtaskItems: eventItem && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
@@ -306,8 +308,15 @@ LinkRect {
 					Layout.fillWidth: true
 					Layout.minimumWidth: 0
 					Layout.maximumWidth: Math.ceil(implicitWidth)
-					text: taskRow.title
-					textFormat: Text.PlainText // User text: never parsed as HTML
+					// User text: plain, or escaped with its links (Shared.linkifiedText), never parsed as HTML.
+					text: taskRow.linkedTitle || taskRow.title
+					textFormat: taskRow.linkedTitle ? Text.StyledText : Text.PlainText
+					linkColor: Kirigami.Theme.linkColor
+					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+					HoverHandler {
+						enabled: !!taskRow.linkedTitle
+						cursorShape: titleLabel.hoveredLink ? Qt.PointingHandCursor : undefined
+					}
 					color: Kirigami.Theme.textColor
 					opacity: taskRow.doneOpacity
 					font.family: appletConfig.eventFont.family

@@ -533,6 +533,46 @@ function locationLink(location) {
 	return '<a href="' + href + '">' + escapeHtml(location) + '</a>'
 }
 
+//--- Links in a title (a task named after its ticket's URL)
+// A link's short name: a ticket's key (Jira "CSS-2175", Linear "ENG-12"), "repo#12" (GitHub, GitLab
+// issues and pull / merge requests, "repo!12" for a merge request), else ''.
+function linkShortName(url) {
+	var u = String(url || '')
+	var m = u.match(/\/browse\/([A-Z][A-Z0-9_]*-\d+)(?:[\/?#]|$)/) || u.match(/[?&]selectedIssue=([A-Z][A-Z0-9_]*-\d+)/)
+		|| u.match(/^https?:\/\/linear\.app\/[^\/]+\/issue\/([A-Z][A-Z0-9]*-\d+)/i)
+	if (m) {
+		return m[1].toUpperCase()
+	}
+	m = u.match(/^https?:\/\/github\.com\/[^\/]+\/([^\/]+)\/(?:issues|pull)\/(\d+)/i)
+	if (m) {
+		return m[1] + '#' + m[2]
+	}
+	m = u.match(/\/([^\/]+)\/-\/(issues|merge_requests)\/(\d+)/)
+	if (m) {
+		return m[1] + (m[2] === 'issues' ? '#' : '!') + m[3]
+	}
+	return ''
+}
+// text with its web links as <a> (for a Text with textFormat: Text.StyledText): a ticket's link
+// shows its short name (linkShortName), others the URL; the rest escaped. '' without a link.
+function linkifiedText(text) {
+	text = String(text || '')
+	var re = /https?:\/\/[^\s<>"]+/gi
+	var out = ''
+	var last = 0
+	var found = false
+	var m
+	while ((m = re.exec(text)) !== null) {
+		var url = m[0].replace(/[.,;:!?)\]]+$/, '') // Not the sentence's punctuation
+		found = true
+		out += escapeHtml(text.slice(last, m.index))
+			+ '<a href="' + url.replace(/"/g, '%22') + '">' + escapeHtml(linkShortName(url) || url) + '</a>'
+		last = m.index + url.length
+		re.lastIndex = last
+	}
+	return found ? out + escapeHtml(text.slice(last)) : ''
+}
+
 //--- Event span ("All day", "14 – 16 Oct", "14 Oct 22:00 – 16 Oct 02:00")
 // Days an event covers. All-day events end at midnight the next day (exclusive); a timed event
 // counts every day it touches.

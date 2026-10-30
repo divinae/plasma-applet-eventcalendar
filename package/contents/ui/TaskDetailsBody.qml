@@ -222,8 +222,16 @@ ColumnLayout {
 		font.weight: Font.Bold
 		font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * 1.35
 		wrapMode: Text.Wrap
-		text: body.item ? body.item.summary || "" : ""
-		textFormat: Text.PlainText // User text: never parsed as HTML
+		readonly property string plainTitle: body.item ? body.item.summary || "" : ""
+		readonly property string linkedTitle: Shared.linkifiedText(plainTitle)
+		// User text: plain, or escaped with its links (a ticket's URL as "CSS-2175"), never parsed as HTML.
+		text: linkedTitle || plainTitle
+		textFormat: linkedTitle ? Text.StyledText : Text.PlainText
+		linkColor: Kirigami.Theme.linkColor
+		onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+		HoverHandler {
+			cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : undefined
+		}
 		font.strikeout: body.done
 		opacity: body.done ? 0.7 : 1
 	}
