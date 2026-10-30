@@ -1,6 +1,7 @@
 # Event Calendar NG for Plasma 6
 
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
+[![KDE Store](https://img.shields.io/badge/KDE%20Store-Event%20Calendar%20NG-1d99f3?logo=kde&logoColor=white)](https://store.kde.org/p/2379570/)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
 **Your day, one click from the clock.** Calendar, agenda, tasks, meetings and weather in the
@@ -118,6 +119,11 @@ All shots (and the animation above) use mock data.
 </details>
 
 ## Install
+
+### From the KDE Store
+
+Right click the panel > Add or Manage Widgets > Get New Widgets > Download New Plasma Widgets,
+search for **Event Calendar NG**, or get it from [store.kde.org](https://store.kde.org/p/2379570/).
 
 ### From a release
 
