@@ -190,8 +190,9 @@ ColumnLayout {
 			elide: Text.ElideRight
 			text: panel.locationName
 			textFormat: Text.PlainText // User text: never parsed as HTML
-			opacity: panel.dimOpacity
-			color: panel.forecastUrl && locationHover.hovered ? Kirigami.Theme.linkColor : Kirigami.Theme.textColor
+			// A link (the full forecast on the web): in the link color, underlined when hovered.
+			opacity: panel.forecastUrl ? 1 : panel.dimOpacity
+			color: panel.forecastUrl ? Kirigami.Theme.linkColor : Kirigami.Theme.textColor
 			font.underline: !!panel.forecastUrl && locationHover.hovered
 			PlasmaComponents3.ToolTip.text: panel.forecastUrl ? i18n("Full forecast on the web") : text
 			PlasmaComponents3.ToolTip.visible: (truncated || !!panel.forecastUrl) && locationHover.hovered
@@ -202,6 +203,22 @@ ColumnLayout {
 			TapHandler {
 				enabled: !!panel.forecastUrl
 				onTapped: Shared.openExternalUrl(panel.forecastUrl)
+			}
+		}
+		// Opens in the browser.
+		Kirigami.Icon {
+			visible: !!panel.locationName && !!panel.forecastUrl
+			Layout.alignment: Qt.AlignVCenter
+			implicitWidth: Math.round(Kirigami.Units.iconSizes.small * 0.75)
+			implicitHeight: implicitWidth
+			source: "external-link-symbolic"
+			fallback: "link"
+			color: Kirigami.Theme.linkColor
+			TapHandler {
+				onTapped: Shared.openExternalUrl(panel.forecastUrl)
+			}
+			HoverHandler {
+				cursorShape: Qt.PointingHandCursor
 			}
 		}
 	}
