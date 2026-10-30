@@ -529,7 +529,7 @@ ConfigPage {
 		}
 		FormCard.FormSectionText {
 			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account.")
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account
