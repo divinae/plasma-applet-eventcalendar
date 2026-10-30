@@ -145,7 +145,7 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.12.1-plasma6.0.plasmoid` from the
+- **Product file:** `eventcalendar-ng-v1.12.1.plasmoid` from the
   [v1.12.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.12.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
