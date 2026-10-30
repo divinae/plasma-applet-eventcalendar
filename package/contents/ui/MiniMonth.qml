@@ -140,8 +140,8 @@ ColumnLayout {
 				Accessible.name: eventCount > 0 ? i18ncp("%2 = date", "%2, %1 event", "%2, %1 events", eventCount, text) : text
 				onClicked: miniMonth.dayClicked(day)
 
-				// Today: a solid accent circle, the only solid one. The shown day: a pale accent circle,
-				// its number in the accent color (as Google Calendar). The days in sight (rangeStart ..
+				// Today: a solid accent tile, the only solid one. The shown day: a pale accent tile, its
+				// number in the accent color (as Google Calendar). Tiles hold the number and its dots. The days in sight (rangeStart ..
 				// rangeEnd, the Agenda): a soft band across the row instead.
 				readonly property color accent: Kirigami.Theme.highlightColor
 				readonly property bool marked: selected && miniMonth.showSelection
@@ -161,7 +161,7 @@ ColumnLayout {
 						readonly property color bandColor: Qt.rgba(dayButton.accent.r, dayButton.accent.g, dayButton.accent.b, 0.14)
 						readonly property bool bothEnds: dayButton.rangeLeftEnd && dayButton.rangeRightEnd
 						readonly property bool oneEnd: dayButton.rangeLeftEnd || dayButton.rangeRightEnd
-						// The rounded end: a pill, only its outer half shown (no overlap, an even tint).
+						// The rounded end: a rounded tile, only its outer half shown (no overlap, an even tint).
 						Item {
 							visible: parent.oneEnd
 							clip: !parent.bothEnds
@@ -172,7 +172,7 @@ ColumnLayout {
 								x: -parent.x
 								width: dayButton.width
 								height: parent.height
-								radius: height / 2
+								radius: Math.round(Kirigami.Units.cornerRadius * 1.5) // As the day tiles
 								color: parent.parent.bandColor
 							}
 						}
@@ -184,12 +184,12 @@ ColumnLayout {
 							color: parent.bandColor
 						}
 					}
+					// A rounded square over the number and its dots.
 					Rectangle {
 						anchors.centerIn: parent
-						anchors.verticalCenterOffset: -Math.round(parent.height * 0.08)
-						width: Math.min(parent.width, parent.height) - 6
-						height: width
-						radius: width / 2
+						width: Math.min(parent.width - 4, parent.height + 2)
+						height: parent.height - 2
+						radius: Math.round(Kirigami.Units.cornerRadius * 1.5)
 						color: dayButton.isToday ? dayButton.accent
 							: dayButton.marked ? Qt.rgba(dayButton.accent.r, dayButton.accent.g, dayButton.accent.b, dayButton.hovered ? 0.3 : 0.2)
 							: dayButton.hovered ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.1)
@@ -203,7 +203,7 @@ ColumnLayout {
 						text: dayButton.day.getDate()
 						textFormat: Text.PlainText
 						font.pointSize: Kirigami.Theme.smallFont.pointSize
-						font.weight: dayButton.isToday || dayButton.marked ? Font.Bold : Font.Normal
+						font.weight: dayButton.isToday || dayButton.marked ? Font.Bold : Font.DemiBold
 						color: dayButton.numberColor
 						opacity: dayButton.inMonth || dayButton.marked || dayButton.isToday ? 1 : 0.45
 					}
