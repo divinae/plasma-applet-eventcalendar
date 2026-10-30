@@ -61,7 +61,10 @@ ColumnLayout {
 	// "Add a task…" shown (the title's "+").
 	property bool adding: false
 	property int doneCount: 0
-	onShowDoneChanged: deferredRebuild()
+	onShowDoneChanged: {
+		easeFold()
+		deferredRebuild()
+	}
 	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
 	property var expandedSubtasks: ({})
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
@@ -131,10 +134,25 @@ ColumnLayout {
 			deferredRebuild()
 		}
 	}
+	// Built right away when the panel gets its model or day (a view opening shows it filled, not
+	// empty for a frame and then jumping); changes of the data later are coalesced (deferredRebuild).
 	Component.onCompleted: rebuild()
-	onDayTextChanged: deferredRebuild()
+	onDayTextChanged: rebuild()
 	onTodayChanged: deferredRebuild()
-	onEventModelChanged: deferredRebuild()
+	onEventModelChanged: rebuild()
+	// Folding eases only when folded or unfolded here (the arrow, "N completed"), not the list
+	// growing in when a view opens or the tasks change.
+	property bool foldEasing: false
+	function easeFold() {
+		foldEasing = true
+		foldEasingOff.restart()
+	}
+	Timer {
+		id: foldEasingOff
+		interval: appletConfig.longDuration + 100
+		onTriggered: dayTasks.foldEasing = false
+	}
+	onExpandedChanged: easeFold()
 	Connections {
 		target: plasmoid.configuration
 		function onDayTasksListIdChanged() { dayTasks.deferredRebuild() }
@@ -321,7 +339,10 @@ ColumnLayout {
 		clip: true
 		Layout.fillWidth: true
 		Layout.preferredHeight: targetHeight
-		Behavior on Layout.preferredHeight { NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic } }
+		Behavior on Layout.preferredHeight {
+			enabled: dayTasks.foldEasing
+			NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		}
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 		QQC2.ScrollBar.vertical: OverlayScrollBar {
