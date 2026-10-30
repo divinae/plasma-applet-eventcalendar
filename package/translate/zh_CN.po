@@ -160,15 +160,26 @@ msgstr "无法加载 %1：%2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr "、"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 个事件"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -813,10 +824,10 @@ msgstr "任务列表在“任务”页面中选择。"
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+"calendar menu they are shown and hidden by color: calendars of one color "
+"together. The Google calendars of an account signed in here are listed "
+"above, with the account."
 msgstr ""
-"以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > "
-"Plasma 日历）中设置。在弹出窗口的日历菜单中它们是一个条目。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1427,6 +1438,16 @@ msgstr "小日历"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "接下来"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All-day events side by side"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"In the Day view, three or more all-day events take a third of the width "
+"each, three in a row. Hovering one shows it in full."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -4085,11 +4106,6 @@ msgid "Yesterday"
 msgstr "昨天"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 个事件"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -4117,6 +4133,14 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are one entry."
+#~ msgstr ""
+#~ "以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > "
+#~ "Plasma 日历）中设置。在弹出窗口的日历菜单中它们是一个条目。"
 
 #~ msgid "Next 12 hours"
 #~ msgstr "未来 12 小时"

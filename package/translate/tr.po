@@ -162,15 +162,27 @@ msgstr "%1 yüklenemedi: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
-
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = a few event titles"
+msgid "Akonadi calendar: %1"
+msgstr ""
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/WeekView.qml
+msgid "%1 event"
+msgid_plural "%1 events"
+msgstr[0] "%1 etkinlik"
+msgstr[1] "%1 etkinlik"
+
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -835,11 +847,10 @@ msgstr "Görev listeleri Görevler sayfasında seçilir."
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are one entry."
+"calendar menu they are shown and hidden by color: calendars of one color "
+"together. The Google calendars of an account signed in here are listed "
+"above, with the account."
 msgstr ""
-"Salt okunur gösterilir. Hangi Akonadi takvimlerinin gösterileceği PIM "
-"etkinlikleri eklentisinin ayarlar sayfasında (Etkinlikler > Plasma "
-"takvimleri) seçilir. Açılır pencerenin takvim menüsünde tek bir öğedir."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1472,6 +1483,16 @@ msgstr "Küçük takvim"
 #: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
 msgid "Up next"
 msgstr "Sıradakiler"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All-day events side by side"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"In the Day view, three or more all-day events take a third of the width "
+"each, three in a row. Hovering one shows it in full."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -4186,12 +4207,6 @@ msgid "Yesterday"
 msgstr "Dün"
 
 #: ../contents/ui/WeekView.qml
-msgid "%1 event"
-msgid_plural "%1 events"
-msgstr[0] "%1 etkinlik"
-msgstr[1] "%1 etkinlik"
-
-#: ../contents/ui/WeekView.qml
 msgctxt "%1 = time zone, %2 = a date"
 msgid ""
 "%1\n"
@@ -4220,6 +4235,15 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are one entry."
+#~ msgstr ""
+#~ "Salt okunur gösterilir. Hangi Akonadi takvimlerinin gösterileceği PIM "
+#~ "etkinlikleri eklentisinin ayarlar sayfasında (Etkinlikler > Plasma "
+#~ "takvimleri) seçilir. Açılır pencerenin takvim menüsünde tek bir öğedir."
 
 #~ msgid "Next 12 hours"
 #~ msgstr "Sonraki 12 saat"

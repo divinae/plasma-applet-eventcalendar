@@ -62,4 +62,51 @@ assert.deepStrictEqual(repair(['h', 'pimevents.so']), ['pimevents.so'], 'a stray
 assert.deepStrictEqual(repair(['x']), [], 'nothing usable')
 assert.deepStrictEqual(repair([]), [])
 
+//--- Akonadi events by color
+assert.strictEqual(U.colorKey('#9A9CFF'), '9a9cff')
+assert.strictEqual(U.colorKey('#ff9a9cff'), '9a9cff', 'with alpha')
+assert.strictEqual(U.colorKey(''), '')
+assert.strictEqual(U.colorKey('red'), '')
+const prefix = 'plasma_EventsColor_'
+const ev = (color, summary) => ({ calendarId: prefix + color, summary })
+const groups = JSON.parse(JSON.stringify(U.colorCalendars([
+	ev('aaaaaa', 'Standup'), ev('bbbbbb', 'Vacation'), ev('bbbbbb', 'Physio'), ev('bbbbbb', 'Vacation'),
+	ev('bbbbbb', 'Dentist'), ev('bbbbbb', 'Review'), { calendarId: 'plasma_Holidays', summary: 'Easter' },
+], prefix, 3)))
+assert.deepStrictEqual(groups, [
+	{ id: prefix + 'aaaaaa', color: '#aaaaaa', count: 1, titles: ['Standup'] },
+	{ id: prefix + 'bbbbbb', color: '#bbbbbb', count: 5, titles: ['Vacation', 'Physio', 'Dentist'] },
+], 'by color, different titles, other calendars left out')
+
+//--- Akonadi's Google calendars of an account also signed in to in the widget
+const mirrored = U.akonadiMirroredCollections([
+	'account|akonadi_google_resource_14|Me@Gmail.com',
+	'account|akonadi_google_resource_15|work@example.com',
+	'collection|1466|akonadi_google_resource_14|RootCollection',
+	'collection|1485|akonadi_google_resource_14|de.german#holiday@group.v.calendar.google.com',
+	'collection|1486|akonadi_google_resource_14|me@gmail.com',
+	'collection|1489|akonadi_google_resource_14|other@group.calendar.google.com',
+	'collection|1495|akonadi_google_resource_15|de.german#holiday@group.v.calendar.google.com',
+	'collection|1499|akonadi_google_resource_99|me@gmail.com',
+	'',
+].join('\n'), { 'me@gmail.com': ['me@gmail.com', 'de.german#holiday@group.v.calendar.google.com'] })
+assert.deepStrictEqual(JSON.parse(JSON.stringify(mirrored)), { 1485: true, 1486: true },
+	"that account's calendars in the widget: not those it lacks, not another account's, not a resource without settings")
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.akonadiMirroredCollections('', { 'me@gmail.com': ['me@gmail.com'] }))), {}, 'no database: none')
+
+const rows = [
+	{ id: '1486', name: 'me@gmail.com', checked: true },
+	{ id: '1485', name: 'Holidays', checked: true },
+	{ id: '20', name: 'Work', checked: true },
+	{ id: '21', name: 'Off', checked: false },
+]
+const colors = { 1486: '#aaaaaa', 1485: '#bbbbbb', 20: '#bbbbbb', 21: '#cccccc' }
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.mirroredColorKeys(rows, colors, { 1486: true, 1485: true, 21: true }))), { aaaaaa: true },
+	'a color also of another shown calendar stays; not shown calendars left out')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.googleCalendarIdsByAccount([
+	{ calendarList: [{ id: 'x@group.calendar.google.com' }, { id: 'Me@Gmail.com', primary: true }] },
+	{ calendarList: [] },
+	null,
+]))), { 'me@gmail.com': ['x@group.calendar.google.com', 'Me@Gmail.com'] })
+
 console.log('PASS plasma_calendar_utils')

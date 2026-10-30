@@ -104,6 +104,8 @@ ConfigPage {
 	}
 	Component.onCompleted: {
 		loadAkonadiGoogleAccounts()
+		loadAkonadiColors()
+		loadAkonadiGoogleCollections()
 		updateShownPimCalendars() // The model may be filled already: no reset or insert comes then
 	}
 
@@ -116,6 +118,29 @@ ConfigPage {
 		}
 	}
 	property var shownPimCalendars: []
+	// Their colors, from Akonadi's database (PlasmaCalendarUtils.akonadiColorsCommand): none when
+	// it can't be read.
+	ExecUtil { id: akonadiColorReader }
+	property var akonadiColors: ({})
+	function loadAkonadiColors() {
+		akonadiColorReader.execArgv(PlasmaCalendarUtils.akonadiColorsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			page.akonadiColors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
+		})
+	}
+	// The Google calendars Akonadi syncs for an account signed in here too: listed above with the
+	// account, so not here again.
+	ExecUtil { id: akonadiCollectionReader }
+	property string akonadiGoogleCollections: ""
+	function loadAkonadiGoogleCollections() {
+		akonadiCollectionReader.execArgv(PlasmaCalendarUtils.akonadiGoogleCollectionsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			page.akonadiGoogleCollections = String(stdout || "")
+		})
+	}
+	readonly property var mirroredPimCalendars: PlasmaCalendarUtils.akonadiMirroredCollections(akonadiGoogleCollections,
+		PlasmaCalendarUtils.googleCalendarIdsByAccount(Shared.toArray(googleLoginManager.accounts)))
+	readonly property var listedPimCalendars: shownPimCalendars.filter(function(row) {
+		return !mirroredPimCalendars[row.id]
+	})
 	function updateShownPimCalendars() {
 		shownPimCalendars = PlasmaCalendarUtils.pimCalendarRows(pimCalendarsModel, Qt.UserRole, Qt.DisplayRole).filter(function(row) {
 			return row.checked
@@ -427,22 +452,32 @@ ConfigPage {
 
 		// Calendars that come in through KDE PIM: listed, chosen in the pimevents plugin's settings.
 		FormCard.FormHeader {
-			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
+			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
 			title: i18n("KDE PIM (Akonadi)")
 		}
 		FormCard.FormCard {
-			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
+			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
 			Repeater {
-				model: page.shownPimCalendars
+				model: page.listedPimCalendars
 				FormCard.FormTextDelegate {
-					icon.name: "view-calendar"
+					id: pimCalendarRow
+					readonly property string calendarColor: page.akonadiColors[modelData.id] || ""
+					icon.name: calendarColor ? "" : "view-calendar"
 					text: modelData.name
+					// The calendar's color, like the popup's calendar list.
+					leading: Rectangle {
+						visible: !!pimCalendarRow.calendarColor
+						implicitWidth: Kirigami.Units.iconSizes.small * 0.75
+						implicitHeight: implicitWidth
+						radius: width / 2
+						color: pimCalendarRow.calendarColor || "transparent"
+					}
 				}
 			}
 		}
 		FormCard.FormSectionText {
-			visible: page.pimEventsEnabled && page.shownPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry.")
+			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account

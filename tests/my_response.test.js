@@ -42,6 +42,8 @@ assert.strictEqual(S.isHiddenDeclined({ summary: 'Own' }, false), false, 'not in
 assert.strictEqual(S.isHiddenCalendar('work', ['work', 'home']), true, 'hidden')
 assert.strictEqual(S.isHiddenCalendar('other', ['work']), false, 'shown')
 assert.strictEqual(S.isHiddenCalendar('work', []), false, 'nothing hidden')
+assert.strictEqual(S.isHiddenCalendar('plasma_EventsColor_9a9cff', ['plasma_Events']), true, 'Akonadi hidden as one: every color too')
+assert.strictEqual(S.isHiddenCalendar('plasma_EventsColor_9a9cff', ['plasma_EventsColor_aaaaaa']), false, 'another color')
 assert.strictEqual(S.isHiddenCalendar('work', undefined), false, 'no config')
 assert.strictEqual(S.isHiddenCalendar('', ['']), false, 'no calendar')
 

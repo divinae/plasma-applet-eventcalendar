@@ -327,6 +327,12 @@ ConfigPage {
 					}
 				}
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("All-day events side by side")
+				description: i18n("In the Day view, three or more all-day events take a third of the width each, three in a row. Hovering one shows it in full.")
+				configKey: 'dayAllDayTiles'
+			}
 		}
 
 		//--- Agenda (classic mode only)

@@ -307,3 +307,159 @@ function setEnabledPluginsByFilename(eventPluginsManager, pluginFilenameList, al
 	)
 	eventPluginsManager.enabledPlugins = pluginPathList
 }
+
+//--- Akonadi events by color
+// The PIM events plugin tells an event's color, not its calendar: the color stands in for it.
+// "#RRGGBB" or "#AARRGGBB" (a QColor as a string) -> "rrggbb", "" without one.
+function colorKey(color) {
+	var m = /^#(?:[0-9a-f]{2})?([0-9a-f]{6})$/i.exec(String(color || ""))
+	return m ? m[1].toLowerCase() : ""
+}
+
+// The events' calendars named idPrefix + a color key, as [{ id, color, count, titles }], with their
+// first titleCount different titles. By color: each keeps its place as the events change.
+function colorCalendars(events, idPrefix, titleCount) {
+	var byId = {}
+	var list = []
+	;(events || []).forEach(function(event) {
+		var id = String(event.calendarId || "")
+		if (id.indexOf(idPrefix) !== 0) {
+			return
+		}
+		var group = byId[id]
+		if (!group) {
+			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0, titles: [] }
+			list.push(group)
+		}
+		group.count++
+		var title = String(event.summary || "").trim()
+		if (title && group.titles.length < titleCount && group.titles.indexOf(title) < 0) {
+			group.titles.push(title)
+		}
+	})
+	return list.sort(function(a, b) {
+		return a.id < b.id ? -1 : a.id > b.id ? 1 : 0
+	})
+}
+
+// Akonadi's database, read with psql when it's PostgreSQL (Akonadi's default) and psql is
+// installed: the script lines that run one SELECT, its rows as "column|column" lines; nothing
+// otherwise.
+function akonadiPsqlLines(sql) {
+	return [
+		'rc="${XDG_CONFIG_HOME:-$HOME/.config}/akonadi/akonadiserverrc"',
+		'if [ -f "$rc" ] && command -v psql >/dev/null && grep -q "^Driver=QPSQL" "$rc"; then',
+		// Host (the socket directory) and the database name of the [QPSQL] section.
+		'host=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Host"{print substr($0,6);exit}\' "$rc")',
+		'name=$(awk -F= \'/^\\[/{s=($0=="[QPSQL]")} s&&$1=="Name"{print substr($0,6);exit}\' "$rc")',
+		'timeout 5 psql ${host:+-h "$host"} -d "${name:-akonadi}" -At -c "' + sql + '" 2>/dev/null',
+		'fi',
+	]
+}
+
+// The Akonadi calendars' colors (the collectioncolor attribute) are only in Akonadi's database
+// (akonadiPsqlLines); without it nothing (the colors and names then come from the events). Lines
+// "collection id|#aarrggbb".
+function akonadiColorsLines() {
+	return akonadiPsqlLines("SELECT collectionid, convert_from(value, 'UTF8') FROM collectionattributetable WHERE convert_from(type, 'UTF8') = 'collectioncolor'")
+}
+function akonadiColorsCommand() {
+	return ['sh', '-c', akonadiColorsLines().concat(['exit 0']).join('\n')]
+}
+
+// The collections of Akonadi's Google resources, with the account of each: lines
+// "account|resource|email" from the resources' settings, "collection|id|resource|remote id" from the
+// database (a calendar's remote id is its Google calendar id).
+function akonadiGoogleCollectionsLines() {
+	return [
+		'for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/akonadi_google_resource_*rc; do',
+		'r=${f##*/}; [ -f "$f" ] && sed -n "s/^Account=/account|${r%rc}|/p" "$f"',
+		'done',
+	].concat(akonadiPsqlLines("SELECT 'collection', c.id, r.name, c.remoteid FROM collectiontable c JOIN resourcetable r ON r.id = c.resourceid WHERE r.name LIKE 'akonadi_google_resource_%'"))
+}
+function akonadiGoogleCollectionsCommand() {
+	return ['sh', '-c', akonadiGoogleCollectionsLines().concat(['exit 0']).join('\n')]
+}
+// Both: the colors' lines and the collections' lines in one output.
+function akonadiCalendarsCommand() {
+	return ['sh', '-c', akonadiColorsLines().concat(akonadiGoogleCollectionsLines(), ['exit 0']).join('\n')]
+}
+// The widget's Google accounts (GoogleAccountsStore.accounts) for akonadiMirroredCollections:
+// { "email": ["calendar id", ...] }, the email being the primary calendar's id, in lower case.
+function googleCalendarIdsByAccount(accounts) {
+	var calendarIds = {}
+	;(accounts || []).forEach(function(account) {
+		var list = account && account.calendarList ? Array.prototype.slice.call(account.calendarList) : []
+		var primary = list.filter(function(calendar) { return calendar && calendar.primary })[0]
+		if (primary && primary.id) {
+			calendarIds[String(primary.id).toLowerCase()] = list.map(function(calendar) { return calendar.id })
+		}
+	})
+	return calendarIds
+}
+// The collection ids of the Google calendars that Akonadi syncs for an account also signed in to
+// in the widget: { "collection id": true }. calendarIds: { "email": ["calendar id", ...] }, the
+// emails in lower case.
+function akonadiMirroredCollections(stdout, calendarIds) {
+	var accounts = {}
+	var collections = []
+	String(stdout || '').split('\n').forEach(function(line) {
+		var fields = line.trim().split('|')
+		if (fields[0] === 'account' && fields.length >= 3) {
+			accounts[fields[1]] = fields.slice(2).join('|').trim().toLowerCase()
+		} else if (fields[0] === 'collection' && fields.length >= 4) {
+			collections.push({ id: fields[1], resource: fields[2], remoteId: fields.slice(3).join('|') })
+		}
+	})
+	var mirrored = {}
+	collections.forEach(function(collection) {
+		var ids = (calendarIds || {})[accounts[collection.resource]]
+		if (ids && ids.indexOf(collection.remoteId) >= 0) {
+			mirrored[collection.id] = true
+		}
+	})
+	return mirrored
+}
+// The command's output as { "collection id": "#rrggbb" }.
+function parseAkonadiColors(stdout) {
+	var colors = {}
+	String(stdout || '').split('\n').forEach(function(line) {
+		var m = /^(\d+)\|(#[0-9a-f]{6,8})\s*$/i.exec(line)
+		if (m) {
+			colors[m[1]] = '#' + colorKey(m[2])
+		}
+	})
+	return colors
+}
+// The color keys that only mirrored calendars (akonadiMirroredCollections) among the shown ones
+// (pimCalendarRows, checked) have: { key: true }. Their events are the signed-in account's.
+function mirroredColorKeys(rows, colors, mirrored) {
+	var mirroredKeys = {}
+	var otherKeys = {}
+	;(rows || []).forEach(function(row) {
+		var key = row.checked ? colorKey((colors || {})[row.id]) : ''
+		if (key) {
+			if ((mirrored || {})[row.id]) {
+				mirroredKeys[key] = true
+			} else {
+				otherKeys[key] = true
+			}
+		}
+	})
+	Object.keys(otherKeys).forEach(function(key) {
+		delete mirroredKeys[key]
+	})
+	return mirroredKeys
+}
+
+// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color.
+function namesByColor(rows, colors) {
+	var names = {}
+	;(rows || []).forEach(function(row) {
+		var key = row.checked ? colorKey(colors[row.id]) : ''
+		if (key) {
+			names[key] = (names[key] || []).concat(row.name)
+		}
+	})
+	return names
+}

@@ -278,8 +278,12 @@ function isHiddenCalendar(calendarId, hiddenCalendarIds) {
 	if (!hiddenCalendarIds || !calendarId) {
 		return false
 	}
+	var id = String(calendarId)
+	// The Akonadi events were one calendar (plasma_Events) before they came by color
+	// (plasma_EventsColor_rrggbb): hidden then, all of them stay hidden.
+	var akonadiByColor = id.indexOf("plasma_EventsColor_") === 0
 	for (var i = 0; i < hiddenCalendarIds.length; i++) {
-		if (hiddenCalendarIds[i] === String(calendarId)) {
+		if (hiddenCalendarIds[i] === id || (akonadiByColor && hiddenCalendarIds[i] === "plasma_Events")) {
 			return true
 		}
 	}

@@ -104,10 +104,14 @@ PlasmaComponents3.ToolButton {
 					spacing: 0
 					readonly property bool groupStart: index === 0 || calendarToggles.calendars[index - 1].group !== modelData.group
 					readonly property bool shown: !Shared.isHiddenCalendar(modelData.id, calendarToggles.hiddenIds)
+					// The account's only calendar, named like it (a Google account's main calendar): no heading
+					// that just repeats the name, a separator instead.
+					readonly property bool headingRepeats: groupStart && modelData.name === modelData.group
+						&& (index === calendarToggles.calendars.length - 1 || calendarToggles.calendars[index + 1].group !== modelData.group)
 
 					// Account heading, when the calendars come from more than one place.
 					PlasmaComponents3.Label {
-						visible: calendarRow.groupStart && !!modelData.group
+						visible: calendarRow.groupStart && !!modelData.group && !calendarRow.headingRepeats
 						Layout.fillWidth: true
 						Layout.topMargin: index > 0 ? Kirigami.Units.smallSpacing : 0
 						Layout.leftMargin: Kirigami.Units.smallSpacing
@@ -116,7 +120,7 @@ PlasmaComponents3.ToolButton {
 						elide: Text.ElideRight
 					}
 					Kirigami.Separator {
-						visible: calendarRow.groupStart && !modelData.group && index > 0
+						visible: calendarRow.groupStart && (!modelData.group || calendarRow.headingRepeats) && index > 0
 						Layout.fillWidth: true
 						Layout.topMargin: Kirigami.Units.smallSpacing
 						Layout.bottomMargin: Kirigami.Units.smallSpacing

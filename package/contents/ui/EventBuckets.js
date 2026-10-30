@@ -119,6 +119,23 @@ function layoutLanes(dayLists, maxRows) {
 	}
 }
 
+// Day view: one day's all-day events as tiles side by side, columns per row, at most maxRows rows,
+// in their order; too many: the last place is a "+N" for the rest. Returns { bars, laneCount,
+// hiddenCount } like layoutLanes, a bar { eventItem, first: 0, last: 0, lane, slot, slots }.
+function layoutTiles(events, columns, maxRows) {
+	var places = columns * maxRows
+	var shown = events.length > places ? places - 1 : events.length
+	var bars = []
+	for (var i = 0; i < shown; i++) {
+		bars.push({ eventItem: events[i], first: 0, last: 0, lane: Math.floor(i / columns), slot: i % columns, slots: columns })
+	}
+	return {
+		bars: bars,
+		laneCount: Math.ceil(Math.min(events.length, places) / columns),
+		hiddenCount: events.length - shown,
+	}
+}
+
 // Month grid with multi-day events as bars across the days, like Google Calendar.
 // dayTimes: ascending midnight timestamps of the visible days, weekLength days per row.
 // maxRows: event rows that fit in a day cell (bars and titles, including a "+N" row).
