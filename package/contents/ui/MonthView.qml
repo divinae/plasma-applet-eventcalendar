@@ -487,13 +487,10 @@ PinchArea {
 			id: stack
 			// Paging (previous / next): the new month slides in from its side.
 			transform: Translate { id: pageShift }
-			// Paging: the new month slides in across the card from its side.
 			SlideIn {
 				id: pageSlide
 				target: stack
 				shift: pageShift
-				distance: stack.width
-				fade: false
 			}
 
 			pushEnter: Transition {
