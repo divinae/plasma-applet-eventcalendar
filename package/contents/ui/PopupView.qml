@@ -766,7 +766,8 @@ MouseArea {
 		height: implicitHeight
 		MiniMonth {
 			eventModel: agendaMiniMonthCard.visible ? popup.eventModel : null
-			selectedDate: popup.selectedDate
+			// The day at the top of the agenda as it scrolls, else the selected one.
+			selectedDate: isNaN(agendaView.topDate.getTime()) ? popup.selectedDate : agendaView.topDate
 			today: timeModel.currentTime
 			firstDayOfWeek: {
 				var setting = plasmoid.configuration.firstDayOfWeek

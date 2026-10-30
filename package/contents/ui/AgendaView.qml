@@ -11,6 +11,18 @@ Item {
 	signal submitNewEventForm(string calendarId, var date, string text)
 	// Scrolled to the end: the next month below (Logic.loadMoreAgenda).
 	signal endReached()
+	// The first day in sight at the top of the list (the small month beside it follows it).
+	property date topDate: new Date(NaN)
+	function updateTopDate() {
+		var index = agendaList.indexAt(0, agendaList.contentY + 1)
+		if (index < 0) {
+			index = agendaList.indexAt(0, agendaList.contentY + agendaList.spacing + 1)
+		}
+		var agendaItem = index >= 0 && index < root.agendaModel.count ? root.agendaModel.get(index) : null
+		if (agendaItem && agendaItem.date && agendaItem.date.getTime() !== topDate.getTime()) {
+			topDate = agendaItem.date
+		}
+	}
 
 	// The days in a ListView: only the days in sight (and a screen's worth around them) are
 	// built, not the whole month at once (a busy calendar has hundreds of event tiles; building
@@ -24,6 +36,8 @@ Item {
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
 		// At the end after scrolling (not a short list that fits): the next month.
+		onContentYChanged: agendaView.updateTopDate()
+		onCountChanged: Qt.callLater(agendaView.updateTopDate)
 		onAtYEndChanged: {
 			if (atYEnd && contentHeight > height && count > 0) {
 				agendaView.endReached()
