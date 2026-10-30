@@ -195,11 +195,11 @@ Item {
 		interval: 100
 		onTriggered: logic.deferredUpdateWeather()
 	}
-	// A view that shows the hourly forecast (the Day view, the meteogram) with none loaded yet:
+	// A view that shows the hourly forecast (the Day view, the Agenda, the meteogram) with none loaded yet:
 	// fetch it now (else it comes with the hourly refresh, not on each view switch).
 	function ensureHourlyWeather() {
 		var viewMode = popup ? popup.viewMode : ''
-		var wantsHourly = viewMode === 'today' || (popup && popup.showMeteogram)
+		var wantsHourly = viewMode === 'today' || viewMode === 'classic' || (popup && popup.showMeteogram) // Day, Agenda (its weather panel)
 		if (wantsHourly && WeatherApi.weatherIsSetup(plasmoid.configuration)
 				&& !(logic.hourlyWeatherData && logic.hourlyWeatherData.list && logic.hourlyWeatherData.list.length > 0)) {
 			logic.updateHourlyWeather()

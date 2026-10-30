@@ -762,38 +762,49 @@ MouseArea {
 		}
 	}
 
-	// Agenda: a small month left of the list when the popup has room beside it (the list is capped
-	// at agendaMaxWidth and centered), like the Day view's. A day opens it in the agenda.
-	IslandCard {
-		id: agendaMiniMonthCard
-		// As wide as the Day view's (the same view width); its own column left of the list when the
-		// popup has room for both (the list then takes the rest, centered there).
+	// Agenda: the Day view's side columns (DayPanels), the same layout: left the small month and Up
+	// next, right today's tasks and weather, the list between them (at most agendaMaxWidth), all
+	// centered together. A column only with room for it and at least minAgendaWidth of list.
+	DayPanels {
+		id: agendaPanels
+		anchors.fill: parent
+		visible: popup.showAgenda
 		readonly property real viewWidth: popup.width - popup.padding * 2
-		readonly property real sideWidth: appletConfig.sidePanelWidth(viewWidth)
-		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing * 2
-		readonly property bool wanted: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
-			&& viewWidth >= sideWidth + gap + Kirigami.Units.gridUnit * 20
-		readonly property real columnWidth: wanted ? sideWidth + gap : 0
-		// The small month and the list (at most agendaMaxWidth) centered together, side by side.
-		readonly property real groupOffset: wanted ? Math.max(0, Math.round((viewWidth - columnWidth - popup.agendaMaxWidth) / 2)) : 0
-		visible: wanted
-		x: popup.padding + groupOffset
-		y: widgetGrid.y + agendaView.y
-		width: sideWidth
-		height: implicitHeight
-		MiniMonth {
-			eventModel: agendaMiniMonthCard.visible ? popup.eventModel : null
-			// The month of the day at the top of the agenda as it scrolls; the days in sight a band.
-			selectedDate: isNaN(agendaView.topDate.getTime()) ? popup.selectedDate : agendaView.topDate
-			rangeStart: agendaView.topDate
-			rangeEnd: agendaView.bottomDate
-			today: timeModel.currentTime
-			firstDayOfWeek: {
-				var setting = plasmoid.configuration.firstDayOfWeek
-				return setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
-			}
-			onDayClicked: function(day) { popup.goToDay(day) }
-		}
+		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.gridUnit * 2
+		readonly property real minAgendaWidth: Kirigami.Units.gridUnit * 20
+		readonly property bool rightWanted: wantsTasks || wantsWeather
+		readonly property bool leftWanted: wantsMiniMonth || (wantsUpNext && islands)
+		readonly property bool rightRoom: popup.showAgenda && rightWanted && viewWidth >= minAgendaWidth + sideWidth + gap
+		readonly property bool leftRoom: popup.showAgenda && leftWanted
+			&& viewWidth >= minAgendaWidth + sideWidth + gap + (rightRoom ? sideWidth + gap : 0)
+		readonly property real leftSpace: leftRoom ? sideWidth + gap : 0
+		readonly property real rightSpace: rightRoom ? sideWidth + gap : 0
+		readonly property real listWidth: Math.min(viewWidth - leftSpace - rightSpace, popup.agendaMaxWidth)
+		readonly property real groupOffset: popup.showAgenda ? Math.max(0, Math.round((viewWidth - leftSpace - listWidth - rightSpace) / 2)) : 0
+		sideWidth: appletConfig.sidePanelWidth(viewWidth) // As the Day view's
+		leftShown: leftRoom
+		rightShown: rightRoom
+		leftX: popup.padding + groupOffset
+		rightX: popup.padding + groupOffset + leftSpace + listWidth + gap
+		topY: widgetGrid.y + agendaView.y
+		bottomY: widgetGrid.y + agendaView.y + agendaView.height
+
+		eventModel: popup.eventModel
+		day: timeModel.currentTime
+		today: timeModel.currentTime
+		// The month of the day at the top of the list as it scrolls; the days in sight a band.
+		monthDate: isNaN(agendaView.topDate.getTime()) ? popup.selectedDate : agendaView.topDate
+		rangeStart: agendaView.topDate
+		rangeEnd: agendaView.bottomDate
+		onDayClicked: function(day) { popup.goToDay(day) }
+
+		weatherByDay: popup.weatherInViews ? root.weatherByDay : ({})
+		weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
+		weatherCurrent: logic.currentWeatherData
+		weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
+		weatherLoading: logic.weatherLoading
+		weatherError: logic.lastForecastErr ? String(logic.lastForecastErr) : ""
+		onWeatherRetryRequested: logic.updateWeather(true)
 	}
 
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
@@ -818,8 +829,9 @@ MouseArea {
 		visible: !popup.hourGridMode && !popup.tasksMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
-		anchors.leftMargin: popup.padding + agendaMiniMonthCard.groupOffset + agendaMiniMonthCard.columnWidth // The Agenda's small month
-		anchors.rightMargin: popup.padding + agendaMiniMonthCard.groupOffset
+		// The Agenda's side columns (agendaPanels) left and right of it.
+		anchors.leftMargin: popup.padding + agendaPanels.groupOffset + agendaPanels.leftSpace
+		anchors.rightMargin: popup.padding + agendaPanels.groupOffset + agendaPanels.rightSpace
 		anchors.topMargin: popup.viewTabsHeight
 		columns: 1
 		columnSpacing: popup.spacing
