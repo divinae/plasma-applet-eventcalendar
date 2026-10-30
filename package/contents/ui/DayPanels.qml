@@ -5,7 +5,7 @@ import "Shared.js" as Shared
 import "./weather/WeatherApi.js" as WeatherApi
 
 // The Day view's side columns for the Agenda (the same layout): left a small month (MiniMonth) and
-// below it Up next; right the day's tasks (DayTasksPanel) and below them its weather (WeatherPanel).
+// below it Up next (upNextAllowed); right the day's tasks (DayTasksPanel) and below them its weather (WeatherPanel).
 // The view places them: leftX / rightX, from topY down to bottomY, sideWidth wide; leftShown /
 // rightShown say whether a column has room.
 Item {
@@ -41,7 +41,9 @@ Item {
 	readonly property real cardGap: islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing
 	readonly property bool showingToday: Shared.isSameDate(day, today)
 	readonly property bool wantsMiniMonth: plasmoid.configuration.dayShowMiniMonth !== false
-	readonly property bool wantsUpNext: plasmoid.configuration.dayShowUpNext !== false
+	// Up next under the small month (not beside the Agenda: the list itself is what's next).
+	property bool upNextAllowed: true
+	readonly property bool wantsUpNext: upNextAllowed && plasmoid.configuration.dayShowUpNext !== false
 	readonly property bool wantsWeather: plasmoid.configuration.dayShowWeather !== false
 		&& (Object.keys(weatherByDay).length > 0 || weatherIsSetup)
 	readonly property bool wantsTasks: plasmoid.configuration.dayShowTasks !== false

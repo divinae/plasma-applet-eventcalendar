@@ -762,13 +762,14 @@ MouseArea {
 		}
 	}
 
-	// Agenda: the Day view's side columns (DayPanels), the same layout: left the small month and Up
-	// next, right today's tasks and weather, the list between them (at most agendaMaxWidth), all
+	// Agenda: the Day view's side columns (DayPanels), the same layout: left the small month (no Up
+	// next: the list is what's next), right today's tasks and weather, the list between them (at most agendaMaxWidth), all
 	// centered together. A column only with room for it and at least minAgendaWidth of list.
 	DayPanels {
 		id: agendaPanels
 		anchors.fill: parent
 		visible: popup.showAgenda
+		upNextAllowed: false
 		readonly property real viewWidth: popup.width - popup.padding * 2
 		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.gridUnit * 2
 		readonly property real minAgendaWidth: Kirigami.Units.gridUnit * 20
