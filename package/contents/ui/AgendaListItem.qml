@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "Tasks.js" as Tasks
 
 // One agenda day: a header (Today / Tomorrow / date, weather, add button), then the event tiles.
@@ -80,7 +81,7 @@ IslandCard {
 				visible: showWeather
 				spacing: 2
 				Kirigami.Icon {
-					source: Shared.symbolicIcon(weatherIcon)
+					source: WeatherIcons.source(weatherIcon, plasmoid.configuration.weatherIconStyle)
 					fallback: weatherIcon
 					Layout.preferredWidth: Kirigami.Units.iconSizes.small
 					Layout.preferredHeight: Layout.preferredWidth

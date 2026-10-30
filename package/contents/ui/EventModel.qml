@@ -117,6 +117,15 @@ CalendarManager {
 		}
 	}
 
+	// Refresh: the managers that keep their own copy of a source load it anew (reloadSources).
+	function reloadSources() {
+		calendarManagerList.forEach(function(calendarManager) {
+			if (typeof calendarManager.reloadSources === "function") {
+				calendarManager.reloadSources()
+			}
+		})
+	}
+
 	// The manager of calendarId when it can do fnName (has that function), else null.
 	function managerWith(calendarId, fnName) {
 		var calendarManager = getCalendarManager(calendarId)
@@ -352,8 +361,79 @@ CalendarManager {
 		if (dateMin >= dateMax) {
 			return
 		}
+		forgetRanges() // A refresh (poll, settings): the other months may have changed too
 		fetchAll()
 	}
+
+	// A task just marked done: saved at once, but the task views rebuild (and the row moves to
+	// Completed) only after this time, so its row shows it done first (holdTaskMoves).
+	property real taskMovesHeldUntil: 0
+	function holdTaskMoves(ms) {
+		taskMovesHeldUntil = Date.now() + ms
+	}
+	function taskMovesHeldFor() {
+		return Math.max(0, taskMovesHeldUntil - Date.now())
+	}
+
+	//--- Months seen this session, in memory (no network for a month shown again): what each fetch
+	// round loaded, { min, max, center (the month it was fetched around, "yyyy-m"), at,
+	// eventsByCalendar }. A fetch covers the month before and after too (Logic.deferredUpdateEvents),
+	// so the next or previous month shows at once.
+	property var rangeCache: []
+	property string fetchCenter: "" // The month the running fetch is around
+	readonly property int rangeCacheSize: 8
+	signal cachedRangeShown()
+	function rememberRange() {
+		// A calendar shows another round's data (it failed): not these months' events.
+		var restored = restoredCachedInRound || calendarManagerList.some(function(manager) { return manager.restoredInRound })
+		if (restored) {
+			return
+		}
+		var min = dateMin.getTime(), max = dateMax.getTime()
+		var copy = Object.assign({}, eventModel.eventsByCalendar)
+		var kept = rangeCache.filter(function(entry) { return entry.min !== min || entry.max !== max })
+		kept.unshift({ min: min, max: max, center: fetchCenter, at: Date.now(), eventsByCalendar: copy })
+		rangeCache = kept.slice(0, rangeCacheSize)
+	}
+	// The newest remembered round covering [min, max), or null.
+	function cachedRange(min, max) {
+		for (var i = 0; i < rangeCache.length; i++) {
+			var entry = rangeCache[i]
+			if (entry.min <= min.getTime() && entry.max >= max.getTime()) {
+				return entry
+			}
+		}
+		return null
+	}
+	function forgetRanges() {
+		rangeCache = []
+	}
+	// Shows a remembered round right away (the views rebuild from it, see cachedRangeShown).
+	property var shownRange: null // The kept round showRange showed last (until the next fetch)
+	function showRange(entry) {
+		shownRange = entry
+		eventModel.eventsByCalendar = Object.assign({}, entry.eventsByCalendar)
+		dateMin = new Date(entry.min)
+		dateMax = new Date(entry.max)
+		// The managers too (Google, tasks, …): edits and deletes look events up in theirs.
+		calendarManagerList.forEach(function(manager) {
+			var own = {}
+			for (var calendarId in entry.eventsByCalendar) {
+				if (getCalendarManager(calendarId) === manager) {
+					own[calendarId] = entry.eventsByCalendar[calendarId]
+				}
+			}
+			manager.eventsByCalendar = own
+			manager.dateMin = new Date(entry.min)
+			manager.dateMax = new Date(entry.max)
+		})
+		mergeEvents()
+		cachedRangeShown()
+	}
+	// Events created, changed or deleted here: the remembered months may hold the old version.
+	onEventCreated: forgetRanges()
+	onEventUpdated: forgetRanges()
+	onEventDeleted: forgetRanges()
 
 	onFetchAllCalendars: {
 		// Suppress checkIfDone while children start, otherwise children that
@@ -374,7 +454,11 @@ CalendarManager {
 
 	// A fetch round runs: eventsByCalendar was emptied and fills up calendar by calendar.
 	property bool fetchRound: false
-	onFetchingData: fetchRound = true
+	onFetchingData: {
+		fetchRound = true
+		shownRange = null
+		restoredCachedInRound = false
+	}
 	// A calendar's loaded data for a view that reads it directly (the Tasks tab, the Day view's
 	// tasks): during a fetch round, until the calendar arrives, what the last round loaded, so the
 	// view doesn't go empty meanwhile (eg: Retry Now while offline).
@@ -464,10 +548,12 @@ CalendarManager {
 
 	// A fetch round that couldn't load a cached calendar (offline right after boot, keyring still
 	// locked) keeps showing the cached events instead of an empty calendar.
+	property bool restoredCachedInRound: false
 	function restoreCachedCalendars() {
 		var selected = EventCacheUtil.selectedCalendarIds(cacheAccounts())
 		for (var calendarId in eventModel.cachedEventsByCalendar) {
 			if (!eventModel.eventsByCalendar[calendarId] && selected[calendarId]) {
+				restoredCachedInRound = true
 				eventModel.eventsByCalendar[calendarId] = eventModel.cachedEventsByCalendar[calendarId]
 			}
 		}

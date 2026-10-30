@@ -4,7 +4,8 @@
 qtMinVer="6.6"
 kfMinVer="6.0"
 plasmaMinVer="6.0"
-filenameTag="-plasma${plasmaMinVer}"
+# The file's name: eventcalendar-ng-v1.2.3.plasmoid (no Plasma version in it).
+filenameTag="-ng"
 packageExt="plasmoid"
 
 # Misc
@@ -116,8 +117,8 @@ package_plasmoid() {
                 exit 1
         fi
 
-        local filename="${packageName}-v${packageVersion}${filenameTag}.${packageExt}"
-        rm -f -- "${packageName}"-v*."${packageExt}" # Cleanup
+        local filename="${packageName}${filenameTag}-v${packageVersion}.${packageExt}"
+        rm -f -- "${packageName}"-v*."${packageExt}" "${packageName}${filenameTag}"-v*."${packageExt}" # Cleanup
         # Python caches from local runs don't belong in the package.
         find package -name __pycache__ -type d -prune -exec rm -rf -- {} +
         echoGray "[${packageExt}] Zipping '${filename}'"

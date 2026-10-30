@@ -142,6 +142,7 @@ Item {
 					height: parent.height
 					radius: parent.radius
 					color: timeLabel1.color
+					Behavior on width { NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic } }
 				}
 			}
 		}
@@ -225,6 +226,18 @@ Item {
 		readonly property color eventColor: appletConfig.eventColor(clock.nextEvent ? clock.nextEvent.backgroundColor : "")
 		readonly property bool inProgress: typeof upcomingEvents !== "undefined" && upcomingEvents.nextEventInProgress
 		readonly property bool showProgress: inProgress && plasmoid.configuration.clockShowMeetingProgress
+		// Another event takes the chip: it fades in (the text changes at once under it).
+		readonly property string eventKey: clock.nextEvent ? String(clock.nextEvent.summary || "") + "|" + (clock.nextEvent.startDateTime ? clock.nextEvent.startDateTime.getTime() : "") : ""
+		onEventKeyChanged: if (appletConfig.animations && eventKey) chipFade.restart()
+		NumberAnimation {
+			id: chipFade
+			target: nextEventChip
+			property: "opacity"
+			from: 0
+			to: 1
+			duration: appletConfig.longDuration
+			easing.type: Easing.OutCubic
+		}
 		// A shortened title is narrower than its label: the dot and the title move right by the
 		// difference, so the time follows the title closely and the room is at the outer edge.
 		readonly property real titleShift: Math.max(0, nextEventLabel.width - nextEventLabel.contentWidth)
@@ -295,6 +308,7 @@ Item {
 				height: parent.height
 				radius: parent.radius
 				color: nextEventChip.eventColor
+				Behavior on width { NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic } }
 			}
 		}
 	}

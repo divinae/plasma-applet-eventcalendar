@@ -13,7 +13,7 @@ Item {
 
 	// One dot per event (max 3), colored like the event / its calendar.
 	function dotColorAt(i) {
-		var eventItem = modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
+		var eventItem = i < modelEventsCount ? dayStyle.eventAt(modelEvents, i) : null
 		return eventItem && eventItem.backgroundColor ? eventItem.backgroundColor : dotsBadge.dotColor
 	}
 
@@ -31,7 +31,7 @@ Item {
 				height: dotsBadge.dotSize
 				radius: width / 2
 				color: {
-					var _ = modelEventsCount // Re-evaluate when the day's events change.
+					var _ = modelEvents // Re-evaluate when the day's events change.
 					return dotsBadge.dotColorAt(index)
 				}
 				border.width: dotsBadge.dotBorderWidth

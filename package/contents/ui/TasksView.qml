@@ -78,6 +78,11 @@ Item {
 		target: plasmoid.configuration
 		function onTasksInProgressChanged() { tasksView.deferredRebuild() }
 	}
+	// Menus made when first opened: their items took much of the time the view needed to open.
+	property LazyMenu lazyFilterMenu: LazyMenu { parentItem: tasksView; component: filterMenuComponent }
+	property LazyMenu lazyViewMenu: LazyMenu { parentItem: tasksView; component: viewMenuComponent }
+	property LazyMenu lazyListMenu: LazyMenu { parentItem: tasksView; component: listMenuComponent }
+	property LazyMenu lazyColorMenu: LazyMenu { parentItem: tasksView; component: standaloneColorMenuComponent }
 	function setShownInSmartLists(list, shown) {
 		var ids = Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).filter(function(id) {
 			return id !== list.id
@@ -278,7 +283,18 @@ Item {
 		}
 	}
 	function deferredRebuild() {
-		Qt.callLater(rebuild)
+		// A task just marked done keeps its row a moment (EventModel.holdTaskMoves).
+		var held = eventModel && typeof eventModel.taskMovesHeldFor === "function" ? eventModel.taskMovesHeldFor() : 0
+		if (held > 0) {
+			heldRebuild.interval = held
+			heldRebuild.restart()
+		} else {
+			Qt.callLater(rebuild)
+		}
+	}
+	Timer {
+		id: heldRebuild
+		onTriggered: tasksView.rebuild()
 	}
 	// Set a property to value only when it's different (by its JSON).
 	function setIfChanged(name, value) {
@@ -494,8 +510,9 @@ Item {
 
 	// The list's colors on their own ("Manage lists": its dot).
 	function openColorMenu(list, parentItem, x, y) {
-		standaloneColorMenu.list = list
-		standaloneColorMenu.popup(parentItem, x, y)
+		var menu = lazyColorMenu.get()
+		menu.list = list
+		menu.popup(parentItem, x, y)
 	}
 	// Back from "Manage lists" (also when the popup closes), nothing left half done.
 	function closeManaging() {
@@ -509,10 +526,11 @@ Item {
 		managing = false
 	}
 	function openListMenu(list, parentItem, x, y) {
-		listMenu.list = list
-		listMenu.caps = listCaps(list.id)
-		listMenu.showColorMenu(listMenu.caps.color)
-		listMenu.popup(parentItem, x, y)
+		var menu = lazyListMenu.get()
+		menu.list = list
+		menu.caps = listCaps(list.id)
+		menu.showColorMenu(menu.caps.color)
+		menu.popup(parentItem, x, y)
 	}
 
 	//--- Keyboard: the highlighted task (keyRowKey), see KeyNav.js
@@ -1001,7 +1019,7 @@ Item {
 								opacity: tasksView.dimOpacity
 							}
 						}
-						onClicked: filterMenu.popup(filterButton, 0, filterButton.height)
+						onClicked: tasksView.lazyFilterMenu.get().popup(filterButton, 0, filterButton.height)
 					}
 					Item {
 						Layout.fillWidth: true
@@ -1060,10 +1078,13 @@ Item {
 						icon.name: "overflow-menu"
 						display: QQC2.AbstractButton.IconOnly
 						text: i18n("View options")
-						down: pressed || viewMenu.opened
-						onClicked: viewMenu.popup(moreButton, moreButton.width - viewMenu.implicitWidth, moreButton.height)
+						down: pressed || (!!tasksView.lazyViewMenu.object && tasksView.lazyViewMenu.object.opened)
+						onClicked: {
+							var menu = tasksView.lazyViewMenu.get()
+							menu.popup(moreButton, moreButton.width - menu.implicitWidth, moreButton.height)
+						}
 						PlasmaComponents3.ToolTip.text: text
-						PlasmaComponents3.ToolTip.visible: hovered && !viewMenu.opened
+						PlasmaComponents3.ToolTip.visible: hovered && !(tasksView.lazyViewMenu.object && tasksView.lazyViewMenu.object.opened)
 					}
 				}
 			}
@@ -1358,97 +1379,100 @@ Item {
 	}
 
 	// The filters' menu (narrow: on the header's title): the side bar's entries.
-	PlasmaComponents3.Menu {
-		id: filterMenu
-		Instantiator {
-			model: tasksView.filterEntries
-			delegate: PlasmaComponents3.MenuItem {
-				id: filterItem
-				readonly property var entry: modelData
-				readonly property bool isList: entry.type === 'list'
-				readonly property bool isEntry: entry.type === 'filter' || isList
-				readonly property bool current: isEntry && entry.key === tasksView.currentFilter
-				enabled: isEntry
-				readonly property string label: isList ? entry.list.name : entry.type === 'group' ? entry.text : isEntry ? tasksView.filterName(entry.key) : ""
-				text: label.replace(/&/g, "&&") // No mnemonic from a "&" in a list's name
-				Accessible.name: label
-				leftPadding: Kirigami.Units.smallSpacing * 2
-				rightPadding: Kirigami.Units.smallSpacing * 2
-				topPadding: entry.type === 'separator' ? 0 : entry.type === 'group' ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.smallSpacing + 2
-				bottomPadding: entry.type === 'separator' ? 0 : Kirigami.Units.smallSpacing + 2
-				implicitWidth: implicitContentWidth + leftPadding + rightPadding
-				implicitHeight: entry.type === 'separator' ? Kirigami.Units.smallSpacing * 2 + 1 : implicitContentHeight + topPadding + bottomPadding
-				contentItem: Item {
-					implicitWidth: entry.type === 'separator' ? 0 : itemRow.implicitWidth
-					implicitHeight: entry.type === 'separator' ? 1 : itemRow.implicitHeight
-					Kirigami.Separator {
-						visible: filterItem.entry.type === 'separator'
-						anchors.left: parent.left
-						anchors.right: parent.right
-						anchors.verticalCenter: parent.verticalCenter
-					}
-					RowLayout {
-						id: itemRow
-						visible: filterItem.entry.type !== 'separator'
-						anchors.fill: parent
-						spacing: Kirigami.Units.largeSpacing
-						Item {
-							visible: filterItem.isEntry
-							implicitWidth: Kirigami.Units.iconSizes.small
-							implicitHeight: implicitWidth
-							Kirigami.Icon {
-								anchors.fill: parent
-								visible: !filterItem.isList && !!source
-								source: filterItem.isList ? "" : tasksView.filterIcon(filterItem.entry.key)
-								color: Kirigami.Theme.textColor
-								isMask: true
+	Component {
+		id: filterMenuComponent
+		PlasmaComponents3.Menu {
+			id: filterMenu
+			Instantiator {
+				model: tasksView.filterEntries
+				delegate: PlasmaComponents3.MenuItem {
+					id: filterItem
+					readonly property var entry: modelData
+					readonly property bool isList: entry.type === 'list'
+					readonly property bool isEntry: entry.type === 'filter' || isList
+					readonly property bool current: isEntry && entry.key === tasksView.currentFilter
+					enabled: isEntry
+					readonly property string label: isList ? entry.list.name : entry.type === 'group' ? entry.text : isEntry ? tasksView.filterName(entry.key) : ""
+					text: label.replace(/&/g, "&&") // No mnemonic from a "&" in a list's name
+					Accessible.name: label
+					leftPadding: Kirigami.Units.smallSpacing * 2
+					rightPadding: Kirigami.Units.smallSpacing * 2
+					topPadding: entry.type === 'separator' ? 0 : entry.type === 'group' ? Kirigami.Units.smallSpacing * 2 : Kirigami.Units.smallSpacing + 2
+					bottomPadding: entry.type === 'separator' ? 0 : Kirigami.Units.smallSpacing + 2
+					implicitWidth: implicitContentWidth + leftPadding + rightPadding
+					implicitHeight: entry.type === 'separator' ? Kirigami.Units.smallSpacing * 2 + 1 : implicitContentHeight + topPadding + bottomPadding
+					contentItem: Item {
+						implicitWidth: entry.type === 'separator' ? 0 : itemRow.implicitWidth
+						implicitHeight: entry.type === 'separator' ? 1 : itemRow.implicitHeight
+						Kirigami.Separator {
+							visible: filterItem.entry.type === 'separator'
+							anchors.left: parent.left
+							anchors.right: parent.right
+							anchors.verticalCenter: parent.verticalCenter
+						}
+						RowLayout {
+							id: itemRow
+							visible: filterItem.entry.type !== 'separator'
+							anchors.fill: parent
+							spacing: Kirigami.Units.largeSpacing
+							Item {
+								visible: filterItem.isEntry
+								implicitWidth: Kirigami.Units.iconSizes.small
+								implicitHeight: implicitWidth
+								Kirigami.Icon {
+									anchors.fill: parent
+									visible: !filterItem.isList && !!source
+									source: filterItem.isList ? "" : tasksView.filterIcon(filterItem.entry.key)
+									color: Kirigami.Theme.textColor
+									isMask: true
+								}
+								ListMark {
+									visible: filterItem.isList
+									anchors.centerIn: parent
+									list: filterItem.isList ? filterItem.entry.list : null
+									size: Math.round(Kirigami.Units.gridUnit * 0.6)
+									color: filterItem.isList ? tasksView.listDotColor(filterItem.entry.list) : "transparent"
+								}
 							}
-							ListMark {
-								visible: filterItem.isList
-								anchors.centerIn: parent
-								list: filterItem.isList ? filterItem.entry.list : null
-								size: Math.round(Kirigami.Units.gridUnit * 0.6)
-								color: filterItem.isList ? tasksView.listDotColor(filterItem.entry.list) : "transparent"
+							PlasmaComponents3.Label {
+								Layout.fillWidth: true
+								Layout.minimumWidth: 0
+								text: filterItem.label
+								textFormat: Text.PlainText // User text (list name, account label)
+								font.weight: filterItem.current ? Font.DemiBold : Font.Normal
+								opacity: filterItem.entry.type === 'group' ? tasksView.dimOpacity : 1
+								elide: Text.ElideRight
+							}
+							PlasmaComponents3.Label {
+								visible: filterItem.isEntry && filterItem.entry.count > 0
+								Layout.leftMargin: Kirigami.Units.largeSpacing
+								text: String(filterItem.entry.count || 0)
+								textFormat: Text.PlainText
+								opacity: tasksView.dimOpacity
 							}
 						}
-						PlasmaComponents3.Label {
-							Layout.fillWidth: true
-							Layout.minimumWidth: 0
-							text: filterItem.label
-							textFormat: Text.PlainText // User text (list name, account label)
-							font.weight: filterItem.current ? Font.DemiBold : Font.Normal
-							opacity: filterItem.entry.type === 'group' ? tasksView.dimOpacity : 1
-							elide: Text.ElideRight
-						}
-						PlasmaComponents3.Label {
-							visible: filterItem.isEntry && filterItem.entry.count > 0
-							Layout.leftMargin: Kirigami.Units.largeSpacing
-							text: String(filterItem.entry.count || 0)
-							textFormat: Text.PlainText
-							opacity: tasksView.dimOpacity
-						}
 					}
+					background: Rectangle {
+						radius: Kirigami.Units.cornerRadius
+						readonly property color tint: filterItem.current ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
+						color: Qt.rgba(tint.r, tint.g, tint.b, filterItem.current ? 0.18 : filterItem.highlighted ? 0.1 : 0)
+					}
+					onTriggered: tasksView.setFilter(entry.key)
 				}
-				background: Rectangle {
-					radius: Kirigami.Units.cornerRadius
-					readonly property color tint: filterItem.current ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
-					color: Qt.rgba(tint.r, tint.g, tint.b, filterItem.current ? 0.18 : filterItem.highlighted ? 0.1 : 0)
-				}
-				onTriggered: tasksView.setFilter(entry.key)
+				onObjectAdded: function(index, object) { filterMenu.insertItem(index, object) }
+				onObjectRemoved: function(index, object) { filterMenu.removeItem(object) }
 			}
-			onObjectAdded: function(index, object) { filterMenu.insertItem(index, object) }
-			onObjectRemoved: function(index, object) { filterMenu.removeItem(object) }
-		}
-		PlasmaComponents3.MenuSeparator {
-			visible: tasksView.taskAccounts.length > 0
-			height: visible ? implicitHeight : 0
-		}
-		PlasmaComponents3.MenuItem {
-			visible: tasksView.taskAccounts.length > 0
-			height: visible ? implicitHeight : 0
-			text: i18n("New list")
-			icon.name: "list-add"
-			onTriggered: tasksView.startNewList()
+			PlasmaComponents3.MenuSeparator {
+				visible: tasksView.taskAccounts.length > 0
+				height: visible ? implicitHeight : 0
+			}
+			PlasmaComponents3.MenuItem {
+				visible: tasksView.taskAccounts.length > 0
+				height: visible ? implicitHeight : 0
+				text: i18n("New list")
+				icon.name: "list-add"
+				onTriggered: tasksView.startNewList()
+			}
 		}
 	}
 
@@ -1465,77 +1489,80 @@ Item {
 	}
 
 	// The view's options ("⋯" in the header).
-	PlasmaComponents3.Menu {
-		id: viewMenu
+	Component {
+		id: viewMenuComponent
 		PlasmaComponents3.Menu {
-			title: i18n("Group by")
-			icon.name: "view-list-tree"
-			ChoiceItem {
-				text: i18nc("group tasks by", "Date")
-				current: tasksView.groupBy === 'date'
-				onTriggered: plasmoid.configuration.tasksGroupBy = 'date'
+			id: viewMenu
+			PlasmaComponents3.Menu {
+				title: i18n("Group by")
+				icon.name: "view-list-tree"
+				ChoiceItem {
+					text: i18nc("group tasks by", "Date")
+					current: tasksView.groupBy === 'date'
+					onTriggered: plasmoid.configuration.tasksGroupBy = 'date'
+				}
+				ChoiceItem {
+					text: i18nc("group tasks by", "List")
+					current: tasksView.groupBy === 'list'
+					onTriggered: plasmoid.configuration.tasksGroupBy = 'list'
+				}
+				ChoiceItem {
+					text: i18nc("group tasks by", "None")
+					current: tasksView.groupBy === 'none'
+					onTriggered: plasmoid.configuration.tasksGroupBy = 'none'
+				}
 			}
-			ChoiceItem {
-				text: i18nc("group tasks by", "List")
-				current: tasksView.groupBy === 'list'
-				onTriggered: plasmoid.configuration.tasksGroupBy = 'list'
+			PlasmaComponents3.Menu {
+				title: i18n("Sort by")
+				icon.name: "view-sort"
+				ChoiceItem {
+					text: i18nc("sort tasks by", "Due date")
+					current: tasksView.sortBy === 'due'
+					onTriggered: plasmoid.configuration.tasksSortBy = 'due'
+				}
+				ChoiceItem {
+					text: i18nc("sort tasks by", "Title")
+					current: tasksView.sortBy === 'title'
+					onTriggered: plasmoid.configuration.tasksSortBy = 'title'
+				}
+				ChoiceItem {
+					text: i18nc("sort tasks by", "List order")
+					current: tasksView.sortBy === 'list'
+					onTriggered: plasmoid.configuration.tasksSortBy = 'list'
+				}
+				ChoiceItem {
+					text: i18nc("sort tasks by", "Priority")
+					current: tasksView.sortBy === 'priority'
+					onTriggered: plasmoid.configuration.tasksSortBy = 'priority'
+				}
 			}
+			PlasmaComponents3.MenuSeparator {}
 			ChoiceItem {
-				text: i18nc("group tasks by", "None")
-				current: tasksView.groupBy === 'none'
-				onTriggered: plasmoid.configuration.tasksGroupBy = 'none'
+				text: i18n("Show details")
+				toggle: true
+				icon.name: "view-list-details"
+				current: tasksView.showDetails
+				onTriggered: plasmoid.configuration.tasksShowDetails = !tasksView.showDetails
 			}
-		}
-		PlasmaComponents3.Menu {
-			title: i18n("Sort by")
-			icon.name: "view-sort"
-			ChoiceItem {
-				text: i18nc("sort tasks by", "Due date")
-				current: tasksView.sortBy === 'due'
-				onTriggered: plasmoid.configuration.tasksSortBy = 'due'
+			PlasmaComponents3.MenuItem {
+				text: tasksView.showCompleted ? i18n("Hide completed") : i18n("Show completed")
+				icon.name: "task-complete"
+				onTriggered: plasmoid.configuration.tasksShowCompleted = !tasksView.showCompleted
 			}
-			ChoiceItem {
-				text: i18nc("sort tasks by", "Title")
-				current: tasksView.sortBy === 'title'
-				onTriggered: plasmoid.configuration.tasksSortBy = 'title'
+			PlasmaComponents3.MenuSeparator {
+				visible: tasksView.taskAccounts.length > 0
+				height: visible ? implicitHeight : 0
 			}
-			ChoiceItem {
-				text: i18nc("sort tasks by", "List order")
-				current: tasksView.sortBy === 'list'
-				onTriggered: plasmoid.configuration.tasksSortBy = 'list'
-			}
-			ChoiceItem {
-				text: i18nc("sort tasks by", "Priority")
-				current: tasksView.sortBy === 'priority'
-				onTriggered: plasmoid.configuration.tasksSortBy = 'priority'
-			}
-		}
-		PlasmaComponents3.MenuSeparator {}
-		ChoiceItem {
-			text: i18n("Show details")
-			toggle: true
-			icon.name: "view-list-details"
-			current: tasksView.showDetails
-			onTriggered: plasmoid.configuration.tasksShowDetails = !tasksView.showDetails
-		}
-		PlasmaComponents3.MenuItem {
-			text: tasksView.showCompleted ? i18n("Hide completed") : i18n("Show completed")
-			icon.name: "task-complete"
-			onTriggered: plasmoid.configuration.tasksShowCompleted = !tasksView.showCompleted
-		}
-		PlasmaComponents3.MenuSeparator {
-			visible: tasksView.taskAccounts.length > 0
-			height: visible ? implicitHeight : 0
-		}
-		PlasmaComponents3.MenuItem {
-			visible: tasksView.taskAccounts.length > 0
-			height: visible ? implicitHeight : 0
-			text: i18n("Manage lists")
-			icon.name: "configure"
-			onTriggered: {
-				tasksView.cancelRename()
-				tasksView.addingList = false
-				tasksView.managing = true
+			PlasmaComponents3.MenuItem {
+				visible: tasksView.taskAccounts.length > 0
+				height: visible ? implicitHeight : 0
+				text: i18n("Manage lists")
+				icon.name: "configure"
+				onTriggered: {
+					tasksView.cancelRename()
+					tasksView.addingList = false
+					tasksView.managing = true
+				}
 			}
 		}
 	}
@@ -2054,62 +2081,68 @@ Item {
 			}
 		}
 	}
-	ColorMenu {
-		id: standaloneColorMenu
+	Component {
+		id: standaloneColorMenuComponent
+		ColorMenu {
+			id: standaloneColorMenu
+		}
 	}
 
 	// A list's menu ("⋯" or right click on its header).
-	PlasmaComponents3.Menu {
-		id: listMenu
-		property var list: null
-		property var caps: ({})
+	Component {
+		id: listMenuComponent
+		PlasmaComponents3.Menu {
+			id: listMenu
+			property var list: null
+			property var caps: ({})
 
-		// A submenu can't be hidden, so Color is only inserted for lists that have one (TickTick).
-		readonly property int colorMenuIndex: 1 // After Rename
-		function showColorMenu(show) {
-			var shown = listMenu.itemAt(colorMenuIndex) && listMenu.itemAt(colorMenuIndex).subMenu === colorMenu
-			if (show && !shown) {
-				listMenu.insertMenu(colorMenuIndex, colorMenu)
-			} else if (!show && shown) {
-				listMenu.takeMenu(colorMenuIndex)
+			// A submenu can't be hidden, so Color is only inserted for lists that have one (TickTick).
+			readonly property int colorMenuIndex: 1 // After Rename
+			function showColorMenu(show) {
+				var shown = listMenu.itemAt(colorMenuIndex) && listMenu.itemAt(colorMenuIndex).subMenu === colorMenu
+				if (show && !shown) {
+					listMenu.insertMenu(colorMenuIndex, colorMenu)
+				} else if (!show && shown) {
+					listMenu.takeMenu(colorMenuIndex)
+				}
 			}
-		}
-		property PlasmaComponents3.Menu colorMenu: ColorMenu {
-			list: listMenu.list
-		}
+			property PlasmaComponents3.Menu colorMenu: ColorMenu {
+				list: listMenu.list
+			}
 
-		PlasmaComponents3.MenuItem {
-			visible: !!listMenu.caps.rename
-			height: visible ? implicitHeight : 0
-			text: i18n("Rename…")
-			icon.name: "edit-rename"
-			onTriggered: tasksView.startRename(listMenu.list)
-		}
-		// Like TickTick's Someday: the list's tasks only on its own filter, not in All, Today, …
-		PlasmaComponents3.MenuItem {
-			text: i18n("Show in smart lists")
-			icon.name: "view-filter"
-			checkable: true
-			checked: !!listMenu.list && !tasksView.smartHidden[listMenu.list.id]
-			onTriggered: tasksView.setShownInSmartLists(listMenu.list, checked)
-		}
-		PlasmaComponents3.MenuItem {
-			visible: !!listMenu.caps.clearCompleted
-			height: visible ? implicitHeight : 0
-			text: i18n("Clear completed")
-			icon.name: "edit-clear-history"
-			onTriggered: tasksView.clearCompleted(listMenu.list)
-		}
-		PlasmaComponents3.MenuSeparator {
-			visible: !!listMenu.caps.delete
-			height: visible ? implicitHeight : 0
-		}
-		PlasmaComponents3.MenuItem {
-			visible: !!listMenu.caps.delete
-			height: visible ? implicitHeight : 0
-			text: i18n("Delete list…")
-			icon.name: "edit-delete"
-			onTriggered: tasksView.askDelete(listMenu.list)
+			PlasmaComponents3.MenuItem {
+				visible: !!listMenu.caps.rename
+				height: visible ? implicitHeight : 0
+				text: i18n("Rename…")
+				icon.name: "edit-rename"
+				onTriggered: tasksView.startRename(listMenu.list)
+			}
+			// Like TickTick's Someday: the list's tasks only on its own filter, not in All, Today, …
+			PlasmaComponents3.MenuItem {
+				text: i18n("Show in smart lists")
+				icon.name: "view-filter"
+				checkable: true
+				checked: !!listMenu.list && !tasksView.smartHidden[listMenu.list.id]
+				onTriggered: tasksView.setShownInSmartLists(listMenu.list, checked)
+			}
+			PlasmaComponents3.MenuItem {
+				visible: !!listMenu.caps.clearCompleted
+				height: visible ? implicitHeight : 0
+				text: i18n("Clear completed")
+				icon.name: "edit-clear-history"
+				onTriggered: tasksView.clearCompleted(listMenu.list)
+			}
+			PlasmaComponents3.MenuSeparator {
+				visible: !!listMenu.caps.delete
+				height: visible ? implicitHeight : 0
+			}
+			PlasmaComponents3.MenuItem {
+				visible: !!listMenu.caps.delete
+				height: visible ? implicitHeight : 0
+				text: i18n("Delete list…")
+				icon.name: "edit-delete"
+				onTriggered: tasksView.askDelete(listMenu.list)
+			}
 		}
 	}
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -278,7 +278,6 @@ msgid "Edit Calendar"
 msgstr "Kalender bearbeiten"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Name"
@@ -549,6 +548,7 @@ msgid "Show a notification"
 msgstr "Benachrichtigung anzeigen"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Stil"
 
@@ -864,30 +864,44 @@ msgid_plural ""
 "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
 "eg because their account was set up anew, which gives its calendars new ids."
 msgstr[0] ""
+"Ein im PIM-Termin-Modul ausgewählter Kalender existiert in Akonadi nicht "
+"mehr, etwa weil sein Konto neu eingerichtet wurde, was seinen Kalendern neue "
+"IDs gibt."
 msgstr[1] ""
+"%1 im PIM-Termin-Modul ausgewählte Kalender existieren in Akonadi nicht "
+"mehr, etwa weil ihr Konto neu eingerichtet wurde, was seinen Kalendern neue "
+"IDs gibt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Not selected now: %1. Select them on the PIM Events Plugin page of the "
 "Digital Clock's settings."
 msgstr ""
+"Nicht ausgewählt: %1. Wählen Sie sie auf der Seite des PIM-Termin-Moduls in "
+"den Einstellungen der Digitaluhr aus."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "All the calendars Akonadi has now are selected."
-msgstr ""
+msgstr "Alle Kalender, die Akonadi jetzt hat, sind ausgewählt."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Forget the Missing Ones"
-msgstr ""
+msgstr "Fehlende vergessen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
 "in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. Google calendars shown "
-"through an account signed in here are listed above, with the account."
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
+"Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, wird "
+"auf der Seite des PIM-Termin-Moduls in den Einstellungen der Digitaluhr "
+"festgelegt (das Modul selbst wird unter Termine > Plasma-Kalender "
+"eingeschaltet). Im Kalendermenü des Aufklappfensters werden sie nach Farbe "
+"ein- und ausgeblendet: Kalender einer Farbe gemeinsam. Die Google-Kalender "
+"eines hier angemeldeten Kontos stehen oben beim Konto."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1380,6 +1394,16 @@ msgid "Flat"
 msgstr "Flach"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Animationen"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr ""
+"Ansichten gleiten und blenden ein, Karten öffnen sich, die Tage des kleinen "
+"Monats gehen weich über."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "Aussehen der Termine"
 
@@ -1538,6 +1562,21 @@ msgid "Up next"
 msgstr "Als Nächstes"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "„Als Nächstes“ zeigt"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "Die Tage nach dem gezeigten; spätere unter „Mehr anzeigen“"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "Tag"
+msgstr[1] "Tage"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
 msgstr "Ganztägige Termine nebeneinander"
 
@@ -1606,6 +1645,47 @@ msgid "Debug logging and extra settings pages"
 msgstr "Debug-Protokollierung und zusätzliche Einstellungsseiten"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "ja"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "nein"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "fehlgeschlagen (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "Aktuelles Wetter, 3-Stunden-Schritte: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 Tage (kostenpflichtiger Tarif): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+"OpenWeatherMap kennt diese App-ID nicht (eine neue braucht bis zu 2 Stunden)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "Wählen Sie oben One Call 3.0: stündlich und 8 Tage."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "One Call 3.0 ist nicht abonniert: Wählen Sie oben Kostenlos (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Quelle"
 
@@ -1634,7 +1714,6 @@ msgid "City name, eg: Warszawa"
 msgstr "Ortsname, z. B.: Berlin"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1669,6 +1748,71 @@ msgid "Required for OpenWeatherMap"
 msgstr "Für OpenWeatherMap erforderlich"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Kostenlos (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "Wird geprüft …"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "App-ID prüfen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+"Kostenlos (2.5) funktioniert mit jeder App-ID: das aktuelle Wetter und eine "
+"Vorhersage in 3-Stunden-Schritten für 5 Tage. Die Vorhersage für 16 Tage "
+"braucht einen kostenpflichtigen Tarif; ohne ihn werden die Tage aus den 3-"
+"Stunden-Schritten gebildet."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+"One Call 3.0 braucht das Abonnement „One Call by Call“ auf <a href=\"https://"
+"openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 Abrufe am "
+"Tag sind kostenlos, eine Zahlungskarte ist nötig): das aktuelle Wetter, 48 "
+"Stunden stündlich und 8 Tage in einem Abruf. Das Miniprogramm fragt "
+"höchstens alle 10 Minuten, etwa 150 Abrufe am Tag."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+"Eine App-ID gilt für beide: „App-ID prüfen“ zeigt, was Ihre nutzen darf."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
+"Die mitgelieferte App-ID teilen sich alle, die dieses Miniprogramm "
+"verwenden, und damit auch ihr Abruflimit: Das Wetter wird dann zeitweise "
+"nicht aktualisiert. Eine eigene, kostenlose App-ID: Registrieren Sie sich "
+"auf <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a> und kopieren Sie sie unter „API keys“. Open-"
+"Meteo braucht keine."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1693,12 +1837,78 @@ msgid "Kelvin"
 msgstr "Kelvin"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogramm zeigt"
+msgid "Icons"
+msgstr "Piktogramme"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "System"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "Hintergrund des Symbols fürs aktuelle Wetter"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "Himmel, je nach Wetter"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "Dezent"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "Keiner"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "Vorhersagediagramm"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "Auch das Meteogramm über der Agenda"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "Einfach"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "Aufwendig"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Angezeigte Stunden"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr ""
+"Das heutige Diagramm in der Tagesansicht und das Meteogramm über der Agenda"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " Stunden"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "Größere Symbole"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "Im Diagramm und bei den nächsten Tagen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "Regenmengen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "Die Summe über dem Diagramm, die Mengen zu den regenreichsten Stunden"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1719,19 +1929,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Geladen von <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "ID"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "Ortsname, z. B. Berlin oder Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "Website des Ortes"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "Link öffnen"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "N"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "S"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "O"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "W"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "ID %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap hat die App-ID nicht angenommen: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "Die Suche ist fehlgeschlagen: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "Kein Ort gefunden."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "Keine App-ID eingetragen."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1745,6 +1990,14 @@ msgstr "Liste umbenennen…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Liste löschen…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "ID"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "Website des Ortes"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1769,8 +2022,24 @@ msgid "All lists"
 msgstr "Alle Listen"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Angezeigte Aufgabenliste"
+msgid "All open"
+msgstr "Alle offenen"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Angezeigte Aufgaben"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "An diesem Tag fällig"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Alle offenen Aufgaben"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Keine offenen Aufgaben"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1779,6 +2048,17 @@ msgstr "Alles erledigt"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Keine Aufgaben"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "In Bearbeitung"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Zu erledigen"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2975,6 +3255,30 @@ msgstr "Limit der Wetter-API erreicht"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+"OpenWeatherMap hat die App-ID für One Call 3.0 abgelehnt: Abonnieren Sie es "
+"oder wählen Sie Kostenlos (2.5) unter Einstellungen > Wetter."
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+"OpenWeatherMap hat die App-ID abgelehnt. Eine neue funktioniert erst nach "
+"bis zu 2 Stunden; prüfen Sie sie unter Einstellungen > Wetter."
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr "de"
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3432,12 +3736,6 @@ msgstr "Als nicht erledigt markieren"
 msgid "Mark as done"
 msgstr "Als erledigt markieren"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "In Bearbeitung"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Aufgabe konnte nicht verschoben werden"
@@ -3664,10 +3962,6 @@ msgstr "Ohne Datum"
 msgid "Completed"
 msgstr "Erledigt"
 
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Keine offenen Aufgaben"
-
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
 msgid "Completed"
@@ -3879,8 +4173,114 @@ msgid "dddd, d MMM"
 msgstr "dddd, d. MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "Morgen nichts."
+msgstr[1] "Nichts in den nächsten %1 Tagen."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "In den nächsten Tagen ist nichts geplant."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "Klar"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "Überwiegend klar"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "Teilweise bewölkt"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "Bedeckt"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "Nebel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "Nebel mit Reifansatz"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "Leichter Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "Starker Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "Gefrierender Sprühregen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "Leichter Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "Starker Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "Gefrierender Regen"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "Leichter Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "Starker Schneefall"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "Schneegriesel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "Regenschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "Starke Regenschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "Schneeschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "Starke Schneeschauer"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "Gewitter"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "Gewitter mit Hagel"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "Unbekannt"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3891,6 +4291,10 @@ msgstr ""
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Wetter wird geladen…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Vollständige Vorhersage im Web"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3907,13 +4311,20 @@ msgid "No forecast for this day."
 msgstr "Keine Vorhersage für diesen Tag."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Nächste 12 Stunden"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "Nächste Stunde"
+msgstr[1] "Nächste %1 Stunden"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Im Tagesverlauf"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "Regen: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3964,20 +4375,6 @@ msgstr "Arbeitsort: %1"
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 #~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 #~ "calendar menu they are shown and hidden by color: calendars of one color "
-#~ "together. Google calendars shown through an account signed in here are "
-#~ "listed above, with the account."
-#~ msgstr ""
-#~ "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, "
-#~ "wird auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine "
-#~ "> Plasma-Kalender). Im Kalendermenü des Aufklappfensters werden sie nach "
-#~ "Farbe ein- und ausgeblendet: Kalender einer Farbe gemeinsam. Google-"
-#~ "Kalender, die über ein hier angemeldetes Konto angezeigt werden, stehen "
-#~ "oben beim Konto."
-
-#~ msgid ""
-#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
-#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-#~ "calendar menu they are shown and hidden by color: calendars of one color "
 #~ "together. The Google calendars of an account signed in here are listed "
 #~ "above, with the account."
 #~ msgstr ""
@@ -3987,16 +4384,26 @@ msgstr "Arbeitsort: %1"
 #~ "Farbe ein- und ausgeblendet: Kalender einer Farbe gemeinsam. Die Google-"
 #~ "Kalender eines hier angemeldeten Kontos stehen oben beim Konto."
 
-#~ msgid ""
-#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
-#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-#~ "calendar menu they are shown and hidden by color: calendars of one color "
-#~ "together."
-#~ msgstr ""
-#~ "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, "
-#~ "wird auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine "
-#~ "> Plasma-Kalender). Im Kalendermenü des Aufklappfensters werden sie nach "
-#~ "Farbe ein- und ausgeblendet: Kalender einer Farbe gemeinsam."
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " Tage"
+
+#~ msgid "Up next lists"
+#~ msgstr "„Als Nächstes“ zeigt"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = so viele wie passen; der Rest unter „Mehr anzeigen“"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " Termine"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogramm zeigt"
+
+#~ msgctxt "%1 = icon theme, eg: Breeze"
+#~ msgid "System (%1)"
+#~ msgstr "System (%1)"
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
@@ -4007,6 +4414,12 @@ msgstr "Arbeitsort: %1"
 #~ "wird auf der Einstellungsseite des PIM-Termin-Moduls festgelegt (Termine "
 #~ "> Plasma-Kalender). Im Kalendermenü des Aufklappfensters sind sie ein "
 #~ "Eintrag."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Nächste 12 Stunden"
+
+#~ msgid "Task list shown"
+#~ msgstr "Angezeigte Aufgabenliste"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4635,17 +5048,11 @@ msgstr "Arbeitsort: %1"
 #~ msgid "Grid"
 #~ msgstr "Raster"
 
-#~ msgid "Rain"
-#~ msgstr "Regen"
-
 #~ msgid "Positive Temp"
 #~ msgstr "Positive Temperatur"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Negative Temperatur"
-
-#~ msgid "Icons"
-#~ msgstr "Piktogramme"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Version:</b> %1"

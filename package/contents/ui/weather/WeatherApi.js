@@ -3,12 +3,19 @@
 .import "OpenWeatherMap.js" as OpenWeatherMap
 .import "WeatherCanada.js" as WeatherCanada
 .import "OpenMeteo.js" as OpenMeteo
+.import "IconSeverity.js" as IconSeverity
+
+/* The language of the weather texts, OpenWeatherMap's code for it (Open-Meteo's are translated in
+   Logic.qml). */
+function setLanguage(code) {
+	OpenWeatherMap.setLanguage(code)
+}
 
 /* How many hours each data point represents */
 function getDataPointDuration(config) {
 	var weatherService = config.weatherService
 	if (weatherService == 'OpenWeatherMap') {
-		return 3
+		return OpenWeatherMap.dataPointDuration(config)
 	} else if (weatherService == 'OpenMeteo') {
 		return 1
 	} else if (weatherService == 'WeatherCanada') {
@@ -94,6 +101,28 @@ function updateHourlyWeather(config, callback) {
 	}
 }
 
+// A web page with the full forecast for the configured place ('' when there's none): meteoblue for
+// Open-Meteo's coordinates, the city's page of OpenWeatherMap or Weather Canada.
+function forecastPageUrl(config) {
+	var weatherService = config.weatherService
+	if (weatherService == 'OpenMeteo') {
+		var lat = Number(config.openMeteoLatitude)
+		var lon = Number(config.openMeteoLongitude)
+		if (!isFinite(lat) || !isFinite(lon) || (lat === 0 && lon === 0)) {
+			return ''
+		}
+		return 'https://www.meteoblue.com/en/weather/week/' + Math.abs(lat).toFixed(3) + (lat < 0 ? 'S' : 'N')
+			+ Math.abs(lon).toFixed(3) + (lon < 0 ? 'W' : 'E')
+	} else if (weatherService == 'OpenWeatherMap') {
+		var cityId = Number(config.openWeatherMapCityId)
+		return cityId > 0 ? 'https://openweathermap.org/city/' + Math.floor(cityId) : ''
+	} else if (weatherService == 'WeatherCanada') {
+		var match = /[a-z]{2}-\d+/.exec(String(config.weatherCanadaCityId || ''))
+		return match ? WeatherCanada.getCityUrl(match[0]) : ''
+	}
+	return ''
+}
+
 /* Return true if all configuration has been setup. */
 function weatherIsSetup(config) {
 	var weatherService = config.weatherService
@@ -108,39 +137,7 @@ function weatherIsSetup(config) {
 	}
 }
 
-var weatherIconBySeverity = [
-	// Least Severe
-	'weather-clear-night',
-	'weather-clear',
-	'weather-few-clouds-night',
-	'weather-few-clouds',
-	'weather-clouds-night',
-	'weather-clouds',
-	'weather-fog',
-	'weather-overcast',
-	'weather-showers-scattered-night',
-	'weather-showers-scattered',
-	'weather-snow-scattered-night',
-	'weather-snow-scattered-day',
-	'weather-snow',
-	'weather-snow-rain-night',
-	'weather-snow-rain',
-	'weather-showers-night',
-	'weather-showers',
-	'weather-storm-night',
-	'weather-storm',
-	'weather-severe-alert',
-	// Most severe
-]
-
+// The most severe of the icons (eg: a day's from its hours): see IconSeverity.js.
 function getMostSevereIcon(weatherIconList) {
-	var mostSevereIndex = weatherIconBySeverity.indexOf(weatherIconList[0])
-	for (var i = 1; i < weatherIconList.length; i++) {
-		var index = weatherIconBySeverity.indexOf(weatherIconList[i])
-		mostSevereIndex = Math.max(mostSevereIndex, index)
-	}
-	if (mostSevereIndex === -1) {
-		return weatherIconList[0]
-	}
-	return weatherIconBySeverity[mostSevereIndex]
+	return IconSeverity.mostSevere(weatherIconList)
 }

@@ -937,6 +937,24 @@ function dayTaskRows(items, day, today) {
 		.concat(subtaskTree(tasks.filter(isDone)))
 }
 
+// The Day view's "All open tasks": every open task (any due date, or none), each once, split into
+// { progress: rows of the ones in progress (item.inProgress, see stampInProgress), todo: the
+// others }, rows as dayTaskRows'.
+function dayAllTaskSections(items) {
+	var progress = []
+	var todo = []
+	var seen = {}
+	for (var i = 0; i < (items || []).length; i++) {
+		var item = items[i]
+		if (!isTask(item) || isDone(item) || seen[item.calendarId + ':' + item.id]) {
+			continue
+		}
+		seen[item.calendarId + ':' + item.id] = true
+		;(item.inProgress ? progress : todo).push(item)
+	}
+	return { progress: subtaskTree(sortOpenTasks(progress)), todo: subtaskTree(sortOpenTasks(todo)) }
+}
+
 //--- Tasks view by date
 
 // The tasks of the lists, each once: { open: [{ item, list }], done: [{ item, list }] }.

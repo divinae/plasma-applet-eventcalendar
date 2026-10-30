@@ -92,26 +92,7 @@ MouseArea {
 			currentView = plasmoid.configuration.popupMode
 		}
 	}
-	//--- How long a view switch takes (Settings > Advanced > debugging: the log only): from the
-	// switch to the view built (Loader) and to the first frame drawn after it. Times and view names,
-	// nothing about events.
-	property real switchStart: 0
-	property real switchBuilt: 0
-	function switchLog(what) {
-		if (switchStart > 0) {
-			logger.debug('view switch:', viewMode, what, Math.round(Date.now() - switchStart), 'ms')
-		}
-	}
-	Connections {
-		target: popup.Window.window
-		enabled: popup.switchStart > 0
-		function onFrameSwapped() {
-			popup.switchLog('first frame')
-			popup.switchStart = 0
-		}
-	}
 	onCurrentViewChanged: {
-		switchStart = Date.now()
 		closeOverlays() // Overlays belong to the view they were opened from.
 		if (openLastView) {
 			plasmoid.configuration.popupLastView = currentView
@@ -191,7 +172,7 @@ MouseArea {
 		// Opening the popup or picking a day / "today" in the same month keeps the month:
 		// nothing to fetch or rebuild. (A newly created popup fills itself in Component.onCompleted.)
 		if (monthChanged) {
-			logic.updateEvents()
+			logic.updateEvents(true) // Month navigation: from memory when it can
 		}
 	}
 
@@ -350,6 +331,13 @@ MouseArea {
 	//--- New / edit event form, on top of everything.
 	property bool editorOpen: false
 	property var editorEvent: null // null: new event
+	// What the details and editor cards show: the event while open, kept while they fade out after
+	// closing (detailsEvent / editorEvent are cleared right away).
+	property var shownDetailsEvent: null
+	onDetailsEventChanged: if (detailsEvent) shownDetailsEvent = detailsEvent
+	property var shownEditorEvent: null
+	onEditorOpenChanged: if (editorOpen) shownEditorEvent = editorEvent
+	onEditorEventChanged: if (editorOpen) shownEditorEvent = editorEvent
 	property date editorDate: new Date()
 	property var editorStart: null
 	property string editorTitle: ""
@@ -481,7 +469,7 @@ MouseArea {
 		}
 		onNewEventClicked: popup.tasksMode ? popup.newTask(null) : popup.openQuickAdd()
 		onSearchClicked: popup.openSearch()
-		onRefreshClicked: logic.update()
+		onRefreshClicked: logic.reload()
 		onGoToDateRequested: popup.openGoToDate()
 	}
 
@@ -609,7 +597,7 @@ MouseArea {
 
 		OverlayCard {
 			id: searchOverlay
-			visible: popup.searchOpen
+			open: popup.searchOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.closeSearch()
 			cardComponent: visible ? searchCard : null
@@ -624,7 +612,7 @@ MouseArea {
 
 		OverlayCard {
 			id: eventDetailsOverlay
-			visible: !!popup.detailsEvent
+			open: !!popup.detailsEvent
 			anchors.fill: parent
 			framed: false // The card draws its own frame
 			onOutsideClicked: popup.closeEventDetails()
@@ -632,7 +620,7 @@ MouseArea {
 			Component {
 				id: eventDetailsCard
 				EventDetailsView {
-					eventItem: popup.detailsEvent
+					eventItem: popup.shownDetailsEvent // Kept while the card fades out
 					onCloseRequested: popup.closeEventDetails()
 					onEditRequested: popup.editEvent(popup.detailsEvent)
 					onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
@@ -641,7 +629,7 @@ MouseArea {
 		}
 
 		OverlayCard {
-			visible: popup.goToDateOpen
+			open: popup.goToDateOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.goToDateOpen = false
 			cardComponent: visible ? goToDateCard : null
@@ -656,7 +644,7 @@ MouseArea {
 
 		OverlayCard {
 			id: quickAddOverlay
-			visible: popup.quickAddOpen
+			open: popup.quickAddOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.closeQuickAdd()
 			cardComponent: visible ? quickAddCard : null
@@ -683,7 +671,7 @@ MouseArea {
 
 		OverlayCard {
 			id: importOverlay
-			visible: popup.importOpen
+			open: popup.importOpen
 			anchors.fill: parent
 			onOutsideClicked: {} // Don't lose the checked events on a stray click.
 			cardComponent: visible ? importCard : null
@@ -699,7 +687,8 @@ MouseArea {
 
 		OverlayCard {
 			id: eventEditorOverlay
-			visible: popup.editorOpen
+			open: popup.editorOpen
+			fadeOut: false // Its form's other inputs (template, title) are cleared on closing
 			anchors.fill: parent
 			framed: false // The card draws its own frame
 			onOutsideClicked: {} // Don't lose typed input on a stray click.
@@ -707,7 +696,7 @@ MouseArea {
 			Component {
 				id: eventEditorCard
 				EventEditView {
-					eventItem: popup.editorEvent
+					eventItem: popup.shownEditorEvent // Kept while the card fades out
 					initialDate: popup.editorDate
 					initialStart: popup.editorStart
 					initialTitle: popup.editorTitle
@@ -727,7 +716,6 @@ MouseArea {
 		visible: active
 		anchors.fill: widgetGrid
 		onLoaded: {
-			popup.switchLog('week/day view built')
 			if (popup.pendingDayViewDate) {
 				item.weekStart = popup.pendingDayViewDate
 				popup.pendingDayViewDate = null
@@ -752,6 +740,52 @@ MouseArea {
 		}
 	}
 
+	// Agenda: the Day view's side columns (DayPanels), the same layout: left the small month (no Up
+	// next: the list is what's next), right today's tasks and weather, the list between them (at most agendaMaxWidth), all
+	// centered together. A column only with room for it and at least minAgendaWidth of list.
+	DayPanels {
+		id: agendaPanels
+		anchors.fill: parent
+		visible: popup.showAgenda
+		upNextAllowed: false
+		readonly property real viewWidth: popup.width - popup.padding * 2
+		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.gridUnit * 2
+		readonly property real minAgendaWidth: Kirigami.Units.gridUnit * 20
+		readonly property bool rightWanted: wantsTasks || wantsWeather
+		readonly property bool leftWanted: wantsMiniMonth || (wantsUpNext && islands)
+		readonly property bool rightRoom: popup.showAgenda && rightWanted && viewWidth >= minAgendaWidth + sideWidth + gap
+		readonly property bool leftRoom: popup.showAgenda && leftWanted
+			&& viewWidth >= minAgendaWidth + sideWidth + gap + (rightRoom ? sideWidth + gap : 0)
+		readonly property real leftSpace: leftRoom ? sideWidth + gap : 0
+		readonly property real rightSpace: rightRoom ? sideWidth + gap : 0
+		readonly property real listWidth: Math.min(viewWidth - leftSpace - rightSpace, popup.agendaMaxWidth)
+		readonly property real groupOffset: popup.showAgenda ? Math.max(0, Math.round((viewWidth - leftSpace - listWidth - rightSpace) / 2)) : 0
+		sideWidth: appletConfig.sidePanelWidth(viewWidth) // As the Day view's
+		leftShown: leftRoom
+		rightShown: rightRoom
+		leftX: popup.padding + groupOffset
+		rightX: popup.padding + groupOffset + leftSpace + listWidth + gap
+		topY: widgetGrid.y + agendaView.y
+		bottomY: widgetGrid.y + agendaView.y + agendaView.height
+
+		eventModel: popup.eventModel
+		day: timeModel.currentTime
+		today: timeModel.currentTime
+		// The month of the day at the top of the list as it scrolls; the days in sight a band.
+		monthDate: isNaN(agendaView.topDate.getTime()) ? popup.selectedDate : agendaView.topDate
+		rangeStart: agendaView.topDate
+		rangeEnd: agendaView.bottomDate
+		onDayClicked: function(day) { popup.goToDay(day) }
+
+		weatherByDay: popup.weatherInViews ? root.weatherByDay : ({})
+		weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
+		weatherCurrent: logic.currentWeatherData
+		weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
+		weatherLoading: logic.weatherLoading
+		weatherError: logic.lastForecastErr ? String(logic.lastForecastErr) : ""
+		onWeatherRetryRequested: logic.updateWeather(true)
+	}
+
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
@@ -761,7 +795,6 @@ MouseArea {
 		anchors.bottom: widgetGrid.bottom
 		anchors.left: widgetGrid.left
 		anchors.right: widgetGrid.right
-		onLoaded: popup.switchLog('tasks view built')
 		sourceComponent: TasksView {
 			eventModel: popup.eventModel
 		}
@@ -772,6 +805,9 @@ MouseArea {
 		visible: !popup.hourGridMode && !popup.tasksMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
+		// The Agenda's side columns (agendaPanels) left and right of it.
+		anchors.leftMargin: popup.padding + agendaPanels.groupOffset + agendaPanels.leftSpace
+		anchors.rightMargin: popup.padding + agendaPanels.groupOffset + agendaPanels.rightSpace
 		anchors.topMargin: popup.viewTabsHeight
 		columns: 1
 		columnSpacing: popup.spacing
@@ -909,6 +945,7 @@ MouseArea {
 			Layout.maximumWidth: popup.agendaMaxWidth
 			Layout.alignment: Qt.AlignHCenter
 
+			onEndReached: logic.loadMoreAgenda()
 			onNewEventFormOpened: function(agendaItem, calendarSelector) {
 				var selectedCalendarId = ""
 				if (plasmoid.configuration.agendaNewEventRememberCalendar) {
@@ -978,17 +1015,13 @@ MouseArea {
 	function updateAgenda() {
 		agendaStale = !showAgenda
 		if (showAgenda) {
-			var t = Date.now()
 			agendaModel.parseGCalEvents(eventModel.eventsData)
-			logger.debug('agenda parsed in', Date.now() - t, 'ms')
 		}
 	}
 	function updateMonth() {
 		monthStale = !showCalendar
 		if (showCalendar) {
-			var t = Date.now()
 			monthView.parseGCalEvents(eventModel.eventsData)
-			logger.debug('month parsed in', Date.now() - t, 'ms')
 		}
 	}
 	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()

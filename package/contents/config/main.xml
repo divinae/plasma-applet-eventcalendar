@@ -195,6 +195,10 @@
 			<!-- Day view: the task list shown ("" = all selected lists). -->
 			<default></default>
 		</entry>
+		<entry name="dayTasksScope" type="string">
+			<!-- Day view: the tasks shown: 'day' (due that day, and on today the overdue ones) or 'all' (every open task, in progress apart). -->
+			<default>day</default>
+		</entry>
 		<entry name="tasksSmartHiddenLists" type="StringList">
 			<!-- Tasks view: lists left out of the smart filters (All, Today, ...), shown only on their own (like TickTick's "Someday"). -->
 			<default></default>
@@ -515,6 +519,10 @@
 			<!-- islands: the Day view's panels, the agenda days and the task sections in their own rounded cards; flat: one surface -->
 			<default>islands</default>
 		</entry>
+		<entry name="animationsEnabled" type="bool">
+			<!-- Views sliding and fading in, cards opening, tiles easing (also off with Plasma's animation speed at instant) -->
+			<default>true</default>
+		</entry>
 		<entry name="googleColorPalette" type="string">
 			<!-- current: Google Calendar's current colors; classic: the old palette the API returns; system: nearest colors of the Plasma color scheme -->
 			<default>current</default>
@@ -542,6 +550,10 @@
 		<entry name="openWeatherMapCityId" type="uint">
 			<default>0</default>
 		</entry>
+		<entry name="openWeatherMapApi" type="string">
+			<!-- enum: free (2.5, any app id), onecall (3.0, the "One Call by Call" subscription) -->
+			<default>free</default>
+		</entry>
 		<!-- WeatherCanada -->
 		<entry name="weatherCanadaCityId" type="string">
 			<default></default>
@@ -563,6 +575,10 @@
 		<entry name="dayShowUpNext" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="dayUpNextDays" type="uint">
+			<!-- Day view's Up next: the days after the shown one it lists (as many events as fit), the rest under "Show more" -->
+			<default>14</default>
+		</entry>
 		<entry name="dayShowWeather" type="bool">
 			<default>true</default>
 		</entry>
@@ -571,7 +587,7 @@
 		</entry>
 		<entry name="dayAllDayTiles" type="bool">
 			<!-- Day view: three all-day events or more side by side, three in a row (the tooltip has the full text). -->
-			<default>true</default>
+			<default>false</default>
 		</entry>
 		<entry name="weatherShowInViews" type="bool">
 			<default>true</default>
@@ -583,8 +599,26 @@
 		<entry name="weatherUnits" type="string">
 			<default>metric</default>
 		</entry>
+		<entry name="weatherIconStyle" type="string">
+			<!-- enum: system (the icon theme's), yr (bundled) -->
+			<default>system</default>
+		</entry>
+		<entry name="weatherChartStyle" type="string">
+			<!-- The Weather panel's hourly chart. enum: simple, fancy -->
+			<default>simple</default>
+		</entry>
+		<entry name="weatherChartLargeIcons" type="bool">
+			<default>false</default>
+		</entry>
+		<entry name="weatherChartRainAmounts" type="bool">
+			<default>false</default>
+		</entry>
+		<entry name="weatherIconBackground" type="string">
+			<!-- The Weather panel's current weather icon. enum: sky (colors after the weather), subtle, none -->
+			<default>sky</default>
+		</entry>
 		<entry name="meteogramHours" type="uint">
-			<default>30</default>
+			<default>24</default>
 		</entry>
 	</group>
 

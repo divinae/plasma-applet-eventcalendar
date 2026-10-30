@@ -118,11 +118,10 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.mirroredColorKeys(rows, color
 	'a color also of another shown calendar stays; not shown calendars left out')
 assert.deepStrictEqual(JSON.parse(JSON.stringify(U.googleCalendarIdsByAccount([
 	{ calendarList: [{ id: 'x@group.calendar.google.com' }, { id: 'y@group.calendar.google.com' }, { id: 'Me@Gmail.com', primary: true }],
-		calendarIdList: ['primary', 'y@group.calendar.google.com'] },
-	{ calendarList: [{ id: 'other@gmail.com', primary: true }], calendarIdList: ['other@gmail.com'] },
+		calendarIdList: ['x@group.calendar.google.com', 'primary'] },
 	{ calendarList: [] },
 	null,
-]))), { 'me@gmail.com': ['y@group.calendar.google.com', 'Me@Gmail.com'], 'other@gmail.com': ['other@gmail.com'] },
-	'only the calendars selected in the widget ("primary" too); not one unselected (its events come from Akonadi only)')
+]))), { 'me@gmail.com': ['x@group.calendar.google.com', 'Me@Gmail.com'] },
+	'only the calendars shown in the widget ("primary" as its id): an Akonadi copy of another one stays')
 
 console.log('PASS plasma_calendar_utils')

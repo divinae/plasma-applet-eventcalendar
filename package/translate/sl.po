@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -170,7 +170,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Koledar Akonadi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -281,7 +281,6 @@ msgid "Edit Calendar"
 msgstr "Uredi koledar"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Ime"
@@ -550,6 +549,7 @@ msgid "Show a notification"
 msgstr "Prikaži obvestilo"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Slog"
 
@@ -883,9 +883,14 @@ msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
 "in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. Google calendars shown "
-"through an account signed in here are listed above, with the account."
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
+"Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, nastavite "
+"na strani vstavka za dogodke PIM v nastavitvah Digitalne ure (sam vstavek "
+"vklopite v Dogodki > Koledarji Plasma). V meniju koledarjev v pojavnem oknu "
+"jih prikazujete in skrivate po barvi: koledarje ene barve skupaj. Googlovi "
+"koledarji računa, ki je tu prijavljen, so navedeni zgoraj, pri računu."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1362,6 +1367,16 @@ msgid "Flat"
 msgstr "Ploščat"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Animacije"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr ""
+"Pogledi zdrsnejo in se postopoma prikažejo, kartice se odprejo, dnevi malega "
+"meseca se spreminjajo mehko."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "Videz dogodkov"
 
@@ -1516,14 +1531,33 @@ msgid "Up next"
 msgstr "Sledi"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "Naslednje prikaže"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "Dnevi po prikazanem; poznejši pod »Pokaži več«"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dan"
+msgstr[1] "dneva"
+msgstr[2] "dnevi"
+msgstr[3] "dni"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "Celodnevni dogodki drug ob drugem"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
 msgstr ""
+"V dnevnem pogledu tri ali več celodnevnih dogodkov zasede vsak tretjino "
+"širine, trije v vrsti. Ko z miško preletite dogodek, se prikaže v celoti."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1580,6 +1614,48 @@ msgid "Debug logging and extra settings pages"
 msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "da"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "ne"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "ni uspelo (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "Trenutno vreme, 3-urni koraki: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 dni (plačljiv paket): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+"OpenWeatherMap ne pozna tega ID-ja aplikacije (nov začne delovati v največ 2 "
+"urah)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "Zgoraj izberite One Call 3.0: po urah in 8 dni."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "Ni naročnine na One Call 3.0: zgoraj izberite Free (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Vir"
 
@@ -1608,7 +1684,6 @@ msgid "City name, eg: Warszawa"
 msgstr "Ime mesta, npr.: Warszawa"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1643,6 +1718,70 @@ msgid "Required for OpenWeatherMap"
 msgstr "Zahtevano za OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "Preverjanje…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "Preveri ID aplikacije"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+"Free (2.5) deluje s katerim koli ID-jem aplikacije: trenutno vreme in "
+"napoved v 3-urnih korakih za 5 dni. Napoved za 16 dni zahteva plačljiv "
+"paket; brez njega so dnevi sestavljeni iz 3-urnih korakov."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+"One Call 3.0 zahteva naročnino »One Call by Call« na <a href=\"https://"
+"openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 klicev na "
+"dan je brezplačnih, potrebna je plačilna kartica): trenutno vreme, 48 ur po "
+"urah in 8 dni v enem klicu. Gradnik povprašuje največ vsakih 10 minut, "
+"približno 150 klicev na dan."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+"En ID aplikacije deluje za oba: »Preveri ID aplikacije« pove, kaj lahko "
+"uporablja vaš."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
+"Vgrajeni ID aplikacije si delijo vsi uporabniki tega gradnika, z njim pa "
+"tudi omejitev zahtev: vreme se lahko občasno preneha posodabljati. Lasten "
+"brezplačen ID aplikacije: registrirajte se na <a href=\"https://"
+"home.openweathermap.org/users/sign_up\">openweathermap.org</a> in ga "
+"kopirajte iz »API keys«. Open-Meteo ga ne potrebuje."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1667,12 +1806,77 @@ msgid "Kelvin"
 msgstr "Kelvin"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogram prikazuje"
+msgid "Icons"
+msgstr "Ikone"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "Sistemske"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "Ozadje ikone trenutnega vremena"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "Nebo, glede na vreme"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "Nevsiljivo"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "Brez"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "Graf napovedi"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "Tudi meteogram nad dnevnim redom"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "Preprost"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "Podroben"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Prikazane ure"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Današnji graf v dnevnem pogledu in meteogram nad dnevnim redom"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " ur"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "Večje ikone"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "V grafu in pri naslednjih dneh"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "Količine padavin"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "Vsota nad grafom, količine ob najbolj deževnih urah"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1693,19 +1897,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Prenešeno z: <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "Id"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "Ime mesta, npr.: Berlin ali Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "Spletna stran mesta"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "Odpri povezavo"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "S"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "J"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "V"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "Z"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "ID %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap ni sprejel ID-ja aplikacije: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "Iskanje ni uspelo: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "Mesta ni bilo mogoče najti."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "ID aplikacije ni nastavljen."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1719,6 +1958,14 @@ msgstr "Preimenuj seznam…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Izbriši seznam…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "Id"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "Spletna stran mesta"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1743,8 +1990,24 @@ msgid "All lists"
 msgstr "Vsi seznami"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Prikazani seznam opravil"
+msgid "All open"
+msgstr "Vse odprte"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Prikazana opravila"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Rok ta dan"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Vsa odprta opravila"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Ni odprtih opravil"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1753,6 +2016,17 @@ msgstr "Vse opravljeno"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Ni opravil"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "V teku"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Za narediti"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2991,6 +3265,30 @@ msgstr "Dosežena omejitev API-ja za vreme"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+"OpenWeatherMap je zavrnil ID aplikacije za One Call 3.0: naročite se nanj "
+"ali izberite Free (2.5) v Nastavitve > Vreme."
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+"OpenWeatherMap je zavrnil ID aplikacije. Nov začne delovati v največ 2 urah; "
+"preverite ga v Nastavitve > Vreme."
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr "sl"
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3460,12 +3758,6 @@ msgstr "Označi kot neopravljeno"
 msgid "Mark as done"
 msgstr "Označi kot opravljeno"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "V teku"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Opravila ni bilo mogoče premakniti"
@@ -3691,10 +3983,6 @@ msgstr "Brez datuma"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Dokončano"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Ni odprtih opravil"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3922,8 +4210,116 @@ msgid "dddd, d MMM"
 msgstr "dddd, d. MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "Nič v naslednjem %1 dnevu."
+msgstr[1] "Nič v naslednjih %1 dneh."
+msgstr[2] "Nič v naslednjih %1 dneh."
+msgstr[3] "Nič v naslednjih %1 dneh."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "V prihodnjih dneh ni načrtovano nič."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "Jasno"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "Pretežno jasno"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "Delno oblačno"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "Oblačno"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "Megla"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "Megla z ivjem"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "Rahlo rosenje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "Rosenje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "Močno rosenje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "Zmrzujoče rosenje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "Rahel dež"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Regija"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "Močan dež"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "Zmrzujoči dež"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "Rahlo sneženje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "Sneženje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "Močno sneženje"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "Zrnat sneg"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "Plohe"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "Močne plohe"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "Snežne plohe"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "Močne snežne plohe"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "Nevihta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "Nevihta s točo"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "Neznano"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3932,6 +4328,10 @@ msgstr "Nastavite lokacijo v Nastavitve > Vreme, da bo tu prikazana napoved."
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Nalaganje vremena…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Celotna napoved na spletu"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3948,13 +4348,22 @@ msgid "No forecast for this day."
 msgstr "Za ta dan ni napovedi."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Naslednjih 12 ur"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "Naslednja %1 ura"
+msgstr[1] "Naslednji %1 uri"
+msgstr[2] "Naslednje %1 ure"
+msgstr[3] "Naslednjih %1 ur"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Čez dan"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "Dež: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -4005,11 +4414,47 @@ msgstr "Delovna lokacija: %1"
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 #~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, "
+#~ "nastavite na strani z nastavitvami vstavka za dogodke PIM (Dogodki > "
+#~ "Koledarji Plasma). V meniju koledarjev v pojavnem oknu jih prikazujete in "
+#~ "skrivate po barvi: koledarje ene barve skupaj. Googlovi koledarji računa, "
+#~ "ki je tu prijavljen, so navedeni zgoraj, pri računu."
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " dni"
+
+#~ msgid "Up next lists"
+#~ msgstr "Naslednje prikaže"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = kolikor jih gre; ostali pod »Pokaži več«"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " dogodkov"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogram prikazuje"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 #~ "calendar menu they are one entry."
 #~ msgstr ""
 #~ "Prikazani samo za branje. Katere koledarje Akonadi prikazati, izberete na "
 #~ "strani nastavitev vtičnika dogodkov PIM (Dogodki > Koledarji Plasma). V "
 #~ "meniju koledarjev pojavnega okna so en vnos."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Naslednjih 12 ur"
+
+#~ msgid "Task list shown"
+#~ msgstr "Prikazani seznam opravil"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4622,17 +5067,11 @@ msgstr "Delovna lokacija: %1"
 #~ msgid "Grid"
 #~ msgstr "Mreža"
 
-#~ msgid "Rain"
-#~ msgstr "Regija"
-
 #~ msgid "Positive Temp"
 #~ msgstr "Temperatura (+)"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Temperatura (-)"
-
-#~ msgid "Icons"
-#~ msgstr "Ikone"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Različica:</b> %1"

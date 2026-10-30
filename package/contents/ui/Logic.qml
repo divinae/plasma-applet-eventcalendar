@@ -71,6 +71,12 @@ Item {
 		logger.debug('update')
 		logic.updateData()
 	}
+	// Refresh (header, widget menu): also the sources that keep their own copy anew (Plasma's
+	// calendar plugins, see PlasmaCalendarManager.reloadSources).
+	function reload() {
+		eventModel.reloadSources()
+		logic.update()
+	}
 
 	function updateData() {
 		logger.debug('updateData')
@@ -79,12 +85,36 @@ Item {
 	}
 
 	//--- Events
-	function updateEvents() {
+	// navigation: the shown month changed (PopupView), and only that: the month may come from
+	// memory. Any other caller (poll, Refresh, Retry, settings, a refetch after a change) fetches.
+	property bool fetchNeeded: false
+	function updateEvents(navigation) {
+		if (!navigation) {
+			fetchNeeded = true
+		}
+		// A month in memory: shown right away (paging slides it in already filled); a fetch it may
+		// still need (an older one, or around another month) waits as usual, so quick paging
+		// fetches once.
+		if (navigation && !fetchNeeded && !eventModel.fetchRound) {
+			var month = agendaModel.currentMonth
+			var range = agendaModel.getDateRange(month)
+			var entry = eventModel.cachedRange(range.min, range.max)
+			if (entry) {
+				agendaModel.visibleDateMin = range.min
+				agendaModel.visibleDateMax = range.max
+				eventModel.showRange(entry)
+				var center = month.getFullYear() + '-' + month.getMonth()
+				if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
+					updateEventsTimer.stop()
+					return
+				}
+			}
+		}
 		updateEventsTimer.restart()
 	}
 	Timer {
 		id: updateEventsTimer
-		interval: 1000
+		interval: 300 // A few quick clicks through months: one fetch
 		onTriggered: logic.deferredUpdateEvents()
 	}
 	// A view filter changed (declined events, hidden calendars): rebuild from what's loaded.
@@ -95,15 +125,61 @@ Item {
 		upcomingEvents.updateTooltipEvents()
 	}
 
+	// The shown month's events: from memory when a fetch round covered it (EventModel.rangeCache),
+	// fetched again only when that round wasn't around this month or is older than the poll
+	// interval. A fetch covers the month before and after too, so moving a month shows at once.
 	function deferredUpdateEvents() {
-		var range = agendaModel.getDateRange(agendaModel.currentMonth)
+		var month = agendaModel.currentMonth
+		var range = agendaModel.getDateRange(month)
 
 		agendaModel.visibleDateMin = range.min
 		agendaModel.visibleDateMax = range.max
-		eventModel.fetchAll(range.min, range.max)
+		var center = month.getFullYear() + '-' + month.getMonth()
+		var force = fetchNeeded
+		fetchNeeded = false
+		if (force) {
+			eventModel.forgetRanges() // Other months may have changed too
+		}
+		var entry = force ? null : eventModel.cachedRange(range.min, range.max)
+		if (entry && !eventModel.fetchRound) {
+			if (eventModel.shownRange !== entry) { // Not again when updateEvents showed it already
+				eventModel.showRange(entry)
+			}
+			if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
+				return
+			}
+		}
+		var before = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() - 1, 1))
+		var after = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() + 1, 1))
+		eventModel.fetchCenter = center
+		// The Agenda's months added by scrolling (loadMoreAgenda) stay loaded on a refresh.
+		var agendaEnd = new Date(month.getFullYear(), month.getMonth() + 1 + agendaModel.extraMonths, 7)
+		eventModel.fetchAll(before.min, new Date(Math.max(range.max.getTime(), after.max.getTime(), agendaEnd.getTime())))
+	}
+
+	// The Agenda scrolled to its end: one more month below, from what's loaded (a fetch covers the
+	// next month too) or else fetched (the loaded months and the new one).
+	function loadMoreAgenda() {
+		if (agendaModel.extraMonths >= agendaModel.maxExtraMonths || eventModel.fetchRound) {
+			return
+		}
+		agendaModel.extraMonths += 1
+		var month = agendaModel.currentMonth
+		var end = new Date(month.getFullYear(), month.getMonth() + 1 + agendaModel.extraMonths, 1)
+		if (end > agendaModel.visibleDateMax) {
+			agendaModel.visibleDateMax = end
+		}
+		if (eventModel.dateMax >= end) {
+			if (popup) popup.updateAgenda()
+			return
+		}
+		eventModel.fetchCenter = ""
+		eventModel.fetchAll(eventModel.dateMin, new Date(end.getFullYear(), end.getMonth() + 1, 7))
 	}
 
 	//--- Weather
+	// Every hour; force: now (a view that needs the hourly forecast, Retry, settings). The weather
+	// services' RequestCache answers repeats within 10 minutes without a request.
 	function updateWeather(force) {
 		if (WeatherApi.weatherIsSetup(plasmoid.configuration)) {
 			// update every hour
@@ -130,11 +206,11 @@ Item {
 		interval: 100
 		onTriggered: logic.deferredUpdateWeather()
 	}
-	// A view that shows the hourly forecast (the Day view, the meteogram) with none loaded yet:
+	// A view that shows the hourly forecast (the Day view, the Agenda, the meteogram) with none loaded yet:
 	// fetch it now (else it comes with the hourly refresh, not on each view switch).
 	function ensureHourlyWeather() {
 		var viewMode = popup ? popup.viewMode : ''
-		var wantsHourly = viewMode === 'today' || (popup && popup.showMeteogram)
+		var wantsHourly = viewMode === 'today' || viewMode === 'classic' || (popup && popup.showMeteogram) // Day, Agenda (its weather panel)
 		if (wantsHourly && WeatherApi.weatherIsSetup(plasmoid.configuration)
 				&& !(logic.hourlyWeatherData && logic.hourlyWeatherData.list && logic.hourlyWeatherData.list.length > 0)) {
 			logic.updateHourlyWeather()
@@ -180,19 +256,28 @@ Item {
 			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
 			errorMessage += '\n' + i18n("Will try again soon.")
 			logic.lastForecastErr = errorMessage
+		} else if (xhr && xhr.status === 401 && plasmoid.configuration.weatherService === 'OpenWeatherMap') {
+			// "Invalid API key" also when the key is fine but not for this API (One Call 3.0 without
+			// the subscription).
+			lastForecastAt = Date.now()
+			logic.lastForecastErr = plasmoid.configuration.openWeatherMapApi === 'onecall'
+				? i18n("OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather.")
+				: i18n("OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather.")
 		} else {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			logic.lastForecastErr = err
 		}
 	}
 
-	// Server errors: retried after 30 s, 1, 2, then every 5 minutes, until a forecast arrives.
+	// Server errors: retried after 30 s, 1, 2, 5, 5, 5 minutes, then every 5 minutes until a forecast
+	// arrives; OpenWeatherMap every 30 minutes then (its app id's limit, shared with everyone using
+	// the built-in one).
 	property int weatherRetries: 0
 	function scheduleWeatherRetry() {
 		if (weatherRetryTimer.running) {
 			return // Daily and hourly both failed: one retry
 		}
-		var delays = [30, 60, 120, 300]
+		var delays = [30, 60, 120, 300, 300, 300, plasmoid.configuration.weatherService === 'OpenWeatherMap' ? 1800 : 300]
 		weatherRetryTimer.interval = delays[Math.min(weatherRetries, delays.length - 1)] * 1000
 		weatherRetries++
 		weatherRetryTimer.start()
@@ -207,9 +292,34 @@ Item {
 		weatherRetryTimer.stop()
 	}
 
+	// The weather texts in the widget's language: OpenWeatherMap's from the service (its code for the
+	// language, a translation), Open-Meteo's from ours. The parsed items are new objects each time.
+	function setWeatherLanguage() {
+		WeatherApi.setLanguage(i18nc("The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there", "en"))
+	}
+	function localizedWeather(data) {
+		if (!data || plasmoid.configuration.weatherService !== 'OpenMeteo') {
+			return data
+		}
+		function localize(item) {
+			if (item && item.text) {
+				item.text = i18n(item.text)
+			}
+			if (item && item.description) {
+				item.description = i18n(item.description)
+			}
+		}
+		;(data.list || []).forEach(localize)
+		if (data.current && (data.list || []).indexOf(data.current) < 0) {
+			localize(data.current)
+		}
+		return data
+	}
+
 	function updateDailyWeather() {
 		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateDailyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
@@ -222,7 +332,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.dailyWeatherData = data
+			logic.dailyWeatherData = localizedWeather(data)
 			if (data.current) {
 				logic.currentWeatherData = data.current
 			}
@@ -233,6 +343,7 @@ Item {
 	function updateHourlyWeather() {
 		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateHourlyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
@@ -245,7 +356,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.hourlyWeatherData = data
+			logic.hourlyWeatherData = localizedWeather(data)
 			logic.currentWeatherData = data.current || data.list[0]
 			if (popup) popup.updateMeteogram()
 		})
@@ -291,6 +402,7 @@ Item {
 		function onOpenMeteoLongitudeChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapAppIdChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapCityIdChanged() { logic.resetWeatherAndUpdate() }
+		function onOpenWeatherMapApiChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherUnitsChanged() { logic.updateWeather(true) }
 		function onWidgetShowMeteogramChanged() {
@@ -410,6 +522,7 @@ Item {
 				// Event cache: the last loaded Google events and tasks (see showCachedEvents).
 				eventModel.settleCachedCalendars()
 				eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
+				eventModel.rememberRange()
 				logic.eventsNetworkFailed = false
 				if (logic.currentErrorType !== ErrorType.NoError && logic.currentErrorType !== ErrorType.NetworkError) {
 					logic.clearError() // Fetched fine this time
@@ -421,6 +534,9 @@ Item {
 		}
 		function onEventCreated(calendarId, data) {
 			if (popup) popup.deferredUpdateUI()
+		}
+		function onCachedRangeShown() {
+			if (popup) popup.updateUI() // Right away: before the paged month's first frame
 		}
 		function onEventUpdated(calendarId, eventId, data) {
 			if (popup) popup.deferredUpdateUI()

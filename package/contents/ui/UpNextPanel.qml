@@ -7,8 +7,8 @@ import org.kde.plasma.components as PlasmaComponents3
 import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 
-// The Day view's "Up next" (left column, under the small month): a few events after the shown day
-// (at most limit, from the next days days), by day
+// The Day view's "Up next" (left column, under the small month): the events of the days after the
+// shown one (Settings > Views > "Up next shows", as many as fit the column), by day
 // ("Tomorrow", "Thu 29 Oct"), each with its color bar, time and title (Shared.upcomingEvents;
 // eventModel.eventsData, so declined or hidden ones are left out as everywhere; tasks left out). A
 // click shows that day (dayRequested), a right click the event menu. Scrolls when long.
@@ -19,18 +19,12 @@ ColumnLayout {
 	// Events from this time on (the day after the one shown).
 	property date after: new Date()
 	property date today: new Date()
-	// Kept short: a glance at what's next, not a second agenda; expanded ("Show more"): more of
-	// the week, the list scrolls.
-	property int limit: 5
-	property int days: 3
 	property bool expanded: false
-	// Fills the height it's given (the Day view's left column): the events of the next two weeks,
-	// as many as fit, the list at the top.
-	property bool fill: false
-	readonly property int shownLimit: expanded ? Math.max(15, collapsedLimit * 2) : collapsedLimit
-	readonly property int shownDays: expanded ? Math.max(7, collapsedDays * 2) : collapsedDays
-	readonly property int collapsedLimit: fill ? 50 : limit
-	readonly property int collapsedDays: fill ? 14 : days
+	// The days covered (Settings > Views, at most 30: about as far as the loaded months reach);
+	// expanded ("Show more"): twice as many, at least a week, the list scrolls.
+	readonly property int collapsedDays: Math.min(30, plasmoid.configuration.dayUpNextDays || 14)
+	readonly property int expandedDays: Math.max(7, collapsedDays * 2)
+	readonly property int shownDays: expanded ? expandedDays : collapsedDays
 	// The height it may take (0: no limit): only the events that fit whole are listed.
 	property real maxHeight: 0
 	readonly property real titleHeight: titleMetrics.height * 1.25 + spacing
@@ -43,10 +37,17 @@ ColumnLayout {
 
 	signal dayRequested(date day)
 
-	readonly property var entries: {
+	// The upcoming events of the expanded window, sorted once (entries and hasMore take from it).
+	readonly property var upcoming: {
 		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
+		var until = Shared.addDays(Shared.startOfDay(after), expandedDays).getTime()
+		return Shared.upcomingEvents(items, after, 200).filter(function(entry) {
+			return entry.day.getTime() < until
+		})
+	}
+	readonly property var entries: {
 		var until = Shared.addDays(Shared.startOfDay(after), shownDays).getTime()
-		var list = Shared.upcomingEvents(items, after, shownLimit).filter(function(entry) {
+		var list = upcoming.filter(function(entry) {
 			return entry.day.getTime() < until
 		})
 		if (maxHeight <= 0 || expanded) {
@@ -69,16 +70,7 @@ ColumnLayout {
 		return fit
 	}
 	// More than shown (collapsed): "Show more" is offered.
-	readonly property bool hasMore: {
-		if (expanded) {
-			return true
-		}
-		var items = eventModel && eventModel.eventsData ? Tasks.withoutTasks(eventModel.eventsData.items) : []
-		var until = Shared.addDays(Shared.startOfDay(after), Math.max(7, collapsedDays * 2)).getTime()
-		return Shared.upcomingEvents(items, after, entries.length + 1).filter(function(entry) {
-			return entry.day.getTime() < until
-		}).length > entries.length
-	}
+	readonly property bool hasMore: expanded || upcoming.length > entries.length
 	// The entries with a heading row before each day's first: [{ type: 'day' | 'event', … }].
 	readonly property var rows: {
 		var out = []
@@ -117,9 +109,11 @@ ColumnLayout {
 	}
 
 	PlasmaComponents3.Label {
+		// Nothing in the days covered: later events, if any, under "Show more".
 		visible: upNext.entries.length === 0
 		Layout.fillWidth: true
-		text: i18n("Nothing planned in the coming days.")
+		text: upNext.hasMore ? i18np("Nothing tomorrow.", "Nothing in the next %1 days.", upNext.collapsedDays)
+			: i18n("Nothing planned in the coming days.")
 		textFormat: Text.PlainText
 		wrapMode: Text.Wrap
 		opacity: 0.75
@@ -201,7 +195,6 @@ ColumnLayout {
 
 	// Filling: the room left below the list.
 	Item {
-		visible: upNext.fill
 		Layout.fillHeight: true
 	}
 

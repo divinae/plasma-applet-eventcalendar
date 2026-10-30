@@ -49,20 +49,33 @@ ColumnLayout {
 		tasks.forEach(function(task) { ids[task.calendarId] = true })
 		return Object.keys(ids).length > 1
 	}
+	// "All open tasks" (dayTasksScope 'all', the list menu): every open task of the shown list(s),
+	// any date, in progress first; otherwise the ones due that day.
+	readonly property bool allOpen: plasmoid.configuration.dayTasksScope === 'all'
 	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the open ones
+	property var progressRows: [] // allOpen: the ones in progress (taskRows: these, then the others)
+	property var todoRows: [] // …and the others
 	property var doneRows: [] // …and the done ones, with showDone (below "Hide completed")
 	// The done tasks are folded away under "N completed" (for the session).
 	property bool showDone: false
 	// "Add a task…" shown (the title's "+").
 	property bool adding: false
 	property int doneCount: 0
-	onShowDoneChanged: deferredRebuild()
+	onShowDoneChanged: {
+		easeFold()
+		deferredRebuild()
+	}
 	// The tasks whose checklist is open (TaskRow.expandedStore), for the session.
 	property var expandedSubtasks: ({})
 	readonly property int openCount: tasks.filter(function(t) { return !Tasks.isDone(t) }).length
 
 	visible: hasLists
 	spacing: 2
+
+	property LazyMenu lazyFilterMenu: LazyMenu {
+		parentItem: dayTasks
+		component: listFilterMenuComponent
+	}
 
 	function rebuild() {
 		var lists = eventModel ? eventModel.getSelectedTaskLists() : []
@@ -85,6 +98,19 @@ ColumnLayout {
 		}
 		hasLists = lists.length > 0
 		Tasks.stampInProgress(items, plasmoid.configuration.tasksInProgress)
+		if (allOpen) {
+			// The done ones (all of them, ever) aren't shown here.
+			var sections = Tasks.dayAllTaskSections(items)
+			progressRows = sections.progress
+			todoRows = sections.todo
+			taskRows = sections.progress.concat(sections.todo)
+			doneCount = 0
+			doneRows = []
+			tasks = taskRows.map(function(row) { return row.item })
+			return
+		}
+		progressRows = []
+		todoRows = []
 		var rows = Tasks.dayTaskRows(items, dayText, today)
 		var openRows = rows.filter(function(row) { return !Tasks.isDone(row.item) })
 		doneCount = rows.length - openRows.length
@@ -93,7 +119,18 @@ ColumnLayout {
 		tasks = rows.map(function(row) { return row.item })
 	}
 	function deferredRebuild() {
-		Qt.callLater(rebuild)
+		// A task just marked done keeps its row a moment (EventModel.holdTaskMoves).
+		var held = eventModel && typeof eventModel.taskMovesHeldFor === "function" ? eventModel.taskMovesHeldFor() : 0
+		if (held > 0) {
+			heldRebuild.interval = held
+			heldRebuild.restart()
+		} else {
+			Qt.callLater(rebuild)
+		}
+	}
+	Timer {
+		id: heldRebuild
+		onTriggered: dayTasks.rebuild()
 	}
 	// A change of calendarId concerns the panel: one of the task lists (selected now: maybe since
 	// the last rebuild).
@@ -105,13 +142,29 @@ ColumnLayout {
 			deferredRebuild()
 		}
 	}
+	// Built right away when the panel gets its model or day (a view opening shows it filled, not
+	// empty for a frame and then jumping); changes of the data later are coalesced (deferredRebuild).
 	Component.onCompleted: rebuild()
-	onDayTextChanged: deferredRebuild()
+	onDayTextChanged: rebuild()
 	onTodayChanged: deferredRebuild()
-	onEventModelChanged: deferredRebuild()
+	onEventModelChanged: rebuild()
+	// Folding eases only when folded or unfolded here (the arrow, "N completed"), not the list
+	// growing in when a view opens or the tasks change.
+	property bool foldEasing: false
+	function easeFold() {
+		foldEasing = true
+		foldEasingOff.restart()
+	}
+	Timer {
+		id: foldEasingOff
+		interval: appletConfig.longDuration + 100
+		onTriggered: dayTasks.foldEasing = false
+	}
+	onExpandedChanged: easeFold()
 	Connections {
 		target: plasmoid.configuration
 		function onDayTasksListIdChanged() { dayTasks.deferredRebuild() }
+		function onDayTasksScopeChanged() { dayTasks.deferredRebuild() }
 		function onTasksInProgressChanged() { dayTasks.deferredRebuild() }
 	}
 
@@ -171,7 +224,7 @@ ColumnLayout {
 			onClicked: {
 				dayTasks.adding = !dayTasks.adding
 				if (dayTasks.adding) {
-					Qt.callLater(quickAddRow.focusField)
+					Qt.callLater(function() { if (quickAddLoader.item) quickAddLoader.item.focusField() })
 				}
 			}
 			PlasmaComponents3.ToolTip.text: text
@@ -183,10 +236,10 @@ ColumnLayout {
 		// The list filter: all lists or one (several lists only), on the right.
 		PlasmaComponents3.ToolButton {
 			id: listFilterButton
-			visible: dayTasks.lists.length > 1
 			Layout.minimumWidth: 0
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 9
-			readonly property string label: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
+			Layout.maximumWidth: Kirigami.Units.gridUnit * 10
+			readonly property string label: (dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists"))
+				+ (dayTasks.allOpen ? " · " + i18n("All open") : "")
 			text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the list's name
 			Accessible.name: label
 			icon.name: "view-filter"
@@ -197,10 +250,24 @@ ColumnLayout {
 			contentItem: RowLayout {
 				spacing: listFilterButton.spacing
 				Kirigami.Icon {
+					visible: !dayTasks.filterList
 					Layout.alignment: Qt.AlignVCenter
 					implicitWidth: listFilterButton.icon.width
 					implicitHeight: listFilterButton.icon.height
 					source: listFilterButton.icon.name
+				}
+				// The chosen list's mark (its emoji or color dot), as in the menu.
+				Item {
+					visible: !!dayTasks.filterList
+					Layout.alignment: Qt.AlignVCenter
+					implicitWidth: listFilterButton.icon.width
+					implicitHeight: listFilterButton.icon.height
+					ListMark {
+						anchors.centerIn: parent
+						list: dayTasks.filterList
+						size: Math.round(listFilterButton.icon.width * 0.6)
+						color: dayTasks.listMarkColor(dayTasks.filterList)
+					}
 				}
 				PlasmaComponents3.Label {
 					Layout.fillWidth: true
@@ -210,30 +277,52 @@ ColumnLayout {
 					elide: Text.ElideRight
 				}
 			}
-			onClicked: listFilterMenu.popup(listFilterButton, 0, listFilterButton.height)
-			PlasmaComponents3.ToolTip.text: i18n("Task list shown")
+			onClicked: dayTasks.lazyFilterMenu.get().popup(listFilterButton, 0, listFilterButton.height)
+			PlasmaComponents3.ToolTip.text: i18n("Tasks shown")
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
-		PlasmaComponents3.Menu {
-			id: listFilterMenu
-			PlasmaComponents3.MenuItem {
-				text: i18n("All lists")
-				checkable: true
-				checked: !dayTasks.filterListId
-				onTriggered: plasmoid.configuration.dayTasksListId = ""
-			}
-			PlasmaComponents3.MenuSeparator {}
-			Instantiator {
-				model: dayTasks.lists
-				delegate: PlainMenuItem {
-					required property var modelData
-					label: modelData.name
+		// Made when first opened (three of these panels in the Day view, only one shown).
+		Component {
+			id: listFilterMenuComponent
+			PlasmaComponents3.Menu {
+				id: listFilterMenu
+				PlasmaComponents3.MenuItem {
+					text: i18n("Due this day")
 					checkable: true
-					checked: dayTasks.filterListId === modelData.id
-					onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
+					checked: !dayTasks.allOpen
+					onTriggered: plasmoid.configuration.dayTasksScope = 'day'
 				}
-				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
-				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
+				PlasmaComponents3.MenuItem {
+					text: i18n("All open tasks")
+					checkable: true
+					checked: dayTasks.allOpen
+					onTriggered: plasmoid.configuration.dayTasksScope = 'all'
+				}
+				PlasmaComponents3.MenuSeparator {
+					visible: dayTasks.lists.length > 1
+				}
+				PlasmaComponents3.MenuItem {
+					visible: dayTasks.lists.length > 1
+					text: i18n("All lists")
+					checkable: true
+					checked: !dayTasks.filterListId
+					onTriggered: plasmoid.configuration.dayTasksListId = ""
+				}
+				PlasmaComponents3.MenuSeparator {}
+				Instantiator {
+					model: dayTasks.lists
+					delegate: PlainMenuItem {
+						required property var modelData
+						label: modelData.name
+						list: modelData
+						markColor: dayTasks.listMarkColor(modelData)
+						checkable: true
+						checked: dayTasks.filterListId === modelData.id
+						onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
+					}
+					onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 5, object) }
+					onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
+				}
 			}
 		}
 	}
@@ -243,7 +332,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.smallSpacing
 		// Only done ones left (folded away): all done.
-		text: dayTasks.doneCount > 0 ? i18n("All done") : i18n("No tasks")
+		text: dayTasks.allOpen ? i18n("No open tasks") : dayTasks.doneCount > 0 ? i18n("All done") : i18n("No tasks")
 		textFormat: Text.PlainText
 		opacity: 0.75
 		elide: Text.ElideRight
@@ -251,9 +340,17 @@ ColumnLayout {
 
 	PlasmaComponents3.ScrollView {
 		id: scrollView
-		visible: dayTasks.open && (dayTasks.taskRows.length > 0 || dayTasks.doneCount > 0)
+		readonly property bool wanted: dayTasks.open && (dayTasks.taskRows.length > 0 || dayTasks.doneCount > 0)
+		// Folding (the strip's arrow, "N completed"): the height eases open and closed.
+		readonly property real targetHeight: wanted ? Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight) : 0
+		visible: wanted || height > 0.5
+		clip: true
 		Layout.fillWidth: true
-		Layout.preferredHeight: Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight)
+		Layout.preferredHeight: targetHeight
+		Behavior on Layout.preferredHeight {
+			enabled: dayTasks.foldEasing
+			NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		}
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 		QQC2.ScrollBar.vertical: OverlayScrollBar {
@@ -265,7 +362,25 @@ ColumnLayout {
 			width: scrollView.availableWidth
 			spacing: 1
 			Repeater {
-				model: dayTasks.taskRows
+				model: dayTasks.shownOnce && !dayTasks.allOpen ? dayTasks.taskRows : []
+				DayTaskRow {}
+			}
+			// "All open tasks": in progress, then the others.
+			SectionLabel {
+				visible: dayTasks.allOpen && dayTasks.progressRows.length > 0
+				text: i18nc("tasks filter", "In progress") + " · " + dayTasks.progressRows.length
+			}
+			Repeater {
+				model: dayTasks.shownOnce ? dayTasks.progressRows : []
+				DayTaskRow {}
+			}
+			SectionLabel {
+				visible: dayTasks.allOpen && dayTasks.todoRows.length > 0
+				Layout.topMargin: dayTasks.progressRows.length > 0 ? Kirigami.Units.smallSpacing : 0
+				text: i18nc("tasks in the Day view, not in progress", "To do") + " · " + dayTasks.todoRows.length
+			}
+			Repeater {
+				model: dayTasks.shownOnce ? dayTasks.todoRows : []
 				DayTaskRow {}
 			}
 			// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
@@ -325,10 +440,30 @@ ColumnLayout {
 			}
 			// The done ones, under "Hide completed".
 			Repeater {
-				model: dayTasks.doneRows
+				model: dayTasks.shownOnce ? dayTasks.doneRows : []
 				DayTaskRow {}
 			}
 		}
+	}
+
+	// The color of a list's dot (ListMark), as in the Tasks tab.
+	function listMarkColor(list) {
+		return appletConfig.eventColoredTextColor(appletConfig.eventColor(list && list.color ? list.color : null))
+	}
+
+	// "In progress" / "To do" over the rows, quiet like "2 completed", lined up with the titles.
+	component SectionLabel: PlasmaComponents3.Label {
+		Layout.fillWidth: true
+		Layout.leftMargin: Kirigami.Units.smallSpacing * 2
+		Layout.rightMargin: Kirigami.Units.smallSpacing * 2
+		topPadding: Kirigami.Units.smallSpacing
+		bottomPadding: 2
+		textFormat: Text.PlainText
+		font.family: appletConfig.eventFont.family
+		font.pointSize: appletConfig.eventFont.pointSize * 0.85
+		font.weight: Font.DemiBold
+		opacity: 0.7
+		elide: Text.ElideRight
 	}
 
 	// A task of the list (open or done), from the Repeater's row.
@@ -339,6 +474,7 @@ ColumnLayout {
 		depth: modelData.depth
 		today: dayTasks.today
 		compact: true
+		compactShowsDay: dayTasks.allOpen
 		listMark: dayTasks.mixedLists
 		expandedStore: dayTasks.expandedSubtasks
 		onCheckToggled: function(item, done) {
@@ -356,33 +492,43 @@ ColumnLayout {
 	}
 
 	// "Add a task…" due on the shown day, on the last used list (a picker when there are several).
-	QuickAddTaskRow {
-		id: quickAddRow
-		// Only after the title's "+" (or while a task is being typed or saved).
+	// Made after the title's "+" was first used (then kept: a task may still be saving), shown only
+	// while adding.
+	property bool addingUsed: false
+	// Rows only once the panel was shown (the Day view keeps three panels, one shown), then kept.
+	property bool shownOnce: visible
+	onVisibleChanged: if (visible) shownOnce = true
+	onAddingChanged: if (adding) addingUsed = true
+	Loader {
+		id: quickAddLoader
+		active: dayTasks.addingUsed
 		visible: dayTasks.open && dayTasks.adding
-		onDismissed: dayTasks.adding = false
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.smallSpacing + 3
 		Layout.bottomMargin: 3
-		// A thin rounded frame: it reads as a field, apart from the tasks (a bit of room above and
-		// below the text).
-		Rectangle {
-			z: -1
-			anchors.fill: parent
-			anchors.topMargin: -3
-			anchors.bottomMargin: -3
-			radius: Kirigami.Units.cornerRadius * 2
-			color: "transparent"
-			border.width: 1
-			border.color: quickAddRow.fieldFocused ? Kirigami.Theme.highlightColor
-				: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.18)
+		sourceComponent: QuickAddTaskRow {
+			id: quickAddRow
+			onDismissed: dayTasks.adding = false
+			// A thin rounded frame: it reads as a field, apart from the tasks (a bit of room above and
+			// below the text).
+			Rectangle {
+				z: -1
+				anchors.fill: parent
+				anchors.topMargin: -3
+				anchors.bottomMargin: -3
+				radius: Kirigami.Units.cornerRadius * 2
+				color: "transparent"
+				border.width: 1
+				border.color: quickAddRow.fieldFocused ? Kirigami.Theme.highlightColor
+					: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.18)
+			}
+			eventModel: dayTasks.eventModel
+			lists: dayTasks.lists
+			// The filtered list, if any: new tasks go there.
+			listId: dayTasks.filterListId
+			dueDay: dayTasks.allOpen ? "" : dayTasks.dayText // All open: undated unless typed
+			compact: true
 		}
-		eventModel: dayTasks.eventModel
-		lists: dayTasks.lists
-		// The filtered list, if any: new tasks go there.
-		listId: dayTasks.filterListId
-		dueDay: dayTasks.dayText
-		compact: true
 	}
 
 	// A card taller than the tasks (the Day view's right column, down to the grid's bottom): they

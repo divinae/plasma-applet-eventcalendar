@@ -11,8 +11,53 @@ Item {
 
 	property Component cardComponent
 	property bool framed: true
+	// Shown while open, and while it fades out after closing (fadeOut). Fading out its buttons
+	// take no clicks (they would act on the closed event, see the blocker at the end).
+	property bool open: false
+	property bool fadeOut: true
+	visible: open || closeAnimation.running
 	readonly property Item card: cardLoader.item
 	signal outsideClicked()
+
+	// Opening: the overlay fades in and the card grows into place from a little smaller.
+	Scale {
+		id: cardScale
+		origin.x: cardLoader.width / 2
+		origin.y: cardLoader.height / 2
+	}
+	ParallelAnimation {
+		id: openAnimation
+		NumberAnimation { target: overlay; property: "opacity"; from: 0; to: 1; duration: appletConfig.shortDuration; easing.type: Easing.OutCubic }
+		NumberAnimation { target: cardScale; property: "xScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		NumberAnimation { target: cardScale; property: "yScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+	}
+	onOpenChanged: {
+		if (open) {
+			// Opened again while still fading out: a fresh card (not the closed one's fields).
+			if (closeAnimation.running) {
+				closeAnimation.stop()
+				cardLoader.active = false
+				cardLoader.active = true
+			}
+			if (appletConfig.animations) {
+				openAnimation.restart()
+			} else {
+				overlay.opacity = 1
+			}
+		} else if (appletConfig.animations && fadeOut) {
+			openAnimation.stop()
+			closeAnimation.restart()
+		}
+	}
+	// Closing: a short fade out (the card keeps what it showed meanwhile, see PopupView's held values).
+	NumberAnimation {
+		id: closeAnimation
+		target: overlay
+		property: "opacity"
+		to: 0
+		duration: appletConfig.shortDuration
+		easing.type: Easing.InCubic
+	}
 
 	// Strong backdrop so the card doesn't blend into the view behind it.
 	Rectangle {
@@ -26,6 +71,7 @@ Item {
 	}
 	Kirigami.ShadowedRectangle {
 		anchors.fill: cardLoader
+		transform: cardScale
 		visible: !!cardLoader.item
 		radius: Kirigami.Units.cornerRadius * 2
 		color: "transparent"
@@ -35,6 +81,7 @@ Item {
 	}
 	Rectangle {
 		anchors.fill: cardLoader
+		transform: cardScale
 		visible: overlay.framed && !!cardLoader.item
 		color: Kirigami.Theme.backgroundColor
 		radius: Kirigami.Units.cornerRadius * 2
@@ -44,9 +91,19 @@ Item {
 	Loader {
 		id: cardLoader
 		anchors.centerIn: parent
+		transform: cardScale
 		width: Math.min(Kirigami.Units.gridUnit * 30, overlay.width - Kirigami.Units.gridUnit * 2)
 		height: item ? Math.min(item.implicitHeight, overlay.height - Kirigami.Units.gridUnit * 2) : 0
 		sourceComponent: overlay.cardComponent
+	}
+
+	// While fading out: over the card, so its buttons take no clicks.
+	MouseArea {
+		anchors.fill: parent
+		z: 100
+		visible: !overlay.open
+		acceptedButtons: Qt.AllButtons
+		hoverEnabled: true
 	}
 
 	// Give keyboard focus (Esc) back to the card, eg: after a card above it closes.

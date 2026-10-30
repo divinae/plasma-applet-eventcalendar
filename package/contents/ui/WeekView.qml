@@ -8,10 +8,12 @@ import "EventBuckets.js" as EventBuckets
 import "LocaleFuncs.js" as LocaleFuncs
 import "MeetingLink.js" as MeetingLink
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
+import "./weather/WeatherApi.js" as WeatherApi
 
 // Week view like Google Calendar: hour grid with event blocks, all-day row on top.
 Item {
@@ -21,9 +23,11 @@ Item {
 	// The popup header shows the title and the navigation (goPrevious, goNext, goToday).
 	function goPrevious() {
 		weekStart = dayDate(-dayCount)
+		pageSlide.run(-1, 0)
 	}
 	function goNext() {
 		weekStart = dayDate(dayCount)
+		pageSlide.run(1, 0)
 	}
 	// The week (or day) with today; when it's shown already, still relaid and scrolled once.
 	function goToday() {
@@ -71,7 +75,7 @@ Item {
 	// right, all centered. Not enough room: the tasks become a strip above the grid, then the
 	// weather a compact row above it.
 	// Both side columns as wide as each other: a share of the popup, within limits.
-	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 17, Math.max(Kirigami.Units.gridUnit * 12, width * 0.27)))
+	readonly property real sidePanelWidth: appletConfig.sidePanelWidth(width)
 	readonly property real weatherPanelWidth: sidePanelWidth
 	readonly property real tasksPanelWidth: sidePanelWidth
 	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
@@ -157,7 +161,9 @@ Item {
 			return t >= from && t <= to
 		})
 	}
-	onDayCountChanged: goToday()
+	// After the columns follow (columnDays): right away the rebuild saw the old count (Day -> Week
+	// filled only the first column).
+	onDayCountChanged: Qt.callLater(goToday)
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []
@@ -441,7 +447,7 @@ Item {
 		resetScroll()
 		rebuild()
 	}
-	onWorkWeekChanged: rebuild()
+	onWorkWeekChanged: Qt.callLater(rebuild) // As above: once columnDays follows
 	Component.onCompleted: {
 		rebuild()
 		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
@@ -704,11 +710,10 @@ Item {
 		x: miniMonthCard.x
 		y: startY
 		width: miniMonthCard.width
-		// Down to the grid's bottom edge, with as many events as fit there.
-		height: Math.max(0, weekView.sideBottom - startY)
+		// As tall as its events, at most down to the grid's bottom edge (as many as fit there).
+		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
 
 		UpNextPanel {
-			fill: true
 			// Only the events that fit whole (a short popup: fewer, not a cut row).
 			maxHeight: weekView.sideBottom - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
 			eventModel: upNextCard.visible ? weekView.eventModel : null
@@ -738,15 +743,20 @@ Item {
 			// the next days.
 			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
 			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
-			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName : ""
+			forecastUrl: WeatherApi.forecastPageUrl(plasmoid.configuration)
+			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName
+				: weekView.weatherCurrent && weekView.weatherCurrent.place ? weekView.weatherCurrent.place : ""
 			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)
+			// The week after the shown day, as far as the forecast goes; the panel shows those that fit.
+			maxHeight: weatherCard.room - weatherCard.topPadding - weatherCard.bottomPadding
 			nextDays: {
 				var list = []
-				for (var i = 1; i <= 4; i++) {
+				for (var i = 1; i <= 7; i++) {
 					var d = weekView.dayWeather(weekView.dayDate(i))
-					if (d) {
-						list.push(d)
+					if (!d) {
+						break
 					}
+					list.push(d)
 				}
 				return list
 			}
@@ -813,6 +823,13 @@ Item {
 			shown: weekView.islands
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			// Paging (previous / next): the new week or day slides in from its side.
+			transform: Translate { id: pageShift }
+			SlideIn {
+				id: pageSlide
+				target: gridCard
+				shift: pageShift
+			}
 
 			ColumnLayout {
 				spacing: Kirigami.Units.smallSpacing
@@ -957,7 +974,7 @@ Item {
 									anchors.verticalCenter: parent.verticalCenter
 									width: Kirigami.Units.iconSizes.small
 									height: width
-									source: Shared.symbolicIcon(dayHeaderCell.weather ? dayHeaderCell.weather.iconName : "")
+									source: WeatherIcons.source(dayHeaderCell.weather ? dayHeaderCell.weather.iconName : "", plasmoid.configuration.weatherIconStyle)
 									fallback: dayHeaderCell.weather ? dayHeaderCell.weather.iconName : ""
 								}
 								PlasmaComponents3.Label {

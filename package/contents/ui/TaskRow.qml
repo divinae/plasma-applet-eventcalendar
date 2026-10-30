@@ -74,7 +74,8 @@ LinkRect {
 	readonly property color listColor: appletConfig.eventColoredTextColor(eventStyle.color)
 	// Done, also while a click on the check is being saved.
 	readonly property bool done: taskCheck.done
-	readonly property real doneOpacity: done ? 0.55 : 1
+	property real doneOpacity: done ? 0.55 : 1
+	Behavior on doneOpacity { NumberAnimation { duration: appletConfig.longDuration } }
 	readonly property bool overdue: due.kind === 'overdue' && !done
 	readonly property var due: {
 		var parts = today.split('-')
@@ -113,15 +114,21 @@ LinkRect {
 		return ""
 	}
 	readonly property string dueText: due.kind === 'overdue' ? i18nc("%1 = short date", "Overdue · due %1", withTime(dueDateText)) : withTime(dayText)
+	// compact with tasks of any day (the Day view's "All open tasks"): the day too, as elsewhere.
+	property bool compactShowsDay: false
 	// The day left out when the section says it (Today, Tomorrow); compact (the Day view's day): the
 	// time only, the date when overdue.
-	readonly property string chipText: compact ? (overdue ? withTime(dueDateText) : timeText)
+	readonly property string chipText: compact ? (overdue ? withTime(dueDateText) : compactShowsDay ? withTime(dayText) : timeText)
 		: withTime(due.kind === sectionDueKind ? "" : dayText)
 	readonly property bool showChip: !!chipText
 	readonly property string notesLine: compact || !showNotes || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")
 	// The due date and notes: a bit smaller than the title, larger than the views' small font.
 	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
+	// The title with its links' names (eg: a ticket's URL shown as "CSS-2175") in the link color, ''
+	// without a link. Not clickable: a click opens the task, the link button opens the link.
+	readonly property string linkedTitle: Shared.coloredLinkText(title, Kirigami.Theme.linkColor)
+	readonly property string titleLink: Shared.firstLink(title)
 	readonly property bool canEdit: !!eventItem && eventItem.canEdit !== false
 	// TickTick's checklist items ([{ id, title, done }]) and how many are done.
 	readonly property var subtaskItems: eventItem && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
@@ -129,7 +136,7 @@ LinkRect {
 
 	activeFocusOnTab: true
 	Accessible.role: Accessible.Button
-	Accessible.name: title || i18n("Task")
+	Accessible.name: Shared.displayTitle(title) || i18n("Task")
 	Accessible.description: [done ? i18n("Done") : i18n("Not done"), dueText,
 		progress.total ? i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", progress.done, progress.total) : ""]
 		.filter(function(t) { return !!t }).join(". ")
@@ -166,8 +173,8 @@ LinkRect {
 	HoverHandler {
 		id: rowHover
 	}
-	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || todayButton.activeFocus
-		|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus || subtasksButton.activeFocus
+	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || subtasksButton.activeFocus
+		|| (!!actionsLoader.item && actionsLoader.item.buttonFocus)
 	readonly property bool showActions: actionsEnabled && canEdit && !dragging
 		&& (hovered || rowHover.hovered || focusInside)
 
@@ -304,8 +311,11 @@ LinkRect {
 					Layout.fillWidth: true
 					Layout.minimumWidth: 0
 					Layout.maximumWidth: Math.ceil(implicitWidth)
-					text: taskRow.title
-					textFormat: Text.PlainText // User text: never parsed as HTML
+					// User text: plain, or escaped with its links' names (Shared.coloredLinkText), never
+					// parsed as HTML.
+					text: taskRow.linkedTitle || taskRow.title
+					textFormat: taskRow.linkedTitle ? Text.StyledText : Text.PlainText
+					Accessible.name: Shared.displayTitle(taskRow.title)
 					color: Kirigami.Theme.textColor
 					opacity: taskRow.doneOpacity
 					font.family: appletConfig.eventFont.family
@@ -493,42 +503,58 @@ LinkRect {
 
 		}
 
-		// The hover buttons, centered on the title's line: they take no height.
-		Item {
-			visible: taskRow.showActions
+		// The hover buttons, centered on the title's line: they take no height. Made while shown only
+		// (five buttons in every row took much of the time a list of tasks needed to open).
+		Loader {
+			id: actionsLoader
+			active: taskRow.showActions
+			visible: active
 			Layout.alignment: Qt.AlignTop
-			implicitWidth: actions.implicitWidth
-			implicitHeight: titleLabel.implicitHeight
-			Row {
-				id: actions
-				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
-				spacing: 0
-				TaskRowButton {
-					id: todayButton
-					visible: !taskRow.done && taskRow.due.kind !== 'today'
-					icon.name: "go-jump-today"
-					text: i18n("Due today")
-					onClicked: taskRow.setDue(taskRow.today)
-				}
-				TaskRowButton {
-					id: tomorrowButton
-					visible: !taskRow.done && taskRow.due.kind !== 'tomorrow'
-					icon.name: "go-next"
-					text: i18n("Due tomorrow")
-					onClicked: taskRow.setDue(Tasks.addDays(taskRow.today, 1))
-				}
-				TaskRowButton {
-					id: editButton
-					icon.name: "document-edit"
-					text: i18n("Edit")
-					onClicked: taskRow.edit()
-				}
-				TaskRowButton {
-					id: deleteButton
-					icon.name: "edit-delete"
-					text: i18n("Delete")
-					onClicked: taskRow.remove()
+			Layout.preferredWidth: item ? item.implicitWidth : 0
+			Layout.preferredHeight: titleLabel.implicitHeight
+			sourceComponent: Item {
+				// Focus in one of the buttons keeps them shown (focusInside).
+				readonly property bool buttonFocus: linkButton.activeFocus || todayButton.activeFocus
+					|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus
+				implicitWidth: actions.implicitWidth
+				Row {
+					id: actions
+					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
+					spacing: 0
+					TaskRowButton {
+						id: linkButton
+						visible: !!taskRow.titleLink
+						icon.name: "link"
+						text: i18n("Open Link")
+						onClicked: Shared.openExternalUrl(taskRow.titleLink)
+					}
+					TaskRowButton {
+						id: todayButton
+						visible: !taskRow.done && taskRow.due.kind !== 'today'
+						icon.name: "go-jump-today"
+						text: i18n("Due today")
+						onClicked: taskRow.setDue(taskRow.today)
+					}
+					TaskRowButton {
+						id: tomorrowButton
+						visible: !taskRow.done && taskRow.due.kind !== 'tomorrow'
+						icon.name: "go-next"
+						text: i18n("Due tomorrow")
+						onClicked: taskRow.setDue(Tasks.addDays(taskRow.today, 1))
+					}
+					TaskRowButton {
+						id: editButton
+						icon.name: "document-edit"
+						text: i18n("Edit")
+						onClicked: taskRow.edit()
+					}
+					TaskRowButton {
+						id: deleteButton
+						icon.name: "edit-delete"
+						text: i18n("Delete")
+						onClicked: taskRow.remove()
+					}
 				}
 			}
 		}

@@ -1,13 +1,14 @@
 # Event Calendar NG for Plasma 6
 
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
+[![KDE Store](https://img.shields.io/badge/KDE%20Store-Event%20Calendar%20NG-1d99f3?logo=kde&logoColor=white)](https://store.kde.org/p/2379570/)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
 **Your day, one click from the clock.** Calendar, agenda, tasks, meetings and weather in the
 Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting
 again.
 
-![Day view](docs/screenshots/today.png)
+![Using the widget: Day, Week, Month and Agenda views, paging, event details and the Tasks tab](docs/demo.gif)
 
 ### Why you'll like it
 
@@ -43,7 +44,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **Views** in the popup, switchable from its header: **Month** (event titles in the days,
   multi-day events as bars across them), **Week** and **Day** (an hour grid you can scroll through
   the whole day; drag events to move or resize them; beside the Day view's hours: a small month
-  with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
+  with dots on busy days, Up next, the day's tasks and its weather, each one can be turned off) and **Agenda** (a list of upcoming days, with the Day view's small month, tasks and weather beside it; more months as you scroll), plus a **Tasks** tab. Drag events between days (Ctrl + drag copies),
   show or hide calendars from the header, a work week, a second time zone, keyboard navigation,
   **Go to date** (G: "next friday", "15 nov", "+2w"). The popup opens in your default view or the
   last one used; the view switcher is tabs or a drop-down, and a right click on the header picks
@@ -64,10 +65,12 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by
   due date, title, list or priority. **Add a task…** recognizes "tomorrow 17:00 !high #Work every
   week" as the day, time, priority, list and repeat. Priorities, due times, repeats, reminders,
-  checklists (TickTick) and subtasks (Google); mark tasks in progress; set the priority and due
+  checklists (TickTick) and subtasks (Google); a ticket's link in a task's name shows as a link
+  named after it (Jira "CSS-2175", Linear, GitHub, GitLab); mark tasks in progress; set the priority and due
   date from the right-click menu; drag tasks between days, lists and accounts; undo,
   keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
-  lists). Task reminders, a morning summary, and the day's tasks in the Day view. TickTick signs in
+  lists). Task reminders, a morning summary, and in the Day view the day's tasks, or all open tasks of a
+  list split into In progress and To do. TickTick signs in
   with an API token, kept in the system keyring.
 - **Meetings**: Join buttons for about 40 services (Google Meet, Zoom, Teams, Webex, Slack huddles,
   Discord, Chime, GoTo, Jitsi…), in the agenda, the Day view, the event details, notifications and
@@ -87,7 +90,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
   direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
-  OpenWeatherMap / Weather Canada.
+  OpenWeatherMap (free or One Call 3.0) / Weather Canada; the system's icons or Yr's colored ones,
+  a simple or a fancy forecast chart.
 - **Starts instantly and works offline**: the last loaded events and tasks are shown right away
   and stay visible offline (Settings > Views > Offline turns it off; each widget keeps its own), fetches
   are retried automatically, and a banner shows when it can't connect. The Agenda and the Tasks tab
@@ -100,16 +104,26 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 
 ## Screenshots
 
-All shots use mock data.
+All shots (and the animation above) use mock data.
+
+<details>
+<summary><b>Each view and the settings</b></summary>
 
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
 | ![Day view](docs/screenshots/today.png) **Day**: a small month, Up next, the hours, tasks and weather | ![Tasks](docs/screenshots/tasks.png) **Tasks**: smart filters, priorities, in progress |
-| ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
+| ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card, the small month, tasks and weather beside | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
 | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts and calendars | ![View settings](docs/screenshots/settings-views.png) **Settings**: views and appearance |
 
+</details>
+
 ## Install
+
+### From the KDE Store
+
+Right click the panel > Add or Manage Widgets > Get New Widgets > Download New Plasma Widgets,
+search for **Event Calendar NG**, or get it from [store.kde.org](https://store.kde.org/p/2379570/).
 
 ### From a release
 
@@ -117,9 +131,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-v1.10.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.12.1.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-v1.10.0-plasma6.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.12.1.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a
@@ -187,4 +201,6 @@ and `python3 tests/*_test.py`. Translations live in `package/translate/` (see it
 
 ## License
 
-GPL-2.0-or-later, like the original widget.
+GPL-2.0-or-later, like the original widget. The Yr weather icons (`package/contents/icons/weather`)
+are by Yr / MET Norway, MIT licensed ([metno/weathericons](https://github.com/metno/weathericons));
+their `<symbol>`s are inlined, for Qt before 6.7.

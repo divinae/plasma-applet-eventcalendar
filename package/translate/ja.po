@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -145,7 +145,7 @@ msgstr "、"
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Akonadi カレンダー: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/WeekView.qml
 msgid "%1 event"
@@ -235,7 +235,7 @@ msgstr "%1 後"
 msgid "Edit Calendar"
 msgstr "カレンダーを編集"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "名前"
 
@@ -485,7 +485,7 @@ msgstr "イベント開始時"
 msgid "Show a notification"
 msgstr "通知を表示"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "スタイル"
 
@@ -740,8 +740,8 @@ msgid "Forget the Missing Ones"
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account."
-msgstr ""
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+msgstr "読み取り専用で表示されます。表示する Akonadi カレンダーはデジタル時計の設定の PIM イベントプラグインのページで設定します (プラグイン自体は イベント > Plasma カレンダー で有効にします)。ポップアップのカレンダーメニューでは色ごとに表示・非表示を切り替えます: 同じ色のカレンダーはまとめて切り替わります。ここでサインインしたアカウントの Google カレンダーは、上にアカウントとともに表示されます。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1146,6 +1146,14 @@ msgid "Flat"
 msgstr "フラット"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "アニメーション"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "ビューがスライドとフェードで現れ、カードが開き、小さな月の日付がなめらかに切り替わります。"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "予定の表示"
 
@@ -1293,12 +1301,26 @@ msgid "Up next"
 msgstr "次の予定"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "次の予定の表示期間"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "表示中の日の後の日数。それ以降は「さらに表示」から"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "日"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "終日イベントを横に並べる"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "In the Day view, three or more all-day events take a third of the width each, three in a row. Hovering one shows it in full."
-msgstr ""
+msgstr "日ビューで終日イベントが 3 件以上あると、それぞれ幅の 3 分の 1 を占め、1 行に 3 件並びます。マウスを重ねると全体が表示されます。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1349,6 +1371,45 @@ msgid "Debug logging and extra settings pages"
 msgstr "デバッグログと追加の設定ページ"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "はい"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "いいえ"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "失敗 (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "現在の天気、3 時間ごと: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 日間 (有料プラン): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr "OpenWeatherMap はこのアプリ ID を認識していません (新しい ID が有効になるまで最大 2 時間かかります)。"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "上で One Call 3.0 を選択してください: 1 時間ごとと 8 日間。"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "One Call 3.0 を購読していません: 上で Free (2.5) を選択してください。"
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "ソース"
 
@@ -1376,7 +1437,7 @@ msgstr "未設定"
 msgid "City name, eg: Warszawa"
 msgstr "都市名 (例: Tokyo)"
 
-#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
 msgid "Search"
 msgstr "サーチ"
 
@@ -1409,6 +1470,42 @@ msgid "Required for OpenWeatherMap"
 msgstr "OpenWeatherMap では必須"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "確認中…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "アプリ ID を確認"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5) works with any app id: the current weather and a forecast in 3 hour steps for 5 days. Its forecast for 16 days needs a paid plan; without one, the days are made from the 3 hour steps."
+msgstr "Free (2.5) はどのアプリ ID でも使えます: 現在の天気と、5 日間の 3 時間ごとの予報。16 日間の予報には有料プランが必要です。ない場合、日ごとの予報は 3 時間ごとの予報から作成されます。"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0 needs the \"One Call by Call\" subscription on <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 calls a day are free, a payment card is required): the current weather, 48 hours by the hour and 8 days, in one call. The widget asks at most every 10 minutes, about 150 calls a day."
+msgstr "One Call 3.0 には <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> での「One Call by Call」の購読が必要です (1 日 1000 回まで無料、支払いカードが必要): 現在の天気、1 時間ごとの 48 時間分と 8 日間を 1 回の呼び出しで取得します。ウィジェットの問い合わせは最短でも 10 分ごと、1 日約 150 回です。"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr "1 つのアプリ ID で両方に使えます: 「アプリ ID を確認」で、お使いの ID が何を使えるかがわかります。"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The built-in app id is shared by everyone using this widget, and so is its request limit: the weather may stop updating at times. A free app id of your own: sign up at <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo needs none."
+msgstr "組み込みのアプリ ID はこのウィジェットのすべての利用者で共有され、リクエスト制限も共有されます: そのため天気が更新されなくなることがあります。自分用の無料アプリ ID: <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a> でサインアップし、「API keys」からコピーしてください。Open-Meteo には不要です。"
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1433,12 +1530,77 @@ msgid "Kelvin"
 msgstr "ケルビン(K)"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "メテオグラムの表示期間"
+msgid "Icons"
+msgstr "アイコン"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "システム"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "現在の天気アイコンの背景"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "空 (天気に応じて)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "控えめ"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "なし"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "予報グラフ"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "予定の上のメテオグラムにも適用"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "シンプル"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "リッチ"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "表示する時間"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "日表示の今日のグラフと予定一覧の上のメテオグラム"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " 時間"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "大きいアイコン"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "グラフと翌日以降の表示"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "降水量"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "グラフの上に合計、雨の多い時間に量を表示"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1456,17 +1618,54 @@ msgstr "都市を選択"
 msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr " <a href=\"%1\">%1</a> からのデータ"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "Id"
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "都市名 (例: Berlin または Berlin, DE)"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "都市のサイト"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "リンクを開く"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "N"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "S"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "E"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "W"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "ID %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap がアプリ ID を受け付けませんでした: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "検索に失敗しました: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "都市が見つかりません。"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "アプリ ID が設定されていません。"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1479,6 +1678,14 @@ msgstr "リストの名前を変更…"
 #: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "リストを削除…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "Id"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "都市のサイト"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1502,8 +1709,24 @@ msgid "All lists"
 msgstr "すべてのリスト"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "表示するタスクリスト"
+msgid "All open"
+msgstr "未完了すべて"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "表示するタスク"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "この日が期限"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "未完了のタスクすべて"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "未完了のタスクはありません"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1512,6 +1735,16 @@ msgstr "すべて完了"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "タスクなし"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "進行中"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "未着手"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2649,6 +2882,19 @@ msgid "Weather API limit reached"
 msgstr "天気 API の制限に達しました"
 
 #: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather."
+msgstr "OpenWeatherMap が One Call 3.0 のアプリ ID を拒否しました: 購読するか、設定 > 天気 で Free (2.5) を選択してください。"
+
+#: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather."
+msgstr "OpenWeatherMap がアプリ ID を拒否しました。新しい ID が使えるようになるまで最大 2 時間かかります。設定 > 天気 で確認してください。"
+
+#: ../contents/ui/Logic.qml
+msgctxt "The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there"
+msgid "en"
+msgstr "ja"
+
+#: ../contents/ui/Logic.qml
 msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 msgstr "Google の認証が期限切れになったか、取り消されました。イベントカレンダーの設定 > Google Calendar を開き、そのアカウントに再度サインインしてください。"
 
@@ -3080,11 +3326,6 @@ msgstr "未完了にする"
 msgid "Mark as done"
 msgstr "完了にする"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "進行中"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "タスクを移動できませんでした"
@@ -3309,10 +3550,6 @@ msgstr "日付なし"
 msgid "Completed"
 msgstr "完了済み"
 
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "未完了のタスクはありません"
-
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
 msgid "Completed"
@@ -3517,8 +3754,113 @@ msgid "dddd, d MMM"
 msgstr "M月d日 dddd"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "次の %1 日間は予定がありません。"
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "今後数日の予定はありません。"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "晴れ"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "おおむね晴れ"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "一部曇り"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "曇り"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "霧"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "着氷性の霧"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "弱い霧雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "霧雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "強い霧雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "着氷性の霧雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "弱い雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "強い雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "着氷性の雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "弱い雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "強い雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "霧雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "にわか雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "強いにわか雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "にわか雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "強いにわか雪"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "雷雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "ひょうを伴う雷雨"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "不明"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3527,6 +3869,10 @@ msgstr "ここに天気予報を表示するには、設定 > 天気 で場所�
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "天気を読み込み中…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Web で詳しい予報を見る"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3543,13 +3889,19 @@ msgid "No forecast for this day."
 msgstr "この日の天気予報はありません。"
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "今後 12 時間"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "今後 %1 時間"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "日中"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "降水量: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3593,8 +3945,34 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
 
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr "読み取り専用で表示されます。表示する Akonadi カレンダーは PIM イベントプラグインの設定ページ (イベント > Plasma カレンダー) で設定します。ポップアップのカレンダーメニューでは色ごとに表示・非表示を切り替えます: 同じ色のカレンダーはまとめて切り替わります。ここでサインインしたアカウントの Google カレンダーは、上にアカウントとともに表示されます。"
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " 日"
+
+#~ msgid "Up next lists"
+#~ msgstr "次の予定の表示件数"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = 入るだけ表示、残りは「さらに表示」から"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " 件"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "メテオグラムの表示期間"
+
 #~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 #~ msgstr "読み取り専用で表示します。表示する Akonadi カレンダーは PIM イベントプラグインの設定ページ (イベント > Plasma カレンダー) で選びます。ポップアップのカレンダーメニューでは 1 項目になります。"
+
+#~ msgid "Next 12 hours"
+#~ msgstr "今後 12 時間"
+
+#~ msgid "Task list shown"
+#~ msgstr "表示するタスクリスト"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4149,17 +4527,11 @@ msgstr "勤務場所: %1"
 #~ msgid "Grid"
 #~ msgstr "グリッド"
 
-#~ msgid "Rain"
-#~ msgstr "雨"
-
 #~ msgid "Positive Temp"
 #~ msgstr "0以上の温度"
 
 #~ msgid "Negative Temp"
 #~ msgstr "0以下の温度"
-
-#~ msgid "Icons"
-#~ msgstr "アイコン"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>バージョン:</b> %1"

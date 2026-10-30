@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "WeatherIcons.js" as WeatherIcons
 
 Item {
 	id: tooltipContentItem
@@ -127,7 +128,7 @@ Item {
 					spacing: Kirigami.Units.smallSpacing
 					Kirigami.Icon {
 						readonly property string iconName: tooltipWeather.current ? tooltipWeather.current.iconName : (tooltipWeather.today ? tooltipWeather.today.iconName : "")
-						source: Shared.symbolicIcon(iconName)
+						source: WeatherIcons.source(iconName, plasmoid.configuration.weatherIconStyle)
 						fallback: iconName
 						Layout.preferredWidth: Kirigami.Units.iconSizes.small
 						Layout.preferredHeight: Layout.preferredWidth

@@ -67,6 +67,40 @@ function isValidDate(d) {
 	}
 }
 
+// The web links in raw text: each passed to linkHtml(url), which returns its HTML; the rest escaped.
+function linkify(raw, linkHtml) {
+	var rUrl = /https?:\/\/[^\s<>"]+/gi
+	var out = ''
+	var lastIndex = 0
+	var match
+	while ((match = rUrl.exec(raw)) !== null) {
+		var href = urlEnd(match[0])
+		out += escapeHtml(raw.slice(lastIndex, match.index)) + linkHtml(href)
+		lastIndex = match.index + href.length
+		rUrl.lastIndex = lastIndex
+	}
+	return out + escapeHtml(raw.slice(lastIndex))
+}
+// A URL found in text without the sentence's punctuation or quotes after it; a ")" stays when it
+// closes a "(" of the URL (eg: Wikipedia's Foo_(bar)).
+function urlEnd(url) {
+	for (;;) {
+		var trimmed = url.replace(/[.,;:!?'"\u2018\u2019\u201c\u201d\]]+$/, '')
+		if (/\)$/.test(trimmed) && (trimmed.split('(').length < trimmed.split(')').length)) {
+			trimmed = trimmed.slice(0, -1)
+		}
+		if (trimmed === url) {
+			return url
+		}
+		url = trimmed
+	}
+}
+// <a> for a web link (else the label alone). href: StyledText doesn't decode entities there (&amp;
+// would reach the browser); the URL pattern has no quotes or angle brackets, so it's safe as is.
+function anchor(href, labelHtml) {
+	return isSafeExternalUrl(href) ? '<a href="' + href + '">' + labelHtml + '</a>' : labelHtml
+}
+
 // Event description / task notes as safe StyledText: Google stores descriptions as HTML, which
 // could load remote images (tracking) or carry odd markup. Reduce it to text (keeping link
 // targets), escape it, then link URLs and keep line breaks.
@@ -92,20 +126,7 @@ function renderText(text) {
 			.replace(/&#39;/g, "'")
 			.replace(/&amp;/g, '&')
 	}
-	var rUrl = /(https?:\/\/[^\s<>"]+)/gi
-	var out = ''
-	var lastIndex = 0
-	var match
-	while ((match = rUrl.exec(raw)) !== null) {
-		var href = match[0].replace(/[).,;:!?]+$/, '') // Not the sentence's punctuation
-		out += escapeHtml(raw.slice(lastIndex, match.index))
-		// href: StyledText doesn't decode entities there (&amp; would reach the browser); the URL
-		// pattern has no quotes or angle brackets, so it's safe as is.
-		out += isSafeExternalUrl(href) ? '<a href="' + href + '">' + escapeHtml(href) + '</a>' : escapeHtml(href)
-		lastIndex = match.index + href.length
-		rUrl.lastIndex = lastIndex
-	}
-	out += escapeHtml(raw.slice(lastIndex))
+	var out = linkify(raw, function(href) { return anchor(href, escapeHtml(href)) })
 	out = out.replace(/\r\n?/g, '\n').replace(/\n/g, '<br>')
 	// Remove leading new lines, as Google sometimes adds them.
 	out = out.replace(/^(<br>)+/, '')
@@ -267,28 +288,6 @@ function isHiddenCalendar(calendarId, hiddenCalendarIds) {
 		}
 	}
 	return false
-}
-
-// hiddenCalendarIds with one calendar hidden or shown again. allIds: the calendars listed (the
-// popup's calendar menu): showing one Akonadi color while all of Akonadi is hidden (plasma_Events,
-// see isHiddenCalendar) keeps the other colors hidden, by their own ids.
-function toggledCalendarIds(hiddenCalendarIds, calendarId, hide, allIds) {
-	var id = String(calendarId)
-	var current = (hiddenCalendarIds || []).map(String)
-	var ids = []
-	if (!hide && id.indexOf("plasma_EventsColor_") === 0 && current.indexOf("plasma_Events") >= 0) {
-		(allIds || []).map(String).forEach(function(other) {
-			if (other !== id && other.indexOf("plasma_EventsColor_") === 0 && current.indexOf(other) < 0) {
-				ids.push(other)
-			}
-		})
-		current = current.filter(function(other) { return other !== "plasma_Events" })
-	}
-	ids = current.filter(function(other) { return other !== id }).concat(ids)
-	if (hide) {
-		ids.push(id)
-	}
-	return ids
 }
 
 // Titles of the events this one overlaps (EventModel sets conflictsWith, see Conflicts.js). It holds
@@ -557,6 +556,62 @@ function locationUrl(location) {
 function locationLink(location) {
 	var href = locationUrl(location).replace(/"/g, '%22')
 	return '<a href="' + href + '">' + escapeHtml(location) + '</a>'
+}
+
+//--- Links in a title (a task named after its ticket's URL)
+// A link's short name: a ticket's key (Jira "CSS-2175", Linear "ENG-12"), "repo#12" (GitHub and
+// GitHub Enterprise issues and pull requests, GitLab issues; "repo!12" for a merge request), else ''.
+function linkShortName(url) {
+	var u = String(url || '')
+	var m = u.match(/\/browse\/([A-Z][A-Z0-9_]*-\d+)(?:[\/?#]|$)/i) || u.match(/[?&]selectedIssue=([A-Z][A-Z0-9_]*-\d+)/i)
+		|| u.match(/^https?:\/\/linear\.app\/[^\/]+\/issue\/([A-Z][A-Z0-9]*-\d+)/i)
+	if (m) {
+		return m[1].toUpperCase()
+	}
+	m = u.match(/\/([^\/]+)\/-\/(issues|merge_requests)\/(\d+)(?:[\/?#]|$)/)
+	if (m) {
+		return m[1] + (m[2] === 'issues' ? '#' : '!') + m[3]
+	}
+	m = u.match(/^https?:\/\/[^\/]+\/[^\/]+\/([^\/]+)\/(?:issues|pull)\/(\d+)(?:[\/?#]|$)/)
+	if (m) {
+		return m[1] + '#' + m[2]
+	}
+	return ''
+}
+// The first web link in text, or ''.
+function firstLink(text) {
+	var m = String(text || '').match(/https?:\/\/[^\s<>"]+/i)
+	return m ? urlEnd(m[0]) : ''
+}
+// A title as shown: its ticket links by their short names (linkShortName), as plain text.
+function displayTitle(text) {
+	return String(text || '').replace(/https?:\/\/[^\s<>"]+/gi, function(found) {
+		var url = urlEnd(found)
+		var name = linkShortName(url)
+		return name ? name + found.slice(url.length) : found
+	})
+}
+// text with its web links as <a> (for a Text with textFormat: Text.StyledText): a ticket's link
+// shows its short name (linkShortName), others the URL; the rest escaped, line breaks kept. '' without
+// a link.
+function linkifiedText(text) {
+	text = String(text || '')
+	if (!firstLink(text)) {
+		return ''
+	}
+	return linkify(text, function(url) { return anchor(url, escapeHtml(linkShortName(url) || url)) })
+		.replace(/\r\n?/g, '\n').replace(/\n/g, '<br>').replace(/  /g, ' &nbsp;')
+}
+// text with its links' names (as linkifiedText's) in color, not clickable (a list row: a click opens
+// the row). '' without a link.
+function coloredLinkText(text, color) {
+	text = String(text || '')
+	if (!firstLink(text)) {
+		return ''
+	}
+	return linkify(text, function(url) {
+		return '<font color="' + String(color) + '">' + escapeHtml(linkShortName(url) || url) + '</font>'
+	})
 }
 
 //--- Event span ("All day", "14 – 16 Oct", "14 Oct 22:00 – 16 Oct 02:00")

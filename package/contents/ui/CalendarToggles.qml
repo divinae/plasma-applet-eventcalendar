@@ -46,7 +46,25 @@ PlasmaComponents3.ToolButton {
 	}
 
 	function toggledIds(currentIds, calendarId, hide) {
-		return Shared.toggledCalendarIds(currentIds, calendarId, hide, calendars.map(function(calendar) { return calendar.id }))
+		var ids = []
+		// The Akonadi events hidden as one calendar before they came by color ("plasma_Events",
+		// Shared.isHiddenCalendar): each color hidden on its own now, so one can be shown again.
+		var akonadiByColor = calendarId.indexOf("plasma_EventsColor_") === 0
+		for (var i = 0; i < currentIds.length; i++) {
+			if (akonadiByColor && currentIds[i] === "plasma_Events") {
+				calendars.forEach(function(calendar) {
+					if (String(calendar.id).indexOf("plasma_EventsColor_") === 0 && calendar.id !== calendarId) {
+						ids.push(String(calendar.id))
+					}
+				})
+			} else if (currentIds[i] !== calendarId) {
+				ids.push(String(currentIds[i]))
+			}
+		}
+		if (hide) {
+			ids.push(calendarId)
+		}
+		return ids
 	}
 	function setHidden(calendarId, hide) {
 		plasmoid.configuration.hiddenCalendarIds = toggledIds(hiddenIds, calendarId, hide)

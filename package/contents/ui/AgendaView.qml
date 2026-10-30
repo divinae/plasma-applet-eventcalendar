@@ -9,6 +9,29 @@ Item {
 
 	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
+	// Scrolled to the end: the next month below (Logic.loadMoreAgenda).
+	signal endReached()
+	// The first and last day in sight (the small month beside it marks them).
+	property date topDate: new Date(NaN)
+	property date bottomDate: new Date(NaN)
+	function dateAt(y) {
+		var index = agendaList.indexAt(0, y)
+		if (index < 0) {
+			index = agendaList.indexAt(0, y + agendaList.spacing + 1)
+		}
+		var agendaItem = index >= 0 && index < root.agendaModel.count ? root.agendaModel.get(index) : null
+		return agendaItem && agendaItem.date ? agendaItem.date : null
+	}
+	function updateTopDate() {
+		var top = dateAt(agendaList.contentY + 1)
+		var bottom = dateAt(agendaList.contentY + agendaList.height - agendaList.spacing - 2) || (agendaList.count > 0 ? root.agendaModel.get(agendaList.count - 1).date : null)
+		if (top && top.getTime() !== topDate.getTime()) {
+			topDate = top
+		}
+		if (bottom && bottom.getTime() !== bottomDate.getTime()) {
+			bottomDate = bottom
+		}
+	}
 
 	// The days in a ListView: only the days in sight (and a screen's worth around them) are
 	// built, not the whole month at once (a busy calendar has hundreds of event tiles; building
@@ -21,6 +44,19 @@ Item {
 		spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
+		// Days added at the end (the next month, by scrolling there) fade in.
+		add: Transition {
+			NumberAnimation { property: "opacity"; from: 0; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		}
+		// At the end after scrolling (not a short list that fits): the next month.
+		onContentYChanged: agendaView.updateTopDate()
+		onCountChanged: Qt.callLater(agendaView.updateTopDate)
+		onHeightChanged: Qt.callLater(agendaView.updateTopDate)
+		onAtYEndChanged: {
+			if (atYEnd && contentHeight > height && count > 0) {
+				agendaView.endReached()
+			}
+		}
 		// Not flicked with the mouse (as Plasma's ScrollView); wheel and touchpad as there.
 		interactive: Kirigami.Settings.hasTransientTouchInput
 		QQC2.ScrollBar.vertical: OverlayScrollBar {}

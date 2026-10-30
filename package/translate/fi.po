@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Akonadi-kalenteri: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/WeekView.qml
 msgid "%1 event"
@@ -241,7 +241,7 @@ msgstr "%1 päästä"
 msgid "Edit Calendar"
 msgstr "Muokkaa kalenteria"
 
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Nimi"
 
@@ -492,7 +492,7 @@ msgstr "Kun tapahtuma alkaa"
 msgid "Show a notification"
 msgstr "Näytä ilmoitus"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Tyyli"
 
@@ -748,8 +748,9 @@ msgid "Forget the Missing Ones"
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
 msgstr ""
+"Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan Digitaalisen kellon asetusten PIM-tapahtumaliitännäisen sivulla (itse liitännäinen otetaan käyttöön kohdassa Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne näytetään ja piilotetaan värin mukaan: samanväriset kalenterit yhdessä. Täällä kirjautuneen tilin Google-kalenterit näkyvät yllä tilin kohdalla."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1154,6 +1155,14 @@ msgid "Flat"
 msgstr "Tasainen"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Animaatiot"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "Näkymät liukuvat ja häivyttyvät esiin, kortit avautuvat, pienen kuukauden päivät vaihtuvat pehmeästi."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "Tapahtumien ulkoasu"
 
@@ -1301,12 +1310,27 @@ msgid "Up next"
 msgstr "Seuraavaksi"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "Seuraavaksi näyttää"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "Näytetyn jälkeiset päivät; myöhemmät kohdassa \"Näytä lisää\""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "päivä"
+msgstr[1] "päivää"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "Koko päivän tapahtumat rinnakkain"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "In the Day view, three or more all-day events take a third of the width each, three in a row. Hovering one shows it in full."
-msgstr ""
+msgstr "Päivänäkymässä kolme tai useampi koko päivän tapahtuma vie kukin kolmanneksen leveydestä, kolme rivissä. Osoittimen vieminen tapahtuman päälle näyttää sen kokonaan."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1357,6 +1381,45 @@ msgid "Debug logging and extra settings pages"
 msgstr "Vianjäljityslokit ja lisäasetussivut"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "kyllä"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "ei"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "epäonnistui (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "Nykyinen sää, 3 tunnin välein: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 päivää (maksullinen tilaus): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr "OpenWeatherMap ei tunne tätä sovellustunnistetta (uuden käyttöönotto kestää enintään 2 tuntia)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "Valitse yltä One Call 3.0: tunneittain ja 8 päivää."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "One Call 3.0 ei ole tilattuna: valitse yltä Free (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Lähde"
 
@@ -1384,7 +1447,7 @@ msgstr "Ei asetettu"
 msgid "City name, eg: Warszawa"
 msgstr "Kaupungin nimi, esim. Warszawa"
 
-#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/ConfigWeather.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/PopupHeader.qml
 msgid "Search"
 msgstr "Etsi"
 
@@ -1417,6 +1480,42 @@ msgid "Required for OpenWeatherMap"
 msgstr "Vaaditaan OpenWeatherMapia varten"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "Tarkistetaan…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "Tarkista sovellustunniste"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5) works with any app id: the current weather and a forecast in 3 hour steps for 5 days. Its forecast for 16 days needs a paid plan; without one, the days are made from the 3 hour steps."
+msgstr "Free (2.5) toimii kaikilla sovellustunnisteilla: nykyinen sää ja ennuste 3 tunnin välein 5 päiväksi. 16 päivän ennuste vaatii maksullisen tilauksen; ilman sitä päivät muodostetaan 3 tunnin jaksoista."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0 needs the \"One Call by Call\" subscription on <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 calls a day are free, a payment card is required): the current weather, 48 hours by the hour and 8 days, in one call. The widget asks at most every 10 minutes, about 150 calls a day."
+msgstr "One Call 3.0 vaatii ”One Call by Call” -tilauksen sivustolla <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 kutsua päivässä on ilmaisia, maksukortti vaaditaan): nykyinen sää, 48 tuntia tunneittain ja 8 päivää yhdellä kutsulla. Sovelma kysyy enintään 10 minuutin välein, noin 150 kutsua päivässä."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr "Sama sovellustunniste toimii molemmissa: Tarkista sovellustunniste kertoo, mitä sinun tunnisteesi saa käyttää."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The built-in app id is shared by everyone using this widget, and so is its request limit: the weather may stop updating at times. A free app id of your own: sign up at <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo needs none."
+msgstr "Sisäänrakennettu sovellustunniste on yhteinen kaikille tämän sovelman käyttäjille, samoin sen pyyntöraja: sää voi ajoittain lakata päivittymästä. Oma ilmainen sovellustunniste: rekisteröidy sivustolla <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a> ja kopioi se kohdasta ”API keys”. Open-Meteo ei tarvitse tunnistetta."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1441,12 +1540,77 @@ msgid "Kelvin"
 msgstr "Kelvin"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Meteogrammi näyttää"
+msgid "Icons"
+msgstr "Kuvakkeet"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "Järjestelmä"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "Nykyisen sään kuvakkeen tausta"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "Taivas, sään mukaan"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "Hienovarainen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "Ei mitään"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "Ennustekaavio"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "Myös meteogrammi agendan yläpuolella"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "Yksinkertainen"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "Näyttävä"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Näytettävät tunnit"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "Tämän päivän kaavio päivänäkymässä ja meteogrammi asialistan yläpuolella"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " tuntia"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "Suuremmat kuvakkeet"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "Kaaviossa ja tulevissa päivissä"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "Sademäärät"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "Kokonaismäärä kaavion yläpuolella, määrät sateisimpien tuntien kohdalla"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1464,17 +1628,54 @@ msgstr "Valitse kaupunki"
 msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Haettu osoitteesta <a href=\"%1\">%1</a>"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "Id"
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "Kaupungin nimi, esim.: Berlin tai Berlin, DE"
 
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "Kaupungin www-sivu"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "Avaa linkki"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "P"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "E"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "I"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "L"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "Tunnus %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap ei hyväksynyt sovellustunnistetta: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "Haku epäonnistui: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "Kaupunkia ei löytynyt."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "Sovellustunnistetta ei ole asetettu."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1487,6 +1688,14 @@ msgstr "Nimeä luettelo uudelleen…"
 #: ../contents/ui/config/SelectionRow.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Poista luettelo…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "Id"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "Kaupungin www-sivu"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1510,8 +1719,24 @@ msgid "All lists"
 msgstr "Kaikki luettelot"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Näytettävä tehtäväluettelo"
+msgid "All open"
+msgstr "Kaikki avoimet"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Näytettävät tehtävät"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Erääntyy tänä päivänä"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Kaikki avoimet tehtävät"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Ei avoimia tehtäviä"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1520,6 +1745,16 @@ msgstr "Kaikki tehty"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Ei tehtäviä"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Käynnissä"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Tehtävänä"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2679,6 +2914,19 @@ msgid "Weather API limit reached"
 msgstr "Sään API-rajoitus saavutettu"
 
 #: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather."
+msgstr "OpenWeatherMap hylkäsi sovellustunnisteen One Call 3.0:lle: tilaa se tai valitse Free (2.5) kohdassa Asetukset > Sää."
+
+#: ../contents/ui/Logic.qml
+msgid "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather."
+msgstr "OpenWeatherMap hylkäsi sovellustunnisteen. Uusi alkaa toimia enintään 2 tunnin kuluessa; tarkista se kohdassa Asetukset > Sää."
+
+#: ../contents/ui/Logic.qml
+msgctxt "The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there"
+msgid "en"
+msgstr "fi"
+
+#: ../contents/ui/Logic.qml
 msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 msgstr "Googlen valtuutus on vanhentunut tai peruttu. Avaa Event Calendarin asetukset > Google-kalenteri ja kirjaudu kyseiselle tilille uudelleen."
 
@@ -3119,11 +3367,6 @@ msgstr "Merkitse tekemättömäksi"
 msgid "Mark as done"
 msgstr "Merkitse tehdyksi"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Käynnissä"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Tehtävän siirtäminen epäonnistui"
@@ -3348,10 +3591,6 @@ msgstr "Ei päivämäärää"
 msgid "Completed"
 msgstr "Valmiit"
 
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Ei avoimia tehtäviä"
-
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
 msgid "Completed"
@@ -3563,8 +3802,114 @@ msgid "dddd, d MMM"
 msgstr "dddd d. MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "Ei mitään huomenna."
+msgstr[1] "Ei mitään seuraavan %1 päivän aikana."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Ei mitään suunniteltua lähipäiville."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "Selkeää"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "Enimmäkseen selkeää"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "Puolipilvistä"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "Pilvistä"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "Sumua"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "Huurtavaa sumua"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "Heikkoa tihkusadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "Tihkusadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "Voimakasta tihkusadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "Jäätävää tihkusadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "Heikkoa sadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Sade"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "Voimakasta sadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "Jäätävää sadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "Heikkoa lumisadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "Lumisadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "Voimakasta lumisadetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "Lumijyväsiä"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "Sadekuuroja"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "Voimakkaita sadekuuroja"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "Lumikuuroja"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "Voimakkaita lumikuuroja"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "Ukkosta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "Ukkosta ja raetta"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "Tuntematon"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3573,6 +3918,10 @@ msgstr "Aseta sijainti kohdassa Asetukset > Sää, niin ennuste näytetään tä
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Ladataan säätä…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Koko ennuste verkossa"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3589,13 +3938,20 @@ msgid "No forecast for this day."
 msgstr "Tälle päivälle ei ole ennustetta."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Seuraavat 12 tuntia"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "Seuraava tunti"
+msgstr[1] "Seuraavat %1 tuntia"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Päivän aikana"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "Sade: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3640,8 +3996,34 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
 
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr "Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan PIM-tapahtumaliitännäisen asetussivulla (Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne näytetään ja piilotetaan värin mukaan: samanväriset kalenterit yhdessä. Täällä kirjautuneen tilin Google-kalenterit näkyvät yllä tilin kohdalla."
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " päivää"
+
+#~ msgid "Up next lists"
+#~ msgstr "Seuraavaksi näyttää"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = niin monta kuin mahtuu; loput kohdassa \"Näytä lisää\""
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " tapahtumaa"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Meteogrammi näyttää"
+
 #~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are one entry."
 #~ msgstr "Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan PIM-tapahtumaliitännäisen asetussivulla (Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne ovat yksi kohta."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Seuraavat 12 tuntia"
+
+#~ msgid "Task list shown"
+#~ msgstr "Näytettävä tehtäväluettelo"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4228,17 +4610,11 @@ msgstr "Työskentelypaikka: %1"
 #~ msgid "Grid"
 #~ msgstr "Ruudukko"
 
-#~ msgid "Rain"
-#~ msgstr "Sade"
-
 #~ msgid "Positive Temp"
 #~ msgstr "Lämpöasteet"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Pakkasasteet"
-
-#~ msgid "Icons"
-#~ msgstr "Kuvakkeet"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Versio:</b> %1"

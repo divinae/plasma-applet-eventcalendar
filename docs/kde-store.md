@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.10.0
+    1.12.1
 
 **License**
 
@@ -125,22 +125,28 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.10.0)**
+**Changelog (1.12.1)**
 
 ```
-- New name: Event Calendar NG
-- Meetings: run your own command when a meeting starts and ends
-- Event menu: Copy Event Details
-- Panel right-click menu: the next meeting first (Join, Copy link, Mute, Mark as Ended), then New Event / Task, Go to Date, Import
-- Summary notifications: shorter, with Show All / Show Tasks
-- Faster view switching (no weather fetch on each switch)
-- Fixes: "All" in the Tasks header cut to "…"
+- Dark themes: the date and time pickers showed light text on a white background
+```
+
+**Changelog (1.12.0)**
+
+```
+- Faster: views open 2-3x faster; months seen stay in memory and the next ones load ahead
+- Agenda: the Day view's layout (small month, today's tasks and weather beside the list), more months when scrolled to the end
+- Small month: today a solid tile, the shown day a pale one, the Agenda's days in sight a band
+- Gentle animations (month paging, cards, ticking off a task, the clock's chip), can be turned off
+- Up next: choose how many days it covers
+- Weather: high, low and rain beside the temperature, the location opens the full forecast
+- Fixes: Day -> Week showed only the first column
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.10.0-plasma6.0.plasmoid` from the
-  [v1.10.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.10.0),
+- **Product file:** `eventcalendar-ng-v1.12.1.plasmoid` from the
+  [v1.12.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.12.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

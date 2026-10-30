@@ -12,6 +12,7 @@ Rectangle {
 	property color backgroundColor: "transparent"
 	property color backgroundHoverColor: appletConfig.agendaHoverBackground
 	color: clickable && hovered ? backgroundHoverColor : backgroundColor
+	Behavior on color { ColorAnimation { duration: appletConfig.shortDuration } }
 	property string tooltipMainText
 	property string tooltipSubText
 	property alias acceptedButtons: mouseArea.acceptedButtons
@@ -46,7 +47,7 @@ Rectangle {
 					if (mouse.button == Qt.LeftButton) {
 						linkRect.leftClicked(mouse)
 					} else if (mouse.button == Qt.RightButton) {
-						contextMenu.show(mouse.x, mouse.y)
+						lazyContextMenu.get().show(mouse.x, mouse.y)
 						mouse.accepted = true
 					}
 				}
@@ -57,8 +58,13 @@ Rectangle {
 		}
 	}
 
-	ContextMenu {
-		id: contextMenu
-		onPopulate: linkRect.loadContextMenu(contextMenu)
+	// Made on the first right click (a Menu for every row of a list cost a lot when views opened).
+	property LazyMenu lazyContextMenu: LazyMenu {
+		parentItem: linkRect
+		component: Component {
+			ContextMenu {
+				onPopulate: function(menu) { linkRect.loadContextMenu(menu) }
+			}
+		}
 	}
 }

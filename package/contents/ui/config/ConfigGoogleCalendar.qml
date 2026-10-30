@@ -104,8 +104,7 @@ ConfigPage {
 	}
 	Component.onCompleted: {
 		loadAkonadiGoogleAccounts()
-		loadAkonadiColors()
-		loadAkonadiGoogleCollections()
+		loadAkonadiCalendars()
 		loadPimSelection()
 		updateShownPimCalendars() // The model may be filled already: no reset or insert comes then
 	}
@@ -147,21 +146,15 @@ ConfigPage {
 		pimCalendarsModel.saveConfig()
 		loadPimSelection()
 	}
-	// Their colors, from Akonadi's database (PlasmaCalendarUtils.akonadiColorsCommand): none when
-	// it can't be read.
-	ExecUtil { id: akonadiColorReader }
+	// From Akonadi's database, in one run (PlasmaCalendarUtils.akonadiCalendarsCommand, as the
+	// widget reads it): their colors (none when it can't be read), and the Google calendars Akonadi
+	// syncs for an account signed in here too (listed above with the account, so not here again).
+	ExecUtil { id: akonadiCalendarsReader }
 	property var akonadiColors: ({})
-	function loadAkonadiColors() {
-		akonadiColorReader.execArgv(PlasmaCalendarUtils.akonadiColorsCommand(), function(cmd, exitCode, exitStatus, stdout) {
-			page.akonadiColors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
-		})
-	}
-	// The Google calendars Akonadi syncs for an account signed in here too, and selected there:
-	// listed above with the account, so not here again.
-	ExecUtil { id: akonadiCollectionReader }
 	property string akonadiGoogleCollections: ""
-	function loadAkonadiGoogleCollections() {
-		akonadiCollectionReader.execArgv(PlasmaCalendarUtils.akonadiGoogleCollectionsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+	function loadAkonadiCalendars() {
+		akonadiCalendarsReader.execArgv(PlasmaCalendarUtils.akonadiCalendarsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			page.akonadiColors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
 			page.akonadiGoogleCollections = String(stdout || "")
 		})
 	}
@@ -529,7 +522,7 @@ ConfigPage {
 		}
 		FormCard.FormSectionText {
 			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. Google calendars shown through an account signed in here are listed above, with the account.")
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account

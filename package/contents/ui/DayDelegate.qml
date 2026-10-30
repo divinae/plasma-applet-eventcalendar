@@ -97,7 +97,7 @@ MouseArea {
 				return 0
 			}
 		}
-		Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration*2 } }
+		Behavior on opacity { NumberAnimation { duration: appletConfig.shortDuration*2 } }
 		color: Kirigami.Theme.highlightColor
 		radius: dayStyle.radius
 		z: todayRect.z - 1
@@ -137,15 +137,17 @@ MouseArea {
 		return events[index]
 	}
 
-	property int eventCount: eventsLength(model.events)
+	// The day's events: the month's plain arrays (DaysCalendar.dayEvents) or model.events.
+	readonly property var events: calendarView && calendarView.dayEvents ? (calendarView.dayEvents[index] || []) : model.events
+	property int eventCount: eventsLength(events)
 	property var eventColors: []
 	property bool useHightlightColor: eventColors.length === 0
 
-	onEventCountChanged: updateEventColors()
+	onEventsChanged: updateEventColors() // Other events, maybe as many
 	function updateEventColors() {
 		var set = {}
-		for (var i = 0; i < eventCount; i++) {
-			var eventItem = eventAt(model.events, i)
+		for (var i = 0, count = eventsLength(dayStyle.events); i < count; i++) {
+			var eventItem = eventAt(dayStyle.events, i)
 			if (eventItem && eventItem.backgroundColor) {
 				set[eventItem.backgroundColor] = true
 			}
@@ -178,7 +180,7 @@ MouseArea {
 			}
 			sourceComponent: badgeComponent
 
-			readonly property var modelEvents: model.events
+			readonly property var modelEvents: dayStyle.events
 			readonly property int modelEventsCount: dayStyle.eventsLength(modelEvents)
 			// Month view with multi-day bars: rows at the top taken by bars, bars that don't fit.
 			readonly property int spanRows: model.reservedRows || 0
@@ -240,14 +242,14 @@ MouseArea {
 		mainText: containsMouse ? Shared.formatDate(thisDate, Qt.locale().dateFormat(Locale.LongFormat)) : ""
 		subText: containsMouse ? tooltipBody() : ""
 		function tooltipBody() {
-			var count = eventsLength(model.events)
+			var count = eventsLength(dayStyle.events)
 			if (!count) {
 				return ''
 			}
 			var lines = []
 			var now = new Date()
 			for (var i = 0; i < count; i++) {
-				var eventItem = eventAt(model.events, i)
+				var eventItem = eventAt(dayStyle.events, i)
 				if (!eventItem) {
 					continue
 				}

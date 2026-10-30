@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -170,7 +170,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Ημερολόγιο Akonadi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -277,7 +277,6 @@ msgid "Edit Calendar"
 msgstr "Επεξεργασία ημερολογίου"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Όνομα"
@@ -548,6 +547,7 @@ msgid "Show a notification"
 msgstr "Εμφάνιση ειδοποίησης"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Στιλ"
 
@@ -885,9 +885,16 @@ msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
 "in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. Google calendars shown "
-"through an account signed in here are listed above, with the account."
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
+"Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
+"ορίζεται στη σελίδα του πρόσθετου συμβάντων PIM στις ρυθμίσεις του Ψηφιακού "
+"ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Συμβάντα > Ημερολόγια "
+"Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου εμφανίζονται και "
+"αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος μαζί. Τα ημερολόγια "
+"Google ενός λογαριασμού που έχει συνδεθεί εδώ εμφανίζονται παραπάνω, μαζί με "
+"τον λογαριασμό."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1378,6 +1385,16 @@ msgid "Flat"
 msgstr "Επίπεδο"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Κινούμενα εφέ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr ""
+"Οι προβολές γλιστρούν και εμφανίζονται σταδιακά, οι κάρτες ανοίγουν, οι "
+"ημέρες του μικρού μήνα αλλάζουν ομαλά."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "Εμφάνιση συμβάντων"
 
@@ -1536,14 +1553,33 @@ msgid "Up next"
 msgstr "Επόμενα"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "All-day events side by side"
+msgid "Up next shows"
+msgstr "Τα επόμενα δείχνουν"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
 msgstr ""
+"Οι ημέρες μετά την εμφανιζόμενη· οι επόμενες στο «Εμφάνιση περισσότερων»"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "ημέρα"
+msgstr[1] "ημέρες"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All-day events side by side"
+msgstr "Ολοήμερα συμβάντα δίπλα-δίπλα"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
 msgstr ""
+"Στην προβολή ημέρας, τρία ή περισσότερα ολοήμερα συμβάντα καταλαμβάνουν το "
+"καθένα το ένα τρίτο του πλάτους, τρία σε κάθε σειρά. Όταν περνάτε τον δείκτη "
+"πάνω από ένα, εμφανίζεται ολόκληρο."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1601,6 +1637,48 @@ msgid "Debug logging and extra settings pages"
 msgstr "Καταγραφή αποσφαλμάτωσης και επιπλέον σελίδες ρυθμίσεων"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "ναι"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "όχι"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "απέτυχε (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "Τρέχων καιρός, βήματα 3 ωρών: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 ημέρες (επί πληρωμή πρόγραμμα): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+"Το OpenWeatherMap δεν αναγνωρίζει αυτό το αναγνωριστικό εφαρμογής (ένα νέο "
+"χρειάζεται έως 2 ώρες)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "Επιλέξτε παραπάνω One Call 3.0: ανά ώρα και 8 ημέρες."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "Χωρίς συνδρομή στο One Call 3.0: επιλέξτε παραπάνω Free (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Πηγή"
 
@@ -1629,7 +1707,6 @@ msgid "City name, eg: Warszawa"
 msgstr "Όνομα πόλης, π.χ.: Warszawa"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1664,6 +1741,72 @@ msgid "Required for OpenWeatherMap"
 msgstr "Απαιτείται για το OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "Έλεγχος…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "Έλεγχος αναγνωριστικού εφαρμογής"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+"Το Free (2.5) λειτουργεί με οποιοδήποτε αναγνωριστικό εφαρμογής: ο τρέχων "
+"καιρός και πρόγνωση σε βήματα 3 ωρών για 5 ημέρες. Η πρόγνωση 16 ημερών "
+"απαιτεί επί πληρωμή πρόγραμμα· χωρίς αυτό, οι ημέρες σχηματίζονται από τα "
+"βήματα 3 ωρών."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+"Το One Call 3.0 απαιτεί τη συνδρομή «One Call by Call» στο <a href=\"https://"
+"openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 κλήσεις την "
+"ημέρα είναι δωρεάν, απαιτείται κάρτα πληρωμής): ο τρέχων καιρός, 48 ώρες ανά "
+"ώρα και 8 ημέρες, σε μία κλήση. Το γραφικό συστατικό ρωτά το πολύ κάθε 10 "
+"λεπτά, περίπου 150 κλήσεις την ημέρα."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+"Ένα αναγνωριστικό εφαρμογής λειτουργεί και για τα δύο: το «Έλεγχος "
+"αναγνωριστικού εφαρμογής» δείχνει τι μπορεί να χρησιμοποιεί το δικό σας."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
+"Το ενσωματωμένο αναγνωριστικό εφαρμογής το μοιράζονται όλοι όσοι "
+"χρησιμοποιούν αυτό το γραφικό συστατικό, όπως και το όριο αιτημάτων του: ο "
+"καιρός μπορεί κατά διαστήματα να σταματά να ενημερώνεται. Για δικό σας "
+"δωρεάν αναγνωριστικό εφαρμογής: εγγραφείτε στο <a href=\"https://"
+"home.openweathermap.org/users/sign_up\">openweathermap.org</a> και "
+"αντιγράψτε το από το «API keys». Το Open-Meteo δεν χρειάζεται κανένα."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1688,12 +1831,79 @@ msgid "Kelvin"
 msgstr "Κέλβιν"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "Το μετεόγραμμα εμφανίζει"
+msgid "Icons"
+msgstr "Εικονίδια"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "Σύστημα"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "Φόντο εικονιδίου τρέχοντος καιρού"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "Ουρανός, ανάλογα με τον καιρό"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "Διακριτικό"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "Κανένα"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "Γράφημα πρόγνωσης"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "Και το μετεόγραμμα πάνω από την ατζέντα"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "Απλό"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "Περίτεχνο"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "Εμφανιζόμενες ώρες"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr ""
+"Το σημερινό γράφημα στην προβολή ημέρας και το μετεόγραμμα πάνω από την "
+"ατζέντα"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " ώρες"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "Μεγαλύτερα εικονίδια"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "Στο γράφημα και στις επόμενες ημέρες"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "Ποσότητες βροχής"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "Το σύνολο πάνω από το γράφημα, οι ποσότητες στις πιο βροχερές ώρες"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1714,19 +1924,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Ελήφθη από <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "Αναγνωριστικό"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "Όνομα πόλης, π.χ.: Berlin ή Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "Ιστοσελίδα Πόλης"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "Άνοιγμα Συνδέσμου"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "Β"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "Ν"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "Α"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "Δ"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "ID %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "Το OpenWeatherMap δεν δέχτηκε το αναγνωριστικό εφαρμογής: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "Η αναζήτηση απέτυχε: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "Δεν βρέθηκε πόλη."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "Δεν έχει οριστεί αναγνωριστικό εφαρμογής."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1740,6 +1985,14 @@ msgstr "Μετονομασία λίστας…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Διαγραφή λίστας…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "Αναγνωριστικό"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "Ιστοσελίδα Πόλης"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1764,8 +2017,24 @@ msgid "All lists"
 msgstr "Όλες οι λίστες"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Εμφανιζόμενη λίστα εργασιών"
+msgid "All open"
+msgstr "Όλες οι ανοιχτές"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Εμφανιζόμενες εργασίες"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Λήξη αυτή την ημέρα"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Όλες οι ανοιχτές εργασίες"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1774,6 +2043,17 @@ msgstr "Όλα ολοκληρώθηκαν"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Καμία εργασία"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Σε εξέλιξη"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Προς εκτέλεση"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2973,6 +3253,30 @@ msgstr "Συμπληρώθηκε το όριο του API καιρού"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+"Το OpenWeatherMap απέρριψε το αναγνωριστικό εφαρμογής για το One Call 3.0: "
+"γίνετε συνδρομητής ή επιλέξτε Free (2.5) στις Ρυθμίσεις > Καιρός."
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+"Το OpenWeatherMap απέρριψε το αναγνωριστικό εφαρμογής. Ένα νέο χρειάζεται "
+"έως 2 ώρες για να λειτουργήσει· ελέγξτε το στις Ρυθμίσεις > Καιρός."
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr "el"
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3428,12 +3732,6 @@ msgstr "Σήμανση ως μη ολοκληρωμένης"
 msgid "Mark as done"
 msgstr "Σήμανση ως ολοκληρωμένης"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Σε εξέλιξη"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Δεν ήταν δυνατή η μετακίνηση της εργασίας"
@@ -3660,10 +3958,6 @@ msgstr "Χωρίς ημερομηνία"
 msgid "Completed"
 msgstr "Ολοκληρωμένες"
 
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Καμία ανοιχτή εργασία"
-
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
 msgid "Completed"
@@ -3878,8 +4172,114 @@ msgid "dddd, d MMM"
 msgstr "dddd, d MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "Τίποτα αύριο."
+msgstr[1] "Τίποτα τις επόμενες %1 ημέρες."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Τίποτα προγραμματισμένο τις επόμενες ημέρες."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "Αίθριος"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "Κυρίως αίθριος"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "Μερικώς νεφελώδης"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "Συννεφιά"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "Ομίχλη"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "Παγωμένη ομίχλη"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "Ασθενές ψιχάλισμα"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "Ψιχάλισμα"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "Έντονο ψιχάλισμα"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "Παγωμένο ψιχάλισμα"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "Ασθενής βροχή"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Βροχή"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "Ισχυρή βροχή"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "Παγωμένη βροχή"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "Ασθενής χιονόπτωση"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "Χιονόπτωση"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "Ισχυρή χιονόπτωση"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "Χιονόκοκκοι"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "Μπόρες βροχής"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "Ισχυρές μπόρες βροχής"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "Μπόρες χιονιού"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "Ισχυρές μπόρες χιονιού"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "Καταιγίδα"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "Καταιγίδα με χαλάζι"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "Άγνωστο"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3889,6 +4289,10 @@ msgstr ""
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Φόρτωση καιρού…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Πλήρης πρόγνωση στο διαδίκτυο"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3905,13 +4309,20 @@ msgid "No forecast for this day."
 msgstr "Δεν υπάρχει πρόγνωση για αυτήν την ημέρα."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Επόμενες 12 ώρες"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "Επόμενη ώρα"
+msgstr[1] "Επόμενες %1 ώρες"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "Κατά τη διάρκεια της ημέρας"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "Βροχή: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3961,12 +4372,49 @@ msgstr "Τοποθεσία εργασίας: %1"
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 #~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
+#~ "ορίζεται στη σελίδα ρυθμίσεων του πρόσθετου συμβάντων PIM (Συμβάντα > "
+#~ "Ημερολόγια Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου "
+#~ "εμφανίζονται και αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος "
+#~ "μαζί. Τα ημερολόγια Google ενός λογαριασμού που έχει συνδεθεί εδώ "
+#~ "εμφανίζονται παραπάνω, μαζί με τον λογαριασμό."
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " ημέρες"
+
+#~ msgid "Up next lists"
+#~ msgstr "Τα επόμενα δείχνουν"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = όσα χωράνε· τα υπόλοιπα στο «Εμφάνιση περισσότερων»"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " γεγονότα"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "Το μετεόγραμμα εμφανίζει"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 #~ "calendar menu they are one entry."
 #~ msgstr ""
 #~ "Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
 #~ "ορίζεται στη σελίδα ρυθμίσεων του πρόσθετου συμβάντων PIM (Συμβάντα > "
 #~ "Ημερολόγια Plasma). Στο μενού ημερολογίων του αναδυόμενου είναι μία "
 #~ "καταχώριση."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Επόμενες 12 ώρες"
+
+#~ msgid "Task list shown"
+#~ msgstr "Εμφανιζόμενη λίστα εργασιών"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4546,17 +4994,11 @@ msgstr "Τοποθεσία εργασίας: %1"
 #~ msgid "Grid"
 #~ msgstr "Πλέγμα"
 
-#~ msgid "Rain"
-#~ msgstr "Βροχή"
-
 #~ msgid "Positive Temp"
 #~ msgstr "Θετική Θερμοκρασία"
 
 #~ msgid "Negative Temp"
 #~ msgstr "Αρνητική Θερμοκρασία"
-
-#~ msgid "Icons"
-#~ msgstr "Εικονίδια"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>Έκδοση:</b> %1"

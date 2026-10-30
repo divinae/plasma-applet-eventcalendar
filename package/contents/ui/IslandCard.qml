@@ -69,8 +69,11 @@ Item {
 		}
 	}
 
+	// Content kept inside the card (eg: a month sliding in while paging).
+	property bool clipContent: false
 	Item {
 		id: contentArea
+		clip: card.clipContent
 		x: card.leftPadding
 		y: card.topPadding
 		width: Math.max(0, card.width - card.leftPadding - card.rightPadding)

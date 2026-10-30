@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -169,7 +169,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Akonadi 달력: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -271,7 +271,6 @@ msgid "Edit Calendar"
 msgstr "달력 편집"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "이름"
@@ -536,6 +535,7 @@ msgid "Show a notification"
 msgstr "알림 표시"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "스타일"
 
@@ -862,9 +862,14 @@ msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
 "in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. Google calendars shown "
-"through an account signed in here are listed above, with the account."
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
+"읽기 전용으로 표시됩니다. 표시할 Akonadi 달력은 디지털 시계 설정의 PIM 행사 "
+"플러그인 페이지에서 설정합니다(플러그인 자체는 행사 > Plasma 달력에서 켭니"
+"다). 팝업의 달력 메뉴에서는 색상별로 표시하거나 숨깁니다: 같은 색상의 달력은 "
+"함께 처리됩니다. 여기에서 로그인한 계정의 Google 달력은 위쪽에 계정과 함께 표"
+"시됩니다."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1340,6 +1345,16 @@ msgid "Flat"
 msgstr "플랫"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "애니메이션"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr ""
+"보기가 미끄러지듯 나타나고, 카드가 열리며, 작은 달력의 날짜가 부드럽게 바뀝니"
+"다."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "일정 모양"
 
@@ -1494,14 +1509,30 @@ msgid "Up next"
 msgstr "다음 일정"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "다음 일정 표시 기간"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "표시된 날 이후의 날짜, 그 이후는 \"더 보기\"에서"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "일"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "종일 이벤트 나란히 표시"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
 msgstr ""
+"일 보기에서 종일 이벤트가 3개 이상이면 각각 너비의 3분의 1을 차지하며 한 줄"
+"에 3개씩 표시됩니다. 마우스를 올리면 전체 내용이 표시됩니다."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1558,6 +1589,48 @@ msgid "Debug logging and extra settings pages"
 msgstr "디버그 로그 및 추가 설정 페이지"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "예"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "아니요"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "실패(%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "현재 날씨, 3시간 간격: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16일(유료 요금제): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+"OpenWeatherMap에서 이 앱 ID를 인식하지 못합니다(새 ID는 사용 가능해지기까지 "
+"최대 2시간이 걸림)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "위에서 One Call 3.0을 선택하십시오: 시간별 및 8일."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "One Call 3.0을 구독하지 않았습니다: 위에서 Free (2.5)를 선택하십시오."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "원본"
 
@@ -1586,7 +1659,6 @@ msgid "City name, eg: Warszawa"
 msgstr "도시 이름, 예: Seoul"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1621,6 +1693,70 @@ msgid "Required for OpenWeatherMap"
 msgstr "OpenWeatherMap에 필요"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "확인 중…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "앱 ID 확인"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+"Free (2.5)는 모든 앱 ID에서 작동합니다: 현재 날씨와 5일 동안의 3시간 간격 예"
+"보. 16일 예보에는 유료 요금제가 필요하며, 없으면 3시간 간격 예보로 일별 예보"
+"를 만듭니다."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+"One Call 3.0을 사용하려면 <a href=\"https://openweathermap.org/api/one-"
+"call-3\">openweathermap.org</a>에서 ‘One Call by Call’ 구독이 필요합니다(하"
+"루 1000회 호출은 무료, 결제 카드 필요): 현재 날씨, 48시간 시간별 예보, 8일 예"
+"보를 한 번의 호출로 가져옵니다. 위젯은 최대 10분마다 요청하며, 하루 약 150회 "
+"호출합니다."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+"하나의 앱 ID로 둘 다 사용할 수 있습니다: ‘앱 ID 확인’을 누르면 사용 가능한 항"
+"목을 알려 줍니다."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
+"내장 앱 ID는 이 위젯의 모든 사용자가 공유하며 요청 한도도 공유합니다: 그래서 "
+"날씨가 가끔 업데이트되지 않을 수 있습니다. 무료 개인 앱 ID: <a "
+"href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>"
+"에서 가입한 후 ‘API keys’에서 복사하십시오. Open-Meteo는 앱 ID가 필요하지 않"
+"습니다."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1645,12 +1781,77 @@ msgid "Kelvin"
 msgstr "절대온도"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "기상 그래프 표시 기간"
+msgid "Icons"
+msgstr "아이콘"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "시스템"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "현재 날씨 아이콘 배경"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "하늘, 날씨에 따라"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "은은하게"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "없음"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "예보 차트"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "일정 위 기상 그래프에도 적용"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "간단"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "화려"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "표시할 시간"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "일 보기의 오늘 차트와 일정 위의 기상도"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " 시간"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "큰 아이콘"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "차트와 다음 날들에서"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "강수량"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "차트 위에 합계, 비가 가장 많이 오는 시간에 양 표시"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1671,19 +1872,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "<a href=\"%1\">%1</a>에서 가져옴"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "ID"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "도시 이름, 예: Berlin 또는 Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "도시 웹페이지"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "링크 열기"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "N"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "S"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "E"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "W"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "ID %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap에서 앱 ID를 허용하지 않았습니다: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "검색 실패: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "도시를 찾을 수 없습니다."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "앱 ID가 설정되지 않았습니다."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1697,6 +1933,14 @@ msgstr "목록 이름 바꾸기…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "목록 삭제…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "ID"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "도시 웹페이지"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1721,8 +1965,24 @@ msgid "All lists"
 msgstr "모든 목록"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "표시할 작업 목록"
+msgid "All open"
+msgstr "열린 항목 모두"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "표시할 작업"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "이 날 마감"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "열린 작업 모두"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "열린 작업 없음"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1731,6 +1991,17 @@ msgstr "모두 완료"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "작업 없음"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "진행 중"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "할 일"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2903,6 +3174,30 @@ msgstr "날씨 API의 제한에 도달하였습니다"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+"OpenWeatherMap에서 One Call 3.0에 대한 앱 ID를 거부했습니다: 구독하거나 설정 "
+"> 날씨에서 Free (2.5)를 선택하십시오."
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+"OpenWeatherMap에서 앱 ID를 거부했습니다. 새 ID는 작동하기까지 최대 2시간이 걸"
+"립니다. 설정 > 날씨에서 확인하십시오."
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr "kr"
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3345,12 +3640,6 @@ msgstr "완료 안 됨으로 표시"
 msgid "Mark as done"
 msgstr "완료로 표시"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "진행 중"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "작업을 이동할 수 없음"
@@ -3575,10 +3864,6 @@ msgstr "날짜 없음"
 msgid "Completed"
 msgstr "완료됨"
 
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "열린 작업 없음"
-
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
 msgid "Completed"
@@ -3784,8 +4069,113 @@ msgid "dddd, d MMM"
 msgstr "M월 d일 dddd"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "다음 %1일 동안 일정이 없습니다."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "앞으로 며칠 동안 계획된 일정이 없습니다."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "맑음"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "대체로 맑음"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "구름 조금"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "흐림"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "안개"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "착빙성 안개"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "약한 이슬비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "이슬비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "강한 이슬비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "어는 이슬비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "약한 비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "강한 비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "어는 비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "약한 눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "강한 눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "쌀알눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "소나기"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "강한 소나기"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "소낙눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "강한 소낙눈"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "뇌우"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "우박을 동반한 뇌우"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "알 수 없음"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3794,6 +4184,10 @@ msgstr "여기에 일기 예보를 표시하려면 설정 > 날씨에서 위치�
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "날씨 불러오는 중…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "웹에서 전체 예보 보기"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3810,13 +4204,19 @@ msgid "No forecast for this day."
 msgstr "이 날의 일기 예보가 없습니다."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "다음 12시간"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "다음 %1시간"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "하루 동안"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "강수량: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3864,11 +4264,46 @@ msgstr "근무 위치: %1"
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 #~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "읽기 전용으로 표시됩니다. 표시할 Akonadi 달력은 PIM 행사 플러그인의 설정 "
+#~ "페이지(행사 > Plasma 달력)에서 설정합니다. 팝업의 달력 메뉴에서는 색상별"
+#~ "로 표시하거나 숨깁니다: 같은 색상의 달력은 함께 처리됩니다. 여기에서 로그"
+#~ "인한 계정의 Google 달력은 위쪽에 계정과 함께 표시됩니다."
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr "일"
+
+#~ msgid "Up next lists"
+#~ msgstr "다음 일정 표시 개수"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = 들어가는 만큼, 나머지는 \"더 보기\"에서"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr "개"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "기상 그래프 표시 기간"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 #~ "calendar menu they are one entry."
 #~ msgstr ""
 #~ "읽기 전용으로 표시됩니다. 표시할 Akonadi 캘린더는 PIM 일정 플러그인의 설"
 #~ "정 페이지(일정 > Plasma 캘린더)에서 정합니다. 팝업의 캘린더 메뉴에서는 하"
 #~ "나의 항목입니다."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "다음 12시간"
+
+#~ msgid "Task list shown"
+#~ msgstr "표시할 작업 목록"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
@@ -4487,17 +4922,11 @@ msgstr "근무 위치: %1"
 #~ msgid "Grid"
 #~ msgstr "격자"
 
-#~ msgid "Rain"
-#~ msgstr "비"
-
 #~ msgid "Positive Temp"
 #~ msgstr "영상"
 
 #~ msgid "Negative Temp"
 #~ msgstr "영하"
-
-#~ msgid "Icons"
-#~ msgstr "아이콘"
 
 #~ msgid "<b>Version:</b> %1"
 #~ msgstr "<b>버전:</b> %1"

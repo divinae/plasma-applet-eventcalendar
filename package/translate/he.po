@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 13:06+0100\n"
+"POT-Creation-Date: 2026-10-30 13:22+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -169,7 +169,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "לוח שנה של Akonadi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -280,7 +280,6 @@ msgid "Edit Calendar"
 msgstr "עריכת לוח שנה"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "שם"
@@ -547,6 +546,7 @@ msgid "Show a notification"
 msgstr "הצגת התראה"
 
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigViews.qml
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "סגנון"
 
@@ -869,9 +869,14 @@ msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
 "in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. Google calendars shown "
-"through an account signed in here are listed above, with the account."
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
+"מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד תוסף אירועי "
+"ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־אירועים > לוחות שנה של "
+"Plasma). בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי צבע: לוחות "
+"שנה באותו צבע יחד. לוחות השנה של Google של חשבון שמחובר כאן מופיעים למעלה, "
+"יחד עם החשבון."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1340,6 +1345,15 @@ msgid "Flat"
 msgstr "שטוח"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "הנפשות"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr ""
+"התצוגות מחליקות ומופיעות בהדרגה, כרטיסים נפתחים, ימי החודש הקטן משתנים ברכות."
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
 msgstr "מראה האירועים"
 
@@ -1493,14 +1507,33 @@ msgid "Up next"
 msgstr "הבא בתור"
 
 #: ../contents/ui/config/ConfigViews.qml
+msgid "Up next shows"
+msgstr "הבא מציג"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "הימים שאחרי היום המוצג; המאוחרים יותר תחת „הצג עוד”"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "יום"
+msgstr[1] "ימים"
+msgstr[2] "ימים"
+msgstr[3] "ימים"
+
+#: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "אירועים של יום שלם זה לצד זה"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
 msgstr ""
+"בתצוגת היום, שלושה אירועים של יום שלם או יותר תופסים כל אחד שליש מהרוחב, "
+"שלושה בשורה. ריחוף מעל אירוע מציג אותו במלואו."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1557,6 +1590,48 @@ msgid "Debug logging and extra settings pages"
 msgstr "רישום ניפוי שגיאות ועמודי הגדרות נוספים"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr "כן"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr "לא"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr "נכשל (%1)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr "מזג האוויר הנוכחי, בקפיצות של 3 שעות: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr "16 ימים (תוכנית בתשלום): %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr "One Call 3.0: %1"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+"OpenWeatherMap לא מכיר את מזהה היישום הזה (מזהה חדש מתחיל לעבוד תוך עד "
+"שעתיים)."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr "יש לבחור למעלה ב־One Call 3.0: לפי שעה ו־8 ימים."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr "אין מינוי ל־One Call 3.0: יש לבחור למעלה ב־Free (2.5)."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "מקור"
 
@@ -1585,7 +1660,6 @@ msgid "City name, eg: Warszawa"
 msgstr "שם העיר, למשל: ירושלים"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1620,6 +1694,69 @@ msgid "Required for OpenWeatherMap"
 msgstr "נדרש עבור OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr "API"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr "Free (2.5)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr "One Call 3.0"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr "בבדיקה…"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr "בדיקת מזהה יישום"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+"Free (2.5) עובד עם כל מזהה יישום: מזג האוויר הנוכחי ותחזית בקפיצות של 3 שעות "
+"ל־5 ימים. התחזית ל־16 ימים דורשת תוכנית בתשלום; בלעדיה, הימים מחושבים "
+"מהקפיצות של 3 שעות."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+"One Call 3.0 דורש את המינוי “One Call by Call” ב־<a href=\"https://"
+"openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 קריאות ביום "
+"בחינם, נדרש כרטיס תשלום): מזג האוויר הנוכחי, 48 שעות לפי שעה ו־8 ימים, "
+"בקריאה אחת. היישומון שואל לכל היותר פעם ב־10 דקות, כ־150 קריאות ביום."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+"מזהה יישום אחד מתאים לשניהם: “בדיקת מזהה יישום” מראה במה המזהה שלך רשאי "
+"להשתמש."
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
+"מזהה היישום המובנה משותף לכל מי שמשתמש ביישומון הזה, וכך גם מגבלת הבקשות "
+"שלו: מזג האוויר עלול להפסיק להתעדכן מדי פעם. מזהה יישום חינמי משלך: יש "
+"להירשם ב־<a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a> ולהעתיק אותו מ־“API keys”. Open-Meteo לא "
+"צריך מזהה."
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
 msgstr "Weather Canada"
 
@@ -1644,12 +1781,77 @@ msgid "Kelvin"
 msgstr "קלווין"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Meteogram shows"
-msgstr "המטאוגרמה מציגה"
+msgid "Icons"
+msgstr "סמלים"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "System"
+msgstr "מערכת"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Yr (MET Norway)"
+msgstr "Yr (MET Norway)"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather icon background"
+msgstr "רקע סמל מזג האוויר הנוכחי"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Sky, after the weather"
+msgstr "שמיים, לפי מזג האוויר"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Subtle"
+msgstr "עדין"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "no icon background"
+msgid "None"
+msgstr "ללא"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Forecast chart"
+msgstr "תרשים תחזית"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Also the meteogram above the agenda"
+msgstr "גם המטאוגרמה מעל סדר היום"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Simple"
+msgstr "פשוט"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Fancy"
+msgstr "מהודר"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Hours shown"
+msgstr "שעות מוצגות"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Today's chart in the Day view and the meteogram above the agenda"
+msgstr "התרשים של היום בתצוגת היום והמטאוגרמה מעל סדר היום"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
 msgstr " שעות"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Larger icons"
+msgstr "סמלים גדולים יותר"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "In the chart and the next days"
+msgstr "בתרשים ובימים הבאים"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Rain amounts"
+msgstr "כמויות גשם"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "The total above the chart, the amounts at the heaviest hours"
+msgstr "הסכום מעל התרשים, הכמויות בשעות הגשומות ביותר"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1670,19 +1872,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "הנתונים נמשכו מתוך <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "מזהה"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr "שם עיר, למשל: Berlin או Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "אתר האינטרנט של העיר"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "פתיחת הקישור"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr "N"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr "S"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr "E"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr "W"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr "מזהה %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr "OpenWeatherMap לא קיבל את מזהה היישום: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr "החיפוש נכשל: %1"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr "לא נמצאה עיר."
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr "לא הוגדר מזהה יישום."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1696,6 +1933,14 @@ msgstr "שינוי שם הרשימה…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "מחיקת הרשימה…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "מזהה"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "אתר האינטרנט של העיר"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -1720,8 +1965,24 @@ msgid "All lists"
 msgstr "כל הרשימות"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "רשימת המשימות המוצגת"
+msgid "All open"
+msgstr "כל הפתוחות"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "משימות מוצגות"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "לביצוע ביום זה"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "כל המשימות הפתוחות"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1730,6 +1991,17 @@ msgstr "הכול בוצע"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "אין משימות"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "בתהליך"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "לביצוע"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -2967,6 +3239,30 @@ msgstr "הגעת למכסת ה־API של תחזית מזג האוויר"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+"OpenWeatherMap דחה את מזהה היישום עבור One Call 3.0: יש להירשם למינוי או "
+"לבחור ב־Free (2.5) בהגדרות > מזג האוויר."
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+"OpenWeatherMap דחה את מזהה היישום. מזהה חדש מתחיל לעבוד תוך עד שעתיים; יש "
+"לבדוק אותו בהגדרות > מזג האוויר."
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr "he"
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3430,12 +3726,6 @@ msgstr "סימון כלא הושלמה"
 msgid "Mark as done"
 msgstr "סימון כהושלמה"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "בתהליך"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "לא ניתן להעביר את המשימה"
@@ -3659,10 +3949,6 @@ msgstr "ללא תאריך"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "הושלמו"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3889,8 +4175,116 @@ msgid "dddd, d MMM"
 msgstr "dddd, d MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "אין כלום מחר."
+msgstr[1] "אין כלום ביומיים הקרובים."
+msgstr[2] "אין כלום ב־%1 הימים הקרובים."
+msgstr[3] "אין כלום ב־%1 הימים הקרובים."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "אין דבר מתוכנן בימים הקרובים."
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr "בהיר"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr "בהיר ברובו"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr "מעונן חלקית"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr "מעונן"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr "ערפל"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr "ערפל קפוא"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr "טפטוף קל"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr "טפטוף"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr "טפטוף כבד"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr "טפטוף קופא"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr "גשם קל"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "גשם"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr "גשם כבד"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr "גשם קופא"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr "שלג קל"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr "שלג"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr "שלג כבד"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr "גרגירי שלג"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr "ממטרי גשם"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr "ממטרי גשם כבדים"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr "ממטרי שלג"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr "ממטרי שלג כבדים"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr "סופת רעמים"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr "סופת רעמים עם ברד"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr "לא ידוע"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -3899,6 +4293,10 @@ msgstr "יש להגדיר מיקום בהגדרות > מזג האוויר כדי
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "מזג האוויר נטען…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "התחזית המלאה ברשת"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"
@@ -3915,13 +4313,22 @@ msgid "No forecast for this day."
 msgstr "אין תחזית ליום זה."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "12 השעות הבאות"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] "השעה הבאה"
+msgstr[1] "השעתיים הבאות"
+msgstr[2] "%1 השעות הבאות"
+msgstr[3] "%1 השעות הבאות"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
 msgid "During the day"
 msgstr "במהלך היום"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the hours of the chart"
+msgid "Rain: %1"
+msgstr "גשם: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
@@ -3972,11 +4379,46 @@ msgstr "מיקום עבודה: %1"
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
 #~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד ההגדרות "
+#~ "של תוסף אירועי ה־PIM (אירועים > לוחות שנה של Plasma). בתפריט לוחות השנה "
+#~ "של החלון הקופץ הם מוצגים ומוסתרים לפי צבע: לוחות שנה באותו צבע יחד. לוחות "
+#~ "השנה של Google של חשבון שמחובר כאן מופיעים למעלה, יחד עם החשבון."
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " ימים"
+
+#~ msgid "Up next lists"
+#~ msgstr "הבא מציג"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = כמה שנכנסים; השאר תחת „הצג עוד”"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " אירועים"
+
+#~ msgid "Meteogram shows"
+#~ msgstr "המטאוגרמה מציגה"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
 #~ "calendar menu they are one entry."
 #~ msgstr ""
 #~ "מוצגים לקריאה בלבד. אילו יומני Akonadi מוצגים נקבע בדף ההגדרות של תוסף "
 #~ "אירועי PIM (אירועים > יומני Plasma). בתפריט היומנים של החלון הקופץ הם "
 #~ "רשומה אחת."
+
+#~ msgid "Next 12 hours"
+#~ msgstr "12 השעות הבאות"
+
+#~ msgid "Task list shown"
+#~ msgstr "רשימת המשימות המוצגת"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

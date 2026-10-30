@@ -1,10 +1,12 @@
 .pragma library
 
 .import "../lib/Requests.js" as Requests
+.import "RequestCache.js" as RequestCache
 
-// Open-Meteo: free, no API key. https://open-meteo.com/en/docs
+// Open-Meteo: free, no API key (10000 requests a day). https://open-meteo.com/en/docs
 // One forecast request has current, hourly and daily data; the daily and hourly
-// updates share it (cached for a few minutes).
+// updates share it (RequestCache).
+var DAILY_LIMIT = 2000
 
 function weatherIsSetup(config) {
 	return !!config.openMeteoLocationName && isFinite(config.openMeteoLatitude) && isFinite(config.openMeteoLongitude)
@@ -12,40 +14,46 @@ function weatherIsSetup(config) {
 }
 
 //--- WMO weather codes
+// The texts are marked for translation only: there's no i18n() in a library, Logic.qml translates
+// them (localizedWeather) as the data comes.
+function I18N_NOOP(text) {
+	return text
+}
+
 // [day icon, night icon, short text]
 var codeMap = {
-	0: ['weather-clear', 'weather-clear-night', 'Clear'],
-	1: ['weather-few-clouds', 'weather-few-clouds-night', 'Mainly clear'],
-	2: ['weather-clouds', 'weather-clouds-night', 'Partly cloudy'],
-	3: ['weather-overcast', 'weather-overcast', 'Overcast'],
-	45: ['weather-fog', 'weather-fog', 'Fog'],
-	48: ['weather-fog', 'weather-fog', 'Rime fog'],
-	51: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Light drizzle'],
-	53: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Drizzle'],
-	55: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Heavy drizzle'],
-	56: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing drizzle'],
-	57: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing drizzle'],
-	61: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Light rain'],
-	63: ['weather-showers', 'weather-showers-night', 'Rain'],
-	65: ['weather-showers', 'weather-showers-night', 'Heavy rain'],
-	66: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing rain'],
-	67: ['weather-freezing-rain', 'weather-freezing-rain', 'Freezing rain'],
-	71: ['weather-snow-scattered-day', 'weather-snow-scattered-night', 'Light snow'],
-	73: ['weather-snow', 'weather-snow', 'Snow'],
-	75: ['weather-snow', 'weather-snow', 'Heavy snow'],
-	77: ['weather-snow', 'weather-snow', 'Snow grains'],
-	80: ['weather-showers-scattered', 'weather-showers-scattered-night', 'Rain showers'],
-	81: ['weather-showers', 'weather-showers-night', 'Rain showers'],
-	82: ['weather-showers', 'weather-showers-night', 'Heavy rain showers'],
-	85: ['weather-snow-scattered-day', 'weather-snow-scattered-night', 'Snow showers'],
-	86: ['weather-snow', 'weather-snow', 'Heavy snow showers'],
-	95: ['weather-storm', 'weather-storm-night', 'Thunderstorm'],
-	96: ['weather-storm', 'weather-storm-night', 'Thunderstorm with hail'],
-	99: ['weather-storm', 'weather-storm-night', 'Thunderstorm with hail'],
+	0: ['weather-clear', 'weather-clear-night', I18N_NOOP("Clear")],
+	1: ['weather-few-clouds', 'weather-few-clouds-night', I18N_NOOP("Mainly clear")],
+	2: ['weather-clouds', 'weather-clouds-night', I18N_NOOP("Partly cloudy")],
+	3: ['weather-overcast', 'weather-overcast', I18N_NOOP("Overcast")],
+	45: ['weather-fog', 'weather-fog', I18N_NOOP("Fog")],
+	48: ['weather-fog', 'weather-fog', I18N_NOOP("Rime fog")],
+	51: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Light drizzle")],
+	53: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Drizzle")],
+	55: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Heavy drizzle")],
+	56: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing drizzle")],
+	57: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing drizzle")],
+	61: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Light rain")],
+	63: ['weather-showers', 'weather-showers-night', I18N_NOOP("Rain")],
+	65: ['weather-showers', 'weather-showers-night', I18N_NOOP("Heavy rain")],
+	66: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing rain")],
+	67: ['weather-freezing-rain', 'weather-freezing-rain', I18N_NOOP("Freezing rain")],
+	71: ['weather-snow-scattered-day', 'weather-snow-scattered-night', I18N_NOOP("Light snow")],
+	73: ['weather-snow', 'weather-snow', I18N_NOOP("Snow")],
+	75: ['weather-snow', 'weather-snow', I18N_NOOP("Heavy snow")],
+	77: ['weather-snow', 'weather-snow', I18N_NOOP("Snow grains")],
+	80: ['weather-showers-scattered', 'weather-showers-scattered-night', I18N_NOOP("Rain showers")],
+	81: ['weather-showers', 'weather-showers-night', I18N_NOOP("Rain showers")],
+	82: ['weather-showers', 'weather-showers-night', I18N_NOOP("Heavy rain showers")],
+	85: ['weather-snow-scattered-day', 'weather-snow-scattered-night', I18N_NOOP("Snow showers")],
+	86: ['weather-snow', 'weather-snow', I18N_NOOP("Heavy snow showers")],
+	95: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm")],
+	96: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm with hail")],
+	99: ['weather-storm', 'weather-storm-night', I18N_NOOP("Thunderstorm with hail")],
 }
 
 function codeInfo(code, isDay) {
-	var info = codeMap[code] || ['weather-severe-alert', 'weather-severe-alert', 'Unknown']
+	var info = codeMap[code] || ['weather-severe-alert', 'weather-severe-alert', I18N_NOOP("Unknown")]
 	return { iconName: isDay === 0 ? info[1] : info[0], text: info[2] }
 }
 
@@ -64,9 +72,6 @@ function parseLocalTime(s) {
 }
 
 //--- Request (shared by daily and hourly updates)
-var cache = { key: '', at: 0, data: null }
-var pending = {} // key -> [callbacks]
-
 function forecastUrl(config) {
 	var url = 'https://api.open-meteo.com/v1/forecast'
 	url += '?latitude=' + encodeURIComponent(config.openMeteoLatitude)
@@ -82,28 +87,14 @@ function forecastUrl(config) {
 }
 
 function fetchForecast(config, callback) {
-	var url = forecastUrl(config)
-	if (cache.key === url && cache.data && Date.now() - cache.at < 10 * 60 * 1000) {
-		return callback(null, cache.data, null)
-	}
-	if (pending[url]) {
-		pending[url].push(callback)
-		return
-	}
-	pending[url] = [callback]
-	Requests.getJSON({ url: url }, function(err, data, xhr) {
-		if (!err && data && data.error) {
-			err = data.reason || 'Open-Meteo error'
-		}
-		if (!err) {
-			cache = { key: url, at: Date.now(), data: data }
-		}
-		var callbacks = pending[url]
-		delete pending[url]
-		for (var i = 0; i < callbacks.length; i++) {
-			callbacks[i](err, data, xhr)
-		}
-	})
+	RequestCache.getJSON({
+		service: 'OpenMeteo',
+		url: forecastUrl(config),
+		dailyLimit: DAILY_LIMIT,
+		errorOf: function(data) {
+			return data && data.error ? data.reason || 'Open-Meteo error' : ''
+		},
+	}, callback)
 }
 
 //--- Provider API (see WeatherApi.js for the item formats)
@@ -172,9 +163,11 @@ function currentData(data, units) {
 	}
 	var info = codeInfo(data.current.weather_code, data.current.is_day)
 	return {
+		dt: parseLocalTime(data.current.time),
 		temp: temperature(data.current.temperature_2m, units),
 		iconName: info.iconName,
 		text: info.text,
+		description: info.text,
 	}
 }
 
