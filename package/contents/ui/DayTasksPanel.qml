@@ -69,6 +69,14 @@ ColumnLayout {
 	visible: hasLists
 	spacing: 2
 
+	property var filterMenuObject: null
+	function filterMenu() {
+		if (!filterMenuObject) {
+			filterMenuObject = listFilterMenuComponent.createObject(dayTasks)
+		}
+		return filterMenuObject
+	}
+
 	function rebuild() {
 		var lists = eventModel ? eventModel.getSelectedTaskLists() : []
 		var shownId = String(plasmoid.configuration.dayTasksListId || "")
@@ -190,7 +198,7 @@ ColumnLayout {
 			onClicked: {
 				dayTasks.adding = !dayTasks.adding
 				if (dayTasks.adding) {
-					Qt.callLater(quickAddRow.focusField)
+					Qt.callLater(function() { if (quickAddLoader.item) quickAddLoader.item.focusField() })
 				}
 			}
 			PlasmaComponents3.ToolTip.text: text
@@ -243,48 +251,52 @@ ColumnLayout {
 					elide: Text.ElideRight
 				}
 			}
-			onClicked: listFilterMenu.popup(listFilterButton, 0, listFilterButton.height)
+			onClicked: dayTasks.filterMenu().popup(listFilterButton, 0, listFilterButton.height)
 			PlasmaComponents3.ToolTip.text: i18n("Tasks shown")
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
-		PlasmaComponents3.Menu {
-			id: listFilterMenu
-			PlasmaComponents3.MenuItem {
-				text: i18n("Due this day")
-				checkable: true
-				checked: !dayTasks.allOpen
-				onTriggered: plasmoid.configuration.dayTasksScope = 'day'
-			}
-			PlasmaComponents3.MenuItem {
-				text: i18n("All open tasks")
-				checkable: true
-				checked: dayTasks.allOpen
-				onTriggered: plasmoid.configuration.dayTasksScope = 'all'
-			}
-			PlasmaComponents3.MenuSeparator {
-				visible: dayTasks.lists.length > 1
-			}
-			PlasmaComponents3.MenuItem {
-				visible: dayTasks.lists.length > 1
-				text: i18n("All lists")
-				checkable: true
-				checked: !dayTasks.filterListId
-				onTriggered: plasmoid.configuration.dayTasksListId = ""
-			}
-			PlasmaComponents3.MenuSeparator {}
-			Instantiator {
-				model: dayTasks.lists
-				delegate: PlainMenuItem {
-					required property var modelData
-					label: modelData.name
-					list: modelData
-					markColor: dayTasks.listMarkColor(modelData)
+		// Made when first opened (three of these panels in the Day view, only one shown).
+		Component {
+			id: listFilterMenuComponent
+			PlasmaComponents3.Menu {
+				id: listFilterMenu
+				PlasmaComponents3.MenuItem {
+					text: i18n("Due this day")
 					checkable: true
-					checked: dayTasks.filterListId === modelData.id
-					onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
+					checked: !dayTasks.allOpen
+					onTriggered: plasmoid.configuration.dayTasksScope = 'day'
 				}
-				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 5, object) }
-				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
+				PlasmaComponents3.MenuItem {
+					text: i18n("All open tasks")
+					checkable: true
+					checked: dayTasks.allOpen
+					onTriggered: plasmoid.configuration.dayTasksScope = 'all'
+				}
+				PlasmaComponents3.MenuSeparator {
+					visible: dayTasks.lists.length > 1
+				}
+				PlasmaComponents3.MenuItem {
+					visible: dayTasks.lists.length > 1
+					text: i18n("All lists")
+					checkable: true
+					checked: !dayTasks.filterListId
+					onTriggered: plasmoid.configuration.dayTasksListId = ""
+				}
+				PlasmaComponents3.MenuSeparator {}
+				Instantiator {
+					model: dayTasks.lists
+					delegate: PlainMenuItem {
+						required property var modelData
+						label: modelData.name
+						list: modelData
+						markColor: dayTasks.listMarkColor(modelData)
+						checkable: true
+						checked: dayTasks.filterListId === modelData.id
+						onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
+					}
+					onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 5, object) }
+					onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
+				}
 			}
 		}
 	}
@@ -316,7 +328,7 @@ ColumnLayout {
 			width: scrollView.availableWidth
 			spacing: 1
 			Repeater {
-				model: dayTasks.allOpen ? [] : dayTasks.taskRows
+				model: dayTasks.visible && !dayTasks.allOpen ? dayTasks.taskRows : [] // Hidden (the Day view keeps three panels): no rows
 				DayTaskRow {}
 			}
 			// "All open tasks": in progress, then the others.
@@ -325,7 +337,7 @@ ColumnLayout {
 				text: i18nc("tasks filter", "In progress") + " · " + dayTasks.progressRows.length
 			}
 			Repeater {
-				model: dayTasks.progressRows
+				model: dayTasks.visible ? dayTasks.progressRows : []
 				DayTaskRow {}
 			}
 			SectionLabel {
@@ -334,7 +346,7 @@ ColumnLayout {
 				text: i18nc("tasks in the Day view, not in progress", "To do") + " · " + dayTasks.todoRows.length
 			}
 			Repeater {
-				model: dayTasks.todoRows
+				model: dayTasks.visible ? dayTasks.todoRows : []
 				DayTaskRow {}
 			}
 			// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
@@ -394,7 +406,7 @@ ColumnLayout {
 			}
 			// The done ones, under "Hide completed".
 			Repeater {
-				model: dayTasks.doneRows
+				model: dayTasks.visible ? dayTasks.doneRows : []
 				DayTaskRow {}
 			}
 		}
@@ -446,33 +458,40 @@ ColumnLayout {
 	}
 
 	// "Add a task…" due on the shown day, on the last used list (a picker when there are several).
-	QuickAddTaskRow {
-		id: quickAddRow
-		// Only after the title's "+" (or while a task is being typed or saved).
+	// Made after the title's "+" was first used (then kept: a task may still be saving), shown only
+	// while adding.
+	property bool addingUsed: false
+	onAddingChanged: if (adding) addingUsed = true
+	Loader {
+		id: quickAddLoader
+		active: dayTasks.addingUsed
 		visible: dayTasks.open && dayTasks.adding
-		onDismissed: dayTasks.adding = false
 		Layout.fillWidth: true
 		Layout.topMargin: Kirigami.Units.smallSpacing + 3
 		Layout.bottomMargin: 3
-		// A thin rounded frame: it reads as a field, apart from the tasks (a bit of room above and
-		// below the text).
-		Rectangle {
-			z: -1
-			anchors.fill: parent
-			anchors.topMargin: -3
-			anchors.bottomMargin: -3
-			radius: Kirigami.Units.cornerRadius * 2
-			color: "transparent"
-			border.width: 1
-			border.color: quickAddRow.fieldFocused ? Kirigami.Theme.highlightColor
-				: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.18)
+		sourceComponent: QuickAddTaskRow {
+			id: quickAddRow
+			onDismissed: dayTasks.adding = false
+			// A thin rounded frame: it reads as a field, apart from the tasks (a bit of room above and
+			// below the text).
+			Rectangle {
+				z: -1
+				anchors.fill: parent
+				anchors.topMargin: -3
+				anchors.bottomMargin: -3
+				radius: Kirigami.Units.cornerRadius * 2
+				color: "transparent"
+				border.width: 1
+				border.color: quickAddRow.fieldFocused ? Kirigami.Theme.highlightColor
+					: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.18)
+			}
+			eventModel: dayTasks.eventModel
+			lists: dayTasks.lists
+			// The filtered list, if any: new tasks go there.
+			listId: dayTasks.filterListId
+			dueDay: dayTasks.allOpen ? "" : dayTasks.dayText // All open: undated unless typed
+			compact: true
 		}
-		eventModel: dayTasks.eventModel
-		lists: dayTasks.lists
-		// The filtered list, if any: new tasks go there.
-		listId: dayTasks.filterListId
-		dueDay: dayTasks.allOpen ? "" : dayTasks.dayText // All open: undated unless typed
-		compact: true
 	}
 
 	// A card taller than the tasks (the Day view's right column, down to the grid's bottom): they
