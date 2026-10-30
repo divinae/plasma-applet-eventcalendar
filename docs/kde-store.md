@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.10.0
+    1.11.0
 
 **License**
 
@@ -125,22 +125,30 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
-**Changelog (1.10.0)**
+**Changelog (1.11.0)**
 
 ```
-- New name: Event Calendar NG
-- Meetings: run your own command when a meeting starts and ends
-- Event menu: Copy Event Details
-- Panel right-click menu: the next meeting first (Join, Copy link, Mute, Mark as Ended), then New Event / Task, Go to Date, Import
-- Summary notifications: shorter, with Show All / Show Tasks
-- Faster view switching (no weather fetch on each switch)
-- Fixes: "All" in the Tasks header cut to "…"
+Weather
+- Colorful Yr icons or the system's; a fancy forecast chart (temperature colors, nights, rain amounts)
+- Now: high, low and rain beside the temperature; the location opens the full forecast on the web
+- Chart hours setting (24 by default), up to a week of next days
+- OpenWeatherMap: the current weather, One Call 3.0, the days without a paid plan, a working city search, far fewer requests
+
+Tasks
+- Day view: all open tasks of a list, In progress and To do
+- A ticket link in a task's name shows as its key (Jira CSS-2175, GitHub repo#12)
+
+Calendars
+- KDE PIM (Akonadi): Refresh reloads it, calendars shown and hidden by color, a Google calendar synced both ways listed once
+- Day view: all-day events side by side (option), Up next as tall as its events
+
+Thanks to frispete for the weather and Akonadi work
 ```
 
 ## Files
 
-- **Product file:** `eventcalendar-v1.10.0-plasma6.0.plasmoid` from the
-  [v1.10.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.10.0),
+- **Product file:** `eventcalendar-v1.11.0-plasma6.0.plasmoid` from the
+  [v1.11.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.11.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

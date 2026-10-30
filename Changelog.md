@@ -1,3 +1,22 @@
+## v1.11.0 - October 30 2026
+
+### Weather (thanks to frispete, #7, #8)
+* **Icons:** the system's (as before) or Yr's colorful ones (Settings > Weather > Icons); the current weather's icon on a sky, a subtle tile or none.
+* **Forecast chart:** "Simple" (as before) or "Fancy": a smooth line colored by the temperature, nights shaded, a freezing line, rounded rain bars, the current time. Larger icons and rain amounts as options; "Hours shown" (24 by default) for the Day view's chart and the agenda's meteogram.
+* **Now:** the high, the low and the rain beside the temperature; the location opens the full forecast on the web (meteoblue, OpenWeatherMap or Weather Canada).
+* Up to a week of next days in the Day view, as many as fit; the weather texts in the widget's language.
+* **OpenWeatherMap:** "Now" is the current weather; Free (2.5) shows the next days without a paid plan, One Call 3.0 by the hour and 8 days; a city search that works; Check App Id; far fewer requests (answers reused, a daily budget, longer pauses after errors).
+
+### Tasks
+* **Day view:** "All open tasks" of a list (the panel's menu), In progress and To do apart; each list's icon or color in the menu.
+* A ticket's link in a task's name shows as a link named after it (Jira "CSS-2175", Linear, GitHub "repo#12", GitLab); a click on the task opens it, the link button the ticket.
+
+### Calendars (thanks to frispete, #6, #10)
+* **KDE PIM (Akonadi):** Refresh loads the calendar plugins anew (an event Akonadi synced later now shows), and their changes show live.
+* Akonadi calendars are shown and hidden by color in the calendar menu, named and marked from Akonadi when it runs on PostgreSQL.
+* A Google calendar synced by Akonadi and signed in to here too is listed once.
+* **Day view:** three all-day events or more side by side (Settings > Views, off by default); Up next as tall as its events; the hint after a free day follows the clock's calendars.
+
 ## v1.10.0 - October 29 2026
 
 * The widget is called **Event Calendar NG** (in the widget list, the settings and notifications); it keeps the same id and settings.

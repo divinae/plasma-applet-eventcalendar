@@ -47,7 +47,7 @@
 		"Name[sl]": "Koledar z dnevnim redom NG",
 		"Name[tr]": "Etkinlik Takvimi NG",
 		"Name[uk]": "Календар подій NG",
-		"Version": "1.10.0",
+		"Version": "1.11.0",
 		"Website": "https://github.com/divinae/plasma-applet-eventcalendar"
 	},
 	"X-Plasma-API-Minimum-Version": "6.0",
