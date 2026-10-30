@@ -1294,7 +1294,7 @@ CalendarManager {
 			}
 			out.splice(at, 0, entry)
 		}
-		return out
+		return Shared.calendarMenuSections(out)
 	}
 	function selectedCalendarEntry(calendarId, calendar, group) {
 		var name = String(calendar.summary || calendar.name || "")
