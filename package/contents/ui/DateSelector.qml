@@ -94,7 +94,11 @@ PlasmaComponents3.TextField {
 				margins: -1
 			}
 			radius: 2
-			color: Kirigami.Theme.viewBackgroundColor
+			// The theme's view background (a Plasma 5 name was undefined here: white under light text in
+			// dark themes, issue #11).
+			Kirigami.Theme.colorSet: Kirigami.Theme.View
+			Kirigami.Theme.inherit: false
+			color: Kirigami.Theme.backgroundColor
 			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.3)
 			layer.enabled: true
 
