@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:01+0100\n"
+"POT-Creation-Date: 2026-10-30 09:07+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -3865,6 +3865,10 @@ msgstr "Defina uma localização em Configuração > Meteorologia para ver aqui 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "A carregar a meteorologia…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Previsão completa na web"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"

@@ -13,6 +13,7 @@ import "Tasks.js" as Tasks
 import "TimeZone.js" as TimeZone
 import "WeekDrag.js" as WeekDrag
 import "lib/ColorUtil.js" as ColorUtil
+import "./weather/WeatherApi.js" as WeatherApi
 
 // Week view like Google Calendar: hour grid with event blocks, all-day row on top.
 Item {
@@ -739,6 +740,7 @@ Item {
 			// the next days.
 			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
 			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
+			forecastUrl: WeatherApi.forecastPageUrl(plasmoid.configuration)
 			locationName: plasmoid.configuration.weatherService === 'OpenMeteo' ? plasmoid.configuration.openMeteoLocationName
 				: weekView.weatherCurrent && weekView.weatherCurrent.place ? weekView.weatherCurrent.place : ""
 			hourly: weekView.showingToday ? weekView.weatherHourly : weekView.dayHours(weekView.weekStart)

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:01+0100\n"
+"POT-Creation-Date: 2026-10-30 09:07+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -4232,6 +4232,10 @@ msgstr ""
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Φόρτωση καιρού…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Πλήρης πρόγνωση στο διαδίκτυο"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"

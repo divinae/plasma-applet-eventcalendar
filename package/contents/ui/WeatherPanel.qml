@@ -20,6 +20,7 @@ ColumnLayout {
 	property bool isToday: true // false: the view shows another day
 	property bool isSetup: true
 	property string locationName: ""
+	property string forecastUrl: "" // The full forecast on the web (WeatherApi.forecastPageUrl): the location opens it
 	property bool compact: false // One row above the grid when the popup is narrow
 	// Sections left out where there's little height (the Day view's right column above the tasks).
 	property bool showHourly: true
@@ -190,10 +191,17 @@ ColumnLayout {
 			text: panel.locationName
 			textFormat: Text.PlainText // User text: never parsed as HTML
 			opacity: panel.dimOpacity
-			PlasmaComponents3.ToolTip.text: text
-			PlasmaComponents3.ToolTip.visible: truncated && locationHover.hovered
+			color: panel.forecastUrl && locationHover.hovered ? Kirigami.Theme.linkColor : Kirigami.Theme.textColor
+			font.underline: !!panel.forecastUrl && locationHover.hovered
+			PlasmaComponents3.ToolTip.text: panel.forecastUrl ? i18n("Full forecast on the web") : text
+			PlasmaComponents3.ToolTip.visible: (truncated || !!panel.forecastUrl) && locationHover.hovered
 			HoverHandler {
 				id: locationHover
+				cursorShape: panel.forecastUrl ? Qt.PointingHandCursor : Qt.ArrowCursor
+			}
+			TapHandler {
+				enabled: !!panel.forecastUrl
+				onTapped: Shared.openExternalUrl(panel.forecastUrl)
 			}
 		}
 	}
@@ -287,25 +295,74 @@ ColumnLayout {
 				opacity: panel.dimOpacity
 			}
 		}
-		// Today: the high and the low, then the rain (when there is any), on the right, in the room
-		// beside the temperature.
+		// Today: the high and the low, then the rain (when there is any) on a light blue pill with a
+		// drop, on the right, in the room beside the temperature.
 		ColumnLayout {
 			visible: !panel.compact && !!panel.today && panel.isToday
 			Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-			spacing: 2
-			PlasmaComponents3.Label {
+			spacing: Kirigami.Units.smallSpacing
+			RowLayout {
 				Layout.alignment: Qt.AlignRight
-				textFormat: Text.PlainText
-				text: panel.today ? "↑ " + Shared.formatTemp(panel.today.temp.max) + "   ↓ " + Shared.formatTemp(panel.today.temp.min) : ""
+				spacing: Kirigami.Units.largeSpacing
 				Accessible.name: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
+				PlasmaComponents3.Label {
+					textFormat: Text.PlainText
+					text: panel.today ? "↑ " + Shared.formatTemp(panel.today.temp.max) : ""
+				}
+				PlasmaComponents3.Label {
+					textFormat: Text.PlainText
+					text: panel.today ? "↓ " + Shared.formatTemp(panel.today.temp.min) : ""
+					opacity: panel.dimOpacity * 0.8
+				}
 			}
-			PlasmaComponents3.Label {
+			Rectangle {
+				id: rainPill
 				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
+				readonly property color tint: appletConfig.darkTheme ? "#7db8ff" : "#1f6fd6"
 				visible: !!rain
 				Layout.alignment: Qt.AlignRight
-				textFormat: Text.PlainText
-				text: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
-				opacity: panel.dimOpacity
+				implicitWidth: rainRow.implicitWidth + Kirigami.Units.largeSpacing * 2
+				implicitHeight: rainRow.implicitHeight + Kirigami.Units.smallSpacing * 2
+				radius: height / 2
+				color: ColorUtil.setAlpha(tint, appletConfig.darkTheme ? 0.2 : 0.12)
+				Accessible.name: rain ? i18nc("precipitation during the day", "Rain: %1", rain) : ""
+				RowLayout {
+					id: rainRow
+					anchors.centerIn: parent
+					spacing: Kirigami.Units.smallSpacing
+					// A drop: a circle, and above its center a square of half its size turned on its
+					// corner (the bottom corner at the center, the point up, the sides on the circle).
+					Item {
+						readonly property real d: Math.round(rainLabel.implicitHeight * 0.5)
+						Layout.alignment: Qt.AlignVCenter
+						implicitWidth: d
+						implicitHeight: Math.ceil(d * (0.5 + Math.SQRT1_2))
+						Rectangle {
+							width: parent.d / 2
+							height: width
+							x: (parent.width - width) / 2
+							y: parent.height - parent.d / 2 - parent.d * Math.SQRT1_2 / 2 - height / 2
+							rotation: 45
+							antialiasing: true
+							color: rainPill.tint
+						}
+						Rectangle {
+							width: parent.d
+							height: width
+							y: parent.height - height
+							radius: width / 2
+							antialiasing: true
+							color: rainPill.tint
+						}
+					}
+					PlasmaComponents3.Label {
+						id: rainLabel
+						textFormat: Text.PlainText
+						text: rainPill.rain
+						color: rainPill.tint
+						font.weight: Font.DemiBold
+					}
+				}
 			}
 		}
 		// Compact: today's range on the same row

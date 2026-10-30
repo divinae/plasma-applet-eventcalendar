@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:01+0100\n"
+"POT-Creation-Date: 2026-10-30 09:07+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -4267,6 +4267,10 @@ msgstr "Nastavite lokacijo v Nastavitve > Vreme, da bo tu prikazana napoved."
 #: ../contents/ui/WeatherPanel.qml
 msgid "Loading weather…"
 msgstr "Nalaganje vremena…"
+
+#: ../contents/ui/WeatherPanel.qml
+msgid "Full forecast on the web"
+msgstr "Celotna napoved na spletu"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "high / low temperature"

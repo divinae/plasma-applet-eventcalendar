@@ -102,6 +102,28 @@ function updateHourlyWeather(config, callback) {
 }
 
 /* Return true if all configuration has been setup. */
+// A web page with the full forecast for the configured place ('' when there's none): meteoblue for
+// Open-Meteo's coordinates, the city's page of OpenWeatherMap or Weather Canada.
+function forecastPageUrl(config) {
+	var weatherService = config.weatherService
+	if (weatherService == 'OpenMeteo') {
+		var lat = Number(config.openMeteoLatitude)
+		var lon = Number(config.openMeteoLongitude)
+		if (!isFinite(lat) || !isFinite(lon) || (lat === 0 && lon === 0)) {
+			return ''
+		}
+		return 'https://www.meteoblue.com/en/weather/week/' + Math.abs(lat).toFixed(3) + (lat < 0 ? 'S' : 'N')
+			+ Math.abs(lon).toFixed(3) + (lon < 0 ? 'W' : 'E')
+	} else if (weatherService == 'OpenWeatherMap') {
+		var cityId = Number(config.openWeatherMapCityId)
+		return cityId > 0 ? 'https://openweathermap.org/city/' + Math.floor(cityId) : ''
+	} else if (weatherService == 'WeatherCanada') {
+		var match = /[a-z]{2}-\d+/.exec(String(config.weatherCanadaCityId || ''))
+		return match ? WeatherCanada.getCityUrl(match[0]) : ''
+	}
+	return ''
+}
+
 function weatherIsSetup(config) {
 	var weatherService = config.weatherService
 	if (weatherService == 'OpenMeteo') {
