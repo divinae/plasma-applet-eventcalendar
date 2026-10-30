@@ -1826,7 +1826,8 @@ msgstr "Heures affichées"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Le graphique du jour dans la vue Jour et le météogramme au-dessus de l'agenda"
+msgstr ""
+"Le graphique du jour dans la vue Jour et le météogramme au-dessus de l'agenda"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"

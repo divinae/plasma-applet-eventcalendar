@@ -1830,7 +1830,9 @@ msgstr "Εμφανιζόμενες ώρες"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Το σημερινό γράφημα στην προβολή ημέρας και το μετεόγραμμα πάνω από την ατζέντα"
+msgstr ""
+"Το σημερινό γράφημα στην προβολή ημέρας και το μετεόγραμμα πάνω από την "
+"ατζέντα"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
