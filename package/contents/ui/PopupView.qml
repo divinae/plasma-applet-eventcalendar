@@ -752,6 +752,30 @@ MouseArea {
 		}
 	}
 
+	// Agenda: a small month left of the list when the popup has room beside it (the list is capped
+	// at agendaMaxWidth and centered), like the Day view's. A day opens it in the agenda.
+	IslandCard {
+		id: agendaMiniMonthCard
+		readonly property real sideWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 15, Math.max(Kirigami.Units.gridUnit * 11, popup.width * 0.22)))
+		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing * 2
+		visible: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
+			&& agendaView.x >= sideWidth + gap
+		x: widgetGrid.x + agendaView.x - gap - sideWidth
+		y: widgetGrid.y + agendaView.y
+		width: sideWidth
+		height: implicitHeight
+		MiniMonth {
+			eventModel: agendaMiniMonthCard.visible ? popup.eventModel : null
+			selectedDate: popup.selectedDate
+			today: timeModel.currentTime
+			firstDayOfWeek: {
+				var setting = plasmoid.configuration.firstDayOfWeek
+				return setting >= 0 ? setting : Qt.locale().firstDayOfWeek % 7
+			}
+			onDayClicked: function(day) { popup.goToDay(day) }
+		}
+	}
+
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
