@@ -7,7 +7,7 @@
 Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting
 again.
 
-![Day view](docs/screenshots/today.png)
+![Using the widget: Day, Week, Month and Agenda views, paging, event details and the Tasks tab](docs/demo.gif)
 
 ### Why you'll like it
 
@@ -103,14 +103,19 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 
 ## Screenshots
 
-All shots use mock data.
+All shots (and the animation above) use mock data.
+
+<details>
+<summary><b>Each view and the settings</b></summary>
 
 | | |
 |---|---|
 | ![Month view](docs/screenshots/month.png) **Month**: event titles in the days | ![Week view](docs/screenshots/week.png) **Week**: hour grid, all-day events, weather |
 | ![Day view](docs/screenshots/today.png) **Day**: a small month, Up next, the hours, tasks and weather | ![Tasks](docs/screenshots/tasks.png) **Tasks**: smart filters, priorities, in progress |
-| ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
+| ![Agenda](docs/screenshots/agenda.png) **Agenda**: each day a card, the small month, tasks and weather beside | ![Event details](docs/screenshots/event-details.png) **Event details**: location, guests, Join |
 | ![Google Calendar settings](docs/screenshots/settings-google.png) **Settings**: accounts and calendars | ![View settings](docs/screenshots/settings-views.png) **Settings**: views and appearance |
+
+</details>
 
 ## Install
 

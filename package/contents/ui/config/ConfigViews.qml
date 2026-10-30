@@ -339,7 +339,7 @@ ConfigPage {
 				hint: i18n("The days after the shown one; later ones under \"Show more\"")
 				configKey: 'dayUpNextDays'
 				// The unit as the number asks for it (1 day, 2 days; in Polish 1 dzień, 2 dni, 5 dni).
-				suffix: " " + i18ncp("number of days, after the number", "day", "days", value)
+				unitFor: function(n) { return i18ncp("number of days, after the number", "day", "days", n) }
 				from: 1
 				to: 30
 			}
