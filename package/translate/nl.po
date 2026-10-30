@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-10-30 18:36+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -166,9 +166,9 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-msgctxt "%1 = a few event titles"
-msgid "Akonadi calendar: %1"
-msgstr "Akonadi-agenda: %1"
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -178,9 +178,9 @@ msgstr[0] "%1 afspraak"
 msgstr[1] "%1 afspraken"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr ""
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -852,17 +852,42 @@ msgstr "Takenlijsten worden gekozen op de pagina Taken."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are shown and hidden by color: calendars of one color "
-"together. The Google calendars of an account signed in here are listed "
-"above, with the account."
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Events > Plasma calendars). In the popup's calendar menu they are shown "
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
 "Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
-"ingesteld op de instellingenpagina van de PIM-afsprakenplug-in (Afspraken > "
-"Plasma-agenda's). In het agendamenu van de pop-up worden ze per kleur "
-"getoond en verborgen: agenda's van één kleur samen. De Google-agenda's van "
-"een hier aangemeld account staan hierboven, bij het account."
+"ingesteld op de pagina van de PIM-afsprakenplug-in in de instellingen van de "
+"Digitale klok (de plug-in zelf wordt aangezet in Afspraken > Plasma-"
+"agenda's). In het agendamenu van de pop-up worden ze per kleur getoond en "
+"verborgen: agenda's van één kleur samen. De Google-agenda's van een hier "
+"aangemeld account staan hierboven, bij het account."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4320,6 +4345,23 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgctxt "%1 = a few event titles"
+#~ msgid "Akonadi calendar: %1"
+#~ msgstr "Akonadi-agenda: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
+#~ "ingesteld op de instellingenpagina van de PIM-afsprakenplug-in (Afspraken "
+#~ "> Plasma-agenda's). In het agendamenu van de pop-up worden ze per kleur "
+#~ "getoond en verborgen: agenda's van één kleur samen. De Google-agenda's "
+#~ "van een hier aangemeld account staan hierboven, bij het account."
 
 #~ msgctxt "number of days"
 #~ msgid " days"

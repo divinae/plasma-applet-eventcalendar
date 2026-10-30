@@ -47,8 +47,9 @@ function toArray(listLike) {
 // [PIMEventsPlugin] calendars= in plasmashellrc). Accounts (resources) are left out.
 // Current versions: a flat list with the roles collectionId (UserRole + 1), name, enabled (false:
 // an account) and checked. Older ones: a tree with a { id, enabled } object in UserRole + 1.
+// withAccounts: the accounts too, as { id, name, checked: false, account: true }.
 var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4
-function pimCalendarRows(model, userRole, displayRole) {
+function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 	var rows = []
 	if (!model) {
 		return rows
@@ -61,12 +62,20 @@ function pimCalendarRows(model, userRole, displayRole) {
 				name: String(model.data(index, displayRole) || ''),
 				checked: !!data.enabled,
 			})
-		} else if (data !== undefined && data !== null && model.data(index, userRole + PIM_ROLE_ENABLED) !== false) {
-			rows.push({
+		} else if (data !== undefined && data !== null) {
+			var account = model.data(index, userRole + PIM_ROLE_ENABLED) === false
+			if (account && !withAccounts) {
+				return
+			}
+			var row = {
 				id: String(data),
 				name: String(model.data(index, userRole + PIM_ROLE_NAME) || model.data(index, displayRole) || ''),
-				checked: !!model.data(index, userRole + PIM_ROLE_CHECKED),
-			})
+				checked: !account && !!model.data(index, userRole + PIM_ROLE_CHECKED),
+			}
+			if (account) {
+				row.account = true
+			}
+			rows.push(row)
 		}
 	}
 	// A tree under the accounts (Akonadi's EntityTreeModel): calendars can be folders in folders.
@@ -82,6 +91,35 @@ function pimCalendarRows(model, userRole, displayRole) {
 	}
 	walk(null, 0)
 	return rows
+}
+
+// The pimevents plugin's own selection, [PIMEventsPlugin] calendars= in plasmashellrc: a script
+// printing its collection ids, comma separated.
+function pimSelectionCommand() {
+	return ['sh', '-c', 'f="${XDG_CONFIG_HOME:-$HOME/.config}/plasmashellrc"\n'
+		+ '[ -f "$f" ] && awk -F= \'/^\\[/{s=($0=="[PIMEventsPlugin]")} s&&$1=="calendars"{print substr($0,11);exit}\' "$f"\n'
+		+ 'exit 0']
+}
+// ["collection id", ...] from pimSelectionCommand's output.
+function parsePimSelection(stdout) {
+	return String(stdout || '').split(/[,\s]+/).filter(function(id, i, list) {
+		return /^[0-9]+$/.test(id) && list.indexOf(id) === i
+	})
+}
+// The selected ids (parsePimSelection) Akonadi no longer has, eg: of an account set up anew, whose
+// calendars got new ids (and aren't shown until selected). rows: pimCalendarRows with the
+// accounts; none while it's empty (Akonadi not read yet).
+function stalePimSelection(selectedIds, rows) {
+	if (!rows || !rows.length) {
+		return []
+	}
+	var known = {}
+	rows.forEach(function(row) {
+		known[row.id] = true
+	})
+	return (selectedIds || []).filter(function(id) {
+		return !known[id]
+	})
 }
 
 function getPluginFilename(pluginPath) {
@@ -316,9 +354,9 @@ function colorKey(color) {
 	return m ? m[1].toLowerCase() : ""
 }
 
-// The events' calendars named idPrefix + a color key, as [{ id, color, count, titles }], with their
-// first titleCount different titles. By color: each keeps its place as the events change.
-function colorCalendars(events, idPrefix, titleCount) {
+// The events' calendars named idPrefix + a color key, as [{ id, color, count }]. By color: each
+// keeps its place as the events change.
+function colorCalendars(events, idPrefix) {
 	var byId = {}
 	var list = []
 	;(events || []).forEach(function(event) {
@@ -328,14 +366,10 @@ function colorCalendars(events, idPrefix, titleCount) {
 		}
 		var group = byId[id]
 		if (!group) {
-			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0, titles: [] }
+			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0 }
 			list.push(group)
 		}
 		group.count++
-		var title = String(event.summary || "").trim()
-		if (title && group.titles.length < titleCount && group.titles.indexOf(title) < 0) {
-			group.titles.push(title)
-		}
 	})
 	return list.sort(function(a, b) {
 		return a.id < b.id ? -1 : a.id > b.id ? 1 : 0
@@ -451,14 +485,23 @@ function mirroredColorKeys(rows, colors, mirrored) {
 	return mirroredKeys
 }
 
-// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color.
+// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color; without
+// one, of the others in it. A model keeps the selection it was made with (a calendar selected
+// later in the Digital Clock's settings isn't checked in it), while the plugin shows its events.
 function namesByColor(rows, colors) {
-	var names = {}
+	var shown = {}
+	var others = {}
 	;(rows || []).forEach(function(row) {
-		var key = row.checked ? colorKey(colors[row.id]) : ''
+		var key = colorKey((colors || {})[row.id])
 		if (key) {
+			var names = row.checked ? shown : others
 			names[key] = (names[key] || []).concat(row.name)
 		}
 	})
-	return names
+	Object.keys(others).forEach(function(key) {
+		if (!shown[key]) {
+			shown[key] = others[key]
+		}
+	})
+	return shown
 }

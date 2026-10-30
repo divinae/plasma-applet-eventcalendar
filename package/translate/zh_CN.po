@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-10-30 18:36+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -166,9 +166,9 @@ msgid ", "
 msgstr "、"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-msgctxt "%1 = a few event titles"
-msgid "Akonadi calendar: %1"
-msgstr "Akonadi 日历：%1"
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -177,9 +177,9 @@ msgid_plural "%1 events"
 msgstr[0] "%1 个事件"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr ""
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -822,15 +822,39 @@ msgstr "任务列表在“任务”页面中选择。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are shown and hidden by color: calendars of one color "
-"together. The Google calendars of an account signed in here are listed "
-"above, with the account."
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
 msgstr ""
-"以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > "
-"Plasma 日历）中设置。在弹出窗口的日历菜单中，它们按颜色显示和隐藏：同一颜色的"
-"日历一起切换。在此登录的账户的 Google 日历与账户一起列在上方。"
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Events > Plasma calendars). In the popup's calendar menu they are shown "
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
+msgstr ""
+"以只读方式显示。显示哪些 Akonadi 日历在数字时钟设置的 PIM 事件插件页面中设置"
+"（插件本身在 事件 > Plasma 日历 中启用）。在弹出窗口的日历菜单中，它们按颜色"
+"显示和隐藏：同一颜色的日历一起切换。在此登录的账户的 Google 日历与账户一起列"
+"在上方。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4182,6 +4206,21 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgctxt "%1 = a few event titles"
+#~ msgid "Akonadi calendar: %1"
+#~ msgstr "Akonadi 日历：%1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > "
+#~ "Plasma 日历）中设置。在弹出窗口的日历菜单中，它们按颜色显示和隐藏：同一颜"
+#~ "色的日历一起切换。在此登录的账户的 Google 日历与账户一起列在上方。"
 
 #~ msgctxt "number of days"
 #~ msgid " days"

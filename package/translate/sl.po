@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-10-30 18:36+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -168,9 +168,9 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-msgctxt "%1 = a few event titles"
-msgid "Akonadi calendar: %1"
-msgstr "Koledar Akonadi: %1"
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -182,9 +182,9 @@ msgstr[2] "%1 dogodki"
 msgstr[3] "%1 dogodkov"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr ""
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -854,17 +854,43 @@ msgstr "Sezname opravil izberete na strani Opravila."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are shown and hidden by color: calendars of one color "
-"together. The Google calendars of an account signed in here are listed "
-"above, with the account."
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr ""
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Events > Plasma calendars). In the popup's calendar menu they are shown "
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
 "Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, nastavite "
-"na strani z nastavitvami vstavka za dogodke PIM (Dogodki > Koledarji "
-"Plasma). V meniju koledarjev v pojavnem oknu jih prikazujete in skrivate po "
-"barvi: koledarje ene barve skupaj. Googlovi koledarji računa, ki je tu "
-"prijavljen, so navedeni zgoraj, pri računu."
+"na strani vstavka za dogodke PIM v nastavitvah Digitalne ure (sam vstavek "
+"vklopite v Dogodki > Koledarji Plasma). V meniju koledarjev v pojavnem oknu "
+"jih prikazujete in skrivate po barvi: koledarje ene barve skupaj. Googlovi "
+"koledarji računa, ki je tu prijavljen, so navedeni zgoraj, pri računu."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4384,6 +4410,23 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgctxt "%1 = a few event titles"
+#~ msgid "Akonadi calendar: %1"
+#~ msgstr "Koledar Akonadi: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, "
+#~ "nastavite na strani z nastavitvami vstavka za dogodke PIM (Dogodki > "
+#~ "Koledarji Plasma). V meniju koledarjev v pojavnem oknu jih prikazujete in "
+#~ "skrivate po barvi: koledarje ene barve skupaj. Googlovi koledarji računa, "
+#~ "ki je tu prijavljen, so navedeni zgoraj, pri računu."
 
 #~ msgctxt "number of days"
 #~ msgid " days"

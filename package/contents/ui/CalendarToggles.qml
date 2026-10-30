@@ -111,7 +111,9 @@ PlasmaComponents3.ToolButton {
 					id: calendarRow
 					Layout.fillWidth: true
 					spacing: 0
+					// A new account, or the next section (Shared.calendarMenuSections): Akonadi's, the others.
 					readonly property bool groupStart: index === 0 || calendarToggles.calendars[index - 1].group !== modelData.group
+						|| calendarToggles.calendars[index - 1].section !== modelData.section
 					readonly property bool shown: !Shared.isHiddenCalendar(modelData.id, calendarToggles.hiddenIds)
 					// The account's only calendar, named like it (a Google account's main calendar): no heading
 					// that just repeats the name, a separator instead.
