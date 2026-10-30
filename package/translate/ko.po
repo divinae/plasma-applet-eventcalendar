@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:52+0100\n"
+"POT-Creation-Date: 2026-10-30 10:53+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1485,17 +1485,17 @@ msgid "Up next"
 msgstr "다음 일정"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Up next lists"
-msgstr "다음 일정 표시 개수"
+msgid "Up next shows"
+msgstr "다음 일정 표시 기간"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "0 = as many as fit; the rest under \"Show more\""
-msgstr "0 = 들어가는 만큼, 나머지는 \"더 보기\"에서"
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "표시된 날 이후의 날짜, 그 이후는 \"더 보기\"에서"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of events"
-msgid " events"
-msgstr "개"
+msgctxt "number of days"
+msgid " days"
+msgstr "일"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -4230,6 +4230,16 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Up next lists"
+#~ msgstr "다음 일정 표시 개수"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = 들어가는 만큼, 나머지는 \"더 보기\"에서"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr "개"
 
 #~ msgid "Meteogram shows"
 #~ msgstr "기상 그래프 표시 기간"

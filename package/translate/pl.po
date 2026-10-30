@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:52+0100\n"
+"POT-Creation-Date: 2026-10-30 10:53+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1291,17 +1291,17 @@ msgid "Up next"
 msgstr "Następne"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Up next lists"
+msgid "Up next shows"
 msgstr "Następne pokazuje"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "0 = as many as fit; the rest under \"Show more\""
-msgstr "0 = tyle, ile się zmieści; reszta pod „Pokaż więcej”"
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "Dni po pokazanym; późniejsze pod „Pokaż więcej”"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of events"
-msgid " events"
-msgstr " wydarzeń"
+msgctxt "number of days"
+msgid " days"
+msgstr " dni"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -4008,6 +4008,16 @@ msgstr "Dziś nie ma już wydarzeń"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgid "Up next lists"
+#~ msgstr "Następne pokazuje"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = tyle, ile się zmieści; reszta pod „Pokaż więcej”"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " wydarzeń"
 
 #~ msgid "Meteogram shows"
 #~ msgstr "Meteogram pokazuje"

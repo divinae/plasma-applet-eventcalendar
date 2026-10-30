@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:52+0100\n"
+"POT-Creation-Date: 2026-10-30 10:53+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1480,17 +1480,17 @@ msgid "Up next"
 msgstr "הבא בתור"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Up next lists"
+msgid "Up next shows"
 msgstr "הבא מציג"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "0 = as many as fit; the rest under \"Show more\""
-msgstr "0 = כמה שנכנסים; השאר תחת „הצג עוד”"
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "הימים שאחרי היום המוצג; המאוחרים יותר תחת „הצג עוד”"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of events"
-msgid " events"
-msgstr " אירועים"
+msgctxt "number of days"
+msgid " days"
+msgstr " ימים"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -4336,6 +4336,16 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Up next lists"
+#~ msgstr "הבא מציג"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = כמה שנכנסים; השאר תחת „הצג עוד”"
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " אירועים"
 
 #~ msgid "Meteogram shows"
 #~ msgstr "המטאוגרמה מציגה"

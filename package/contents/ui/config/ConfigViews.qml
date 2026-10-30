@@ -335,12 +335,12 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
-				label: i18n("Up next lists")
-				hint: i18n("0 = as many as fit; the rest under \"Show more\"")
-				configKey: 'dayUpNextCount'
-				suffix: i18nc("number of events", " events")
-				from: 0
-				to: 50
+				label: i18n("Up next shows")
+				hint: i18n("The days after the shown one; later ones under \"Show more\"")
+				configKey: 'dayUpNextDays'
+				suffix: i18nc("number of days", " days")
+				from: 1
+				to: 60
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {

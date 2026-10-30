@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:52+0100\n"
+"POT-Creation-Date: 2026-10-30 10:53+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1291,17 +1291,17 @@ msgid "Up next"
 msgstr "Seuraavaksi"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Up next lists"
+msgid "Up next shows"
 msgstr "Seuraavaksi näyttää"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "0 = as many as fit; the rest under \"Show more\""
-msgstr "0 = niin monta kuin mahtuu; loput kohdassa \"Näytä lisää\""
+msgid "The days after the shown one; later ones under \"Show more\""
+msgstr "Näytetyn jälkeiset päivät; myöhemmät kohdassa \"Näytä lisää\""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of events"
-msgid " events"
-msgstr " tapahtumaa"
+msgctxt "number of days"
+msgid " days"
+msgstr " päivää"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -3968,6 +3968,16 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Up next lists"
+#~ msgstr "Seuraavaksi näyttää"
+
+#~ msgid "0 = as many as fit; the rest under \"Show more\""
+#~ msgstr "0 = niin monta kuin mahtuu; loput kohdassa \"Näytä lisää\""
+
+#~ msgctxt "number of events"
+#~ msgid " events"
+#~ msgstr " tapahtumaa"
 
 #~ msgid "Meteogram shows"
 #~ msgstr "Meteogrammi näyttää"
