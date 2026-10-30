@@ -112,7 +112,8 @@ PinchArea {
 		var day = daysModel.get(index)
 		return new Date(day.yearNumber, day.monthNumber - 1, day.dayNumber)
 	}
-	// The loaded event for one from a day cell (those are ListModel copies).
+	// The loaded event for one from a day cell (the cells get eventsData's own objects, through
+	// dayEvents: never change them there).
 	function loadedEvent(eventItem) {
 		var items = eventDragModel && eventDragModel.eventsData ? eventDragModel.eventsData.items : []
 		for (var i = 0; i < items.length; i++) {

@@ -65,9 +65,10 @@ function getJSON(opt, callback) {
 	if (cached && at - cached.at < maxAge) {
 		return callback(null, cached.data, null)
 	}
-	// Past the budget a failing URL too is asked at most once an hour (failures aren't cached).
+	// Past the budget a failing URL too is asked at most once an hour (failures aren't cached);
+	// meanwhile the older answer, if there is one.
 	if (overBudget && failedAt[url] && at - failedAt[url] < LIMITED_MAX_AGE) {
-		return callback('Over the daily request budget', null, null)
+		return cached ? callback(null, cached.data, null) : callback('Over the daily request budget', null, null)
 	}
 	if (pending[url]) {
 		pending[url].push(callback)
@@ -88,8 +89,13 @@ function getJSON(opt, callback) {
 		}
 		var callbacks = pending[url]
 		delete pending[url]
+		// Each caller gets its answer, even when an earlier one throws.
 		for (var i = 0; i < callbacks.length; i++) {
-			callbacks[i](err, data, xhr)
+			try {
+				callbacks[i](err, data, xhr)
+			} catch (e) {
+				console.warn('[eventcalendar] weather callback failed:', e)
+			}
 		}
 	})
 }

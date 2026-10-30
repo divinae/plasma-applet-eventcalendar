@@ -328,7 +328,7 @@ ColumnLayout {
 			width: scrollView.availableWidth
 			spacing: 1
 			Repeater {
-				model: dayTasks.visible && !dayTasks.allOpen ? dayTasks.taskRows : [] // Hidden (the Day view keeps three panels): no rows
+				model: dayTasks.shownOnce && !dayTasks.allOpen ? dayTasks.taskRows : []
 				DayTaskRow {}
 			}
 			// "All open tasks": in progress, then the others.
@@ -337,7 +337,7 @@ ColumnLayout {
 				text: i18nc("tasks filter", "In progress") + " · " + dayTasks.progressRows.length
 			}
 			Repeater {
-				model: dayTasks.visible ? dayTasks.progressRows : []
+				model: dayTasks.shownOnce ? dayTasks.progressRows : []
 				DayTaskRow {}
 			}
 			SectionLabel {
@@ -346,7 +346,7 @@ ColumnLayout {
 				text: i18nc("tasks in the Day view, not in progress", "To do") + " · " + dayTasks.todoRows.length
 			}
 			Repeater {
-				model: dayTasks.visible ? dayTasks.todoRows : []
+				model: dayTasks.shownOnce ? dayTasks.todoRows : []
 				DayTaskRow {}
 			}
 			// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
@@ -406,7 +406,7 @@ ColumnLayout {
 			}
 			// The done ones, under "Hide completed".
 			Repeater {
-				model: dayTasks.visible ? dayTasks.doneRows : []
+				model: dayTasks.shownOnce ? dayTasks.doneRows : []
 				DayTaskRow {}
 			}
 		}
@@ -461,6 +461,9 @@ ColumnLayout {
 	// Made after the title's "+" was first used (then kept: a task may still be saving), shown only
 	// while adding.
 	property bool addingUsed: false
+	// Rows only once the panel was shown (the Day view keeps three panels, one shown), then kept.
+	property bool shownOnce: visible
+	onVisibleChanged: if (visible) shownOnce = true
 	onAddingChanged: if (adding) addingUsed = true
 	Loader {
 		id: quickAddLoader

@@ -76,7 +76,9 @@ Item {
 	// A task marked in progress or not: first in its section, the In progress filter.
 	Connections {
 		target: plasmoid.configuration
-		// Menus made when first opened: their items took much of the time the view needed to open.
+		function onTasksInProgressChanged() { tasksView.deferredRebuild() }
+	}
+	// Menus made when first opened: their items took much of the time the view needed to open.
 	property var madeMenus: ({})
 	property var viewMenu: null // The "⋯" menu, once made (its button shows it open)
 	function made(component, name) {
@@ -84,9 +86,6 @@ Item {
 			madeMenus[name] = component.createObject(tasksView)
 		}
 		return madeMenus[name]
-	}
-
-	function onTasksInProgressChanged() { tasksView.deferredRebuild() }
 	}
 	function setShownInSmartLists(list, shown) {
 		var ids = Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).filter(function(id) {

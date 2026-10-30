@@ -21,6 +21,8 @@ var weatherIconBySeverity = [
 	'weather-snow-rain',
 	'weather-showers-night',
 	'weather-showers',
+	'weather-freezing-rain',
+	'weather-hail',
 	'weather-storm-night',
 	'weather-storm',
 	'weather-severe-alert',

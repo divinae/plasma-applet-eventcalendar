@@ -101,7 +101,6 @@ function updateHourlyWeather(config, callback) {
 	}
 }
 
-/* Return true if all configuration has been setup. */
 // A web page with the full forecast for the configured place ('' when there's none): meteoblue for
 // Open-Meteo's coordinates, the city's page of OpenWeatherMap or Weather Canada.
 function forecastPageUrl(config) {
@@ -124,6 +123,7 @@ function forecastPageUrl(config) {
 	return ''
 }
 
+/* Return true if all configuration has been setup. */
 function weatherIsSetup(config) {
 	var weatherService = config.weatherService
 	if (weatherService == 'OpenMeteo') {

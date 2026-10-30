@@ -67,9 +67,6 @@ function isValidDate(d) {
 	}
 }
 
-// Event description / task notes as safe StyledText: Google stores descriptions as HTML, which
-// could load remote images (tracking) or carry odd markup. Reduce it to text (keeping link
-// targets), escape it, then link URLs and keep line breaks.
 // The web links in raw text: each passed to linkHtml(url), which returns its HTML; the rest escaped.
 function linkify(raw, linkHtml) {
 	var rUrl = /https?:\/\/[^\s<>"]+/gi
@@ -104,6 +101,9 @@ function anchor(href, labelHtml) {
 	return isSafeExternalUrl(href) ? '<a href="' + href + '">' + labelHtml + '</a>' : labelHtml
 }
 
+// Event description / task notes as safe StyledText: Google stores descriptions as HTML, which
+// could load remote images (tracking) or carry odd markup. Reduce it to text (keeping link
+// targets), escape it, then link URLs and keep line breaks.
 function renderText(text) {
 	if (typeof text === 'undefined' || text === null) {
 		return ''

@@ -42,7 +42,7 @@ function apiUrl(endpoint, args) {
 	url += endpoint + '?id=' + args.cityId
 	url += '&units=' + unitsParam(args.units)
 	url += langParam()
-	url += '&appid=' + args.appId
+	url += '&appid=' + encodeURIComponent(String(args.appId || '').trim())
 	return url
 }
 
@@ -52,7 +52,7 @@ function oneCallUrl(coord, args) {
 	url += '&exclude=minutely,alerts'
 	url += '&units=' + unitsParam(args.units)
 	url += langParam()
-	url += '&appid=' + args.appId
+	url += '&appid=' + encodeURIComponent(String(args.appId || '').trim())
 	return url
 }
 

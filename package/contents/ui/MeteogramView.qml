@@ -250,6 +250,9 @@ Item {
 
 				function paintFancy(ctx) {
 					var data = graph.gridData
+					if (data.length < 2) {
+						return // A line needs two points (and the bars their spacing)
+					}
 					var dark = appletConfig.darkTheme
 					var units = plasmoid.configuration.weatherUnits
 					var textColor = appletConfig.meteogramTextColor
