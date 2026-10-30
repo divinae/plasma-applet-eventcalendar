@@ -168,7 +168,7 @@ msgstr "、"
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Akonadi 日历：%1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -827,7 +827,7 @@ msgid ""
 "calendar menu they are shown and hidden by color: calendars of one color "
 "together. The Google calendars of an account signed in here are listed "
 "above, with the account."
-msgstr ""
+msgstr "以只读方式显示。显示哪些 Akonadi 日历在 PIM 事件插件的设置页面（事件 > Plasma 日历）中设置。在弹出窗口的日历菜单中，它们按颜色显示和隐藏：同一颜色的日历一起切换。在此登录的账户的 Google 日历与账户一起列在上方。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1441,13 +1441,13 @@ msgstr "接下来"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "全天事件并排显示"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
-msgstr ""
+msgstr "在日视图中，三个或更多全天事件各占三分之一宽度，每行三个。鼠标悬停时完整显示。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1505,42 +1505,42 @@ msgstr "调试日志和额外的设置页面"
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"
 msgid "yes"
-msgstr ""
+msgstr "是"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may not use"
 msgid "no"
-msgstr ""
+msgstr "否"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "%1 = error"
 msgid "failed (%1)"
-msgstr ""
+msgstr "失败（%1）"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather, 3 hour steps: %1"
-msgstr ""
+msgstr "当前天气，3 小时间隔：%1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "16 days (paid plan): %1"
-msgstr ""
+msgstr "16 天（付费方案）：%1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0: %1"
-msgstr ""
+msgstr "One Call 3.0：%1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
-msgstr ""
+msgstr "OpenWeatherMap 无法识别此应用 ID（新 ID 最多需要 2 小时生效）。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Choose One Call 3.0 above: by the hour and 8 days."
-msgstr ""
+msgstr "请在上方选择 One Call 3.0：逐小时及 8 天。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
-msgstr ""
+msgstr "未订阅 One Call 3.0：请在上方选择 Free (2.5)。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
@@ -1606,30 +1606,30 @@ msgstr "OpenWeatherMap 必需"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Free (2.5)"
-msgstr ""
+msgstr "Free (2.5)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0"
-msgstr ""
+msgstr "One Call 3.0"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Checking…"
-msgstr ""
+msgstr "正在检查…"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Check App Id"
-msgstr ""
+msgstr "检查应用 ID"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "Free (2.5) works with any app id: the current weather and a forecast in 3 "
 "hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
 "one, the days are made from the 3 hour steps."
-msgstr ""
+msgstr "Free (2.5) 适用于任何应用 ID：当前天气和 5 天内 3 小时间隔的预报。16 天预报需要付费方案；没有付费方案时，每日预报由 3 小时间隔数据生成。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1638,11 +1638,11 @@ msgid ""
 "(1000 calls a day are free, a payment card is required): the current "
 "weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
 "most every 10 minutes, about 150 calls a day."
-msgstr ""
+msgstr "One Call 3.0 需要在 <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> 订阅“One Call by Call”（每天 1000 次调用免费，需要支付卡）：一次调用即可获取当前天气、48 小时逐小时预报和 8 天预报。小部件最多每 10 分钟请求一次，每天约 150 次调用。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One app id works for both: Check App Id tells what yours may use."
-msgstr ""
+msgstr "一个应用 ID 两者通用：“检查应用 ID”会显示您的 ID 可以使用哪些。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1651,7 +1651,7 @@ msgid ""
 "own: sign up at <a href=\"https://home.openweathermap.org/users/"
 "sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
 "needs none."
-msgstr ""
+msgstr "内置应用 ID 由所有使用此小部件的人共享，其请求限额也是共享的：天气有时可能停止更新。获取您自己的免费应用 ID：在 <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a> 注册，然后从“API keys”中复制。Open-Meteo 不需要应用 ID。"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1683,28 +1683,28 @@ msgstr "图标"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "System"
-msgstr ""
+msgstr "系统"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Yr (MET Norway)"
-msgstr ""
+msgstr "Yr (MET Norway)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather icon background"
-msgstr ""
+msgstr "当前天气图标背景"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Sky, after the weather"
-msgstr ""
+msgstr "天空，随天气变化"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Subtle"
-msgstr ""
+msgstr "淡雅"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "no icon background"
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -1716,35 +1716,35 @@ msgstr " 小时"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
-msgstr ""
+msgstr "预报图表"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Also the meteogram above the agenda"
-msgstr ""
+msgstr "也适用于日程上方的气象图"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
-msgstr ""
+msgstr "简单"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
-msgstr ""
+msgstr "精美"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
-msgstr ""
+msgstr "更大的图标"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "In the chart and the next days"
-msgstr ""
+msgstr "在图表和未来几天中"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Rain amounts"
-msgstr ""
+msgstr "降雨量"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "The total above the chart, the amounts at the heaviest hours"
-msgstr ""
+msgstr "图表上方显示总量，雨量最大的时段显示数值"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1766,7 +1766,7 @@ msgstr "数据来源于网站 <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "City name, eg: Berlin or Berlin, DE"
-msgstr ""
+msgstr "城市名称，例如：Berlin 或 Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
@@ -1776,43 +1776,43 @@ msgstr "打开链接"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "north"
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "south"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "east"
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "west"
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "OpenWeatherMap city id"
 msgid "Id %1"
-msgstr ""
+msgstr "ID %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "OpenWeatherMap didn't accept the app id: %1"
-msgstr ""
+msgstr "OpenWeatherMap 未接受该应用 ID：%1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "The search failed: %1"
-msgstr ""
+msgstr "搜索失败：%1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No city found."
-msgstr ""
+msgstr "未找到城市。"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
-msgstr ""
+msgstr "未设置应用 ID。"
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -3064,13 +3064,13 @@ msgstr "已达到天气 API 限制"
 msgid ""
 "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
 "choose Free (2.5) in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap 拒绝了该应用 ID 使用 One Call 3.0：请订阅，或在 设置 > 天气 中选择 Free (2.5)。"
 
 #: ../contents/ui/Logic.qml
 msgid ""
 "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
 "check it in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap 拒绝了该应用 ID。新 ID 最多需要 2 小时才能生效；请在 设置 > 天气 中检查。"
 
 #: ../contents/ui/Logic.qml
 msgctxt ""
@@ -3078,7 +3078,7 @@ msgctxt ""
 "openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
 "isn't there"
 msgid "en"
-msgstr ""
+msgstr "zh_cn"
 
 #: ../contents/ui/Logic.qml
 msgid ""
@@ -3951,47 +3951,47 @@ msgstr "未来几天没有安排。"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Clear"
-msgstr ""
+msgstr "晴"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Mainly clear"
-msgstr ""
+msgstr "大部晴朗"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Partly cloudy"
-msgstr ""
+msgstr "局部多云"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Overcast"
-msgstr ""
+msgstr "阴"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Fog"
-msgstr ""
+msgstr "雾"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rime fog"
-msgstr ""
+msgstr "雾凇"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light drizzle"
-msgstr ""
+msgstr "小毛毛雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Drizzle"
-msgstr ""
+msgstr "毛毛雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy drizzle"
-msgstr ""
+msgstr "大毛毛雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing drizzle"
-msgstr ""
+msgstr "冻毛毛雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light rain"
-msgstr ""
+msgstr "小雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain"
@@ -3999,55 +3999,55 @@ msgstr "降水"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain"
-msgstr ""
+msgstr "大雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing rain"
-msgstr ""
+msgstr "冻雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light snow"
-msgstr ""
+msgstr "小雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow"
-msgstr ""
+msgstr "雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow"
-msgstr ""
+msgstr "大雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow grains"
-msgstr ""
+msgstr "米雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain showers"
-msgstr ""
+msgstr "阵雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain showers"
-msgstr ""
+msgstr "强阵雨"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow showers"
-msgstr ""
+msgstr "阵雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow showers"
-msgstr ""
+msgstr "强阵雪"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm"
-msgstr ""
+msgstr "雷暴"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm with hail"
-msgstr ""
+msgstr "雷暴伴有冰雹"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -4074,7 +4074,7 @@ msgstr "此日无天气预报。"
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next hour"
 msgid_plural "Next %1 hours"
-msgstr[0] ""
+msgstr[0] "未来 %1 小时"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -4084,7 +4084,7 @@ msgstr "当天逐小时"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the hours of the chart"
 msgid "Rain: %1"
-msgstr ""
+msgstr "降雨：%1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"

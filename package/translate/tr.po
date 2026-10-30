@@ -170,7 +170,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Akonadi takvimi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -850,7 +850,7 @@ msgid ""
 "calendar menu they are shown and hidden by color: calendars of one color "
 "together. The Google calendars of an account signed in here are listed "
 "above, with the account."
-msgstr ""
+msgstr "Salt okunur gösterilir. Hangi Akonadi takvimlerinin gösterileceği, PIM etkinlikleri eklentisinin ayarlar sayfasında belirlenir (Etkinlikler > Plasma takvimleri). Açılır pencerenin takvim menüsünde renge göre gösterilir ve gizlenirler: aynı renkteki takvimler birlikte. Burada oturum açmış bir hesabın Google takvimleri yukarıda, hesapla birlikte listelenir."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1486,13 +1486,13 @@ msgstr "Sıradakiler"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "Tüm gün süren etkinlikler yan yana"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
-msgstr ""
+msgstr "Gün görünümünde üç veya daha fazla tüm gün süren etkinliğin her biri genişliğin üçte birini kaplar, bir satırda üç tane. Üzerine gelindiğinde etkinlik tam olarak gösterilir."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1551,42 +1551,42 @@ msgstr "Hata ayıklama günlüğü ve ek ayar sayfaları"
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"
 msgid "yes"
-msgstr ""
+msgstr "evet"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may not use"
 msgid "no"
-msgstr ""
+msgstr "hayır"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "%1 = error"
 msgid "failed (%1)"
-msgstr ""
+msgstr "başarısız (%1)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather, 3 hour steps: %1"
-msgstr ""
+msgstr "Güncel hava durumu, 3 saatlik adımlar: %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "16 days (paid plan): %1"
-msgstr ""
+msgstr "16 gün (ücretli plan): %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0: %1"
-msgstr ""
+msgstr "One Call 3.0: %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
-msgstr ""
+msgstr "OpenWeatherMap bu uygulama kimliğini tanımıyor (yeni bir kimliğin etkinleşmesi 2 saati bulabilir)."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Choose One Call 3.0 above: by the hour and 8 days."
-msgstr ""
+msgstr "Yukarıdan One Call 3.0'ı seçin: saatlik ve 8 gün."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
-msgstr ""
+msgstr "One Call 3.0 aboneliği yok: yukarıdan Free (2.5) seçin."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
@@ -1652,30 +1652,30 @@ msgstr "OpenWeatherMap için gerekli"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Free (2.5)"
-msgstr ""
+msgstr "Free (2.5)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0"
-msgstr ""
+msgstr "One Call 3.0"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Checking…"
-msgstr ""
+msgstr "Denetleniyor…"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Check App Id"
-msgstr ""
+msgstr "Uygulama kimliğini denetle"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "Free (2.5) works with any app id: the current weather and a forecast in 3 "
 "hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
 "one, the days are made from the 3 hour steps."
-msgstr ""
+msgstr "Free (2.5) her uygulama kimliğiyle çalışır: güncel hava durumu ve 5 gün için 3 saatlik adımlarla tahmin. 16 günlük tahmin ücretli plan gerektirir; plan olmadan günler 3 saatlik adımlardan oluşturulur."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1684,11 +1684,11 @@ msgid ""
 "(1000 calls a day are free, a payment card is required): the current "
 "weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
 "most every 10 minutes, about 150 calls a day."
-msgstr ""
+msgstr "One Call 3.0, <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> üzerinde “One Call by Call” aboneliği gerektirir (günde 1000 çağrı ücretsizdir, ödeme kartı gereklidir): güncel hava durumu, saat saat 48 saat ve 8 gün, tek çağrıda. Araç takımı en fazla 10 dakikada bir sorgular, günde yaklaşık 150 çağrı."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One app id works for both: Check App Id tells what yours may use."
-msgstr ""
+msgstr "Tek bir uygulama kimliği ikisi için de çalışır: “Uygulama kimliğini denetle”, sizinkinin neleri kullanabileceğini gösterir."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1697,7 +1697,7 @@ msgid ""
 "own: sign up at <a href=\"https://home.openweathermap.org/users/"
 "sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
 "needs none."
-msgstr ""
+msgstr "Yerleşik uygulama kimliği, bu araç takımını kullanan herkes tarafından paylaşılır, istek sınırı da öyle: hava durumu zaman zaman güncellenmeyi durdurabilir. Size ait ücretsiz bir uygulama kimliği için: <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a> üzerinde kaydolun, ardından kimliği “API keys” bölümünden kopyalayın. Open-Meteo kimlik gerektirmez."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1729,28 +1729,28 @@ msgstr "İkonlar"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Yr (MET Norway)"
-msgstr ""
+msgstr "Yr (MET Norway)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather icon background"
-msgstr ""
+msgstr "Güncel hava durumu ikonunun arka planı"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Sky, after the weather"
-msgstr ""
+msgstr "Gökyüzü, hava durumuna göre"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Subtle"
-msgstr ""
+msgstr "Hafif"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "no icon background"
 msgid "None"
-msgstr ""
+msgstr "Yok"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -1762,35 +1762,35 @@ msgstr " saat"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
-msgstr ""
+msgstr "Tahmin grafiği"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Also the meteogram above the agenda"
-msgstr ""
+msgstr "Ajandanın üstündeki meteogram da"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
-msgstr ""
+msgstr "Basit"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
-msgstr ""
+msgstr "Gösterişli"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
-msgstr ""
+msgstr "Daha büyük ikonlar"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "In the chart and the next days"
-msgstr ""
+msgstr "Grafikte ve sonraki günlerde"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Rain amounts"
-msgstr ""
+msgstr "Yağmur miktarları"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "The total above the chart, the amounts at the heaviest hours"
-msgstr ""
+msgstr "Grafiğin üstünde toplam, en yağışlı saatlerde miktarlar"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1812,7 +1812,7 @@ msgstr "Bilgiler <a href=\"%1\">%1</a> sitesinden alınmaktadır."
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "City name, eg: Berlin or Berlin, DE"
-msgstr ""
+msgstr "Şehir adı, örn.: Berlin veya Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
@@ -1822,43 +1822,43 @@ msgstr "Linki Aç"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "north"
 msgid "N"
-msgstr ""
+msgstr "K"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "south"
 msgid "S"
-msgstr ""
+msgstr "G"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "east"
 msgid "E"
-msgstr ""
+msgstr "D"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "west"
 msgid "W"
-msgstr ""
+msgstr "B"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "OpenWeatherMap city id"
 msgid "Id %1"
-msgstr ""
+msgstr "Kimlik %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "OpenWeatherMap didn't accept the app id: %1"
-msgstr ""
+msgstr "OpenWeatherMap uygulama kimliğini kabul etmedi: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "The search failed: %1"
-msgstr ""
+msgstr "Arama başarısız oldu: %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No city found."
-msgstr ""
+msgstr "Şehir bulunamadı."
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
-msgstr ""
+msgstr "Uygulama kimliği ayarlanmadı."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -3138,13 +3138,13 @@ msgstr "Hava durumu API sınırına ulaşıldı"
 msgid ""
 "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
 "choose Free (2.5) in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap, One Call 3.0 için uygulama kimliğini reddetti: abone olun veya Ayarlar > Hava Durumu bölümünden Free (2.5) seçin."
 
 #: ../contents/ui/Logic.qml
 msgid ""
 "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
 "check it in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap uygulama kimliğini reddetti. Yeni bir kimliğin çalışması 2 saati bulabilir; Ayarlar > Hava Durumu bölümünden denetleyin."
 
 #: ../contents/ui/Logic.qml
 msgctxt ""
@@ -3152,7 +3152,7 @@ msgctxt ""
 "openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
 "isn't there"
 msgid "en"
-msgstr ""
+msgstr "tr"
 
 #: ../contents/ui/Logic.qml
 msgid ""
@@ -4049,47 +4049,47 @@ msgstr "Önümüzdeki günlerde planlanmış bir şey yok."
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Clear"
-msgstr ""
+msgstr "Açık"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Mainly clear"
-msgstr ""
+msgstr "Çoğunlukla açık"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Parçalı bulutlu"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Overcast"
-msgstr ""
+msgstr "Kapalı"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Fog"
-msgstr ""
+msgstr "Sis"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rime fog"
-msgstr ""
+msgstr "Kırağılı sis"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light drizzle"
-msgstr ""
+msgstr "Hafif çisenti"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Drizzle"
-msgstr ""
+msgstr "Çisenti"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy drizzle"
-msgstr ""
+msgstr "Yoğun çisenti"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing drizzle"
-msgstr ""
+msgstr "Donan çisenti"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light rain"
-msgstr ""
+msgstr "Hafif yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain"
@@ -4097,55 +4097,55 @@ msgstr "Yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain"
-msgstr ""
+msgstr "Şiddetli yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing rain"
-msgstr ""
+msgstr "Donan yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light snow"
-msgstr ""
+msgstr "Hafif kar"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow"
-msgstr ""
+msgstr "Kar"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow"
-msgstr ""
+msgstr "Yoğun kar"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow grains"
-msgstr ""
+msgstr "Kar tanecikleri"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain showers"
-msgstr ""
+msgstr "Sağanak yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain showers"
-msgstr ""
+msgstr "Şiddetli sağanak yağmur"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow showers"
-msgstr ""
+msgstr "Kar sağanağı"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow showers"
-msgstr ""
+msgstr "Yoğun kar sağanağı"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Gök gürültülü fırtına"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm with hail"
-msgstr ""
+msgstr "Dolulu gök gürültülü fırtına"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmiyor"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -4174,8 +4174,8 @@ msgstr "Bu gün için hava tahmini yok."
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next hour"
 msgid_plural "Next %1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sonraki saat"
+msgstr[1] "Sonraki %1 saat"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -4185,7 +4185,7 @@ msgstr "Gün içinde"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the hours of the chart"
 msgid "Rain: %1"
-msgstr ""
+msgstr "Yağmur: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"

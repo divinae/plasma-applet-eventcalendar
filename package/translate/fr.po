@@ -170,7 +170,7 @@ msgstr ", "
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgctxt "%1 = a few event titles"
 msgid "Akonadi calendar: %1"
-msgstr ""
+msgstr "Calendrier Akonadi : %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -862,7 +862,7 @@ msgid ""
 "calendar menu they are shown and hidden by color: calendars of one color "
 "together. The Google calendars of an account signed in here are listed "
 "above, with the account."
-msgstr ""
+msgstr "Affichés en lecture seule. Les calendriers Akonadi affichés se choisissent dans la page de configuration du module d'événements PIM (Événements > Calendriers Plasma). Dans le menu des calendriers de la fenêtre, ils sont affichés et masqués par couleur : les calendriers d'une même couleur ensemble. Les calendriers Google d'un compte connecté ici sont listés plus haut, avec le compte."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1509,13 +1509,13 @@ msgstr "À venir"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
-msgstr ""
+msgstr "Événements sur toute la journée côte à côte"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
-msgstr ""
+msgstr "Dans la vue Jour, à partir de trois événements sur toute la journée, chacun occupe un tiers de la largeur, trois par ligne. Le survol d'un événement l'affiche en entier."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1575,42 +1575,42 @@ msgstr "Journalisation de débogage et pages de paramètres supplémentaires"
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"
 msgid "yes"
-msgstr ""
+msgstr "oui"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may not use"
 msgid "no"
-msgstr ""
+msgstr "non"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "%1 = error"
 msgid "failed (%1)"
-msgstr ""
+msgstr "échec (%1)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather, 3 hour steps: %1"
-msgstr ""
+msgstr "Météo actuelle, pas de 3 heures : %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "16 days (paid plan): %1"
-msgstr ""
+msgstr "16 jours (offre payante) : %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0: %1"
-msgstr ""
+msgstr "One Call 3.0 : %1"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
-msgstr ""
+msgstr "OpenWeatherMap ne connaît pas cet identifiant d'application (un nouveau peut mettre jusqu'à 2 heures)."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Choose One Call 3.0 above: by the hour and 8 days."
-msgstr ""
+msgstr "Choisissez One Call 3.0 ci-dessus : heure par heure et 8 jours."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
-msgstr ""
+msgstr "Pas d'abonnement à One Call 3.0 : choisissez Free (2.5) ci-dessus."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
@@ -1676,30 +1676,30 @@ msgstr "Requis pour OpenWeatherMap"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Free (2.5)"
-msgstr ""
+msgstr "Free (2.5)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One Call 3.0"
-msgstr ""
+msgstr "One Call 3.0"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Checking…"
-msgstr ""
+msgstr "Vérification…"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Check App Id"
-msgstr ""
+msgstr "Vérifier l'identifiant d'application"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "Free (2.5) works with any app id: the current weather and a forecast in 3 "
 "hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
 "one, the days are made from the 3 hour steps."
-msgstr ""
+msgstr "Free (2.5) fonctionne avec tout identifiant d'application : la météo actuelle et des prévisions par pas de 3 heures sur 5 jours. Les prévisions sur 16 jours nécessitent une offre payante ; sans elle, les jours sont calculés à partir des pas de 3 heures."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1708,11 +1708,11 @@ msgid ""
 "(1000 calls a day are free, a payment card is required): the current "
 "weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
 "most every 10 minutes, about 150 calls a day."
-msgstr ""
+msgstr "One Call 3.0 nécessite l'abonnement « One Call by Call » sur <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 appels par jour sont gratuits, une carte de paiement est requise) : la météo actuelle, 48 heures heure par heure et 8 jours, en un seul appel. Le widget interroge au plus toutes les 10 minutes, environ 150 appels par jour."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One app id works for both: Check App Id tells what yours may use."
-msgstr ""
+msgstr "Un identifiant d'application vaut pour les deux : « Vérifier l'identifiant d'application » indique ce que le vôtre peut utiliser."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1721,7 +1721,7 @@ msgid ""
 "own: sign up at <a href=\"https://home.openweathermap.org/users/"
 "sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
 "needs none."
-msgstr ""
+msgstr "L'identifiant d'application intégré est partagé par tous les utilisateurs de ce widget, de même que sa limite de requêtes : la météo peut parfois cesser de se mettre à jour. Pour un identifiant d'application gratuit à vous : inscrivez-vous sur <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, puis copiez-le depuis « API keys ». Open-Meteo n'en a pas besoin."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1753,28 +1753,28 @@ msgstr "Icônes"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Yr (MET Norway)"
-msgstr ""
+msgstr "Yr (MET Norway)"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Current weather icon background"
-msgstr ""
+msgstr "Arrière-plan de l'icône de la météo actuelle"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Sky, after the weather"
-msgstr ""
+msgstr "Ciel, selon la météo"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Subtle"
-msgstr ""
+msgstr "Discret"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "no icon background"
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Meteogram shows"
@@ -1786,35 +1786,35 @@ msgstr " heures"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Forecast chart"
-msgstr ""
+msgstr "Graphique des prévisions"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Also the meteogram above the agenda"
-msgstr ""
+msgstr "Aussi le météogramme au-dessus de l'agenda"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
-msgstr ""
+msgstr "Simple"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Fancy"
-msgstr ""
+msgstr "Élaboré"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Larger icons"
-msgstr ""
+msgstr "Icônes plus grandes"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "In the chart and the next days"
-msgstr ""
+msgstr "Dans le graphique et les jours suivants"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Rain amounts"
-msgstr ""
+msgstr "Quantités de pluie"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "The total above the chart, the amounts at the heaviest hours"
-msgstr ""
+msgstr "Le total au-dessus du graphique, les quantités aux heures les plus pluvieuses"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -1836,7 +1836,7 @@ msgstr "Récupérée depuis <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "City name, eg: Berlin or Berlin, DE"
-msgstr ""
+msgstr "Nom de ville, ex. : Berlin ou Berlin, DE"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
@@ -1846,43 +1846,43 @@ msgstr "Ouvrir le lien"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "north"
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "south"
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "east"
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "west"
 msgid "W"
-msgstr ""
+msgstr "O"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgctxt "OpenWeatherMap city id"
 msgid "Id %1"
-msgstr ""
+msgstr "ID %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "OpenWeatherMap didn't accept the app id: %1"
-msgstr ""
+msgstr "OpenWeatherMap n'a pas accepté l'identifiant d'application : %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "The search failed: %1"
-msgstr ""
+msgstr "La recherche a échoué : %1"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No city found."
-msgstr ""
+msgstr "Aucune ville trouvée."
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
-msgstr ""
+msgstr "Aucun identifiant d'application défini."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -3167,13 +3167,13 @@ msgstr "Limite de l'API météo atteinte"
 msgid ""
 "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
 "choose Free (2.5) in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap a refusé l'identifiant d'application pour One Call 3.0 : abonnez-vous-y ou choisissez Free (2.5) dans Paramètres > Météo."
 
 #: ../contents/ui/Logic.qml
 msgid ""
 "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
 "check it in Settings > Weather."
-msgstr ""
+msgstr "OpenWeatherMap a refusé l'identifiant d'application. Un nouveau peut mettre jusqu'à 2 heures à fonctionner ; vérifiez-le dans Paramètres > Météo."
 
 #: ../contents/ui/Logic.qml
 msgctxt ""
@@ -3181,7 +3181,7 @@ msgctxt ""
 "openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
 "isn't there"
 msgid "en"
-msgstr ""
+msgstr "fr"
 
 #: ../contents/ui/Logic.qml
 msgid ""
@@ -4079,47 +4079,47 @@ msgstr "Rien de prévu dans les prochains jours."
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Clear"
-msgstr ""
+msgstr "Dégagé"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Mainly clear"
-msgstr ""
+msgstr "Plutôt dégagé"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Partiellement nuageux"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Overcast"
-msgstr ""
+msgstr "Couvert"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Fog"
-msgstr ""
+msgstr "Brouillard"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rime fog"
-msgstr ""
+msgstr "Brouillard givrant"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light drizzle"
-msgstr ""
+msgstr "Bruine légère"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Drizzle"
-msgstr ""
+msgstr "Bruine"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy drizzle"
-msgstr ""
+msgstr "Bruine forte"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing drizzle"
-msgstr ""
+msgstr "Bruine verglaçante"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light rain"
-msgstr ""
+msgstr "Pluie faible"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain"
@@ -4127,55 +4127,55 @@ msgstr "Pluie"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain"
-msgstr ""
+msgstr "Pluie forte"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Freezing rain"
-msgstr ""
+msgstr "Pluie verglaçante"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Light snow"
-msgstr ""
+msgstr "Neige faible"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow"
-msgstr ""
+msgstr "Neige"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow"
-msgstr ""
+msgstr "Neige forte"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow grains"
-msgstr ""
+msgstr "Neige en grains"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Rain showers"
-msgstr ""
+msgstr "Averses de pluie"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy rain showers"
-msgstr ""
+msgstr "Fortes averses de pluie"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Snow showers"
-msgstr ""
+msgstr "Averses de neige"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Heavy snow showers"
-msgstr ""
+msgstr "Fortes averses de neige"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Orage"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Thunderstorm with hail"
-msgstr ""
+msgstr "Orage avec grêle"
 
 #: ../contents/ui/weather/OpenMeteo.js
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
@@ -4203,8 +4203,8 @@ msgstr "Aucune prévision pour ce jour."
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next hour"
 msgid_plural "Next %1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Prochaine heure"
+msgstr[1] "%1 prochaines heures"
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -4214,7 +4214,7 @@ msgstr "Pendant la journée"
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "precipitation during the hours of the chart"
 msgid "Rain: %1"
-msgstr ""
+msgstr "Pluie : %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "Next days"
