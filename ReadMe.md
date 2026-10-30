@@ -67,7 +67,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   checklists (TickTick) and subtasks (Google); mark tasks in progress; set the priority and due
   date from the right-click menu; drag tasks between days, lists and accounts; undo,
   keyboard, search. Manage lists (rename, color, clear completed, delete, hide from the smart
-  lists). Task reminders, a morning summary, and the day's tasks in the Day view. TickTick signs in
+  lists). Task reminders, a morning summary, and in the Day view the day's tasks, or all open tasks of a
+  list split into In progress and To do. TickTick signs in
   with an API token, kept in the system keyring.
 - **Meetings**: Join buttons for about 40 services (Google Meet, Zoom, Teams, Webex, Slack huddles,
   Discord, Chime, GoTo, Jitsi…), in the agenda, the Day view, the event details, notifications and

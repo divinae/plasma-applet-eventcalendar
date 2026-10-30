@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1720,8 +1720,24 @@ msgid "All lists"
 msgstr "Όλες οι λίστες"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Εμφανιζόμενη λίστα εργασιών"
+msgid "All open"
+msgstr "Όλες οι ανοιχτές"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Εμφανιζόμενες εργασίες"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Λήξη αυτή την ημέρα"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Όλες οι ανοιχτές εργασίες"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1730,6 +1746,17 @@ msgstr "Όλα ολοκληρώθηκαν"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Καμία εργασία"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Σε εξέλιξη"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Προς εκτέλεση"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3384,12 +3411,6 @@ msgstr "Σήμανση ως μη ολοκληρωμένης"
 msgid "Mark as done"
 msgstr "Σήμανση ως ολοκληρωμένης"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Σε εξέλιξη"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Δεν ήταν δυνατή η μετακίνηση της εργασίας"
@@ -3615,10 +3636,6 @@ msgstr "Χωρίς ημερομηνία"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Ολοκληρωμένες"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Καμία ανοιχτή εργασία"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3919,6 +3936,9 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "Εμφανιζόμενη λίστα εργασιών"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

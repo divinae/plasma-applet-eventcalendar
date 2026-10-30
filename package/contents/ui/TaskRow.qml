@@ -113,9 +113,11 @@ LinkRect {
 		return ""
 	}
 	readonly property string dueText: due.kind === 'overdue' ? i18nc("%1 = short date", "Overdue · due %1", withTime(dueDateText)) : withTime(dayText)
+	// compact with tasks of any day (the Day view's "All open tasks"): the day too, as elsewhere.
+	property bool compactShowsDay: false
 	// The day left out when the section says it (Today, Tomorrow); compact (the Day view's day): the
 	// time only, the date when overdue.
-	readonly property string chipText: compact ? (overdue ? withTime(dueDateText) : timeText)
+	readonly property string chipText: compact ? (overdue ? withTime(dueDateText) : compactShowsDay ? withTime(dayText) : timeText)
 		: withTime(due.kind === sectionDueKind ? "" : dayText)
 	readonly property bool showChip: !!chipText
 	readonly property string notesLine: compact || !showNotes || !eventItem ? "" : Tasks.firstLine(eventItem.notes || eventItem.description || "")

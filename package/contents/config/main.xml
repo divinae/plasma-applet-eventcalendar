@@ -195,6 +195,10 @@
 			<!-- Day view: the task list shown ("" = all selected lists). -->
 			<default></default>
 		</entry>
+		<entry name="dayTasksScope" type="string">
+			<!-- Day view: the tasks shown: 'day' (due that day, and on today the overdue ones) or 'all' (every open task, in progress apart). -->
+			<default>day</default>
+		</entry>
 		<entry name="tasksSmartHiddenLists" type="StringList">
 			<!-- Tasks view: lists left out of the smart filters (All, Today, ...), shown only on their own (like TickTick's "Someday"). -->
 			<default></default>

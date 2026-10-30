@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1484,7 +1484,23 @@ msgid "All lists"
 msgstr ""
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
+msgid "All open"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
 msgstr ""
 
 #: ../contents/ui/DayTasksPanel.qml
@@ -1493,6 +1509,16 @@ msgstr ""
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr ""
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
 msgstr ""
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
@@ -3090,11 +3116,6 @@ msgstr ""
 msgid "Mark as done"
 msgstr ""
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr ""
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr ""
@@ -3317,10 +3338,6 @@ msgstr ""
 
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
-msgstr ""
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
 msgstr ""
 
 #: ../contents/ui/TaskUndoBar.qml

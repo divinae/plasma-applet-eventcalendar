@@ -13,7 +13,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
 	'flatRows', 'progressKey', 'isInProgress', 'withProgress', 'stampInProgress', 'pruneProgress', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
-	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
+	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'dayAllTaskSections', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -106,6 +106,24 @@ assert.strictEqual(T.firstLine(undefined), '')
 	same(T.dayTasks(items, '2026-10-27', '2026-10-26').map(t => t.id), ['tomorrow'])
 	same(T.dayTasks(items, '2026-10-20', '2026-10-26').map(t => t.id), ['overdue'], 'its own day too')
 	same(T.dayTasks(null, '2026-10-26', '2026-10-26'), [])
+}
+
+// dayAllTaskSections: every open task, dated or not, in progress apart; subtasks under their parent.
+{
+	const items = [
+		task({ id: 'a', calendarId: 'l', due: '2026-11-20T00:00:00.000Z' }),
+		task({ id: 'b', calendarId: 'l' }),
+		task({ id: 'p', calendarId: 'l', inProgress: true }),
+		task({ id: 'b1', calendarId: 'l', parent: 'b' }),
+		task({ id: 'd', calendarId: 'l', status: 'completed' }),
+		task({ id: 'a', calendarId: 'l', due: '2026-11-20T00:00:00.000Z' }),
+		{ kind: 'calendar#event', id: 'e', calendarId: 'c' },
+	]
+	const sections = T.dayAllTaskSections(items)
+	same(sections.progress.map(r => r.item.id), ['p'])
+	same(sections.todo.map(r => r.item.id + ':' + r.depth).sort(), ['a:0', 'b1:1', 'b:0'])
+	same(sections.todo.map(r => r.item.id).indexOf('b1'), sections.todo.map(r => r.item.id).indexOf('b') + 1, 'subtask right under')
+	same(T.dayAllTaskSections(null), { progress: [], todo: [] })
 }
 
 // dateSections: Monday 26 October; "this week" is the rest of the week (Monday-first: to Sunday 1

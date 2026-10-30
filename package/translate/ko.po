@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1678,8 +1678,24 @@ msgid "All lists"
 msgstr "모든 목록"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "표시할 작업 목록"
+msgid "All open"
+msgstr "열린 항목 모두"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "표시할 작업"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "이 날 마감"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "열린 작업 모두"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "열린 작업 없음"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1688,6 +1704,17 @@ msgstr "모두 완료"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "작업 없음"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "진행 중"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "할 일"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3302,12 +3329,6 @@ msgstr "완료 안 됨으로 표시"
 msgid "Mark as done"
 msgstr "완료로 표시"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "진행 중"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "작업을 이동할 수 없음"
@@ -3531,10 +3552,6 @@ msgstr "날짜 없음"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "완료됨"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "열린 작업 없음"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3822,6 +3839,9 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "표시할 작업 목록"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

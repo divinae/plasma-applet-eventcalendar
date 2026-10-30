@@ -10,6 +10,9 @@ PlasmaComponents3.MenuItem {
 	id: plainItem
 
 	property string label: ""
+	// A task list: its mark (ListMark: its emoji or a dot in markColor) in the icon's place.
+	property var list: null
+	property color markColor: "transparent"
 
 	text: label.replace(/&/g, "&&") // Escaped: no mnemonic from the user's "&"
 	Accessible.name: label
@@ -19,9 +22,21 @@ PlasmaComponents3.MenuItem {
 			Layout.preferredWidth: (plainItem.ListView.view && plainItem.ListView.view.hasCheckables) || plainItem.checkable
 				? plainItem.indicator.width : Kirigami.Units.smallSpacing
 		}
+		Item {
+			visible: !!plainItem.list
+			Layout.alignment: Qt.AlignVCenter
+			Layout.preferredHeight: Math.max(plainLabel.height, Kirigami.Units.iconSizes.small)
+			Layout.preferredWidth: Layout.preferredHeight
+			ListMark {
+				anchors.centerIn: parent
+				list: plainItem.list
+				size: Math.round(Kirigami.Units.iconSizes.small * 0.6)
+				color: plainItem.markColor
+			}
+		}
 		Kirigami.Icon {
 			Layout.alignment: Qt.AlignVCenter
-			visible: (plainItem.ListView.view && plainItem.ListView.view.hasIcons) || plainItem.icon.name.length > 0 || String(plainItem.icon.source).length > 0
+			visible: !plainItem.list && ((plainItem.ListView.view && plainItem.ListView.view.hasIcons) || plainItem.icon.name.length > 0 || String(plainItem.icon.source).length > 0)
 			source: plainItem.icon.name || plainItem.icon.source
 			Layout.preferredHeight: Math.max(plainLabel.height, Kirigami.Units.iconSizes.small)
 			Layout.preferredWidth: Layout.preferredHeight

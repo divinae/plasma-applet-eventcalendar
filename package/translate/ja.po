@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1467,8 +1467,24 @@ msgid "All lists"
 msgstr "すべてのリスト"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "表示するタスクリスト"
+msgid "All open"
+msgstr "未完了すべて"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "表示するタスク"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "この日が期限"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "未完了のタスクすべて"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "未完了のタスクはありません"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1477,6 +1493,16 @@ msgstr "すべて完了"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "タスクなし"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "進行中"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "未着手"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3045,11 +3071,6 @@ msgstr "未完了にする"
 msgid "Mark as done"
 msgstr "完了にする"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "進行中"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "タスクを移動できませんでした"
@@ -3273,10 +3294,6 @@ msgstr "日付なし"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "完了済み"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "未完了のタスクはありません"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3562,6 +3579,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "表示するタスクリスト"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

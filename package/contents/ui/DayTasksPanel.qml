@@ -49,7 +49,12 @@ ColumnLayout {
 		tasks.forEach(function(task) { ids[task.calendarId] = true })
 		return Object.keys(ids).length > 1
 	}
+	// "All open tasks" (dayTasksScope 'all', the list menu): every open task of the shown list(s),
+	// any date, in progress first; otherwise the ones due that day.
+	readonly property bool allOpen: plasmoid.configuration.dayTasksScope === 'all'
 	property var taskRows: [] // Tasks.dayTaskRows: [{ item, depth }], the open ones
+	property var progressRows: [] // allOpen: the ones in progress (taskRows: these, then the others)
+	property var todoRows: [] // …and the others
 	property var doneRows: [] // …and the done ones, with showDone (below "Hide completed")
 	// The done tasks are folded away under "N completed" (for the session).
 	property bool showDone: false
@@ -85,6 +90,19 @@ ColumnLayout {
 		}
 		hasLists = lists.length > 0
 		Tasks.stampInProgress(items, plasmoid.configuration.tasksInProgress)
+		if (allOpen) {
+			// The done ones (all of them, ever) aren't shown here.
+			var sections = Tasks.dayAllTaskSections(items)
+			progressRows = sections.progress
+			todoRows = sections.todo
+			taskRows = sections.progress.concat(sections.todo)
+			doneCount = 0
+			doneRows = []
+			tasks = taskRows.map(function(row) { return row.item })
+			return
+		}
+		progressRows = []
+		todoRows = []
 		var rows = Tasks.dayTaskRows(items, dayText, today)
 		var openRows = rows.filter(function(row) { return !Tasks.isDone(row.item) })
 		doneCount = rows.length - openRows.length
@@ -112,6 +130,7 @@ ColumnLayout {
 	Connections {
 		target: plasmoid.configuration
 		function onDayTasksListIdChanged() { dayTasks.deferredRebuild() }
+		function onDayTasksScopeChanged() { dayTasks.deferredRebuild() }
 		function onTasksInProgressChanged() { dayTasks.deferredRebuild() }
 	}
 
@@ -183,10 +202,10 @@ ColumnLayout {
 		// The list filter: all lists or one (several lists only), on the right.
 		PlasmaComponents3.ToolButton {
 			id: listFilterButton
-			visible: dayTasks.lists.length > 1
 			Layout.minimumWidth: 0
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 9
-			readonly property string label: dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists")
+			Layout.maximumWidth: Kirigami.Units.gridUnit * 10
+			readonly property string label: (dayTasks.filterList ? dayTasks.filterList.name : i18n("All lists"))
+				+ (dayTasks.allOpen ? " · " + i18n("All open") : "")
 			text: label.replace(/&/g, "&&") // No mnemonic from a "&" in the list's name
 			Accessible.name: label
 			icon.name: "view-filter"
@@ -197,10 +216,24 @@ ColumnLayout {
 			contentItem: RowLayout {
 				spacing: listFilterButton.spacing
 				Kirigami.Icon {
+					visible: !dayTasks.filterList
 					Layout.alignment: Qt.AlignVCenter
 					implicitWidth: listFilterButton.icon.width
 					implicitHeight: listFilterButton.icon.height
 					source: listFilterButton.icon.name
+				}
+				// The chosen list's mark (its emoji or color dot), as in the menu.
+				Item {
+					visible: !!dayTasks.filterList
+					Layout.alignment: Qt.AlignVCenter
+					implicitWidth: listFilterButton.icon.width
+					implicitHeight: listFilterButton.icon.height
+					ListMark {
+						anchors.centerIn: parent
+						list: dayTasks.filterList
+						size: Math.round(listFilterButton.icon.width * 0.6)
+						color: dayTasks.listMarkColor(dayTasks.filterList)
+					}
 				}
 				PlasmaComponents3.Label {
 					Layout.fillWidth: true
@@ -211,12 +244,28 @@ ColumnLayout {
 				}
 			}
 			onClicked: listFilterMenu.popup(listFilterButton, 0, listFilterButton.height)
-			PlasmaComponents3.ToolTip.text: i18n("Task list shown")
+			PlasmaComponents3.ToolTip.text: i18n("Tasks shown")
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
 		PlasmaComponents3.Menu {
 			id: listFilterMenu
 			PlasmaComponents3.MenuItem {
+				text: i18n("Due this day")
+				checkable: true
+				checked: !dayTasks.allOpen
+				onTriggered: plasmoid.configuration.dayTasksScope = 'day'
+			}
+			PlasmaComponents3.MenuItem {
+				text: i18n("All open tasks")
+				checkable: true
+				checked: dayTasks.allOpen
+				onTriggered: plasmoid.configuration.dayTasksScope = 'all'
+			}
+			PlasmaComponents3.MenuSeparator {
+				visible: dayTasks.lists.length > 1
+			}
+			PlasmaComponents3.MenuItem {
+				visible: dayTasks.lists.length > 1
 				text: i18n("All lists")
 				checkable: true
 				checked: !dayTasks.filterListId
@@ -228,11 +277,13 @@ ColumnLayout {
 				delegate: PlainMenuItem {
 					required property var modelData
 					label: modelData.name
+					list: modelData
+					markColor: dayTasks.listMarkColor(modelData)
 					checkable: true
 					checked: dayTasks.filterListId === modelData.id
 					onTriggered: plasmoid.configuration.dayTasksListId = modelData.id
 				}
-				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 2, object) }
+				onObjectAdded: function(index, object) { listFilterMenu.insertItem(index + 5, object) }
 				onObjectRemoved: function(index, object) { listFilterMenu.removeItem(object) }
 			}
 		}
@@ -243,7 +294,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.leftMargin: Kirigami.Units.smallSpacing
 		// Only done ones left (folded away): all done.
-		text: dayTasks.doneCount > 0 ? i18n("All done") : i18n("No tasks")
+		text: dayTasks.allOpen ? i18n("No open tasks") : dayTasks.doneCount > 0 ? i18n("All done") : i18n("No tasks")
 		textFormat: Text.PlainText
 		opacity: 0.75
 		elide: Text.ElideRight
@@ -265,7 +316,25 @@ ColumnLayout {
 			width: scrollView.availableWidth
 			spacing: 1
 			Repeater {
-				model: dayTasks.taskRows
+				model: dayTasks.allOpen ? [] : dayTasks.taskRows
+				DayTaskRow {}
+			}
+			// "All open tasks": in progress, then the others.
+			SectionLabel {
+				visible: dayTasks.allOpen && dayTasks.progressRows.length > 0
+				text: i18nc("tasks filter", "In progress") + " · " + dayTasks.progressRows.length
+			}
+			Repeater {
+				model: dayTasks.progressRows
+				DayTaskRow {}
+			}
+			SectionLabel {
+				visible: dayTasks.allOpen && dayTasks.todoRows.length > 0
+				Layout.topMargin: dayTasks.progressRows.length > 0 ? Kirigami.Units.smallSpacing : 0
+				text: i18nc("tasks in the Day view, not in progress", "To do") + " · " + dayTasks.todoRows.length
+			}
+			Repeater {
+				model: dayTasks.todoRows
 				DayTaskRow {}
 			}
 			// "2 completed" / "Hide completed": the done tasks folded away or shown. Lined up with the rows
@@ -331,6 +400,26 @@ ColumnLayout {
 		}
 	}
 
+	// The color of a list's dot (ListMark), as in the Tasks tab.
+	function listMarkColor(list) {
+		return appletConfig.eventColoredTextColor(appletConfig.eventColor(list && list.color ? list.color : null))
+	}
+
+	// "In progress" / "To do" over the rows, quiet like "2 completed", lined up with the titles.
+	component SectionLabel: PlasmaComponents3.Label {
+		Layout.fillWidth: true
+		Layout.leftMargin: Kirigami.Units.smallSpacing * 2
+		Layout.rightMargin: Kirigami.Units.smallSpacing * 2
+		topPadding: Kirigami.Units.smallSpacing
+		bottomPadding: 2
+		textFormat: Text.PlainText
+		font.family: appletConfig.eventFont.family
+		font.pointSize: appletConfig.eventFont.pointSize * 0.85
+		font.weight: Font.DemiBold
+		opacity: 0.7
+		elide: Text.ElideRight
+	}
+
 	// A task of the list (open or done), from the Repeater's row.
 	component DayTaskRow: TaskRow {
 		required property var modelData
@@ -339,6 +428,7 @@ ColumnLayout {
 		depth: modelData.depth
 		today: dayTasks.today
 		compact: true
+		compactShowsDay: dayTasks.allOpen
 		listMark: dayTasks.mixedLists
 		expandedStore: dayTasks.expandedSubtasks
 		onCheckToggled: function(item, done) {
@@ -381,7 +471,7 @@ ColumnLayout {
 		lists: dayTasks.lists
 		// The filtered list, if any: new tasks go there.
 		listId: dayTasks.filterListId
-		dueDay: dayTasks.dayText
+		dueDay: dayTasks.allOpen ? "" : dayTasks.dayText // All open: undated unless typed
 		compact: true
 	}
 

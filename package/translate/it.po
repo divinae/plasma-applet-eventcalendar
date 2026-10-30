@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -1470,8 +1470,24 @@ msgid "All lists"
 msgstr "Tutti gli elenchi"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Elenco attività mostrato"
+msgid "All open"
+msgstr "Tutte aperte"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Attività mostrate"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "In scadenza questo giorno"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Tutte le attività aperte"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Nessuna attività aperta"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1480,6 +1496,16 @@ msgstr "Tutto fatto"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Nessuna attività"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "In corso"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Da fare"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3079,11 +3105,6 @@ msgstr "Segna come non completata"
 msgid "Mark as done"
 msgstr "Segna come completata"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "In corso"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Impossibile spostare l'attività"
@@ -3307,10 +3328,6 @@ msgstr "Senza data"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Completate"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Nessuna attività aperta"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3605,6 +3622,9 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "Elenco attività mostrato"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

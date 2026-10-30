@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1691,8 +1691,24 @@ msgid "All lists"
 msgstr "Tüm listeler"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Gösterilen görev listesi"
+msgid "All open"
+msgstr "Tüm açık"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Gösterilen görevler"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Bu gün bitenler"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Tüm açık görevler"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Açık görev yok"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1701,6 +1717,17 @@ msgstr "Hepsi tamam"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Görev yok"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Devam ediyor"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Yapılacak"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3347,12 +3374,6 @@ msgstr "Tamamlanmadı olarak işaretle"
 msgid "Mark as done"
 msgstr "Tamamlandı olarak işaretle"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Devam ediyor"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Görev taşınamadı"
@@ -3576,10 +3597,6 @@ msgstr "Tarih yok"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Tamamlanan"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Açık görev yok"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3879,6 +3896,9 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "Gösterilen görev listesi"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

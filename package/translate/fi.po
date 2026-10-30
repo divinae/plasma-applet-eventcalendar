@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1473,8 +1473,24 @@ msgid "All lists"
 msgstr "Kaikki luettelot"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "Näytettävä tehtäväluettelo"
+msgid "All open"
+msgstr "Kaikki avoimet"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "Näytettävät tehtävät"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "Erääntyy tänä päivänä"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "Kaikki avoimet tehtävät"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "Ei avoimia tehtäviä"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1483,6 +1499,16 @@ msgstr "Kaikki tehty"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "Ei tehtäviä"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "Käynnissä"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "Tehtävänä"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3082,11 +3108,6 @@ msgstr "Merkitse tekemättömäksi"
 msgid "Mark as done"
 msgstr "Merkitse tehdyksi"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "Käynnissä"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "Tehtävän siirtäminen epäonnistui"
@@ -3310,10 +3331,6 @@ msgstr "Ei päivämäärää"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "Valmiit"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "Ei avoimia tehtäviä"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3608,6 +3625,9 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "Näytettävä tehtäväluettelo"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"

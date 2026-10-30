@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-29 16:01+0100\n"
+"POT-Creation-Date: 2026-10-30 08:11+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1671,8 +1671,24 @@ msgid "All lists"
 msgstr "כל הרשימות"
 
 #: ../contents/ui/DayTasksPanel.qml
-msgid "Task list shown"
-msgstr "רשימת המשימות המוצגת"
+msgid "All open"
+msgstr "כל הפתוחות"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Tasks shown"
+msgstr "משימות מוצגות"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "Due this day"
+msgstr "לביצוע ביום זה"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgid "All open tasks"
+msgstr "כל המשימות הפתוחות"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
+msgid "No open tasks"
+msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/DayTasksPanel.qml
 msgid "All done"
@@ -1681,6 +1697,17 @@ msgstr "הכול בוצע"
 #: ../contents/ui/DayTasksPanel.qml
 msgid "No tasks"
 msgstr "אין משימות"
+
+#: ../contents/ui/DayTasksPanel.qml ../contents/ui/TaskCheck.qml
+#: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
+msgctxt "tasks filter"
+msgid "In progress"
+msgstr "בתהליך"
+
+#: ../contents/ui/DayTasksPanel.qml
+msgctxt "tasks in the Day view, not in progress"
+msgid "To do"
+msgstr "לביצוע"
 
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/TasksView.qml
 msgid "Hide completed"
@@ -3381,12 +3408,6 @@ msgstr "סימון כלא הושלמה"
 msgid "Mark as done"
 msgstr "סימון כהושלמה"
 
-#: ../contents/ui/TaskCheck.qml ../contents/ui/TaskDetailsBody.qml
-#: ../contents/ui/TasksView.qml
-msgctxt "tasks filter"
-msgid "In progress"
-msgstr "בתהליך"
-
 #: ../contents/ui/TaskDetailsBody.qml ../contents/ui/TasksView.qml
 msgid "Couldn't move the task"
 msgstr "לא ניתן להעביר את המשימה"
@@ -3610,10 +3631,6 @@ msgstr "ללא תאריך"
 #: ../contents/ui/TasksView.qml
 msgid "Completed"
 msgstr "הושלמו"
-
-#: ../contents/ui/TasksView.qml
-msgid "No open tasks"
-msgstr "אין משימות פתוחות"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -3927,6 +3944,9 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Task list shown"
+#~ msgstr "רשימת המשימות המוצגת"
 
 #~ msgctxt "%1 = Google Meet, Zoom, ..., %2 = event title, %3 = when"
 #~ msgid "Join %1: %2 (%3)"
