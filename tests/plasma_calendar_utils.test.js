@@ -85,11 +85,25 @@ const ev = (color, summary) => ({ calendarId: prefix + color, summary })
 const groups = JSON.parse(JSON.stringify(U.colorCalendars([
 	ev('aaaaaa', 'Standup'), ev('bbbbbb', 'Vacation'), ev('bbbbbb', 'Physio'), ev('bbbbbb', 'Vacation'),
 	ev('bbbbbb', 'Dentist'), ev('bbbbbb', 'Review'), { calendarId: 'plasma_Holidays', summary: 'Easter' },
-], prefix, 3)))
+], prefix)))
 assert.deepStrictEqual(groups, [
-	{ id: prefix + 'aaaaaa', color: '#aaaaaa', count: 1, titles: ['Standup'] },
-	{ id: prefix + 'bbbbbb', color: '#bbbbbb', count: 5, titles: ['Vacation', 'Physio', 'Dentist'] },
-], 'by color, different titles, other calendars left out')
+	{ id: prefix + 'aaaaaa', color: '#aaaaaa', count: 1 },
+	{ id: prefix + 'bbbbbb', color: '#bbbbbb', count: 5 },
+], 'by color, other calendars left out')
+
+// Named after the calendars of a color: the shown ones, else the others in it (a model made before
+// a calendar was selected in the Digital Clock's settings has it unchecked).
+const named = U.namesByColor([
+	{ id: '1', name: 'Work', checked: true },
+	{ id: '2', name: 'Team', checked: false },
+	{ id: '3', name: 'Support', checked: false },
+	{ id: '4', name: 'Holidays', checked: true },
+	{ id: '5', name: 'No color', checked: true },
+], { 1: '#ffaaaaaa', 2: '#aaaaaa', 3: '#ffbbbbbb', 4: '#cccccc' })
+assert.deepStrictEqual(JSON.parse(JSON.stringify(named)), { aaaaaa: ['Work'], bbbbbb: ['Support'], cccccc: ['Holidays'] },
+	'a shown calendar first; not shown ones only for a color without one')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.namesByColor([{ id: '1', name: 'Work', checked: true }], undefined))), {},
+	'no colors read')
 
 //--- Akonadi's Google calendars of an account also signed in to in the widget
 const mirrored = U.akonadiMirroredCollections([

@@ -354,9 +354,9 @@ function colorKey(color) {
 	return m ? m[1].toLowerCase() : ""
 }
 
-// The events' calendars named idPrefix + a color key, as [{ id, color, count, titles }], with their
-// first titleCount different titles. By color: each keeps its place as the events change.
-function colorCalendars(events, idPrefix, titleCount) {
+// The events' calendars named idPrefix + a color key, as [{ id, color, count }]. By color: each
+// keeps its place as the events change.
+function colorCalendars(events, idPrefix) {
 	var byId = {}
 	var list = []
 	;(events || []).forEach(function(event) {
@@ -366,14 +366,10 @@ function colorCalendars(events, idPrefix, titleCount) {
 		}
 		var group = byId[id]
 		if (!group) {
-			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0, titles: [] }
+			group = byId[id] = { id: id, color: "#" + id.substr(idPrefix.length), count: 0 }
 			list.push(group)
 		}
 		group.count++
-		var title = String(event.summary || "").trim()
-		if (title && group.titles.length < titleCount && group.titles.indexOf(title) < 0) {
-			group.titles.push(title)
-		}
 	})
 	return list.sort(function(a, b) {
 		return a.id < b.id ? -1 : a.id > b.id ? 1 : 0
@@ -489,14 +485,23 @@ function mirroredColorKeys(rows, colors, mirrored) {
 	return mirroredKeys
 }
 
-// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color.
+// Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color; without
+// one, of the others in it. A model keeps the selection it was made with (a calendar selected
+// later in the Digital Clock's settings isn't checked in it), while the plugin shows its events.
 function namesByColor(rows, colors) {
-	var names = {}
+	var shown = {}
+	var others = {}
 	;(rows || []).forEach(function(row) {
-		var key = row.checked ? colorKey(colors[row.id]) : ''
+		var key = colorKey((colors || {})[row.id])
 		if (key) {
+			var names = row.checked ? shown : others
 			names[key] = (names[key] || []).concat(row.name)
 		}
 	})
-	return names
+	Object.keys(others).forEach(function(key) {
+		if (!shown[key]) {
+			shown[key] = others[key]
+		}
+	})
+	return shown
 }
