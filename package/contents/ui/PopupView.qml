@@ -766,7 +766,7 @@ MouseArea {
 	// at agendaMaxWidth and centered), like the Day view's. A day opens it in the agenda.
 	IslandCard {
 		id: agendaMiniMonthCard
-		readonly property real sideWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 15, Math.max(Kirigami.Units.gridUnit * 11, popup.width * 0.22)))
+		readonly property real sideWidth: appletConfig.sidePanelWidth(widgetGrid.width) // As the Day view's
 		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing * 2
 		visible: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
 			&& agendaView.x >= sideWidth + gap

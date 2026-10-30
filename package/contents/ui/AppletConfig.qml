@@ -131,6 +131,11 @@ QtObject {
 	// Day view's panels, the agenda days and the task sections sit in rounded cards (IslandCard);
 	// "Flat": one surface.
 	readonly property bool islands: plasmoid.configuration.uiStyle !== 'flat'
+	// The side panels' width (the Day view's small month, Up next, weather; the Agenda's small
+	// month) for a view this wide: the same in both views.
+	function sidePanelWidth(viewWidth) {
+		return Math.round(Math.min(Kirigami.Units.gridUnit * 17, Math.max(Kirigami.Units.gridUnit * 12, viewWidth * 0.27)))
+	}
 	// Animations (Settings > Views > Animations): their durations, 0 when off.
 	readonly property bool animations: plasmoid.configuration.animationsEnabled !== false
 	readonly property int shortDuration: animations ? Kirigami.Units.shortDuration : 0

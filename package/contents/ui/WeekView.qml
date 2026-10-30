@@ -75,7 +75,7 @@ Item {
 	// right, all centered. Not enough room: the tasks become a strip above the grid, then the
 	// weather a compact row above it.
 	// Both side columns as wide as each other: a share of the popup, within limits.
-	readonly property real sidePanelWidth: Math.round(Math.min(Kirigami.Units.gridUnit * 17, Math.max(Kirigami.Units.gridUnit * 12, width * 0.27)))
+	readonly property real sidePanelWidth: appletConfig.sidePanelWidth(width)
 	readonly property real weatherPanelWidth: sidePanelWidth
 	readonly property real tasksPanelWidth: sidePanelWidth
 	readonly property real weatherGap: Kirigami.Units.gridUnit // Each side of the space between the grid and a panel
