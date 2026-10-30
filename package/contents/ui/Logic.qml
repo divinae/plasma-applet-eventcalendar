@@ -71,6 +71,12 @@ Item {
 		logger.debug('update')
 		logic.updateData()
 	}
+	// Refresh (header, widget menu): also the sources that keep their own copy anew (Plasma's
+	// calendar plugins, see PlasmaCalendarManager.reloadSources).
+	function reload() {
+		eventModel.reloadSources()
+		logic.update()
+	}
 
 	function updateData() {
 		logger.debug('updateData')

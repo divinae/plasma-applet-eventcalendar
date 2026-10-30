@@ -115,6 +115,15 @@ CalendarManager {
 		}
 	}
 
+	// Refresh: the managers that keep their own copy of a source load it anew (reloadSources).
+	function reloadSources() {
+		calendarManagerList.forEach(function(calendarManager) {
+			if (typeof calendarManager.reloadSources === "function") {
+				calendarManager.reloadSources()
+			}
+		})
+	}
+
 	// The manager of calendarId when it can do fnName (has that function), else null.
 	function managerWith(calendarId, fnName) {
 		var calendarManager = getCalendarManager(calendarId)

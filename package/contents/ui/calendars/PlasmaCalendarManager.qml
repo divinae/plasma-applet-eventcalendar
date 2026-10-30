@@ -157,6 +157,35 @@ CalendarManager {
 	Component.onCompleted: {
 		syncEnabledPlugins()
 	}
+
+	// Refresh: the plugins loaded anew, so they ask their sources again. A plugin can miss changes:
+	// the PIM one didn't see an event Akonadi synced later (only a plasmashell restart showed it).
+	function reloadSources() {
+		if (!ensureEventPluginsManager()) {
+			return
+		}
+		eventPluginsManager.enabledPlugins = []
+		syncEnabledPlugins()
+	}
+
+	// The plugins' data comes after they're asked (Akonadi takes a while) and changes (an event
+	// added, edited or removed in KOrganizer): read it again, ours only (no Google requests).
+	Connections {
+		target: plasmaCalendarManager.eventPluginsManager
+		function onDataReady() { pluginDataTimer.restart() }
+		function onEventModified() { pluginDataTimer.restart() }
+		function onEventRemoved() { pluginDataTimer.restart() }
+		function onPluginsChanged() { pluginDataTimer.restart() }
+	}
+	Timer {
+		id: pluginDataTimer
+		interval: 500 // A plugin sends its data in parts: read once they're in.
+		onTriggered: {
+			if (plasmaCalendarManager.dateMin < plasmaCalendarManager.dateMax) {
+				plasmaCalendarManager.fetchAll() // The last range
+			}
+		}
+	}
 	Connections {
 		target: plasmoid.configuration
 		function onEnabledCalendarPluginsChanged() {
