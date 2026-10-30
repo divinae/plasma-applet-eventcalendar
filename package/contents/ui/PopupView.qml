@@ -766,11 +766,16 @@ MouseArea {
 	// at agendaMaxWidth and centered), like the Day view's. A day opens it in the agenda.
 	IslandCard {
 		id: agendaMiniMonthCard
-		readonly property real sideWidth: appletConfig.sidePanelWidth(widgetGrid.width) // As the Day view's
+		// As wide as the Day view's (the same view width); its own column left of the list when the
+		// popup has room for both (the list then takes the rest, centered there).
+		readonly property real viewWidth: popup.width - popup.padding * 2
+		readonly property real sideWidth: appletConfig.sidePanelWidth(viewWidth)
 		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.largeSpacing * 2
-		visible: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
-			&& agendaView.x >= sideWidth + gap
-		x: widgetGrid.x + agendaView.x - gap - sideWidth
+		readonly property bool wanted: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
+			&& viewWidth >= sideWidth + gap + Kirigami.Units.gridUnit * 20
+		readonly property real columnWidth: wanted ? sideWidth + gap : 0
+		visible: wanted
+		x: popup.padding
 		y: widgetGrid.y + agendaView.y
 		width: sideWidth
 		height: implicitHeight
@@ -811,6 +816,7 @@ MouseArea {
 		visible: !popup.hourGridMode && !popup.tasksMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
+		anchors.leftMargin: popup.padding + agendaMiniMonthCard.columnWidth // The Agenda's small month
 		anchors.topMargin: popup.viewTabsHeight
 		columns: 1
 		columnSpacing: popup.spacing
