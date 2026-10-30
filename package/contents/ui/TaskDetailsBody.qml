@@ -229,6 +229,7 @@ ColumnLayout {
 		textFormat: linkedTitle ? Text.StyledText : Text.PlainText
 		linkColor: Kirigami.Theme.linkColor
 		onLinkActivated: function(link) { Shared.openExternalUrl(link) }
+		Accessible.name: Shared.displayTitle(plainTitle)
 		HoverHandler {
 			cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : undefined
 		}

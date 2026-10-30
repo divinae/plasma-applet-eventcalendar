@@ -574,7 +574,7 @@ CalendarManager {
 			appIcon: "view-task",
 			event: 'taskReminder',
 			expireTimeout: upcomingEvents.reminderExpireTimeout(),
-			summary: task.summary || task.title || '',
+			summary: Shared.displayTitle(task.summary || task.title || ''),
 			body: Shared.escapeHtml(taskDueText(task)),
 			soundFile: plasmoid.configuration.eventReminderSfxEnabled ? plasmoid.configuration.eventReminderSfxPath : '',
 			actions: actions,
@@ -662,7 +662,7 @@ CalendarManager {
 	// The titles (escaped) and "+N more".
 	function taskSummaryLines(tasks) {
 		var lines = tasks.titles.map(function(title) {
-			return Shared.escapeHtml(title)
+			return Shared.escapeHtml(Shared.displayTitle(title))
 		})
 		if (tasks.more > 0) {
 			lines.push(i18ncp("task summary, more tasks", "+%1 more", "+%1 more", tasks.more))

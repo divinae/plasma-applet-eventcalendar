@@ -124,8 +124,10 @@ LinkRect {
 	// The due date and notes: a bit smaller than the title, larger than the views' small font.
 	readonly property font detailFont: appletConfig.scaledFont(appletConfig.eventFont, 0.9)
 	readonly property string title: eventItem ? (eventItem.summary || eventItem.title || "") : ""
-	// The title with its links (eg: a ticket's URL shown as "CSS-2175"), '' without one.
-	readonly property string linkedTitle: Shared.linkifiedText(title)
+	// The title with its links' names (eg: a ticket's URL shown as "CSS-2175") in the link color, ''
+	// without a link. Not clickable: a click opens the task, the link button opens the link.
+	readonly property string linkedTitle: Shared.coloredLinkText(title, Kirigami.Theme.linkColor)
+	readonly property string titleLink: Shared.firstLink(title)
 	readonly property bool canEdit: !!eventItem && eventItem.canEdit !== false
 	// TickTick's checklist items ([{ id, title, done }]) and how many are done.
 	readonly property var subtaskItems: eventItem && eventItem.subtasks && eventItem.subtasks.length ? eventItem.subtasks : []
@@ -133,7 +135,7 @@ LinkRect {
 
 	activeFocusOnTab: true
 	Accessible.role: Accessible.Button
-	Accessible.name: title || i18n("Task")
+	Accessible.name: Shared.displayTitle(title) || i18n("Task")
 	Accessible.description: [done ? i18n("Done") : i18n("Not done"), dueText,
 		progress.total ? i18nc("checklist items done: %1 of %2", "%1 of %2 subtasks done", progress.done, progress.total) : ""]
 		.filter(function(t) { return !!t }).join(". ")
@@ -171,7 +173,7 @@ LinkRect {
 		id: rowHover
 	}
 	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || todayButton.activeFocus
-		|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus || subtasksButton.activeFocus
+		|| linkButton.activeFocus || tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus || subtasksButton.activeFocus
 	readonly property bool showActions: actionsEnabled && canEdit && !dragging
 		&& (hovered || rowHover.hovered || focusInside)
 
@@ -308,15 +310,11 @@ LinkRect {
 					Layout.fillWidth: true
 					Layout.minimumWidth: 0
 					Layout.maximumWidth: Math.ceil(implicitWidth)
-					// User text: plain, or escaped with its links (Shared.linkifiedText), never parsed as HTML.
+					// User text: plain, or escaped with its links' names (Shared.coloredLinkText), never
+					// parsed as HTML.
 					text: taskRow.linkedTitle || taskRow.title
 					textFormat: taskRow.linkedTitle ? Text.StyledText : Text.PlainText
-					linkColor: Kirigami.Theme.linkColor
-					onLinkActivated: function(link) { Shared.openExternalUrl(link) }
-					HoverHandler {
-						enabled: !!taskRow.linkedTitle
-						cursorShape: titleLabel.hoveredLink ? Qt.PointingHandCursor : undefined
-					}
+					Accessible.name: Shared.displayTitle(taskRow.title)
 					color: Kirigami.Theme.textColor
 					opacity: taskRow.doneOpacity
 					font.family: appletConfig.eventFont.family
@@ -515,6 +513,13 @@ LinkRect {
 				anchors.right: parent.right
 				anchors.verticalCenter: parent.verticalCenter
 				spacing: 0
+				TaskRowButton {
+					id: linkButton
+					visible: !!taskRow.titleLink
+					icon.name: "link"
+					text: i18n("Open Link")
+					onClicked: Shared.openExternalUrl(taskRow.titleLink)
+				}
 				TaskRowButton {
 					id: todayButton
 					visible: !taskRow.done && taskRow.due.kind !== 'today'
