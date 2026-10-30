@@ -92,6 +92,15 @@ Item {
 		if (!navigation) {
 			fetchNeeded = true
 		}
+		// A month in memory: shown right away (paging slides it in already filled).
+		if (navigation && !fetchNeeded && !eventModel.fetchRound) {
+			var range = agendaModel.getDateRange(agendaModel.currentMonth)
+			if (eventModel.cachedRange(range.min, range.max)) {
+				updateEventsTimer.stop()
+				deferredUpdateEvents()
+				return
+			}
+		}
 		updateEventsTimer.restart()
 	}
 	Timer {
@@ -516,7 +525,7 @@ Item {
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onCachedRangeShown() {
-			if (popup) popup.deferredUpdateUI()
+			if (popup) popup.updateUI() // Right away: before the paged month's first frame
 		}
 		function onEventUpdated(calendarId, eventId, data) {
 			if (popup) popup.deferredUpdateUI()

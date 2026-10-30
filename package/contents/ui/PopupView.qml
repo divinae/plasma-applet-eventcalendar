@@ -110,13 +110,13 @@ MouseArea {
 			popup.switchStart = 0
 		}
 	}
-	// A view switched to fades in and rises a little into place (SlideIn): only the one shown.
+	// A view switched to fades in (SlideIn, no movement: a shift read as a jump); only the one shown.
 	SlideIn { id: weekViewSlide; target: weekViewLoader; shift: weekViewShift }
 	SlideIn { id: tasksViewSlide; target: tasksViewLoader; shift: tasksViewShift }
 	SlideIn { id: widgetGridSlide; target: widgetGrid; shift: widgetGridShift }
 	function slideViewIn() {
 		var slide = hourGridMode ? weekViewSlide : tasksMode ? tasksViewSlide : widgetGridSlide
-		slide.run(0, 1)
+		slide.run(0, 0)
 	}
 	onCurrentViewChanged: {
 		switchStart = Date.now()

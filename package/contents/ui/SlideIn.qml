@@ -23,7 +23,30 @@ ParallelAnimation {
 		var mirror = Qt.application.layoutDirection === Qt.RightToLeft ? -1 : 1
 		xMove.from = shift ? (dx || 0) * mirror * distance : 0
 		yMove.from = shift ? (dy || 0) * distance * 0.5 : 0
-		start()
+		// In place at once; moving from the next frame on: the new content is built (and filled)
+		// before that frame, and an animation started now would skip its first part meanwhile.
+		if (shift) {
+			shift.x = xMove.from
+			shift.y = yMove.from
+		}
+		if (fade) {
+			target.opacity = 0
+		}
+		var window = target.Window.window
+		if (window) {
+			startAfterFrame.target = window
+			startAfterFrame.enabled = true
+		} else {
+			start()
+		}
+	}
+	property Connections startAfterFrame: Connections {
+		enabled: false
+		ignoreUnknownSignals: true
+		function onFrameSwapped() {
+			slideIn.startAfterFrame.enabled = false
+			slideIn.start()
+		}
 	}
 
 	NumberAnimation {
