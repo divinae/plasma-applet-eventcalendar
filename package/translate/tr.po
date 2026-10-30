@@ -1505,7 +1505,8 @@ msgstr "Sıradakiler gösterir"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "The days after the shown one; later ones under \"Show more\""
-msgstr "Gösterilen günden sonraki günler; sonrakiler \"Daha fazla göster\" altında"
+msgstr ""
+"Gösterilen günden sonraki günler; sonrakiler \"Daha fazla göster\" altında"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgctxt "number of days"

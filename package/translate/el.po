@@ -1533,7 +1533,8 @@ msgstr "Τα επόμενα δείχνουν"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "The days after the shown one; later ones under \"Show more\""
-msgstr "Οι ημέρες μετά την εμφανιζόμενη· οι επόμενες στο «Εμφάνιση περισσότερων»"
+msgstr ""
+"Οι ημέρες μετά την εμφανιζόμενη· οι επόμενες στο «Εμφάνιση περισσότερων»"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgctxt "number of days"
