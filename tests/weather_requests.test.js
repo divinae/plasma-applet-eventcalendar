@@ -94,7 +94,8 @@ assert.deepStrictEqual(plain(hourly[0]), {
 assert.strictEqual(response.list[0].temp, undefined, 'the cached response is left as it was')
 
 const current = OWM.parseCurrentData({ dt: 90, main: { temp: 12.5 }, weather: w(800, '01d', 'clear sky') }, 'metric')
-assert.deepStrictEqual(plain(current), { dt: 90, temp: 12.5, iconName: 'weather-clear', text: 'Clear sky', description: 'clear sky', precipitation: 0 })
+assert.deepStrictEqual(plain(current), { dt: 90, temp: 12.5, iconName: 'weather-clear', text: 'Clear sky', description: 'clear sky', precipitation: 0, place: '' })
+assert.strictEqual(OWM.parseCurrentData({ dt: 90, main: { temp: 1 }, name: 'Warsaw', sys: { country: 'PL' } }, 'metric').place, 'Warsaw, PL', 'the city as the location')
 assert.strictEqual(OWM.parseCurrentData({}, 'metric'), null)
 
 // An update: the forecast and the current weather (/weather), which daily and hourly share.

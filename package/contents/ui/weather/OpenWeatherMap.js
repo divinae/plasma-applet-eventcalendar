@@ -203,6 +203,8 @@ function parseCurrentData(data, units) {
 		text: sentence(weather ? weather.description : ''),
 		description: weather ? weather.description : '',
 		precipitation: amount(data.rain, '1h') + amount(data.snow, '1h'),
+		// The city's name (/weather; One Call has none), shown as the panel's location.
+		place: data.name ? String(data.name) + (data.sys && data.sys.country ? ', ' + data.sys.country : '') : '',
 	}
 }
 

@@ -17,7 +17,8 @@ function nowIndex(points, nowMs) {
 
 // Night or day for each point, from its icon: a night icon (weather-clear-night, ...) is night,
 // one that has a night variant (weather-clear, ...) is day. The others (overcast, fog, snow, ...)
-// look the same at night: they take the nearest point that tells, earlier ones first.
+// look the same at night: by their local hour (dt: night from 20:00 to 6:00), else (no dt) they
+// take the nearest point that tells, earlier ones first.
 var DAY_ICONS = [
 	'weather-clear', 'weather-few-clouds', 'weather-clouds', 'weather-showers', 'weather-showers-scattered',
 	'weather-snow-rain', 'weather-snow-scattered-day', 'weather-storm',
@@ -28,7 +29,14 @@ function nightFlags(points) {
 		if (name.indexOf('night') >= 0) {
 			return true
 		}
-		return DAY_ICONS.indexOf(name) >= 0 ? false : null
+		if (DAY_ICONS.indexOf(name) >= 0) {
+			return false
+		}
+		if (isFinite(point.dt)) {
+			var hour = new Date(point.dt * 1000).getHours()
+			return hour >= 20 || hour < 6
+		}
+		return null
 	})
 	return known.map(function(night, i) {
 		for (var d = 1; night === null && d < known.length; d++) {

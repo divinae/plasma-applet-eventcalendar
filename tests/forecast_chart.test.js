@@ -21,11 +21,16 @@ assert.strictEqual(C.nowIndex(points, (1004 * hour) * 1000), -1, 'after the char
 assert.strictEqual(C.nowIndex([at(0)], 0), -1)
 
 //--- Nights
-const icons = names => names.map((iconName, i) => at(i, { iconName }))
+const icons = names => names.map(iconName => ({ iconName })) // No dt: by the icons alone
 assert.deepStrictEqual(plain(C.nightFlags(icons(['weather-clear', 'weather-overcast', 'weather-clear-night', 'weather-fog', 'weather-fog']))),
 	[false, false, true, true, true], 'overcast and fog: like the point before')
 assert.deepStrictEqual(plain(C.nightFlags(icons(['weather-fog', 'weather-clouds-night']))), [true, true], 'or after')
 assert.deepStrictEqual(plain(C.nightFlags(icons(['weather-fog', 'weather-snow']))), [false, false], 'unknown: day')
+{
+	const at = (h) => new Date(2026, 9, 30, h).getTime() / 1000
+	assert.deepStrictEqual(plain(C.nightFlags([{ iconName: 'weather-fog', dt: at(10) }, { iconName: 'weather-overcast', dt: at(22) }, { iconName: 'weather-clear-night', dt: at(23) }])),
+		[false, true, true], 'unknown: by the hour, not a later night icon')
+}
 assert.deepStrictEqual(plain(C.nightRanges(icons(['weather-clear', 'weather-clear-night', 'weather-clear-night', 'weather-clear']))),
 	[{ from: 0.5, to: 2.5 }])
 assert.deepStrictEqual(plain(C.nightRanges(icons(['weather-clear-night', 'weather-clear', 'weather-clear-night']))),
