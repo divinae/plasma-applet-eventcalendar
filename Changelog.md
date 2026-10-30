@@ -1,3 +1,9 @@
+## v1.12.1 - October 30 2026
+
+### Fixes
+* Dark themes: the date and time pickers of the event editor showed light text on a white background (#11).
+* Settings: "Up next shows" said "14 day" instead of "14 days".
+
 ## v1.12.0 - October 30 2026
 
 ### Faster
