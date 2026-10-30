@@ -9,7 +9,7 @@ import "Tasks.js" as Tasks
 
 // A small month calendar (the Day view, beside the hours): the month's name with previous / next,
 // the weekday initials, and the days of six weeks. Today is filled in the accent color (as in the
-// views' headers), the shown day (selectedDate) lightly tinted with its number in the accent color,
+// views' headers), the shown day (selectedDate) in an accent ring with its number in that color,
 // days of the months around are dimmed, and dots
 // under a day say how busy it is: 1 for 1-2 events, 2 for 3-4, 3 for 5 or more
 // (eventModel.eventsData, tasks left out), in the colors of its events. A click picks the day
@@ -141,12 +141,22 @@ ColumnLayout {
 					height: width
 					radius: width / 2
 					color: dayButton.isToday ? Kirigami.Theme.highlightColor
-						: dayButton.selected ? Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, dayButton.hovered ? 0.3 : 0.2)
 						: dayButton.hovered ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.1)
 						: "transparent"
-					// Today shown as well as selected: a ring in the tint around the filled circle.
-					border.width: dayButton.isToday && dayButton.selected ? 2 : 0
-					border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.35)
+					// The shown day: a ring in the accent color (today too: then a light one around it,
+					// see the ring below).
+					border.width: dayButton.selected && !dayButton.isToday ? 2 : 0
+					border.color: Kirigami.Theme.highlightColor
+					Rectangle {
+						visible: dayButton.selected && dayButton.isToday
+						anchors.centerIn: parent
+						width: parent.width + 4
+						height: width
+						radius: width / 2
+						color: "transparent"
+						border.width: 2
+						border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.45)
+					}
 				}
 				contentItem: Item {
 					PlasmaComponents3.Label {
