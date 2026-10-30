@@ -288,6 +288,8 @@ KCM.SimpleKCM {
 	property var cfg_access_tokenDefault
 	property var cfg_openWeatherMapAppId
 	property var cfg_openWeatherMapAppIdDefault
+	property var cfg_openWeatherMapApi
+	property var cfg_openWeatherMapApiDefault
 	property var cfg_openWeatherMapCityId
 	property var cfg_openWeatherMapCityIdDefault
 	property var cfg_weatherCanadaCityId

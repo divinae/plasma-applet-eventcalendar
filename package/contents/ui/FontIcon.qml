@@ -28,12 +28,13 @@ Item {
 	function getIconCode(name) {
 		var codeByName = {
 			'question': '?',
-			'weather-clear': '\uf00d',
-			'weather-clear-night': '\uf02e', // wi-day-sunny
-			'weather-clouds': '\uf041', // wi-cloud
-			'weather-clouds-night': '\uf041', // wi-cloud
-			'weather-few-clouds': '\uf002', // wi-day-cloudy
-			'weather-few-clouds-night': '\uf086', // wi-night-alt-cloudy
+			'weather-clear': '\uf00d', // wi-day-sunny
+			'weather-clear-night': '\uf02e', // wi-night-clear
+			// Partly cloudy: a sun (moon) behind a cloud; few clouds: a sun with a small one.
+			'weather-clouds': '\uf002', // wi-day-cloudy
+			'weather-clouds-night': '\uf086', // wi-night-alt-cloudy
+			'weather-few-clouds': '\uf00c', // wi-day-sunny-overcast
+			'weather-few-clouds-night': '\uf081', // wi-night-alt-partly-cloudy
 			'weather-fog': '\uf014', // wi-fog
 			'weather-freezing-rain': '\uf0b5', // wi-sleet
 			'weather-hail': '\uf015', // wi-hail

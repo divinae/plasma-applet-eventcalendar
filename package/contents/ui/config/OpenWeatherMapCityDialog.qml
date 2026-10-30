@@ -2,22 +2,30 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import org.kde.kitemmodels as KItemModels
 
 import ".."
 import "../lib"
 import "../lib/ConfigUtils.js" as ConfigUtils
 import "../lib/Requests.js" as Requests
 
+// Settings > Weather > OpenWeatherMap > Find City…: OpenWeatherMap's own search (data/2.5/find), the
+// largest places first, with their country and coordinates (one name can be several places).
 Dialog {
 	id: chooseCityDialog
 	title: i18n("Select city")
 	standardButtons: Dialog.Ok | Dialog.Cancel
 	modal: true
 
-	width: 500
-	height: 600
+	// Within the settings window, so the buttons stay in sight.
+	parent: Overlay.overlay
+	anchors.centerIn: parent
+	width: Math.min(Kirigami.Units.gridUnit * 30, parent ? parent.width - Kirigami.Units.gridUnit * 2 : 500)
+	height: Math.min(Kirigami.Units.gridUnit * 30, parent ? parent.height - Kirigami.Units.gridUnit * 2 : 600)
+
+	property string selectedCityId: ""
+	property var configBridge: null
 	property bool loadingCityList: false
+	property string statusText: "" // An error, or that nothing was found
 
 	Logger {
 		id: logger
@@ -25,23 +33,31 @@ Dialog {
 	}
 
 	ListModel { id: cityListModel }
-	KItemModels.KSortFilterProxyModel {
-		id: filteredCityListModel
-		// sourceModel: cityListModel // Link after populating cityListModel so the UI doesn't freeze.
-		filterRoleName: "name"
-		sortRoleName: "name"
-		filterCaseSensitivity: Qt.CaseInsensitive
-		sortCaseSensitivity: Qt.CaseInsensitive
-		filterRegularExpression: RegExp("")
-	}
-
-	property string selectedCityId: ""
-	property var configBridge: null
 
 	Timer {
-		id: debouceApplyFilter
-		interval: 1000
-		onTriggered: chooseCityDialog.applyCityListSearch()
+		id: debounceSearch
+		interval: 600
+		onTriggered: chooseCityDialog.searchCityList(cityNameInput.text)
+	}
+
+	onOpened: {
+		selectedCityId = ""
+		cityNameInput.forceActiveFocus()
+		cityNameInput.selectAll()
+	}
+	// OK needs a city.
+	onSelectedCityIdChanged: {
+		var ok = standardButton(Dialog.Ok)
+		if (ok) {
+			ok.enabled = !!selectedCityId
+		}
+	}
+	Component.onCompleted: {
+		configBridge = ConfigUtils.findBridge(chooseCityDialog)
+		var ok = standardButton(Dialog.Ok)
+		if (ok) {
+			ok.enabled = false
+		}
 	}
 
 	ColumnLayout {
@@ -49,149 +65,173 @@ Dialog {
 		spacing: Kirigami.Units.smallSpacing
 
 		LinkText {
+			Layout.fillWidth: true
 			text: i18n("Fetched from <a href=\"%1\">%1</a>", "https://openweathermap.org/find")
 		}
-		TextField {
+		Kirigami.SearchField {
 			id: cityNameInput
 			Layout.fillWidth: true
-			text: ""
-			placeholderText: i18n("Search")
-			onTextChanged: debouceApplyFilter.restart()
-		}
-
-		RowLayout {
-			Layout.fillWidth: true
-			spacing: Kirigami.Units.smallSpacing
-
-			Label {
-				text: i18n("Name")
-				font.bold: true
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 10
+			placeholderText: i18n("City name, eg: Berlin or Berlin, DE")
+			onTextEdited: debounceSearch.restart()
+			onAccepted: {
+				debounceSearch.stop()
+				chooseCityDialog.searchCityList(text)
 			}
-			Label {
-				text: i18n("Id")
-				font.bold: true
-				Layout.preferredWidth: Kirigami.Units.gridUnit * 6
-			}
-			Label {
-				text: i18n("City Webpage")
-				font.bold: true
-				Layout.fillWidth: true
+			Keys.onDownPressed: {
+				cityListView.forceActiveFocus()
+				if (cityListView.count > 0) {
+					cityListView.currentIndex = 0
+				}
 			}
 		}
 
-		ListView {
-			id: cityListView
+		ScrollView {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Layout.minimumHeight: 200
-			clip: true
-			focus: true
-			highlightFollowsCurrentItem: true
-			highlight: Rectangle {
-				color: Kirigami.Theme.highlightColor
-				opacity: 0.15
+			Component.onCompleted: {
+				if (background) {
+					background.visible = true // The list's frame
+				}
 			}
-			model: filteredCityListModel
 
-			delegate: RowLayout {
-				width: cityListView.width
-				spacing: Kirigami.Units.smallSpacing
-
-				MouseArea {
-					anchors.fill: parent
-					propagateComposedEvents: true
-					onClicked: {
-						cityListView.currentIndex = index
-						chooseCityDialog.selectedCityId = cityId
-						mouse.accepted = false
+			ListView {
+				id: cityListView
+				clip: true
+				model: cityListModel
+				currentIndex: -1
+				onCurrentIndexChanged: chooseCityDialog.selectedCityId = currentIndex >= 0 ? String(cityListModel.get(currentIndex).cityId) : ""
+				Keys.onReturnPressed: {
+					if (chooseCityDialog.selectedCityId) {
+						chooseCityDialog.accept()
 					}
-					onDoubleClicked: chooseCityDialog.accept()
 				}
 
-				Label {
-					text: name
-					textFormat: Text.PlainText // User text: never parsed as HTML
-					elide: Text.ElideRight
-					Layout.preferredWidth: Kirigami.Units.gridUnit * 10
+				delegate: ItemDelegate {
+					width: cityListView.width
+					highlighted: ListView.isCurrentItem
+					onClicked: cityListView.currentIndex = index
+					onDoubleClicked: {
+						cityListView.currentIndex = index
+						chooseCityDialog.accept()
+					}
+					contentItem: RowLayout {
+						spacing: Kirigami.Units.largeSpacing
+						ColumnLayout {
+							Layout.fillWidth: true
+							spacing: 0
+							Label {
+								Layout.fillWidth: true
+								text: model.name
+								textFormat: Text.PlainText // From the service: never parsed as HTML
+								elide: Text.ElideRight
+							}
+							Label {
+								Layout.fillWidth: true
+								text: model.details
+								textFormat: Text.PlainText
+								elide: Text.ElideRight
+								font: Kirigami.Theme.smallFont
+								opacity: 0.7
+							}
+						}
+						LinkText {
+							text: "<a href=\"https://openweathermap.org/city/" + model.cityId + "\">" + i18n("Open Link") + "</a>"
+							linkColor: parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.highlightColor
+						}
+					}
 				}
-				Label {
-					text: cityId
-					elide: Text.ElideRight
-					Layout.preferredWidth: Kirigami.Units.gridUnit * 6
-				}
-				LinkText {
-					Layout.fillWidth: true
-					text: "<a href=\"https://openweathermap.org/city/" + cityId + "\">" + i18n("Open Link") + "</a>"
-					linkColor: cityListView.currentIndex === index ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.linkColor
-				}
-			}
 
-			BusyIndicator {
-				anchors.centerIn: parent
-				running: visible
-				visible: chooseCityDialog.loadingCityList
+				Kirigami.PlaceholderMessage {
+					anchors.centerIn: parent
+					width: parent.width - Kirigami.Units.gridUnit * 2
+					visible: !chooseCityDialog.loadingCityList && cityListView.count === 0 && !!chooseCityDialog.statusText
+					text: chooseCityDialog.statusText
+				}
+				BusyIndicator {
+					anchors.centerIn: parent
+					running: visible
+					visible: chooseCityDialog.loadingCityList
+				}
 			}
 		}
 	}
 
-	function clearCityList() {
-		// clear list so that each append() doesn't rebuild the UI
-		filteredCityListModel.sourceModel = null
-		cityListModel.clear()
+	// "Bingen am Rhein, DE" / "Id 2948825 · 49.97° N, 7.90° E"
+	function coordinates(coord) {
+		if (!coord || !isFinite(coord.lat) || !isFinite(coord.lon)) {
+			return ""
+		}
+		var lat = Math.abs(coord.lat).toFixed(2) + "° " + (coord.lat >= 0 ? i18nc("north", "N") : i18nc("south", "S"))
+		var lon = Math.abs(coord.lon).toFixed(2) + "° " + (coord.lon >= 0 ? i18nc("east", "E") : i18nc("west", "W"))
+		return lat + ", " + lon
 	}
-
 	function parseCityList(data) {
-		for (var i = 0; i < data.list.length; i++) {
-			var item = data.list[i]
+		var list = data && data.list ? data.list : []
+		for (var i = 0; i < list.length; i++) {
+			var item = list[i]
+			var country = item.sys && item.sys.country ? item.sys.country : ""
 			cityListModel.append({
 				cityId: item.id,
-				name: item.name + ", " + item.sys.country,
+				name: item.name + (country ? ", " + country : ""),
+				details: [i18nc("OpenWeatherMap city id", "Id %1", String(item.id)), coordinates(item.coord)].filter(function(s) { return !!s }).join(" · "),
 			})
 		}
 	}
 
-	function applyCityListSearch() {
-		searchCityList(cityNameInput.text)
-	}
-
+	property int searchGeneration: 0 // Answers to an older search are dropped.
 	function searchCityList(q) {
+		q = String(q || "").trim()
 		logger.debug("searchCityList", q)
-		clearCityList()
-		if (q) {
-			chooseCityDialog.loadingCityList = true
-			fetchCityList({
-				appId: configBridge ? configBridge.read("openWeatherMapAppId", "") : "",
-				q: q,
-			}, function(err, data, xhr) {
-				if (err) {
-					chooseCityDialog.loadingCityList = false
-					return console.log('searchCityList.err', err, xhr && xhr.status)
-				}
-				logger.debug('searchCityList.response')
-				logger.debugJSON('searchCityList.response', data)
-
-				parseCityList(data)
-
-				// link after populating so that each append() doesn't attempt to rebuild the UI.
-				filteredCityListModel.sourceModel = cityListModel
-
-				chooseCityDialog.loadingCityList = false
-			})
+		cityListModel.clear()
+		cityListView.currentIndex = -1
+		statusText = ""
+		var generation = ++searchGeneration
+		if (!q) {
+			loadingCityList = false
+			return
 		}
+		loadingCityList = true
+		fetchCityList({
+			appId: configBridge ? configBridge.read("openWeatherMapAppId", "") : "",
+			q: q,
+		}, function(err, data, xhr) {
+			if (generation !== searchGeneration) {
+				return
+			}
+			loadingCityList = false
+			if (err) {
+				console.log('[eventcalendar] searchCityList.err', err, xhr && xhr.status)
+				var body = data
+				if (typeof body === "string") {
+					try {
+						body = JSON.parse(body) // An error's body comes unparsed: { cod, message }
+					} catch (e) {
+						body = null
+					}
+				}
+				var message = body && body.message ? body.message : String(err)
+				statusText = xhr && xhr.status === 401
+					? i18n("OpenWeatherMap didn't accept the app id: %1", message)
+					: i18n("The search failed: %1", message)
+				return
+			}
+			parseCityList(data)
+			if (cityListModel.count === 0) {
+				statusText = i18n("No city found.")
+			}
+		})
 	}
-
-	Component.onCompleted: configBridge = ConfigUtils.findBridge(chooseCityDialog)
 
 	function fetchCityList(args, callback) {
-		if (!args.appId) return callback("OpenWeatherMap AppId not set")
-
+		if (!args.appId) {
+			return callback(i18n("No app id set."))
+		}
 		var url = "https://api.openweathermap.org/data/2.5/"
 		url += "find?q=" + encodeURIComponent(args.q)
 		url += "&type=like"
 		url += "&sort=population"
 		url += "&cnt=30"
-		url += "&appid=" + args.appId
+		url += "&appid=" + encodeURIComponent(args.appId)
 		Requests.getJSON(url, callback)
 	}
 }

@@ -260,7 +260,6 @@ msgid "Edit Calendar"
 msgstr "달력 편집"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "이름"
@@ -1516,6 +1515,46 @@ msgid "Debug logging and extra settings pages"
 msgstr "디버그 로그 및 추가 설정 페이지"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "원본"
 
@@ -1544,7 +1583,6 @@ msgid "City name, eg: Warszawa"
 msgstr "도시 이름, 예: Seoul"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1577,6 +1615,55 @@ msgstr "API 앱 ID"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
 msgstr "OpenWeatherMap에 필요"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1695,19 +1782,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "<a href=\"%1\">%1</a>에서 가져옴"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "ID"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "도시 웹페이지"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr ""
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "링크 열기"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr ""
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1721,6 +1843,14 @@ msgstr "목록 이름 바꾸기…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "목록 삭제…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "ID"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "도시 웹페이지"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -2954,6 +3084,26 @@ msgstr "날씨 API의 제한에 도달하였습니다"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3828,6 +3978,106 @@ msgstr "M월 d일 dddd"
 msgid "Nothing planned in the coming days."
 msgstr "앞으로 며칠 동안 계획된 일정이 없습니다."
 
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "비"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr ""
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "여기에 일기 예보를 표시하려면 설정 > 날씨에서 위치를 설정하십시오."
@@ -3851,8 +4101,9 @@ msgid "No forecast for this day."
 msgstr "이 날의 일기 예보가 없습니다."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "다음 12시간"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] ""
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -3911,6 +4162,9 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Next 12 hours"
+#~ msgstr "다음 12시간"
 
 #~ msgid "Task list shown"
 #~ msgstr "표시할 작업 목록"
@@ -4531,9 +4785,6 @@ msgstr "근무 위치: %1"
 
 #~ msgid "Grid"
 #~ msgstr "격자"
-
-#~ msgid "Rain"
-#~ msgstr "비"
 
 #~ msgid "Positive Temp"
 #~ msgstr "영상"

@@ -110,6 +110,8 @@ Item {
 	}
 
 	//--- Weather
+	// Every hour; force: now (a view that needs the hourly forecast, Retry, settings). The weather
+	// services' RequestCache answers repeats within 10 minutes without a request.
 	function updateWeather(force) {
 		if (WeatherApi.weatherIsSetup(plasmoid.configuration)) {
 			// update every hour
@@ -186,19 +188,27 @@ Item {
 			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
 			errorMessage += '\n' + i18n("Will try again soon.")
 			logic.lastForecastErr = errorMessage
+		} else if (xhr && xhr.status === 401 && plasmoid.configuration.weatherService === 'OpenWeatherMap') {
+			// "Invalid API key" also when the key is fine but not for this API (One Call 3.0 without
+			// the subscription).
+			lastForecastAt = Date.now()
+			logic.lastForecastErr = plasmoid.configuration.openWeatherMapApi === 'onecall'
+				? i18n("OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or choose Free (2.5) in Settings > Weather.")
+				: i18n("OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; check it in Settings > Weather.")
 		} else {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			logic.lastForecastErr = err
 		}
 	}
 
-	// Server errors: retried after 30 s, 1, 2, then every 5 minutes, until a forecast arrives.
+	// Server errors: retried after 30 s, 1, 2, 5, 5, 5 minutes, then every 30 minutes (a longer
+	// outage), until a forecast arrives.
 	property int weatherRetries: 0
 	function scheduleWeatherRetry() {
 		if (weatherRetryTimer.running) {
 			return // Daily and hourly both failed: one retry
 		}
-		var delays = [30, 60, 120, 300]
+		var delays = [30, 60, 120, 300, 300, 300, 1800]
 		weatherRetryTimer.interval = delays[Math.min(weatherRetries, delays.length - 1)] * 1000
 		weatherRetries++
 		weatherRetryTimer.start()
@@ -213,9 +223,34 @@ Item {
 		weatherRetryTimer.stop()
 	}
 
+	// The weather texts in the widget's language: OpenWeatherMap's from the service (its code for the
+	// language, a translation), Open-Meteo's from ours. The parsed items are new objects each time.
+	function setWeatherLanguage() {
+		WeatherApi.setLanguage(i18nc("The language code for OpenWeatherMap's weather texts, as listed on https://openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours isn't there", "en"))
+	}
+	function localizedWeather(data) {
+		if (!data || plasmoid.configuration.weatherService !== 'OpenMeteo') {
+			return data
+		}
+		function localize(item) {
+			if (item && item.text) {
+				item.text = i18n(item.text)
+			}
+			if (item && item.description) {
+				item.description = i18n(item.description)
+			}
+		}
+		;(data.list || []).forEach(localize)
+		if (data.current && (data.list || []).indexOf(data.current) < 0) {
+			localize(data.current)
+		}
+		return data
+	}
+
 	function updateDailyWeather() {
 		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateDailyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
@@ -228,7 +263,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.dailyWeatherData = data
+			logic.dailyWeatherData = localizedWeather(data)
 			if (data.current) {
 				logic.currentWeatherData = data.current
 			}
@@ -239,6 +274,7 @@ Item {
 	function updateHourlyWeather() {
 		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
 		logic.weatherRequests++
+		setWeatherLanguage()
 		WeatherApi.updateHourlyWeather(plasmoid.configuration, function(err, data, xhr) {
 			logic.weatherRequests = Math.max(0, logic.weatherRequests - 1)
 			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
@@ -251,7 +287,7 @@ Item {
 			logic.weatherNetworkFailed = false
 			logic.weatherArrived()
 			logic.networkRecovered()
-			logic.hourlyWeatherData = data
+			logic.hourlyWeatherData = localizedWeather(data)
 			logic.currentWeatherData = data.current || data.list[0]
 			if (popup) popup.updateMeteogram()
 		})
@@ -297,6 +333,7 @@ Item {
 		function onOpenMeteoLongitudeChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapAppIdChanged() { logic.resetWeatherAndUpdate() }
 		function onOpenWeatherMapCityIdChanged() { logic.resetWeatherAndUpdate() }
+		function onOpenWeatherMapApiChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherUnitsChanged() { logic.updateWeather(true) }
 		function onWidgetShowMeteogramChanged() {

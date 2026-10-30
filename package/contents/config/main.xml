@@ -546,6 +546,10 @@
 		<entry name="openWeatherMapCityId" type="uint">
 			<default>0</default>
 		</entry>
+		<entry name="openWeatherMapApi" type="string">
+			<!-- enum: free (2.5, any app id), onecall (3.0, the "One Call by Call" subscription) -->
+			<default>free</default>
+		</entry>
 		<!-- WeatherCanada -->
 		<entry name="weatherCanadaCityId" type="string">
 			<default></default>

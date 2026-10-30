@@ -341,7 +341,9 @@ ColumnLayout {
 	readonly property bool chartRainAmounts: plasmoid.configuration.weatherChartRainAmounts
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
-		text: panel.isToday ? i18n("Next 12 hours") : i18nc("weather by hour of the shown day", "During the day")
+		// The hours the chart spans: 12 by the hour, 36 in 3 hour steps (OpenWeatherMap's free API).
+		readonly property int hours: hourChart.points.length > 1 ? Math.round((hourChart.points[hourChart.points.length - 1].dt - hourChart.points[0].dt) / 3600) : 0
+		text: panel.isToday ? i18np("Next hour", "Next %1 hours", hours) : i18nc("weather by hour of the shown day", "During the day")
 		readonly property real rain: ForecastChart.rainTotal(hourChart.points)
 		detail: panel.chartRainAmounts && rain > 0 ? i18nc("precipitation during the hours of the chart", "Rain: %1", panel.precipitationText(rain)) : ""
 	}
@@ -620,37 +622,59 @@ ColumnLayout {
 	}
 
 	//--- Next days: day, icon, high / low. With the chart's larger icons, larger here too and the
-	// text to fit them.
+	// text to fit them. The days given (a week at most, as far as the weather service goes:
+	// OpenWeatherMap's free API about 5), as many as fit in maxHeight, whole rows only.
+	property real maxHeight: Infinity
 	readonly property bool largeIcons: plasmoid.configuration.weatherChartLargeIcons
 	readonly property real nextDaysFontScale: largeIcons ? 1.15 : 1
+	readonly property bool nextDaysWanted: showData && !compact && showNextDays && nextDays.length > 0
+	FontMetrics {
+		id: nextDaysFontMetrics
+		font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
+	}
+	readonly property real nextDaysRowStep: Math.ceil(Math.max(nextDaysFontMetrics.height, largeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small)) + nextDaysList.spacing
+	// The rest of the panel: its height without the day rows (which don't change it, no loop).
+	readonly property real heightBesideDays: implicitHeight - nextDaysList.implicitHeight
+	readonly property int nextDaysShown: {
+		if (!nextDaysWanted) {
+			return 0
+		}
+		var room = maxHeight - heightBesideDays + nextDaysList.spacing
+		return Math.max(1, Math.min(nextDays.length, Math.floor(room / nextDaysRowStep)))
+	}
 	SectionTitle {
-		visible: panel.showData && !panel.compact && panel.showNextDays && panel.nextDays.length > 0
+		visible: panel.nextDaysWanted
 		text: i18n("Next days")
 	}
-	Repeater {
-		model: panel.showData && !panel.compact && panel.showNextDays ? panel.nextDays.slice(0, 4) : []
-		RowLayout {
-			Layout.fillWidth: true
-			Layout.topMargin: index > 0 ? 2 : 0
-			spacing: Kirigami.Units.smallSpacing
-			PlasmaComponents3.Label {
+	ColumnLayout {
+		id: nextDaysList
+		visible: panel.nextDaysWanted
+		Layout.fillWidth: true
+		spacing: 2
+		Repeater {
+			model: panel.nextDaysWanted ? panel.nextDays.slice(0, panel.nextDaysShown) : []
+			RowLayout {
 				Layout.fillWidth: true
-				elide: Text.ElideRight
-				text: Qt.locale().dayName(new Date(modelData.dt * 1000).getDay(), Locale.LongFormat)
-				font.capitalization: Font.Capitalize
-				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
-			}
-			Kirigami.Icon {
-				source: WeatherIcons.source(modelData.iconName, plasmoid.configuration.weatherIconStyle)
-				fallback: modelData.iconName
-				Layout.preferredWidth: panel.largeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
-				Layout.preferredHeight: Layout.preferredWidth
-			}
-			PlasmaComponents3.Label {
-				Layout.preferredWidth: Math.round(Kirigami.Units.gridUnit * 4 * panel.nextDaysFontScale)
-				horizontalAlignment: Text.AlignRight
-				text: Shared.formatTemp(modelData.temp.max) + " / " + Shared.formatTemp(modelData.temp.min)
-				font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
+				spacing: Kirigami.Units.smallSpacing
+				PlasmaComponents3.Label {
+					Layout.fillWidth: true
+					elide: Text.ElideRight
+					text: Qt.locale().dayName(new Date(modelData.dt * 1000).getDay(), Locale.LongFormat)
+					font.capitalization: Font.Capitalize
+					font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
+				}
+				Kirigami.Icon {
+					source: WeatherIcons.source(modelData.iconName, plasmoid.configuration.weatherIconStyle)
+					fallback: modelData.iconName
+					Layout.preferredWidth: panel.largeIcons ? Kirigami.Units.iconSizes.smallMedium : Kirigami.Units.iconSizes.small
+					Layout.preferredHeight: Layout.preferredWidth
+				}
+				PlasmaComponents3.Label {
+					Layout.preferredWidth: Math.round(Kirigami.Units.gridUnit * 4 * panel.nextDaysFontScale)
+					horizontalAlignment: Text.AlignRight
+					text: Shared.formatTemp(modelData.temp.max) + " / " + Shared.formatTemp(modelData.temp.min)
+					font.pointSize: appletConfig.fontPoints(Kirigami.Theme.defaultFont) * panel.nextDaysFontScale
+				}
 			}
 		}
 	}

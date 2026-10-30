@@ -265,7 +265,6 @@ msgid "Edit Calendar"
 msgstr "Editar calendário"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 msgid "Name"
 msgstr "Nome"
@@ -1537,6 +1536,46 @@ msgid "Debug logging and extra settings pages"
 msgstr "Registro de depuração e páginas de configuração extras"
 
 #: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may use"
+msgid "yes"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "an API the app id may not use"
+msgid "no"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgctxt "%1 = error"
+msgid "failed (%1)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Current weather, 3 hour steps: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "16 days (paid plan): %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Choose One Call 3.0 above: by the hour and 8 days."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Not subscribed to One Call 3.0: choose Free (2.5) above."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
 msgid "Source"
 msgstr "Origem"
 
@@ -1565,7 +1604,6 @@ msgid "City name, eg: Warszawa"
 msgstr "Nome da cidade, ex.: Warszawa"
 
 #: ../contents/ui/config/ConfigWeather.qml
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Search"
@@ -1598,6 +1636,55 @@ msgstr "ID do app da API"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Required for OpenWeatherMap"
 msgstr "Obrigatório para o OpenWeatherMap"
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "API"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Free (2.5)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One Call 3.0"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Checking…"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "Check App Id"
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"Free (2.5) works with any app id: the current weather and a forecast in 3 "
+"hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
+"one, the days are made from the 3 hour steps."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"One Call 3.0 needs the \"One Call by Call\" subscription on <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 calls a day are free, a payment card is required): the current "
+"weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
+"most every 10 minutes, about 150 calls a day."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid "One app id works for both: Check App Id tells what yours may use."
+msgstr ""
+
+#: ../contents/ui/config/ConfigWeather.qml
+msgid ""
+"The built-in app id is shared by everyone using this widget, and so is its "
+"request limit: the weather may stop updating at times. A free app id of your "
+"own: sign up at <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
+"needs none."
+msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1716,19 +1803,54 @@ msgid "Fetched from <a href=\"%1\">%1</a>"
 msgstr "Dados obtidos de <a href=\"%1\">%1</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "Id"
-msgstr "Id"
-
-#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
-#: ../contents/ui/config/WeatherCanadaCityDialog.qml
-msgid "City Webpage"
-msgstr "Página Web da Cidade"
+msgid "City name, eg: Berlin or Berlin, DE"
+msgstr ""
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml ../contents/ui/TaskRow.qml
 msgid "Open Link"
 msgstr "Abir Link"
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "north"
+msgid "N"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "south"
+msgid "S"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "east"
+msgid "E"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "west"
+msgid "W"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgctxt "OpenWeatherMap city id"
+msgid "Id %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "OpenWeatherMap didn't accept the app id: %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "The search failed: %1"
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No city found."
+msgstr ""
+
+#: ../contents/ui/config/OpenWeatherMapCityDialog.qml
+msgid "No app id set."
+msgstr ""
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -1742,6 +1864,14 @@ msgstr "Renomear lista…"
 #: ../contents/ui/TasksView.qml
 msgid "Delete list…"
 msgstr "Remover lista…"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "Id"
+msgstr "Id"
+
+#: ../contents/ui/config/WeatherCanadaCityDialog.qml
+msgid "City Webpage"
+msgstr "Página Web da Cidade"
 
 #: ../contents/ui/DateTimeSelector.qml ../contents/ui/EventEditView.qml
 msgctxt "event editor date format"
@@ -2999,6 +3129,26 @@ msgstr "Limite da API do clima alcançada"
 
 #: ../contents/ui/Logic.qml
 msgid ""
+"OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
+"choose Free (2.5) in Settings > Weather."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid ""
+"OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
+"check it in Settings > Weather."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgctxt ""
+"The language code for OpenWeatherMap's weather texts, as listed on https://"
+"openweathermap.org/current#multi (eg: de, fr, pt_br, zh_cn); en if yours "
+"isn't there"
+msgid "en"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
 "Google Calendar and sign in to that account again."
 msgstr ""
@@ -3884,6 +4034,106 @@ msgstr "dddd, d MMM"
 msgid "Nothing planned in the coming days."
 msgstr "Nada planejado para os próximos dias."
 
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Mainly clear"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Partly cloudy"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Overcast"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rime fog"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing drizzle"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain"
+msgstr "Chuva"
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Freezing rain"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Light snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow grains"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy rain showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Heavy snow showers"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Thunderstorm with hail"
+msgstr ""
+
+#: ../contents/ui/weather/OpenMeteo.js
+msgid "Unknown"
+msgstr ""
+
 #: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr ""
@@ -3908,8 +4158,10 @@ msgid "No forecast for this day."
 msgstr "Sem previsão para este dia."
 
 #: ../contents/ui/WeatherPanel.qml
-msgid "Next 12 hours"
-msgstr "Próximas 12 horas"
+msgid "Next hour"
+msgid_plural "Next %1 hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../contents/ui/WeatherPanel.qml
 msgctxt "weather by hour of the shown day"
@@ -3970,6 +4222,9 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgid "Next 12 hours"
+#~ msgstr "Próximas 12 horas"
 
 #~ msgid "Task list shown"
 #~ msgstr "Lista de tarefas mostrada"
@@ -4598,9 +4853,6 @@ msgstr "Local de trabalho: %1"
 
 #~ msgid "Grid"
 #~ msgstr "Grade"
-
-#~ msgid "Rain"
-#~ msgstr "Chuva"
 
 #~ msgid "Positive Temp"
 #~ msgstr "Temperatura Positiva"
