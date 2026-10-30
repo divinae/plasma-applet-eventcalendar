@@ -8,8 +8,9 @@ import "Shared.js" as Shared
 import "Tasks.js" as Tasks
 
 // A small month calendar (the Day view, beside the hours): the month's name with previous / next,
-// the weekday initials, and the days of six weeks. The shown day (selectedDate) is filled in the
-// accent color, today is in the accent color, days of the months around are dimmed, and dots
+// the weekday initials, and the days of six weeks. Today is filled in the accent color (as in the
+// views' headers), the shown day (selectedDate) lightly tinted with its number in the accent color,
+// days of the months around are dimmed, and dots
 // under a day say how busy it is: 1 for 1-2 events, 2 for 3-4, 3 for 5 or more
 // (eventModel.eventsData, tasks left out), in the colors of its events. A click picks the day
 // (dayClicked); the month shown follows selectedDate and can be paged through on its own.
@@ -139,9 +140,13 @@ ColumnLayout {
 					width: Math.min(parent.width, parent.height) - 2
 					height: width
 					radius: width / 2
-					color: dayButton.selected ? Kirigami.Theme.highlightColor
+					color: dayButton.isToday ? Kirigami.Theme.highlightColor
+						: dayButton.selected ? Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, dayButton.hovered ? 0.3 : 0.2)
 						: dayButton.hovered ? Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.1)
 						: "transparent"
+					// Today shown as well as selected: a ring in the tint around the filled circle.
+					border.width: dayButton.isToday && dayButton.selected ? 2 : 0
+					border.color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.35)
 				}
 				contentItem: Item {
 					PlasmaComponents3.Label {
@@ -151,10 +156,10 @@ ColumnLayout {
 						textFormat: Text.PlainText
 						font.pointSize: Kirigami.Theme.smallFont.pointSize
 						font.weight: dayButton.isToday || dayButton.selected ? Font.Bold : Font.Normal
-						color: dayButton.selected ? Kirigami.Theme.highlightedTextColor
-							: dayButton.isToday ? Kirigami.Theme.highlightColor
+						color: dayButton.isToday ? Kirigami.Theme.highlightedTextColor
+							: dayButton.selected ? Kirigami.Theme.highlightColor
 							: Kirigami.Theme.textColor
-						opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
+						opacity: dayButton.inMonth || dayButton.selected || dayButton.isToday ? 1 : 0.45
 					}
 					// How busy: 1-3 small dots under the number, in the colors of the day's events.
 					Row {
@@ -169,9 +174,9 @@ ColumnLayout {
 								height: 4
 								radius: 2
 								// The events' colors as their bars elsewhere (the Google palette setting).
-								color: dayButton.selected ? Kirigami.Theme.highlightedTextColor
+								color: dayButton.isToday ? Kirigami.Theme.highlightedTextColor
 									: modelData ? appletConfig.eventBarColor(appletConfig.eventColor(modelData)) : Kirigami.Theme.highlightColor
-								opacity: dayButton.inMonth || dayButton.selected ? 1 : 0.45
+								opacity: dayButton.inMonth || dayButton.selected || dayButton.isToday ? 1 : 0.45
 							}
 						}
 					}
