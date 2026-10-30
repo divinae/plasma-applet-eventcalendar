@@ -107,10 +107,22 @@ Item {
 		}
 		if (subtaskId) {
 			eventModel.toggleSubtask(item, subtaskId, next, saved)
+		} else if (next && appletConfig.animations && typeof eventModel.later === "function") {
+			// Done: the check pops and the title is struck through here first, then the task moves
+			// (to Completed) a moment later (EventModel.later: saved even if this row is gone).
+			var model = eventModel
+			popAnimation.restart()
+			model.later(function() { model.toggleTask(item, next, saved) })
 		} else {
 			eventModel.toggleTask(item, next, saved)
 		}
 		toggled(next)
+	}
+	// The check when a task is marked done: up a little and back.
+	SequentialAnimation {
+		id: popAnimation
+		NumberAnimation { target: taskCheck; property: "scale"; to: 1.3; duration: appletConfig.shortDuration * 0.6; easing.type: Easing.OutQuad }
+		NumberAnimation { target: taskCheck; property: "scale"; to: 1; duration: appletConfig.shortDuration; easing.type: Easing.OutBack }
 	}
 
 	// The islands style's look (like TickTick): a rounded square with a neutral border (red when

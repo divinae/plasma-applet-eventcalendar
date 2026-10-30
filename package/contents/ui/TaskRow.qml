@@ -74,7 +74,8 @@ LinkRect {
 	readonly property color listColor: appletConfig.eventColoredTextColor(eventStyle.color)
 	// Done, also while a click on the check is being saved.
 	readonly property bool done: taskCheck.done
-	readonly property real doneOpacity: done ? 0.55 : 1
+	property real doneOpacity: done ? 0.55 : 1
+	Behavior on doneOpacity { NumberAnimation { duration: appletConfig.longDuration } }
 	readonly property bool overdue: due.kind === 'overdue' && !done
 	readonly property var due: {
 		var parts = today.split('-')

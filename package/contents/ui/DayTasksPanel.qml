@@ -314,9 +314,14 @@ ColumnLayout {
 
 	PlasmaComponents3.ScrollView {
 		id: scrollView
-		visible: dayTasks.open && (dayTasks.taskRows.length > 0 || dayTasks.doneCount > 0)
+		readonly property bool wanted: dayTasks.open && (dayTasks.taskRows.length > 0 || dayTasks.doneCount > 0)
+		// Folding (the strip's arrow, "N completed"): the height eases open and closed.
+		readonly property real targetHeight: wanted ? Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight) : 0
+		visible: wanted || height > 0.5
+		clip: true
 		Layout.fillWidth: true
-		Layout.preferredHeight: Math.min(taskColumn.implicitHeight, dayTasks.maxListHeight)
+		Layout.preferredHeight: targetHeight
+		Behavior on Layout.preferredHeight { NumberAnimation { duration: appletConfig.longDuration; easing.type: Easing.OutCubic } }
 		contentWidth: availableWidth
 		QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
 		QQC2.ScrollBar.vertical: OverlayScrollBar {

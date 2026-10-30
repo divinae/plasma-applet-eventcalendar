@@ -353,6 +353,23 @@ CalendarManager {
 		fetchAll()
 	}
 
+	// Runs fn a moment later (a task marked done: its row shows it before it moves), once for all
+	// queued meanwhile. Here, not in the row: the row may be rebuilt before.
+	property var laterQueue: []
+	function later(fn) {
+		laterQueue.push(fn)
+		laterTimer.restart()
+	}
+	Timer {
+		id: laterTimer
+		interval: 350
+		onTriggered: {
+			var queue = eventModel.laterQueue
+			eventModel.laterQueue = []
+			queue.forEach(function(fn) { fn() })
+		}
+	}
+
 	//--- Months seen this session, in memory (no network for a month shown again): what each fetch
 	// round loaded, { min, max, center (the month it was fetched around, "yyyy-m"), at,
 	// eventsByCalendar }. A fetch covers the month before and after too (Logic.deferredUpdateEvents),

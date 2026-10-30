@@ -359,6 +359,13 @@ MouseArea {
 	//--- New / edit event form, on top of everything.
 	property bool editorOpen: false
 	property var editorEvent: null // null: new event
+	// What the details and editor cards show: the event while open, kept while they fade out after
+	// closing (detailsEvent / editorEvent are cleared right away).
+	property var shownDetailsEvent: null
+	onDetailsEventChanged: if (detailsEvent) shownDetailsEvent = detailsEvent
+	property var shownEditorEvent: null
+	onEditorOpenChanged: if (editorOpen) shownEditorEvent = editorEvent
+	onEditorEventChanged: if (editorOpen) shownEditorEvent = editorEvent
 	property date editorDate: new Date()
 	property var editorStart: null
 	property string editorTitle: ""
@@ -618,7 +625,7 @@ MouseArea {
 
 		OverlayCard {
 			id: searchOverlay
-			visible: popup.searchOpen
+			open: popup.searchOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.closeSearch()
 			cardComponent: visible ? searchCard : null
@@ -633,7 +640,7 @@ MouseArea {
 
 		OverlayCard {
 			id: eventDetailsOverlay
-			visible: !!popup.detailsEvent
+			open: !!popup.detailsEvent
 			anchors.fill: parent
 			framed: false // The card draws its own frame
 			onOutsideClicked: popup.closeEventDetails()
@@ -641,7 +648,7 @@ MouseArea {
 			Component {
 				id: eventDetailsCard
 				EventDetailsView {
-					eventItem: popup.detailsEvent
+					eventItem: popup.shownDetailsEvent // Kept while the card fades out
 					onCloseRequested: popup.closeEventDetails()
 					onEditRequested: popup.editEvent(popup.detailsEvent)
 					onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
@@ -650,7 +657,7 @@ MouseArea {
 		}
 
 		OverlayCard {
-			visible: popup.goToDateOpen
+			open: popup.goToDateOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.goToDateOpen = false
 			cardComponent: visible ? goToDateCard : null
@@ -665,7 +672,7 @@ MouseArea {
 
 		OverlayCard {
 			id: quickAddOverlay
-			visible: popup.quickAddOpen
+			open: popup.quickAddOpen
 			anchors.fill: parent
 			onOutsideClicked: popup.closeQuickAdd()
 			cardComponent: visible ? quickAddCard : null
@@ -692,7 +699,7 @@ MouseArea {
 
 		OverlayCard {
 			id: importOverlay
-			visible: popup.importOpen
+			open: popup.importOpen
 			anchors.fill: parent
 			onOutsideClicked: {} // Don't lose the checked events on a stray click.
 			cardComponent: visible ? importCard : null
@@ -708,7 +715,7 @@ MouseArea {
 
 		OverlayCard {
 			id: eventEditorOverlay
-			visible: popup.editorOpen
+			open: popup.editorOpen
 			anchors.fill: parent
 			framed: false // The card draws its own frame
 			onOutsideClicked: {} // Don't lose typed input on a stray click.
@@ -716,7 +723,7 @@ MouseArea {
 			Component {
 				id: eventEditorCard
 				EventEditView {
-					eventItem: popup.editorEvent
+					eventItem: popup.shownEditorEvent // Kept while the card fades out
 					initialDate: popup.editorDate
 					initialStart: popup.editorStart
 					initialTitle: popup.editorTitle

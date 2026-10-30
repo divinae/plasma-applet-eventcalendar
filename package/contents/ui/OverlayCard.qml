@@ -11,6 +11,9 @@ Item {
 
 	property Component cardComponent
 	property bool framed: true
+	// Shown while open, and while it fades out after closing.
+	property bool open: false
+	visible: open || closeAnimation.running
 	readonly property Item card: cardLoader.item
 	signal outsideClicked()
 
@@ -26,7 +29,28 @@ Item {
 		NumberAnimation { target: cardScale; property: "xScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
 		NumberAnimation { target: cardScale; property: "yScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
 	}
-	onVisibleChanged: if (visible && appletConfig.animations) openAnimation.restart()
+	onOpenChanged: {
+		if (open) {
+			closeAnimation.stop()
+			if (appletConfig.animations) {
+				openAnimation.restart()
+			} else {
+				overlay.opacity = 1
+			}
+		} else if (appletConfig.animations) {
+			openAnimation.stop()
+			closeAnimation.restart()
+		}
+	}
+	// Closing: a short fade out (the card keeps what it showed meanwhile, see PopupView's held values).
+	NumberAnimation {
+		id: closeAnimation
+		target: overlay
+		property: "opacity"
+		to: 0
+		duration: appletConfig.shortDuration
+		easing.type: Easing.InCubic
+	}
 
 	// Strong backdrop so the card doesn't blend into the view behind it.
 	Rectangle {
