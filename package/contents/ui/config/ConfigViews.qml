@@ -124,6 +124,12 @@ ConfigPage {
 				]
 			}
 			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Animations")
+				description: i18n("Views slide and fade in, cards open, the small month's days ease.")
+				configKey: 'animationsEnabled'
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigCombo {
 				text: i18n("Event look")
 				configKey: 'eventLook'

@@ -97,7 +97,7 @@ MouseArea {
 				return 0
 			}
 		}
-		Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration*2 } }
+		Behavior on opacity { NumberAnimation { duration: appletConfig.shortDuration*2 } }
 		color: Kirigami.Theme.highlightColor
 		radius: dayStyle.radius
 		z: todayRect.z - 1

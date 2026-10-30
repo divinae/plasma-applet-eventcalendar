@@ -34,7 +34,7 @@ Rectangle {
 	visible: shown || opacity > 0
 	opacity: shown ? 1 : 0
 	Behavior on opacity {
-		NumberAnimation { duration: Kirigami.Units.shortDuration }
+		NumberAnimation { duration: appletConfig.shortDuration }
 	}
 
 	implicitWidth: row.implicitWidth + Kirigami.Units.largeSpacing * 2

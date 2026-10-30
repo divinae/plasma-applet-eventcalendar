@@ -110,8 +110,17 @@ MouseArea {
 			popup.switchStart = 0
 		}
 	}
+	// A view switched to fades in and rises a little into place (SlideIn): only the one shown.
+	SlideIn { id: weekViewSlide; target: weekViewLoader; shift: weekViewShift }
+	SlideIn { id: tasksViewSlide; target: tasksViewLoader; shift: tasksViewShift }
+	SlideIn { id: widgetGridSlide; target: widgetGrid; shift: widgetGridShift }
+	function slideViewIn() {
+		var slide = hourGridMode ? weekViewSlide : tasksMode ? tasksViewSlide : widgetGridSlide
+		slide.run(0, 1)
+	}
 	onCurrentViewChanged: {
 		switchStart = Date.now()
+		Qt.callLater(slideViewIn)
 		closeOverlays() // Overlays belong to the view they were opened from.
 		if (openLastView) {
 			plasmoid.configuration.popupLastView = currentView
@@ -723,6 +732,7 @@ MouseArea {
 
 	Loader {
 		id: weekViewLoader
+		transform: Translate { id: weekViewShift }
 		active: popup.hourGridMode
 		visible: active
 		anchors.fill: widgetGrid
@@ -782,6 +792,7 @@ MouseArea {
 	// The task lists: the whole width (TasksView centers its column, the scroll bar at the edge).
 	Loader {
 		id: tasksViewLoader
+		transform: Translate { id: tasksViewShift }
 		active: popup.tasksMode
 		visible: active
 		anchors.top: widgetGrid.top
@@ -796,6 +807,7 @@ MouseArea {
 
 	GridLayout {
 		id: widgetGrid
+		transform: Translate { id: widgetGridShift }
 		visible: !popup.hourGridMode && !popup.tasksMode
 		anchors.fill: parent
 		anchors.margins: popup.padding

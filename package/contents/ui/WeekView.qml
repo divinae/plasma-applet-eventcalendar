@@ -23,9 +23,11 @@ Item {
 	// The popup header shows the title and the navigation (goPrevious, goNext, goToday).
 	function goPrevious() {
 		weekStart = dayDate(-dayCount)
+		pageSlide.run(-1, 0)
 	}
 	function goNext() {
 		weekStart = dayDate(dayCount)
+		pageSlide.run(1, 0)
 	}
 	// The week (or day) with today; when it's shown already, still relaid and scrolled once.
 	function goToday() {
@@ -822,6 +824,13 @@ Item {
 			shown: weekView.islands
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			// Paging (previous / next): the new week or day slides in from its side.
+			transform: Translate { id: pageShift }
+			SlideIn {
+				id: pageSlide
+				target: gridCard
+				shift: pageShift
+			}
 
 			ColumnLayout {
 				spacing: Kirigami.Units.smallSpacing

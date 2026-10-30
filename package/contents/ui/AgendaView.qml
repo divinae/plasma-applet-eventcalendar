@@ -44,6 +44,10 @@ Item {
 		spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
+		// Days added (the next month at the end, a day with a new event) fade in.
+		add: Transition {
+			NumberAnimation { property: "opacity"; from: 0; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		}
 		// At the end after scrolling (not a short list that fits): the next month.
 		onContentYChanged: agendaView.updateTopDate()
 		onCountChanged: Qt.callLater(agendaView.updateTopDate)

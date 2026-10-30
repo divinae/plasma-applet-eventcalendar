@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:07+0100\n"
+"POT-Creation-Date: 2026-10-30 10:26+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1358,6 +1358,14 @@ msgstr "Νησιά (κάρτες)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"
 msgstr "Επίπεδο"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Κινούμενα εφέ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "Οι προβολές γλιστρούν και εμφανίζονται σταδιακά, οι κάρτες ανοίγουν, οι ημέρες του μικρού μήνα αλλάζουν ομαλά."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

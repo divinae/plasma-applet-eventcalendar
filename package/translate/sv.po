@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:07+0100\n"
+"POT-Creation-Date: 2026-10-30 10:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -1131,6 +1131,14 @@ msgstr "Öar (kort)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"
 msgstr "Platt"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Animeringar"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "Vyer glider och tonar in, kort öppnas, den lilla månadens dagar övergår mjukt."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

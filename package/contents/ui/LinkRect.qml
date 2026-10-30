@@ -12,6 +12,7 @@ Rectangle {
 	property color backgroundColor: "transparent"
 	property color backgroundHoverColor: appletConfig.agendaHoverBackground
 	color: clickable && hovered ? backgroundHoverColor : backgroundColor
+	Behavior on color { ColorAnimation { duration: appletConfig.shortDuration } }
 	property string tooltipMainText
 	property string tooltipSubText
 	property alias acceptedButtons: mouseArea.acceptedButtons

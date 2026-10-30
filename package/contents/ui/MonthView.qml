@@ -38,11 +38,13 @@ PinchArea {
 	function goPrevious() {
 		if (stack.currentItem) {
 			stack.currentItem.previous()
+			pageSlide.run(-1, 0)
 		}
 	}
 	function goNext() {
 		if (stack.currentItem) {
 			stack.currentItem.next()
+			pageSlide.run(1, 0)
 		}
 	}
 	// Month title click: zoom out to the year / decade view.
@@ -482,16 +484,23 @@ PinchArea {
 		// Sized by the card (its content).
 		QQC2.StackView {
 			id: stack
+			// Paging (previous / next): the new month slides in from its side.
+			transform: Translate { id: pageShift }
+			SlideIn {
+				id: pageSlide
+				target: stack
+				shift: pageShift
+			}
 
 			pushEnter: Transition {
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "opacity"
 					from: 0
 					to: 1
 				}
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "transformScale"
 					from: 1.5
 					to: 1
@@ -499,7 +508,7 @@ PinchArea {
 			}
 			pushExit: Transition {
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "opacity"
 					from: 1
 					to: 0
@@ -508,7 +517,7 @@ PinchArea {
 
 			popEnter: Transition {
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "opacity"
 					from: 0
 					to: 1
@@ -517,13 +526,13 @@ PinchArea {
 			popExit: Transition {
 				id: popExit
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "opacity"
 					from: 1
 					to: 0
 				}
 				NumberAnimation {
-					duration: Kirigami.Units.longDuration
+					duration: appletConfig.longDuration
 					property: "transformScale"
 					// so no matter how much you scaled, it would still fly towards you
 					to: popExit.ViewTransition.item.transformScale * 1.5

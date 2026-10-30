@@ -519,6 +519,10 @@
 			<!-- islands: the Day view's panels, the agenda days and the task sections in their own rounded cards; flat: one surface -->
 			<default>islands</default>
 		</entry>
+		<entry name="animationsEnabled" type="bool">
+			<!-- Views sliding and fading in, cards opening, tiles easing (also off with Plasma's animation speed at instant) -->
+			<default>true</default>
+		</entry>
 		<entry name="googleColorPalette" type="string">
 			<!-- current: Google Calendar's current colors; classic: the old palette the API returns; system: nearest colors of the Plasma color scheme -->
 			<default>current</default>

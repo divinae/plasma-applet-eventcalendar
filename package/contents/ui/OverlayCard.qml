@@ -14,6 +14,20 @@ Item {
 	readonly property Item card: cardLoader.item
 	signal outsideClicked()
 
+	// Opening: the overlay fades in and the card grows into place from a little smaller.
+	Scale {
+		id: cardScale
+		origin.x: cardLoader.width / 2
+		origin.y: cardLoader.height / 2
+	}
+	ParallelAnimation {
+		id: openAnimation
+		NumberAnimation { target: overlay; property: "opacity"; from: 0; to: 1; duration: appletConfig.shortDuration; easing.type: Easing.OutCubic }
+		NumberAnimation { target: cardScale; property: "xScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+		NumberAnimation { target: cardScale; property: "yScale"; from: 0.96; to: 1; duration: appletConfig.longDuration; easing.type: Easing.OutCubic }
+	}
+	onVisibleChanged: if (visible && appletConfig.animations) openAnimation.restart()
+
 	// Strong backdrop so the card doesn't blend into the view behind it.
 	Rectangle {
 		anchors.fill: parent
@@ -26,6 +40,7 @@ Item {
 	}
 	Kirigami.ShadowedRectangle {
 		anchors.fill: cardLoader
+		transform: cardScale
 		visible: !!cardLoader.item
 		radius: Kirigami.Units.cornerRadius * 2
 		color: "transparent"
@@ -35,6 +50,7 @@ Item {
 	}
 	Rectangle {
 		anchors.fill: cardLoader
+		transform: cardScale
 		visible: overlay.framed && !!cardLoader.item
 		color: Kirigami.Theme.backgroundColor
 		radius: Kirigami.Units.cornerRadius * 2
@@ -44,6 +60,7 @@ Item {
 	Loader {
 		id: cardLoader
 		anchors.centerIn: parent
+		transform: cardScale
 		width: Math.min(Kirigami.Units.gridUnit * 30, overlay.width - Kirigami.Units.gridUnit * 2)
 		height: item ? Math.min(item.implicitHeight, overlay.height - Kirigami.Units.gridUnit * 2) : 0
 		sourceComponent: overlay.cardComponent

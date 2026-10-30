@@ -131,6 +131,10 @@ QtObject {
 	// Day view's panels, the agenda days and the task sections sit in rounded cards (IslandCard);
 	// "Flat": one surface.
 	readonly property bool islands: plasmoid.configuration.uiStyle !== 'flat'
+	// Animations (Settings > Views > Animations): their durations, 0 when off.
+	readonly property bool animations: plasmoid.configuration.animationsEnabled !== false
+	readonly property int shortDuration: animations ? Kirigami.Units.shortDuration : 0
+	readonly property int longDuration: animations ? Kirigami.Units.longDuration : 0
 	// A card: a bit lighter than the popup (light and dark themes) and nearly opaque, so it adds
 	// contrast on the translucent (blurred) popup background instead of taking it away.
 	readonly property color cardColor: ColorUtil.setAlpha(ColorUtil.lerp(Kirigami.Theme.backgroundColor, Qt.rgba(1, 1, 1, 1), darkTheme ? 0.94 : 0.5), 0.62)

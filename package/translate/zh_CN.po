@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:07+0100\n"
+"POT-Creation-Date: 2026-10-30 10:26+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1289,6 +1289,14 @@ msgstr "岛屿（卡片）"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"
 msgstr "扁平"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "动画"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "视图滑入并淡入，卡片展开，小月历的日期平滑切换。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"

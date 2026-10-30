@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 09:07+0100\n"
+"POT-Creation-Date: 2026-10-30 10:26+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1339,6 +1339,14 @@ msgstr "Otoki (kartice)"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"
 msgstr "Ploščat"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Animations"
+msgstr "Animacije"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Views slide and fade in, cards open, the small month's days ease."
+msgstr "Pogledi zdrsnejo in se postopoma prikažejo, kartice se odprejo, dnevi malega meseca se spreminjajo mehko."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event look"
