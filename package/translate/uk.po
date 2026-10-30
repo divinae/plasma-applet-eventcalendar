@@ -860,7 +860,12 @@ msgid ""
 "calendar menu they are shown and hidden by color: calendars of one color "
 "together. The Google calendars of an account signed in here are listed "
 "above, with the account."
-msgstr "Показуються лише для читання. Які календарі Akonadi показувати, задається на сторінці налаштувань додатка подій PIM («Події» > «Календарі Plasma»). У меню календарів контекстного вікна вони показуються і ховаються за кольором: календарі одного кольору разом. Календарі Google облікового запису, до якого тут виконано вхід, наведено вище, разом з обліковим записом."
+msgstr ""
+"Показуються лише для читання. Які календарі Akonadi показувати, задається на "
+"сторінці налаштувань додатка подій PIM («Події» > «Календарі Plasma»). У "
+"меню календарів контекстного вікна вони показуються і ховаються за кольором: "
+"календарі одного кольору разом. Календарі Google облікового запису, до якого "
+"тут виконано вхід, наведено вище, разом з обліковим записом."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1498,7 +1503,9 @@ msgstr "Цілоденні події поруч"
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
-msgstr "У поданні дня три або більше цілоденних подій займають по третині ширини, по три в ряд. Якщо навести вказівник на подію, її буде показано повністю."
+msgstr ""
+"У поданні дня три або більше цілоденних подій займають по третині ширини, по "
+"три в ряд. Якщо навести вказівник на подію, її буде показано повністю."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1584,7 +1591,9 @@ msgstr "One Call 3.0: %1"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
-msgstr "OpenWeatherMap не знає цього ідентифікатора програми (новий починає працювати протягом 2 годин)."
+msgstr ""
+"OpenWeatherMap не знає цього ідентифікатора програми (новий починає "
+"працювати протягом 2 годин)."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Choose One Call 3.0 above: by the hour and 8 days."
@@ -1681,7 +1690,10 @@ msgid ""
 "Free (2.5) works with any app id: the current weather and a forecast in 3 "
 "hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
 "one, the days are made from the 3 hour steps."
-msgstr "Free (2.5) працює з будь-яким ідентифікатором програми: поточна погода і прогноз із кроком 3 години на 5 днів. Прогноз на 16 днів потребує платного тарифу; без нього дні складаються з 3-годинних кроків."
+msgstr ""
+"Free (2.5) працює з будь-яким ідентифікатором програми: поточна погода і "
+"прогноз із кроком 3 години на 5 днів. Прогноз на 16 днів потребує платного "
+"тарифу; без нього дні складаються з 3-годинних кроків."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1690,11 +1702,18 @@ msgid ""
 "(1000 calls a day are free, a payment card is required): the current "
 "weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
 "most every 10 minutes, about 150 calls a day."
-msgstr "One Call 3.0 потребує підписки «One Call by Call» на <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 запитів на день безкоштовні, потрібна платіжна картка): поточна погода, 48 годин щогодини і 8 днів одним запитом. Віджет звертається не частіше ніж раз на 10 хвилин, близько 150 запитів на день."
+msgstr ""
+"One Call 3.0 потребує підписки «One Call by Call» на <a href=\"https://"
+"openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 запитів на "
+"день безкоштовні, потрібна платіжна картка): поточна погода, 48 годин "
+"щогодини і 8 днів одним запитом. Віджет звертається не частіше ніж раз на 10 "
+"хвилин, близько 150 запитів на день."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One app id works for both: Check App Id tells what yours may use."
-msgstr "Один ідентифікатор програми підходить для обох: «Перевірити ідентифікатор програми» покаже, що може використовувати ваш."
+msgstr ""
+"Один ідентифікатор програми підходить для обох: «Перевірити ідентифікатор "
+"програми» покаже, що може використовувати ваш."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1703,7 +1722,13 @@ msgid ""
 "own: sign up at <a href=\"https://home.openweathermap.org/users/"
 "sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
 "needs none."
-msgstr "Вбудований ідентифікатор програми спільний для всіх користувачів цього віджета, як і його ліміт запитів: погода може часом переставати оновлюватися. Власний безкоштовний ідентифікатор програми: зареєструйтеся на <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, а потім скопіюйте його з розділу «API keys». Для Open-Meteo він не потрібен."
+msgstr ""
+"Вбудований ідентифікатор програми спільний для всіх користувачів цього "
+"віджета, як і його ліміт запитів: погода може часом переставати "
+"оновлюватися. Власний безкоштовний ідентифікатор програми: зареєструйтеся на "
+"<a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, а потім скопіюйте його з розділу «API "
+"keys». Для Open-Meteo він не потрібен."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -3165,13 +3190,17 @@ msgstr "Досягнуто обмеження запитів до API погод
 msgid ""
 "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
 "choose Free (2.5) in Settings > Weather."
-msgstr "OpenWeatherMap відхилив ідентифікатор програми для One Call 3.0: оформіть підписку або виберіть Free (2.5) у «Параметри» > «Погода»."
+msgstr ""
+"OpenWeatherMap відхилив ідентифікатор програми для One Call 3.0: оформіть "
+"підписку або виберіть Free (2.5) у «Параметри» > «Погода»."
 
 #: ../contents/ui/Logic.qml
 msgid ""
 "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
 "check it in Settings > Weather."
-msgstr "OpenWeatherMap відхилив ідентифікатор програми. Новий починає працювати протягом 2 годин; перевірте його у «Параметри» > «Погода»."
+msgstr ""
+"OpenWeatherMap відхилив ідентифікатор програми. Новий починає працювати "
+"протягом 2 годин; перевірте його у «Параметри» > «Погода»."
 
 #: ../contents/ui/Logic.qml
 msgctxt ""

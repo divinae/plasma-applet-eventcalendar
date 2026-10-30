@@ -862,7 +862,13 @@ msgid ""
 "calendar menu they are shown and hidden by color: calendars of one color "
 "together. The Google calendars of an account signed in here are listed "
 "above, with the account."
-msgstr "Affichés en lecture seule. Les calendriers Akonadi affichés se choisissent dans la page de configuration du module d'événements PIM (Événements > Calendriers Plasma). Dans le menu des calendriers de la fenêtre, ils sont affichés et masqués par couleur : les calendriers d'une même couleur ensemble. Les calendriers Google d'un compte connecté ici sont listés plus haut, avec le compte."
+msgstr ""
+"Affichés en lecture seule. Les calendriers Akonadi affichés se choisissent "
+"dans la page de configuration du module d'événements PIM (Événements > "
+"Calendriers Plasma). Dans le menu des calendriers de la fenêtre, ils sont "
+"affichés et masqués par couleur : les calendriers d'une même couleur "
+"ensemble. Les calendriers Google d'un compte connecté ici sont listés plus "
+"haut, avec le compte."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -1515,7 +1521,10 @@ msgstr "Événements sur toute la journée côte à côte"
 msgid ""
 "In the Day view, three or more all-day events take a third of the width "
 "each, three in a row. Hovering one shows it in full."
-msgstr "Dans la vue Jour, à partir de trois événements sur toute la journée, chacun occupe un tiers de la largeur, trois par ligne. Le survol d'un événement l'affiche en entier."
+msgstr ""
+"Dans la vue Jour, à partir de trois événements sur toute la journée, chacun "
+"occupe un tiers de la largeur, trois par ligne. Le survol d'un événement "
+"l'affiche en entier."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Event descriptions"
@@ -1602,7 +1611,9 @@ msgstr "One Call 3.0 : %1"
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
 "OpenWeatherMap doesn't know this app id (a new one takes up to 2 hours)."
-msgstr "OpenWeatherMap ne connaît pas cet identifiant d'application (un nouveau peut mettre jusqu'à 2 heures)."
+msgstr ""
+"OpenWeatherMap ne connaît pas cet identifiant d'application (un nouveau peut "
+"mettre jusqu'à 2 heures)."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Choose One Call 3.0 above: by the hour and 8 days."
@@ -1699,7 +1710,11 @@ msgid ""
 "Free (2.5) works with any app id: the current weather and a forecast in 3 "
 "hour steps for 5 days. Its forecast for 16 days needs a paid plan; without "
 "one, the days are made from the 3 hour steps."
-msgstr "Free (2.5) fonctionne avec tout identifiant d'application : la météo actuelle et des prévisions par pas de 3 heures sur 5 jours. Les prévisions sur 16 jours nécessitent une offre payante ; sans elle, les jours sont calculés à partir des pas de 3 heures."
+msgstr ""
+"Free (2.5) fonctionne avec tout identifiant d'application : la météo "
+"actuelle et des prévisions par pas de 3 heures sur 5 jours. Les prévisions "
+"sur 16 jours nécessitent une offre payante ; sans elle, les jours sont "
+"calculés à partir des pas de 3 heures."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1708,11 +1723,18 @@ msgid ""
 "(1000 calls a day are free, a payment card is required): the current "
 "weather, 48 hours by the hour and 8 days, in one call. The widget asks at "
 "most every 10 minutes, about 150 calls a day."
-msgstr "One Call 3.0 nécessite l'abonnement « One Call by Call » sur <a href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> (1000 appels par jour sont gratuits, une carte de paiement est requise) : la météo actuelle, 48 heures heure par heure et 8 jours, en un seul appel. Le widget interroge au plus toutes les 10 minutes, environ 150 appels par jour."
+msgstr ""
+"One Call 3.0 nécessite l'abonnement « One Call by Call » sur <a "
+"href=\"https://openweathermap.org/api/one-call-3\">openweathermap.org</a> "
+"(1000 appels par jour sont gratuits, une carte de paiement est requise) : la "
+"météo actuelle, 48 heures heure par heure et 8 jours, en un seul appel. Le "
+"widget interroge au plus toutes les 10 minutes, environ 150 appels par jour."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "One app id works for both: Check App Id tells what yours may use."
-msgstr "Un identifiant d'application vaut pour les deux : « Vérifier l'identifiant d'application » indique ce que le vôtre peut utiliser."
+msgstr ""
+"Un identifiant d'application vaut pour les deux : « Vérifier l'identifiant "
+"d'application » indique ce que le vôtre peut utiliser."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid ""
@@ -1721,7 +1743,13 @@ msgid ""
 "own: sign up at <a href=\"https://home.openweathermap.org/users/"
 "sign_up\">openweathermap.org</a>, then copy it from \"API keys\". Open-Meteo "
 "needs none."
-msgstr "L'identifiant d'application intégré est partagé par tous les utilisateurs de ce widget, de même que sa limite de requêtes : la météo peut parfois cesser de se mettre à jour. Pour un identifiant d'application gratuit à vous : inscrivez-vous sur <a href=\"https://home.openweathermap.org/users/sign_up\">openweathermap.org</a>, puis copiez-le depuis « API keys ». Open-Meteo n'en a pas besoin."
+msgstr ""
+"L'identifiant d'application intégré est partagé par tous les utilisateurs de "
+"ce widget, de même que sa limite de requêtes : la météo peut parfois cesser "
+"de se mettre à jour. Pour un identifiant d'application gratuit à vous : "
+"inscrivez-vous sur <a href=\"https://home.openweathermap.org/users/"
+"sign_up\">openweathermap.org</a>, puis copiez-le depuis « API keys ». Open-"
+"Meteo n'en a pas besoin."
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Weather Canada"
@@ -1814,7 +1842,8 @@ msgstr "Quantités de pluie"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "The total above the chart, the amounts at the heaviest hours"
-msgstr "Le total au-dessus du graphique, les quantités aux heures les plus pluvieuses"
+msgstr ""
+"Le total au-dessus du graphique, les quantités aux heures les plus pluvieuses"
 
 #: ../contents/ui/config/GoogleLoginManager.qml
 msgid "Not signed in to this Google account. Sign in again."
@@ -3167,13 +3196,17 @@ msgstr "Limite de l'API météo atteinte"
 msgid ""
 "OpenWeatherMap refused the app id for One Call 3.0: subscribe to it, or "
 "choose Free (2.5) in Settings > Weather."
-msgstr "OpenWeatherMap a refusé l'identifiant d'application pour One Call 3.0 : abonnez-vous-y ou choisissez Free (2.5) dans Paramètres > Météo."
+msgstr ""
+"OpenWeatherMap a refusé l'identifiant d'application pour One Call 3.0 : "
+"abonnez-vous-y ou choisissez Free (2.5) dans Paramètres > Météo."
 
 #: ../contents/ui/Logic.qml
 msgid ""
 "OpenWeatherMap refused the app id. A new one takes up to 2 hours to work; "
 "check it in Settings > Weather."
-msgstr "OpenWeatherMap a refusé l'identifiant d'application. Un nouveau peut mettre jusqu'à 2 heures à fonctionner ; vérifiez-le dans Paramètres > Météo."
+msgstr ""
+"OpenWeatherMap a refusé l'identifiant d'application. Un nouveau peut mettre "
+"jusqu'à 2 heures à fonctionner ; vérifiez-le dans Paramètres > Météo."
 
 #: ../contents/ui/Logic.qml
 msgctxt ""
