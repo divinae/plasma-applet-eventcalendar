@@ -362,11 +362,13 @@ CalendarManager {
 	readonly property int rangeCacheSize: 8
 	signal cachedRangeShown()
 	function rememberRange() {
-		var min = dateMin.getTime(), max = dateMax.getTime()
-		var copy = {}
-		for (var calendarId in eventModel.eventsByCalendar) {
-			copy[calendarId] = eventModel.eventsByCalendar[calendarId]
+		// A calendar shows another round's data (it failed): not these months' events.
+		var restored = restoredCachedInRound || calendarManagerList.some(function(manager) { return manager.restoredInRound })
+		if (restored) {
+			return
 		}
+		var min = dateMin.getTime(), max = dateMax.getTime()
+		var copy = Object.assign({}, eventModel.eventsByCalendar)
 		var kept = rangeCache.filter(function(entry) { return entry.min !== min || entry.max !== max })
 		kept.unshift({ min: min, max: max, center: fetchCenter, at: Date.now(), eventsByCalendar: copy })
 		rangeCache = kept.slice(0, rangeCacheSize)
@@ -386,13 +388,21 @@ CalendarManager {
 	}
 	// Shows a remembered round right away (the views rebuild from it, see cachedRangeShown).
 	function showRange(entry) {
-		var copy = {}
-		for (var calendarId in entry.eventsByCalendar) {
-			copy[calendarId] = entry.eventsByCalendar[calendarId]
-		}
-		eventModel.eventsByCalendar = copy
+		eventModel.eventsByCalendar = Object.assign({}, entry.eventsByCalendar)
 		dateMin = new Date(entry.min)
 		dateMax = new Date(entry.max)
+		// The managers too (Google, tasks, …): edits and deletes look events up in theirs.
+		calendarManagerList.forEach(function(manager) {
+			var own = {}
+			for (var calendarId in entry.eventsByCalendar) {
+				if (getCalendarManager(calendarId) === manager) {
+					own[calendarId] = entry.eventsByCalendar[calendarId]
+				}
+			}
+			manager.eventsByCalendar = own
+			manager.dateMin = new Date(entry.min)
+			manager.dateMax = new Date(entry.max)
+		})
 		mergeEvents()
 		cachedRangeShown()
 	}
@@ -420,7 +430,10 @@ CalendarManager {
 
 	// A fetch round runs: eventsByCalendar was emptied and fills up calendar by calendar.
 	property bool fetchRound: false
-	onFetchingData: fetchRound = true
+	onFetchingData: {
+		fetchRound = true
+		restoredCachedInRound = false
+	}
 	// A calendar's loaded data for a view that reads it directly (the Tasks tab, the Day view's
 	// tasks): during a fetch round, until the calendar arrives, what the last round loaded, so the
 	// view doesn't go empty meanwhile (eg: Retry Now while offline).
@@ -510,10 +523,12 @@ CalendarManager {
 
 	// A fetch round that couldn't load a cached calendar (offline right after boot, keyring still
 	// locked) keeps showing the cached events instead of an empty calendar.
+	property bool restoredCachedInRound: false
 	function restoreCachedCalendars() {
 		var selected = EventCacheUtil.selectedCalendarIds(cacheAccounts())
 		for (var calendarId in eventModel.cachedEventsByCalendar) {
 			if (!eventModel.eventsByCalendar[calendarId] && selected[calendarId]) {
+				restoredCachedInRound = true
 				eventModel.eventsByCalendar[calendarId] = eventModel.cachedEventsByCalendar[calendarId]
 			}
 		}

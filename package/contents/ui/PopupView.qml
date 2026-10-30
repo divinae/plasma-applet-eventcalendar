@@ -191,7 +191,7 @@ MouseArea {
 		// Opening the popup or picking a day / "today" in the same month keeps the month:
 		// nothing to fetch or rebuild. (A newly created popup fills itself in Component.onCompleted.)
 		if (monthChanged) {
-			logic.updateEvents()
+			logic.updateEvents(true) // Month navigation: from memory when it can
 		}
 	}
 
@@ -909,6 +909,7 @@ MouseArea {
 			Layout.maximumWidth: popup.agendaMaxWidth
 			Layout.alignment: Qt.AlignHCenter
 
+			onEndReached: logic.loadMoreAgenda()
 			onNewEventFormOpened: function(agendaItem, calendarSelector) {
 				var selectedCalendarId = ""
 				if (plasmoid.configuration.agendaNewEventRememberCalendar) {

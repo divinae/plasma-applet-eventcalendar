@@ -27,6 +27,11 @@ ListModel {
 	property date visibleDateMin: new Date()
 	property date visibleDateMax: new Date()
 	property date currentMonth: new Date()
+	// Months added after currentMonth by scrolling to the end (Logic.loadMoreAgenda); a month change
+	// starts again with none.
+	property int extraMonths: 0
+	readonly property int maxExtraMonths: 12
+	onCurrentMonthChanged: extraMonths = 0
 
 	function getDateRange(targetDate) {
 		var today = new Date(timeModel.currentTime)
@@ -250,12 +255,13 @@ ListModel {
 			var nextNumDaysEndExclusive = new Date(today.getFullYear(), today.getMonth(), today.getDate() + showNextNumDays + 1)
 			var currentMonthMin = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)
 			var currentMonthMaxExclusive = new Date(currentMonth.getFullYear(), currentMonth.getMonth()+1, 1)
+			var shownMaxExclusive = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1 + extraMonths, 1)
 			var currentMonthContainsToday = currentMonthMin <= today && today < currentMonthMaxExclusive
 
 			if (clipEventsFromOtherMonths) {
 				// Remove calendar from different months
 				agendaItemList = agendaItemList.filter(function(agendaItem) {
-					return !(agendaItem.date < currentMonthMin || currentMonthMaxExclusive <= agendaItem.date && nextNumDaysEndExclusive < agendaItem.date)
+					return !(agendaItem.date < currentMonthMin || shownMaxExclusive <= agendaItem.date && nextNumDaysEndExclusive < agendaItem.date)
 				})
 				byDay = indexAgendaItems(agendaItemList)
 			}

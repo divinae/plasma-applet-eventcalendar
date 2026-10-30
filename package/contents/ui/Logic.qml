@@ -85,7 +85,13 @@ Item {
 	}
 
 	//--- Events
-	function updateEvents() {
+	// navigation: the shown month changed (PopupView), and only that: the month may come from
+	// memory. Any other caller (poll, Refresh, Retry, settings, a refetch after a change) fetches.
+	property bool fetchNeeded: false
+	function updateEvents(navigation) {
+		if (!navigation) {
+			fetchNeeded = true
+		}
 		updateEventsTimer.restart()
 	}
 	Timer {
@@ -111,7 +117,12 @@ Item {
 		agendaModel.visibleDateMin = range.min
 		agendaModel.visibleDateMax = range.max
 		var center = month.getFullYear() + '-' + month.getMonth()
-		var entry = eventModel.cachedRange(range.min, range.max)
+		var force = fetchNeeded
+		fetchNeeded = false
+		if (force) {
+			eventModel.forgetRanges() // Other months may have changed too
+		}
+		var entry = force ? null : eventModel.cachedRange(range.min, range.max)
 		if (entry && !eventModel.fetchRound) {
 			eventModel.showRange(entry)
 			if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
@@ -121,7 +132,29 @@ Item {
 		var before = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() - 1, 1))
 		var after = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() + 1, 1))
 		eventModel.fetchCenter = center
-		eventModel.fetchAll(before.min, new Date(Math.max(range.max.getTime(), after.max.getTime())))
+		// The Agenda's months added by scrolling (loadMoreAgenda) stay loaded on a refresh.
+		var agendaEnd = new Date(month.getFullYear(), month.getMonth() + 1 + agendaModel.extraMonths, 7)
+		eventModel.fetchAll(before.min, new Date(Math.max(range.max.getTime(), after.max.getTime(), agendaEnd.getTime())))
+	}
+
+	// The Agenda scrolled to its end: one more month below, from what's loaded (a fetch covers the
+	// next month too) or else fetched (the loaded months and the new one).
+	function loadMoreAgenda() {
+		if (agendaModel.extraMonths >= agendaModel.maxExtraMonths || eventModel.fetchRound) {
+			return
+		}
+		agendaModel.extraMonths += 1
+		var month = agendaModel.currentMonth
+		var end = new Date(month.getFullYear(), month.getMonth() + 1 + agendaModel.extraMonths, 1)
+		if (end > agendaModel.visibleDateMax) {
+			agendaModel.visibleDateMax = end
+		}
+		if (eventModel.dateMax >= end) {
+			if (popup) popup.updateAgenda()
+			return
+		}
+		eventModel.fetchCenter = ""
+		eventModel.fetchAll(eventModel.dateMin, new Date(end.getFullYear(), end.getMonth() + 1, 7))
 	}
 
 	//--- Weather

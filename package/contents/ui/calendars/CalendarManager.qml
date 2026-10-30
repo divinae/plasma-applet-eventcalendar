@@ -62,9 +62,13 @@ Item {
 	// Events of the previous fetch, kept so a calendar that fails to fetch (eg: offline) can keep
 	// showing what it had.
 	property var previousEventsByCalendar: ({})
+	// A calendar of this round shows an earlier round's data (maybe of other months): the round
+	// isn't kept as the months' events (EventModel.rememberRange).
+	property bool restoredInRound: false
 	function restorePreviousCalendar(calendarId) {
 		var previous = previousEventsByCalendar[calendarId]
 		if (previous && !eventsByCalendar[calendarId]) {
+			restoredInRound = true
 			eventsByCalendar[calendarId] = previous // Already parsed
 			calendarFetched(calendarId, previous)
 		}
@@ -136,6 +140,7 @@ Item {
 			snapshot[id] = current[id]
 		}
 		previousEventsByCalendar = snapshot
+		restoredInRound = false
 		clear()
 		calendarManager.fetchGeneration += 1
 		if (typeof dateMin !== "undefined") {

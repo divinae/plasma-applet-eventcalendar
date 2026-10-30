@@ -9,6 +9,8 @@ Item {
 
 	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
+	// Scrolled to the end: the next month below (Logic.loadMoreAgenda).
+	signal endReached()
 
 	// The days in a ListView: only the days in sight (and a screen's worth around them) are
 	// built, not the whole month at once (a busy calendar has hundreds of event tiles; building
@@ -21,6 +23,12 @@ Item {
 		spacing: appletConfig.islands ? appletConfig.cardGap : appletConfig.agendaDaySpacing
 		cacheBuffer: Math.max(0, height)
 		boundsBehavior: Flickable.StopAtBounds
+		// At the end after scrolling (not a short list that fits): the next month.
+		onAtYEndChanged: {
+			if (atYEnd && contentHeight > height && count > 0) {
+				agendaView.endReached()
+			}
+		}
 		// Not flicked with the mouse (as Plasma's ScrollView); wheel and touchpad as there.
 		interactive: Kirigami.Settings.hasTransientTouchInput
 		QQC2.ScrollBar.vertical: OverlayScrollBar {}
