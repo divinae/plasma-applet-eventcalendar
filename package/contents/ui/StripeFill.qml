@@ -14,12 +14,14 @@ Item {
 	// Lines 3 px wide every 9 px along the width (as the Canvas drew them): 9 / sqrt(2) apart across.
 	readonly property real spacing: 9 / Math.SQRT2
 	readonly property real span: width + height
+	// Most events aren't striped (the tile keeps a hidden StripeFill): nothing built, no layer then.
+	readonly property bool active: visible && width > 0 && height > 0
 
 	Item {
 		id: stripes
 		anchors.fill: parent
 		visible: false
-		layer.enabled: stripeFill.width > 0 && stripeFill.height > 0
+		layer.enabled: stripeFill.active
 		clip: true
 
 		// Bars side by side, turned 45° (bottom left to top right), over the whole tile.
@@ -29,7 +31,7 @@ Item {
 			anchors.centerIn: parent
 			rotation: -45
 			Repeater {
-				model: Math.ceil(stripeFill.span / stripeFill.spacing) + 1
+				model: stripeFill.active ? Math.ceil(stripeFill.span / stripeFill.spacing) + 1 : 0
 				Rectangle {
 					x: index * stripeFill.spacing
 					width: 3 // Across the stripe

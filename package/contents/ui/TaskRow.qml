@@ -172,8 +172,8 @@ LinkRect {
 	HoverHandler {
 		id: rowHover
 	}
-	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || todayButton.activeFocus
-		|| linkButton.activeFocus || tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus || subtasksButton.activeFocus
+	readonly property bool focusInside: activeFocus || taskCheck.activeFocus || subtasksButton.activeFocus
+		|| (!!actionsLoader.item && actionsLoader.item.buttonFocus)
 	readonly property bool showActions: actionsEnabled && canEdit && !dragging
 		&& (hovered || rowHover.hovered || focusInside)
 
@@ -502,49 +502,58 @@ LinkRect {
 
 		}
 
-		// The hover buttons, centered on the title's line: they take no height.
-		Item {
-			visible: taskRow.showActions
+		// The hover buttons, centered on the title's line: they take no height. Made while shown only
+		// (five buttons in every row took much of the time a list of tasks needed to open).
+		Loader {
+			id: actionsLoader
+			active: taskRow.showActions
+			visible: active
 			Layout.alignment: Qt.AlignTop
-			implicitWidth: actions.implicitWidth
-			implicitHeight: titleLabel.implicitHeight
-			Row {
-				id: actions
-				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
-				spacing: 0
-				TaskRowButton {
-					id: linkButton
-					visible: !!taskRow.titleLink
-					icon.name: "link"
-					text: i18n("Open Link")
-					onClicked: Shared.openExternalUrl(taskRow.titleLink)
-				}
-				TaskRowButton {
-					id: todayButton
-					visible: !taskRow.done && taskRow.due.kind !== 'today'
-					icon.name: "go-jump-today"
-					text: i18n("Due today")
-					onClicked: taskRow.setDue(taskRow.today)
-				}
-				TaskRowButton {
-					id: tomorrowButton
-					visible: !taskRow.done && taskRow.due.kind !== 'tomorrow'
-					icon.name: "go-next"
-					text: i18n("Due tomorrow")
-					onClicked: taskRow.setDue(Tasks.addDays(taskRow.today, 1))
-				}
-				TaskRowButton {
-					id: editButton
-					icon.name: "document-edit"
-					text: i18n("Edit")
-					onClicked: taskRow.edit()
-				}
-				TaskRowButton {
-					id: deleteButton
-					icon.name: "edit-delete"
-					text: i18n("Delete")
-					onClicked: taskRow.remove()
+			Layout.preferredWidth: item ? item.implicitWidth : 0
+			Layout.preferredHeight: titleLabel.implicitHeight
+			sourceComponent: Item {
+				// Focus in one of the buttons keeps them shown (focusInside).
+				readonly property bool buttonFocus: linkButton.activeFocus || todayButton.activeFocus
+					|| tomorrowButton.activeFocus || editButton.activeFocus || deleteButton.activeFocus
+				implicitWidth: actions.implicitWidth
+				Row {
+					id: actions
+					anchors.right: parent.right
+					anchors.verticalCenter: parent.verticalCenter
+					spacing: 0
+					TaskRowButton {
+						id: linkButton
+						visible: !!taskRow.titleLink
+						icon.name: "link"
+						text: i18n("Open Link")
+						onClicked: Shared.openExternalUrl(taskRow.titleLink)
+					}
+					TaskRowButton {
+						id: todayButton
+						visible: !taskRow.done && taskRow.due.kind !== 'today'
+						icon.name: "go-jump-today"
+						text: i18n("Due today")
+						onClicked: taskRow.setDue(taskRow.today)
+					}
+					TaskRowButton {
+						id: tomorrowButton
+						visible: !taskRow.done && taskRow.due.kind !== 'tomorrow'
+						icon.name: "go-next"
+						text: i18n("Due tomorrow")
+						onClicked: taskRow.setDue(Tasks.addDays(taskRow.today, 1))
+					}
+					TaskRowButton {
+						id: editButton
+						icon.name: "document-edit"
+						text: i18n("Edit")
+						onClicked: taskRow.edit()
+					}
+					TaskRowButton {
+						id: deleteButton
+						icon.name: "edit-delete"
+						text: i18n("Delete")
+						onClicked: taskRow.remove()
+					}
 				}
 			}
 		}

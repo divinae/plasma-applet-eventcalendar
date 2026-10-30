@@ -48,6 +48,8 @@ Item {
 	property alias nextLabel: nextButton.tooltip
 
 	property int rows
+	// Each cell's events by index (MonthView.dayEvents), else the cells' model.events.
+	property var dayEvents: null
 	property int columns
 
 	property bool showWeekNumbers

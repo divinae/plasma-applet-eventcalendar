@@ -45,7 +45,7 @@ Item {
 	readonly property Item calendarView: dayStyle.calendarView
 
 	function eventAt(i) {
-		return modelEvents && i < modelEvents.count ? modelEvents.get(i) : null
+		return i < modelEventsCount ? dayStyle.eventAt(modelEvents, i) : null
 	}
 
 	Column {
@@ -63,7 +63,7 @@ Item {
 			EventBar {
 				readonly property Item calendarView: eventTitlesBadge.calendarView
 				eventItem: {
-					var _ = eventTitlesBadge.eventCount // Re-evaluate when the day's events change.
+					var _ = modelEvents // Re-evaluate when the day's events change.
 					return eventTitlesBadge.eventAt(index)
 				}
 				titleFont: eventTitlesBadge.titleFont

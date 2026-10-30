@@ -96,6 +96,8 @@ PinchArea {
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
 	property var spanBars: []
 	readonly property int eventRowCapacity: mainDaysCalendar.eventTitleRowCapacity
+	// Each cell's events (daysModel's order), plain arrays set by setEvents.
+	property var dayEvents: []
 	property alias daysModel : daysModel
 
 	//--- Dragging events to other days (with event titles): the event moves by whole days, timed
@@ -250,6 +252,7 @@ PinchArea {
 		builtMonthKey = monthKey
 
 		daysModel.clear()
+		dayEvents = [] // By cell: filled again by setEvents
 		var totalDays = calendarBackend.days * calendarBackend.weeks
 		var daysBeforeCurrentMonth = 0
 		var daysAfterCurrentMonth = 0
@@ -337,13 +340,11 @@ PinchArea {
 		var layout = spanBarsActive
 			? EventBuckets.layoutMonth(items, dayTimes, calendarBackend.days, eventRowCapacity)
 			: { bars: [], dayEvents: EventBuckets.bucketByDay(items, dayTimes), reservedRows: [], hiddenSpanCount: [] }
+		// The events as plain arrays (dayEvents): copying them into the cells' nested ListModels took
+		// most of the time of a fill.
 		for (var j = 0; j < layout.dayEvents.length; j++) {
 			var day = daysModel.get(j)
 			var dayEvents = layout.dayEvents[j]
-			day.events.clear()
-			if (dayEvents.length) {
-				day.events.append(dayEvents)
-			}
 			var reservedRows = layout.reservedRows[j] || 0
 			var hiddenSpanCount = layout.hiddenSpanCount[j] || 0
 			if (day.reservedRows !== reservedRows) {
@@ -352,8 +353,12 @@ PinchArea {
 			if (day.hiddenSpanCount !== hiddenSpanCount) {
 				daysModel.setProperty(j, 'hiddenSpanCount', hiddenSpanCount)
 			}
-			daysModel.setProperty(j, 'showEventBadge', dayEvents.length > 0 || hiddenSpanCount > 0)
+			var showEventBadge = dayEvents.length > 0 || hiddenSpanCount > 0
+			if (day.showEventBadge !== showEventBadge) {
+				daysModel.setProperty(j, 'showEventBadge', showEventBadge)
+			}
 		}
+		root.dayEvents = layout.dayEvents
 		spanBars = layout.bars
 	}
 
@@ -526,6 +531,7 @@ PinchArea {
 
 			initialItem: DaysCalendar {
 				id: mainDaysCalendar
+				dayEvents: root.dayEvents
 				// The month's standalone name ("Listopad", not the "listopada" of a date) and the
 				// year; no day.
 				title: {
