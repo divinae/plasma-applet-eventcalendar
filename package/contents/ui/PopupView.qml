@@ -774,8 +774,10 @@ MouseArea {
 		readonly property bool wanted: popup.showAgenda && plasmoid.configuration.dayShowMiniMonth
 			&& viewWidth >= sideWidth + gap + Kirigami.Units.gridUnit * 20
 		readonly property real columnWidth: wanted ? sideWidth + gap : 0
+		// The small month and the list (at most agendaMaxWidth) centered together, side by side.
+		readonly property real groupOffset: wanted ? Math.max(0, Math.round((viewWidth - columnWidth - popup.agendaMaxWidth) / 2)) : 0
 		visible: wanted
-		x: popup.padding
+		x: popup.padding + groupOffset
 		y: widgetGrid.y + agendaView.y
 		width: sideWidth
 		height: implicitHeight
@@ -816,7 +818,8 @@ MouseArea {
 		visible: !popup.hourGridMode && !popup.tasksMode
 		anchors.fill: parent
 		anchors.margins: popup.padding
-		anchors.leftMargin: popup.padding + agendaMiniMonthCard.columnWidth // The Agenda's small month
+		anchors.leftMargin: popup.padding + agendaMiniMonthCard.groupOffset + agendaMiniMonthCard.columnWidth // The Agenda's small month
+		anchors.rightMargin: popup.padding + agendaMiniMonthCard.groupOffset
 		anchors.topMargin: popup.viewTabsHeight
 		columns: 1
 		columnSpacing: popup.spacing
