@@ -349,8 +349,57 @@ CalendarManager {
 		if (dateMin >= dateMax) {
 			return
 		}
+		forgetRanges() // A refresh (poll, settings): the other months may have changed too
 		fetchAll()
 	}
+
+	//--- Months seen this session, in memory (no network for a month shown again): what each fetch
+	// round loaded, { min, max, center (the month it was fetched around, "yyyy-m"), at,
+	// eventsByCalendar }. A fetch covers the month before and after too (Logic.deferredUpdateEvents),
+	// so the next or previous month shows at once.
+	property var rangeCache: []
+	property string fetchCenter: "" // The month the running fetch is around
+	readonly property int rangeCacheSize: 8
+	signal cachedRangeShown()
+	function rememberRange() {
+		var min = dateMin.getTime(), max = dateMax.getTime()
+		var copy = {}
+		for (var calendarId in eventModel.eventsByCalendar) {
+			copy[calendarId] = eventModel.eventsByCalendar[calendarId]
+		}
+		var kept = rangeCache.filter(function(entry) { return entry.min !== min || entry.max !== max })
+		kept.unshift({ min: min, max: max, center: fetchCenter, at: Date.now(), eventsByCalendar: copy })
+		rangeCache = kept.slice(0, rangeCacheSize)
+	}
+	// The newest remembered round covering [min, max), or null.
+	function cachedRange(min, max) {
+		for (var i = 0; i < rangeCache.length; i++) {
+			var entry = rangeCache[i]
+			if (entry.min <= min.getTime() && entry.max >= max.getTime()) {
+				return entry
+			}
+		}
+		return null
+	}
+	function forgetRanges() {
+		rangeCache = []
+	}
+	// Shows a remembered round right away (the views rebuild from it, see cachedRangeShown).
+	function showRange(entry) {
+		var copy = {}
+		for (var calendarId in entry.eventsByCalendar) {
+			copy[calendarId] = entry.eventsByCalendar[calendarId]
+		}
+		eventModel.eventsByCalendar = copy
+		dateMin = new Date(entry.min)
+		dateMax = new Date(entry.max)
+		mergeEvents()
+		cachedRangeShown()
+	}
+	// Events created, changed or deleted here: the remembered months may hold the old version.
+	onEventCreated: forgetRanges()
+	onEventUpdated: forgetRanges()
+	onEventDeleted: forgetRanges()
 
 	onFetchAllCalendars: {
 		// Suppress checkIfDone while children start, otherwise children that

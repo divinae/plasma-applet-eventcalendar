@@ -90,7 +90,7 @@ Item {
 	}
 	Timer {
 		id: updateEventsTimer
-		interval: 1000
+		interval: 300 // A few quick clicks through months: one fetch
 		onTriggered: logic.deferredUpdateEvents()
 	}
 	// A view filter changed (declined events, hidden calendars): rebuild from what's loaded.
@@ -101,12 +101,27 @@ Item {
 		upcomingEvents.updateTooltipEvents()
 	}
 
+	// The shown month's events: from memory when a fetch round covered it (EventModel.rangeCache),
+	// fetched again only when that round wasn't around this month or is older than the poll
+	// interval. A fetch covers the month before and after too, so moving a month shows at once.
 	function deferredUpdateEvents() {
-		var range = agendaModel.getDateRange(agendaModel.currentMonth)
+		var month = agendaModel.currentMonth
+		var range = agendaModel.getDateRange(month)
 
 		agendaModel.visibleDateMin = range.min
 		agendaModel.visibleDateMax = range.max
-		eventModel.fetchAll(range.min, range.max)
+		var center = month.getFullYear() + '-' + month.getMonth()
+		var entry = eventModel.cachedRange(range.min, range.max)
+		if (entry && !eventModel.fetchRound) {
+			eventModel.showRange(entry)
+			if (entry.center === center && Date.now() - entry.at < plasmoid.configuration.eventsPollInterval * 60000) {
+				return
+			}
+		}
+		var before = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() - 1, 1))
+		var after = agendaModel.getDateRange(new Date(month.getFullYear(), month.getMonth() + 1, 1))
+		eventModel.fetchCenter = center
+		eventModel.fetchAll(before.min, new Date(Math.max(range.max.getTime(), after.max.getTime())))
 	}
 
 	//--- Weather
@@ -454,6 +469,7 @@ Item {
 				// Event cache: the last loaded Google events and tasks (see showCachedEvents).
 				eventModel.settleCachedCalendars()
 				eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
+				eventModel.rememberRange()
 				logic.eventsNetworkFailed = false
 				if (logic.currentErrorType !== ErrorType.NoError && logic.currentErrorType !== ErrorType.NetworkError) {
 					logic.clearError() // Fetched fine this time
@@ -464,6 +480,9 @@ Item {
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onEventCreated(calendarId, data) {
+			if (popup) popup.deferredUpdateUI()
+		}
+		function onCachedRangeShown() {
 			if (popup) popup.deferredUpdateUI()
 		}
 		function onEventUpdated(calendarId, eventId, data) {
