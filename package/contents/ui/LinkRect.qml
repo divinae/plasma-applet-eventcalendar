@@ -47,7 +47,7 @@ Rectangle {
 					if (mouse.button == Qt.LeftButton) {
 						linkRect.leftClicked(mouse)
 					} else if (mouse.button == Qt.RightButton) {
-						linkRect.contextMenu().show(mouse.x, mouse.y)
+						lazyContextMenu.get().show(mouse.x, mouse.y)
 						mouse.accepted = true
 					}
 				}
@@ -58,18 +58,13 @@ Rectangle {
 		}
 	}
 
-	// Made on the first right click: a Menu for every row of a list costs a lot when the view opens.
-	property var contextMenuObject: null
-	function contextMenu() {
-		if (!contextMenuObject) {
-			contextMenuObject = contextMenuComponent.createObject(linkRect)
-		}
-		return contextMenuObject
-	}
-	Component {
-		id: contextMenuComponent
-		ContextMenu {
-			onPopulate: function(menu) { linkRect.loadContextMenu(menu) }
+	// Made on the first right click (a Menu for every row of a list cost a lot when views opened).
+	property LazyMenu lazyContextMenu: LazyMenu {
+		parentItem: linkRect
+		component: Component {
+			ContextMenu {
+				onPopulate: function(menu) { linkRect.loadContextMenu(menu) }
+			}
 		}
 	}
 }

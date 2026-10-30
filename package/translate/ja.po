@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:53+0100\n"
+"POT-Creation-Date: 2026-10-30 10:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1292,9 +1292,10 @@ msgid "The days after the shown one; later ones under \"Show more\""
 msgstr "表示中の日の後の日数。それ以降は「さらに表示」から"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of days"
-msgid " days"
-msgstr " 日"
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "日"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -3736,6 +3737,11 @@ msgid "dddd, d MMM"
 msgstr "M月d日 dddd"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "次の %1 日間は予定がありません。"
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "今後数日の予定はありません。"
 
@@ -3921,6 +3927,10 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " 日"
 
 #~ msgid "Up next lists"
 #~ msgstr "次の予定の表示件数"

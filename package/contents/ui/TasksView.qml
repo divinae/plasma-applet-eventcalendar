@@ -79,14 +79,10 @@ Item {
 		function onTasksInProgressChanged() { tasksView.deferredRebuild() }
 	}
 	// Menus made when first opened: their items took much of the time the view needed to open.
-	property var madeMenus: ({})
-	property var viewMenu: null // The "⋯" menu, once made (its button shows it open)
-	function made(component, name) {
-		if (!madeMenus[name]) {
-			madeMenus[name] = component.createObject(tasksView)
-		}
-		return madeMenus[name]
-	}
+	property LazyMenu lazyFilterMenu: LazyMenu { parentItem: tasksView; component: filterMenuComponent }
+	property LazyMenu lazyViewMenu: LazyMenu { parentItem: tasksView; component: viewMenuComponent }
+	property LazyMenu lazyListMenu: LazyMenu { parentItem: tasksView; component: listMenuComponent }
+	property LazyMenu lazyColorMenu: LazyMenu { parentItem: tasksView; component: standaloneColorMenuComponent }
 	function setShownInSmartLists(list, shown) {
 		var ids = Array.prototype.slice.call(plasmoid.configuration.tasksSmartHiddenLists || []).filter(function(id) {
 			return id !== list.id
@@ -503,9 +499,9 @@ Item {
 
 	// The list's colors on their own ("Manage lists": its dot).
 	function openColorMenu(list, parentItem, x, y) {
-		var colorMenu = made(standaloneColorMenuComponent, 'color')
-		colorMenu.list = list
-		colorMenu.popup(parentItem, x, y)
+		var menu = lazyColorMenu.get()
+		menu.list = list
+		menu.popup(parentItem, x, y)
 	}
 	// Back from "Manage lists" (also when the popup closes), nothing left half done.
 	function closeManaging() {
@@ -519,11 +515,11 @@ Item {
 		managing = false
 	}
 	function openListMenu(list, parentItem, x, y) {
-		var listMenu = made(listMenuComponent, 'list')
-		listMenu.list = list
-		listMenu.caps = listCaps(list.id)
-		listMenu.showColorMenu(listMenu.caps.color)
-		listMenu.popup(parentItem, x, y)
+		var menu = lazyListMenu.get()
+		menu.list = list
+		menu.caps = listCaps(list.id)
+		menu.showColorMenu(menu.caps.color)
+		menu.popup(parentItem, x, y)
 	}
 
 	//--- Keyboard: the highlighted task (keyRowKey), see KeyNav.js
@@ -1012,7 +1008,7 @@ Item {
 								opacity: tasksView.dimOpacity
 							}
 						}
-						onClicked: tasksView.made(filterMenuComponent, 'filter').popup(filterButton, 0, filterButton.height)
+						onClicked: tasksView.lazyFilterMenu.get().popup(filterButton, 0, filterButton.height)
 					}
 					Item {
 						Layout.fillWidth: true
@@ -1071,13 +1067,13 @@ Item {
 						icon.name: "overflow-menu"
 						display: QQC2.AbstractButton.IconOnly
 						text: i18n("View options")
-						down: pressed || (!!tasksView.viewMenu && tasksView.viewMenu.opened)
+						down: pressed || (!!tasksView.lazyViewMenu.object && tasksView.lazyViewMenu.object.opened)
 						onClicked: {
-							var menu = tasksView.viewMenu || (tasksView.viewMenu = tasksView.made(viewMenuComponent, 'view'))
+							var menu = tasksView.lazyViewMenu.get()
 							menu.popup(moreButton, moreButton.width - menu.implicitWidth, moreButton.height)
 						}
 						PlasmaComponents3.ToolTip.text: text
-						PlasmaComponents3.ToolTip.visible: hovered && !(tasksView.viewMenu && tasksView.viewMenu.opened)
+						PlasmaComponents3.ToolTip.visible: hovered && !(tasksView.lazyViewMenu.object && tasksView.lazyViewMenu.object.opened)
 					}
 				}
 			}

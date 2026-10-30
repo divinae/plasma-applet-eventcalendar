@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:53+0100\n"
+"POT-Creation-Date: 2026-10-30 10:59+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1503,9 +1503,11 @@ msgid "The days after the shown one; later ones under \"Show more\""
 msgstr "Dagene efter den viste; senere under \"Vis mere\""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgctxt "number of days"
-msgid " days"
-msgstr " dage"
+msgctxt "number of days, after the number"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dag"
+msgstr[1] "dage"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "All-day events side by side"
@@ -4084,6 +4086,12 @@ msgid "dddd, d MMM"
 msgstr "dddd d. MMM"
 
 #: ../contents/ui/UpNextPanel.qml
+msgid "Nothing tomorrow."
+msgid_plural "Nothing in the next %1 days."
+msgstr[0] "Intet i morgen."
+msgstr[1] "Intet de næste %1 dage."
+
+#: ../contents/ui/UpNextPanel.qml
 msgid "Nothing planned in the coming days."
 msgstr "Intet planlagt de kommende dage."
 
@@ -4272,6 +4280,10 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgctxt "number of days"
+#~ msgid " days"
+#~ msgstr " dage"
 
 #~ msgid "Up next lists"
 #~ msgstr "Næste viser"

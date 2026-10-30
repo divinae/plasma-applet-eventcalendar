@@ -363,9 +363,6 @@ function akonadiPsqlLines(sql) {
 function akonadiColorsLines() {
 	return akonadiPsqlLines("SELECT collectionid, convert_from(value, 'UTF8') FROM collectionattributetable WHERE convert_from(type, 'UTF8') = 'collectioncolor'")
 }
-function akonadiColorsCommand() {
-	return ['sh', '-c', akonadiColorsLines().concat(['exit 0']).join('\n')]
-}
 
 // The collections of Akonadi's Google resources, with the account of each: lines
 // "account|resource|email" from the resources' settings, "collection|id|resource|remote id" from the
@@ -376,9 +373,6 @@ function akonadiGoogleCollectionsLines() {
 		'r=${f##*/}; [ -f "$f" ] && sed -n "s/^Account=/account|${r%rc}|/p" "$f"',
 		'done',
 	].concat(akonadiPsqlLines("SELECT 'collection', c.id, r.name, c.remoteid FROM collectiontable c JOIN resourcetable r ON r.id = c.resourceid WHERE r.name LIKE 'akonadi_google_resource_%'"))
-}
-function akonadiGoogleCollectionsCommand() {
-	return ['sh', '-c', akonadiGoogleCollectionsLines().concat(['exit 0']).join('\n')]
 }
 // Both: the colors' lines and the collections' lines in one output.
 function akonadiCalendarsCommand() {

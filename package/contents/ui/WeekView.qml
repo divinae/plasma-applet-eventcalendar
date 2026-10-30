@@ -714,7 +714,6 @@ Item {
 		height: Math.max(0, Math.min(implicitHeight, weekView.sideBottom - startY))
 
 		UpNextPanel {
-			fill: true
 			// Only the events that fit whole (a short popup: fewer, not a cut row).
 			maxHeight: weekView.sideBottom - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
 			eventModel: upNextCard.visible ? weekView.eventModel : null

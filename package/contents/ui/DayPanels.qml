@@ -85,7 +85,6 @@ Item {
 		width: panels.sideWidth
 		height: Math.max(0, Math.min(implicitHeight, panels.bottomY - startY))
 		UpNextPanel {
-			fill: true
 			maxHeight: panels.bottomY - upNextCard.startY - upNextCard.topPadding - upNextCard.bottomPadding
 			eventModel: upNextCard.visible ? panels.eventModel : null
 			after: Shared.addDays(Shared.startOfDay(panels.day), 1)

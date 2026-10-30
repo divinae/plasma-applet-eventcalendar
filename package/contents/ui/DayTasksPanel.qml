@@ -72,12 +72,9 @@ ColumnLayout {
 	visible: hasLists
 	spacing: 2
 
-	property var filterMenuObject: null
-	function filterMenu() {
-		if (!filterMenuObject) {
-			filterMenuObject = listFilterMenuComponent.createObject(dayTasks)
-		}
-		return filterMenuObject
+	property LazyMenu lazyFilterMenu: LazyMenu {
+		parentItem: dayTasks
+		component: listFilterMenuComponent
 	}
 
 	function rebuild() {
@@ -269,7 +266,7 @@ ColumnLayout {
 					elide: Text.ElideRight
 				}
 			}
-			onClicked: dayTasks.filterMenu().popup(listFilterButton, 0, listFilterButton.height)
+			onClicked: dayTasks.lazyFilterMenu.get().popup(listFilterButton, 0, listFilterButton.height)
 			PlasmaComponents3.ToolTip.text: i18n("Tasks shown")
 			PlasmaComponents3.ToolTip.visible: hovered
 		}
