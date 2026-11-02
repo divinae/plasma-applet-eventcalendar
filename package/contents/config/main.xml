@@ -449,6 +449,9 @@
 		<entry name="eventNotifySkipDeclined" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="eventNotifyClockCalendarsOnly" type="bool">
+			<default>false</default>
+		</entry>
 		<entry name="enabledCalendarPlugins" type="StringList">
 			<!-- Filenames stored in: -->
 			<!-- Ubuntu: /usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/ -->
