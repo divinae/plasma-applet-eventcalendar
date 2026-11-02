@@ -77,8 +77,40 @@ PlasmoidItem {
 		}
 		return moduleProbes[probeFile]
 	}
-	// The camera check (CameraCheckView.qml) needs Qt Multimedia (MultimediaProbe.qml).
+	// The camera check (CameraCheckView.qml) needs Qt Multimedia (MultimediaProbe.qml). Its own
+	// window (CameraCheckWindow.qml), one at a time: opened again, it's brought up with the new
+	// meeting's Join (meetingLink from MeetingLink.find, or null).
 	readonly property bool cameraCheckAvailable: moduleAvailable("MultimediaProbe.qml")
+	property var cameraCheckWindow: null
+	function openCameraCheck(meetingLink) {
+		if (!cameraCheckAvailable) {
+			return
+		}
+		if (cameraCheckWindow) {
+			cameraCheckWindow.meetingLink = meetingLink || null
+			cameraCheckWindow.bringUp()
+			return
+		}
+		var component = Qt.createComponent("CameraCheckWindow.qml")
+		if (component.status !== Component.Ready) {
+			console.warn("[eventcalendar] camera check:", component.errorString())
+			return
+		}
+		var win = component.createObject(root, { meetingLink: meetingLink || null })
+		win.joinRequested.connect(function() {
+			if (win.meetingLink) {
+				meetingOpener.open(win.meetingLink.url)
+			}
+			win.close()
+		})
+		win.closing.connect(function() {
+			if (root.cameraCheckWindow === win) {
+				root.cameraCheckWindow = null
+			}
+			win.destroy() // The camera and the sound stop with it
+		})
+		cameraCheckWindow = win
+	}
 	function showMeetingAlert(eventItem) {
 		alertSnoozeTimer.stop()
 		var layer = moduleAvailable("LayerShellProbe.qml")
@@ -388,10 +420,7 @@ PlasmoidItem {
 			text: i18n("Camera Check…")
 			icon.name: "camera-web-symbolic"
 			visible: root.cameraCheckAvailable
-			onTriggered: {
-				var link = root.menuMeetingLink
-				root.openPopupAndCall(function(popupItem) { popupItem.openCameraCheck(link) })
-			}
+			onTriggered: root.openCameraCheck(root.menuMeetingLink)
 		},
 		PlasmaCore.Action {
 			text: i18n("Mute Notifications")

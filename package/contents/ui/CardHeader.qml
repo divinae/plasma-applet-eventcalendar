@@ -9,6 +9,7 @@ Item {
 
 	property alias title: titleLabel.text
 	property alias cancelText: cancelButton.text
+	property alias cancelVisible: cancelButton.visible
 	property alias actionText: actionButton.text
 	property alias actionIcon: actionButton.icon.name
 	property alias actionEnabled: actionButton.enabled

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:04+0100\n"
+"POT-Creation-Date: 2026-11-02 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,14 +229,6 @@ msgstr ""
 msgid "Show All"
 msgstr ""
 
-#: ../contents/ui/CameraCheckView.qml
-msgid "Camera Check"
-msgstr ""
-
-#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr ""
-
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
 #: ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
@@ -245,6 +237,10 @@ msgstr ""
 
 #: ../contents/ui/CameraCheckView.qml
 msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+msgstr ""
+
+#: ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
 msgstr ""
 
 #: ../contents/ui/CameraMirror.qml
@@ -2922,6 +2918,10 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr ""
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"

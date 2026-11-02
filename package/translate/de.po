@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:04+0100\n"
+"POT-Creation-Date: 2026-11-02 12:10+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -263,14 +263,6 @@ msgstr "%1 in den Countdown der Uhr aufnehmen"
 msgid "Show All"
 msgstr "Alle anzeigen"
 
-#: ../contents/ui/CameraCheckView.qml
-msgid "Camera Check"
-msgstr "Kameratest"
-
-#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Schließen"
-
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
 #: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
@@ -286,6 +278,10 @@ msgid ""
 msgstr ""
 "Es wird nichts aufgenommen. Kamera und Mikrofon werden nur verwendet, "
 "solange dies geöffnet ist."
+
+#: ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Kameratest"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3276,6 +3272,10 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 Ausnahme"
 msgstr[1] "%1 Ausnahmen"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Schließen"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"

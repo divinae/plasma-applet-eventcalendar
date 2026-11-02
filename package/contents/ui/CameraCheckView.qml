@@ -16,7 +16,9 @@ Item {
 	signal closeRequested()
 	signal joinRequested()
 
-	implicitHeight: header.implicitHeight + Kirigami.Units.smallSpacing * 2 + 1
+	// Its window (CameraCheckWindow.qml) has the title and closes it: the header only for Join.
+	readonly property bool showHeader: !!meetingLink
+	implicitHeight: (showHeader ? header.implicitHeight + Kirigami.Units.smallSpacing * 2 + 1 : 0)
 		+ body.implicitHeight + Kirigami.Units.largeSpacing * 2
 	Keys.onEscapePressed: closeRequested()
 	Component.onCompleted: forceActiveFocus()
@@ -27,10 +29,10 @@ Item {
 
 		CardHeader {
 			id: header
+			visible: cameraCheck.showHeader
+			cancelVisible: false
 			Layout.fillWidth: true
 			Layout.margins: Kirigami.Units.smallSpacing
-			title: i18n("Camera Check")
-			cancelText: i18n("Close")
 			actionVisible: !!cameraCheck.meetingLink
 			actionText: cameraCheck.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", cameraCheck.meetingLink.label) : ""
 			actionIcon: "call-start"
@@ -39,6 +41,7 @@ Item {
 		}
 
 		Kirigami.Separator {
+			visible: cameraCheck.showHeader
 			Layout.fillWidth: true
 		}
 

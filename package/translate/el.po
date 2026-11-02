@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:04+0100\n"
+"POT-Creation-Date: 2026-11-02 12:10+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -261,14 +261,6 @@ msgstr "Συμπερίληψη του %1 στην αντίστροφη μέτρ�
 msgid "Show All"
 msgstr "Εμφάνιση όλων"
 
-#: ../contents/ui/CameraCheckView.qml
-msgid "Camera Check"
-msgstr "Έλεγχος κάμερας"
-
-#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Κλείσιμο"
-
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
 #: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
@@ -284,6 +276,10 @@ msgid ""
 msgstr ""
 "Τίποτα δεν καταγράφεται. Η κάμερα και το μικρόφωνο χρησιμοποιούνται μόνο όσο "
 "αυτό είναι ανοιχτό."
+
+#: ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Έλεγχος κάμερας"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3280,6 +3276,10 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 εξαίρεση"
 msgstr[1] "%1 εξαιρέσεις"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Κλείσιμο"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"

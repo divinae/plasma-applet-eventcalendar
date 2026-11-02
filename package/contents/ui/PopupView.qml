@@ -276,14 +276,9 @@ MouseArea {
 		searchOpen = false
 	}
 	property bool quickAddOpen: false
-	//--- Camera check (CameraCheckView): the camera as a mirror and the microphone's level, with Join
-	// for the meeting it was opened for (a link from MeetingLink.find, or null).
-	property bool cameraCheckOpen: false
-	property var cameraCheckLink: null
+	//--- Camera check: its own window (main.qml), with Join for the meeting it's opened for.
 	function openCameraCheck(meetingLink) {
-		closeOverlays()
-		cameraCheckLink = meetingLink || null
-		cameraCheckOpen = true
+		root.openCameraCheck(meetingLink)
 	}
 	//--- Go to date (the G key): the view goes to the day typed.
 	property bool goToDateOpen: false
@@ -409,7 +404,6 @@ MouseArea {
 		searchOpen = false
 		quickAddOpen = false
 		goToDateOpen = false
-		cameraCheckOpen = false
 		closeImport()
 		if (tasksViewLoader.item) {
 			tasksViewLoader.item.closeManaging()
@@ -635,28 +629,6 @@ MouseArea {
 					onCloseRequested: popup.closeEventDetails()
 					onEditRequested: popup.editEvent(popup.detailsEvent)
 					onDuplicateRequested: popup.duplicateEvent(popup.detailsEvent)
-				}
-			}
-		}
-
-		OverlayCard {
-			open: popup.cameraCheckOpen
-			anchors.fill: parent
-			onOutsideClicked: popup.cameraCheckOpen = false
-			cardComponent: visible ? cameraCheckCard : null
-			Component {
-				id: cameraCheckCard
-				CameraCheckView {
-					meetingLink: popup.cameraCheckLink
-					// Off as soon as the card closes (its fade out too) or the popup does.
-					running: popup.cameraCheckOpen && root.expanded
-					onCloseRequested: popup.cameraCheckOpen = false
-					onJoinRequested: {
-						if (popup.cameraCheckLink) {
-							meetingOpener.open(popup.cameraCheckLink.url)
-						}
-						popup.cameraCheckOpen = false
-					}
 				}
 			}
 		}
@@ -1063,7 +1035,7 @@ MouseArea {
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
 	// Enter, Space, E and Delete act on its highlighted task, N goes to "Add a task…".
-	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen || goToDateOpen || cameraCheckOpen
+	readonly property bool anyOverlayOpen: editorOpen || !!detailsEvent || searchOpen || quickAddOpen || importOpen || goToDateOpen
 	readonly property string currentViewMode: monthMode ? 'month' : weekMode ? 'week' : dayMode ? 'today' : tasksMode ? 'tasks' : 'classic'
 	// Take the keys when the popup opens and when the last card closes (its focus is gone).
 	function focusForKeys() {

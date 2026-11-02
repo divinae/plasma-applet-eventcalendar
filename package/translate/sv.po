@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:04+0100\n"
+"POT-Creation-Date: 2026-11-02 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -226,14 +226,6 @@ msgstr "Ta med %1 i klockans nedräkning"
 msgid "Show All"
 msgstr "Visa alla"
 
-#: ../contents/ui/CameraCheckView.qml
-msgid "Camera Check"
-msgstr "Kamerakontroll"
-
-#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Stäng"
-
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
@@ -242,6 +234,10 @@ msgstr "Anslut till %1"
 #: ../contents/ui/CameraCheckView.qml
 msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
 msgstr "Inget spelas in. Kameran och mikrofonen används bara medan detta är öppet."
+
+#: ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Kamerakontroll"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -2898,6 +2894,10 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 undantag"
 msgstr[1] "%1 undantag"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Stäng"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"

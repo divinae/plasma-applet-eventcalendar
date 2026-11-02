@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:04+0100\n"
+"POT-Creation-Date: 2026-11-02 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -225,14 +225,6 @@ msgstr "%1 を時計のカウントダウンに含める"
 msgid "Show All"
 msgstr "すべて表示"
 
-#: ../contents/ui/CameraCheckView.qml
-msgid "Camera Check"
-msgstr "カメラチェック"
-
-#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "閉じる"
-
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
@@ -241,6 +233,10 @@ msgstr "%1 に参加"
 #: ../contents/ui/CameraCheckView.qml
 msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
 msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
+
+#: ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "カメラチェック"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -2872,6 +2868,10 @@ msgstr "%1、%2 まで"
 msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "例外 %1 件"
+
+#: ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "閉じる"
 
 #: ../contents/ui/ImportView.qml
 msgid "Import"
