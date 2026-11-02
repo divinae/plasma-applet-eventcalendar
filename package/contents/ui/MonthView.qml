@@ -93,7 +93,13 @@ PinchArea {
 	// From the view's own size: a cell's height depends on the badge type (the compact header).
 	// About 5 letters of a title (4.5 grid units) and a title row under the day number.
 	readonly property bool roomForTitles: width / 7 >= Kirigami.Units.gridUnit * 4.5 && height / 7 >= Kirigami.Units.gridUnit * 2.5
-	readonly property bool showsTitles: eventTitles && roomForTitles
+	// Followed only while shown: hidden (the popup in another view, its size given away), the day
+	// cells keep what they show. Switching all 42 between titles and dots (and the bars) on each
+	// view change was most of what leaving the month cost, and coming back again.
+	readonly property bool fitsTitles: eventTitles && roomForTitles
+	property bool showsTitles: false
+	onFitsTitlesChanged: if (visible) showsTitles = fitsTitles
+	onVisibleChanged: if (visible) showsTitles = fitsTitles
 	property bool spanBarsEnabled: false
 	readonly property bool spanBarsActive: spanBarsEnabled && mainDaysCalendar.eventBadgeType === 'eventTitles'
 	property var spanBars: []
@@ -645,6 +651,7 @@ PinchArea {
 	}
 
 	Component.onCompleted: {
+		showsTitles = fitsTitles
 		setSelectedDate(calendarBackend.today)
 	}
 }

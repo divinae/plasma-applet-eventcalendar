@@ -911,7 +911,7 @@ MouseArea {
 			Layout.fillHeight: true
 			Layout.alignment: Qt.AlignCenter
 
-			eventTitles: popup.monthMode
+			eventTitles: true // Shown only in the month view (MonthView keeps its cells while hidden)
 			// Multi-day events as bars across the days (with event titles, ie: the month popup mode).
 			spanBarsEnabled: true
 			// Events can be dragged to other days (with event titles).
@@ -1037,9 +1037,13 @@ MouseArea {
 			agendaModel.parseGCalEvents(eventModel.eventsData)
 		}
 	}
+	// From viewMode, not showCalendar: leaving the month, the other view is laid out (the month's
+	// cells resized, refilled for their new row capacity) before showCalendar follows; that refilled
+	// the month several times on its way out.
 	function updateMonth() {
-		monthStale = !showCalendar
-		if (showCalendar) {
+		var shown = viewMode === 'month'
+		monthStale = !shown
+		if (shown) {
 			monthView.parseGCalEvents(eventModel.eventsData)
 		}
 	}

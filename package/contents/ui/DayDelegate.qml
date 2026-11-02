@@ -169,7 +169,10 @@ MouseArea {
 			id: eventBadgeLoader
 			anchors.fill: parent
 
-			active: parent.visible
+			// The day's own flag, not parent.visible: that is false too while the whole month is
+			// hidden (the popup in another view), and every day's events were destroyed on leaving
+			// the month and made again on coming back.
+			active: model.showEventBadge || false
 			property Component badgeComponent: {
 				switch (dayStyle.eventBadgeType) {
 					case 'bottomBar': return eventColorsBarBadgeComponent
