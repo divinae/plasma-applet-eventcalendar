@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Effects
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import QtMultimedia
 import org.kde.kirigami as Kirigami
@@ -121,7 +122,7 @@ ColumnLayout {
 			implicitHeight: implicitWidth
 			source: "camera-web-symbolic"
 		}
-		PlasmaComponents3.ComboBox {
+		QQC2.ComboBox {
 			Layout.fillWidth: true
 			enabled: mirror.cameras.length > 1
 			model: mirror.cameras.map(function(camera) { return CameraPrefs.cameraName(camera.description) })

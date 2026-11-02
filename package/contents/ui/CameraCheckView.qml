@@ -35,7 +35,6 @@ Item {
 			actionVisible: !!cameraCheck.meetingLink
 			actionText: cameraCheck.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", cameraCheck.meetingLink.label) : ""
 			actionIcon: "call-start"
-			onCancelClicked: cameraCheck.closeRequested()
 			onActionClicked: cameraCheck.joinRequested()
 		}
 

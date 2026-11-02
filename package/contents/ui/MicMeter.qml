@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
@@ -220,7 +221,7 @@ ColumnLayout {
 	}
 
 	// The devices: [{ text, device, isDefault }] from a PulseAudio model.
-	component DeviceCombo: PlasmaComponents3.ComboBox {
+	component DeviceCombo: QQC2.ComboBox {
 		id: combo
 		property var pulseModel
 		property bool microphones: false
