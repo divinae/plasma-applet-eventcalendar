@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:49+0100\n"
+"POT-Creation-Date: 2026-11-02 09:56+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -30,18 +30,18 @@ msgstr "Представления"
 msgid "Clock"
 msgstr "Часы"
 
+#: ../contents/config/config.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
+msgid "Events"
+msgstr "События"
+
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Календари"
-
-#: ../contents/config/config.qml
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
-msgid "Events"
-msgstr "События"
 
 #: ../contents/config/config.qml
 msgid "ICalendar (.ics)"
