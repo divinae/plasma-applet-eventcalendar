@@ -232,6 +232,14 @@ PinchArea {
 		dateSelected(currentDate)
 	}
 
+	// Back to the month from the year / decade view (the month view left: the agenda shows its
+	// title and pages with its arrows).
+	function zoomReset() {
+		if (stack.depth > 1) {
+			stack.pop(null)
+		}
+	}
+
 	function resetToToday() {
 		calendarBackend.resetToToday()
 		setSelectedDate(calendarBackend.today)

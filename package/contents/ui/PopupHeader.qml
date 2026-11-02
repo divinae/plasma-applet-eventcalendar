@@ -372,10 +372,12 @@ PlasmaExtras.PlasmoidHeading {
 				font.capitalization: Font.Capitalize
 				text: header.tasksMode ? i18n("Tasks")
 					: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+				// Year / decade view: only in the month view. The agenda shows the month's title too, but
+				// zooming the hidden month changed only the title (and the arrows paged years, #16).
 				MouseArea {
 					anchors.fill: parent
-					enabled: !header.weekViewItem && !header.tasksMode
-					onClicked: header.monthViewItem.titleClicked() // Year / decade view
+					enabled: header.currentMode === 'month'
+					onClicked: header.monthViewItem.titleClicked()
 				}
 			}
 			Item {

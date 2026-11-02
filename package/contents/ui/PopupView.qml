@@ -105,7 +105,12 @@ MouseArea {
 	}
 	// The Day view needs the hourly forecast (also when the popup is made in it: see
 	// Component.onCompleted, no change fires then).
-	onViewModeChanged: logic.ensureHourlyWeather()
+	onViewModeChanged: {
+		logic.ensureHourlyWeather()
+		if (viewMode !== 'month') {
+			monthView.zoomReset() // Its year / decade view is the month view's only (#16)
+		}
+	}
 	readonly property string viewMode: {
 		var mode = currentView
 		if (viewOffered(mode)) {

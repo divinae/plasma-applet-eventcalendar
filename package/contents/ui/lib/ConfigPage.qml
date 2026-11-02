@@ -330,6 +330,8 @@ KCM.SimpleKCM {
 	property var cfg_dayShowWeatherDefault
 	property var cfg_dayShowTasks
 	property var cfg_dayShowTasksDefault
+	property var cfg_dayAllDayTiles
+	property var cfg_dayAllDayTilesDefault
 	// END AUTO CFG PROPS
 
 	property QtObject configBridge: QtObject {
