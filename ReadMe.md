@@ -83,9 +83,9 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   as ended. Music and videos pause when you join; optional Do Not Disturb during meetings and
   auto-join; overlapping meetings are marked.
 - **Camera check** (like Hand Mirror): before a meeting, see yourself in a mirror, check that the
-  microphone picks you up (a level, a warning when it's muted) and pick the camera, microphone and
-  speaker, then Join. From the widget's menu or an event's details; nothing is recorded, and the
-  camera is on only while it's open. Needs Qt Multimedia (`qt6-multimedia`); the microphone part
+  microphone picks you up (a level, a warning when it's muted, a 5-second test played back) and
+  that the speaker works, pick the camera, microphone and speaker, then Join. From the widget's
+  menu or an event's details; nothing is saved, and the camera is on only while it's open. Needs Qt Multimedia (`qt6-multimedia`); the microphone part
   uses Plasma's audio applet.
 - **Notifications** through KDE's notification system: reminders before events (with Snooze,
   optionally hidden after N seconds), when an event starts (optionally critical / persistent, or

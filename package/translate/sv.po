@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:44+0100\n"
+"POT-Creation-Date: 2026-11-02 11:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -240,8 +240,8 @@ msgid "Join %1"
 msgstr "Anslut till %1"
 
 #: ../contents/ui/CameraCheckView.qml
-msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
-msgstr "Inget spelas in. Kameran och mikrofonen används bara medan detta är öppet."
+msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
+msgstr "Inget sparas. Kameran och mikrofonen används bara medan detta är öppet; ett mikrofontest hålls i minnet tills det har spelats upp."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3189,12 +3189,28 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
+msgid "Test: record %1 seconds and play them back"
+msgstr "Test: spela in %1 sekunder och spela upp dem"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Recording… speak now"
+msgstr "Spelar in… prata nu"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Playing back…"
+msgstr "Spelar upp…"
+
+#: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
 msgstr "Mikrofonen är tystad."
 
 #: ../contents/ui/MicMeter.qml
 msgid "Unmute"
 msgstr "Slå på ljud"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Test: play a sound on each side"
+msgstr "Test: spela ett ljud på varje sida"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
@@ -4134,6 +4150,9 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+#~ msgstr "Inget spelas in. Kameran och mikrofonen används bara medan detta är öppet."
 
 #~ msgid "New Event…"
 #~ msgstr "Ny händelse…"

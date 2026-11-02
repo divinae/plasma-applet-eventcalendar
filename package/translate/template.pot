@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:44+0100\n"
+"POT-Creation-Date: 2026-11-02 11:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -244,7 +244,7 @@ msgid "Join %1"
 msgstr ""
 
 #: ../contents/ui/CameraCheckView.qml
-msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
 msgstr ""
 
 #: ../contents/ui/CameraMirror.qml
@@ -3213,11 +3213,27 @@ msgid "%1mm"
 msgstr ""
 
 #: ../contents/ui/MicMeter.qml
+msgid "Test: record %1 seconds and play them back"
+msgstr ""
+
+#: ../contents/ui/MicMeter.qml
+msgid "Recording… speak now"
+msgstr ""
+
+#: ../contents/ui/MicMeter.qml
+msgid "Playing back…"
+msgstr ""
+
+#: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
 msgstr ""
 
 #: ../contents/ui/MicMeter.qml
 msgid "Unmute"
+msgstr ""
+
+#: ../contents/ui/MicMeter.qml
+msgid "Test: play a sound on each side"
 msgstr ""
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml

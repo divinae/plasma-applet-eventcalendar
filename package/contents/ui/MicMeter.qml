@@ -8,7 +8,9 @@ import "CameraPrefs.js" as CameraPrefs
 
 // The camera check's sound (CameraCheckView.qml, loaded by URL only with plasma-pa, see
 // PlasmaPaProbe.qml): the microphone's level while running, a warning when it's muted, and the
-// microphone and speaker to use (Plasma's defaults, set as the volume applet sets them).
+// microphone and speaker to use (Plasma's defaults, set as the volume applet sets them). Each has
+// a test: the microphone records a few seconds and plays them back (kept in memory only, gone
+// when the card closes), the speaker says its channels' names.
 ColumnLayout {
 	id: meter
 
@@ -17,20 +19,108 @@ ColumnLayout {
 	readonly property bool muted: !!source && source.muted
 	spacing: Kirigami.Units.smallSpacing
 
+	readonly property real iconSize: Kirigami.Units.iconSizes.small
+
 	VolumeMonitor {
 		id: monitor
 		target: meter.running ? meter.source : null
 	}
 
-	// Microphone: the level bar.
+	//--- Microphone test: about 5 s recorded, then played back. Stopped and dropped when the card
+	// closes or the popup does.
+	readonly property int micTestSeconds: 5
+	MicrophoneTest {
+		id: micTest
+		source: meter.source
+		onRecordingFinished: playRecording()
+	}
+	Timer {
+		id: micTestTimer
+		interval: meter.micTestSeconds * 1000
+		onTriggered: micTest.stopRecording()
+	}
+	function startMicTest() {
+		if (micTest.recording || micTest.playing) {
+			stopMicTest()
+			return
+		}
+		micTest.clearRecording()
+		micTest.startRecording()
+		micTestTimer.restart()
+	}
+	function stopMicTest() {
+		micTestTimer.stop()
+		if (micTest.recording) {
+			micTest.stopRecording()
+		}
+		micTest.stopPlaying()
+		micTest.clearRecording()
+	}
+	onRunningChanged: {
+		if (!running) {
+			stopMicTest()
+			speakerTest.queue = []
+		}
+	}
+	Component.onDestruction: {
+		micTestTimer.stop()
+		micTest.cleanupStreams()
+	}
+
+	//--- Speaker test: each channel says its name (left, then right), as in Plasma's audio settings.
+	SpeakerTest {
+		id: speakerTest
+		sink: PreferredDevice.sink
+		property var queue: []
+		readonly property bool busy: playingChannels.length > 0 || queue.length > 0
+		function start() {
+			queue = sink ? Array.prototype.slice.call(sink.rawChannels) : []
+			next()
+		}
+		function next() {
+			if (!queue.length) {
+				return
+			}
+			var channel = queue[0]
+			queue = queue.slice(1)
+			testChannel(channel)
+		}
+		onPlayingChannelsChanged: {
+			if (playingChannels.length === 0) {
+				next()
+			}
+		}
+	}
+
+	// Microphone, its test and its level.
 	RowLayout {
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.smallSpacing
 		Kirigami.Icon {
-			implicitWidth: Kirigami.Units.iconSizes.small
+			implicitWidth: meter.iconSize
 			implicitHeight: implicitWidth
 			source: meter.muted ? "microphone-sensitivity-muted" : "audio-input-microphone"
 		}
+		DeviceCombo {
+			Layout.fillWidth: true
+			pulseModel: SourceModel {}
+			microphones: true
+		}
+		PlasmaComponents3.ToolButton {
+			id: micTestButton
+			icon.name: micTest.recording || micTest.playing ? "media-playback-stop" : "media-record"
+			enabled: !!meter.source && !meter.muted
+			onClicked: meter.startMicTest()
+			PlasmaComponents3.ToolTip.text: i18n("Test: record %1 seconds and play them back", meter.micTestSeconds)
+			PlasmaComponents3.ToolTip.visible: hovered
+			PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
+		}
+	}
+	RowLayout {
+		Layout.fillWidth: true
+		Layout.leftMargin: meter.iconSize + Kirigami.Units.smallSpacing // Under the microphone's list
+		Layout.rightMargin: micTestButton.width + Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.smallSpacing
 		Rectangle {
 			Layout.fillWidth: true
 			implicitHeight: Math.round(Kirigami.Units.smallSpacing * 1.5)
@@ -40,11 +130,17 @@ ColumnLayout {
 				height: parent.height
 				radius: parent.radius
 				width: parent.width * (meter.muted ? 0 : CameraPrefs.meterLevel(monitor.volume))
-				color: Kirigami.Theme.positiveTextColor
+				color: micTest.recording ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
 				Behavior on width {
 					NumberAnimation { duration: 80 }
 				}
 			}
+		}
+		PlasmaComponents3.Label {
+			visible: micTest.recording || micTest.playing
+			text: micTest.recording ? i18n("Recording… speak now") : i18n("Playing back…")
+			font: Kirigami.Theme.smallFont
+			opacity: 0.8
 		}
 	}
 	Kirigami.InlineMessage {
@@ -110,27 +206,21 @@ ColumnLayout {
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.smallSpacing
 		Kirigami.Icon {
-			implicitWidth: Kirigami.Units.iconSizes.small
-			implicitHeight: implicitWidth
-			source: "audio-input-microphone"
-		}
-		DeviceCombo {
-			Layout.fillWidth: true
-			pulseModel: SourceModel {}
-			microphones: true
-		}
-	}
-	RowLayout {
-		Layout.fillWidth: true
-		spacing: Kirigami.Units.smallSpacing
-		Kirigami.Icon {
-			implicitWidth: Kirigami.Units.iconSizes.small
+			implicitWidth: meter.iconSize
 			implicitHeight: implicitWidth
 			source: "audio-speakers"
 		}
 		DeviceCombo {
 			Layout.fillWidth: true
 			pulseModel: SinkModel {}
+		}
+		PlasmaComponents3.ToolButton {
+			icon.name: "media-playback-start"
+			enabled: !!speakerTest.sink && !speakerTest.busy
+			onClicked: speakerTest.start()
+			PlasmaComponents3.ToolTip.text: i18n("Test: play a sound on each side")
+			PlasmaComponents3.ToolTip.visible: hovered
+			PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
 		}
 	}
 }

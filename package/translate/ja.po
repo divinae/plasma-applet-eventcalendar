@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:44+0100\n"
+"POT-Creation-Date: 2026-11-02 11:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -239,8 +239,8 @@ msgid "Join %1"
 msgstr "%1 に参加"
 
 #: ../contents/ui/CameraCheckView.qml
-msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
-msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
+msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
+msgstr "何も保存されません。カメラとマイクはこれを開いている間だけ使われます。マイクテストは再生されるまでメモリーにのみ保持されます。"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3158,12 +3158,28 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
+msgid "Test: record %1 seconds and play them back"
+msgstr "テスト: %1 秒録音して再生"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Recording… speak now"
+msgstr "録音中… 話してください"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Playing back…"
+msgstr "再生中…"
+
+#: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
 msgstr "マイクはミュートされています。"
 
 #: ../contents/ui/MicMeter.qml
 msgid "Unmute"
 msgstr "ミュート解除"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Test: play a sound on each side"
+msgstr "テスト: 左右それぞれで音を再生"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
@@ -4086,6 +4102,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+#~ msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
 
 #~ msgid "New Event…"
 #~ msgstr "新しいイベント…"

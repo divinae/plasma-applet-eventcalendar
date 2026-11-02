@@ -7,7 +7,8 @@ import org.kde.plasma.components as PlasmaComponents3
 // camera as a mirror (CameraMirror.qml, with Qt Multimedia), the microphone's level and the
 // microphone and speaker to use (MicMeter.qml, with plasma-pa), and Join when there's a meeting.
 // Both are loaded by URL, after their probes (main.qml): a missing module only hides its part.
-// Nothing is recorded; the camera and the level run only while running.
+// Nothing is saved; the camera and the level run only while running (MicMeter's microphone test
+// is held in memory until played).
 Item {
 	id: cameraCheck
 
@@ -63,7 +64,7 @@ Item {
 				wrapMode: Text.Wrap
 				font: Kirigami.Theme.smallFont
 				opacity: 0.6
-				text: i18n("Nothing is recorded. The camera and the microphone are used only while this is open.")
+				text: i18n("Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played.")
 			}
 		}
 	}

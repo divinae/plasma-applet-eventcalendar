@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:44+0100\n"
+"POT-Creation-Date: 2026-11-02 11:46+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -281,11 +281,11 @@ msgstr "Participar com %1"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is recorded. The camera and the microphone are used only while this "
-"is open."
+"Nothing is saved. The camera and the microphone are used only while this is "
+"open; a microphone test is kept in memory until it's played."
 msgstr ""
-"Nada é gravado. A câmera e o microfone são usados apenas enquanto isto "
-"estiver aberto."
+"Nada é salvo. A câmera e o microfone são usados apenas enquanto isto estiver "
+"aberto; um teste de microfone fica na memória até ser reproduzido."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3564,12 +3564,28 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
+msgid "Test: record %1 seconds and play them back"
+msgstr "Teste: gravar %1 segundos e reproduzi-los"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Recording… speak now"
+msgstr "Gravando… fale agora"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Playing back…"
+msgstr "Reproduzindo…"
+
+#: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
 msgstr "O microfone está mudo."
 
 #: ../contents/ui/MicMeter.qml
 msgid "Unmute"
 msgstr "Ativar som"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Test: play a sound on each side"
+msgstr "Teste: tocar um som em cada lado"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
@@ -4513,6 +4529,13 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgid ""
+#~ "Nothing is recorded. The camera and the microphone are used only while "
+#~ "this is open."
+#~ msgstr ""
+#~ "Nada é gravado. A câmera e o microfone são usados apenas enquanto isto "
+#~ "estiver aberto."
 
 #~ msgid "New Event…"
 #~ msgstr "Novo evento…"

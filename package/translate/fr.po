@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:44+0100\n"
+"POT-Creation-Date: 2026-11-02 11:46+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -278,11 +278,12 @@ msgstr "Rejoindre via %1"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is recorded. The camera and the microphone are used only while this "
-"is open."
+"Nothing is saved. The camera and the microphone are used only while this is "
+"open; a microphone test is kept in memory until it's played."
 msgstr ""
-"Rien n'est enregistré. La caméra et le microphone ne sont utilisés que tant "
-"que ceci est ouvert."
+"Rien n'est enregistré sur le disque. La caméra et le microphone ne sont "
+"utilisés que tant que ceci est ouvert ; un test du microphone reste en "
+"mémoire jusqu'à sa lecture."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3596,12 +3597,28 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
+msgid "Test: record %1 seconds and play them back"
+msgstr "Test : enregistrer %1 secondes et les réécouter"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Recording… speak now"
+msgstr "Enregistrement… parlez maintenant"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Playing back…"
+msgstr "Lecture…"
+
+#: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
 msgstr "Le microphone est coupé."
 
 #: ../contents/ui/MicMeter.qml
 msgid "Unmute"
 msgstr "Réactiver le son"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Test: play a sound on each side"
+msgstr "Test : jouer un son de chaque côté"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
@@ -4551,6 +4568,13 @@ msgstr "Plus d'événements aujourd'hui"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lieu de travail : %1"
+
+#~ msgid ""
+#~ "Nothing is recorded. The camera and the microphone are used only while "
+#~ "this is open."
+#~ msgstr ""
+#~ "Rien n'est enregistré. La caméra et le microphone ne sont utilisés que "
+#~ "tant que ceci est ouvert."
 
 #~ msgid "New Event…"
 #~ msgstr "Nouvel événement…"
