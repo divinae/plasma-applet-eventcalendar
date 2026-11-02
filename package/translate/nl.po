@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -27,9 +27,16 @@ msgstr "Weergaven"
 msgid "Clock"
 msgstr "Klok"
 
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "Agenda's"
+
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Afspraken"
 
@@ -241,12 +248,6 @@ msgstr ""
 "Verbind het account opnieuw met een nieuw API-token in de instellingen voor "
 "Taken."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "Agenda's"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "Geen agenda's geselecteerd in de instellingen."
@@ -435,6 +436,46 @@ msgstr ""
 "afspraken worden getoond, maar kunnen voorlopig alleen in hun eigen app "
 "worden gewijzigd."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "Afspraken importeren uit een bestand…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Kopieer de afspraken uit een .ics-bestand (geëxporteerd uit een andere "
+"agenda-app) naar een van je agenda's. De widget toont ze eerst, zodat je de "
+"agenda kunt kiezen."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Afspraken importeren"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "Herladen om de"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " min"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "Plasma-agendaplug-ins zijn niet beschikbaar."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "Plasma-agenda's"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Standaard (%1)"
@@ -580,46 +621,6 @@ msgstr "Achtergrond tonen"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Bureaubladwidget"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "Afspraken importeren uit een bestand…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Kopieer de afspraken uit een .ics-bestand (geëxporteerd uit een andere "
-"agenda-app) naar een van je agenda's. De widget toont ze eerst, zodat je de "
-"agenda kunt kiezen."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Afspraken importeren"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
-#: ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "Herladen om de"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " min"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "Plasma-agendaplug-ins zijn niet beschikbaar."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "Plasma-agenda's"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -1041,13 +1042,13 @@ msgstr "De ontbrekende vergeten"
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. The Google calendars "
-"of an account signed in here are listed above, with the account."
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
 msgstr ""
 "Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
 "ingesteld op de pagina van de PIM-afsprakenplug-in in de instellingen van de "
-"Digitale klok (de plug-in zelf wordt aangezet in Afspraken > Plasma-"
+"Digitale klok (de plug-in zelf wordt aangezet in Agenda's > Plasma-"
 "agenda's). In het agendamenu van de pop-up worden ze per kleur getoond en "
 "verborgen: agenda's van één kleur samen. De Google-agenda's van een hier "
 "aangemeld account staan hierboven, bij het account."
@@ -4496,6 +4497,21 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Events > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
+#~ "ingesteld op de pagina van de PIM-afsprakenplug-in in de instellingen van "
+#~ "de Digitale klok (de plug-in zelf wordt aangezet in Afspraken > Plasma-"
+#~ "agenda's). In het agendamenu van de pop-up worden ze per kleur getoond en "
+#~ "verborgen: agenda's van één kleur samen. De Google-agenda's van een hier "
+#~ "aangemeld account staan hierboven, bij het account."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"

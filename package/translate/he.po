@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,9 +28,16 @@ msgstr "תצוגות"
 msgid "Clock"
 msgstr "שעון"
 
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "לוחות שנה"
+
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "אירועים"
 
@@ -242,12 +249,6 @@ msgstr "TickTick: יש להיכנס שוב"
 msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr "יש לחבר את החשבון מחדש עם אסימון API חדש בהגדרות המשימות."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "לוחות שנה"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "לא נבחרו לוחות שנה בהגדרות."
@@ -434,6 +435,45 @@ msgstr ""
 "הסיסמה נשמרת במחזיק המפתחות של המערכת. אירועים חוזרים מוצגים, אך בינתיים "
 "ניתן לשנות אותם רק ביישום שלהם."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "ייבוא אירועים מקובץ…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"העתקת האירועים מקובץ ‎.ics (שיוצא מיישום לוח שנה אחר) לאחד מלוחות השנה שלך. "
+"היישומון מציג אותם קודם, כדי לבחור את לוח השנה."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "ייבוא אירועים"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "רענון כל"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " דק׳"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "תוספי לוח השנה של Plasma אינם זמינים."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "לוחות שנה של Plasma"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "ברירת מחדל (%1)"
@@ -576,45 +616,6 @@ msgstr "הצגת רקע"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "יישומון לשולחן העבודה"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "ייבוא אירועים מקובץ…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"העתקת האירועים מקובץ ‎.ics (שיוצא מיישום לוח שנה אחר) לאחד מלוחות השנה שלך. "
-"היישומון מציג אותם קודם, כדי לבחור את לוח השנה."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "ייבוא אירועים"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
-#: ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "רענון כל"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " דק׳"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "תוספי לוח השנה של Plasma אינם זמינים."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "לוחות שנה של Plasma"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -1026,12 +1027,12 @@ msgstr "לשכוח את החסרים"
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. The Google calendars "
-"of an account signed in here are listed above, with the account."
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
 msgstr ""
 "מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד תוסף אירועי "
-"ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־אירועים > לוחות שנה של "
+"ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־לוחות שנה > לוחות שנה של "
 "Plasma). בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי צבע: לוחות "
 "שנה באותו צבע יחד. לוחות השנה של Google של חשבון שמחובר כאן מופיעים למעלה, "
 "יחד עם החשבון."
@@ -4521,6 +4522,20 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Events > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד תוסף "
+#~ "אירועי ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־אירועים > לוחות "
+#~ "שנה של Plasma). בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי "
+#~ "צבע: לוחות שנה באותו צבע יחד. לוחות השנה של Google של חשבון שמחובר כאן "
+#~ "מופיעים למעלה, יחד עם החשבון."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"

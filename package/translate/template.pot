@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,12 @@ msgstr ""
 msgid "Clock"
 msgstr ""
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr ""
+
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr ""
 
@@ -211,10 +216,6 @@ msgstr ""
 msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr ""
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr ""
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr ""
@@ -372,6 +373,39 @@ msgid ""
 "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others. The password is kept in the system keyring. Repeating events are shown, but changed only in their own app for now."
 msgstr ""
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr ""
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr ""
@@ -507,39 +541,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr ""
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
 msgstr ""
 
 #: ../contents/ui/config/ConfigEvents.qml
@@ -876,8 +877,8 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's "
-"calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the "
+"popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml

@@ -26,6 +26,11 @@ ConfigModel {
 		source: "config/ConfigClock.qml"
 	}
 	ConfigCategory {
+		name: i18n("Calendars")
+		icon: "office-calendar"
+		source: "config/ConfigCalendars.qml"
+	}
+	ConfigCategory {
 		name: i18n("Events")
 		icon: "view-calendar-upcoming-events"
 		source: "config/ConfigEvents.qml"

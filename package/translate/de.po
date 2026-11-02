@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -28,9 +28,16 @@ msgstr "Ansichten"
 msgid "Clock"
 msgstr "Uhr"
 
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "Kalender"
+
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Termine"
 
@@ -245,12 +252,6 @@ msgstr ""
 "Verbinden Sie das Konto in den Aufgaben-Einstellungen erneut mit einem neuen "
 "API-Token."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "Kalender"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "In den Einstellungen sind keine Kalender ausgewählt."
@@ -440,6 +441,46 @@ msgstr ""
 "Wiederkehrende Termine werden angezeigt, lassen sich vorerst aber nur in "
 "ihrer eigenen App ändern."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "Termine aus einer Datei importieren…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Kopiert die Termine einer .ics-Datei (aus einer anderen Kalender-App "
+"exportiert) in einen Ihrer Kalender. Das Widget zeigt sie zuerst an, damit "
+"Sie den Kalender wählen können."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Termine importieren"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "Aktualisieren alle"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " Min."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "Plasma-Kalendermodule sind nicht verfügbar."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "Plasma-Kalender"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Standard (%1)"
@@ -586,46 +627,6 @@ msgstr "Hintergrund anzeigen"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Arbeitsflächen-Widget"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "Termine aus einer Datei importieren…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Kopiert die Termine einer .ics-Datei (aus einer anderen Kalender-App "
-"exportiert) in einen Ihrer Kalender. Das Widget zeigt sie zuerst an, damit "
-"Sie den Kalender wählen können."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Termine importieren"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
-#: ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "Aktualisieren alle"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " Min."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "Plasma-Kalendermodule sind nicht verfügbar."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "Plasma-Kalender"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -1049,13 +1050,13 @@ msgstr "Fehlende vergessen"
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. The Google calendars "
-"of an account signed in here are listed above, with the account."
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
 msgstr ""
 "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, wird "
 "auf der Seite des PIM-Termin-Moduls in den Einstellungen der Digitaluhr "
-"festgelegt (das Modul selbst wird unter Termine > Plasma-Kalender "
+"festgelegt (das Modul selbst wird unter Kalender > Plasma-Kalender "
 "eingeschaltet). Im Kalendermenü des Aufklappfensters werden sie nach Farbe "
 "ein- und ausgeblendet: Kalender einer Farbe gemeinsam. Die Google-Kalender "
 "eines hier angemeldeten Kontos stehen oben beim Konto."
@@ -4515,6 +4516,21 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Events > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Schreibgeschützt angezeigt. Welche Akonadi-Kalender angezeigt werden, "
+#~ "wird auf der Seite des PIM-Termin-Moduls in den Einstellungen der "
+#~ "Digitaluhr festgelegt (das Modul selbst wird unter Termine > Plasma-"
+#~ "Kalender eingeschaltet). Im Kalendermenü des Aufklappfensters werden sie "
+#~ "nach Farbe ein- und ausgeblendet: Kalender einer Farbe gemeinsam. Die "
+#~ "Google-Kalender eines hier angemeldeten Kontos stehen oben beim Konto."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"

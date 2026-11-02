@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -25,7 +25,11 @@ msgstr "Viste"
 msgid "Clock"
 msgstr "Orologio"
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "Calendari"
+
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Eventi"
 
@@ -209,10 +213,6 @@ msgstr "TickTick: accedi di nuovo"
 msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr "Ricollega l'account con un nuovo token API nelle impostazioni delle attività."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "Calendari"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "Nessun calendario selezionato nelle impostazioni."
@@ -368,6 +368,39 @@ msgstr "Il semplice http funziona solo con un server nella tua rete; la password
 msgid "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others. The password is kept in the system keyring. Repeating events are shown, but changed only in their own app for now."
 msgstr "Nextcloud, Fastmail, iCloud (con una password per le app), Radicale, Baïkal e altri. La password è conservata nel portachiavi di sistema. Gli eventi ricorrenti vengono mostrati, ma per ora si modificano solo nella loro app."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "Importa eventi da un file…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
+msgstr "Copia gli eventi di un file .ics (esportato da un'altra app di calendario) in uno dei tuoi calendari. L'oggetto li mostra prima, per scegliere il calendario."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Importa eventi"
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "Aggiorna ogni"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " min"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "Le estensioni del calendario di Plasma non sono disponibili."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "Calendari di Plasma"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Predefinito (%1)"
@@ -504,39 +537,6 @@ msgstr "Mostra lo sfondo"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Oggetto del desktop"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "Importa eventi da un file…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
-msgstr "Copia gli eventi di un file .ics (esportato da un'altra app di calendario) in uno dei tuoi calendari. L'oggetto li mostra prima, per scegliere il calendario."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Importa eventi"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "Aggiorna ogni"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " min"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "Le estensioni del calendario di Plasma non sono disponibili."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "Calendari di Plasma"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -867,9 +867,9 @@ msgid "Forget the Missing Ones"
 msgstr "Dimentica quelli mancanti"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
 msgstr ""
-"Mostrati in sola lettura. Quali calendari Akonadi vengono mostrati si imposta nella pagina dell'estensione degli eventi PIM nelle impostazioni dell'Orologio digitale (l'estensione stessa si attiva in Eventi > Calendari di Plasma). Nel menu dei calendari della finestra a comparsa vengono mostrati e nascosti per colore: i calendari dello stesso colore insieme. I calendari Google di un account "
+"Mostrati in sola lettura. Quali calendari Akonadi vengono mostrati si imposta nella pagina dell'estensione degli eventi PIM nelle impostazioni dell'Orologio digitale (l'estensione stessa si attiva in Calendari > Calendari di Plasma). Nel menu dei calendari della finestra a comparsa vengono mostrati e nascosti per colore: i calendari dello stesso colore insieme. I calendari Google di un account "
 "collegato qui sono elencati sopra, con l'account."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -4103,6 +4103,11 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr ""
+#~ "Mostrati in sola lettura. Quali calendari Akonadi vengono mostrati si imposta nella pagina dell'estensione degli eventi PIM nelle impostazioni dell'Orologio digitale (l'estensione stessa si attiva in Eventi > Calendari di Plasma). Nel menu dei calendari della finestra a comparsa vengono mostrati e nascosti per colore: i calendari dello stesso colore insieme. I calendari Google di un account "
+#~ "collegato qui sono elencati sopra, con l'account."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -27,9 +27,16 @@ msgstr "Προβολές"
 msgid "Clock"
 msgstr "Ρολόϊ"
 
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "Ημερολόγια"
+
 #: ../contents/config/config.qml
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/SearchView.qml
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Συμβάντα"
 
@@ -242,12 +249,6 @@ msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr ""
 "Συνδέστε ξανά τον λογαριασμό με νέο διακριτικό API στις ρυθμίσεις Εργασιών."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "Ημερολόγια"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "Δεν έχουν επιλεγεί ημερολόγια στις ρυθμίσεις."
@@ -438,6 +439,46 @@ msgstr ""
 "επαναλαμβανόμενα συμβάντα εμφανίζονται, αλλά προς το παρόν αλλάζουν μόνο στη "
 "δική τους εφαρμογή."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "Εισαγωγή συμβάντων από αρχείο…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Αντιγράψτε τα συμβάντα ενός αρχείου .ics (που εξήχθη από άλλη εφαρμογή "
+"ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
+"πρώτα, για να επιλέξετε το ημερολόγιο."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Εισαγωγή συμβάντων"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "Ανανέωση κάθε"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " λεπ."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "Τα πρόσθετα ημερολογίου του Plasma δεν είναι διαθέσιμα."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "Ημερολόγια Plasma"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Προκαθορισμένο (%1)"
@@ -583,46 +624,6 @@ msgstr "Εμφάνιση φόντου"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Γραφικό συστατικό επιφάνειας εργασίας"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "Εισαγωγή συμβάντων από αρχείο…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Αντιγράψτε τα συμβάντα ενός αρχείου .ics (που εξήχθη από άλλη εφαρμογή "
-"ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
-"πρώτα, για να επιλέξετε το ημερολόγιο."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Εισαγωγή συμβάντων"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
-#: ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "Ανανέωση κάθε"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " λεπ."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "Τα πρόσθετα ημερολογίου του Plasma δεν είναι διαθέσιμα."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "Ημερολόγια Plasma"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -1047,13 +1048,13 @@ msgstr "Ξεχάστε τα ελλείποντα"
 msgid ""
 "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
 "Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Events > Plasma calendars). In the popup's calendar menu they are shown "
-"and hidden by color: calendars of one color together. The Google calendars "
-"of an account signed in here are listed above, with the account."
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
 msgstr ""
 "Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
 "ορίζεται στη σελίδα του πρόσθετου συμβάντων PIM στις ρυθμίσεις του Ψηφιακού "
-"ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Συμβάντα > Ημερολόγια "
+"ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Ημερολόγια > Ημερολόγια "
 "Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου εμφανίζονται και "
 "αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος μαζί. Τα ημερολόγια "
 "Google ενός λογαριασμού που έχει συνδεθεί εδώ εμφανίζονται παραπάνω, μαζί με "
@@ -4519,6 +4520,22 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Events > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
+#~ "ορίζεται στη σελίδα του πρόσθετου συμβάντων PIM στις ρυθμίσεις του "
+#~ "Ψηφιακού ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Συμβάντα > "
+#~ "Ημερολόγια Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου "
+#~ "εμφανίζονται και αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος "
+#~ "μαζί. Τα ημερολόγια Google ενός λογαριασμού που έχει συνδεθεί εδώ "
+#~ "εμφανίζονται παραπάνω, μαζί με τον λογαριασμό."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:30+0100\n"
+"POT-Creation-Date: 2026-11-02 09:43+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,11 @@ msgstr "Näkymät"
 msgid "Clock"
 msgstr "Kello"
 
-#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/SearchView.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+msgid "Calendars"
+msgstr "Kalenterit"
+
+#: ../contents/config/config.qml ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/SearchView.qml
 msgid "Events"
 msgstr "Tapahtumat"
 
@@ -212,10 +216,6 @@ msgstr "TickTick: kirjaudu uudelleen"
 msgid "Connect the account again with a new API token in the Tasks settings."
 msgstr "Yhdistä tili uudelleen uudella API-tunnisteella Tehtävät-asetuksissa."
 
-#: ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
-msgid "Calendars"
-msgstr "Kalenterit"
-
 #: ../contents/ui/CalendarToggles.qml
 msgid "No calendars selected in the settings."
 msgstr "Asetuksissa ei ole valittu kalentereita."
@@ -371,6 +371,39 @@ msgstr "Salaamaton http toimii vain oman verkkosi palvelimen kanssa; salasanaa e
 msgid "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others. The password is kept in the system keyring. Repeating events are shown, but changed only in their own app for now."
 msgstr "Nextcloud, Fastmail, iCloud (sovellussalasanalla), Radicale, Baïkal ja muut. Salasana säilytetään järjestelmän avainrenkaassa. Toistuvat tapahtumat näytetään, mutta toistaiseksi niitä voi muuttaa vain omassa sovelluksessaan."
 
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Import Events from a File…"
+msgstr "Tuo tapahtumia tiedostosta…"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
+msgstr "Kopioi .ics-tiedoston tapahtumat (viety toisesta kalenterisovelluksesta) johonkin kalentereistasi. Sovelma näyttää ne ensin, jotta voit valita kalenterin."
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Tuo tapahtumia"
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Refresh every"
+msgstr "Päivitä joka"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgctxt "Polling interval in minutes"
+msgid " min"
+msgstr " min"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendar plugins are unavailable."
+msgstr "Plasman kalenteriliitännäiset eivät ole käytettävissä."
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Plasma calendars"
+msgstr "Plasma-kalenterit"
+
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
 msgstr "Oletus (%1)"
@@ -507,39 +540,6 @@ msgstr "Näytä tausta"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Desktop widget"
 msgstr "Työpöytäsovelma"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Import Events from a File…"
-msgstr "Tuo tapahtumia tiedostosta…"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
-msgstr "Kopioi .ics-tiedoston tapahtumat (viety toisesta kalenterisovelluksesta) johonkin kalentereistasi. Sovelma näyttää ne ensin, jotta voit valita kalenterin."
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Tuo tapahtumia"
-
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Refresh every"
-msgstr "Päivitä joka"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgctxt "Polling interval in minutes"
-msgid " min"
-msgstr " min"
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendar plugins are unavailable."
-msgstr "Plasman kalenteriliitännäiset eivät ole käytettävissä."
-
-#: ../contents/ui/config/ConfigEvents.qml
-msgid "Plasma calendars"
-msgstr "Plasma-kalenterit"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
@@ -870,9 +870,9 @@ msgid "Forget the Missing Ones"
 msgstr "Unohda puuttuvat"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
 msgstr ""
-"Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan Digitaalisen kellon asetusten PIM-tapahtumaliitännäisen sivulla (itse liitännäinen otetaan käyttöön kohdassa Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne näytetään ja piilotetaan värin mukaan: samanväriset kalenterit yhdessä. Täällä kirjautuneen tilin Google-kalenterit näkyvät yllä tilin kohdalla."
+"Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan Digitaalisen kellon asetusten PIM-tapahtumaliitännäisen sivulla (itse liitännäinen otetaan käyttöön kohdassa Kalenterit > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne näytetään ja piilotetaan värin mukaan: samanväriset kalenterit yhdessä. Täällä kirjautuneen tilin Google-kalenterit näkyvät yllä tilin kohdalla."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4105,6 +4105,10 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr ""
+#~ "Näytetään vain luku -tilassa. Näytettävät Akonadi-kalenterit valitaan Digitaalisen kellon asetusten PIM-tapahtumaliitännäisen sivulla (itse liitännäinen otetaan käyttöön kohdassa Tapahtumat > Plasma-kalenterit). Ponnahdusikkunan kalenterivalikossa ne näytetään ja piilotetaan värin mukaan: samanväriset kalenterit yhdessä. Täällä kirjautuneen tilin Google-kalenterit näkyvät yllä tilin kohdalla."
 
 #~ msgctxt "%1 = a few event titles"
 #~ msgid "Akonadi calendar: %1"
