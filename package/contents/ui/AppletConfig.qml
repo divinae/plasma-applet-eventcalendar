@@ -183,6 +183,9 @@ QtObject {
 	property int meteogramIconSize: 24 * Screen.devicePixelRatio
 	property int meteogramColumnWidth: 32 * Screen.devicePixelRatio // weatherIconSize = 32px (height = 24px but most icons are landscape)
 
+	property QtObject caldavAccounts: Base64Json {
+		configKey: 'caldavAccounts'
+	}
 	property QtObject icalCalendarList: Base64Json {
 		configKey: 'icalCalendarList'
 	}

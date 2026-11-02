@@ -177,6 +177,9 @@ Rectangle {
 	property string lastStartDay: ""
 	readonly property bool supportsRecurrence: !taskMode && !!calendarSelector.selectedCalendarId
 		&& eventModel.supportsRecurrence(calendarSelector.selectedCalendarId)
+	// Google Calendar's own fields (color, availability, guests, Meet, reminders, event types, Find a
+	// time): not for CalDAV calendars, which repeat (supportsRecurrence) but have none of these here.
+	readonly property bool googleFeatures: supportsRecurrence && eventModel.isGoogleCalendar(calendarSelector.selectedCalendarId)
 	readonly property bool canEditRepeat: taskMode ? showTaskRepeat : supportsRecurrence && !seriesLoading && (!isOccurrence || editSeries)
 	// The repeat rows: an event's (Google), or a task's (TickTick).
 	readonly property bool showRepeat: supportsRecurrence || showTaskRepeat
@@ -474,7 +477,7 @@ Rectangle {
 		}
 	}
 	function addAvailabilityArgs(args) {
-		if (!supportsRecurrence) {
+		if (!googleFeatures) {
 			return
 		}
 		if (transparency !== initialTransparency) {
@@ -491,7 +494,7 @@ Rectangle {
 	property string autoDeclineMode: "declineNone"
 	property string declineMessage: ""
 	property string chatStatus: "doNotDisturb"
-	readonly property bool canSetType: isNew && supportsRecurrence && !!calendarSelector.selectedCalendar
+	readonly property bool canSetType: isNew && googleFeatures && !!calendarSelector.selectedCalendar
 		&& calendarSelector.selectedCalendar.primary === true
 	readonly property string effectiveType: isNew ? (canSetType ? eventType : "default") : eventType
 	// Existing event: its settings as loaded (JSON of EventTypes.properties), '' until known (a copy
@@ -628,7 +631,7 @@ Rectangle {
 	//--- Find a time (Google): the guests' busy times on the event's day, to pick a free slot.
 	property bool findTimeOpen: false
 	readonly property var otherGuests: guests.filter(function(guest) { return !guest.self && guest.email })
-	readonly property bool canFindTime: supportsRecurrence && !isSpecialType && !allDayCheckBox.checked
+	readonly property bool canFindTime: googleFeatures && !isSpecialType && !allDayCheckBox.checked
 		&& otherGuests.length > 0 && !!calendarSelector.selectedCalendarId
 		&& !!eventModel.supportsFreeBusy && eventModel.supportsFreeBusy(calendarSelector.selectedCalendarId)
 	function openFindTime() {
@@ -663,7 +666,7 @@ Rectangle {
 	property string sendUpdatesChoice: "" // 'all' or 'none' once answered
 	property string guestNotice: "" // Shown while asking
 	function guestNoticeNeeded() {
-		if (!supportsRecurrence) {
+		if (!googleFeatures) {
 			return ''
 		}
 		if (isNew) {
@@ -689,7 +692,7 @@ Rectangle {
 
 	// The color changed: set its colorId, or undefined (removed from the update) for the calendar color.
 	function addColorArgs(args) {
-		if (supportsRecurrence && colorId !== initialColorId) {
+		if (googleFeatures && colorId !== initialColorId) {
 			args.colorId = colorId || undefined
 		}
 	}
@@ -740,7 +743,7 @@ Rectangle {
 		addAvailabilityArgs(args)
 		addConferenceArgs(args)
 		addTypePropertiesArgs(args)
-		if (supportsRecurrence && remindersChanged) {
+		if (googleFeatures && remindersChanged) {
 			args.reminders = Reminders.toGoogle(reminderState)
 		}
 		return args
@@ -770,14 +773,14 @@ Rectangle {
 				location: locationField.text,
 				description: descriptionField.text,
 			})
-			if (supportsRecurrence && colorId) {
+			if (googleFeatures && colorId) {
 				data.colorId = colorId
 			}
-			if (supportsRecurrence && remindersCustom) {
+			if (googleFeatures && remindersCustom) {
 				data.reminders = Reminders.toGoogle(reminderState)
 			}
 			addAvailabilityArgs(data)
-			if (supportsRecurrence) {
+			if (googleFeatures) {
 				addConferenceArgs(data)
 				if (guests.length) {
 					data.attendees = Guests.newAttendees(guests)
@@ -1263,7 +1266,7 @@ Rectangle {
 				// Event color (Google): the calendar's color or one of Google's 11 event colors.
 				Flow {
 					id: colorRow
-					visible: form.supportsRecurrence
+					visible: form.googleFeatures
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
 					readonly property int swatchSize: Math.round(Kirigami.Units.gridUnit * 1.2)
@@ -1563,7 +1566,7 @@ Rectangle {
 				// Google Meet: add one, or the event's video call with a remove button.
 				RowLayout {
 					id: conferenceRow
-					visible: form.supportsRecurrence && !form.isSpecialType && (form.hadConference || (form.meetAllowed && !form.isInvited))
+					visible: form.googleFeatures && !form.isSpecialType && (form.hadConference || (form.meetAllowed && !form.isInvited))
 					Layout.fillWidth: true
 					RowIcon {
 						source: "camera-web"
@@ -1623,7 +1626,7 @@ Rectangle {
 
 				// Show as busy / free, and who sees the details (Google).
 				RowLayout {
-					visible: form.supportsRecurrence
+					visible: form.googleFeatures
 					Layout.fillWidth: true
 					RowIcon {
 						source: "view-calendar-day"
@@ -1665,7 +1668,7 @@ Rectangle {
 				// Reminders: the calendar's defaults, or this event's own notification times. A task
 				// (TickTick): its own list, and those after the due time kept as they are.
 				ColumnLayout {
-					visible: form.supportsRecurrence || form.showTaskReminders
+					visible: form.googleFeatures || form.showTaskReminders
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
 
@@ -1772,7 +1775,7 @@ Rectangle {
 				// Guests: add by email (with suggestions), remove with the chips' close button.
 				ColumnLayout {
 					id: guestsSection
-					visible: form.supportsRecurrence && !form.isSpecialType
+					visible: form.googleFeatures && !form.isSpecialType
 					Layout.fillWidth: true
 					spacing: Kirigami.Units.smallSpacing
 

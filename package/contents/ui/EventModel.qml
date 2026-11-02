@@ -27,6 +27,7 @@ CalendarManager {
 	Component.onCompleted: {
 		bindSignals(plasmaCalendarManager)
 		bindSignals(icalManager)
+		bindSignals(caldavManager)
 	}
 
 	//---
@@ -201,6 +202,11 @@ CalendarManager {
 	ICalManager {
 		id: icalManager
 		calendarList: appletConfig.icalCalendarList.value
+	}
+
+	CalDAVManager {
+		id: caldavManager
+		accounts: appletConfig.caldavAccounts.value || []
 	}
 
 	Repeater {
@@ -1154,6 +1160,11 @@ CalendarManager {
 	}
 
 	// Repeat rules can be edited (Google Calendar).
+	// A Google calendar (its own fields: color, guests, Meet, reminders, event types).
+	function isGoogleCalendar(calendarId) {
+		var calendarManager = getCalendarManager(calendarId)
+		return !!calendarManager && calendarManager.calendarManagerId === 'GoogleCalendar'
+	}
 	function supportsRecurrence(calendarId) {
 		return !!managerWith(calendarId, 'updateEventFromServer')
 	}

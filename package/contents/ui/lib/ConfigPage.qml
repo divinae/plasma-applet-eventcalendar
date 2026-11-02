@@ -110,6 +110,8 @@ KCM.SimpleKCM {
 	property var cfg_eventsPollIntervalDefault
 	property var cfg_icalCalendarList
 	property var cfg_icalCalendarListDefault
+	property var cfg_caldavAccounts
+	property var cfg_caldavAccountsDefault
 	property var cfg_eventReminderNotificationEnabled
 	property var cfg_eventReminderNotificationEnabledDefault
 	property var cfg_eventReminderSfxEnabled
