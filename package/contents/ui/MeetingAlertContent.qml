@@ -123,7 +123,7 @@ Item {
 			visible: wanted
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: Kirigami.Units.gridUnit
-			Layout.preferredWidth: Kirigami.Units.gridUnit * (expanded ? 26 : 22)
+			Layout.preferredWidth: Kirigami.Units.gridUnit * (expanded ? 22 : 16)
 			spacing: Kirigami.Units.largeSpacing
 			Loader {
 				Layout.fillWidth: true
@@ -140,9 +140,10 @@ Item {
 				source: "MicMeter.qml"
 				onLoaded: item.running = Qt.binding(function() { return content.visible })
 			}
-			PlasmaComponents3.ToolButton {
+			AlertButton {
 				Layout.alignment: Qt.AlignHCenter
-				icon.name: cameraCheck.expanded ? "go-up-symbolic" : "audio-input-microphone-symbolic"
+				compact: true
+				iconName: cameraCheck.expanded ? "go-up-symbolic" : "audio-input-microphone-symbolic"
 				text: cameraCheck.expanded ? i18n("Show Less")
 					: cameraCheck.soundAvailable ? i18n("Microphone and Speaker…") : i18n("Choose the Camera…")
 				onClicked: {
@@ -188,13 +189,15 @@ Item {
 	component AlertButton: QQC2.AbstractButton {
 		id: alertButton
 		property bool accent: false
+		// A smaller one (the camera check's "Microphone and Speaker…"), below the main buttons.
+		property bool compact: false
 		property string iconName: ""
 		readonly property color fg: accent ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
 		Accessible.name: text
 		hoverEnabled: true
-		padding: Kirigami.Units.largeSpacing * 1.5
-		leftPadding: Kirigami.Units.gridUnit * 1.5
-		rightPadding: Kirigami.Units.gridUnit * 1.5
+		padding: compact ? Kirigami.Units.smallSpacing * 1.5 : Kirigami.Units.largeSpacing * 1.5
+		leftPadding: compact ? Kirigami.Units.gridUnit : Kirigami.Units.gridUnit * 1.5
+		rightPadding: compact ? Kirigami.Units.gridUnit : Kirigami.Units.gridUnit * 1.5
 		background: Rectangle {
 			radius: height / 2
 			// The accent one darker / lighter; the others a stronger tint (lighter() does nothing to a
@@ -212,7 +215,7 @@ Item {
 		contentItem: RowLayout {
 			spacing: Kirigami.Units.largeSpacing
 			Kirigami.Icon {
-				implicitWidth: Kirigami.Units.iconSizes.smallMedium
+				implicitWidth: alertButton.compact ? Kirigami.Units.iconSizes.small : Kirigami.Units.iconSizes.smallMedium
 				implicitHeight: implicitWidth
 				source: alertButton.iconName
 				isMask: true
@@ -222,7 +225,7 @@ Item {
 				text: alertButton.text
 				textFormat: Text.PlainText
 				color: alertButton.fg
-				font.pointSize: Kirigami.Theme.defaultFont.pointSize * 1.3
+				font.pointSize: Kirigami.Theme.defaultFont.pointSize * (alertButton.compact ? 1 : 1.3)
 				font.weight: alertButton.accent ? Font.DemiBold : Font.Normal
 			}
 		}
