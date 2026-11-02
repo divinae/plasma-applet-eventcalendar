@@ -37,4 +37,12 @@ assert.strictEqual(C.meterLevel(0.25), 0.5)
 assert.strictEqual(C.meterLevel(4), 1)
 assert.strictEqual(C.meterLevel(undefined), 0)
 
+//--- cameraName
+assert.strictEqual(C.cameraName('Integrated Camera: Integrated C'), 'Integrated Camera')
+assert.strictEqual(C.cameraName('Creative Live! Cam Sync V3: Cre'), 'Creative Live! Cam Sync V3')
+assert.strictEqual(C.cameraName('HD Webcam: HD Webcam'), 'HD Webcam')
+assert.strictEqual(C.cameraName('Logitech C920'), 'Logitech C920')
+assert.strictEqual(C.cameraName('USB Camera: Rear lens'), 'USB Camera: Rear lens', 'a different second part stays')
+assert.strictEqual(C.cameraName(''), '')
+
 console.log('camera_prefs: ok')

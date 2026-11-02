@@ -117,8 +117,7 @@ ColumnLayout {
 		PlasmaComponents3.ComboBox {
 			Layout.fillWidth: true
 			enabled: mirror.cameras.length > 1
-			model: mirror.cameras
-			textRole: "description"
+			model: mirror.cameras.map(function(camera) { return CameraPrefs.cameraName(camera.description) })
 			currentIndex: mirror.cameraIndex
 			displayText: mirror.cameras.length ? currentText : i18n("No camera")
 			onActivated: function(index) {

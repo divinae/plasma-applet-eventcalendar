@@ -50,3 +50,20 @@ function meterLevel(peak) {
 	}
 	return Math.max(0, Math.min(1, Math.sqrt(v)))
 }
+
+// A camera's name to show. Linux cuts a camera's name at 31 characters, and many repeat themselves
+// after a ": " ("Integrated Camera: Integrated C", "Creative Live! Cam Sync V3: Cre"): the part
+// before it when the rest only repeats (the start of) it.
+function cameraName(description) {
+	var text = String(description || '').trim()
+	var at = text.indexOf(': ')
+	if (at <= 0) {
+		return text
+	}
+	var name = text.slice(0, at).trim()
+	var rest = text.slice(at + 2).trim()
+	if (!rest || name.indexOf(rest) === 0 || rest.indexOf(name) === 0) {
+		return name
+	}
+	return text
+}
