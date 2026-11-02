@@ -15,16 +15,13 @@ ConfigPage {
 
 	ListModel { id: timezoneListModel }
 
-	function normalizedTimezones(list) {
-		return TimeZone.normalizedList(list)
-	}
 	function moveTimezone(zoneId, delta) {
 		updateConfig(TimeZone.movedZone(page.configBridge.read("selectedTimeZones", []), zoneId, delta))
 		syncFromConfig()
 	}
 
 	function syncFromConfig() {
-		var zones = normalizedTimezones(page.configBridge.read("selectedTimeZones", []))
+		var zones = TimeZone.normalizedList(page.configBridge.read("selectedTimeZones", []))
 		timezoneListModel.clear()
 		for (var i = 0; i < zones.length; i++) {
 			timezoneListModel.append({ zoneId: zones[i] })
@@ -32,7 +29,7 @@ ConfigPage {
 	}
 
 	function updateConfig(zones) {
-		page.configBridge.write("selectedTimeZones", normalizedTimezones(zones))
+		page.configBridge.write("selectedTimeZones", TimeZone.normalizedList(zones))
 	}
 
 	function addTimezone(zoneId) {
@@ -40,7 +37,7 @@ ConfigPage {
 		if (!zone) {
 			return
 		}
-		var zones = normalizedTimezones(page.configBridge.read("selectedTimeZones", []))
+		var zones = TimeZone.normalizedList(page.configBridge.read("selectedTimeZones", []))
 		if (zones.indexOf(zone) === -1) {
 			zones.push(zone)
 			updateConfig(zones)
@@ -50,7 +47,7 @@ ConfigPage {
 	}
 
 	function removeTimezone(zoneId) {
-		var zones = normalizedTimezones(page.configBridge.read("selectedTimeZones", []))
+		var zones = TimeZone.normalizedList(page.configBridge.read("selectedTimeZones", []))
 		var index = zones.indexOf(zoneId)
 		if (index >= 0 && zoneId !== "Local") {
 			zones.splice(index, 1)

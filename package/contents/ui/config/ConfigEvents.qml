@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls as QQC2
+import QtQuick.Dialogs
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
@@ -93,6 +94,23 @@ ConfigPage {
 			title: i18n("Calendars")
 		}
 		FormCard.FormCard {
+			// The events of an .ics file (exported from another calendar app) copied into one of your
+			// calendars: the widget opens its import card for it (importRequest, see main.qml), as
+			// the widget menu's "Import Events…".
+			FormCard.FormButtonDelegate {
+				icon.name: "document-import"
+				text: i18n("Import Events from a File…")
+				description: i18n("Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar.")
+				onClicked: importFileDialog.open()
+			}
+			FileDialog {
+				id: importFileDialog
+				title: i18n("Import Events")
+				nameFilters: [ i18n("iCalendar (*.ics)") ]
+				// Straight to the widget (not a setting applied with OK, no cfg_ property).
+				onAccepted: page.configBridge.write("importRequest", Date.now() + "|" + String(selectedFile))
+			}
+			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Refresh every")
 				configKey: 'eventsPollInterval'

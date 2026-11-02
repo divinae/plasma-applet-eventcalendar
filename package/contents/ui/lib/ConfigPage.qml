@@ -335,13 +335,21 @@ KCM.SimpleKCM {
 			var prop = "cfg_" + key
 			if (prop in page) {
 				var value = page[prop]
-				return typeof value === "undefined" ? fallback : value
+				return typeof value === "undefined" ? fallback : plainValue(value)
 			}
 			if (typeof plasmoid !== "undefined" && plasmoid.configuration) {
 				var directValue = plasmoid.configuration[key]
-				return typeof directValue === "undefined" ? fallback : directValue
+				return typeof directValue === "undefined" ? fallback : plainValue(directValue)
 			}
 			return fallback
+		}
+		// A StringList setting can come as a Qt sequence, not a JS Array (Array.isArray false: a
+		// list read as empty, issue #15): as an Array.
+		function plainValue(value) {
+			if (value && typeof value === "object" && !Array.isArray(value) && typeof value.length === "number") {
+				return Array.prototype.slice.call(value)
+			}
+			return value
 		}
 
 		function readDefault(key, fallback) {

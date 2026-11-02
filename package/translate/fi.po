@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:02+0100\n"
+"POT-Creation-Date: 2026-11-02 09:28+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,6 +509,22 @@ msgid "Desktop widget"
 msgstr "Työpöytäsovelma"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Import Events from a File…"
+msgstr "Tuo tapahtumia tiedostosta…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
+msgstr "Kopioi .ics-tiedoston tapahtumat (viety toisesta kalenterisovelluksesta) johonkin kalentereistasi. Sovelma näyttää ne ensin, jotta voit valita kalenterin."
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Tuo tapahtumia"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
 msgstr "Päivitä joka"
 
@@ -950,22 +966,6 @@ msgstr "Valinnat"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "Piilota kuvaus \"Tämä tapahtuma lisättiin Google-kalenterin Tavoitteista\""
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Tuo tapahtumia"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
-msgstr "Kopioi .ics-tiedoston tapahtumat (viety toisesta kalenterisovelluksesta) johonkin kalentereistasi. Sovelma näyttää ne ensin, jotta voit valita kalenterin."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Import Events from a File…"
-msgstr "Tuo tapahtumia tiedostosta…"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"

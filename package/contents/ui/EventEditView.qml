@@ -179,7 +179,7 @@ Rectangle {
 		&& eventModel.supportsRecurrence(calendarSelector.selectedCalendarId)
 	// Google Calendar's own fields (color, availability, guests, Meet, reminders, event types, Find a
 	// time): not for CalDAV calendars, which repeat (supportsRecurrence) but have none of these here.
-	readonly property bool googleFeatures: supportsRecurrence && eventModel.isGoogleCalendar(calendarSelector.selectedCalendarId)
+	readonly property bool googleFeatures: !taskMode && eventModel.isGoogleCalendar(calendarSelector.selectedCalendarId)
 	readonly property bool canEditRepeat: taskMode ? showTaskRepeat : supportsRecurrence && !seriesLoading && (!isOccurrence || editSeries)
 	// The repeat rows: an event's (Google), or a task's (TickTick).
 	readonly property bool showRepeat: supportsRecurrence || showTaskRepeat

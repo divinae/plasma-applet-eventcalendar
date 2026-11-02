@@ -7,6 +7,7 @@ import org.kde.kirigamiaddons.formcard as FormCard
 import ".."
 import "../lib"
 import "../ScriptPath.js" as ScriptPath
+import "../calendars/CalDAVErrors.js" as CalDAVErrors
 
 // CalDAV accounts (Nextcloud, Fastmail, iCloud, Radicale, …): server, user name and password (the
 // password goes to the keyring, scope caldav-account), then the account's calendars to show. Kept
@@ -36,15 +37,19 @@ ConfigPage {
 	property bool busy: false
 	property string statusText: ""
 	property bool statusIsError: false
+	function setStatus(text, isError) {
+		statusText = text
+		statusIsError = !!isError
+	}
 
 	function hostOf(url) {
 		var m = /^https?:\/\/([^\/:]+)/i.exec(String(url || ""))
 		return m ? m[1] : String(url || "")
 	}
-	// The helper's error line ("AUTH: …") as a message for the user.
+	// The helper's error (CalDAVErrors.parse) as a message for the user.
 	function errorText(stderr) {
-		var line = String(stderr || "").trim().split("\n").pop()
-		var kind = (/^([A-Z]+):/.exec(line) || [])[1] || ""
+		var parsed = CalDAVErrors.parse(stderr)
+		var kind = parsed.kind
 		if (kind === "AUTH") {
 			return i18n("The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in).")
 		}
@@ -54,11 +59,11 @@ ConfigPage {
 		if (kind === "NOTFOUND") {
 			return i18n("No CalDAV calendars at that address. Try the address your service gives for CalDAV.")
 		}
-		return line.replace(/^[A-Z]+:\s*/, "") || i18n("Unknown error")
+		return parsed.text || i18n("Unknown error")
 	}
 
 	// The account's calendars from the server; selected ones stay selected (new ones are).
-	function discover(account, password, done) {
+	function discover(account, done) {
 		executable.execArgv(['python3', helperPath, 'discover', '--url', account.url, '--account', account.id,
 			'--user', account.username], function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (exitCode) {
@@ -90,35 +95,30 @@ ConfigPage {
 		var username = userField.text.trim()
 		var password = passwordField.text
 		if (!/^https?:\/\//i.test(url) || !username || !password) {
-			statusIsError = true
-			statusText = i18n("Enter the server address (https://…), your user name and your password.")
+			setStatus(i18n("Enter the server address (https://…), your user name and your password."), true)
 			return
 		}
 		var account = { id: "acc" + Date.now().toString(36), label: username + "@" + hostOf(url), url: url, username: username, calendars: [] }
 		busy = true
-		statusIsError = false
-		statusText = i18n("Connecting…")
+		setStatus(i18n("Connecting…"), false)
 		keyring.store(account.id, "password", password, function(err) {
 			if (err) {
 				busy = false
-				statusIsError = true
-				statusText = i18n("The password couldn't be stored in the keyring: %1", String(err))
+				setStatus(i18n("The password couldn't be stored in the keyring: %1", String(err)), true)
 				return
 			}
-			discover(account, password, function(err, calendars) {
+			discover(account, function(err, calendars) {
 				busy = false
 				if (err) {
-					keyring.store(account.id, "password", "", null) // Not kept for an account that isn't added
-					statusIsError = true
-					statusText = err
+					keyring.clear(account.id, "password", null) // Not kept for an account that isn't added
+					setStatus(err, true)
 					return
 				}
 				account.calendars = calendars
 				saveAccounts(page.accounts.concat([account]))
 				passwordField.text = ""
-				statusIsError = false
-				statusText = calendars.length ? i18np("Connected: %1 calendar", "Connected: %1 calendars", calendars.length)
-					: i18n("Connected, but the account has no calendars for events.")
+				setStatus(calendars.length ? i18np("Connected: %1 calendar", "Connected: %1 calendars", calendars.length)
+					: i18n("Connected, but the account has no calendars for events."), false)
 			})
 		})
 	}
@@ -127,26 +127,24 @@ ConfigPage {
 		var list = page.accounts.slice()
 		var account = list[index]
 		busy = true
-		statusText = i18n("Connecting…")
-		discover(account, "", function(err, calendars) {
+		setStatus(i18n("Connecting…"), false)
+		discover(account, function(err, calendars) {
 			busy = false
 			if (err) {
-				statusIsError = true
-				statusText = err
+				setStatus(err, true)
 				return
 			}
 			account.calendars = calendars
 			list[index] = account
 			saveAccounts(list)
-			statusIsError = false
-			statusText = ""
+			setStatus("", false)
 		})
 	}
 
 	function removeAccount(index) {
 		var list = page.accounts.slice()
 		var account = list.splice(index, 1)[0]
-		keyring.store(account.id, "password", "", null) // Clears it
+		keyring.clear(account.id, "password", null)
 		saveAccounts(list)
 	}
 
@@ -249,12 +247,11 @@ ConfigPage {
 						}
 						Label {
 							Layout.fillWidth: true
-							visible: !!page.statusText
+							visible: !!page.statusText && !page.statusIsError
 							text: page.statusText
 							wrapMode: Text.Wrap
-							color: page.statusIsError ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor
 						}
-						Item { Layout.fillWidth: !page.statusText }
+						Item { Layout.fillWidth: !page.statusText || page.statusIsError }
 						Button {
 							icon.name: "network-connect"
 							text: i18n("Connect")
@@ -262,12 +259,18 @@ ConfigPage {
 							onClicked: page.connect()
 						}
 					}
-					Label {
+					// As the other settings pages: errors and warnings in an inline message.
+					Kirigami.InlineMessage {
+						Layout.fillWidth: true
+						visible: page.statusIsError && !!page.statusText
+						type: Kirigami.MessageType.Error
+						text: page.statusText
+					}
+					Kirigami.InlineMessage {
 						Layout.fillWidth: true
 						visible: /^http:\/\//i.test(urlField.text.trim())
+						type: Kirigami.MessageType.Warning
 						text: i18n("Plain http works only for a server on your own network; the password isn't encrypted on the way.")
-						wrapMode: Text.Wrap
-						color: Kirigami.Theme.neutralTextColor
 					}
 				}
 			}

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:02+0100\n"
+"POT-Creation-Date: 2026-11-02 09:28+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -586,6 +586,29 @@ msgid "Desktop widget"
 msgstr "Виджет на рабочем столе"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Import Events from a File…"
+msgstr "Импортировать события из файла…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Скопируйте события из файла .ics (экспортированного из другого приложения "
+"календаря) в один из своих календарей. Виджет сначала покажет их, чтобы "
+"выбрать календарь."
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Импорт событий"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
 msgstr "Обновлять каждые"
 
@@ -1144,28 +1167,6 @@ msgstr "Параметры"
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "Скрыть описание \"Это событие было добавлено из целей Google календаря\""
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Импорт событий"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Скопируйте события из файла .ics (экспортированного из другого приложения "
-"календаря) в один из своих календарей. Виджет сначала покажет их, чтобы "
-"выбрать календарь."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Import Events from a File…"
-msgstr "Импортировать события из файла…"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"

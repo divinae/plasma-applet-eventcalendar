@@ -81,19 +81,6 @@ def url_path(url):
 		return "?"
 
 
-def redact_url(url):
-	"""The URL without userinfo."""
-	parts = urllib.parse.urlsplit(url)
-	if parts.username is None and parts.password is None:
-		return url
-	host = parts.hostname or ""
-	if ":" in host:
-		host = "[{}]".format(host)
-	if parts.port:
-		host += ":{}".format(parts.port)
-	return urllib.parse.urlunsplit((parts.scheme, host, parts.path, parts.query, parts.fragment))
-
-
 def error_for_status(status, url):
 	path = url_path(url)
 	if status in (401, 403):
@@ -447,11 +434,12 @@ def discover(client, url):
 
 #--- query
 
+def is_recurring_component(event):
+	return any(event.get(key) is not None for key in ("RRULE", "RDATE", "RECURRENCE-ID"))
+
+
 def resource_is_recurring(cal):
-	for event in cal.walk("VEVENT"):
-		if event.get("RRULE") is not None or event.get("RDATE") is not None or event.get("RECURRENCE-ID") is not None:
-			return True
-	return False
+	return any(is_recurring_component(event) for event in cal.walk("VEVENT"))
 
 
 def resource_occurrences(cal, start, end):
@@ -459,9 +447,7 @@ def resource_occurrences(cal, start, end):
 		return list(icsjson.recurring_ical_events.of(cal).between(start, end))
 	occurrences = []
 	for event in cal.walk("VEVENT"):
-		if event.get("RRULE") is not None or event.get("RDATE") is not None or event.get("RECURRENCE-ID") is not None:
-			continue
-		if icsjson.event_within(event, start, end):
+		if not is_recurring_component(event) and icsjson.event_within(event, start, end):
 			occurrences.append(event)
 	return occurrences
 
@@ -594,10 +580,6 @@ def is_all_day(value):
 	return isinstance(value, datetime.date) and not isinstance(value, datetime.datetime)
 
 
-def comparable(value):
-	return icsjson.ensure_date_time(value)
-
-
 def set_text(event, key, value):
 	if value is None:
 		return
@@ -625,7 +607,7 @@ def apply_event_fields(event, data):
 	if start is not None and end is not None:
 		if is_all_day(start) != is_all_day(end):
 			raise CalDavError("INPUT", "start and end must both be dates or both date-times")
-		if comparable(end) < comparable(start) or (is_all_day(start) and end <= start):
+		if icsjson.ensure_date_time(end) < icsjson.ensure_date_time(start) or (is_all_day(start) and end <= start):
 			raise CalDavError("INPUT", "end is before start")
 	if start is not None:
 		old_start = icsjson.get_event_date(event, "DTSTART")
@@ -855,7 +837,7 @@ class ArgumentParser(argparse.ArgumentParser):
 
 def parse_day(value):
 	try:
-		return datetime.datetime.strptime(value, "%Y-%m-%d")
+		return icsjson.parse_date(value)
 	except ValueError:
 		raise CalDavError("INPUT", "Not a date (YYYY-MM-DD): {}".format(value))
 
@@ -901,12 +883,7 @@ def build_parser():
 
 def keyring_password(account):
 	import secret_store
-	attributes = [
-		("app", secret_store.APP_ID),
-		("scope", SECRET_SCOPE),
-		("key", SECRET_KEY),
-		("account_id", account),
-	]
+	attributes = secret_store.build_attributes(argparse.Namespace(scope=SECRET_SCOPE, key=SECRET_KEY, account_id=account))
 	found, value, error = secret_store.lookup_secret_detailed(attributes)
 	if found and value:
 		return value

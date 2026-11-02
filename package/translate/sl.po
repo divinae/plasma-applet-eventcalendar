@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:02+0100\n"
+"POT-Creation-Date: 2026-11-02 09:28+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -584,6 +584,29 @@ msgid "Desktop widget"
 msgstr "Gradnik namizja"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Import Events from a File…"
+msgstr "Uvozi dogodke iz datoteke…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Kopirajte dogodke iz datoteke .ics (izvožene iz druge koledarske aplikacije) "
+"v enega od svojih koledarjev. Gradnik jih najprej prikaže, da izberete "
+"koledar."
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Uvozi dogodke"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
 msgstr "Osveži vsakih"
 
@@ -1142,28 +1165,6 @@ msgstr "Možnosti"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "Skrij opis »Ta dogodek je bil dodan iz ciljev v Googlovem koledarju«"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Uvozi dogodke"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Kopirajte dogodke iz datoteke .ics (izvožene iz druge koledarske aplikacije) "
-"v enega od svojih koledarjev. Gradnik jih najprej prikaže, da izberete "
-"koledar."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Import Events from a File…"
-msgstr "Uvozi dogodke iz datoteke…"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"

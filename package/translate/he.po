@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:02+0100\n"
+"POT-Creation-Date: 2026-11-02 09:28+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -578,6 +578,28 @@ msgid "Desktop widget"
 msgstr "יישומון לשולחן העבודה"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Import Events from a File…"
+msgstr "ייבוא אירועים מקובץ…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"העתקת האירועים מקובץ ‎.ics (שיוצא מיישום לוח שנה אחר) לאחד מלוחות השנה שלך. "
+"היישומון מציג אותם קודם, כדי לבחור את לוח השנה."
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "ייבוא אירועים"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (.ics)"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
 msgstr "רענון כל"
 
@@ -1119,27 +1141,6 @@ msgstr "אפשרויות"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "הסתרת התיאור \"אירוע זה נוסף מהמטרות שב־Google Calendar\""
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "ייבוא אירועים"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"העתקת האירועים מקובץ ‎.ics (שיוצא מיישום לוח שנה אחר) לאחד מלוחות השנה שלך. "
-"היישומון מציג אותם קודם, כדי לבחור את לוח השנה."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Import Events from a File…"
-msgstr "ייבוא אירועים מקובץ…"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (.ics)"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"

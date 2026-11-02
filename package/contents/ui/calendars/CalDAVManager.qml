@@ -5,6 +5,8 @@ import "../ErrorType.js" as ErrorType
 import "../ScriptPath.js" as ScriptPath
 import "../lib"
 import "../lib/Base64Compat.js" as Base64Compat
+import "../Shared.js" as Shared
+import "CalDAVErrors.js" as CalDAVErrors
 
 // CalDAV calendars (Nextcloud, Fastmail, iCloud, Radicale, …) through scripts/caldav.py: the
 // selected calendars of the accounts in caldavAccounts (Settings > CalDAV), read for the shown
@@ -54,11 +56,11 @@ CalendarManager {
 		return out
 	}
 
-	// The error kind of the helper's message ("AUTH: …"): the message for the user, no URL in it.
+	// The helper's error (CalDAVErrors.parse) as a message for the user.
 	function helperError(stderr, calendarName) {
-		var line = String(stderr || "").trim().split("\n").pop()
-		var kind = (/^([A-Z]+):/.exec(line) || [])[1] || ""
-		var text = line.replace(/^[A-Z]+:\s*/, "").replace(/https?:\/\/\S+/gi, "[URL]")
+		var parsed = CalDAVErrors.parse(stderr)
+		var kind = parsed.kind
+		var text = parsed.text
 		if (kind === "AUTH") {
 			return { kind: kind, message: i18n("CalDAV: %1 didn't accept the user name or password", calendarName) }
 		}
@@ -91,9 +93,6 @@ CalendarManager {
 		})
 	}
 
-	function dayText(d) {
-		return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-	}
 	// The event's fields as the helper takes them (Google style), base64 JSON on its command line.
 	function eventArg(fields) {
 		var body = {}
@@ -109,7 +108,7 @@ CalendarManager {
 	function fetchCalendar(calendar) {
 		caldavManager.asyncRequests += 1
 		var calendarId = calendar.id
-		helper(['query', '--url', calendar.caldavHref, dayText(dateMin), dayText(dateMax)], calendar, function(err, data) {
+		helper(['query', '--url', calendar.caldavHref, Shared.localDateString(dateMin), Shared.localDateString(dateMax)], calendar, function(err, data) {
 			try {
 				if (err) {
 					restorePreviousCalendar(calendarId) // Keep what was shown
@@ -144,70 +143,73 @@ CalendarManager {
 		})
 	}
 
-	// After a change: everything read again (the server gives the events their final form).
-	function changed() {
-		caldavManager.refresh()
-	}
-
 	//--- Writing
-	function createEventFromData(calendarId, eventData, done) {
-		var calendar = getCalendar(calendarId)
-		if (!calendar) {
-			if (done) done('createEventFromData: unknown calendar')
-			return
-		}
-		helper(['put', '--url', calendar.caldavHref, '--event-b64', eventArg(eventData)], calendar, function(err, data) {
+	// write(calendar, args, ok(data), done(err message or null)): the helper, then on success ok;
+	// errors are reported. Afterwards everything is read again (the server gives the events their
+	// final form, and a conflict shows the current version).
+	function write(calendar, args, ok, done) {
+		helper(args, calendar, function(err, data) {
 			if (err) {
 				caldavManager.error(err.message, ErrorType.UnknownError)
-			} else {
-				eventCreated(calendarId, eventData)
-				changed()
+			} else if (ok) {
+				ok(data)
 			}
+			caldavManager.refresh()
 			if (done) {
 				done(err ? err.message : null)
 			}
 		})
 	}
 
+	function createEventFromData(calendarId, eventData, done) {
+		var calendar = getCalendar(calendarId)
+		if (!calendar) {
+			if (done) done('createEventFromData: unknown calendar')
+			return
+		}
+		write(calendar, ['put', '--url', calendar.caldavHref, '--event-b64', eventArg(eventData)], function() {
+			eventCreated(calendarId, eventData)
+		}, done)
+	}
+
 	// Quick add: the text as the title, on date (at time for an hour, else all day).
 	function createEvent(calendarId, date, text, time) {
 		var day = date || new Date()
 		var data = { summary: text }
-		var pad = function(n) { return (n < 10 ? '0' : '') + n }
-		var dayIso = function(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) }
 		if (time) {
 			var parts = String(time).split(':')
 			var start = new Date(day.getFullYear(), day.getMonth(), day.getDate(), Number(parts[0]) || 0, Number(parts[1]) || 0)
-			var end = new Date(start.getTime() + 3600000)
 			data.start = { dateTime: start.toISOString() }
-			data.end = { dateTime: end.toISOString() }
+			data.end = { dateTime: new Date(start.getTime() + 3600000).toISOString() }
 		} else {
-			var next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1)
-			data.start = { date: dayIso(day) }
-			data.end = { date: dayIso(next) }
+			data.start = { date: Shared.localDateString(day) }
+			data.end = { date: Shared.localDateString(Shared.addDays(day, 1)) }
 		}
 		createEventFromData(calendarId, data, null)
 	}
 
-	function setEventProperties(calendarId, eventId, args, options) {
+	// The loaded event and its calendar, or null (with done told) when it isn't loaded.
+	function loadedEvent(calendarId, eventId, done, what) {
 		var calendar = getCalendar(calendarId)
 		var event = getEvent(calendarId, eventId)
-		var done = options && options.done
 		if (!calendar || !event || !event.caldavHref) {
-			logger.log('caldav.setEventProperties', 'event not loaded')
-			if (done) done('setEventProperties: event not loaded', null)
+			logger.log('caldav.' + what, 'event not loaded')
+			if (done) done(what + ': event not loaded')
+			return null
+		}
+		return { calendar: calendar, event: event }
+	}
+
+	function setEventProperties(calendarId, eventId, args, options) {
+		var done = options && options.done
+		var loaded = loadedEvent(calendarId, eventId, done, 'setEventProperties')
+		if (!loaded) {
 			return
 		}
-		helper(['put', '--url', calendar.caldavHref, '--href', event.caldavHref, '--etag', String(event.caldavEtag || ''),
-			'--event-b64', eventArg(args)], calendar, function(err, data) {
-			if (err) {
-				caldavManager.error(err.message, ErrorType.UnknownError)
-			} else {
-				eventUpdated(calendarId, eventId, event)
-			}
-			changed() // Also after a conflict: the current version
-			if (done) done(err ? err.message : null, event)
-		})
+		write(loaded.calendar, ['put', '--url', loaded.calendar.caldavHref, '--href', loaded.event.caldavHref,
+			'--etag', String(loaded.event.caldavEtag || ''), '--event-b64', eventArg(args)], function() {
+			eventUpdated(calendarId, eventId, loaded.event)
+		}, done)
 	}
 
 	// The editor's server-side update (buildArgs(serverEvent) -> args): the loaded copy is it here.
@@ -217,29 +219,22 @@ CalendarManager {
 			if (done) done('updateEventFromServer: event not loaded')
 			return
 		}
-		setEventProperties(calendarId, eventId, buildArgs(event), { done: function(err) { if (done) done(err) } })
+		setEventProperties(calendarId, eventId, buildArgs(event), { done: done })
 	}
 
 	function deleteEvent(calendarId, eventId, done) {
-		var calendar = getCalendar(calendarId)
-		var event = getEvent(calendarId, eventId)
-		if (!calendar || !event || !event.caldavHref) {
-			if (done) done('deleteEvent: event not loaded')
+		var loaded = loadedEvent(calendarId, eventId, done, 'deleteEvent')
+		if (!loaded) {
 			return
 		}
-		helper(['delete', '--href', event.caldavHref, '--etag', String(event.caldavEtag || '')], calendar, function(err) {
-			if (err) {
-				caldavManager.error(err.message, ErrorType.UnknownError)
-			} else {
-				eventDeleted(calendarId, eventId, event)
-				removeEvent(calendarId, eventId)
-			}
-			changed()
-			if (done) done(err ? err.message : null)
-		})
+		write(loaded.calendar, ['delete', '--href', loaded.event.caldavHref, '--etag', String(loaded.event.caldavEtag || '')], function() {
+			eventDeleted(calendarId, eventId, loaded.event)
+			removeEvent(calendarId, eventId)
+		}, done)
 	}
 
-	// Import (ImportView, one event at a time, Google-style fields): created as a new event.
+	// Import (ImportView, one event at a time, Google-style fields): created as a new event. Not
+	// read again after each: the import card refreshes once at its end.
 	function importEvent(calendarId, eventData, done) {
 		var calendar = getCalendar(calendarId)
 		if (!calendar) {
@@ -247,12 +242,7 @@ CalendarManager {
 			return
 		}
 		helper(['put', '--url', calendar.caldavHref, '--event-b64', eventArg(eventData)], calendar, function(err, data) {
-			if (err) {
-				done(err.message, null)
-				return
-			}
-			changed()
-			done(null, data)
+			done(err ? err.message : null, err ? null : data)
 		})
 	}
 }

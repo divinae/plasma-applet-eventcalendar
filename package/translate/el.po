@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:02+0100\n"
+"POT-Creation-Date: 2026-11-02 09:28+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -585,6 +585,29 @@ msgid "Desktop widget"
 msgstr "Γραφικό συστατικό επιφάνειας εργασίας"
 
 #: ../contents/ui/config/ConfigEvents.qml
+msgid "Import Events from a File…"
+msgstr "Εισαγωγή συμβάντων από αρχείο…"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Αντιγράψτε τα συμβάντα ενός αρχείου .ics (που εξήχθη από άλλη εφαρμογή "
+"ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
+"πρώτα, για να επιλέξετε το ημερολόγιο."
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Εισαγωγή συμβάντων"
+
+#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Refresh every"
 msgstr "Ανανέωση κάθε"
 
@@ -1153,28 +1176,6 @@ msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "Απόκρυψη της περιγραφής «Αυτό το συμβάν προστέθηκε από τους Στόχους στο "
 "Ημερολόγιο Google»"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
-#: ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Εισαγωγή συμβάντων"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid ""
-"Copy the events of an .ics file (exported from another calendar app) into "
-"one of your calendars. The widget shows them first, to pick the calendar."
-msgstr ""
-"Αντιγράψτε τα συμβάντα ενός αρχείου .ics (που εξήχθη από άλλη εφαρμογή "
-"ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
-"πρώτα, για να επιλέξετε το ημερολόγιο."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Import Events from a File…"
-msgstr "Εισαγωγή συμβάντων από αρχείο…"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"

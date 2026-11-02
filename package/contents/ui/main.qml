@@ -342,29 +342,24 @@ PlasmoidItem {
 			if (bar < 0) {
 				return
 			}
-			var fileUrl = request.slice(bar + 1)
-			root.expanded = true
-			Qt.callLater(function() {
-				if (root.fullRepresentationItem && typeof root.fullRepresentationItem.openImport === 'function') {
-					root.fullRepresentationItem.openImport(fileUrl)
-				}
-			})
+			openImportFile(request.slice(bar + 1))
 		}
+	}
+	// The popup with its import card for fileUrl (the menu's file dialog, Settings' import).
+	function openImportFile(fileUrl) {
+		root.expanded = true
+		Qt.callLater(function() {
+			if (root.fullRepresentationItem && typeof root.fullRepresentationItem.openImport === 'function') {
+				root.fullRepresentationItem.openImport(fileUrl)
+			}
+		})
 	}
 	FileDialog {
 		id: importFileDialog
 		title: i18n("Import Events")
 		nameFilters: [ i18n("iCalendar (*.ics)") ]
 		currentFolder: StandardPaths.standardLocations(StandardPaths.DownloadLocation)[0]
-		onAccepted: {
-			var fileUrl = String(selectedFile)
-			root.expanded = true
-			Qt.callLater(function() {
-				if (root.fullRepresentationItem && typeof root.fullRepresentationItem.openImport === 'function') {
-					root.fullRepresentationItem.openImport(fileUrl)
-				}
-			})
-		}
+		onAccepted: openImportFile(String(selectedFile))
 	}
 
 	// The panel's right-click menu: the next meeting first (a heading with its name and time, then

@@ -130,7 +130,6 @@ class UrlRuleTests(unittest.TestCase):
 				caldav.check_url(url)
 			self.assertEqual(ctx.exception.kind, "INPUT")
 		self.assertEqual(caldav.check_url("https://me:pw@cloud.example.com/dav"), "https://cloud.example.com/dav")
-		self.assertEqual(caldav.redact_url("https://me:pw@cloud.example.com:8443/dav"), "https://cloud.example.com:8443/dav")
 
 	def test_redirect_to_other_host_is_refused(self):
 		client = FakeClient([(301, {"Location": "https://evil.example.org/dav/"}, "")])
