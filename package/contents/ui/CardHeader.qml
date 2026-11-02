@@ -12,6 +12,7 @@ Item {
 	property alias actionText: actionButton.text
 	property alias actionIcon: actionButton.icon.name
 	property alias actionEnabled: actionButton.enabled
+	property alias actionVisible: actionButton.visible
 	signal cancelClicked()
 	signal actionClicked()
 

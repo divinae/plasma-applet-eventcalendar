@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:56+0100\n"
+"POT-Creation-Date: 2026-11-02 11:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -224,6 +224,51 @@ msgstr "%1 を時計のカウントダウンに含める"
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "すべて表示"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid "Camera Check"
+msgstr "カメラチェック"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "閉じる"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = Google Meet, Zoom, ..."
+msgid "Join %1"
+msgstr "%1 に参加"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used"
+msgstr "カメラを使用できません"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera found"
+msgstr "カメラが見つかりません"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used. Another app may be using it."
+msgstr "カメラを使用できません。別のアプリが使用している可能性があります。"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Starting the camera…"
+msgstr "カメラを起動しています…"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Try Again"
+msgstr "再試行"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera"
+msgstr "カメラなし"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Mirror the picture"
+msgstr "画像を左右反転"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
@@ -1954,11 +1999,6 @@ msgstr "進行中にする"
 msgid "Show Details"
 msgstr "詳細を表示"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
-msgctxt "%1 = Google Meet, Zoom, ..."
-msgid "Join %1"
-msgstr "%1 に参加"
-
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "イベントの詳細をコピー"
@@ -2126,6 +2166,10 @@ msgstr "繰り返し"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 (%2 時間、%3)"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "カメラをチェック"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -2830,10 +2874,6 @@ msgid_plural "%1 exceptions"
 msgstr[0] "例外 %1 件"
 
 #: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "閉じる"
-
-#: ../contents/ui/ImportView.qml
 msgid "Import"
 msgstr "インポート"
 
@@ -3034,6 +3074,10 @@ msgid "%1 · %2"
 msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
+msgid "Camera Check…"
+msgstr "カメラチェック…"
+
+#: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "新しいイベント…"
 
@@ -3132,6 +3176,14 @@ msgstr "会議"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "The microphone is muted."
+msgstr "マイクはミュートされています。"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Unmute"
+msgstr "ミュート解除"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"

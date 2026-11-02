@@ -314,6 +314,14 @@
 			<!-- Do Not Disturb only for meetings accepted or organized (else any not declined). -->
 			<default>true</default>
 		</entry>
+		<entry name="cameraDevice" type="string">
+			<!-- The camera check's camera, by its description (empty: the system default; see CameraMirror.qml). -->
+			<default></default>
+		</entry>
+		<entry name="cameraMirrored" type="bool">
+			<!-- The camera check shows the camera as a mirror. -->
+			<default>true</default>
+		</entry>
 		<entry name="dailyAgendaEnabled" type="bool">
 			<!-- A notification with today's events once a day (see DailyAgenda.js). -->
 			<default>false</default>

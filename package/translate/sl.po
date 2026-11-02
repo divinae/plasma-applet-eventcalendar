@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:56+0100\n"
+"POT-Creation-Date: 2026-11-02 11:39+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -261,6 +261,57 @@ msgstr "Vključi %1 v odštevanje ob uri"
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "Prikaži vse"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid "Camera Check"
+msgstr "Preverjanje kamere"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Zapri"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
+#: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = Google Meet, Zoom, ..."
+msgid "Join %1"
+msgstr "Pridruži se prek %1"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid ""
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
+msgstr ""
+"Nič se ne snema. Kamera in mikrofon se uporabljata le, dokler je to odprto."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used"
+msgstr "Kamere ni mogoče uporabiti"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera found"
+msgstr "Ni najdene kamere"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used. Another app may be using it."
+msgstr "Kamere ni mogoče uporabiti. Morda jo uporablja drug program."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Starting the camera…"
+msgstr "Zaganjanje kamere…"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Try Again"
+msgstr "Poskusi znova"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera"
+msgstr "Ni kamere"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Mirror the picture"
+msgstr "Zrcali sliko"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
@@ -2297,13 +2348,6 @@ msgstr "Označi kot v teku"
 msgid "Show Details"
 msgstr "Prikaži podrobnosti"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
-#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
-msgctxt "%1 = Google Meet, Zoom, ..."
-msgid "Join %1"
-msgstr "Pridruži se prek %1"
-
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "Kopiraj podrobnosti dogodka"
@@ -2481,6 +2525,10 @@ msgstr "Ponavljanje"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, čas %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "Preveri kamero"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -3244,10 +3292,6 @@ msgstr[2] "%1 izjeme"
 msgstr[3] "%1 izjem"
 
 #: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Zapri"
-
-#: ../contents/ui/ImportView.qml
 msgid "Import"
 msgstr "Uvozi"
 
@@ -3482,6 +3526,10 @@ msgid "%1 · %2"
 msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
+msgid "Camera Check…"
+msgstr "Preverjanje kamere…"
+
+#: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Nov dogodek…"
 
@@ -3590,6 +3638,14 @@ msgstr "Sestanek"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1 mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "The microphone is muted."
+msgstr "Mikrofon je utišan."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Unmute"
+msgstr "Vklopi zvok"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"

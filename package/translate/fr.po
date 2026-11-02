@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:56+0100\n"
+"POT-Creation-Date: 2026-11-02 11:39+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -260,6 +260,60 @@ msgstr "Inclure %1 dans le compte à rebours de l'horloge"
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "Tout afficher"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid "Camera Check"
+msgstr "Vérification de la caméra"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Fermer"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
+#: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = Google Meet, Zoom, ..."
+msgid "Join %1"
+msgstr "Rejoindre via %1"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid ""
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
+msgstr ""
+"Rien n'est enregistré. La caméra et le microphone ne sont utilisés que tant "
+"que ceci est ouvert."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used"
+msgstr "La caméra ne peut pas être utilisée"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera found"
+msgstr "Aucune caméra trouvée"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used. Another app may be using it."
+msgstr ""
+"La caméra ne peut pas être utilisée. Une autre application l'utilise peut-"
+"être."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Starting the camera…"
+msgstr "Démarrage de la caméra…"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Try Again"
+msgstr "Réessayer"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera"
+msgstr "Aucune caméra"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Mirror the picture"
+msgstr "Inverser l'image en miroir"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
@@ -2312,13 +2366,6 @@ msgstr "Marquer comme en cours"
 msgid "Show Details"
 msgstr "Afficher les détails"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
-#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
-msgctxt "%1 = Google Meet, Zoom, ..."
-msgid "Join %1"
-msgstr "Rejoindre via %1"
-
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "Copier les détails de l'événement"
@@ -2494,6 +2541,10 @@ msgstr "Se répète"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1 heure de %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "Vérifier la caméra"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -3229,10 +3280,6 @@ msgstr[0] "%1 exception"
 msgstr[1] "%1 exceptions"
 
 #: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Fermer"
-
-#: ../contents/ui/ImportView.qml
 msgid "Import"
 msgstr "Importer"
 
@@ -3462,6 +3509,10 @@ msgid "%1 · %2"
 msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
+msgid "Camera Check…"
+msgstr "Vérification de la caméra…"
+
+#: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Nouvel événement…"
 
@@ -3564,6 +3615,14 @@ msgstr "Réunion"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "The microphone is muted."
+msgstr "Le microphone est coupé."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Unmute"
+msgstr "Réactiver le son"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"

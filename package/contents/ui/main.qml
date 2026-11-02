@@ -77,6 +77,8 @@ PlasmoidItem {
 		}
 		return moduleProbes[probeFile]
 	}
+	// The camera check (CameraCheckView.qml) needs Qt Multimedia (MultimediaProbe.qml).
+	readonly property bool cameraCheckAvailable: moduleAvailable("MultimediaProbe.qml")
 	function showMeetingAlert(eventItem) {
 		alertSnoozeTimer.stop()
 		var layer = moduleAvailable("LayerShellProbe.qml")
@@ -409,6 +411,15 @@ PlasmoidItem {
 			icon.name: "edit-copy"
 			visible: !!root.menuMeetingLink
 			onTriggered: root.copyToClipboard(root.menuMeetingLink.url)
+		},
+		PlasmaCore.Action {
+			text: i18n("Camera Check…")
+			icon.name: "camera-web"
+			visible: root.cameraCheckAvailable
+			onTriggered: {
+				var link = root.menuMeetingLink
+				root.openPopupAndCall(function(popupItem) { popupItem.openCameraCheck(link) })
+			}
 		},
 		PlasmaCore.Action {
 			text: i18n("Mute Notifications")

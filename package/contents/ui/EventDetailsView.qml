@@ -390,13 +390,22 @@ Rectangle {
 					}
 				}
 
-				// Join
-				PlasmaComponents3.Button {
+				// Join, and the camera check before it
+				RowLayout {
 					visible: !!details.meetingLink && !details.isTask
 					Layout.leftMargin: Kirigami.Units.largeSpacing
-					icon.name: "call-start"
-					text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
-					onClicked: meetingOpener.open(details.meetingLink.url)
+					spacing: Kirigami.Units.smallSpacing
+					PlasmaComponents3.Button {
+						icon.name: "call-start"
+						text: details.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", details.meetingLink.label) : ""
+						onClicked: meetingOpener.open(details.meetingLink.url)
+					}
+					PlasmaComponents3.ToolButton {
+						visible: root.cameraCheckAvailable
+						icon.name: "camera-web"
+						text: i18n("Check Camera")
+						onClicked: popup.openCameraCheck(details.meetingLink)
+					}
 				}
 
 				// RSVP

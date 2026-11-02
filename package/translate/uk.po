@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:56+0100\n"
+"POT-Creation-Date: 2026-11-02 11:39+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -263,6 +263,58 @@ msgstr "Включити %1 у зворотний відлік біля годи
 #: ../contents/ui/CalendarToggles.qml ../contents/ui/UpcomingEvents.qml
 msgid "Show All"
 msgstr "Показати всі"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid "Camera Check"
+msgstr "Перевірка камери"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/ImportView.qml
+msgid "Close"
+msgstr "Закрити"
+
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
+#: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
+#: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
+#: ../contents/ui/UpcomingEvents.qml
+msgctxt "%1 = Google Meet, Zoom, ..."
+msgid "Join %1"
+msgstr "Приєднатися через %1"
+
+#: ../contents/ui/CameraCheckView.qml
+msgid ""
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
+msgstr ""
+"Нічого не записується. Камера та мікрофон використовуються, лише поки це "
+"відкрито."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used"
+msgstr "Камеру неможливо використати"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera found"
+msgstr "Камеру не знайдено"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "The camera can't be used. Another app may be using it."
+msgstr "Камеру неможливо використати. Можливо, її використовує інша програма."
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Starting the camera…"
+msgstr "Запуск камери…"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Try Again"
+msgstr "Спробувати ще раз"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "No camera"
+msgstr "Немає камери"
+
+#: ../contents/ui/CameraMirror.qml
+msgid "Mirror the picture"
+msgstr "Дзеркальне відображення"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
@@ -2290,13 +2342,6 @@ msgstr "Позначити як виконується"
 msgid "Show Details"
 msgstr "Показати подробиці"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
-#: ../contents/ui/JoinPill.qml ../contents/ui/main.qml
-#: ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
-msgctxt "%1 = Google Meet, Zoom, ..."
-msgid "Join %1"
-msgstr "Приєднатися через %1"
-
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "Копіювати відомості про подію"
@@ -2473,6 +2518,10 @@ msgstr "Повторюється"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, час: %2 (%3)"
+
+#: ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "Перевірити камеру"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"
@@ -3219,10 +3268,6 @@ msgstr[1] "%1 винятки"
 msgstr[2] "%1 винятків"
 
 #: ../contents/ui/ImportView.qml
-msgid "Close"
-msgstr "Закрити"
-
-#: ../contents/ui/ImportView.qml
 msgid "Import"
 msgstr "Імпортувати"
 
@@ -3455,6 +3500,10 @@ msgid "%1 · %2"
 msgstr "%1 · %2"
 
 #: ../contents/ui/main.qml
+msgid "Camera Check…"
+msgstr "Перевірка камери…"
+
+#: ../contents/ui/main.qml
 msgid "New Event…"
 msgstr "Нова подія…"
 
@@ -3559,6 +3608,14 @@ msgstr "Зустріч"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1мм"
+
+#: ../contents/ui/MicMeter.qml
+msgid "The microphone is muted."
+msgstr "Мікрофон вимкнено."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Unmute"
+msgstr "Увімкнути звук"
 
 #: ../contents/ui/MiniMonth.qml ../contents/ui/PopupHeader.qml
 msgid "Previous Month"
