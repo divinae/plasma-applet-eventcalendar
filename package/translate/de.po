@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -281,12 +281,11 @@ msgstr "Über %1 beitreten"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is saved. The camera and the microphone are used only while this is "
-"open; a microphone test is kept in memory until it's played."
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
 msgstr ""
-"Es wird nichts gespeichert. Kamera und Mikrofon werden nur verwendet, "
-"solange dies geöffnet ist; ein Mikrofontest bleibt nur im Speicher, bis er "
-"abgespielt ist."
+"Es wird nichts aufgenommen. Kamera und Mikrofon werden nur verwendet, "
+"solange dies geöffnet ist."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3599,16 +3598,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "Test: %1 Sekunden aufnehmen und wiedergeben"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1 %"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "Aufnahme … jetzt sprechen"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "Pegel"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "Wiedergabe …"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1 %"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "Empfindlichkeit"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4575,11 +4582,21 @@ msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
 
 #~ msgid ""
-#~ "Nothing is recorded. The camera and the microphone are used only while "
-#~ "this is open."
+#~ "Nothing is saved. The camera and the microphone are used only while this "
+#~ "is open; a microphone test is kept in memory until it's played."
 #~ msgstr ""
-#~ "Es wird nichts aufgenommen. Kamera und Mikrofon werden nur verwendet, "
-#~ "solange dies geöffnet ist."
+#~ "Es wird nichts gespeichert. Kamera und Mikrofon werden nur verwendet, "
+#~ "solange dies geöffnet ist; ein Mikrofontest bleibt nur im Speicher, bis "
+#~ "er abgespielt ist."
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "Test: %1 Sekunden aufnehmen und wiedergeben"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "Aufnahme … jetzt sprechen"
+
+#~ msgid "Playing back…"
+#~ msgstr "Wiedergabe …"
 
 #~ msgid "New Event…"
 #~ msgstr "Neuer Termin…"

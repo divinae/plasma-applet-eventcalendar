@@ -7,10 +7,10 @@ import org.kde.plasma.private.volume
 import "CameraPrefs.js" as CameraPrefs
 
 // The camera check's sound (CameraCheckView.qml, loaded by URL only with plasma-pa, see
-// PlasmaPaProbe.qml): the microphone's level while running, a warning when it's muted, and the
-// microphone and speaker to use (Plasma's defaults, set as the volume applet sets them). Each has
-// a test: the microphone records a few seconds and plays them back (kept in memory only, gone
-// when the card closes), the speaker says its channels' names.
+// PlasmaPaProbe.qml), live like the volume applet's microphone test: the microphone's level while
+// running, its sensitivity (input volume), a warning when it's muted, the microphone and speaker to
+// use (Plasma's defaults, set as the volume applet sets them) and a speaker test that says its
+// channels' names. Nothing is recorded.
 ColumnLayout {
 	id: meter
 
@@ -26,45 +26,10 @@ ColumnLayout {
 		target: meter.running ? meter.source : null
 	}
 
-	//--- Microphone test: about 5 s recorded, then played back. Stopped and dropped when the card
-	// closes or the popup does.
-	readonly property int micTestSeconds: 5
-	MicrophoneTest {
-		id: micTest
-		source: meter.source
-		onRecordingFinished: playRecording()
-	}
-	Timer {
-		id: micTestTimer
-		interval: meter.micTestSeconds * 1000
-		onTriggered: micTest.stopRecording()
-	}
-	function startMicTest() {
-		if (micTest.recording || micTest.playing) {
-			stopMicTest()
-			return
-		}
-		micTest.clearRecording()
-		micTest.startRecording()
-		micTestTimer.restart()
-	}
-	function stopMicTest() {
-		micTestTimer.stop()
-		if (micTest.recording) {
-			micTest.stopRecording()
-		}
-		micTest.stopPlaying()
-		micTest.clearRecording()
-	}
 	onRunningChanged: {
 		if (!running) {
-			stopMicTest()
 			speakerTest.queue = []
 		}
-	}
-	Component.onDestruction: {
-		micTestTimer.stop()
-		micTest.cleanupStreams()
 	}
 
 	//--- Speaker test: each channel says its name (left, then right), as in Plasma's audio settings.
@@ -74,6 +39,8 @@ ColumnLayout {
 		property var queue: []
 		readonly property bool busy: playingChannels.length > 0 || queue.length > 0
 		function start() {
+			console.log("[eventcalendar] camera check: speaker test, sink:", !!sink, "channels:", sink ? sink.rawChannels.length : 0)
+			meter.testError = ""
 			queue = sink ? Array.prototype.slice.call(sink.rawChannels) : []
 			next()
 		}
@@ -85,6 +52,7 @@ ColumnLayout {
 			queue = queue.slice(1)
 			testChannel(channel)
 		}
+		onShowErrorMessage: function(message) { meter.testFailed("speaker test", message) }
 		onPlayingChannelsChanged: {
 			if (playingChannels.length === 0) {
 				next()
@@ -92,7 +60,7 @@ ColumnLayout {
 		}
 	}
 
-	// Microphone, its test and its level.
+	// Microphone.
 	RowLayout {
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.smallSpacing
@@ -106,21 +74,26 @@ ColumnLayout {
 			pulseModel: SourceModel {}
 			microphones: true
 		}
-		PlasmaComponents3.ToolButton {
-			id: micTestButton
-			icon.name: micTest.recording || micTest.playing ? "media-playback-stop" : "media-record"
-			enabled: !!meter.source && !meter.muted
-			onClicked: meter.startMicTest()
-			PlasmaComponents3.ToolTip.text: i18n("Test: record %1 seconds and play them back", meter.micTestSeconds)
-			PlasmaComponents3.ToolTip.visible: hovered
-			PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
-		}
 	}
-	RowLayout {
+	// Under the microphone's list: its level now, and its sensitivity.
+	readonly property real level: meter.muted ? 0 : CameraPrefs.meterLevel(monitor.volume)
+	TextMetrics {
+		id: percentMetrics
+		font: Kirigami.Theme.smallFont
+		text: i18nc("volume percentage, the widest", "%1%", 100)
+	}
+	GridLayout {
 		Layout.fillWidth: true
-		Layout.leftMargin: meter.iconSize + Kirigami.Units.smallSpacing // Under the microphone's list
-		Layout.rightMargin: micTestButton.width + Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.smallSpacing
+		Layout.leftMargin: meter.iconSize + Kirigami.Units.smallSpacing
+		columns: 3
+		columnSpacing: Kirigami.Units.smallSpacing
+		rowSpacing: Kirigami.Units.smallSpacing
+
+		PlasmaComponents3.Label {
+			text: i18nc("the microphone's input level now", "Level")
+			font: Kirigami.Theme.smallFont
+			opacity: 0.75
+		}
 		Rectangle {
 			Layout.fillWidth: true
 			implicitHeight: Math.round(Kirigami.Units.smallSpacing * 1.5)
@@ -129,18 +102,45 @@ ColumnLayout {
 			Rectangle {
 				height: parent.height
 				radius: parent.radius
-				width: parent.width * (meter.muted ? 0 : CameraPrefs.meterLevel(monitor.volume))
-				color: micTest.recording ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
+				width: parent.width * meter.level
+				color: Kirigami.Theme.positiveTextColor
 				Behavior on width {
 					NumberAnimation { duration: 80 }
 				}
 			}
 		}
 		PlasmaComponents3.Label {
-			visible: micTest.recording || micTest.playing
-			text: micTest.recording ? i18n("Recording… speak now") : i18n("Playing back…")
+			Layout.preferredWidth: percentMetrics.advanceWidth
+			horizontalAlignment: Text.AlignRight
+			text: i18nc("volume percentage", "%1%", Math.round(meter.level * 100))
 			font: Kirigami.Theme.smallFont
-			opacity: 0.8
+		}
+
+		PlasmaComponents3.Label {
+			text: i18nc("the microphone's input volume", "Sensitivity")
+			font: Kirigami.Theme.smallFont
+			opacity: 0.75
+		}
+		PlasmaComponents3.Slider {
+			id: sensitivity
+			Layout.fillWidth: true
+			from: PulseAudio.MinimalVolume
+			to: PulseAudio.NormalVolume
+			stepSize: PulseAudio.NormalVolume / 100
+			value: meter.source ? meter.source.volume : PulseAudio.NormalVolume
+			enabled: !!meter.source && meter.source.volumeWritable
+			onMoved: {
+				// As the volume applet: whole percents; 0 is muted.
+				var volume = Math.round(value * 100 / PulseAudio.NormalVolume) * PulseAudio.NormalVolume / 100
+				meter.source.volume = volume
+				meter.source.muted = volume === 0
+			}
+		}
+		PlasmaComponents3.Label {
+			Layout.preferredWidth: percentMetrics.advanceWidth
+			horizontalAlignment: Text.AlignRight
+			text: i18nc("volume percentage", "%1%", Math.round(sensitivity.value / PulseAudio.NormalVolume * 100))
+			font: Kirigami.Theme.smallFont
 		}
 	}
 	Kirigami.InlineMessage {
@@ -222,5 +222,11 @@ ColumnLayout {
 			PlasmaComponents3.ToolTip.visible: hovered
 			PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
 		}
+	}
+	Kirigami.InlineMessage {
+		Layout.fillWidth: true
+		visible: !!meter.testError
+		type: Kirigami.MessageType.Error
+		text: meter.testError
 	}
 }

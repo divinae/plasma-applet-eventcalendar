@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -278,11 +278,10 @@ msgstr "%1 ile Katıl"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is saved. The camera and the microphone are used only while this is "
-"open; a microphone test is kept in memory until it's played."
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
 msgstr ""
-"Hiçbir şey kaydedilmez. Kamera ve mikrofon yalnızca bu açıkken kullanılır; "
-"mikrofon testi oynatılana kadar yalnızca bellekte tutulur."
+"Hiçbir şey kaydedilmez. Kamera ve mikrofon yalnızca bu açıkken kullanılır."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3554,16 +3553,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "Test: %1 saniye kaydet ve oynat"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%%1"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "Kaydediliyor… şimdi konuşun"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "Seviye"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "Oynatılıyor…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%%1"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "Hassasiyet"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4528,10 +4535,20 @@ msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
 
 #~ msgid ""
-#~ "Nothing is recorded. The camera and the microphone are used only while "
-#~ "this is open."
+#~ "Nothing is saved. The camera and the microphone are used only while this "
+#~ "is open; a microphone test is kept in memory until it's played."
 #~ msgstr ""
-#~ "Hiçbir şey kaydedilmez. Kamera ve mikrofon yalnızca bu açıkken kullanılır."
+#~ "Hiçbir şey kaydedilmez. Kamera ve mikrofon yalnızca bu açıkken "
+#~ "kullanılır; mikrofon testi oynatılana kadar yalnızca bellekte tutulur."
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "Test: %1 saniye kaydet ve oynat"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "Kaydediliyor… şimdi konuşun"
+
+#~ msgid "Playing back…"
+#~ msgstr "Oynatılıyor…"
 
 #~ msgid "New Event…"
 #~ msgstr "Yeni Etkinlik…"

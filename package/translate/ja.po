@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -239,8 +239,8 @@ msgid "Join %1"
 msgstr "%1 に参加"
 
 #: ../contents/ui/CameraCheckView.qml
-msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
-msgstr "何も保存されません。カメラとマイクはこれを開いている間だけ使われます。マイクテストは再生されるまでメモリーにのみ保持されます。"
+msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3158,16 +3158,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "テスト: %1 秒録音して再生"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1%"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "録音中… 話してください"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "レベル"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "再生中…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1%"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "感度"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4103,8 +4111,17 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
 
-#~ msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
-#~ msgstr "何も録画・録音されません。カメラとマイクはこれを開いている間だけ使われます。"
+#~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
+#~ msgstr "何も保存されません。カメラとマイクはこれを開いている間だけ使われます。マイクテストは再生されるまでメモリーにのみ保持されます。"
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "テスト: %1 秒録音して再生"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "録音中… 話してください"
+
+#~ msgid "Playing back…"
+#~ msgstr "再生中…"
 
 #~ msgid "New Event…"
 #~ msgstr "新しいイベント…"

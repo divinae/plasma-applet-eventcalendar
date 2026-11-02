@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -278,11 +278,9 @@ msgstr "הצטרפות ל־%1"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is saved. The camera and the microphone are used only while this is "
-"open; a microphone test is kept in memory until it's played."
-msgstr ""
-"שום דבר לא נשמר. המצלמה והמיקרופון בשימוש רק כל עוד זה פתוח; בדיקת מיקרופון "
-"נשמרת בזיכרון עד שהיא מושמעת."
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
+msgstr "שום דבר לא מוקלט. המצלמה והמיקרופון בשימוש רק כל עוד זה פתוח."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3578,16 +3576,24 @@ msgid "%1mm"
 msgstr "%1 מ״מ"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "בדיקה: הקלטה של %1 שניות והשמעתן"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1%"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "מקליט… אפשר לדבר"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "רמה"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "משמיע…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1%"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "רגישות"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4578,9 +4584,20 @@ msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
 
 #~ msgid ""
-#~ "Nothing is recorded. The camera and the microphone are used only while "
-#~ "this is open."
-#~ msgstr "שום דבר לא מוקלט. המצלמה והמיקרופון בשימוש רק כל עוד זה פתוח."
+#~ "Nothing is saved. The camera and the microphone are used only while this "
+#~ "is open; a microphone test is kept in memory until it's played."
+#~ msgstr ""
+#~ "שום דבר לא נשמר. המצלמה והמיקרופון בשימוש רק כל עוד זה פתוח; בדיקת "
+#~ "מיקרופון נשמרת בזיכרון עד שהיא מושמעת."
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "בדיקה: הקלטה של %1 שניות והשמעתן"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "מקליט… אפשר לדבר"
+
+#~ msgid "Playing back…"
+#~ msgstr "משמיע…"
 
 #~ msgid "New Event…"
 #~ msgstr "אירוע חדש…"

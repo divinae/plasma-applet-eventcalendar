@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -274,11 +274,9 @@ msgstr "加入 %1"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is saved. The camera and the microphone are used only while this is "
-"open; a microphone test is kept in memory until it's played."
-msgstr ""
-"不会保存任何内容。仅在此窗口打开时使用摄像头和麦克风；麦克风测试只保留在内存"
-"中，直到播放完毕。"
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
+msgstr "不会录制任何内容。仅在此窗口打开时使用摄像头和麦克风。"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3447,16 +3445,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "测试：录制 %1 秒并回放"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1%"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "正在录音… 请说话"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "电平"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "正在回放…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1%"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "灵敏度"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4396,9 +4402,20 @@ msgid "Working location: %1"
 msgstr "工作地点：%1"
 
 #~ msgid ""
-#~ "Nothing is recorded. The camera and the microphone are used only while "
-#~ "this is open."
-#~ msgstr "不会录制任何内容。仅在此窗口打开时使用摄像头和麦克风。"
+#~ "Nothing is saved. The camera and the microphone are used only while this "
+#~ "is open; a microphone test is kept in memory until it's played."
+#~ msgstr ""
+#~ "不会保存任何内容。仅在此窗口打开时使用摄像头和麦克风；麦克风测试只保留在内"
+#~ "存中，直到播放完毕。"
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "测试：录制 %1 秒并回放"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "正在录音… 请说话"
+
+#~ msgid "Playing back…"
+#~ msgstr "正在回放…"
 
 #~ msgid "New Event…"
 #~ msgstr "新建事件…"

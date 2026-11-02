@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -279,12 +279,11 @@ msgstr "Συμμετοχή μέσω %1"
 
 #: ../contents/ui/CameraCheckView.qml
 msgid ""
-"Nothing is saved. The camera and the microphone are used only while this is "
-"open; a microphone test is kept in memory until it's played."
+"Nothing is recorded. The camera and the microphone are used only while this "
+"is open."
 msgstr ""
-"Τίποτα δεν αποθηκεύεται. Η κάμερα και το μικρόφωνο χρησιμοποιούνται μόνο όσο "
-"αυτό είναι ανοιχτό· μια δοκιμή μικροφώνου κρατιέται στη μνήμη μέχρι να "
-"αναπαραχθεί."
+"Τίποτα δεν καταγράφεται. Η κάμερα και το μικρόφωνο χρησιμοποιούνται μόνο όσο "
+"αυτό είναι ανοιχτό."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3602,16 +3601,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "Δοκιμή: εγγραφή %1 δευτερολέπτων και αναπαραγωγή τους"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1%"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "Εγγραφή… μιλήστε τώρα"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "Στάθμη"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "Αναπαραγωγή…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1%"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "Ευαισθησία"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4579,11 +4586,21 @@ msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
 
 #~ msgid ""
-#~ "Nothing is recorded. The camera and the microphone are used only while "
-#~ "this is open."
+#~ "Nothing is saved. The camera and the microphone are used only while this "
+#~ "is open; a microphone test is kept in memory until it's played."
 #~ msgstr ""
-#~ "Τίποτα δεν καταγράφεται. Η κάμερα και το μικρόφωνο χρησιμοποιούνται μόνο "
-#~ "όσο αυτό είναι ανοιχτό."
+#~ "Τίποτα δεν αποθηκεύεται. Η κάμερα και το μικρόφωνο χρησιμοποιούνται μόνο "
+#~ "όσο αυτό είναι ανοιχτό· μια δοκιμή μικροφώνου κρατιέται στη μνήμη μέχρι "
+#~ "να αναπαραχθεί."
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "Δοκιμή: εγγραφή %1 δευτερολέπτων και αναπαραγωγή τους"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "Εγγραφή… μιλήστε τώρα"
+
+#~ msgid "Playing back…"
+#~ msgstr "Αναπαραγωγή…"
 
 #~ msgid "New Event…"
 #~ msgstr "Νέο συμβάν…"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:48+0100\n"
+"POT-Creation-Date: 2026-11-02 12:01+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -240,8 +240,8 @@ msgid "Join %1"
 msgstr "Partecipa con %1"
 
 #: ../contents/ui/CameraCheckView.qml
-msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
-msgstr "Non viene salvato nulla. La fotocamera e il microfono sono usati solo finché questo è aperto; un test del microfono resta in memoria finché non viene riprodotto."
+msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
+msgstr "Non viene registrato nulla. La fotocamera e il microfono sono usati solo finché questo è aperto."
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
@@ -3190,16 +3190,24 @@ msgid "%1mm"
 msgstr "%1mm"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Test: record %1 seconds and play them back"
-msgstr "Test: registra %1 secondi e riproducili"
+msgctxt "volume percentage, the widest"
+msgid "%1%"
+msgstr "%1%"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Recording… speak now"
-msgstr "Registrazione… parla ora"
+msgctxt "the microphone's input level now"
+msgid "Level"
+msgstr "Livello"
 
 #: ../contents/ui/MicMeter.qml
-msgid "Playing back…"
-msgstr "Riproduzione…"
+msgctxt "volume percentage"
+msgid "%1%"
+msgstr "%1%"
+
+#: ../contents/ui/MicMeter.qml
+msgctxt "the microphone's input volume"
+msgid "Sensitivity"
+msgstr "Sensibilità"
 
 #: ../contents/ui/MicMeter.qml
 msgid "The microphone is muted."
@@ -4152,8 +4160,17 @@ msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
 
-#~ msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
-#~ msgstr "Non viene registrato nulla. La fotocamera e il microfono sono usati solo finché questo è aperto."
+#~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
+#~ msgstr "Non viene salvato nulla. La fotocamera e il microfono sono usati solo finché questo è aperto; un test del microfono resta in memoria finché non viene riprodotto."
+
+#~ msgid "Test: record %1 seconds and play them back"
+#~ msgstr "Test: registra %1 secondi e riproducili"
+
+#~ msgid "Recording… speak now"
+#~ msgstr "Registrazione… parla ora"
+
+#~ msgid "Playing back…"
+#~ msgstr "Riproduzione…"
 
 #~ msgid "New Event…"
 #~ msgstr "Nuovo evento…"
