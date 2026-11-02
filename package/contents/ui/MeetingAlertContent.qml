@@ -120,25 +120,47 @@ Item {
 				&& root.cameraCheckAvailable && Qt.application.screens.length > 0 && Screen.name === Qt.application.screens[0].name
 			readonly property bool soundAvailable: wanted && root.moduleAvailable("PlasmaPaProbe.qml")
 			property bool expanded: false
+			readonly property real pictureWidth: Kirigami.Units.gridUnit * 12
 			visible: wanted
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: Kirigami.Units.gridUnit
-			Layout.preferredWidth: Kirigami.Units.gridUnit * (expanded ? 22 : 16)
 			spacing: Kirigami.Units.largeSpacing
-			Loader {
-				Layout.fillWidth: true
-				active: cameraCheck.wanted
-				source: "CameraMirror.qml"
-				onLoaded: {
-					item.running = Qt.binding(function() { return content.visible })
-					item.showControls = Qt.binding(function() { return cameraCheck.expanded })
+
+			// Expanded: the controls on a card in the window's colors (the lists and sliders draw
+			// light frames: on the alert's dark colors their text didn't read). Collapsed: the
+			// picture alone, no card.
+			Rectangle {
+				id: cameraCard
+				readonly property real pad: cameraCheck.expanded ? Kirigami.Units.largeSpacing * 1.5 : 0
+				Layout.alignment: Qt.AlignHCenter
+				Layout.preferredWidth: (cameraCheck.expanded ? Kirigami.Units.gridUnit * 24 : cameraCheck.pictureWidth) + pad * 2
+				Layout.preferredHeight: cameraCardColumn.implicitHeight + pad * 2
+				radius: Kirigami.Units.cornerRadius * 3
+				Kirigami.Theme.inherit: false
+				Kirigami.Theme.colorSet: Kirigami.Theme.Window
+				color: cameraCheck.expanded ? Kirigami.Theme.backgroundColor : "transparent"
+				ColumnLayout {
+					id: cameraCardColumn
+					anchors.fill: parent
+					anchors.margins: cameraCard.pad
+					spacing: Kirigami.Units.largeSpacing
+					Loader {
+						Layout.fillWidth: true
+						active: cameraCheck.wanted
+						source: "CameraMirror.qml"
+						onLoaded: {
+							item.pictureMaxWidth = Qt.binding(function() { return cameraCheck.pictureWidth })
+							item.running = Qt.binding(function() { return content.visible })
+							item.showControls = Qt.binding(function() { return cameraCheck.expanded })
+						}
+					}
+					Loader {
+						Layout.fillWidth: true
+						active: cameraCheck.expanded && cameraCheck.soundAvailable
+						source: "MicMeter.qml"
+						onLoaded: item.running = Qt.binding(function() { return content.visible })
+					}
 				}
-			}
-			Loader {
-				Layout.fillWidth: true
-				active: cameraCheck.expanded && cameraCheck.soundAvailable
-				source: "MicMeter.qml"
-				onLoaded: item.running = Qt.binding(function() { return content.visible })
 			}
 			AlertButton {
 				Layout.alignment: Qt.AlignHCenter

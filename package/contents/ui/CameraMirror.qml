@@ -16,6 +16,9 @@ ColumnLayout {
 	property bool running: false
 	// The camera's list and the mirror switch (the full-screen alert: only when expanded).
 	property bool showControls: true
+	// The picture's width at most (0: the whole width), centered (the full-screen alert: small).
+	property real pictureMaxWidth: 0
+	readonly property real pictureWidth: pictureMaxWidth > 0 ? Math.min(pictureMaxWidth, width) : width
 	readonly property bool mirrored: plasmoid.configuration.cameraMirrored !== false
 	spacing: Kirigami.Units.smallSpacing
 
@@ -40,8 +43,9 @@ ColumnLayout {
 
 	// The picture, 16:9 with rounded corners.
 	Item {
-		Layout.fillWidth: true
-		Layout.preferredHeight: Math.round(width * 9 / 16)
+		Layout.alignment: Qt.AlignHCenter
+		Layout.preferredWidth: mirror.pictureWidth
+		Layout.preferredHeight: Math.round(mirror.pictureWidth * 9 / 16)
 
 		Rectangle {
 			anchors.fill: parent
