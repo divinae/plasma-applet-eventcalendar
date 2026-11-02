@@ -1127,18 +1127,16 @@ Item {
 								onDropped: function(copy) { weekView.dragDrop(copy) }
 								onDragCanceled: weekView.dragCancel()
 							}
-							// Details on the first hover, kept (see EventBar's tooltip).
+							// Details as the pointer comes in (see EventBar's tooltip).
 							PlasmaCore.ToolTipArea {
 								id: barToolTip
 								anchors.fill: parent
 								mainText: parent.eventItem.summary // Not bound to containsMouse, see EventBar
 								property string details: ""
-								property var detailsFor: null
 								subText: details
 								textFormat: Text.PlainText
 								onContainsMouseChanged: {
-									if (containsMouse && (!details || detailsFor !== parent.eventItem)) {
-										detailsFor = parent.eventItem
+									if (containsMouse) {
 										details = weekView.eventModel.eventDetailsText(parent.eventItem)
 									}
 								}
