@@ -68,6 +68,9 @@ PlasmoidItem {
 	// The windows: blurred behind (Kicker's DashboardWindow, as Fokus) and through layer-shell when
 	// those modules are there, each probed once when first needed; '' : the plain windows below.
 	property string alertSetUrl: ""
+	// Commands that must finish after the item that started them is gone (the camera check's
+	// "hear yourself" switched off as its card closes).
+	property ExecUtil sharedExec: ExecUtil {}
 	property var moduleProbes: ({})
 	function moduleAvailable(probeFile) {
 		if (!(probeFile in moduleProbes)) {
@@ -119,6 +122,10 @@ PlasmoidItem {
 			: blur ? "MeetingAlertSetBlur.qml"
 			: layer ? "MeetingAlertSetLayer.qml" : ""
 		alertMeetingLink = MeetingLink.find(eventItem)
+		// The alert shows the camera check itself: the window's camera would keep the device.
+		if (cameraCheckWindow && plasmoid.configuration.meetingAlertCamera && alertMeetingLink) {
+			cameraCheckWindow.close()
+		}
 		alertEvent = eventItem
 	}
 	function closeMeetingAlert() {
@@ -373,15 +380,6 @@ PlasmoidItem {
 	// what to do with it), then planning, then the clock's own actions. Plasma adds Configure.
 	readonly property var menuEvent: upcomingEvents.nextEvent
 	readonly property var menuMeetingLink: upcomingEvents.nextEventMeetingLink
-	function openPopupAndCall(fn) {
-		root.expanded = true
-		Qt.callLater(function() {
-			var popupItem = root.fullRepresentationItem
-			if (popupItem) {
-				fn(popupItem)
-			}
-		})
-	}
 	// Copies text (QML has no clipboard API: a TextEdit made for it).
 	function copyToClipboard(text) {
 		var edit = Qt.createQmlObject('import QtQuick; TextEdit { visible: false }', root)

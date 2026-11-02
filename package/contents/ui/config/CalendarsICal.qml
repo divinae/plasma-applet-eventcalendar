@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
-import org.kde.coreaddons as KCoreAddons
+import QtCore
 
 import ".."
 import "../lib"
@@ -16,11 +16,10 @@ import "../lib"
 ConfigSection {
 	id: page
 
-	KCoreAddons.KUser {
-		id: kuser
-	}
 
-	readonly property string localCalendarDir: '/home/' + kuser.loginName + '/.local/share/plasma_org.kde.plasma.eventcalendar'
+	// ~/.local/share/plasma_org.kde.plasma.eventcalendar, wherever the home is (/var/home on
+	// Silverblue / Kinoite): icsjson.py reads local files from there only.
+	readonly property string localCalendarDir: decodeURIComponent(String(StandardPaths.writableLocation(StandardPaths.HomeLocation)).replace(/^file:\/\//, '')) + '/.local/share/plasma_org.kde.plasma.eventcalendar'
 
 	function normalizeLocalPath(value) {
 		var path = String(value || "").trim()

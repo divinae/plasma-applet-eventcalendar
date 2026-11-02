@@ -55,7 +55,7 @@ class WheelInstallTest(unittest.TestCase):
 		self.tmp.cleanup()
 
 	def install(self, pypi, present=()):
-		with mock.patch.object(deps, "WHEELS", [("mod_" + n.replace("-", "_"), n, "1") for n in pypi.wheels]), \
+		with mock.patch.object(deps, "WHEELS", [("mod_" + n.replace("-", "_"), n, "1", "") for n in pypi.wheels]), \
 				mock.patch.object(deps, "fetch", pypi), \
 				mock.patch.object(deps, "importable", lambda name, target: name in present):
 			return deps.with_wheels(self.target)
@@ -78,6 +78,20 @@ class WheelInstallTest(unittest.TestCase):
 		with self.assertRaises(ValueError):
 			self.install(pypi)
 		self.assertFalse((pathlib.Path(self.target).parent / "evil.py").exists())
+
+	def test_an_older_one_is_replaced(self):
+		pypi = FakePyPI({"alpha": wheel({"alpha.py": "x = 1"})})
+		with mock.patch.object(deps, "WHEELS", [("mod_alpha", "alpha", "7.3.0", "6.1")]), \
+				mock.patch.object(deps, "fetch", pypi), \
+				mock.patch.object(deps, "importable", lambda name, target: True), \
+				mock.patch.object(deps, "installed_version", lambda dist, target: "5.0.13"):
+			deps.with_wheels(self.target)
+		self.assertTrue((pathlib.Path(self.target) / "alpha.py").exists(), "5.0.13 < 6.1: installed")
+
+	def test_version_tuple(self):
+		self.assertEqual(deps.version_tuple("2.9.0.post0"), (2, 9, 0))
+		self.assertGreaterEqual(deps.version_tuple("7.3.0"), deps.version_tuple("6.1"))
+		self.assertLess(deps.version_tuple("5.0.13"), deps.version_tuple("6.1"))
 
 	def test_only_https(self):
 		with self.assertRaises(ValueError):

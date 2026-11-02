@@ -28,17 +28,19 @@ TARGET = os.path.expanduser("~/.local/share/plasma_org.kde.plasma.eventcalendar/
 SPEC = "recurring-ical-events>=3.8,<4"
 TIMEOUT = 60
 
-# (import name, PyPI name, version): pure-Python wheels known to work together, the import name
-# checked first. click: x_wr_timezone imports it; typing_extensions: icalendar on Python < 3.13.
+# (import name, PyPI name, version, oldest that works with the rest): pure-Python wheels known to
+# work together. One already importable at least that old is kept (an older one gets this version
+# in the target, which comes first on the path). click: x_wr_timezone imports it;
+# typing_extensions: icalendar on Python < 3.13.
 WHEELS = [
-	("six", "six", "1.17.0"),
-	("dateutil", "python-dateutil", "2.9.0.post0"),
-	("tzdata", "tzdata", "2026.6"),
-	("typing_extensions", "typing-extensions", "4.12.2"),
-	("click", "click", "8.1.8"),
-	("icalendar", "icalendar", "7.3.0"),
-	("x_wr_timezone", "x-wr-timezone", "2.0.1"),
-	("recurring_ical_events", "recurring-ical-events", "3.8.2"),
+	("six", "six", "1.17.0", ""),
+	("dateutil", "python-dateutil", "2.9.0.post0", "2.8.1"),
+	("tzdata", "tzdata", "2026.6", ""),
+	("typing_extensions", "typing-extensions", "4.12.2", ""),
+	("click", "click", "8.1.8", ""),
+	("icalendar", "icalendar", "7.3.0", "6.1"),
+	("x_wr_timezone", "x-wr-timezone", "2.0.1", "1.0"),
+	("recurring_ical_events", "recurring-ical-events", "3.8.2", "3.8"),
 ]
 NEEDED = ("icalendar", "recurring_ical_events")
 
@@ -48,6 +50,39 @@ def importable(name, target):
 	code = "import sys; sys.path.insert(0, sys.argv[1]); import " + name
 	return subprocess.run([sys.executable, "-I", "-c", code, target],
 		stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+
+
+def version_tuple(text):
+	parts = []
+	for piece in str(text).split("."):
+		digits = ""
+		for c in piece:
+			if not c.isdigit():
+				break
+			digits += c
+		if not digits:
+			break # "post0", "rc1": the release numbers end there
+		parts.append(int(digits))
+	return tuple(parts)
+
+
+def installed_version(dist, target):
+	"""The version of distribution `dist` Python finds (with `target` first), or None."""
+	code = ("import sys; sys.path.insert(0, sys.argv[1]); import importlib.metadata as m\n"
+		"try: print(m.version(sys.argv[2]))\nexcept Exception: pass")
+	result = subprocess.run([sys.executable, "-I", "-c", code, target, dist], stdout=subprocess.PIPE,
+		stderr=subprocess.DEVNULL, text=True)
+	return result.stdout.strip() or None
+
+
+def usable(module, dist, oldest, target):
+	"""Importable, and (when `oldest` is set) at least that version."""
+	if not importable(module, target):
+		return False
+	if not oldest:
+		return True
+	version = installed_version(dist, target)
+	return version is not None and version_tuple(version) >= version_tuple(oldest)
 
 
 def all_present(target):
@@ -95,8 +130,8 @@ def wheel_for(name, version):
 
 def with_wheels(target):
 	os.makedirs(target, exist_ok=True)
-	for module, name, version in WHEELS:
-		if importable(module, target):
+	for module, name, version, oldest in WHEELS:
+		if usable(module, name, oldest, target):
 			continue
 		url, sha256 = wheel_for(name, version)
 		blob = fetch(url)
@@ -138,7 +173,8 @@ def main(argv=None):
 			ok, output = False, str(err)
 		if ok and all_present(target):
 			return done({"ok": True, "method": method})
-		errors.append("%s: %s" % (method, (output or "").strip().splitlines()[-1:] or ""))
+		last = ((output or "").strip().splitlines() or [""])[-1]
+		errors.append("%s: %s" % (method, last) if last else method)
 	return done({"ok": False, "error": "; ".join(str(e) for e in errors)[:400], "noInstaller": not has_pip() and not shutil.which("uv")})
 
 

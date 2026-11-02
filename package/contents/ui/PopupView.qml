@@ -758,8 +758,7 @@ MouseArea {
 				if (!popup.hourGridMode) {
 					return // Kept, hidden: the month shown stays
 				}
-				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + Math.floor(dayCount / 2))
-				popup.monthViewDate = middle
+				popup.syncMonthToWeek(this)
 			}
 		}
 	}
@@ -1071,6 +1070,7 @@ MouseArea {
 			return // Made now: onLoaded takes pendingDayViewDate
 		}
 		pendingDayViewDate = null
+		weekViewLoader.item.showing = true
 		Qt.callLater(function() {
 			Qt.callLater(function() { popup.weekViewShown(asked) })
 		})
@@ -1080,16 +1080,24 @@ MouseArea {
 		if (!view || !hourGridMode) {
 			return
 		}
+		view.showing = false
 		var target = asked || view.startOfWeek(timeModel.currentTime)
 		if (target.getTime() !== view.weekStart.getTime()) {
-			view.weekStart = target // Scrolls back and rebuilds (WeekView.onWeekStartChanged)
+			view.weekStart = target // Scrolls back, rebuilds, the month follows (onWeekStartChanged)
 		} else {
 			view.resetScroll()
+			// The month paged meanwhile: the events fetched are its own, back to this week's.
+			syncMonthToWeek(view)
 			if (weekStale) {
 				view.rebuild()
 			}
 		}
 		weekStale = false
+	}
+	// The month the events are fetched for (monthViewDate): the shown week's (or day's).
+	function syncMonthToWeek(view) {
+		var start = view.weekStart
+		monthViewDate = new Date(start.getFullYear(), start.getMonth(), start.getDate() + Math.floor(view.dayCount / 2))
 	}
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep

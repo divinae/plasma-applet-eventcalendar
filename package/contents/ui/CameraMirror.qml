@@ -25,7 +25,7 @@ ColumnLayout {
 
 	MediaDevices { id: mediaDevices }
 	readonly property var cameras: mediaDevices.videoInputs
-	property int cameraIndex: CameraPrefs.pickIndex(cameras, plasmoid.configuration.cameraDevice)
+	readonly property int cameraIndex: CameraPrefs.pickIndex(cameras, plasmoid.configuration.cameraDevice)
 	property string errorText: ""
 	readonly property string cameraState: CameraPrefs.cameraState(cameras.length, camera.active, errorText)
 
@@ -128,8 +128,9 @@ ColumnLayout {
 			model: mirror.cameras.map(function(camera) { return CameraPrefs.cameraName(camera.description) })
 			currentIndex: mirror.cameraIndex
 			displayText: mirror.cameras.length ? currentText : i18n("No camera")
+			// Saved, and picked from that (cameraIndex stays a binding: it follows the cameras
+			// plugged in or out).
 			onActivated: function(index) {
-				mirror.cameraIndex = index
 				plasmoid.configuration.cameraDevice = mirror.cameras[index].description
 			}
 		}

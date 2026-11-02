@@ -163,7 +163,14 @@ Item {
 	}
 	// After the columns follow (columnDays): right away the rebuild saw the old count (Day -> Week
 	// filled only the first column).
-	onDayCountChanged: Qt.callLater(goToday)
+	// Not while hidden (kept in the other views), nor while the popup shows it again
+	// (PopupView.weekViewShown picks the week or day then).
+	property bool showing: false
+	onDayCountChanged: Qt.callLater(function() {
+		if (weekView.visible && !weekView.showing) {
+			weekView.goToday()
+		}
+	})
 
 	// [{ date, allDay: [eventItem], timed: [{ eventItem, start, end, column, columns }] }]
 	property var days: []

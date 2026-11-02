@@ -50,20 +50,41 @@ ColumnLayout {
 	// first unloads the loopbacks it made (also ones left by a crash), then loads one when on.
 	property bool hearSelf: false
 	readonly property string loopbackTag: "eventcalendar-mic-check"
-	readonly property string loopbackScript: 'for m in $(pactl list short modules | awk -v tag="$4" \'index($0, tag) {print $1}\'); do pactl unload-module "$m"; done; '
+	// One at a time, also between the window and the alert (a lock, when flock is there).
+	readonly property string loopbackScript: 'exec 9>"${XDG_RUNTIME_DIR:-/tmp}/eventcalendar-mic-check.lock"; command -v flock >/dev/null && flock 9; '
+		+ 'for m in $(pactl list short modules | awk -v tag="$4" \'index($0, tag) {print $1}\'); do pactl unload-module "$m"; done; '
 		+ '[ "$1" = on ] || exit 0; '
 		+ 'exec pactl load-module module-loopback source="$2" sink="$3" latency_msec=40 source_dont_move=true sink_dont_move=true sink_input_properties=media.name="$4" source_output_properties=media.name="$4"'
-	ExecUtil { id: loopbackExec }
+	// The widget's executor (main.qml), not one of this card's: switching it off still runs when
+	// the card is gone (the alert's "Show Less", the window closed).
+	ExecUtil { id: ownExec }
+	readonly property var loopbackExec: typeof root !== "undefined" && root && root.sharedExec ? root.sharedExec : ownExec
+	function loopbackArgv(on) {
+		return ['sh', '-c', loopbackScript, 'sh', on ? 'on' : 'off',
+			source ? String(source.name) : '', PreferredDevice.sink ? String(PreferredDevice.sink.name) : '', loopbackTag]
+	}
+	// One run at a time (the same command twice shared one listener): a change meanwhile runs
+	// after it, with the state then.
+	property bool loopbackBusy: false
+	property bool loopbackAgain: false
 	function updateLoopback() {
+		if (loopbackBusy) {
+			loopbackAgain = true
+			return
+		}
+		loopbackBusy = true
 		var on = hearSelf && running && !!source && !!PreferredDevice.sink
-		loopbackExec.execArgv(['sh', '-c', loopbackScript, 'sh', on ? 'on' : 'off',
-			source ? String(source.name) : '', PreferredDevice.sink ? String(PreferredDevice.sink.name) : '', loopbackTag],
-			function(cmd, exitCode, exitStatus, stdout, stderr) {
-				if (exitCode) {
-					meter.hearSelf = false
-					meter.testFailed("hear yourself", i18n("Couldn't play the microphone on the speaker (pactl)."))
-				}
-			})
+		loopbackExec.execArgv(loopbackArgv(on), function(cmd, exitCode, exitStatus, stdout, stderr) {
+			meter.loopbackBusy = false
+			if (exitCode && on) {
+				meter.hearSelf = false
+				meter.testFailed("hear yourself", i18n("Couldn't play the microphone on the speaker (pactl)."))
+			}
+			if (meter.loopbackAgain) {
+				meter.loopbackAgain = false
+				meter.updateLoopback()
+			}
+		})
 	}
 	onHearSelfChanged: updateLoopback()
 	onSourceChanged: if (hearSelf) Qt.callLater(updateLoopback)
@@ -77,8 +98,8 @@ ColumnLayout {
 	}
 	Component.onCompleted: updateLoopback() // Off: clears any left behind
 	Component.onDestruction: {
-		if (hearSelf) {
-			hearSelf = false // Unloads it (the engine finishes the command)
+		if (hearSelf || loopbackBusy) {
+			loopbackExec.execArgv(loopbackArgv(false), function() {}) // Off, after any run under way (the lock)
 		}
 	}
 
