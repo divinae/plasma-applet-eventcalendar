@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -75,7 +75,7 @@ msgstr "Domani · %1"
 msgid "New Event"
 msgstr "Nuovo evento"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Nuova attività…"
 
@@ -3107,29 +3107,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Controllo della fotocamera…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Nuovo evento…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Vai alla data…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importa eventi…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Apri Google Calendar"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Aggiorna"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Copia data e ora"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4155,6 +4135,21 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Nuovo evento…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Vai alla data…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importa eventi…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Apri Google Calendar"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Copia data e ora"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "L'autorizzazione Google è scaduta o è stata revocata. Apri Impostazioni di Event Calendar > Google Calendar e accedi di nuovo a quell'account."

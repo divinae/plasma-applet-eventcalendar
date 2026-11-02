@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -86,8 +86,7 @@ msgstr "Yarın · %1"
 msgid "New Event"
 msgstr "Yeni Etkinlik"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Yeni Görev…"
 
@@ -3471,29 +3470,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Kamera denetimi…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Yeni Etkinlik…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Tarihe git…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Etkinlikleri İçe Aktar…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Google Takvim'i Aç"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Yenile"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Tarih ve Saati Kopyala"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4530,6 +4509,21 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Yeni Etkinlik…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Tarihe git…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Etkinlikleri İçe Aktar…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Google Takvim'i Aç"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Tarih ve Saati Kopyala"
 
 #~ msgid ""
 #~ "Google authorization expired or was revoked. Open Event Calendar Settings "

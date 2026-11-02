@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr "Imorgon · %1"
 msgid "New Event"
 msgstr "Ny händelse"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Ny uppgift…"
 
@@ -3106,29 +3106,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Kamerakontroll…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Ny händelse…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Gå till datum…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importera händelser…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Öppna Google Kalender"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Uppdatera"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Kopiera datum och tid"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4154,6 +4134,21 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Ny händelse…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Gå till datum…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importera händelser…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Öppna Google Kalender"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Kopiera datum och tid"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "Googles auktorisering har gått ut eller återkallats. Öppna inställningarna för Event Calendar > Google Kalender och logga in på kontot igen."

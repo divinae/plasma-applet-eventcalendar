@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -73,7 +73,7 @@ msgstr "Amanhã · %1"
 msgid "New Event"
 msgstr "Novo evento"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Nova tarefa…"
 
@@ -3105,29 +3105,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Verificar a câmara…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Novo evento…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Ir para a data…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importar eventos…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Abrir o Calendário Google"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Atualizar"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Copiar data e hora"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4153,6 +4133,21 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Novo evento…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Ir para a data…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importar eventos…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Abrir o Calendário Google"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Copiar data e hora"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "A autorização Google expirou ou foi revogada. Abra a configuração do Event Calendar > Calendário Google e inicie sessão novamente nessa conta."

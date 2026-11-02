@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgstr "Huomenna · %1"
 msgid "New Event"
 msgstr "Uusi tapahtuma"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Uusi tehtävä…"
 
@@ -3109,29 +3109,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Kameran tarkistus…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Uusi tapahtuma…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Siirry päivään…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Tuo tapahtumia…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Avaa Google-kalenteri"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Päivitä"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Kopioi päiväys ja aika"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4157,6 +4137,21 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Uusi tapahtuma…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Siirry päivään…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Tuo tapahtumia…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Avaa Google-kalenteri"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Kopioi päiväys ja aika"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "Googlen valtuutus on vanhentunut tai peruttu. Avaa Event Calendarin asetukset > Google-kalenteri ja kirjaudu kyseiselle tilille uudelleen."

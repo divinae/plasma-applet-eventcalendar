@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -76,7 +76,7 @@ msgstr "Mañana · %1"
 msgid "New Event"
 msgstr "Nuevo evento"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Nueva tarea…"
 
@@ -3108,29 +3108,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Comprobar la cámara…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Nuevo evento…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Ir a la fecha…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importar eventos…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Abrir Google Calendar"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Refrescar"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Copiar fecha y hora"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4156,6 +4136,21 @@ msgstr "No hay más eventos hoy"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lugar de trabajo: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Nuevo evento…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Ir a la fecha…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importar eventos…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Abrir Google Calendar"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Copiar fecha y hora"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "La autorización de Google caducó o fue revocada. Abre los ajustes del Calendario de Eventos > Google Calendar y vuelve a iniciar sesión en esa cuenta."

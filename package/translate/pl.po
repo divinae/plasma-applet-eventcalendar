@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -74,7 +74,7 @@ msgstr "Jutro · %1"
 msgid "New Event"
 msgstr "Nowe wydarzenie"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Nowe zadanie…"
 
@@ -3135,29 +3135,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Sprawdzenie kamery…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Nowe wydarzenie…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Idź do daty…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importuj wydarzenia…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Otwórz Kalendarz Google"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Odśwież"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Kopiuj datę i godzinę"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4202,6 +4182,21 @@ msgstr "Dziś nie ma już wydarzeń"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Nowe wydarzenie…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Idź do daty…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importuj wydarzenia…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Otwórz Kalendarz Google"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Kopiuj datę i godzinę"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "Autoryzacja Google wygasła lub została cofnięta. Otwórz Ustawienia Event Calendar > Kalendarz Google i zaloguj się ponownie na to konto."

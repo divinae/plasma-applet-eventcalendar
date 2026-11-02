@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -86,8 +86,7 @@ msgstr "I morgen · %1"
 msgid "New Event"
 msgstr "Ny begivenhed"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "Ny opgave…"
 
@@ -3459,29 +3458,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "Kameratjek…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "Ny begivenhed…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "Gå til dato…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "Importér begivenheder…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Åbn Google Kalender"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "Genindlæs"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "Kopiér dato og tid"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4510,6 +4489,21 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "Ny begivenhed…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "Gå til dato…"
+
+#~ msgid "Import Events…"
+#~ msgstr "Importér begivenheder…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Åbn Google Kalender"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "Kopiér dato og tid"
 
 #~ msgid ""
 #~ "Google authorization expired or was revoked. Open Event Calendar Settings "

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -86,8 +86,7 @@ msgstr "내일 · %1"
 msgid "New Event"
 msgstr "새 이벤트"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml
-#: ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "새 작업…"
 
@@ -3422,29 +3421,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "카메라 확인…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "새 이벤트…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "날짜로 이동…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "일정 가져오기…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Google 캘린더 열기"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "새로고침"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "날짜 및 시간 복사"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4460,6 +4439,21 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "새 이벤트…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "날짜로 이동…"
+
+#~ msgid "Import Events…"
+#~ msgstr "일정 가져오기…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Google 캘린더 열기"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "날짜 및 시간 복사"
 
 #~ msgid ""
 #~ "Google authorization expired or was revoked. Open Event Calendar Settings "

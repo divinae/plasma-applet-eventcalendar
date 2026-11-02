@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:39+0100\n"
+"POT-Creation-Date: 2026-11-02 11:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -75,7 +75,7 @@ msgstr "明日 · %1"
 msgid "New Event"
 msgstr "新しいイベント"
 
-#: ../contents/ui/AgendaListItem.qml ../contents/ui/main.qml ../contents/ui/QuickAddView.qml
+#: ../contents/ui/AgendaListItem.qml ../contents/ui/QuickAddView.qml
 msgid "New Task…"
 msgstr "新しいタスク…"
 
@@ -3077,29 +3077,9 @@ msgstr "%1 · %2"
 msgid "Camera Check…"
 msgstr "カメラチェック…"
 
-#: ../contents/ui/main.qml
-msgid "New Event…"
-msgstr "新しいイベント…"
-
-#: ../contents/ui/main.qml
-msgid "Go to Date…"
-msgstr "日付へ移動…"
-
-#: ../contents/ui/main.qml
-msgid "Import Events…"
-msgstr "予定をインポート…"
-
-#: ../contents/ui/main.qml
-msgid "Open Google Calendar"
-msgstr "Google Calendar を開く"
-
 #: ../contents/ui/main.qml ../contents/ui/PopupHeader.qml
 msgid "Refresh"
 msgstr "更新"
-
-#: ../contents/ui/main.qml
-msgid "Copy Date and Time"
-msgstr "日付と時刻をコピー"
 
 #: ../contents/ui/main.qml
 msgid "Date and Time Formats…"
@@ -4106,6 +4086,21 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "New Event…"
+#~ msgstr "新しいイベント…"
+
+#~ msgid "Go to Date…"
+#~ msgstr "日付へ移動…"
+
+#~ msgid "Import Events…"
+#~ msgstr "予定をインポート…"
+
+#~ msgid "Open Google Calendar"
+#~ msgstr "Google Calendar を開く"
+
+#~ msgid "Copy Date and Time"
+#~ msgstr "日付と時刻をコピー"
 
 #~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
 #~ msgstr "Google の認証が期限切れになったか、取り消されました。イベントカレンダーの設定 > Google Calendar を開き、そのアカウントに再度サインインしてください。"

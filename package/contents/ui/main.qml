@@ -149,24 +149,6 @@ PlasmoidItem {
 		source: "../fonts/weathericons-regular-webfont.ttf"
 	}
 
-	function formatClipboardText() {
-		return Shared.formatDateTime(timeModel.currentTime, Qt.locale().dateTimeFormat(Locale.LongFormat))
-	}
-
-	function copyCurrentDateTime() {
-		clipboardHelper.copyText(formatClipboardText())
-	}
-
-	TextEdit {
-		id: clipboardHelper
-		visible: false
-		function copyText(text) {
-			clipboardHelper.text = text
-			clipboardHelper.selectAll()
-			clipboardHelper.copy()
-		}
-	}
-
 	toolTipItem: Loader {
 		id: tooltipLoader
 
@@ -320,22 +302,13 @@ PlasmoidItem {
 
 	// Right-click menu: the next meeting and event actions first, then the widget's data, then
 	// the system settings for date and time (Plasma adds Configure / Remove after these).
-	function openPopupAndNewEvent() {
-		root.expanded = true
-		Qt.callLater(function() {
-			if (root.fullRepresentationItem && typeof root.fullRepresentationItem.newEvent === 'function') {
-				root.fullRepresentationItem.newEvent(timeModel.currentTime)
-			}
-		})
-	}
-	readonly property bool hasGoogleAccounts: logic.parseGoogleAccounts().length > 0
 
 	// Import a .ics file: pick it, then the popup shows its events in the import card.
 	// The dialog is here, not in the popup: the popup may close while the dialog is open.
 	function chooseImportFile() {
 		importFileDialog.open()
 	}
-	// Settings > ICalendar > "Import Events from a File…": the same import card, for that file.
+	// Settings > Calendars > General > "Import Events from a File…": the same import card, for that file.
 	Connections {
 		target: plasmoid.configuration
 		function onImportRequestChanged() {
@@ -368,7 +341,6 @@ PlasmoidItem {
 	// what to do with it), then planning, then the clock's own actions. Plasma adds Configure.
 	readonly property var menuEvent: upcomingEvents.nextEvent
 	readonly property var menuMeetingLink: upcomingEvents.nextEventMeetingLink
-	readonly property bool menuHasTaskLists: !!eventModel && eventModel.getSelectedTaskLists().length > 0
 	function openPopupAndCall(fn) {
 		root.expanded = true
 		Qt.callLater(function() {
@@ -438,46 +410,9 @@ PlasmoidItem {
 			visible: !!root.menuEvent
 		},
 		PlasmaCore.Action {
-			text: i18n("New Event…")
-			icon.name: "list-add"
-			onTriggered: root.openPopupAndNewEvent()
-		},
-		PlasmaCore.Action {
-			text: i18n("New Task…")
-			icon.name: "view-task-add"
-			visible: root.menuHasTaskLists
-			onTriggered: root.openPopupAndCall(function(popupItem) { popupItem.newTask(timeModel.currentTime, "") })
-		},
-		PlasmaCore.Action {
-			text: i18n("Go to Date…")
-			icon.name: "go-jump"
-			onTriggered: root.openPopupAndCall(function(popupItem) { popupItem.openGoToDate() })
-		},
-		PlasmaCore.Action {
-			text: i18n("Import Events…")
-			icon.name: "document-import"
-			visible: root.hasGoogleAccounts
-			onTriggered: root.chooseImportFile()
-		},
-		PlasmaCore.Action {
-			text: i18n("Open Google Calendar")
-			icon.name: "globe"
-			visible: root.hasGoogleAccounts
-			onTriggered: Qt.openUrlExternally("https://calendar.google.com/")
-		},
-		PlasmaCore.Action {
-			isSeparator: true
-		},
-		PlasmaCore.Action {
 			text: i18n("Refresh")
 			icon.name: "view-refresh"
 			onTriggered: logic.reload()
-		},
-		PlasmaCore.Action {
-			id: clipboardAction
-			text: i18n("Copy Date and Time")
-			icon.name: "edit-copy"
-			onTriggered: copyCurrentDateTime()
 		},
 		PlasmaCore.Action {
 			isSeparator: true
