@@ -3,6 +3,8 @@ import QtQuick
 ListModel {
 	id: listModel
 	property alias configKey: base64Json.configKey
+	// The settings page's bridge (applied with OK): a ListModel has no parent for Base64Json to find it.
+	property alias configBridge: base64Json.configBridge
 
 	property int oldCount: count
 	property QtObject base64Json: Base64Json {

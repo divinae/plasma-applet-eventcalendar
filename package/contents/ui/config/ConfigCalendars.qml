@@ -6,7 +6,7 @@ import org.kde.kirigami as Kirigami
 import "../lib"
 
 // Calendars: where the events come from, in tabs. General (Plasma's calendar plugins, the refresh
-// interval, importing an .ics file), Google Calendar and CalDAV accounts. A tab is loaded the first
+// interval, importing an .ics file), Google Calendar and CalDAV accounts, .ics files and links. A tab is loaded the first
 // time it's shown and kept: its changes are applied with the page.
 ConfigPage {
 	id: page
@@ -16,6 +16,7 @@ ConfigPage {
 		{ title: i18n("General"), iconName: "office-calendar", source: "CalendarsGeneral.qml" },
 		{ title: i18n("Google Calendar"), iconSource: Qt.resolvedUrl("../../icons/google_calendar_96px.png"), source: "CalendarsGoogle.qml" },
 		{ title: i18n("CalDAV"), iconName: "folder-cloud", source: "CalendarsCalDAV.qml" },
+		{ title: i18n("iCalendar"), iconName: "text-calendar", source: "CalendarsICal.qml" },
 	]
 
 	header: QQC2.TabBar {
@@ -51,5 +52,6 @@ ConfigPage {
 		TabSection { tabIndex: 0 }
 		TabSection { tabIndex: 1 }
 		TabSection { tabIndex: 2 }
+		TabSection { tabIndex: 3 }
 	}
 }
