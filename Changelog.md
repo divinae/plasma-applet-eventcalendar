@@ -1,3 +1,11 @@
+## v1.14.0 - November 2 2026
+
+### Settings
+* **Calendars:** one page with tabs. General (Plasma calendars such as holidays and KDE PIM, how often events are refreshed, importing an .ics file), Google Calendar and CalDAV. The Events page keeps clicking an event, reminders, notifications and meetings.
+
+### Fixes
+* Calendar menu: a CalDAV calendar just deselected stays under its account's name, and CalDAV calendar names are no longer shortened (a name starting with the account's was cut).
+
 ## v1.13.0 - November 2 2026
 
 ### CalDAV (#14)

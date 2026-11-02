@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.13.0
+    1.14.0
 
 **License**
 
@@ -130,6 +130,13 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
+**Changelog (1.14.0)**
+
+```
+- Settings: Calendars in one page with tabs (General, Google Calendar, CalDAV); import from a file is under Calendars > General
+- Calendar menu: CalDAV calendar names shown in full, under their account
+```
+
 **Changelog (1.13.0)**
 
 ```
@@ -159,8 +166,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.13.0.plasmoid` from the
-  [v1.13.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.13.0),
+- **Product file:** `eventcalendar-ng-v1.14.0.plasmoid` from the
+  [v1.14.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.14.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
