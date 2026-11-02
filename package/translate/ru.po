@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -39,13 +39,9 @@ msgstr "События"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Календари"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -181,6 +177,7 @@ msgid "Could not get the free / busy times"
 msgstr "Не удалось получить сведения о занятости"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -500,7 +497,7 @@ msgid "Import Events"
 msgstr "Импорт событий"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -614,6 +611,7 @@ msgid "Reload calendars and task lists"
 msgstr "Перезагрузить календари и списки задач"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Удалить"
@@ -838,6 +836,49 @@ msgstr "Параметры"
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "Скрыть описание \"Это событие было добавлено из целей Google календаря\""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Показывать этот календарь"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Ярлык календаря"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "URL https:// или локальный файл %1/*.ics"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Обзор"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Добавить календарь"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Ссылка .ics или файл"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Новый календарь"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "Файл в %1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+"Файлы и ссылки .ics показываются здесь как календари, только для чтения, в "
+"том числе без сети. Локальные файлы читаются из %1. Чтобы вместо этого "
+"добавить события в один из ваших календарей, импортируйте файл в календарь "
+"Google или CalDAV (Календари > Общие)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1284,26 +1325,6 @@ msgid ""
 msgstr ""
 "Всплывающие окна и звуки для каждого типа уведомлений также можно настроить "
 "в разделе «Параметры системы» > «Уведомления» > «Event Calendar»."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Добавить календарь"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Новый календарь"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Ярлык календаря"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "URL https:// или локальный файл %1/*.ics"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Обзор"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3211,14 +3232,24 @@ msgid "No day found in the text"
 msgstr "В тексте не найден день"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Не удалось установить модули. Установите python3-icalendar (python-icalendar "
+"в Arch) менеджером пакетов."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Не удалось установить модули: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Не удалось прочитать файл."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"Для чтения файлов .ics нужен модуль Python icalendar (python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "Для чтения файлов .ics нужен модуль Python icalendar."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3311,6 +3342,20 @@ msgstr "Файл не выбран"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Выбрать файл…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Установка…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Установить"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Загружает icalendar и recurring-ical-events в собственную папку виджета."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4638,6 +4683,14 @@ msgstr "Сегодня событий больше нет"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Место работы: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ "Для чтения файлов .ics нужен модуль Python icalendar (python-icalendar)."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

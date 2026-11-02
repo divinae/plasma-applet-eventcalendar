@@ -27,6 +27,30 @@ Item {
 	property int skippedCount: 0 // Cancelled events in the file
 	property bool loading: false
 	property string loadError: ""
+	// The Python modules for .ics files are missing: the card offers to install them
+	// (scripts/install_python_deps.py, into the widget's own folder, no root).
+	property bool modulesMissing: false
+	property bool installingModules: false
+	function installModules() {
+		installingModules = true
+		loadError = ""
+		executable.execArgv(['python3', ScriptPath.scriptPath("install_python_deps.py")], function(cmd, exitCode, exitStatus, stdout, stderr) {
+			importView.installingModules = false
+			var result = {}
+			try {
+				var lines = String(stdout || "").trim().split('\n')
+				result = JSON.parse(lines[lines.length - 1])
+			} catch (e) {
+			}
+			if (result.ok) {
+				importView.readFile() // Read again, with the modules
+				return
+			}
+			importView.loadError = result.noInstaller
+				? i18n("Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager.")
+				: i18n("Couldn't install the modules: %1", String(result.error || stderr || "").slice(0, 200))
+		})
+	}
 	property bool importing: false
 	property bool finished: false
 	property int importedCount: 0
@@ -56,6 +80,7 @@ Item {
 		rowStatus = []
 		skippedCount = 0
 		loadError = ""
+		modulesMissing = false
 		finished = false
 		importedCount = 0
 		failedCount = 0
@@ -76,6 +101,7 @@ Item {
 			}
 			importView.loading = false
 			if (exitCode) {
+				importView.modulesMissing = /No module named '?(icalendar|recurring_ical_events)/.test(String(stderr || stdout))
 				importView.loadError = importView.processError(stderr || stdout)
 				return
 			}
@@ -98,7 +124,7 @@ Item {
 	function processError(output) {
 		var text = String(output || "")
 		if (/No module named '?icalendar/.test(text)) {
-			return i18n("Reading .ics files needs the Python icalendar module (python-icalendar).")
+			return i18n("Reading .ics files needs the Python icalendar module.")
 		}
 		var lines = text.split('\n').map(function(l) { return l.trim() }).filter(function(l) { return l })
 		var last = lines.length ? lines[lines.length - 1].replace(/^\w+(Error|Exception): /, '') : ""
@@ -278,8 +304,28 @@ Item {
 				}
 			}
 
+			// The modules missing: install them here (no package manager, no root).
+			RowLayout {
+				visible: importView.modulesMissing
+				Layout.fillWidth: true
+				spacing: Kirigami.Units.smallSpacing
+				PlasmaComponents3.Button {
+					icon.name: "download"
+					text: importView.installingModules ? i18n("Installing…") : i18n("Install")
+					enabled: !importView.installingModules
+					onClicked: importView.installModules()
+				}
+				PlasmaComponents3.Label {
+					Layout.fillWidth: true
+					wrapMode: Text.Wrap
+					text: i18n("Downloads icalendar and recurring-ical-events into the widget's own folder.")
+					font: Kirigami.Theme.smallFont
+					opacity: 0.7
+				}
+			}
+
 			PlasmaComponents3.Label {
-				visible: importView.loading || !!importView.loadError || (!importView.loading && !!importView.fileUrl && importView.items.length === 0)
+				visible: !importView.installingModules && (importView.loading || !!importView.loadError || (!importView.loading && !!importView.fileUrl && importView.items.length === 0))
 				Layout.fillWidth: true
 				wrapMode: Text.Wrap
 				color: importView.loadError ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.textColor

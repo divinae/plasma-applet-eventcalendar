@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -29,13 +29,9 @@ msgstr "Orologio"
 msgid "Events"
 msgstr "Eventi"
 
-#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Calendari"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
@@ -149,7 +145,7 @@ msgstr "Autenticazione Google non riuscita: %1"
 msgid "Could not get the free / busy times"
 msgstr "Impossibile ottenere gli orari libero / occupato"
 
-#: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/ICalManager.qml ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -413,7 +409,7 @@ msgstr "Copia gli eventi di un file .ics (esportato da un'altra app di calendari
 msgid "Import Events"
 msgstr "Importa eventi"
 
-#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -504,7 +500,7 @@ msgstr "Accedi di nuovo"
 msgid "Reload calendars and task lists"
 msgstr "Ricarica calendari ed elenchi di attività"
 
-#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Rimuovi"
 
@@ -659,6 +655,42 @@ msgstr "Opzioni"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "Nascondi la descrizione «Questo evento è stato aggiunto da Obiettivi in Google Calendar»"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Mostra questo calendario"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Etichetta del calendario"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "URL https:// o file locale %1/*.ics"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Naviga"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Aggiungi calendario"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Un link .ics o un file"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Nuovo calendario"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "Un file in %1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ".ics files and links show here as calendars, read-only, offline too. Local files are read from %1. To add events to one of your calendars instead, import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr "I file e i link .ics compaiono qui come calendari, in sola lettura, anche offline. I file locali sono letti da %1. Per aggiungere invece gli eventi a uno dei tuoi calendari, importa il file in un calendario Google o CalDAV (Calendari > Generale)."
 
 #: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigTasks.qml
 msgid "General"
@@ -1048,26 +1080,6 @@ msgstr "Salta gli eventi che ho rifiutato"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Finestre e suoni per ogni tipo di notifica possono essere impostati anche in Impostazioni di sistema > Notifiche > Event Calendar."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Aggiungi calendario"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Nuovo calendario"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Etichetta del calendario"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "URL https:// o file locale %1/*.ics"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Naviga"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -2842,12 +2854,20 @@ msgid "No day found in the text"
 msgstr "Nessun giorno trovato nel testo"
 
 #: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
+msgstr "Impossibile installare i moduli. Installa python3-icalendar (python-icalendar su Arch) con il gestore dei pacchetti."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Impossibile installare i moduli: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Impossibile leggere il file."
 
 #: ../contents/ui/ImportView.qml
-msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr "La lettura dei file .ics richiede il modulo Python icalendar (python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "La lettura dei file .ics richiede il modulo Python icalendar."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -2931,6 +2951,18 @@ msgstr "Nessun file scelto"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Scegli file…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Installazione…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Installa"
+
+#: ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Scarica icalendar e recurring-ical-events nella cartella del widget."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4199,6 +4231,12 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (.ics)"
+
+#~ msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr "La lettura dei file .ics richiede il modulo Python icalendar (python-icalendar)."
 
 #~ msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
 #~ msgstr "Prima di partecipare a una riunione con un link video: la fotocamera, livello e sensibilità del microfono, ascoltarti e l'altoparlante. Non viene registrato nulla; sono attivi solo mentre l'avviso è mostrato."

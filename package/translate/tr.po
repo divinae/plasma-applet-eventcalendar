@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -36,13 +36,9 @@ msgstr "Etkinlikler"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Takvimler"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -177,6 +173,7 @@ msgid "Could not get the free / busy times"
 msgstr "Meşgul / müsait zamanlar alınamadı"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -491,7 +488,7 @@ msgid "Import Events"
 msgstr "Etkinlikleri İçe Aktar"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -605,6 +602,7 @@ msgid "Reload calendars and task lists"
 msgstr "Takvimleri ve görev listelerini yeniden yükle"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Kaldır"
@@ -823,6 +821,49 @@ msgstr "Seçenekler"
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "\"Bu etkinlik Google Takvim'deki Hedefler'den eklendi\" açıklamasını gizle"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Bu takvimi göster"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Takvim Etiketi"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "https:// URL'si veya yerel %1/*.ics dosyası"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Tara"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Takvim Ekle"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Bir .ics bağlantısı veya dosya"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Yeni Takvim"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "%1 içinde bir dosya"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+".ics dosyaları ve bağlantıları burada salt okunur takvimler olarak, "
+"çevrimdışı da gösterilir. Yerel dosyalar %1 konumundan okunur. Etkinlikleri "
+"bunun yerine takvimlerinizden birine eklemek için dosyayı bir Google veya "
+"CalDAV takvimine aktarın (Takvimler > Genel)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1266,26 +1307,6 @@ msgid ""
 msgstr ""
 "Her bildirim türü için açılır pencereler ve sesler Sistem Ayarları > "
 "Bildirimler > Event Calendar bölümünden de ayarlanabilir."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Takvim Ekle"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Yeni Takvim"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Takvim Etiketi"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "https:// URL'si veya yerel %1/*.ics dosyası"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Tara"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3180,15 +3201,24 @@ msgid "No day found in the text"
 msgstr "Metinde gün bulunamadı"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Modüller kurulamadı. python3-icalendar paketini (Arch'ta python-icalendar) "
+"paket yöneticinizle kurun."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Modüller kurulamadı: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Dosya okunamadı."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-".ics dosyalarını okumak için Python icalendar modülü (python-icalendar) "
-"gerekir."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr ".ics dosyalarını okumak için Python icalendar modülü gerekir."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3275,6 +3305,20 @@ msgstr "Dosya seçilmedi"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Dosya Seç…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Kuruluyor…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Kur"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"icalendar ve recurring-ical-events'i bileşenin kendi klasörüne indirir."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4580,6 +4624,15 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ ".ics dosyalarını okumak için Python icalendar modülü (python-icalendar) "
+#~ "gerekir."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

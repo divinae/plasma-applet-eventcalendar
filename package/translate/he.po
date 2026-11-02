@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -37,13 +37,9 @@ msgstr "אירועים"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "לוחות שנה"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -176,6 +172,7 @@ msgid "Could not get the free / busy times"
 msgstr "לא ניתן לקבל את זמני הפנוי / עסוק"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -491,7 +488,7 @@ msgid "Import Events"
 msgstr "ייבוא אירועים"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (.ics)"
 
@@ -603,6 +600,7 @@ msgid "Reload calendars and task lists"
 msgstr "טעינה מחדש של לוחות שנה ורשימות משימות"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "הסרה"
@@ -817,6 +815,48 @@ msgstr "אפשרויות"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "הסתרת התיאור \"אירוע זה נוסף מהמטרות שב־Google Calendar\""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "הצגת לוח שנה זה"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "תווית לוח שנה"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "כתובת https://‎ או קובץ %1/*.ics מקומי"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "עיון"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "הוספת לוח שנה"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "קישור .ics או קובץ"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "לוח שנה חדש"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "קובץ ב־%1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+"קבצים וקישורי .ics מוצגים כאן כלוחות שנה, לקריאה בלבד, גם ללא חיבור. קבצים "
+"מקומיים נקראים מ־%1. כדי להוסיף את האירועים ללוח שנה שלך, יש לייבא את הקובץ "
+"ללוח שנה של Google או CalDAV (לוחות שנה > כללי)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1254,26 +1294,6 @@ msgid ""
 msgstr ""
 "ניתן להגדיר חלונות קופצים וצלילים לכל סוג התראה גם בהגדרות המערכת > התראות > "
 "לוח שנה עם אירועים."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "הוספת לוח שנה"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "לוח שנה חדש"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "תווית לוח שנה"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "כתובת https://‎ או קובץ %1/*.ics מקומי"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "עיון"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3185,13 +3205,24 @@ msgid "No day found in the text"
 msgstr "לא נמצא יום בטקסט"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"לא ניתן היה להתקין את המודולים. יש להתקין את python3-icalendar (python-"
+"icalendar ב־Arch) עם מנהל החבילות."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "לא ניתן היה להתקין את המודולים: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "לא ניתן לקרוא את הקובץ."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr "קריאת קובצי ‎.ics דורשת את מודול ה־Python‏ icalendar ‏(python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "קריאת קובצי .ics דורשת את מודול Python בשם icalendar."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3290,6 +3321,19 @@ msgstr "לא נבחר קובץ"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "בחירת קובץ…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "מתקין…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "התקנה"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4628,6 +4672,14 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ "קריאת קובצי ‎.ics דורשת את מודול ה־Python‏ icalendar ‏(python-icalendar)."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

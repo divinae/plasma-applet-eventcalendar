@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,13 +30,9 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigICal.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/PopupHeader.qml
 msgid "Calendars"
-msgstr ""
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
 msgstr ""
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
@@ -152,7 +148,7 @@ msgstr ""
 msgid "Could not get the free / busy times"
 msgstr ""
 
-#: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/ICalManager.qml ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr ""
 
@@ -419,7 +415,7 @@ msgstr ""
 msgid "Import Events"
 msgstr ""
 
-#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr ""
 
@@ -512,7 +508,7 @@ msgstr ""
 msgid "Reload calendars and task lists"
 msgstr ""
 
-#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr ""
 
@@ -670,6 +666,44 @@ msgstr ""
 
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local files are read from %1. To add events to one of your calendars instead, import the file into a Google or CalDAV calendar "
+"(Calendars > General)."
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigTasks.qml
@@ -1061,26 +1095,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
-msgstr ""
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr ""
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr ""
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr ""
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr ""
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
 msgstr ""
 
 #: ../contents/ui/config/ConfigTasks.qml
@@ -2865,11 +2879,19 @@ msgid "No day found in the text"
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
+msgstr ""
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr ""
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
-msgid "Reading .ics files needs the Python icalendar module (python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
@@ -2953,6 +2975,18 @@ msgstr ""
 
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
+msgstr ""
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr ""
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr ""
+
+#: ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr ""
 
 #: ../contents/ui/ImportView.qml

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -37,13 +37,9 @@ msgstr "Dogodki"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Koledar"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "iCalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -177,6 +173,7 @@ msgid "Could not get the free / busy times"
 msgstr "Ni bilo mogoče pridobiti zasedenih / prostih terminov"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -498,7 +495,7 @@ msgid "Import Events"
 msgstr "Uvozi dogodke"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -612,6 +609,7 @@ msgid "Reload calendars and task lists"
 msgstr "Znova naloži koledarje in sezname opravil"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Odstrani"
@@ -837,6 +835,49 @@ msgstr "Možnosti"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "Skrij opis »Ta dogodek je bil dodan iz ciljev v Googlovem koledarju«"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Pokaži ta koledar"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Ime koledarja"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "URL https:// ali krajevna datoteka %1/*.ics"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Brskaj"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Dodaj koledar"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Povezava .ics ali datoteka"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Nov koledar"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "Datoteka v %1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+"Datoteke in povezave .ics so tu prikazane kot koledarji, samo za branje, "
+"tudi brez povezave. Krajevne datoteke se berejo iz %1. Če želite dogodke "
+"namesto tega dodati v enega od svojih koledarjev, uvozite datoteko v koledar "
+"Google ali CalDAV (Koledarji > Splošno)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1284,26 +1325,6 @@ msgid ""
 msgstr ""
 "Pojavna okna in zvoke za vsako vrsto obvestil lahko nastavite tudi v "
 "Sistemske nastavitve > Obvestila > Event Calendar."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Dodaj koledar"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Nov koledar"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Ime koledarja"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "URL https:// ali krajevna datoteka %1/*.ics"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Brskaj"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3222,14 +3243,24 @@ msgid "No day found in the text"
 msgstr "V besedilu ni najdenega dneva"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Modulov ni bilo mogoče namestiti. Namestite python3-icalendar (python-"
+"icalendar v Archu) z upravljalnikom paketov."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Modulov ni bilo mogoče namestiti: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Datoteke ni bilo mogoče prebrati."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"Za branje datotek .ics je potreben modul Python icalendar (python-icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "Za branje datotek .ics je potreben modul Python icalendar."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3328,6 +3359,19 @@ msgstr "Nobena datoteka ni izbrana"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Izberi datoteko…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Nameščanje …"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Namesti"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Prenese icalendar in recurring-ical-events v lastno mapo gradnika."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4675,6 +4719,15 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "iCalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ "Za branje datotek .ics je potreben modul Python icalendar (python-"
+#~ "icalendar)."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

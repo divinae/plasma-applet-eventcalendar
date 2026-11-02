@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -36,13 +36,9 @@ msgstr "Afspraken"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Agenda's"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -175,6 +171,7 @@ msgid "Could not get the free / busy times"
 msgstr "Kan de beschikbaarheid niet ophalen"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -496,7 +493,7 @@ msgid "Import Events"
 msgstr "Afspraken importeren"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -612,6 +609,7 @@ msgid "Reload calendars and task lists"
 msgstr "Agenda's en takenlijsten herladen"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Verwijderen"
@@ -832,6 +830,49 @@ msgstr "Opties"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "‘Deze afspraak is toegevoegd door doelen in Google Agenda’ verbergen"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Deze agenda tonen"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Agendalabel"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "https://-url of lokaal %1/*.ics-bestand"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Bladeren"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Agenda toevoegen"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Een .ics-link of een bestand"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Nieuwe agenda"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "Een bestand in %1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+".ics-bestanden en -links verschijnen hier als agenda's, alleen-lezen, ook "
+"offline. Lokale bestanden worden gelezen uit %1. Om de afspraken in plaats "
+"daarvan aan een van je agenda's toe te voegen, importeer je het bestand in "
+"een Google- of CalDAV-agenda (Agenda's > Algemeen)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1279,26 +1320,6 @@ msgid ""
 msgstr ""
 "Pop-ups en geluiden per soort melding kunnen ook worden ingesteld in "
 "Systeeminstellingen > Meldingen > Event Calendar."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Agenda toevoegen"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Nieuwe agenda"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Agendalabel"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "https://-url of lokaal %1/*.ics-bestand"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Bladeren"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3205,15 +3226,24 @@ msgid "No day found in the text"
 msgstr "Geen dag gevonden in de tekst"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"De modules konden niet worden geïnstalleerd. Installeer python3-icalendar "
+"(python-icalendar op Arch) met je pakketbeheerder."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "De modules konden niet worden geïnstalleerd: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Kan het bestand niet lezen."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"Voor het lezen van .ics-bestanden is de Python-module icalendar (python-"
-"icalendar) nodig."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "Voor het lezen van .ics-bestanden is de Python-module icalendar nodig."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3300,6 +3330,20 @@ msgstr "Geen bestand gekozen"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Bestand kiezen…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Installeren…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Installeren"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Downloadt icalendar en recurring-ical-events naar de eigen map van de widget."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4607,6 +4651,15 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ "Voor het lezen van .ics-bestanden is de Python-module icalendar (python-"
+#~ "icalendar) nodig."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

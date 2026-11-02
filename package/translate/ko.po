@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -36,13 +36,9 @@ msgstr "행사"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "달력"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "iCalendar (.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -176,6 +172,7 @@ msgid "Could not get the free / busy times"
 msgstr "바쁨 / 한가함 시간을 가져올 수 없습니다"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -484,7 +481,7 @@ msgid "Import Events"
 msgstr "일정 가져오기"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -597,6 +594,7 @@ msgid "Reload calendars and task lists"
 msgstr "달력 및 작업 목록 다시 불러오기"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "삭제"
@@ -806,6 +804,48 @@ msgstr "옵션"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "\"Google 캘린더의 목표에서 추가됨\" 설명 숨기기"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "이 달력 표시"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "달력 이름"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "https:// URL 또는 로컬 %1/*.ics 파일"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "찾기"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "달력 추가"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr ".ics 링크 또는 파일"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "새 달력"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "%1의 파일"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+".ics 파일과 링크는 여기에 읽기 전용 달력으로 표시되며 오프라인에서도 작동합니"
+"다. 로컬 파일은 %1에서 읽습니다. 대신 내 달력에 일정을 추가하려면 파일을 "
+"Google 또는 CalDAV 달력으로 가져오십시오(달력 > 일반)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1245,26 +1285,6 @@ msgid ""
 msgstr ""
 "알림 종류별 팝업과 소리는 시스템 설정 > 알림 > 이벤트 달력에서도 설정할 수 있"
 "습니다."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "달력 추가"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "새 달력"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "달력 이름"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "https:// URL 또는 로컬 %1/*.ics 파일"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "찾기"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3142,14 +3162,24 @@ msgid "No day found in the text"
 msgstr "텍스트에서 날짜를 찾을 수 없습니다"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"모듈을 설치할 수 없습니다. 패키지 관리자로 python3-icalendar(Arch에서는 "
+"python-icalendar)를 설치하십시오."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "모듈을 설치할 수 없음: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "파일을 읽을 수 없습니다."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-".ics 파일을 읽으려면 Python icalendar 모듈(python-icalendar)이 필요합니다."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr ".ics 파일을 읽으려면 Python icalendar 모듈이 필요합니다."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3230,6 +3260,19 @@ msgstr "선택한 파일 없음"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "파일 선택…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "설치 중…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "설치"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4509,6 +4552,14 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "iCalendar (.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ ".ics 파일을 읽으려면 Python icalendar 모듈(python-icalendar)이 필요합니다."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "

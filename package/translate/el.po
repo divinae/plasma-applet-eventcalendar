@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:09+0100\n"
+"POT-Creation-Date: 2026-11-02 13:31+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -36,13 +36,9 @@ msgstr "Συμβάντα"
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
 #: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/CalendarsGoogle.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Ημερολόγια"
-
-#: ../contents/config/config.qml
-msgid "ICalendar (.ics)"
-msgstr "ICalendar (*.ics)"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -177,6 +173,7 @@ msgid "Could not get the free / busy times"
 msgstr "Δεν ήταν δυνατή η λήψη των ελεύθερων / απασχολημένων ωρών"
 
 #: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
 
@@ -499,7 +496,7 @@ msgid "Import Events"
 msgstr "Εισαγωγή συμβάντων"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
@@ -616,6 +613,7 @@ msgid "Reload calendars and task lists"
 msgstr "Επαναφόρτωση ημερολογίων και λιστών εργασιών"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/CalendarsICal.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -841,6 +839,49 @@ msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "Απόκρυψη της περιγραφής «Αυτό το συμβάν προστέθηκε από τους Στόχους στο "
 "Ημερολόγιο Google»"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Show this calendar"
+msgstr "Εμφάνιση αυτού του ημερολογίου"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Calendar Label"
+msgstr "Ετικέτα Ημερολογίου"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "https:// URL or local %1/*.ics file"
+msgstr "URL https:// ή τοπικό αρχείο %1/*.ics"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Browse"
+msgstr "Πλοήγηση"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "Add Calendar"
+msgstr "Προσθήκη Ημερολογίου"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "An .ics link or a file"
+msgstr "Ένας σύνδεσμος .ics ή ένα αρχείο"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "New Calendar"
+msgstr "Νέο Ημερολόγιο"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid "A file in %1"
+msgstr "Ένα αρχείο στο %1"
+
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+".ics files and links show here as calendars, read-only, offline too. Local "
+"files are read from %1. To add events to one of your calendars instead, "
+"import the file into a Google or CalDAV calendar (Calendars > General)."
+msgstr ""
+"Τα αρχεία και οι σύνδεσμοι .ics εμφανίζονται εδώ ως ημερολόγια, μόνο για "
+"ανάγνωση, και εκτός σύνδεσης. Τα τοπικά αρχεία διαβάζονται από το %1. Για να "
+"προσθέσετε αντί γι' αυτό συμβάντα σε ένα από τα ημερολόγιά σας, εισαγάγετε "
+"το αρχείο σε ημερολόγιο Google ή CalDAV (Ημερολόγια > Γενικά)."
 
 #: ../contents/ui/config/ConfigCalendars.qml
 #: ../contents/ui/config/ConfigTasks.qml
@@ -1290,26 +1331,6 @@ msgid ""
 msgstr ""
 "Τα αναδυόμενα και οι ήχοι για κάθε είδος ειδοποίησης ρυθμίζονται επίσης στις "
 "Ρυθμίσεις συστήματος > Ειδοποιήσεις > Event Calendar."
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Add Calendar"
-msgstr "Προσθήκη Ημερολογίου"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "New Calendar"
-msgstr "Νέο Ημερολόγιο"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Calendar Label"
-msgstr "Ετικέτα Ημερολογίου"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "https:// URL or local %1/*.ics file"
-msgstr "URL https:// ή τοπικό αρχείο %1/*.ics"
-
-#: ../contents/ui/config/ConfigICal.qml
-msgid "Browse"
-msgstr "Πλοήγηση"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -3224,15 +3245,24 @@ msgid "No day found in the text"
 msgstr "Δεν βρέθηκε ημέρα στο κείμενο"
 
 #: ../contents/ui/ImportView.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων. Εγκαταστήστε το python3-"
+"icalendar (python-icalendar στο Arch) με τη διαχείριση πακέτων σας."
+
+#: ../contents/ui/ImportView.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων: %1"
+
+#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Αδυναμία ανάγνωσης του αρχείου."
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Reading .ics files needs the Python icalendar module (python-icalendar)."
-msgstr ""
-"Η ανάγνωση αρχείων .ics απαιτεί το άρθρωμα Python icalendar (python-"
-"icalendar)."
+msgid "Reading .ics files needs the Python icalendar module."
+msgstr "Η ανάγνωση αρχείων .ics χρειάζεται το άρθρωμα Python icalendar."
 
 #: ../contents/ui/ImportView.qml
 msgid "Could not read the file: %1"
@@ -3319,6 +3349,21 @@ msgstr "Δεν επιλέχθηκε αρχείο"
 #: ../contents/ui/ImportView.qml
 msgid "Choose File…"
 msgstr "Επιλογή αρχείου…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Εγκατάσταση…"
+
+#: ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Εγκατάσταση"
+
+#: ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
+"στοιχείου."
 
 #: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
@@ -4631,6 +4676,15 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "ICalendar (.ics)"
+#~ msgstr "ICalendar (*.ics)"
+
+#~ msgid ""
+#~ "Reading .ics files needs the Python icalendar module (python-icalendar)."
+#~ msgstr ""
+#~ "Η ανάγνωση αρχείων .ics απαιτεί το άρθρωμα Python icalendar (python-"
+#~ "icalendar)."
 
 #~ msgid ""
 #~ "Before you join a meeting with a video link: your camera, the "
