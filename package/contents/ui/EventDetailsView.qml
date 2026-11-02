@@ -402,7 +402,7 @@ Rectangle {
 					}
 					PlasmaComponents3.ToolButton {
 						visible: root.cameraCheckAvailable
-						icon.name: "camera-web"
+						icon.name: "camera-web-symbolic"
 						text: i18n("Check Camera")
 						onClicked: popup.openCameraCheck(details.meetingLink)
 					}

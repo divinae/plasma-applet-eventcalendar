@@ -386,7 +386,7 @@ PlasmoidItem {
 		},
 		PlasmaCore.Action {
 			text: i18n("Camera Check…")
-			icon.name: "camera-web"
+			icon.name: "camera-web-symbolic"
 			visible: root.cameraCheckAvailable
 			onTriggered: {
 				var link = root.menuMeetingLink

@@ -298,7 +298,7 @@ PlasmaComponents3.Menu {
 		visible: !!eventMenu.meetingLink && root.cameraCheckAvailable
 		height: visible ? implicitHeight : 0
 		text: i18n("Check Camera")
-		icon.name: "camera-web"
+		icon.name: "camera-web-symbolic"
 		onTriggered: eventMenu.cameraCheck(eventMenu.meetingLink)
 	}
 	// The event as text (title, day and time, place, link), like Dato's Copy.

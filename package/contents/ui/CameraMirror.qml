@@ -81,7 +81,7 @@ ColumnLayout {
 				Layout.alignment: Qt.AlignHCenter
 				implicitWidth: Kirigami.Units.iconSizes.large
 				implicitHeight: implicitWidth
-				source: mirror.cameraState === 'starting' ? "camera-web" : "camera-off"
+				source: mirror.cameraState === 'starting' ? "camera-web-symbolic" : "camera-off"
 				color: "white"
 				isMask: true
 				opacity: 0.8
@@ -112,7 +112,7 @@ ColumnLayout {
 		Kirigami.Icon {
 			implicitWidth: Kirigami.Units.iconSizes.small
 			implicitHeight: implicitWidth
-			source: "camera-web"
+			source: "camera-web-symbolic"
 		}
 		PlasmaComponents3.ComboBox {
 			Layout.fillWidth: true
