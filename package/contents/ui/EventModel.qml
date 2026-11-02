@@ -1283,7 +1283,8 @@ CalendarManager {
 				}
 				listed[calendar.id] = true
 				if (calendar.inCalendarMenu !== false) { // false: its events are in another entry
-					out.push(selectedCalendarEntry(calendar.id, calendar, group))
+					// A manager of several accounts (CalDAV) names the account on each calendar.
+					out.push(selectedCalendarEntry(calendar.id, calendar, String(calendar.accountLabel || group)))
 				}
 			}
 		}
