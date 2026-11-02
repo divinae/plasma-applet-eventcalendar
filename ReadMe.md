@@ -161,7 +161,7 @@ dependencies below on Debian/Ubuntu, Arch and Fedora.
 - KNotifications QML module (`org.kde.notification`; Debian/Ubuntu:
   `qml6-module-org-kde-notification`, Arch: `knotifications`, Fedora: `kf6-knotifications`)
 - Kirigami Addons (settings pages)
-- `secret-tool` (libsecret) or KWallet, for storing Google tokens in the keyring
+- `secret-tool` (libsecret) or KWallet, for storing Google and TickTick tokens and CalDAV passwords in the keyring
 
 Optional:
 

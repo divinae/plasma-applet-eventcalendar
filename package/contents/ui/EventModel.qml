@@ -1014,7 +1014,7 @@ CalendarManager {
 				if (!selected) {
 					continue
 				}
-				var entry = withListIcon(selectedCalendarEntry(calendar.id, calendar, label))
+				var entry = withListIcon(selectedCalendarEntry(calendar.id, calendar, calendarManager))
 				entry.group = group
 				out.push(entry)
 			}
@@ -1274,7 +1274,6 @@ CalendarManager {
 		var listed = {}
 		for (var i = 0; i < calendarManagerList.length; i++) {
 			var calendarManager = calendarManagerList[i]
-			var group = String(calendarManager.accountLabel || "")
 			var list = calendarManager.getCalendarList()
 			for (var j = 0; j < list.length; j++) {
 				var calendar = list[j]
@@ -1283,8 +1282,7 @@ CalendarManager {
 				}
 				listed[calendar.id] = true
 				if (calendar.inCalendarMenu !== false) { // false: its events are in another entry
-					// A manager of several accounts (CalDAV) names the account on each calendar.
-					out.push(selectedCalendarEntry(calendar.id, calendar, String(calendar.accountLabel || group)))
+					out.push(selectedCalendarEntry(calendar.id, calendar, calendarManager))
 				}
 			}
 		}
@@ -1296,7 +1294,7 @@ CalendarManager {
 			}
 			var manager = eventModel.calendarPluginMap[calendarId]
 			var data = manager && typeof manager.getCalendar === 'function' ? manager.getCalendar(calendarId) : null
-			var entry = selectedCalendarEntry(calendarId, data || {}, String(manager && manager.accountLabel || ""))
+			var entry = selectedCalendarEntry(calendarId, data || caldavCalendarStub(calendarId), manager)
 			var at = out.length
 			for (var k = out.length - 1; entry.group && k >= 0; k--) {
 				if (out[k].group === entry.group) {
@@ -1308,9 +1306,23 @@ CalendarManager {
 		}
 		return Shared.calendarMenuSections(out)
 	}
-	function selectedCalendarEntry(calendarId, calendar, group) {
+	// A calendar's account, the menu's group heading: the manager's (Google, TickTick), or for a
+	// manager of several accounts (CalDAV) the one named on the calendar.
+	function calendarGroup(calendar, manager) {
+		return String(calendar.accountLabel || (manager && manager.accountLabel) || "")
+	}
+	// A CalDAV calendar no longer listed (deselected; its events stay until the next fetch): its
+	// account's label from the id ("caldav-<account>::<href>").
+	function caldavCalendarStub(calendarId) {
+		var m = /^caldav-(.+?)::/.exec(String(calendarId))
+		var account = m ? (appletConfig.caldavAccounts.value || []).filter(function(a) { return a.id === m[1] })[0] : null
+		return account ? { accountLabel: String(account.label || account.username || "") } : {}
+	}
+	function selectedCalendarEntry(calendarId, calendar, manager) {
+		var group = calendarGroup(calendar, manager)
 		var name = String(calendar.summary || calendar.name || "")
-		if (group && name.indexOf(group + " - ") === 0) {
+		// Google names an account's calendars "<account> - <name>"; the account is the heading.
+		if (group && !calendar.accountLabel && name.indexOf(group + " - ") === 0) {
 			name = name.substr(group.length + 3) // The account is the group heading
 		}
 		if (!name) {

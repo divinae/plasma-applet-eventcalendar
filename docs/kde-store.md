@@ -91,12 +91,12 @@ Google Calendar
 - Rename and recolor calendars
 - An event in several calendars (yours and a shared one) shows once
 - KDE PIM (Akonadi) calendars and holidays side by side with a direct Google sign-in
+- Tokens are kept in the system keyring
 
 CalDAV
 - Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others: choose the calendars of each account
-- Create, edit, move and delete events there; import .ics files into them
+- Create, edit, move and delete events there (repeating events are shown, edited in their own app for now); import .ics files into them
 - The password is kept in the system keyring
-- Tokens are kept in the system keyring
 
 Tasks
 - Google Tasks and TickTick (or Dida365, with an API token kept in the system keyring) in their own tab: smart filters (All, Today, Tomorrow, Next 7 days, Overdue, No date, each list), grouped by date or by list, sorted by due date, title, list or priority
@@ -122,7 +122,7 @@ Starts instantly and works offline: the last loaded events and tasks are shown r
 
 Translated into 20 languages.
 
-Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google and TickTick sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files and CalDAV.
+Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google, TickTick and CalDAV sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files and CalDAV.
 
 Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
