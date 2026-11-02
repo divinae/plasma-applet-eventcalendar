@@ -123,8 +123,12 @@ MouseArea {
 	readonly property bool weekMode: viewMode === 'week'
 	readonly property bool dayMode: viewMode === 'today'
 	readonly property bool tasksMode: viewMode === 'tasks'
-	readonly property bool hourGridMode: weekMode || dayMode // Both use WeekView
-	readonly property bool fullViewMode: monthMode || hourGridMode || tasksMode
+	// Each straight from viewMode, not from the flags above: those follow one after another, and in
+	// between (the old view's flag false, the new one's not yet true) the popup took itself for the
+	// agenda, laid it out with its panels and resized the month (its days switched to dots and
+	// back): ~200 ms of each change between the month and the Week / Day views (measured).
+	readonly property bool hourGridMode: viewMode === 'week' || viewMode === 'today' // Both use WeekView
+	readonly property bool fullViewMode: viewMode === 'month' || viewMode === 'week' || viewMode === 'today' || viewMode === 'tasks'
 	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
 	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
 	// The agenda view is the agenda list only (plus optional meteogram / timer); the month view
