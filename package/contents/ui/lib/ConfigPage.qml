@@ -214,6 +214,8 @@ KCM.SimpleKCM {
 	property var cfg_meetingFullScreenAlertDefault
 	property var cfg_meetingFullScreenAlertLinkOnly
 	property var cfg_meetingFullScreenAlertLinkOnlyDefault
+	property var cfg_meetingAlertCamera
+	property var cfg_meetingAlertCameraDefault
 	property var cfg_clockNextEventLinkOnly
 	property var cfg_clockNextEventLinkOnlyDefault
 	property var cfg_clockNextEventAcceptedOnly

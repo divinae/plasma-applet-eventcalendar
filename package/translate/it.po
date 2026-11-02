@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:12+0100\n"
+"POT-Creation-Date: 2026-11-02 12:15+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -907,6 +907,14 @@ msgstr "Schermo intero solo per riunioni con link video"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Altri eventi: una notifica. Silenziati: nessuna."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Show the camera"
+msgstr "Mostra la fotocamera"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
+msgstr "Come appari prima di partecipare, per le riunioni con un link video. Non viene registrato nulla; la fotocamera è accesa solo mentre l'avviso è mostrato."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -2004,7 +2012,7 @@ msgstr "Segna come in corso"
 msgid "Show Details"
 msgstr "Mostra dettagli"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/UpcomingEvents.qml
 msgid "Check Camera"
 msgstr "Controlla la fotocamera"
 

@@ -30,6 +30,12 @@ ConfigPage {
 		})
 	}
 
+	readonly property bool multimediaAvailable: {
+		var probe = Qt.createComponent("../MultimediaProbe.qml", Component.PreferSynchronous)
+		var ok = probe.status === Component.Ready
+		probe.destroy()
+		return ok
+	}
 	Component.onCompleted: {
 		findMeetApps()
 	}
@@ -188,6 +194,16 @@ ConfigPage {
 				text: i18n("Full screen only for meetings with a video link")
 				description: i18n("Other events: a notification. Muted events: none.")
 				configKey: 'meetingFullScreenAlertLinkOnly'
+			}
+			// The camera as a mirror in the full-screen alert (needs Qt Multimedia, see
+			// MultimediaProbe.qml): off by default, the camera turning on by itself is a surprise.
+			FormCard.FormDelegateSeparator { visible: alertCamera.visible }
+			FormConfigSwitch {
+				id: alertCamera
+				visible: startingEnabled.checked && startingStyle.configValue === true && page.multimediaAvailable
+				text: i18n("Show the camera")
+				description: i18n("How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown.")
+				configKey: 'meetingAlertCamera'
 			}
 			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
 			FormConfigSwitch {

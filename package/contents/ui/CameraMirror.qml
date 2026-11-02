@@ -14,6 +14,8 @@ ColumnLayout {
 	id: mirror
 
 	property bool running: false
+	// The camera's list and the mirror switch (not in the full-screen alert).
+	property bool showControls: true
 	readonly property bool mirrored: plasmoid.configuration.cameraMirrored !== false
 	spacing: Kirigami.Units.smallSpacing
 
@@ -107,6 +109,7 @@ ColumnLayout {
 	}
 
 	RowLayout {
+		visible: mirror.showControls
 		Layout.fillWidth: true
 		spacing: Kirigami.Units.smallSpacing
 		Kirigami.Icon {

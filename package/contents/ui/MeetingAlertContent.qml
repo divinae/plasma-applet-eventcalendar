@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Window
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
@@ -105,6 +106,23 @@ Item {
 			textFormat: Text.PlainText
 			font.pointSize: Kirigami.Theme.defaultFont.pointSize * 1.6
 			opacity: 0.75
+		}
+
+		// How you look before you join (Settings > Events > When an Event Starts > Show the camera):
+		// the camera as a mirror, for a meeting with a link, on the first screen only (a camera
+		// serves one window), while the alert is shown. Loaded by URL: needs Qt Multimedia.
+		Loader {
+			readonly property bool wanted: plasmoid.configuration.meetingAlertCamera && !!content.meetingLink
+				&& root.cameraCheckAvailable && Qt.application.screens.length > 0 && Screen.name === Qt.application.screens[0].name
+			Layout.alignment: Qt.AlignHCenter
+			Layout.topMargin: Kirigami.Units.gridUnit
+			Layout.preferredWidth: Kirigami.Units.gridUnit * 22
+			active: wanted
+			source: "CameraMirror.qml"
+			onLoaded: {
+				item.showControls = false
+				item.running = Qt.binding(function() { return content.visible })
+			}
 		}
 
 		RowLayout {

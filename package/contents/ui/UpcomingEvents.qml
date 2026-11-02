@@ -134,6 +134,10 @@ CalendarManager {
 			if (meetingLink && args.event === 'eventStarting') {
 				actions.push('join,' + i18nc("%1 = Google Meet, Zoom, ...", "Join %1", meetingLink.label))
 			}
+			// Minutes before a meeting: how you look and sound (CameraCheckWindow.qml), then Join there.
+			if (meetingLink && args.event === 'reminder' && root.cameraCheckAvailable) {
+				actions.push('camera,' + i18n("Check Camera"))
+			}
 		}
 		if (args.respond) {
 			actions.push('accepted,' + i18nc("RSVP", "Yes"))
@@ -159,6 +163,8 @@ CalendarManager {
 				upcomingEvents.showInWidget(eventItem) // Clicking the notification itself
 			} else if (actionId === 'join' && meetingLink) {
 				meetingOpener.open(meetingLink.url)
+			} else if (actionId === 'camera' && meetingLink) {
+				root.openCameraCheck(meetingLink)
 			} else if (actionId === 'accepted' || actionId === 'tentative' || actionId === 'declined') {
 				// A repeating meeting: answered for the whole series, like the invitation email.
 				eventModel.respondToEvent(eventItem, actionId, !!eventItem.recurringEventId, function() {

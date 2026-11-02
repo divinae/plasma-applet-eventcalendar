@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:12+0100\n"
+"POT-Creation-Date: 2026-11-02 12:15+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1065,6 +1065,18 @@ msgstr "화상 링크가 있는 회의만 전체 화면"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "다른 일정: 알림. 음소거한 일정: 없음."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Show the camera"
+msgstr "카메라 표시"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"How you look before you join, for meetings with a video link. Nothing is "
+"recorded; the camera is on only while the alert is shown."
+msgstr ""
+"화상 링크가 있는 회의에 참여하기 전 내 모습을 보여 줍니다. 아무것도 녹화되지 "
+"않으며, 카메라는 알림이 표시되는 동안에만 켜집니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -2301,6 +2313,7 @@ msgid "Show Details"
 msgstr "자세히 보기"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgid "Check Camera"
 msgstr "카메라 확인"
 

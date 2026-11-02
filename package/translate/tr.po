@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:12+0100\n"
+"POT-Creation-Date: 2026-11-02 12:15+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1083,6 +1083,18 @@ msgstr "Tam ekran yalnızca video bağlantısı olan toplantılar için"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Diğer etkinlikler: bildirim. Sessize alınanlar: yok."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Show the camera"
+msgstr "Kamerayı göster"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"How you look before you join, for meetings with a video link. Nothing is "
+"recorded; the camera is on only while the alert is shown."
+msgstr ""
+"Görüntülü bağlantısı olan toplantılarda katılmadan önce nasıl göründüğünüz. "
+"Hiçbir şey kaydedilmez; kamera yalnızca uyarı gösterilirken açıktır."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -2326,6 +2338,7 @@ msgid "Show Details"
 msgstr "Ayrıntıları Göster"
 
 #: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+#: ../contents/ui/UpcomingEvents.qml
 msgid "Check Camera"
 msgstr "Kamerayı denetle"
 

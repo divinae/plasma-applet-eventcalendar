@@ -384,6 +384,10 @@
 			<!-- Full screen only for meetings with a video link (other events: a notification) -->
 			<default>true</default>
 		</entry>
+		<entry name="meetingAlertCamera" type="bool">
+			<!-- The full-screen alert shows the camera as a mirror (CameraMirror.qml), on the first screen. -->
+			<default>false</default>
+		</entry>
 		<entry name="hideDuplicateEvents" type="bool">
 			<!-- The same event in two calendars (same iCalUID and start) shown once -->
 			<default>true</default>
