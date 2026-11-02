@@ -11,7 +11,7 @@ import "../Shared.js" as Shared
 import "../code/GooglePalette.js" as GooglePalette
 import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
-ConfigPage {
+ConfigSection {
 	id: page
 
 	function markDirty() {

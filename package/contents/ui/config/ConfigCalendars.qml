@@ -1,105 +1,55 @@
 import QtQuick
 import QtQuick.Controls as QQC2
-import QtQuick.Dialogs
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import org.kde.kirigamiaddons.formcard as FormCard
 
 import "../lib"
-import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
-// Where the events come from: Plasma's calendar plugins (holidays, KDE PIM), how often they're
-// fetched, and importing an .ics file. Google and CalDAV accounts have their own pages.
+// Calendars: where the events come from, in tabs. General (Plasma's calendar plugins, the refresh
+// interval, importing an .ics file), Google Calendar and CalDAV accounts. A tab is loaded the first
+// time it's shown and kept: its changes are applied with the page.
 ConfigPage {
 	id: page
-	property var eventPluginsManager: null
 
-	// From digitalclock's configCalendar.qml
-	signal configurationChanged()
-	function saveConfig() {
-		if (!eventPluginsManager) {
-			return
+	property int currentTab: 0
+	readonly property var tabs: [
+		{ title: i18n("General"), iconName: "office-calendar", source: "CalendarsGeneral.qml" },
+		{ title: i18n("Google Calendar"), iconSource: Qt.resolvedUrl("../../icons/google_calendar_96px.png"), source: "CalendarsGoogle.qml" },
+		{ title: i18n("CalDAV"), iconName: "folder-cloud", source: "CalendarsCalDAV.qml" },
+	]
+
+	header: QQC2.TabBar {
+		id: tabBar
+		currentIndex: page.currentTab
+		onCurrentIndexChanged: page.currentTab = currentIndex
+		Repeater {
+			model: page.tabs
+			QQC2.TabButton {
+				text: modelData.title
+				icon.name: modelData.iconName || ""
+				icon.source: modelData.iconSource || ""
+			}
 		}
-		var enabledPluginFilenames = PlasmaCalendarUtils.pluginPathToFilenameList(eventPluginsManager.enabledPlugins)
-		page.configBridge.write("enabledCalendarPlugins", enabledPluginFilenames)
-		page.configBridge.write("enabledCalendarPluginsAllowEmpty", enabledPluginFilenames.length === 0)
 	}
-	Component.onCompleted: {
-		try {
-			eventPluginsManager = Qt.createQmlObject(
-				"import org.kde.plasma.workspace.calendar as PlasmaCalendar; PlasmaCalendar.EventPluginsManager {}",
-				page
-			)
-		} catch (e) {
-			console.warn("[eventcalendar] PlasmaCalendar.EventPluginsManager unavailable:", e)
-			return
+
+	component TabSection: Loader {
+		property int tabIndex: 0
+		Layout.fillWidth: true
+		visible: page.currentTab === tabIndex
+		function load() {
+			if (visible && status === Loader.Null) {
+				setSource(Qt.resolvedUrl(page.tabs[tabIndex].source), { configBridge: page.configBridge })
+			}
 		}
-		PlasmaCalendarUtils.populateEnabledPluginsByFilename(
-			eventPluginsManager,
-			page.configBridge.read("enabledCalendarPlugins", []),
-			page.configBridge.read("enabledCalendarPluginsAllowEmpty", false)
-		)
+		onVisibleChanged: load()
+		Component.onCompleted: load()
 	}
 
 	ColumnLayout {
 		Layout.fillWidth: true
 		spacing: 0
-
-		FormCard.FormHeader {
-			title: i18n("Calendars")
-		}
-		FormCard.FormCard {
-			// The events of an .ics file (exported from another calendar app) copied into one of your
-			// calendars: the widget opens its import card for it (importRequest, see main.qml), as
-			// the widget menu's "Import Events…".
-			FormCard.FormButtonDelegate {
-				icon.name: "document-import"
-				text: i18n("Import Events from a File…")
-				description: i18n("Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar.")
-				onClicked: importFileDialog.open()
-			}
-			FileDialog {
-				id: importFileDialog
-				title: i18n("Import Events")
-				nameFilters: [ i18n("iCalendar (*.ics)") ]
-				// Straight to the widget (not a setting applied with OK, no cfg_ property).
-				onAccepted: page.configBridge.write("importRequest", Date.now() + "|" + String(selectedFile))
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSpin {
-				label: i18n("Refresh every")
-				configKey: 'eventsPollInterval'
-				suffix: i18nc("Polling interval in minutes", " min")
-				from: 5
-				to: 90
-			}
-			FormCard.FormDelegateSeparator {}
-			FormCard.FormTextDelegate {
-				visible: !page.eventPluginsManager
-				text: i18n("Plasma calendar plugins are unavailable.")
-			}
-			FormCard.AbstractFormDelegate {
-				visible: !!page.eventPluginsManager
-				background: null
-				contentItem: ColumnLayout {
-					spacing: 0
-					QQC2.Label {
-						text: i18n("Plasma calendars")
-					}
-					// A Repeater needs a layout parent (it breaks form layouts' child handling).
-					Repeater {
-						model: page.eventPluginsManager ? page.eventPluginsManager.model : null
-						delegate: QQC2.CheckBox {
-							text: model.display
-							checked: model.checked
-							onClicked: {
-								model.checked = checked // needed for model's setData to be called
-								page.saveConfig()
-							}
-						}
-					}
-				}
-			}
-		}
+		TabSection { tabIndex: 0 }
+		TabSection { tabIndex: 1 }
+		TabSection { tabIndex: 2 }
 	}
 }

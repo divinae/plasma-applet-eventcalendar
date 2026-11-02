@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:43+0100\n"
+"POT-Creation-Date: 2026-11-02 09:49+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,8 +28,8 @@ msgid "Clock"
 msgstr "Saat"
 
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Takvimler"
@@ -43,14 +43,6 @@ msgstr "Etkinlikler"
 #: ../contents/config/config.qml
 msgid "ICalendar (.ics)"
 msgstr "ICalendar (.ics)"
-
-#: ../contents/config/config.qml
-msgid "Google Calendar"
-msgstr "Google Takvim"
-
-#: ../contents/config/config.qml
-msgid "CalDAV"
-msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -125,7 +117,7 @@ msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Etkinlik bu arada başka bir yerde değiştirildi; yeniden yüklendi"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
 
@@ -198,14 +190,13 @@ msgid "Could not load %1: %2"
 msgstr "%1 yüklenemedi: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/FindTimeView.qml
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -271,7 +262,7 @@ msgid "Show All"
 msgstr "Tümünü Göster"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
 #: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
 #: ../contents/ui/TasksView.qml
@@ -330,7 +321,7 @@ msgstr "Renk"
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -339,11 +330,11 @@ msgstr ""
 "uygulama parolası gerektirir (iCloud, Fastmail, iki aşamalı oturum açmalı "
 "Nextcloud)."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Couldn't connect to the server. Check the address and your connection."
 msgstr "Sunucuya bağlanılamadı. Adresi ve bağlantınızı denetleyin."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "No CalDAV calendars at that address. Try the address your service gives for "
 "CalDAV."
@@ -351,71 +342,73 @@ msgstr ""
 "Bu adreste CalDAV takvimi yok. Hizmetinizin CalDAV için verdiği adresi "
 "deneyin."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server's answer couldn't be read"
 msgstr "Sunucunun yanıtı okunamadı"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Enter the server address (https://…), your user name and your password."
 msgstr "Sunucu adresini (https://…), kullanıcı adınızı ve parolanızı girin."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connecting…"
 msgstr "Bağlanıyor…"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The password couldn't be stored in the keyring: %1"
 msgstr "Parola anahtar zincirinde saklanamadı: %1"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected: %1 calendar"
 msgid_plural "Connected: %1 calendars"
 msgstr[0] "Bağlandı: %1 takvim"
 msgstr[1] "Bağlandı: %1 takvim"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Bağlandı, ancak hesabın etkinlikler için takvimi yok."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Salt okunur"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
 msgstr "Takvimleri Yenile"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Hesabı Kaldır"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Add a CalDAV Account"
 msgstr "CalDAV Hesabı Ekle"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Server"
 msgstr "Sunucu"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "eg: https://cloud.example.org/remote.php/dav"
 msgstr "örn.: https://cloud.example.org/remote.php/dav"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "User name"
 msgstr "Kullanıcı adı"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Password"
 msgstr "Parola"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Bağlan"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Plain http works only for a server on your own network; the password isn't "
 "encrypted on the way."
@@ -423,7 +416,7 @@ msgstr ""
 "Şifrelenmemiş http yalnızca kendi ağınızdaki bir sunucuyla çalışır; parola "
 "yolda şifrelenmez."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
 "others. The password is kept in the system keyring. Repeating events are "
@@ -433,11 +426,11 @@ msgstr ""
 "diğerleri. Parola sistem anahtar zincirinde saklanır. Yinelenen etkinlikler "
 "gösterilir, ancak şimdilik yalnızca kendi uygulamalarında değiştirilebilir."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Import Events from a File…"
 msgstr "Dosyadan Etkinlikleri İçe Aktar…"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid ""
 "Copy the events of an .ics file (exported from another calendar app) into "
 "one of your calendars. The widget shows them first, to pick the calendar."
@@ -446,32 +439,357 @@ msgstr ""
 "etkinlikleri takvimlerinizden birine kopyalayın. Araç takımı, takvimi "
 "seçebilmeniz için önce onları gösterir."
 
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/ImportView.qml
 #: ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Etkinlikleri İçe Aktar"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Yenileme sıklığı"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgctxt "Polling interval in minutes"
 msgid " min"
 msgstr " dk"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendar plugins are unavailable."
 msgstr "Plasma takvim eklentileri kullanılamıyor."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendars"
 msgstr "Plasma takvimleri"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google Account"
+msgstr "Google Hesabı"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Account %1"
+msgstr "Google Hesabı %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login failed: %1"
+msgstr "Oturum açma başarısız: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login complete."
+msgstr "Oturum açma tamamlandı."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Could not prepare Google login: %1"
+msgstr "Google oturum açma işlemi hazırlanamadı: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for browser callback..."
+msgstr "Tarayıcı geri çağrısı bekleniyor..."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign-in timed out. Try again."
+msgstr "Oturum açma zaman aşımına uğradı. Yeniden deneyin."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed. See logs for details."
+msgstr "Otomatik oturum açma başarısız. Ayrıntılar için günlüklere bakın."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: invalid callback data."
+msgstr "Otomatik oturum açma başarısız: geçersiz geri çağrı verisi."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: %1"
+msgstr "Otomatik oturum açma başarısız: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: authorization code missing."
+msgstr "Otomatik oturum açma başarısız: yetkilendirme kodu eksik."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"The desktop could not open the browser automatically. Use the login link in "
+"Advanced sign-in options instead."
+msgstr ""
+"Masaüstü tarayıcıyı otomatik olarak açamadı. Bunun yerine Gelişmiş oturum "
+"açma seçeneklerindeki oturum açma bağlantısını kullanın."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Sign in to show your Google calendars and task lists. Your browser opens to "
+"sign in; when access is granted the widget picks it up automatically."
+msgstr ""
+"Google takvimlerinizi ve görev listelerinizi göstermek için oturum açın. "
+"Oturum açmak için tarayıcınız açılır; erişim verildiğinde araç takımı bunu "
+"otomatik olarak algılar."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
+"Sign in here as well to answer invitations, edit and delete events and join "
+"meetings from the widget. Events of an account synced both ways are shown "
+"once, from the sign-in here."
+msgstr ""
+"KDE PIM (Akonadi), %1 hesabının Google takvimlerini zaten salt okunur olarak "
+"getiriyor. Davetlere yanıt vermek, etkinlikleri düzenleyip silmek ve "
+"toplantılara araç takımından katılmak için burada da oturum açın. İki yoldan "
+"eşitlenen bir hesabın etkinlikleri, buradaki oturumdan bir kez gösterilir."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
+"sign-in here, where they can be answered and edited."
+msgstr ""
+"KDE PIM (Akonadi) tarafından da eşitleniyor: %1. Etkinlikleri, yanıtlanıp "
+"düzenlenebildikleri buradaki oturumdan bir kez gösterilir."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign In Again"
+msgstr "Yeniden Oturum Aç"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Reload calendars and task lists"
+msgstr "Takvimleri ve görev listelerini yeniden yükle"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove"
+msgstr "Kaldır"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Google access for this account expired or was revoked. Sign in again to "
+"reconnect it (the account and its settings are kept)."
+msgstr ""
+"Bu hesabın Google erişiminin süresi doldu veya erişim iptal edildi. Yeniden "
+"bağlamak için tekrar oturum açın (hesap ve ayarları korunur)."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The widget was updated. Sign in again to keep this account in sync."
+msgstr ""
+"Araç takımı güncellendi. Bu hesabı eşzamanlı tutmak için yeniden oturum açın."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "No calendars loaded yet. Use the reload button."
+msgstr "Henüz takvim yüklenmedi. Yeniden yükle düğmesini kullanın."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Görev listeleri Görevler sayfasında seçilir."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"PIM etkinlikleri eklentisinde seçili bir takvim artık Akonadi'de yok; "
+"örneğin hesabı yeniden kurulduğu için takvimleri yeni kimlikler aldı."
+msgstr[1] ""
+"PIM etkinlikleri eklentisinde seçili %1 takvim artık Akonadi'de yok; örneğin "
+"hesapları yeniden kurulduğu için takvimleri yeni kimlikler aldı."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+"Şu anda seçili değil: %1. Bunları Sayısal Saat ayarlarının PIM Events Plugin "
+"sayfasında seçin."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Akonadi'nin şu anki tüm takvimleri seçili."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Forget the Missing Ones"
+msgstr "Eksik olanları unut"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
+msgstr ""
+"Salt okunur gösterilir. Hangi Akonadi takvimlerinin gösterileceği, Sayısal "
+"Saat ayarlarındaki PIM etkinlikleri eklentisi sayfasında belirlenir "
+"(eklentinin kendisi Takvimler > Plasma takvimleri bölümünde açılır). Açılır "
+"pencerenin takvim menüsünde renge göre gösterilir ve gizlenirler: aynı "
+"renkteki takvimler birlikte. Burada oturum açmış bir hesabın Google "
+"takvimleri yukarıda, hesapla birlikte listelenir."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account…"
+msgstr "Hesap Ekle…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign in with Google…"
+msgstr "Google ile Oturum Aç…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for the browser sign-in…"
+msgstr "Tarayıcıda oturum açılması bekleniyor…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Advanced sign-in options"
+msgstr "Gelişmiş oturum açma seçenekleri"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
+msgstr "Kendi Google OAuth istemciniz veya oturum açma kodunu elle yapıştırma"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Credentials"
+msgstr "İstemci Kimlik Bilgileri"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Using a previously stored Google OAuth client for compatibility. If login "
+"still fails, add your own client ID and client secret."
+msgstr ""
+"Uyumluluk için önceden kaydedilmiş bir Google OAuth istemcisi kullanılıyor. "
+"Oturum açma hâlâ başarısız olursa kendi istemci kimliğinizi ve istemci gizli "
+"anahtarınızı ekleyin."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Try desktop built-in client (no secret)"
+msgstr "Masaüstü yerleşik istemcisini dene (gizli anahtar yok)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client ID"
+msgstr "İstemci Kimliği"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Optional"
+msgstr "İsteğe bağlı"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Secret"
+msgstr "İstemci Gizli Anahtarı"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Leave these empty to use the built-in client. A custom client must be a "
+"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
+"redirect URI set to %1."
+msgstr ""
+"Yerleşik istemciyi kullanmak için bunları boş bırakın. Özel bir istemci, bir "
+"Google Cloud OAuth Masaüstü istemcisi ya da gizli anahtarı olan ve "
+"yönlendirme URI'si %1 olarak ayarlanmış bir Web istemcisi olmalıdır."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"For a custom OAuth client, publish the OAuth consent screen to Production. "
+"Google expires refresh tokens for external apps left in Testing after seven "
+"days; Workspace session controls can also require reauthorization."
+msgstr ""
+"Özel bir OAuth istemcisi için OAuth izin ekranını Production durumunda "
+"yayımlayın. Google, Testing durumunda bırakılan harici uygulamaların "
+"yenileme belirteçlerinin süresini yedi gün sonra doldurur; Workspace oturum "
+"denetimleri de yeniden yetkilendirme gerektirebilir."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Manual Sign-in"
+msgstr "Elle Oturum Açma"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto) - Add Account"
+msgstr "Oturum Aç (Otomatik) - Hesap Ekle"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto)"
+msgstr "Oturum Aç (Otomatik)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+"the browser redirects to a localhost URL. If auto-capture succeeds you can "
+"ignore the field below; otherwise copy the full URL (or just the code) and "
+"paste it."
+msgstr ""
+"<a href=\"%1\">%2</a> adresini açmak için Oturum Aç (Otomatik) düğmesine "
+"tıklayın. Erişim izni verdikten sonra tarayıcı bir localhost URL'sine "
+"yönlendirir. Otomatik yakalama başarılı olursa aşağıdaki alanı yok "
+"sayabilirsiniz; aksi halde URL'nin tamamını (veya yalnızca kodu) kopyalayıp "
+"yapıştırın."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The desktop could not open the browser automatically."
+msgstr "Masaüstü tarayıcıyı otomatik olarak açamadı."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Copy Link"
+msgstr "Bağlantıyı Kopyala"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Helper page (optional): <a href=\"%1\">%1</a>"
+msgstr "Yardımcı sayfa (isteğe bağlı): <a href=\"%1\">%1</a>"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"If your browser shows a connection error, that's expected. Copy the URL from "
+"the address bar anyway and paste it below. If auto-capture works, you do not "
+"need to paste anything."
+msgstr ""
+"Tarayıcınız bir bağlantı hatası gösterirse bu beklenen bir durumdur. Yine de "
+"adres çubuğundaki URL'yi kopyalayıp aşağıya yapıştırın. Otomatik yakalama "
+"çalışırsa hiçbir şey yapıştırmanız gerekmez."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Paste the authorization code or redirect URL here"
+msgstr "Yetkilendirme kodunu veya yönlendirme URL'sini buraya yapıştırın"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google authorization code or redirect URL"
+msgstr "Google yetkilendirme kodu veya yönlendirme URL'si"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Paste the Google authorization code or the full redirect URL from the browser"
+msgstr ""
+"Google yetkilendirme kodunu veya tarayıcıdaki tam yönlendirme URL'sini "
+"yapıştırın"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account"
+msgstr "Hesap Ekle"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Submit"
+msgstr "Gönder"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Options"
+msgstr "Seçenekler"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Hide \"This event was added from Goals in Google Calendar\" description"
+msgstr ""
+"\"Bu etkinlik Google Takvim'deki Hedefler'den eklendi\" açıklamasını gizle"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Genel"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Google Calendar"
+msgstr "Google Takvim"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -877,318 +1195,6 @@ msgstr ""
 "Her bildirim türü için açılır pencereler ve sesler Sistem Ayarları > "
 "Bildirimler > Event Calendar bölümünden de ayarlanabilir."
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google Account"
-msgstr "Google Hesabı"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Google Account %1"
-msgstr "Google Hesabı %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login failed: %1"
-msgstr "Oturum açma başarısız: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login complete."
-msgstr "Oturum açma tamamlandı."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Could not prepare Google login: %1"
-msgstr "Google oturum açma işlemi hazırlanamadı: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for browser callback..."
-msgstr "Tarayıcı geri çağrısı bekleniyor..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign-in timed out. Try again."
-msgstr "Oturum açma zaman aşımına uğradı. Yeniden deneyin."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed. See logs for details."
-msgstr "Otomatik oturum açma başarısız. Ayrıntılar için günlüklere bakın."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: invalid callback data."
-msgstr "Otomatik oturum açma başarısız: geçersiz geri çağrı verisi."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: %1"
-msgstr "Otomatik oturum açma başarısız: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: authorization code missing."
-msgstr "Otomatik oturum açma başarısız: yetkilendirme kodu eksik."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"The desktop could not open the browser automatically. Use the login link in "
-"Advanced sign-in options instead."
-msgstr ""
-"Masaüstü tarayıcıyı otomatik olarak açamadı. Bunun yerine Gelişmiş oturum "
-"açma seçeneklerindeki oturum açma bağlantısını kullanın."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Sign in to show your Google calendars and task lists. Your browser opens to "
-"sign in; when access is granted the widget picks it up automatically."
-msgstr ""
-"Google takvimlerinizi ve görev listelerinizi göstermek için oturum açın. "
-"Oturum açmak için tarayıcınız açılır; erişim verildiğinde araç takımı bunu "
-"otomatik olarak algılar."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
-"Sign in here as well to answer invitations, edit and delete events and join "
-"meetings from the widget. Events of an account synced both ways are shown "
-"once, from the sign-in here."
-msgstr ""
-"KDE PIM (Akonadi), %1 hesabının Google takvimlerini zaten salt okunur olarak "
-"getiriyor. Davetlere yanıt vermek, etkinlikleri düzenleyip silmek ve "
-"toplantılara araç takımından katılmak için burada da oturum açın. İki yoldan "
-"eşitlenen bir hesabın etkinlikleri, buradaki oturumdan bir kez gösterilir."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
-"sign-in here, where they can be answered and edited."
-msgstr ""
-"KDE PIM (Akonadi) tarafından da eşitleniyor: %1. Etkinlikleri, yanıtlanıp "
-"düzenlenebildikleri buradaki oturumdan bir kez gösterilir."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign In Again"
-msgstr "Yeniden Oturum Aç"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Reload calendars and task lists"
-msgstr "Takvimleri ve görev listelerini yeniden yükle"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove"
-msgstr "Kaldır"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Google access for this account expired or was revoked. Sign in again to "
-"reconnect it (the account and its settings are kept)."
-msgstr ""
-"Bu hesabın Google erişiminin süresi doldu veya erişim iptal edildi. Yeniden "
-"bağlamak için tekrar oturum açın (hesap ve ayarları korunur)."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
-"Araç takımı güncellendi. Bu hesabı eşzamanlı tutmak için yeniden oturum açın."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "No calendars loaded yet. Use the reload button."
-msgstr "Henüz takvim yüklenmedi. Yeniden yükle düğmesini kullanın."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task lists are chosen on the Tasks page."
-msgstr "Görev listeleri Görevler sayfasında seçilir."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"PIM etkinlikleri eklentisinde seçili bir takvim artık Akonadi'de yok; "
-"örneğin hesabı yeniden kurulduğu için takvimleri yeni kimlikler aldı."
-msgstr[1] ""
-"PIM etkinlikleri eklentisinde seçili %1 takvim artık Akonadi'de yok; örneğin "
-"hesapları yeniden kurulduğu için takvimleri yeni kimlikler aldı."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Şu anda seçili değil: %1. Bunları Sayısal Saat ayarlarının PIM Events Plugin "
-"sayfasında seçin."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Akonadi'nin şu anki tüm takvimleri seçili."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Forget the Missing Ones"
-msgstr "Eksik olanları unut"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Salt okunur gösterilir. Hangi Akonadi takvimlerinin gösterileceği, Sayısal "
-"Saat ayarlarındaki PIM etkinlikleri eklentisi sayfasında belirlenir "
-"(eklentinin kendisi Takvimler > Plasma takvimleri bölümünde açılır). Açılır "
-"pencerenin takvim menüsünde renge göre gösterilir ve gizlenirler: aynı "
-"renkteki takvimler birlikte. Burada oturum açmış bir hesabın Google "
-"takvimleri yukarıda, hesapla birlikte listelenir."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account…"
-msgstr "Hesap Ekle…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign in with Google…"
-msgstr "Google ile Oturum Aç…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the browser sign-in…"
-msgstr "Tarayıcıda oturum açılması bekleniyor…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Advanced sign-in options"
-msgstr "Gelişmiş oturum açma seçenekleri"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr "Kendi Google OAuth istemciniz veya oturum açma kodunu elle yapıştırma"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Credentials"
-msgstr "İstemci Kimlik Bilgileri"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Using a previously stored Google OAuth client for compatibility. If login "
-"still fails, add your own client ID and client secret."
-msgstr ""
-"Uyumluluk için önceden kaydedilmiş bir Google OAuth istemcisi kullanılıyor. "
-"Oturum açma hâlâ başarısız olursa kendi istemci kimliğinizi ve istemci gizli "
-"anahtarınızı ekleyin."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Try desktop built-in client (no secret)"
-msgstr "Masaüstü yerleşik istemcisini dene (gizli anahtar yok)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client ID"
-msgstr "İstemci Kimliği"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Optional"
-msgstr "İsteğe bağlı"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Secret"
-msgstr "İstemci Gizli Anahtarı"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Leave these empty to use the built-in client. A custom client must be a "
-"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
-"redirect URI set to %1."
-msgstr ""
-"Yerleşik istemciyi kullanmak için bunları boş bırakın. Özel bir istemci, bir "
-"Google Cloud OAuth Masaüstü istemcisi ya da gizli anahtarı olan ve "
-"yönlendirme URI'si %1 olarak ayarlanmış bir Web istemcisi olmalıdır."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"For a custom OAuth client, publish the OAuth consent screen to Production. "
-"Google expires refresh tokens for external apps left in Testing after seven "
-"days; Workspace session controls can also require reauthorization."
-msgstr ""
-"Özel bir OAuth istemcisi için OAuth izin ekranını Production durumunda "
-"yayımlayın. Google, Testing durumunda bırakılan harici uygulamaların "
-"yenileme belirteçlerinin süresini yedi gün sonra doldurur; Workspace oturum "
-"denetimleri de yeniden yetkilendirme gerektirebilir."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Manual Sign-in"
-msgstr "Elle Oturum Açma"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto) - Add Account"
-msgstr "Oturum Aç (Otomatik) - Hesap Ekle"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto)"
-msgstr "Oturum Aç (Otomatik)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to a localhost URL. If auto-capture succeeds you can "
-"ignore the field below; otherwise copy the full URL (or just the code) and "
-"paste it."
-msgstr ""
-"<a href=\"%1\">%2</a> adresini açmak için Oturum Aç (Otomatik) düğmesine "
-"tıklayın. Erişim izni verdikten sonra tarayıcı bir localhost URL'sine "
-"yönlendirir. Otomatik yakalama başarılı olursa aşağıdaki alanı yok "
-"sayabilirsiniz; aksi halde URL'nin tamamını (veya yalnızca kodu) kopyalayıp "
-"yapıştırın."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The desktop could not open the browser automatically."
-msgstr "Masaüstü tarayıcıyı otomatik olarak açamadı."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Copy Link"
-msgstr "Bağlantıyı Kopyala"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page (optional): <a href=\"%1\">%1</a>"
-msgstr "Yardımcı sayfa (isteğe bağlı): <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If your browser shows a connection error, that's expected. Copy the URL from "
-"the address bar anyway and paste it below. If auto-capture works, you do not "
-"need to paste anything."
-msgstr ""
-"Tarayıcınız bir bağlantı hatası gösterirse bu beklenen bir durumdur. Yine de "
-"adres çubuğundaki URL'yi kopyalayıp aşağıya yapıştırın. Otomatik yakalama "
-"çalışırsa hiçbir şey yapıştırmanız gerekmez."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Paste the authorization code or redirect URL here"
-msgstr "Yetkilendirme kodunu veya yönlendirme URL'sini buraya yapıştırın"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google authorization code or redirect URL"
-msgstr "Google yetkilendirme kodu veya yönlendirme URL'si"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
-"Google yetkilendirme kodunu veya tarayıcıdaki tam yönlendirme URL'sini "
-"yapıştırın"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account"
-msgstr "Hesap Ekle"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Submit"
-msgstr "Gönder"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Options"
-msgstr "Seçenekler"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr ""
-"\"Bu etkinlik Google Takvim'deki Hedefler'den eklendi\" açıklamasını gizle"
-
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Takvim Ekle"
@@ -1274,10 +1280,6 @@ msgstr "Yeni liste"
 #: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Ekle"
-
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Genel"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Overdue tasks on today"
@@ -3388,10 +3390,11 @@ msgstr "tr"
 #: ../contents/ui/Logic.qml
 msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
-"Google Calendar and sign in to that account again."
+"Calendars > Google Calendar and sign in to that account again."
 msgstr ""
 "Google yetkilendirmesinin süresi doldu veya iptal edildi. Event Calendar "
-"Ayarları > Google Takvim bölümünü açıp o hesapla yeniden oturum açın."
+"Ayarları > Takvimler > Google Takvim bölümünü açıp o hesapla yeniden oturum "
+"açın."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -4471,6 +4474,13 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid ""
+#~ "Google authorization expired or was revoked. Open Event Calendar Settings "
+#~ "> Google Calendar and sign in to that account again."
+#~ msgstr ""
+#~ "Google yetkilendirmesinin süresi doldu veya iptal edildi. Event Calendar "
+#~ "Ayarları > Google Takvim bölümünü açıp o hesapla yeniden oturum açın."
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "

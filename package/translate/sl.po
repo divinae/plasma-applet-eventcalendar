@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:43+0100\n"
+"POT-Creation-Date: 2026-11-02 09:49+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -29,8 +29,8 @@ msgid "Clock"
 msgstr "Ura"
 
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Koledar"
@@ -44,14 +44,6 @@ msgstr "Dogodki"
 #: ../contents/config/config.qml
 msgid "ICalendar (.ics)"
 msgstr "iCalendar (.ics)"
-
-#: ../contents/config/config.qml
-msgid "Google Calendar"
-msgstr "Googlov koledar"
-
-#: ../contents/config/config.qml
-msgid "CalDAV"
-msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -126,7 +118,7 @@ msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Dogodek je bil medtem spremenjen drugje; znova je naložen"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
@@ -198,14 +190,13 @@ msgid "Could not load %1: %2"
 msgstr "Ni bilo mogoče naložiti %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/FindTimeView.qml
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -272,7 +263,7 @@ msgid "Show All"
 msgstr "Prikaži vse"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
 #: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
 #: ../contents/ui/TasksView.qml
@@ -334,7 +325,7 @@ msgstr "Barva"
 msgid "Save"
 msgstr "Shrani"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -343,11 +334,11 @@ msgstr ""
 "potrebujejo geslo za aplikacijo (iCloud, Fastmail, Nextcloud z dvostopenjsko "
 "prijavo)."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Couldn't connect to the server. Check the address and your connection."
 msgstr "Povezava s strežnikom ni uspela. Preverite naslov in povezavo."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "No CalDAV calendars at that address. Try the address your service gives for "
 "CalDAV."
@@ -355,23 +346,23 @@ msgstr ""
 "Na tem naslovu ni koledarjev CalDAV. Poskusite naslov, ki ga vaša storitev "
 "navaja za CalDAV."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server's answer couldn't be read"
 msgstr "Odgovora strežnika ni bilo mogoče prebrati"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Enter the server address (https://…), your user name and your password."
 msgstr "Vnesite naslov strežnika (https://…), svoje uporabniško ime in geslo."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connecting…"
 msgstr "Povezovanje…"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The password couldn't be stored in the keyring: %1"
 msgstr "Gesla ni bilo mogoče shraniti v shrambo ključev: %1"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected: %1 calendar"
 msgid_plural "Connected: %1 calendars"
 msgstr[0] "Povezano: %1 koledar"
@@ -379,49 +370,51 @@ msgstr[1] "Povezano: %1 koledarja"
 msgstr[2] "Povezano: %1 koledarji"
 msgstr[3] "Povezano: %1 koledarjev"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Povezano, vendar račun nima koledarjev za dogodke."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Samo za branje"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
 msgstr "Posodobi koledarje"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Odstrani račun"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Add a CalDAV Account"
 msgstr "Dodaj račun CalDAV"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Server"
 msgstr "Strežnik"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "eg: https://cloud.example.org/remote.php/dav"
 msgstr "npr.: https://cloud.example.org/remote.php/dav"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "User name"
 msgstr "Uporabniško ime"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Password"
 msgstr "Geslo"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Poveži"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Plain http works only for a server on your own network; the password isn't "
 "encrypted on the way."
@@ -429,7 +422,7 @@ msgstr ""
 "Navaden http deluje le s strežnikom v vašem lastnem omrežju; geslo med "
 "prenosom ni šifrirano."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
 "others. The password is kept in the system keyring. Repeating events are "
@@ -440,11 +433,11 @@ msgstr ""
 "dogodki so prikazani, vendar jih je zaenkrat mogoče spreminjati le v njihovi "
 "lastni aplikaciji."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Import Events from a File…"
 msgstr "Uvozi dogodke iz datoteke…"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid ""
 "Copy the events of an .ics file (exported from another calendar app) into "
 "one of your calendars. The widget shows them first, to pick the calendar."
@@ -453,32 +446,364 @@ msgstr ""
 "v enega od svojih koledarjev. Gradnik jih najprej prikaže, da izberete "
 "koledar."
 
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/ImportView.qml
 #: ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Uvozi dogodke"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Osveži vsakih"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgctxt "Polling interval in minutes"
 msgid " min"
 msgstr " min"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendar plugins are unavailable."
 msgstr "Vstavki koledarja Plasma niso na voljo."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendars"
 msgstr "Koledarji Plasma"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google Account"
+msgstr "Googlov račun"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Account %1"
+msgstr "Googlov račun %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login failed: %1"
+msgstr "Prijava ni uspela: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login complete."
+msgstr "Prijava je končana."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Could not prepare Google login: %1"
+msgstr "Ni bilo mogoče pripraviti prijave v Google: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for browser callback..."
+msgstr "Čakanje na odziv brskalnika..."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign-in timed out. Try again."
+msgstr "Čas za prijavo je potekel. Poskusite znova."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed. See logs for details."
+msgstr "Samodejna prijava ni uspela. Podrobnosti so v dnevnikih."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: invalid callback data."
+msgstr "Samodejna prijava ni uspela: neveljavni podatki odziva."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: %1"
+msgstr "Samodejna prijava ni uspela: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: authorization code missing."
+msgstr "Samodejna prijava ni uspela: manjka avtorizacijska koda."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"The desktop could not open the browser automatically. Use the login link in "
+"Advanced sign-in options instead."
+msgstr ""
+"Namizje ni moglo samodejno odpreti brskalnika. Namesto tega uporabite "
+"povezavo za prijavo v naprednih možnostih prijave."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Sign in to show your Google calendars and task lists. Your browser opens to "
+"sign in; when access is granted the widget picks it up automatically."
+msgstr ""
+"Prijavite se, da bodo prikazani vaši Googlovi koledarji in seznami opravil. "
+"Za prijavo se odpre brskalnik; ko je dostop odobren, ga gradnik samodejno "
+"prevzame."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
+"Sign in here as well to answer invitations, edit and delete events and join "
+"meetings from the widget. Events of an account synced both ways are shown "
+"once, from the sign-in here."
+msgstr ""
+"KDE PIM (Akonadi) že prinaša Googlove koledarje za %1, samo za branje. "
+"Prijavite se tudi tukaj, da boste lahko iz gradnika odgovarjali na povabila, "
+"urejali in brisali dogodke ter se pridružili sestankom. Dogodki računa, "
+"sinhroniziranega na oba načina, so prikazani enkrat, iz prijave tukaj."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
+"sign-in here, where they can be answered and edited."
+msgstr ""
+"Sinhronizira tudi KDE PIM (Akonadi): %1. Njihovi dogodki so prikazani "
+"enkrat, iz prijave tukaj, kjer jih lahko odgovorite in urejate."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign In Again"
+msgstr "Ponovno se prijavi"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Reload calendars and task lists"
+msgstr "Znova naloži koledarje in sezname opravil"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove"
+msgstr "Odstrani"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Google access for this account expired or was revoked. Sign in again to "
+"reconnect it (the account and its settings are kept)."
+msgstr ""
+"Dostop do Googla za ta račun je potekel ali je bil preklican. Ponovno se "
+"prijavite, da ga znova povežete (račun in njegove nastavitve se ohranijo)."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The widget was updated. Sign in again to keep this account in sync."
+msgstr ""
+"Gradnik je bil posodobljen. Ponovno se prijavite, da bo ta račun ostal "
+"usklajen."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "No calendars loaded yet. Use the reload button."
+msgstr "Koledarji še niso naloženi. Uporabite gumb za ponovno nalaganje."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Sezname opravil izberete na strani Opravila."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"%1 koledar, izbran v vtičniku dogodkov PIM, ne obstaja več v Akonadi, npr. "
+"ker je bil njegov račun znova nastavljen, kar njegovim koledarjem da nove ID-"
+"je."
+msgstr[1] ""
+"%1 koledarja, izbrana v vtičniku dogodkov PIM, ne obstajata več v Akonadi, "
+"npr. ker je bil njun račun znova nastavljen, kar njegovim koledarjem da nove "
+"ID-je."
+msgstr[2] ""
+"%1 koledarji, izbrani v vtičniku dogodkov PIM, ne obstajajo več v Akonadi, "
+"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
+"nove ID-je."
+msgstr[3] ""
+"%1 koledarjev, izbranih v vtičniku dogodkov PIM, ne obstaja več v Akonadi, "
+"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
+"nove ID-je."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+"Trenutno niso izbrani: %1. Izberite jih na strani PIM Events Plugin v "
+"nastavitvah Digitalne ure."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Vsi koledarji, ki jih Akonadi ima zdaj, so izbrani."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Forget the Missing Ones"
+msgstr "Pozabi manjkajoče"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
+msgstr ""
+"Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, nastavite "
+"na strani vstavka za dogodke PIM v nastavitvah Digitalne ure (sam vstavek "
+"vklopite v Koledar > Koledarji Plasma). V meniju koledarjev v pojavnem oknu "
+"jih prikazujete in skrivate po barvi: koledarje ene barve skupaj. Googlovi "
+"koledarji računa, ki je tu prijavljen, so navedeni zgoraj, pri računu."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account…"
+msgstr "Dodaj račun…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign in with Google…"
+msgstr "Prijava z Googlom…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for the browser sign-in…"
+msgstr "Čakanje na prijavo v brskalniku…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Advanced sign-in options"
+msgstr "Napredne možnosti prijave"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
+msgstr "Lasten odjemalec Google OAuth ali ročno lepljenje kode za prijavo"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Credentials"
+msgstr "Poverilnice odjemalca"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Using a previously stored Google OAuth client for compatibility. If login "
+"still fails, add your own client ID and client secret."
+msgstr ""
+"Zaradi združljivosti se uporablja prej shranjen odjemalec Google OAuth. Če "
+"prijava še vedno ne uspe, dodajte svoj ID in skrivnost odjemalca."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Try desktop built-in client (no secret)"
+msgstr "Poskusi vgrajeni namizni odjemalec (brez skrivnosti)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client ID"
+msgstr "ID odjemalca"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Optional"
+msgstr "Izbirno"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Secret"
+msgstr "Skrivnost odjemalca"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Leave these empty to use the built-in client. A custom client must be a "
+"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
+"redirect URI set to %1."
+msgstr ""
+"Pustite prazno za uporabo vgrajenega odjemalca. Odjemalec po meri mora biti "
+"namizni odjemalec Google Cloud OAuth ali spletni odjemalec s skrivnostjo in "
+"URI-jem za preusmeritev, nastavljenim na %1."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"For a custom OAuth client, publish the OAuth consent screen to Production. "
+"Google expires refresh tokens for external apps left in Testing after seven "
+"days; Workspace session controls can also require reauthorization."
+msgstr ""
+"Za odjemalca OAuth po meri objavite zaslon za soglasje OAuth v produkcijo "
+"(Production). Google zunanjim aplikacijam, ki ostanejo v testiranju "
+"(Testing), po sedmih dneh razveljavi žetone za osvežitev; nadzor sej v "
+"Workspace lahko prav tako zahteva ponovno avtorizacijo."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Manual Sign-in"
+msgstr "Ročna prijava"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto) - Add Account"
+msgstr "Prijava (samodejna) - Dodaj račun"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto)"
+msgstr "Prijava (samodejna)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+"the browser redirects to a localhost URL. If auto-capture succeeds you can "
+"ignore the field below; otherwise copy the full URL (or just the code) and "
+"paste it."
+msgstr ""
+"Kliknite Prijava (samodejna), da odprete <a href=\"%1\">%2</a>. Ko odobrite "
+"dostop, vas brskalnik preusmeri na URL localhost. Če samodejni zajem uspe, "
+"lahko spodnje polje prezrete; sicer kopirajte celoten URL (ali samo kodo) in "
+"ga prilepite."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The desktop could not open the browser automatically."
+msgstr "Namizje ni moglo samodejno odpreti brskalnika."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Copy Link"
+msgstr "Kopiraj povezavo"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Helper page (optional): <a href=\"%1\">%1</a>"
+msgstr "Pomožna stran (izbirno): <a href=\"%1\">%1</a>"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"If your browser shows a connection error, that's expected. Copy the URL from "
+"the address bar anyway and paste it below. If auto-capture works, you do not "
+"need to paste anything."
+msgstr ""
+"Če brskalnik prikaže napako povezave, je to pričakovano. Vseeno kopirajte "
+"URL iz naslovne vrstice in ga prilepite spodaj. Če samodejni zajem deluje, "
+"vam ni treba ničesar prilepiti."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Paste the authorization code or redirect URL here"
+msgstr "Sem prilepite avtorizacijsko kodo ali URL za preusmeritev"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google authorization code or redirect URL"
+msgstr "Googlova avtorizacijska koda ali URL za preusmeritev"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Paste the Google authorization code or the full redirect URL from the browser"
+msgstr ""
+"Prilepite Googlovo avtorizacijsko kodo ali celoten URL za preusmeritev iz "
+"brskalnika"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account"
+msgstr "Dodaj račun"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Submit"
+msgstr "Potrdi"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Options"
+msgstr "Možnosti"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Hide \"This event was added from Goals in Google Calendar\" description"
+msgstr "Skrij opis »Ta dogodek je bil dodan iz ciljev v Googlovem koledarju«"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Splošno"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Google Calendar"
+msgstr "Googlov koledar"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -888,325 +1213,6 @@ msgstr ""
 "Pojavna okna in zvoke za vsako vrsto obvestil lahko nastavite tudi v "
 "Sistemske nastavitve > Obvestila > Event Calendar."
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google Account"
-msgstr "Googlov račun"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Google Account %1"
-msgstr "Googlov račun %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login failed: %1"
-msgstr "Prijava ni uspela: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login complete."
-msgstr "Prijava je končana."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Could not prepare Google login: %1"
-msgstr "Ni bilo mogoče pripraviti prijave v Google: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for browser callback..."
-msgstr "Čakanje na odziv brskalnika..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign-in timed out. Try again."
-msgstr "Čas za prijavo je potekel. Poskusite znova."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed. See logs for details."
-msgstr "Samodejna prijava ni uspela. Podrobnosti so v dnevnikih."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: invalid callback data."
-msgstr "Samodejna prijava ni uspela: neveljavni podatki odziva."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: %1"
-msgstr "Samodejna prijava ni uspela: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: authorization code missing."
-msgstr "Samodejna prijava ni uspela: manjka avtorizacijska koda."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"The desktop could not open the browser automatically. Use the login link in "
-"Advanced sign-in options instead."
-msgstr ""
-"Namizje ni moglo samodejno odpreti brskalnika. Namesto tega uporabite "
-"povezavo za prijavo v naprednih možnostih prijave."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Sign in to show your Google calendars and task lists. Your browser opens to "
-"sign in; when access is granted the widget picks it up automatically."
-msgstr ""
-"Prijavite se, da bodo prikazani vaši Googlovi koledarji in seznami opravil. "
-"Za prijavo se odpre brskalnik; ko je dostop odobren, ga gradnik samodejno "
-"prevzame."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
-"Sign in here as well to answer invitations, edit and delete events and join "
-"meetings from the widget. Events of an account synced both ways are shown "
-"once, from the sign-in here."
-msgstr ""
-"KDE PIM (Akonadi) že prinaša Googlove koledarje za %1, samo za branje. "
-"Prijavite se tudi tukaj, da boste lahko iz gradnika odgovarjali na povabila, "
-"urejali in brisali dogodke ter se pridružili sestankom. Dogodki računa, "
-"sinhroniziranega na oba načina, so prikazani enkrat, iz prijave tukaj."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
-"sign-in here, where they can be answered and edited."
-msgstr ""
-"Sinhronizira tudi KDE PIM (Akonadi): %1. Njihovi dogodki so prikazani "
-"enkrat, iz prijave tukaj, kjer jih lahko odgovorite in urejate."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign In Again"
-msgstr "Ponovno se prijavi"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Reload calendars and task lists"
-msgstr "Znova naloži koledarje in sezname opravil"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove"
-msgstr "Odstrani"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Google access for this account expired or was revoked. Sign in again to "
-"reconnect it (the account and its settings are kept)."
-msgstr ""
-"Dostop do Googla za ta račun je potekel ali je bil preklican. Ponovno se "
-"prijavite, da ga znova povežete (račun in njegove nastavitve se ohranijo)."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
-"Gradnik je bil posodobljen. Ponovno se prijavite, da bo ta račun ostal "
-"usklajen."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "No calendars loaded yet. Use the reload button."
-msgstr "Koledarji še niso naloženi. Uporabite gumb za ponovno nalaganje."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task lists are chosen on the Tasks page."
-msgstr "Sezname opravil izberete na strani Opravila."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"%1 koledar, izbran v vtičniku dogodkov PIM, ne obstaja več v Akonadi, npr. "
-"ker je bil njegov račun znova nastavljen, kar njegovim koledarjem da nove ID-"
-"je."
-msgstr[1] ""
-"%1 koledarja, izbrana v vtičniku dogodkov PIM, ne obstajata več v Akonadi, "
-"npr. ker je bil njun račun znova nastavljen, kar njegovim koledarjem da nove "
-"ID-je."
-msgstr[2] ""
-"%1 koledarji, izbrani v vtičniku dogodkov PIM, ne obstajajo več v Akonadi, "
-"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
-"nove ID-je."
-msgstr[3] ""
-"%1 koledarjev, izbranih v vtičniku dogodkov PIM, ne obstaja več v Akonadi, "
-"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
-"nove ID-je."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Trenutno niso izbrani: %1. Izberite jih na strani PIM Events Plugin v "
-"nastavitvah Digitalne ure."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Vsi koledarji, ki jih Akonadi ima zdaj, so izbrani."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Forget the Missing Ones"
-msgstr "Pozabi manjkajoče"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, nastavite "
-"na strani vstavka za dogodke PIM v nastavitvah Digitalne ure (sam vstavek "
-"vklopite v Koledar > Koledarji Plasma). V meniju koledarjev v pojavnem oknu "
-"jih prikazujete in skrivate po barvi: koledarje ene barve skupaj. Googlovi "
-"koledarji računa, ki je tu prijavljen, so navedeni zgoraj, pri računu."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account…"
-msgstr "Dodaj račun…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign in with Google…"
-msgstr "Prijava z Googlom…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the browser sign-in…"
-msgstr "Čakanje na prijavo v brskalniku…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Advanced sign-in options"
-msgstr "Napredne možnosti prijave"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr "Lasten odjemalec Google OAuth ali ročno lepljenje kode za prijavo"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Credentials"
-msgstr "Poverilnice odjemalca"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Using a previously stored Google OAuth client for compatibility. If login "
-"still fails, add your own client ID and client secret."
-msgstr ""
-"Zaradi združljivosti se uporablja prej shranjen odjemalec Google OAuth. Če "
-"prijava še vedno ne uspe, dodajte svoj ID in skrivnost odjemalca."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Try desktop built-in client (no secret)"
-msgstr "Poskusi vgrajeni namizni odjemalec (brez skrivnosti)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client ID"
-msgstr "ID odjemalca"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Optional"
-msgstr "Izbirno"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Secret"
-msgstr "Skrivnost odjemalca"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Leave these empty to use the built-in client. A custom client must be a "
-"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
-"redirect URI set to %1."
-msgstr ""
-"Pustite prazno za uporabo vgrajenega odjemalca. Odjemalec po meri mora biti "
-"namizni odjemalec Google Cloud OAuth ali spletni odjemalec s skrivnostjo in "
-"URI-jem za preusmeritev, nastavljenim na %1."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"For a custom OAuth client, publish the OAuth consent screen to Production. "
-"Google expires refresh tokens for external apps left in Testing after seven "
-"days; Workspace session controls can also require reauthorization."
-msgstr ""
-"Za odjemalca OAuth po meri objavite zaslon za soglasje OAuth v produkcijo "
-"(Production). Google zunanjim aplikacijam, ki ostanejo v testiranju "
-"(Testing), po sedmih dneh razveljavi žetone za osvežitev; nadzor sej v "
-"Workspace lahko prav tako zahteva ponovno avtorizacijo."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Manual Sign-in"
-msgstr "Ročna prijava"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto) - Add Account"
-msgstr "Prijava (samodejna) - Dodaj račun"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto)"
-msgstr "Prijava (samodejna)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to a localhost URL. If auto-capture succeeds you can "
-"ignore the field below; otherwise copy the full URL (or just the code) and "
-"paste it."
-msgstr ""
-"Kliknite Prijava (samodejna), da odprete <a href=\"%1\">%2</a>. Ko odobrite "
-"dostop, vas brskalnik preusmeri na URL localhost. Če samodejni zajem uspe, "
-"lahko spodnje polje prezrete; sicer kopirajte celoten URL (ali samo kodo) in "
-"ga prilepite."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The desktop could not open the browser automatically."
-msgstr "Namizje ni moglo samodejno odpreti brskalnika."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Copy Link"
-msgstr "Kopiraj povezavo"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page (optional): <a href=\"%1\">%1</a>"
-msgstr "Pomožna stran (izbirno): <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If your browser shows a connection error, that's expected. Copy the URL from "
-"the address bar anyway and paste it below. If auto-capture works, you do not "
-"need to paste anything."
-msgstr ""
-"Če brskalnik prikaže napako povezave, je to pričakovano. Vseeno kopirajte "
-"URL iz naslovne vrstice in ga prilepite spodaj. Če samodejni zajem deluje, "
-"vam ni treba ničesar prilepiti."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Paste the authorization code or redirect URL here"
-msgstr "Sem prilepite avtorizacijsko kodo ali URL za preusmeritev"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google authorization code or redirect URL"
-msgstr "Googlova avtorizacijska koda ali URL za preusmeritev"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
-"Prilepite Googlovo avtorizacijsko kodo ali celoten URL za preusmeritev iz "
-"brskalnika"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account"
-msgstr "Dodaj račun"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Submit"
-msgstr "Potrdi"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Options"
-msgstr "Možnosti"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr "Skrij opis »Ta dogodek je bil dodan iz ciljev v Googlovem koledarju«"
-
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Dodaj koledar"
@@ -1293,10 +1299,6 @@ msgstr "Nov seznam"
 #: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Dodaj"
-
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Splošno"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Overdue tasks on today"
@@ -3447,10 +3449,10 @@ msgstr "sl"
 #: ../contents/ui/Logic.qml
 msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
-"Google Calendar and sign in to that account again."
+"Calendars > Google Calendar and sign in to that account again."
 msgstr ""
 "Googlova avtorizacija je potekla ali je bila preklicana. Odprite Nastavitve "
-"Event Calendar > Googlov koledar in se znova prijavite v ta račun."
+"Event Calendar > Koledar > Googlov koledar in se znova prijavite v ta račun."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -4567,6 +4569,14 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid ""
+#~ "Google authorization expired or was revoked. Open Event Calendar Settings "
+#~ "> Google Calendar and sign in to that account again."
+#~ msgstr ""
+#~ "Googlova avtorizacija je potekla ali je bila preklicana. Odprite "
+#~ "Nastavitve Event Calendar > Googlov koledar in se znova prijavite v ta "
+#~ "račun."
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "

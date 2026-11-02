@@ -9,7 +9,7 @@ import "../Shared.js" as Shared
 import "CalDAVErrors.js" as CalDAVErrors
 
 // CalDAV calendars (Nextcloud, Fastmail, iCloud, Radicale, …) through scripts/caldav.py: the
-// selected calendars of the accounts in caldavAccounts (Settings > CalDAV), read for the shown
+// selected calendars of the accounts in caldavAccounts (Settings > Calendars > CalDAV), read for the shown
 // range, and events created, changed, deleted and imported there. The password stays in the
 // keyring (scope caldav-account); the helper reads it there, it's never on a command line.
 // Repeating events are read-only here (whole series edits aren't supported yet).

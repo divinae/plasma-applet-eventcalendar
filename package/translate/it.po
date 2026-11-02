@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:43+0100\n"
+"POT-Creation-Date: 2026-11-02 09:49+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -25,7 +25,7 @@ msgstr "Viste"
 msgid "Clock"
 msgstr "Orologio"
 
-#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
+#: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Calendari"
 
@@ -36,14 +36,6 @@ msgstr "Eventi"
 #: ../contents/config/config.qml
 msgid "ICalendar (.ics)"
 msgstr "ICalendar (.ics)"
-
-#: ../contents/config/config.qml
-msgid "Google Calendar"
-msgstr "Google Calendar"
-
-#: ../contents/config/config.qml
-msgid "CalDAV"
-msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
@@ -108,7 +100,7 @@ msgstr "Impossibile connettersi"
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "L'evento è stato modificato altrove nel frattempo; è stato ricaricato"
 
-#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
 
@@ -169,12 +161,12 @@ msgstr "Errore sconosciuto dell'helper iCalendar"
 msgid "Could not load %1: %2"
 msgstr "Impossibile caricare %1: %2"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/FindTimeView.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/CalendarsGoogle.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -234,7 +226,7 @@ msgstr "Includi %1 nel conto alla rovescia dell'orologio"
 msgid "Show All"
 msgstr "Mostra tutti"
 
-#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+#: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -286,120 +278,358 @@ msgstr "Colore"
 msgid "Save"
 msgstr "Salva"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
 msgstr "Il server non ha accettato il nome utente o la password. Alcuni servizi richiedono una password per le app (iCloud, Fastmail, Nextcloud con accesso a due fattori)."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Couldn't connect to the server. Check the address and your connection."
 msgstr "Impossibile connettersi al server. Controlla l'indirizzo e la connessione."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "No CalDAV calendars at that address. Try the address your service gives for CalDAV."
 msgstr "Nessun calendario CalDAV a questo indirizzo. Prova l'indirizzo che il tuo servizio indica per CalDAV."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server's answer couldn't be read"
 msgstr "Impossibile leggere la risposta del server"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Enter the server address (https://…), your user name and your password."
 msgstr "Inserisci l'indirizzo del server (https://…), il tuo nome utente e la tua password."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connecting…"
 msgstr "Connessione…"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The password couldn't be stored in the keyring: %1"
 msgstr "Impossibile salvare la password nel portachiavi: %1"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected: %1 calendar"
 msgid_plural "Connected: %1 calendars"
 msgstr[0] "Collegato: %1 calendario"
 msgstr[1] "Collegato: %1 calendari"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Collegato, ma l'account non ha calendari per gli eventi."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Sola lettura"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
 msgstr "Aggiorna calendari"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Rimuovi account"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Add a CalDAV Account"
 msgstr "Aggiungi un account CalDAV"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Server"
 msgstr "Server"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "eg: https://cloud.example.org/remote.php/dav"
 msgstr "es.: https://cloud.example.org/remote.php/dav"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "User name"
 msgstr "Nome utente"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Password"
 msgstr "Password"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Collega"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Plain http works only for a server on your own network; the password isn't encrypted on the way."
 msgstr "Il semplice http funziona solo con un server nella tua rete; la password non viene cifrata durante il tragitto."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others. The password is kept in the system keyring. Repeating events are shown, but changed only in their own app for now."
 msgstr "Nextcloud, Fastmail, iCloud (con una password per le app), Radicale, Baïkal e altri. La password è conservata nel portachiavi di sistema. Gli eventi ricorrenti vengono mostrati, ma per ora si modificano solo nella loro app."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Import Events from a File…"
 msgstr "Importa eventi da un file…"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
 msgstr "Copia gli eventi di un file .ics (esportato da un'altra app di calendario) in uno dei tuoi calendari. L'oggetto li mostra prima, per scegliere il calendario."
 
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Importa eventi"
 
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Aggiorna ogni"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgctxt "Polling interval in minutes"
 msgid " min"
 msgstr " min"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendar plugins are unavailable."
 msgstr "Le estensioni del calendario di Plasma non sono disponibili."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendars"
 msgstr "Calendari di Plasma"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google Account"
+msgstr "Account Google"
+
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Google Account %1"
+msgstr "Account Google %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login failed: %1"
+msgstr "Accesso non riuscito: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login complete."
+msgstr "Accesso completato."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Could not prepare Google login: %1"
+msgstr "Impossibile preparare l'accesso a Google: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for browser callback..."
+msgstr "In attesa della risposta del browser..."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign-in timed out. Try again."
+msgstr "Tempo scaduto per l'accesso. Riprova."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed. See logs for details."
+msgstr "Accesso automatico non riuscito. Vedi i log per i dettagli."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: invalid callback data."
+msgstr "Accesso automatico non riuscito: dati di callback non validi."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: %1"
+msgstr "Accesso automatico non riuscito: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: authorization code missing."
+msgstr "Accesso automatico non riuscito: codice di autorizzazione mancante."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The desktop could not open the browser automatically. Use the login link in Advanced sign-in options instead."
+msgstr "Il desktop non è riuscito ad aprire automaticamente il browser. Usa invece il collegamento di accesso in Opzioni di accesso avanzate."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically."
+msgstr "Accedi per mostrare i tuoi calendari ed elenchi di attività Google. Il browser si apre per l'accesso; una volta concessa l'autorizzazione, l'oggetto la rileva automaticamente."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
+msgstr "KDE PIM (Akonadi) porta già i calendari Google di %1, in sola lettura. Accedi anche qui per rispondere agli inviti, modificare ed eliminare eventi e partecipare alle riunioni dal widget. Gli eventi di un account sincronizzato in entrambi i modi sono mostrati una volta sola, dall'accesso qui."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
+msgstr "Sincronizzato anche da KDE PIM (Akonadi): %1. I loro eventi sono mostrati una volta sola, dall'accesso qui, dove si può rispondere e modificarli."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign In Again"
+msgstr "Accedi di nuovo"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Reload calendars and task lists"
+msgstr "Ricarica calendari ed elenchi di attività"
+
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept)."
+msgstr "L'accesso a Google per questo account è scaduto o è stato revocato. Accedi di nuovo per ricollegarlo (l'account e le sue impostazioni vengono mantenuti)."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The widget was updated. Sign in again to keep this account in sync."
+msgstr "L'oggetto è stato aggiornato. Accedi di nuovo per mantenere sincronizzato questo account."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "No calendars loaded yet. Use the reload button."
+msgstr "Nessun calendario ancora caricato. Usa il pulsante di ricarica."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Gli elenchi di attività si scelgono nella pagina Attività."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] "Un calendario selezionato nel plugin degli eventi PIM non esiste più in Akonadi, ad es. perché il suo account è stato configurato di nuovo, il che dà ai suoi calendari nuovi ID."
+msgstr[1] "%1 calendari selezionati nel plugin degli eventi PIM non esistono più in Akonadi, ad es. perché il loro account è stato configurato di nuovo, il che dà ai suoi calendari nuovi ID."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
+msgstr "Non selezionati ora: %1. Selezionali nella pagina PIM Events Plugin delle impostazioni dell'Orologio digitale."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Tutti i calendari che Akonadi ha ora sono selezionati."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Forget the Missing Ones"
+msgstr "Dimentica quelli mancanti"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+msgstr ""
+"Mostrati in sola lettura. Quali calendari Akonadi vengono mostrati si imposta nella pagina dell'estensione degli eventi PIM nelle impostazioni dell'Orologio digitale (l'estensione stessa si attiva in Calendari > Calendari di Plasma). Nel menu dei calendari della finestra a comparsa vengono mostrati e nascosti per colore: i calendari dello stesso colore insieme. I calendari Google di un account "
+"collegato qui sono elencati sopra, con l'account."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account…"
+msgstr "Aggiungi account…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign in with Google…"
+msgstr "Accedi con Google…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for the browser sign-in…"
+msgstr "In attesa dell'accesso dal browser…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Advanced sign-in options"
+msgstr "Opzioni di accesso avanzate"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
+msgstr "Un tuo client OAuth di Google, oppure l'inserimento manuale del codice di accesso"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Credentials"
+msgstr "Credenziali del client"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Using a previously stored Google OAuth client for compatibility. If login still fails, add your own client ID and client secret."
+msgstr "Per compatibilità viene usato un client OAuth di Google memorizzato in precedenza. Se l'accesso continua a non riuscire, aggiungi il tuo ID client e segreto client."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Try desktop built-in client (no secret)"
+msgstr "Prova il client desktop integrato (senza segreto)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client ID"
+msgstr "ID client"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Optional"
+msgstr "Facoltativo"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Secret"
+msgstr "Segreto client"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Leave these empty to use the built-in client. A custom client must be a Google Cloud OAuth Desktop client, or a Web client with its secret and the redirect URI set to %1."
+msgstr "Lascia vuoti questi campi per usare il client integrato. Un client personalizzato deve essere un client OAuth Desktop di Google Cloud, oppure un client Web con il relativo segreto e l'URI di reindirizzamento impostato su %1."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "For a custom OAuth client, publish the OAuth consent screen to Production. Google expires refresh tokens for external apps left in Testing after seven days; Workspace session controls can also require reauthorization."
+msgstr "Per un client OAuth personalizzato, pubblica la schermata di consenso OAuth in Produzione. Google fa scadere dopo sette giorni i token di aggiornamento delle app esterne lasciate in Test; anche i controlli di sessione di Workspace possono richiedere una nuova autorizzazione."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Manual Sign-in"
+msgstr "Accesso manuale"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto) - Add Account"
+msgstr "Accesso (automatico) - Aggiungi account"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto)"
+msgstr "Accesso (automatico)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it."
+msgstr "Fai clic su Accesso (automatico) per aprire <a href=\"%1\">%2</a>. Dopo aver concesso l'accesso, il browser reindirizza a un URL localhost. Se la cattura automatica riesce puoi ignorare il campo qui sotto; altrimenti copia l'URL completo (o solo il codice) e incollalo."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The desktop could not open the browser automatically."
+msgstr "Il desktop non è riuscito ad aprire automaticamente il browser."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Copy Link"
+msgstr "Copia link"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Helper page (optional): <a href=\"%1\">%1</a>"
+msgstr "Pagina di supporto (facoltativa): <a href=\"%1\">%1</a>"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything."
+msgstr "Se il browser mostra un errore di connessione, è normale. Copia comunque l'URL dalla barra degli indirizzi e incollalo qui sotto. Se la cattura automatica funziona, non devi incollare nulla."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Paste the authorization code or redirect URL here"
+msgstr "Incolla qui il codice di autorizzazione o l'URL di reindirizzamento"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google authorization code or redirect URL"
+msgstr "Codice di autorizzazione Google o URL di reindirizzamento"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Paste the Google authorization code or the full redirect URL from the browser"
+msgstr "Incolla il codice di autorizzazione Google o l'URL di reindirizzamento completo dal browser"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account"
+msgstr "Aggiungi account"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Submit"
+msgstr "Invia"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Options"
+msgstr "Opzioni"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Hide \"This event was added from Goals in Google Calendar\" description"
+msgstr "Nascondi la descrizione «Questo evento è stato aggiunto da Obiettivi in Google Calendar»"
+
+#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Generale"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Google Calendar"
+msgstr "Google Calendar"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -758,232 +988,6 @@ msgstr "Salta gli eventi che ho rifiutato"
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Finestre e suoni per ogni tipo di notifica possono essere impostati anche in Impostazioni di sistema > Notifiche > Event Calendar."
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google Account"
-msgstr "Account Google"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
-msgid "Google Account %1"
-msgstr "Account Google %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login failed: %1"
-msgstr "Accesso non riuscito: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login complete."
-msgstr "Accesso completato."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Could not prepare Google login: %1"
-msgstr "Impossibile preparare l'accesso a Google: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for browser callback..."
-msgstr "In attesa della risposta del browser..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign-in timed out. Try again."
-msgstr "Tempo scaduto per l'accesso. Riprova."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed. See logs for details."
-msgstr "Accesso automatico non riuscito. Vedi i log per i dettagli."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: invalid callback data."
-msgstr "Accesso automatico non riuscito: dati di callback non validi."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: %1"
-msgstr "Accesso automatico non riuscito: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: authorization code missing."
-msgstr "Accesso automatico non riuscito: codice di autorizzazione mancante."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The desktop could not open the browser automatically. Use the login link in Advanced sign-in options instead."
-msgstr "Il desktop non è riuscito ad aprire automaticamente il browser. Usa invece il collegamento di accesso in Opzioni di accesso avanzate."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign in to show your Google calendars and task lists. Your browser opens to sign in; when access is granted the widget picks it up automatically."
-msgstr "Accedi per mostrare i tuoi calendari ed elenchi di attività Google. Il browser si apre per l'accesso; una volta concessa l'autorizzazione, l'oggetto la rileva automaticamente."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid "KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. Sign in here as well to answer invitations, edit and delete events and join meetings from the widget. Events of an account synced both ways are shown once, from the sign-in here."
-msgstr "KDE PIM (Akonadi) porta già i calendari Google di %1, in sola lettura. Accedi anche qui per rispondere agli inviti, modificare ed eliminare eventi e partecipare alle riunioni dal widget. Gli eventi di un account sincronizzato in entrambi i modi sono mostrati una volta sola, dall'accesso qui."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid "Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the sign-in here, where they can be answered and edited."
-msgstr "Sincronizzato anche da KDE PIM (Akonadi): %1. I loro eventi sono mostrati una volta sola, dall'accesso qui, dove si può rispondere e modificarli."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign In Again"
-msgstr "Accedi di nuovo"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Reload calendars and task lists"
-msgstr "Ricarica calendari ed elenchi di attività"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
-msgid "Remove"
-msgstr "Rimuovi"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google access for this account expired or was revoked. Sign in again to reconnect it (the account and its settings are kept)."
-msgstr "L'accesso a Google per questo account è scaduto o è stato revocato. Accedi di nuovo per ricollegarlo (l'account e le sue impostazioni vengono mantenuti)."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr "L'oggetto è stato aggiornato. Accedi di nuovo per mantenere sincronizzato questo account."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "No calendars loaded yet. Use the reload button."
-msgstr "Nessun calendario ancora caricato. Usa il pulsante di ricarica."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task lists are chosen on the Tasks page."
-msgstr "Gli elenchi di attività si scelgono nella pagina Attività."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] "Un calendario selezionato nel plugin degli eventi PIM non esiste più in Akonadi, ad es. perché il suo account è stato configurato di nuovo, il che dà ai suoi calendari nuovi ID."
-msgstr[1] "%1 calendari selezionati nel plugin degli eventi PIM non esistono più in Akonadi, ad es. perché il loro account è stato configurato di nuovo, il che dà ai suoi calendari nuovi ID."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
-msgstr "Non selezionati ora: %1. Selezionali nella pagina PIM Events Plugin delle impostazioni dell'Orologio digitale."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Tutti i calendari che Akonadi ha ora sono selezionati."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Forget the Missing Ones"
-msgstr "Dimentica quelli mancanti"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Mostrati in sola lettura. Quali calendari Akonadi vengono mostrati si imposta nella pagina dell'estensione degli eventi PIM nelle impostazioni dell'Orologio digitale (l'estensione stessa si attiva in Calendari > Calendari di Plasma). Nel menu dei calendari della finestra a comparsa vengono mostrati e nascosti per colore: i calendari dello stesso colore insieme. I calendari Google di un account "
-"collegato qui sono elencati sopra, con l'account."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account…"
-msgstr "Aggiungi account…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign in with Google…"
-msgstr "Accedi con Google…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the browser sign-in…"
-msgstr "In attesa dell'accesso dal browser…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Advanced sign-in options"
-msgstr "Opzioni di accesso avanzate"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr "Un tuo client OAuth di Google, oppure l'inserimento manuale del codice di accesso"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Credentials"
-msgstr "Credenziali del client"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Using a previously stored Google OAuth client for compatibility. If login still fails, add your own client ID and client secret."
-msgstr "Per compatibilità viene usato un client OAuth di Google memorizzato in precedenza. Se l'accesso continua a non riuscire, aggiungi il tuo ID client e segreto client."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Try desktop built-in client (no secret)"
-msgstr "Prova il client desktop integrato (senza segreto)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client ID"
-msgstr "ID client"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Optional"
-msgstr "Facoltativo"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Secret"
-msgstr "Segreto client"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Leave these empty to use the built-in client. A custom client must be a Google Cloud OAuth Desktop client, or a Web client with its secret and the redirect URI set to %1."
-msgstr "Lascia vuoti questi campi per usare il client integrato. Un client personalizzato deve essere un client OAuth Desktop di Google Cloud, oppure un client Web con il relativo segreto e l'URI di reindirizzamento impostato su %1."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "For a custom OAuth client, publish the OAuth consent screen to Production. Google expires refresh tokens for external apps left in Testing after seven days; Workspace session controls can also require reauthorization."
-msgstr "Per un client OAuth personalizzato, pubblica la schermata di consenso OAuth in Produzione. Google fa scadere dopo sette giorni i token di aggiornamento delle app esterne lasciate in Test; anche i controlli di sessione di Workspace possono richiedere una nuova autorizzazione."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Manual Sign-in"
-msgstr "Accesso manuale"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto) - Add Account"
-msgstr "Accesso (automatico) - Aggiungi account"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto)"
-msgstr "Accesso (automatico)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, the browser redirects to a localhost URL. If auto-capture succeeds you can ignore the field below; otherwise copy the full URL (or just the code) and paste it."
-msgstr "Fai clic su Accesso (automatico) per aprire <a href=\"%1\">%2</a>. Dopo aver concesso l'accesso, il browser reindirizza a un URL localhost. Se la cattura automatica riesce puoi ignorare il campo qui sotto; altrimenti copia l'URL completo (o solo il codice) e incollalo."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The desktop could not open the browser automatically."
-msgstr "Il desktop non è riuscito ad aprire automaticamente il browser."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Copy Link"
-msgstr "Copia link"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page (optional): <a href=\"%1\">%1</a>"
-msgstr "Pagina di supporto (facoltativa): <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "If your browser shows a connection error, that's expected. Copy the URL from the address bar anyway and paste it below. If auto-capture works, you do not need to paste anything."
-msgstr "Se il browser mostra un errore di connessione, è normale. Copia comunque l'URL dalla barra degli indirizzi e incollalo qui sotto. Se la cattura automatica funziona, non devi incollare nulla."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Paste the authorization code or redirect URL here"
-msgstr "Incolla qui il codice di autorizzazione o l'URL di reindirizzamento"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google authorization code or redirect URL"
-msgstr "Codice di autorizzazione Google o URL di reindirizzamento"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Paste the Google authorization code or the full redirect URL from the browser"
-msgstr "Incolla il codice di autorizzazione Google o l'URL di reindirizzamento completo dal browser"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account"
-msgstr "Aggiungi account"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Submit"
-msgstr "Invia"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Options"
-msgstr "Opzioni"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr "Nascondi la descrizione «Questo evento è stato aggiunto da Obiettivi in Google Calendar»"
-
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Aggiungi calendario"
@@ -1064,10 +1068,6 @@ msgstr "Nuovo elenco"
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Aggiungi"
-
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Generale"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Overdue tasks on today"
@@ -3035,8 +3035,8 @@ msgid "en"
 msgstr "it"
 
 #: ../contents/ui/Logic.qml
-msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
-msgstr "L'autorizzazione Google è scaduta o è stata revocata. Apri Impostazioni di Event Calendar > Google Calendar e accedi di nuovo a quell'account."
+msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Calendars > Google Calendar and sign in to that account again."
+msgstr "L'autorizzazione Google è scaduta o è stata revocata. Apri Impostazioni di Event Calendar > Calendari > Google Calendar e accedi di nuovo a quell'account."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -4103,6 +4103,9 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again."
+#~ msgstr "L'autorizzazione Google è scaduta o è stata revocata. Apri Impostazioni di Event Calendar > Google Calendar e accedi di nuovo a quell'account."
 
 #~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
 #~ msgstr ""

@@ -42,16 +42,6 @@ ConfigModel {
 		visible: hasPlasmoidConfig && plasmoid.configuration.debugging
 	}
 	ConfigCategory {
-		name: i18n("Google Calendar")
-		icon: Qt.resolvedUrl("../icons/google_calendar_96px.png")
-		source: "config/ConfigGoogleCalendar.qml"
-	}
-	ConfigCategory {
-		name: i18n("CalDAV")
-		icon: "folder-cloud"
-		source: "config/ConfigCalDAV.qml"
-	}
-	ConfigCategory {
 		name: i18n("Tasks")
 		icon: "view-task"
 		source: "config/ConfigTasks.qml"

@@ -13,7 +13,7 @@ import "../calendars/CalDAVErrors.js" as CalDAVErrors
 // password goes to the keyring, scope caldav-account), then the account's calendars to show. Kept
 // in caldavAccounts: [{ id, label, url, username, calendars: [{ href, name, color, writable,
 // selected }] }]. The widget reads them through calendars/CalDAVManager.qml.
-ConfigPage {
+ConfigSection {
 	id: page
 
 	Base64Json {

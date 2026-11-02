@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:43+0100\n"
+"POT-Creation-Date: 2026-11-02 09:49+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -28,8 +28,8 @@ msgid "Clock"
 msgstr "Ρολόϊ"
 
 #: ../contents/config/config.qml ../contents/ui/CalendarToggles.qml
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/PopupHeader.qml
 msgid "Calendars"
 msgstr "Ημερολόγια"
@@ -43,14 +43,6 @@ msgstr "Συμβάντα"
 #: ../contents/config/config.qml
 msgid "ICalendar (.ics)"
 msgstr "ICalendar (*.ics)"
-
-#: ../contents/config/config.qml
-msgid "Google Calendar"
-msgstr "Ημερολόγιο Google"
-
-#: ../contents/config/config.qml
-msgid "CalDAV"
-msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -125,7 +117,7 @@ msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Το συμβάν άλλαξε στο μεταξύ από αλλού· φορτώθηκε ξανά"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
@@ -198,14 +190,13 @@ msgid "Could not load %1: %2"
 msgstr "Αδυναμία φόρτωσης %1: %2"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/FindTimeView.qml
+#: ../contents/ui/config/CalendarsGoogle.qml ../contents/ui/FindTimeView.qml
 msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -272,7 +263,7 @@ msgid "Show All"
 msgstr "Εμφάνιση όλων"
 
 #: ../contents/ui/CardHeader.qml ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml ../contents/ui/EventDetailsView.qml
 #: ../contents/ui/ImportView.qml ../contents/ui/ManageListsView.qml
 #: ../contents/ui/TasksView.qml
@@ -332,7 +323,7 @@ msgstr "Χρώμα"
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -341,12 +332,12 @@ msgstr ""
 "Ορισμένες υπηρεσίες χρειάζονται κωδικό εφαρμογής (iCloud, Fastmail, "
 "Nextcloud με σύνδεση δύο παραγόντων)."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Couldn't connect to the server. Check the address and your connection."
 msgstr ""
 "Αδυναμία σύνδεσης με τον διακομιστή. Ελέγξτε τη διεύθυνση και τη σύνδεσή σας."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "No CalDAV calendars at that address. Try the address your service gives for "
 "CalDAV."
@@ -354,73 +345,75 @@ msgstr ""
 "Δεν υπάρχουν ημερολόγια CalDAV σε αυτή τη διεύθυνση. Δοκιμάστε τη διεύθυνση "
 "που δίνει η υπηρεσία σας για το CalDAV."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server's answer couldn't be read"
 msgstr "Η απάντηση του διακομιστή δεν ήταν δυνατό να διαβαστεί"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Enter the server address (https://…), your user name and your password."
 msgstr ""
 "Εισαγάγετε τη διεύθυνση του διακομιστή (https://…), το όνομα χρήστη και τον "
 "κωδικό πρόσβασής σας."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connecting…"
 msgstr "Σύνδεση…"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The password couldn't be stored in the keyring: %1"
 msgstr "Ο κωδικός πρόσβασης δεν ήταν δυνατό να αποθηκευτεί στην κλειδοθήκη: %1"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected: %1 calendar"
 msgid_plural "Connected: %1 calendars"
 msgstr[0] "Συνδέθηκε: %1 ημερολόγιο"
 msgstr[1] "Συνδέθηκε: %1 ημερολόγια"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Συνδέθηκε, αλλά ο λογαριασμός δεν έχει ημερολόγια για συμβάντα."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Μόνο για ανάγνωση"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
 msgstr "Ανανέωση ημερολογίων"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsGoogle.qml
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove Account"
 msgstr "Αφαίρεση λογαριασμού"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Add a CalDAV Account"
 msgstr "Προσθήκη λογαριασμού CalDAV"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Server"
 msgstr "Διακομιστής"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "eg: https://cloud.example.org/remote.php/dav"
 msgstr "π.χ.: https://cloud.example.org/remote.php/dav"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "User name"
 msgstr "Όνομα χρήστη"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Password"
 msgstr "Κωδικός πρόσβασης"
 
-#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Σύνδεση"
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Plain http works only for a server on your own network; the password isn't "
 "encrypted on the way."
@@ -428,7 +421,7 @@ msgstr ""
 "Το απλό http λειτουργεί μόνο για διακομιστή στο δικό σας δίκτυο· ο κωδικός "
 "πρόσβασης δεν κρυπτογραφείται κατά τη μετάδοση."
 
-#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
 "others. The password is kept in the system keyring. Repeating events are "
@@ -439,11 +432,11 @@ msgstr ""
 "επαναλαμβανόμενα συμβάντα εμφανίζονται, αλλά προς το παρόν αλλάζουν μόνο στη "
 "δική τους εφαρμογή."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Import Events from a File…"
 msgstr "Εισαγωγή συμβάντων από αρχείο…"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid ""
 "Copy the events of an .ics file (exported from another calendar app) into "
 "one of your calendars. The widget shows them first, to pick the calendar."
@@ -452,32 +445,367 @@ msgstr ""
 "ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
 "πρώτα, για να επιλέξετε το ημερολόγιο."
 
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsGeneral.qml ../contents/ui/ImportView.qml
 #: ../contents/ui/main.qml
 msgid "Import Events"
 msgstr "Εισαγωγή συμβάντων"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 #: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Ανανέωση κάθε"
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgctxt "Polling interval in minutes"
 msgid " min"
 msgstr " λεπ."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendar plugins are unavailable."
 msgstr "Τα πρόσθετα ημερολογίου του Plasma δεν είναι διαθέσιμα."
 
-#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Plasma calendars"
 msgstr "Ημερολόγια Plasma"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google Account"
+msgstr "Λογαριασμός Google"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Google Account %1"
+msgstr "Λογαριασμός Google %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login failed: %1"
+msgstr "Αποτυχία σύνδεσης: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login complete."
+msgstr "Η σύνδεση ολοκληρώθηκε."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Could not prepare Google login: %1"
+msgstr "Αδυναμία προετοιμασίας σύνδεσης Google: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for browser callback..."
+msgstr "Αναμονή για απάντηση από τον περιηγητή..."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign-in timed out. Try again."
+msgstr "Η σύνδεση έληξε. Δοκιμάστε ξανά."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed. See logs for details."
+msgstr ""
+"Αποτυχία αυτόματης σύνδεσης. Δείτε τα αρχεία καταγραφής για λεπτομέρειες."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: invalid callback data."
+msgstr "Αποτυχία αυτόματης σύνδεσης: μη έγκυρα δεδομένα επιστροφής."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: %1"
+msgstr "Αποτυχία αυτόματης σύνδεσης: %1"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Auto login failed: authorization code missing."
+msgstr "Αποτυχία αυτόματης σύνδεσης: λείπει ο κωδικός εξουσιοδότησης."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"The desktop could not open the browser automatically. Use the login link in "
+"Advanced sign-in options instead."
+msgstr ""
+"Η επιφάνεια εργασίας δεν μπόρεσε να ανοίξει αυτόματα τον περιηγητή. "
+"Χρησιμοποιήστε τον σύνδεσμο σύνδεσης στις Προχωρημένες επιλογές σύνδεσης."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Sign in to show your Google calendars and task lists. Your browser opens to "
+"sign in; when access is granted the widget picks it up automatically."
+msgstr ""
+"Συνδεθείτε για να εμφανίζονται τα ημερολόγια και οι λίστες εργασιών σας "
+"Google. Ο περιηγητής ανοίγει για τη σύνδεση· μόλις δοθεί πρόσβαση, το "
+"γραφικό συστατικό την παραλαμβάνει αυτόματα."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
+"Sign in here as well to answer invitations, edit and delete events and join "
+"meetings from the widget. Events of an account synced both ways are shown "
+"once, from the sign-in here."
+msgstr ""
+"Το KDE PIM (Akonadi) φέρνει ήδη τα ημερολόγια Google του %1, μόνο για "
+"ανάγνωση. Συνδεθείτε και εδώ για να απαντάτε σε προσκλήσεις, να "
+"επεξεργάζεστε και να διαγράφετε συμβάντα και να συμμετέχετε σε συσκέψεις από "
+"το γραφικό στοιχείο. Τα συμβάντα λογαριασμού που συγχρονίζεται και με τους "
+"δύο τρόπους εμφανίζονται μία φορά, από τη σύνδεση εδώ."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgctxt "%1 = email addresses"
+msgid ""
+"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
+"sign-in here, where they can be answered and edited."
+msgstr ""
+"Συγχρονίζεται επίσης από το KDE PIM (Akonadi): %1. Τα συμβάντα τους "
+"εμφανίζονται μία φορά, από τη σύνδεση εδώ, όπου μπορούν να απαντηθούν και να "
+"επεξεργαστούν."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign In Again"
+msgstr "Επανασύνδεση"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Reload calendars and task lists"
+msgstr "Επαναφόρτωση ημερολογίων και λιστών εργασιών"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Google access for this account expired or was revoked. Sign in again to "
+"reconnect it (the account and its settings are kept)."
+msgstr ""
+"Η πρόσβαση Google για αυτόν τον λογαριασμό έληξε ή ανακλήθηκε. Συνδεθείτε "
+"ξανά για επανασύνδεση (ο λογαριασμός και οι ρυθμίσεις του διατηρούνται)."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The widget was updated. Sign in again to keep this account in sync."
+msgstr ""
+"Το γραφικό συστατικό ενημερώθηκε. Συνδεθείτε ξανά για να συνεχίσει ο "
+"συγχρονισμός αυτού του λογαριασμού."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "No calendars loaded yet. Use the reload button."
+msgstr ""
+"Δεν έχουν φορτωθεί ημερολόγια ακόμη. Χρησιμοποιήστε το κουμπί επαναφόρτωσης."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Task lists are chosen on the Tasks page."
+msgstr "Οι λίστες εργασιών επιλέγονται στη σελίδα Εργασίες."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"Ένα ημερολόγιο που έχει επιλεγεί στο πρόσθετο συμβάντων PIM δεν υπάρχει "
+"πλέον στο Akonadi, π.χ. επειδή ο λογαριασμός του ρυθμίστηκε ξανά, κάτι που "
+"δίνει νέα αναγνωριστικά στα ημερολόγιά του."
+msgstr[1] ""
+"%1 ημερολόγια που έχουν επιλεγεί στο πρόσθετο συμβάντων PIM δεν υπάρχουν "
+"πλέον στο Akonadi, π.χ. επειδή ο λογαριασμός τους ρυθμίστηκε ξανά, κάτι που "
+"δίνει νέα αναγνωριστικά στα ημερολόγιά του."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+"Δεν έχουν επιλεγεί τώρα: %1. Επιλέξτε τα στη σελίδα PIM Events Plugin των "
+"ρυθμίσεων του Ψηφιακού ρολογιού."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Όλα τα ημερολόγια που έχει τώρα το Akonadi είναι επιλεγμένα."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Forget the Missing Ones"
+msgstr "Ξεχάστε τα ελλείποντα"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Calendars > Plasma calendars). In the popup's calendar menu they are "
+"shown and hidden by color: calendars of one color together. The Google "
+"calendars of an account signed in here are listed above, with the account."
+msgstr ""
+"Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
+"ορίζεται στη σελίδα του πρόσθετου συμβάντων PIM στις ρυθμίσεις του Ψηφιακού "
+"ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Ημερολόγια > Ημερολόγια "
+"Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου εμφανίζονται και "
+"αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος μαζί. Τα ημερολόγια "
+"Google ενός λογαριασμού που έχει συνδεθεί εδώ εμφανίζονται παραπάνω, μαζί με "
+"τον λογαριασμό."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account…"
+msgstr "Προσθήκη λογαριασμού…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Sign in with Google…"
+msgstr "Σύνδεση με Google…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Waiting for the browser sign-in…"
+msgstr "Αναμονή για σύνδεση στον περιηγητή…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Advanced sign-in options"
+msgstr "Προχωρημένες επιλογές σύνδεσης"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
+msgstr ""
+"Δικός σας πελάτης Google OAuth ή χειροκίνητη επικόλληση του κωδικού σύνδεσης"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Credentials"
+msgstr "Διαπιστευτήρια πελάτη"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Using a previously stored Google OAuth client for compatibility. If login "
+"still fails, add your own client ID and client secret."
+msgstr ""
+"Χρησιμοποιείται ένας παλαιότερα αποθηκευμένος πελάτης Google OAuth για "
+"συμβατότητα. Αν η σύνδεση εξακολουθεί να αποτυγχάνει, προσθέστε δικό σας "
+"αναγνωριστικό και μυστικό πελάτη."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Try desktop built-in client (no secret)"
+msgstr "Δοκιμή ενσωματωμένου πελάτη επιφάνειας εργασίας (χωρίς μυστικό)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client ID"
+msgstr "Αναγνωριστικό πελάτη"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Optional"
+msgstr "Προαιρετικό"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Client Secret"
+msgstr "Μυστικό πελάτη"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Leave these empty to use the built-in client. A custom client must be a "
+"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
+"redirect URI set to %1."
+msgstr ""
+"Αφήστε τα κενά για χρήση του ενσωματωμένου πελάτη. Ένας προσαρμοσμένος "
+"πελάτης πρέπει να είναι πελάτης Google Cloud OAuth τύπου Desktop ή πελάτης "
+"Web με το μυστικό του και URI ανακατεύθυνσης %1."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"For a custom OAuth client, publish the OAuth consent screen to Production. "
+"Google expires refresh tokens for external apps left in Testing after seven "
+"days; Workspace session controls can also require reauthorization."
+msgstr ""
+"Για προσαρμοσμένο πελάτη OAuth, δημοσιεύστε την οθόνη συναίνεσης OAuth σε "
+"Production. Η Google λήγει τα διακριτικά ανανέωσης εξωτερικών εφαρμογών που "
+"μένουν σε Testing μετά από επτά ημέρες· οι έλεγχοι συνεδρίας του Workspace "
+"μπορεί επίσης να απαιτούν νέα εξουσιοδότηση."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Manual Sign-in"
+msgstr "Χειροκίνητη σύνδεση"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto) - Add Account"
+msgstr "Σύνδεση (Αυτόματη) - Προσθήκη λογαριασμού"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Login (Auto)"
+msgstr "Σύνδεση (Αυτόματη)"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
+"the browser redirects to a localhost URL. If auto-capture succeeds you can "
+"ignore the field below; otherwise copy the full URL (or just the code) and "
+"paste it."
+msgstr ""
+"Πατήστε «Σύνδεση (Αυτόματη)» για να ανοίξει το <a href=\"%1\">%2</a>. Αφού "
+"δώσετε πρόσβαση, ο περιηγητής ανακατευθύνει σε ένα URL localhost. Αν η "
+"αυτόματη λήψη πετύχει, αγνοήστε το παρακάτω πεδίο· διαφορετικά αντιγράψτε "
+"ολόκληρο το URL (ή μόνο τον κωδικό) και επικολλήστε το."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "The desktop could not open the browser automatically."
+msgstr "Η επιφάνεια εργασίας δεν μπόρεσε να ανοίξει αυτόματα τον περιηγητή."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Copy Link"
+msgstr "Αντιγραφή συνδέσμου"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Helper page (optional): <a href=\"%1\">%1</a>"
+msgstr "Βοηθητική σελίδα (προαιρετικά): <a href=\"%1\">%1</a>"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"If your browser shows a connection error, that's expected. Copy the URL from "
+"the address bar anyway and paste it below. If auto-capture works, you do not "
+"need to paste anything."
+msgstr ""
+"Αν ο περιηγητής εμφανίσει σφάλμα σύνδεσης, αυτό είναι αναμενόμενο. "
+"Αντιγράψτε ούτως ή άλλως το URL από τη γραμμή διευθύνσεων και επικολλήστε το "
+"παρακάτω. Αν η αυτόματη λήψη λειτουργήσει, δεν χρειάζεται να επικολλήσετε "
+"τίποτα."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Paste the authorization code or redirect URL here"
+msgstr "Επικολλήστε εδώ τον κωδικό εξουσιοδότησης ή το URL ανακατεύθυνσης"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Google authorization code or redirect URL"
+msgstr "Κωδικός εξουσιοδότησης Google ή URL ανακατεύθυνσης"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Paste the Google authorization code or the full redirect URL from the browser"
+msgstr ""
+"Επικολλήστε τον κωδικό εξουσιοδότησης Google ή ολόκληρο το URL "
+"ανακατεύθυνσης από τον περιηγητή"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Add Account"
+msgstr "Προσθήκη λογαριασμού"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Submit"
+msgstr "Υποβολή"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Options"
+msgstr "Επιλογές"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Hide \"This event was added from Goals in Google Calendar\" description"
+msgstr ""
+"Απόκρυψη της περιγραφής «Αυτό το συμβάν προστέθηκε από τους Στόχους στο "
+"Ημερολόγιο Google»"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Γενικά"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Google Calendar"
+msgstr "Ημερολόγιο Google"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -889,328 +1217,6 @@ msgstr ""
 "Τα αναδυόμενα και οι ήχοι για κάθε είδος ειδοποίησης ρυθμίζονται επίσης στις "
 "Ρυθμίσεις συστήματος > Ειδοποιήσεις > Event Calendar."
 
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google Account"
-msgstr "Λογαριασμός Google"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Google Account %1"
-msgstr "Λογαριασμός Google %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login failed: %1"
-msgstr "Αποτυχία σύνδεσης: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login complete."
-msgstr "Η σύνδεση ολοκληρώθηκε."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Could not prepare Google login: %1"
-msgstr "Αδυναμία προετοιμασίας σύνδεσης Google: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for browser callback..."
-msgstr "Αναμονή για απάντηση από τον περιηγητή..."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign-in timed out. Try again."
-msgstr "Η σύνδεση έληξε. Δοκιμάστε ξανά."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed. See logs for details."
-msgstr ""
-"Αποτυχία αυτόματης σύνδεσης. Δείτε τα αρχεία καταγραφής για λεπτομέρειες."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: invalid callback data."
-msgstr "Αποτυχία αυτόματης σύνδεσης: μη έγκυρα δεδομένα επιστροφής."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: %1"
-msgstr "Αποτυχία αυτόματης σύνδεσης: %1"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Auto login failed: authorization code missing."
-msgstr "Αποτυχία αυτόματης σύνδεσης: λείπει ο κωδικός εξουσιοδότησης."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"The desktop could not open the browser automatically. Use the login link in "
-"Advanced sign-in options instead."
-msgstr ""
-"Η επιφάνεια εργασίας δεν μπόρεσε να ανοίξει αυτόματα τον περιηγητή. "
-"Χρησιμοποιήστε τον σύνδεσμο σύνδεσης στις Προχωρημένες επιλογές σύνδεσης."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Sign in to show your Google calendars and task lists. Your browser opens to "
-"sign in; when access is granted the widget picks it up automatically."
-msgstr ""
-"Συνδεθείτε για να εμφανίζονται τα ημερολόγια και οι λίστες εργασιών σας "
-"Google. Ο περιηγητής ανοίγει για τη σύνδεση· μόλις δοθεί πρόσβαση, το "
-"γραφικό συστατικό την παραλαμβάνει αυτόματα."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"KDE PIM (Akonadi) already brings in the Google calendars of %1, read-only. "
-"Sign in here as well to answer invitations, edit and delete events and join "
-"meetings from the widget. Events of an account synced both ways are shown "
-"once, from the sign-in here."
-msgstr ""
-"Το KDE PIM (Akonadi) φέρνει ήδη τα ημερολόγια Google του %1, μόνο για "
-"ανάγνωση. Συνδεθείτε και εδώ για να απαντάτε σε προσκλήσεις, να "
-"επεξεργάζεστε και να διαγράφετε συμβάντα και να συμμετέχετε σε συσκέψεις από "
-"το γραφικό στοιχείο. Τα συμβάντα λογαριασμού που συγχρονίζεται και με τους "
-"δύο τρόπους εμφανίζονται μία φορά, από τη σύνδεση εδώ."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgctxt "%1 = email addresses"
-msgid ""
-"Also synced by KDE PIM (Akonadi): %1. Their events are shown once, from the "
-"sign-in here, where they can be answered and edited."
-msgstr ""
-"Συγχρονίζεται επίσης από το KDE PIM (Akonadi): %1. Τα συμβάντα τους "
-"εμφανίζονται μία φορά, από τη σύνδεση εδώ, όπου μπορούν να απαντηθούν και να "
-"επεξεργαστούν."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign In Again"
-msgstr "Επανασύνδεση"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Reload calendars and task lists"
-msgstr "Επαναφόρτωση ημερολογίων και λιστών εργασιών"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove"
-msgstr "Αφαίρεση"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Google access for this account expired or was revoked. Sign in again to "
-"reconnect it (the account and its settings are kept)."
-msgstr ""
-"Η πρόσβαση Google για αυτόν τον λογαριασμό έληξε ή ανακλήθηκε. Συνδεθείτε "
-"ξανά για επανασύνδεση (ο λογαριασμός και οι ρυθμίσεις του διατηρούνται)."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The widget was updated. Sign in again to keep this account in sync."
-msgstr ""
-"Το γραφικό συστατικό ενημερώθηκε. Συνδεθείτε ξανά για να συνεχίσει ο "
-"συγχρονισμός αυτού του λογαριασμού."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "No calendars loaded yet. Use the reload button."
-msgstr ""
-"Δεν έχουν φορτωθεί ημερολόγια ακόμη. Χρησιμοποιήστε το κουμπί επαναφόρτωσης."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Task lists are chosen on the Tasks page."
-msgstr "Οι λίστες εργασιών επιλέγονται στη σελίδα Εργασίες."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"Ένα ημερολόγιο που έχει επιλεγεί στο πρόσθετο συμβάντων PIM δεν υπάρχει "
-"πλέον στο Akonadi, π.χ. επειδή ο λογαριασμός του ρυθμίστηκε ξανά, κάτι που "
-"δίνει νέα αναγνωριστικά στα ημερολόγιά του."
-msgstr[1] ""
-"%1 ημερολόγια που έχουν επιλεγεί στο πρόσθετο συμβάντων PIM δεν υπάρχουν "
-"πλέον στο Akonadi, π.χ. επειδή ο λογαριασμός τους ρυθμίστηκε ξανά, κάτι που "
-"δίνει νέα αναγνωριστικά στα ημερολόγιά του."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Δεν έχουν επιλεγεί τώρα: %1. Επιλέξτε τα στη σελίδα PIM Events Plugin των "
-"ρυθμίσεων του Ψηφιακού ρολογιού."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Όλα τα ημερολόγια που έχει τώρα το Akonadi είναι επιλεγμένα."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Forget the Missing Ones"
-msgstr "Ξεχάστε τα ελλείποντα"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Εμφανίζονται μόνο για ανάγνωση. Ποια ημερολόγια Akonadi εμφανίζονται "
-"ορίζεται στη σελίδα του πρόσθετου συμβάντων PIM στις ρυθμίσεις του Ψηφιακού "
-"ρολογιού (το ίδιο το πρόσθετο ενεργοποιείται στα Ημερολόγια > Ημερολόγια "
-"Plasma). Στο μενού ημερολογίων του αναδυόμενου παραθύρου εμφανίζονται και "
-"αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος μαζί. Τα ημερολόγια "
-"Google ενός λογαριασμού που έχει συνδεθεί εδώ εμφανίζονται παραπάνω, μαζί με "
-"τον λογαριασμό."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account…"
-msgstr "Προσθήκη λογαριασμού…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Sign in with Google…"
-msgstr "Σύνδεση με Google…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Waiting for the browser sign-in…"
-msgstr "Αναμονή για σύνδεση στον περιηγητή…"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Advanced sign-in options"
-msgstr "Προχωρημένες επιλογές σύνδεσης"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Your own Google OAuth client, or pasting the sign-in code by hand"
-msgstr ""
-"Δικός σας πελάτης Google OAuth ή χειροκίνητη επικόλληση του κωδικού σύνδεσης"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Credentials"
-msgstr "Διαπιστευτήρια πελάτη"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Using a previously stored Google OAuth client for compatibility. If login "
-"still fails, add your own client ID and client secret."
-msgstr ""
-"Χρησιμοποιείται ένας παλαιότερα αποθηκευμένος πελάτης Google OAuth για "
-"συμβατότητα. Αν η σύνδεση εξακολουθεί να αποτυγχάνει, προσθέστε δικό σας "
-"αναγνωριστικό και μυστικό πελάτη."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Try desktop built-in client (no secret)"
-msgstr "Δοκιμή ενσωματωμένου πελάτη επιφάνειας εργασίας (χωρίς μυστικό)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client ID"
-msgstr "Αναγνωριστικό πελάτη"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Optional"
-msgstr "Προαιρετικό"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Client Secret"
-msgstr "Μυστικό πελάτη"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Leave these empty to use the built-in client. A custom client must be a "
-"Google Cloud OAuth Desktop client, or a Web client with its secret and the "
-"redirect URI set to %1."
-msgstr ""
-"Αφήστε τα κενά για χρήση του ενσωματωμένου πελάτη. Ένας προσαρμοσμένος "
-"πελάτης πρέπει να είναι πελάτης Google Cloud OAuth τύπου Desktop ή πελάτης "
-"Web με το μυστικό του και URI ανακατεύθυνσης %1."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"For a custom OAuth client, publish the OAuth consent screen to Production. "
-"Google expires refresh tokens for external apps left in Testing after seven "
-"days; Workspace session controls can also require reauthorization."
-msgstr ""
-"Για προσαρμοσμένο πελάτη OAuth, δημοσιεύστε την οθόνη συναίνεσης OAuth σε "
-"Production. Η Google λήγει τα διακριτικά ανανέωσης εξωτερικών εφαρμογών που "
-"μένουν σε Testing μετά από επτά ημέρες· οι έλεγχοι συνεδρίας του Workspace "
-"μπορεί επίσης να απαιτούν νέα εξουσιοδότηση."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Manual Sign-in"
-msgstr "Χειροκίνητη σύνδεση"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto) - Add Account"
-msgstr "Σύνδεση (Αυτόματη) - Προσθήκη λογαριασμού"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Login (Auto)"
-msgstr "Σύνδεση (Αυτόματη)"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Click Login (Auto) to open <a href=\"%1\">%2</a>. After you grant access, "
-"the browser redirects to a localhost URL. If auto-capture succeeds you can "
-"ignore the field below; otherwise copy the full URL (or just the code) and "
-"paste it."
-msgstr ""
-"Πατήστε «Σύνδεση (Αυτόματη)» για να ανοίξει το <a href=\"%1\">%2</a>. Αφού "
-"δώσετε πρόσβαση, ο περιηγητής ανακατευθύνει σε ένα URL localhost. Αν η "
-"αυτόματη λήψη πετύχει, αγνοήστε το παρακάτω πεδίο· διαφορετικά αντιγράψτε "
-"ολόκληρο το URL (ή μόνο τον κωδικό) και επικολλήστε το."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "The desktop could not open the browser automatically."
-msgstr "Η επιφάνεια εργασίας δεν μπόρεσε να ανοίξει αυτόματα τον περιηγητή."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Copy Link"
-msgstr "Αντιγραφή συνδέσμου"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Helper page (optional): <a href=\"%1\">%1</a>"
-msgstr "Βοηθητική σελίδα (προαιρετικά): <a href=\"%1\">%1</a>"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"If your browser shows a connection error, that's expected. Copy the URL from "
-"the address bar anyway and paste it below. If auto-capture works, you do not "
-"need to paste anything."
-msgstr ""
-"Αν ο περιηγητής εμφανίσει σφάλμα σύνδεσης, αυτό είναι αναμενόμενο. "
-"Αντιγράψτε ούτως ή άλλως το URL από τη γραμμή διευθύνσεων και επικολλήστε το "
-"παρακάτω. Αν η αυτόματη λήψη λειτουργήσει, δεν χρειάζεται να επικολλήσετε "
-"τίποτα."
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Paste the authorization code or redirect URL here"
-msgstr "Επικολλήστε εδώ τον κωδικό εξουσιοδότησης ή το URL ανακατεύθυνσης"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Google authorization code or redirect URL"
-msgstr "Κωδικός εξουσιοδότησης Google ή URL ανακατεύθυνσης"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid ""
-"Paste the Google authorization code or the full redirect URL from the browser"
-msgstr ""
-"Επικολλήστε τον κωδικό εξουσιοδότησης Google ή ολόκληρο το URL "
-"ανακατεύθυνσης από τον περιηγητή"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Add Account"
-msgstr "Προσθήκη λογαριασμού"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Submit"
-msgstr "Υποβολή"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Options"
-msgstr "Επιλογές"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Hide \"This event was added from Goals in Google Calendar\" description"
-msgstr ""
-"Απόκρυψη της περιγραφής «Αυτό το συμβάν προστέθηκε από τους Στόχους στο "
-"Ημερολόγιο Google»"
-
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Προσθήκη Ημερολογίου"
@@ -1301,10 +1307,6 @@ msgstr "Νέα λίστα"
 #: ../contents/ui/config/ConfigTimezones.qml ../contents/ui/QuickAddView.qml
 msgid "Add"
 msgstr "Προσθήκη"
-
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Γενικά"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Overdue tasks on today"
@@ -3430,10 +3432,11 @@ msgstr "el"
 #: ../contents/ui/Logic.qml
 msgid ""
 "Google authorization expired or was revoked. Open Event Calendar Settings > "
-"Google Calendar and sign in to that account again."
+"Calendars > Google Calendar and sign in to that account again."
 msgstr ""
 "Η εξουσιοδότηση Google έληξε ή ανακλήθηκε. Ανοίξτε τις Ρυθμίσεις του Event "
-"Calendar > Ημερολόγιο Google και συνδεθείτε ξανά σε αυτόν τον λογαριασμό."
+"Calendar > Ημερολόγια > Ημερολόγιο Google και συνδεθείτε ξανά σε αυτόν τον "
+"λογαριασμό."
 
 #: ../contents/ui/Logic.qml
 msgid "Logged out of Google. Please login again."
@@ -4520,6 +4523,14 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid ""
+#~ "Google authorization expired or was revoked. Open Event Calendar Settings "
+#~ "> Google Calendar and sign in to that account again."
+#~ msgstr ""
+#~ "Η εξουσιοδότηση Google έληξε ή ανακλήθηκε. Ανοίξτε τις Ρυθμίσεις του "
+#~ "Event Calendar > Ημερολόγιο Google και συνδεθείτε ξανά σε αυτόν τον "
+#~ "λογαριασμό."
 
 #~ msgid ""
 #~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "

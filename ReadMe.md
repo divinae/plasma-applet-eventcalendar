@@ -88,7 +88,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   new invitations for today (with Yes / Maybe / No) and a daily agenda, each configurable in
   System Settings > Notifications > Event Calendar NG. Clicking one opens the event in the widget.
 - **CalDAV** (Nextcloud, Fastmail, iCloud with an app password, Radicale, Baïkal…): add an account in
-  Settings > CalDAV and choose its calendars; create, edit, move and delete events there, import
+  Settings > Calendars > CalDAV and choose its calendars; create, edit, move and delete events there, import
   .ics files into them. The password stays in the system keyring. Repeating events are shown, and
   changed in their own app for now.
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a

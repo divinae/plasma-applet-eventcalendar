@@ -476,7 +476,7 @@ Item {
 		for (var i = 0; i < accounts.length; i++) {
 			var account = accounts[i]
 			if (account.reauthRequired) {
-				return i18n("Google authorization expired or was revoked. Open Event Calendar Settings > Google Calendar and sign in to that account again.")
+				return i18n("Google authorization expired or was revoked. Open Event Calendar Settings > Calendars > Google Calendar and sign in to that account again.")
 			}
 			if (account.sessionUsesPkce === false) {
 				continue
