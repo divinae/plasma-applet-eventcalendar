@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:01+0100\n"
+"POT-Creation-Date: 2026-11-02 12:04+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3617,6 +3617,14 @@ msgstr "Sestanek"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1 mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Couldn't play the microphone on the speaker (pactl)."
+msgstr "Mikrofona ni bilo mogoče predvajati na zvočniku (pactl)."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Hear yourself (use headphones: speakers would whistle)"
+msgstr "Slišite sebe (uporabite slušalke: zvočniki bi piskali)"
 
 #: ../contents/ui/MicMeter.qml
 msgctxt "volume percentage, the widest"

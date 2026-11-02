@@ -83,7 +83,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   as ended. Music and videos pause when you join; optional Do Not Disturb during meetings and
   auto-join; overlapping meetings are marked.
 - **Camera check** (like Hand Mirror): before a meeting, see yourself in a mirror, check that the
-  microphone picks you up (its live level and sensitivity, a warning when it's muted) and that the
+  microphone picks you up (its live level and sensitivity, hear yourself live in headphones, a
+  warning when it's muted) and that the
   speaker works, pick the camera, microphone and speaker, then Join. From the widget's menu or an
   event's details; nothing is recorded, and the camera is on only while it's open. Needs Qt Multimedia (`qt6-multimedia`); the microphone part
   uses Plasma's audio applet.

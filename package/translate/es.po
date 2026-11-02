@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:01+0100\n"
+"POT-Creation-Date: 2026-11-02 12:04+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -3189,6 +3189,14 @@ msgstr "Reunión"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Couldn't play the microphone on the speaker (pactl)."
+msgstr "No se pudo reproducir el micrófono en el altavoz (pactl)."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Hear yourself (use headphones: speakers would whistle)"
+msgstr "Escucharte (usa auriculares: los altavoces acoplarían)"
 
 #: ../contents/ui/MicMeter.qml
 msgctxt "volume percentage, the widest"

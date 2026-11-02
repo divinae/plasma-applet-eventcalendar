@@ -4,13 +4,17 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.private.volume
 
+import "lib"
+
 import "CameraPrefs.js" as CameraPrefs
 
 // The camera check's sound (CameraCheckView.qml, loaded by URL only with plasma-pa, see
 // PlasmaPaProbe.qml), live like the volume applet's microphone test: the microphone's level while
 // running, its sensitivity (input volume), a warning when it's muted, the microphone and speaker to
 // use (Plasma's defaults, set as the volume applet sets them) and a speaker test that says its
-// channels' names. Nothing is recorded.
+// channels' names. Nothing is recorded. "Hear yourself" plays the microphone on the speaker live
+// (PulseAudio / PipeWire's module-loopback through pactl, tagged so it can be found again), only
+// while it's on and the card is shown.
 ColumnLayout {
 	id: meter
 
@@ -26,9 +30,54 @@ ColumnLayout {
 		target: meter.running ? meter.source : null
 	}
 
+	// The tests' errors, shown under the devices (and logged, without any device data).
+	property string testError: ""
+	function testFailed(what, message) {
+		console.warn("[eventcalendar] camera check:", what, "failed:", message)
+		testError = message
+	}
+
 	onRunningChanged: {
 		if (!running) {
 			speakerTest.queue = []
+			hearSelf = false
+		}
+	}
+
+	//--- Hear yourself: the microphone on the speaker, live (module-loopback). The command runs in
+	// Plasma's executable engine, so switching it off still happens when the card is gone. Each run
+	// first unloads the loopbacks it made (also ones left by a crash), then loads one when on.
+	property bool hearSelf: false
+	readonly property string loopbackTag: "eventcalendar-mic-check"
+	readonly property string loopbackScript: 'for m in $(pactl list short modules | awk -v tag="$4" \'index($0, tag) {print $1}\'); do pactl unload-module "$m"; done; '
+		+ '[ "$1" = on ] || exit 0; '
+		+ 'exec pactl load-module module-loopback source="$2" sink="$3" latency_msec=40 source_dont_move=true sink_dont_move=true sink_input_properties=media.name="$4" source_output_properties=media.name="$4"'
+	ExecUtil { id: loopbackExec }
+	function updateLoopback() {
+		var on = hearSelf && running && !!source && !!PreferredDevice.sink
+		loopbackExec.execArgv(['sh', '-c', loopbackScript, 'sh', on ? 'on' : 'off',
+			source ? String(source.name) : '', PreferredDevice.sink ? String(PreferredDevice.sink.name) : '', loopbackTag],
+			function(cmd, exitCode, exitStatus, stdout, stderr) {
+				if (exitCode) {
+					meter.hearSelf = false
+					meter.testFailed("hear yourself", i18n("Couldn't play the microphone on the speaker (pactl)."))
+				}
+			})
+	}
+	onHearSelfChanged: updateLoopback()
+	onSourceChanged: if (hearSelf) Qt.callLater(updateLoopback)
+	Connections {
+		target: PreferredDevice
+		function onSinkChanged() {
+			if (meter.hearSelf) {
+				Qt.callLater(meter.updateLoopback)
+			}
+		}
+	}
+	Component.onCompleted: updateLoopback() // Off: clears any left behind
+	Component.onDestruction: {
+		if (hearSelf) {
+			hearSelf = false // Unloads it (the engine finishes the command)
 		}
 	}
 
@@ -73,6 +122,19 @@ ColumnLayout {
 			Layout.fillWidth: true
 			pulseModel: SourceModel {}
 			microphones: true
+		}
+		PlasmaComponents3.ToolButton {
+			icon.name: "audio-headphones-symbolic"
+			checkable: true
+			checked: meter.hearSelf
+			enabled: !!meter.source && !!PreferredDevice.sink
+			onToggled: {
+				meter.testError = ""
+				meter.hearSelf = checked
+			}
+			PlasmaComponents3.ToolTip.text: i18n("Hear yourself (use headphones: speakers would whistle)")
+			PlasmaComponents3.ToolTip.visible: hovered
+			PlasmaComponents3.ToolTip.delay: Kirigami.Units.toolTipDelay
 		}
 	}
 	// Under the microphone's list: its level now, and its sensitivity.

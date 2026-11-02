@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:01+0100\n"
+"POT-Creation-Date: 2026-11-02 12:04+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -3596,6 +3596,15 @@ msgstr "Besprechung"
 #, no-c-format
 msgid "%1mm"
 msgstr "%1mm"
+
+#: ../contents/ui/MicMeter.qml
+msgid "Couldn't play the microphone on the speaker (pactl)."
+msgstr ""
+"Das Mikrofon konnte nicht über den Lautsprecher wiedergegeben werden (pactl)."
+
+#: ../contents/ui/MicMeter.qml
+msgid "Hear yourself (use headphones: speakers would whistle)"
+msgstr "Sich selbst hören (Kopfhörer verwenden: Lautsprecher würden pfeifen)"
 
 #: ../contents/ui/MicMeter.qml
 msgctxt "volume percentage, the widest"
