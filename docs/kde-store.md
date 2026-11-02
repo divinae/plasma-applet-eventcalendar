@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.12.1
+    1.13.0
 
 **License**
 
@@ -62,7 +62,7 @@ Why you'll like it
 🎥 One-click Join for Google Meet, Zoom, Teams, Webex, Slack huddles and about 35 more.
 ✅ Your tasks too: Google Tasks and TickTick with smart lists, priorities, subtasks and drag and drop. Type "Call mom tomorrow 17:00 !high" and it knows the day, time and priority.
 ✍️ Plan without leaving the panel: create, edit, move and answer events; quick add understands plain sentences, and Go to date takes "next friday" or "+2w".
-☁️ All your calendars: several Google accounts, KDE PIM (Akonadi), holidays and .ics files; an event in two calendars shows once.
+☁️ All your calendars: several Google accounts, CalDAV (Nextcloud, Fastmail, iCloud…), KDE PIM (Akonadi), holidays and .ics files; an event in two calendars shows once.
 ⚡ Fast and offline-ready: opens instantly with your last events and tasks, even without a network.
 🎨 At home in Plasma: rounded cards or flat, light and dark themes, 20 languages.
 🔒 Private: sign-in tokens stay in your system keyring.
@@ -91,6 +91,11 @@ Google Calendar
 - Rename and recolor calendars
 - An event in several calendars (yours and a shared one) shows once
 - KDE PIM (Akonadi) calendars and holidays side by side with a direct Google sign-in
+
+CalDAV
+- Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others: choose the calendars of each account
+- Create, edit, move and delete events there; import .ics files into them
+- The password is kept in the system keyring
 - Tokens are kept in the system keyring
 
 Tasks
@@ -117,12 +122,21 @@ Starts instantly and works offline: the last loaded events and tasks are shown r
 
 Translated into 20 languages.
 
-Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google and TickTick sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files.
+Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google and TickTick sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files and CalDAV.
 
 Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
 
 Support the development: https://ko-fi.com/divinae4535
+```
+
+**Changelog (1.13.0)**
+
+```
+- CalDAV: Nextcloud, Fastmail, iCloud, Radicale, Baïkal... (Settings > CalDAV): events shown, created, edited, deleted and imported
+- Import events from an .ics file from Settings > Events
+- Time zones can be put in order and are no longer forgotten
+- Akonadi calendars named after their calendars; a warning for calendars Akonadi no longer has (thanks to frispete)
 ```
 
 **Changelog (1.12.1)**
@@ -145,8 +159,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.12.1.plasmoid` from the
-  [v1.12.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.12.1),
+- **Product file:** `eventcalendar-ng-v1.13.0.plasmoid` from the
+  [v1.13.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.13.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

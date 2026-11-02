@@ -1,3 +1,22 @@
+## v1.13.0 - November 2 2026
+
+### CalDAV (#14)
+* **Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others:** add an account in Settings > CalDAV and choose its calendars. Events are shown, created, edited, moved and deleted there, and .ics files can be imported into them. The password is kept in the system keyring.
+* Repeating CalDAV events are shown, but changed only in their own app for now.
+* CalDAV calendars appear in the calendar menu under their account's name.
+
+### Import from a file (#13)
+* Settings > Events > Calendars: "Import Events from a File…" copies the events of an .ics file into one of your calendars (Google or CalDAV), as the widget's menu does.
+
+### Time zones (#15)
+* The time zones can be put in order (up and down buttons), and the list is no longer forgotten when one is added or removed.
+
+### KDE PIM (Akonadi), thanks to frispete (#12)
+* Akonadi calendars are named "Akonadi: <calendar name>" in the calendar menu, not after a few of their events.
+* The calendar menu lists the accounts' calendars, then Akonadi's, then the local ones, each section apart.
+* A warning when the PIM events plugin still has calendars selected that Akonadi no longer has (eg: after an account was set up again), with a button to forget them.
+* Akonadi's copies of a signed-in Google account follow a change in that account's selection.
+
 ## v1.12.1 - October 30 2026
 
 ### Fixes
