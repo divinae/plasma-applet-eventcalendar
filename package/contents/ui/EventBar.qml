@@ -132,11 +132,21 @@ Rectangle {
 	}
 
 	// Title and details always set: ToolTipArea's containsMouse turns false once the tooltip opens,
-	// so texts bound to it emptied the open tooltip (a second, title-only or empty one).
+	// so texts bound to it emptied the open tooltip (a second, title-only or empty one). The details
+	// are made on the first hover and then kept (a binding made them for every block at creation,
+	// and again every minute: they depend on the time), dropped when the event changes.
 	PlasmaCore.ToolTipArea {
+		id: toolTip
 		anchors.fill: parent
 		mainText: eventBar.eventItem ? eventBar.eventItem.summary : ""
-		subText: eventBar.detailsModel ? eventBar.detailsModel.eventDetailsText(eventBar.eventItem) : ""
+		property string details: ""
+		subText: details
 		textFormat: Text.PlainText
+		onContainsMouseChanged: {
+			if (containsMouse && !details && eventBar.detailsModel && eventBar.eventItem) {
+				details = eventBar.detailsModel.eventDetailsText(eventBar.eventItem)
+			}
+		}
 	}
+	onEventItemChanged: toolTip.details = ""
 }
