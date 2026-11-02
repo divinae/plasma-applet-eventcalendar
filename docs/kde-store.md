@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.14.0
+    1.15.0
 
 **License**
 
@@ -106,6 +106,7 @@ Tasks
 - Task reminders, a morning summary, and the day's tasks in the Day view
 
 Meetings
+- Camera check before a meeting: the camera as a mirror, the microphone's level, hear yourself, a speaker test, then Join
 - Join buttons for about 40 services (Google Meet, Zoom, Teams, Webex, Slack huddles, Discord, Chime, GoTo, Jitsi…); Google Meet links can open in a Meet web app with a chosen Google account
 - Optional full-screen alert when a meeting starts: the desktop blurred behind, Join / Snooze / Dismiss
 - The panel clock shows the next meeting ("in 5 min" / "12 min left"), with filters: skip all-day events, chosen calendars, only meetings with a link, only accepted
@@ -128,6 +129,16 @@ Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/is
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
 
 Support the development: https://ko-fi.com/divinae4535
+```
+
+**Changelog (1.15.0)**
+
+```
+- Camera check before a meeting: the camera as a mirror, the microphone's level and sensitivity, hear yourself, a speaker test, then Join (window on top; also in the full-screen alert)
+- Month <-> Week / Day much faster
+- Settings: .ics files and links as read-only calendars (Calendars > iCalendar); the import card installs its Python modules
+- Settings > Events: full screen and notification options apart
+- Fix: the header's title in the Agenda changed only the title
 ```
 
 **Changelog (1.14.0)**
@@ -166,8 +177,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.14.0.plasmoid` from the
-  [v1.14.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.14.0),
+- **Product file:** `eventcalendar-ng-v1.15.0.plasmoid` from the
+  [v1.15.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.15.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

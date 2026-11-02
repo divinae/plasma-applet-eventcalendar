@@ -98,6 +98,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Settings > Calendars > CalDAV and choose its calendars; create, edit, move and delete events there, import
   .ics files into them. The password stays in the system keyring. Repeating events are shown, and
   changed in their own app for now.
+- **iCalendar** (.ics) files and links as calendars, read-only and offline too: Settings > Calendars >
+  iCalendar.
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
   direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
@@ -142,9 +144,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.14.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.15.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.14.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.15.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a
@@ -175,7 +177,8 @@ Optional:
 - `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play`, for custom notification sounds
 - iCalendar (.ics) files and CalDAV: the Python packages `icalendar>=6.1,<8` and
   `recurring-ical-events>=3.8,<4` (RRULE / RDATE / EXDATE / RECURRENCE-ID expansion). The install
-  script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`.
+  script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`; installed from
+  the KDE Store, the import card's Install button does the same (pip, uv or the wheels from PyPI).
 - Akonadi / KDE PIM calendars: `akonadi` + `kdepim-addons`; creating local events: `konsolekalendar`
 
 ## Setup

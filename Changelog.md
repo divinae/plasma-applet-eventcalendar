@@ -1,3 +1,24 @@
+## v1.15.0 - November 2 2026
+
+### Camera check
+* **How you look and sound before a meeting** (like Hand Mirror): a window that stays on top, with the camera as a mirror, the microphone's live level and sensitivity, "hear yourself" (headphones), a speaker test, and the camera, microphone and speaker to use, then Join. Nothing is recorded; the camera and the microphone are on only while it's open.
+* Opened from the widget's menu, an event's menu or details, and the reminder before a meeting with a link.
+* **Full-screen alert:** Settings > Events > Full Screen > Camera check shows the camera above Join; "Microphone and Speaker…" adds the rest.
+
+### Faster
+* Month ↔ Week / Day as quick as between the other views: the Week / Day view stays made, the month no longer rebuilds its days, and no in-between state is laid out on a view change.
+* Event tooltips are made when you point at an event, not for every event of a view.
+
+### Settings
+* **Events:** the full screen's and the notification's options apart (Full Screen, Notification).
+* **Calendars > iCalendar:** .ics files and links as calendars, read-only and offline too (#13).
+* **Import from a file:** the Python modules it needs can be installed from the import card (#13).
+* The widget's menu: only the meeting's actions, Refresh and the clock settings.
+
+### Fixes
+* The header's title in the Agenda zoomed the hidden month out to its year and decade (#16).
+* Day view > all-day tiles applies with OK, as the other settings; an iCalendar calendar's name is saved.
+
 ## v1.14.0 - November 2 2026
 
 ### Settings
