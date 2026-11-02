@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:46+0100\n"
+"POT-Creation-Date: 2026-11-02 11:48+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -2255,6 +2255,10 @@ msgstr "标记为进行中"
 msgid "Show Details"
 msgstr "显示详情"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "检查摄像头"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "复制事件详情"
@@ -2429,10 +2433,6 @@ msgstr "重复"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%2时间 %1（%3）"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Check Camera"
-msgstr "检查摄像头"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

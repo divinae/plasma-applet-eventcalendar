@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 11:46+0100\n"
+"POT-Creation-Date: 2026-11-02 11:48+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -2341,6 +2341,10 @@ msgstr "Позначити як виконується"
 msgid "Show Details"
 msgstr "Показати подробиці"
 
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
+msgid "Check Camera"
+msgstr "Перевірити камеру"
+
 #: ../contents/ui/EventContextMenu.qml
 msgid "Copy Event Details"
 msgstr "Копіювати відомості про подію"
@@ -2517,10 +2521,6 @@ msgstr "Повторюється"
 msgctxt "%1 = start and end time, %2 = city, %3 = time zone id"
 msgid "%1 %2 time (%3)"
 msgstr "%1, час: %2 (%3)"
-
-#: ../contents/ui/EventDetailsView.qml
-msgid "Check Camera"
-msgstr "Перевірити камеру"
 
 #: ../contents/ui/EventDetailsView.qml
 msgctxt "RSVP to an invitation"

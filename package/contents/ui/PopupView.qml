@@ -187,6 +187,7 @@ MouseArea {
 		onShowDetails: function(eventItem) { popup.activateEvent(eventItem) }
 		onEditEvent: function(eventItem) { popup.editEvent(eventItem) }
 		onDuplicateEvent: function(eventItem) { popup.duplicateEvent(eventItem) }
+		onCameraCheck: function(meetingLink) { popup.openCameraCheck(meetingLink) }
 		onDeleteRequested: function(eventItem, wholeSeries) { popup.deleteWithUndo(eventItem, wholeSeries) }
 	}
 	//--- Undo (delete, move)

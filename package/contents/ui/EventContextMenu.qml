@@ -30,6 +30,7 @@ PlasmaComponents3.Menu {
 	signal showDetails(var eventItem)
 	signal editEvent(var eventItem)
 	signal duplicateEvent(var eventItem)
+	signal cameraCheck(var meetingLink)
 	// Delete (wholeSeries: every occurrence). Not popup.deleteWithUndo(): in this Menu, "popup" is
 	// its own popup() function, and Delete did nothing.
 	signal deleteRequested(var eventItem, bool wholeSeries)
@@ -291,6 +292,14 @@ PlasmaComponents3.Menu {
 		text: eventMenu.meetingLink ? i18nc("%1 = Google Meet, Zoom, ...", "Join %1", eventMenu.meetingLink.label) : ""
 		icon.name: "call-start"
 		onTriggered: meetingOpener.open(eventMenu.meetingLink.url)
+	}
+	// The camera check (CameraCheckView) for this meeting, with its Join.
+	PlasmaComponents3.MenuItem {
+		visible: !!eventMenu.meetingLink && root.cameraCheckAvailable
+		height: visible ? implicitHeight : 0
+		text: i18n("Check Camera")
+		icon.name: "camera-web"
+		onTriggered: eventMenu.cameraCheck(eventMenu.meetingLink)
 	}
 	// The event as text (title, day and time, place, link), like Dato's Copy.
 	PlasmaComponents3.MenuItem {
