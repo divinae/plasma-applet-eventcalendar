@@ -323,6 +323,7 @@ MouseArea {
 
 	//--- Month view: clicking a day opens it in the Today view.
 	property var pendingDayViewDate: null // Picked up when the day view is created
+	property var askedDayViewDate: null // The same, for the kept view shown again (weekViewShown)
 	function showDayView(date) {
 		var day = Shared.startOfDay(date)
 		if (dayMode && weekViewLoader.item) {
@@ -330,6 +331,7 @@ MouseArea {
 			return
 		}
 		pendingDayViewDate = day
+		askedDayViewDate = day
 		currentView = 'today'
 	}
 
@@ -715,10 +717,15 @@ MouseArea {
 		}
 	}
 
+	// The Week and Day views (one WeekView), made the first time one is shown and then kept, hidden
+	// in the other views: building it is most of what opening it costs (from the month it was made
+	// anew each time, between Week and Day it stays). Shown again: weekViewShown.
+	property bool weekViewKept: false
 	Loader {
 		id: weekViewLoader
-		active: popup.hourGridMode
-		visible: active
+		active: popup.hourGridMode || popup.weekViewKept
+		visible: popup.hourGridMode
+		onStatusChanged: if (status === Loader.Ready) popup.weekViewKept = true
 		anchors.fill: widgetGrid
 		onLoaded: {
 			if (popup.pendingDayViewDate) {
@@ -739,6 +746,9 @@ MouseArea {
 			onWeatherRetryRequested: logic.updateWeather(true)
 			// Make sure the visible week's (or day's) month is fetched.
 			onWeekStartChanged: {
+				if (!popup.hourGridMode) {
+					return // Kept, hidden: the month shown stays
+				}
 				var middle = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + Math.floor(dayCount / 2))
 				popup.monthViewDate = middle
 			}
@@ -1006,6 +1016,7 @@ MouseArea {
 	// (a refresh while in the Day view doesn't build the agenda and the month nobody sees).
 	property bool agendaStale: false
 	property bool monthStale: false
+	property bool weekStale: false
 	function updateUI() {
 		updateUITimer.stop()
 
@@ -1013,7 +1024,10 @@ MouseArea {
 		updateAgenda()
 		updateMonth()
 		if (weekViewLoader.item) {
-			weekViewLoader.item.rebuild()
+			weekStale = !hourGridMode
+			if (hourGridMode) {
+				weekViewLoader.item.rebuild()
+			}
 		}
 		scrollToSelection()
 	}
@@ -1031,6 +1045,39 @@ MouseArea {
 	}
 	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()
 	onShowCalendarChanged: if (showCalendar && monthStale) updateMonth()
+	// The kept Week / Day view shown again (from the month, the agenda, tasks): as a new one would
+	// be, the week (or day) with today, or the day asked for (showDayView). Two ticks later: after
+	// its own reaction to the column count (WeekView.onDayCountChanged goes to today).
+	onHourGridModeChanged: {
+		if (!hourGridMode) {
+			return
+		}
+		var asked = askedDayViewDate
+		askedDayViewDate = null
+		if (!weekViewLoader.item) {
+			return // Made now: onLoaded takes pendingDayViewDate
+		}
+		pendingDayViewDate = null
+		Qt.callLater(function() {
+			Qt.callLater(function() { popup.weekViewShown(asked) })
+		})
+	}
+	function weekViewShown(asked) {
+		var view = weekViewLoader.item
+		if (!view || !hourGridMode) {
+			return
+		}
+		var target = asked || view.startOfWeek(timeModel.currentTime)
+		if (target.getTime() !== view.weekStart.getTime()) {
+			view.weekStart = target // Scrolls back and rebuilds (WeekView.onWeekStartChanged)
+		} else {
+			view.resetScroll()
+			if (weekStale) {
+				view.rebuild()
+			}
+		}
+		weekStale = false
+	}
 
 	//--- Keyboard (KeyNav.js): arrows, Enter, N, / or Ctrl+F, T, 1-5. Cards and text fields keep
 	// their keys; Esc is left to the cards and to Plasma (closes the popup). Tasks tab: Up / Down,
