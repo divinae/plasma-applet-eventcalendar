@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:10+0100\n"
+"POT-Creation-Date: 2026-11-02 12:12+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -226,6 +226,10 @@ msgstr "Uwzględnij %1 w odliczaniu przy zegarze"
 msgid "Show All"
 msgstr "Pokaż wszystkie"
 
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Sprawdzenie kamery"
+
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml ../contents/ui/UpcomingEvents.qml
 msgctxt "%1 = Google Meet, Zoom, ..."
 msgid "Join %1"
@@ -234,10 +238,6 @@ msgstr "Dołącz przez %1"
 #: ../contents/ui/CameraCheckView.qml
 msgid "Nothing is recorded. The camera and the microphone are used only while this is open."
 msgstr "Nic nie jest nagrywane. Kamera i mikrofon są używane tylko wtedy, gdy to jest otwarte."
-
-#: ../contents/ui/CameraCheckWindow.qml
-msgid "Camera Check"
-msgstr "Sprawdzenie kamery"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"

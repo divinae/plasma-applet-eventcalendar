@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:10+0100\n"
+"POT-Creation-Date: 2026-11-02 12:12+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -259,6 +259,10 @@ msgstr "Medtag %1 i urets nedtælling"
 msgid "Show All"
 msgstr "Vis alle"
 
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Kameratjek"
+
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
 #: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
@@ -272,10 +276,6 @@ msgid ""
 "Nothing is recorded. The camera and the microphone are used only while this "
 "is open."
 msgstr "Intet optages. Kameraet og mikrofonen bruges kun, mens dette er åbent."
-
-#: ../contents/ui/CameraCheckWindow.qml
-msgid "Camera Check"
-msgstr "Kameratjek"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:10+0100\n"
+"POT-Creation-Date: 2026-11-02 12:12+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -261,6 +261,10 @@ msgstr "Vključi %1 v odštevanje ob uri"
 msgid "Show All"
 msgstr "Prikaži vse"
 
+#: ../contents/ui/CameraCheckView.qml ../contents/ui/CameraCheckWindow.qml
+msgid "Camera Check"
+msgstr "Preverjanje kamere"
+
 #: ../contents/ui/CameraCheckView.qml ../contents/ui/EventContextMenu.qml
 #: ../contents/ui/EventDetailsView.qml ../contents/ui/JoinPill.qml
 #: ../contents/ui/main.qml ../contents/ui/MeetingAlertContent.qml
@@ -275,10 +279,6 @@ msgid ""
 "is open."
 msgstr ""
 "Nič se ne snema. Kamera in mikrofon se uporabljata le, dokler je to odprto."
-
-#: ../contents/ui/CameraCheckWindow.qml
-msgid "Camera Check"
-msgstr "Preverjanje kamere"
 
 #: ../contents/ui/CameraMirror.qml
 msgid "The camera can't be used"
