@@ -333,6 +333,24 @@ PlasmoidItem {
 	function chooseImportFile() {
 		importFileDialog.open()
 	}
+	// Settings > ICalendar > "Import Events from a File…": the same import card, for that file.
+	Connections {
+		target: plasmoid.configuration
+		function onImportRequestChanged() {
+			var request = String(plasmoid.configuration.importRequest || "")
+			var bar = request.indexOf("|")
+			if (bar < 0) {
+				return
+			}
+			var fileUrl = request.slice(bar + 1)
+			root.expanded = true
+			Qt.callLater(function() {
+				if (root.fullRepresentationItem && typeof root.fullRepresentationItem.openImport === 'function') {
+					root.fullRepresentationItem.openImport(fileUrl)
+				}
+			})
+		}
+	}
 	FileDialog {
 		id: importFileDialog
 		title: i18n("Import Events")

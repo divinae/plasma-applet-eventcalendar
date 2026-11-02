@@ -19,8 +19,9 @@ READY_FILE_MODE = 0o600
 DEFAULT_TIMEOUT = 30
 KWALLET_FOLDER = "plasma-applet-eventcalendar"
 KWALLET_NAMES = ("kdewallet", "kdewallet5")
-# What secrets are for: Google accounts (refresh token, client secret), TickTick accounts (API token).
-ALLOWED_SCOPES = ("google-account", "ticktick-account")
+# What secrets are for: Google accounts (refresh token, client secret), TickTick accounts (API token),
+# CalDAV accounts (password).
+ALLOWED_SCOPES = ("google-account", "ticktick-account", "caldav-account")
 
 
 def build_attributes(args: argparse.Namespace) -> list[tuple[str, str]]:

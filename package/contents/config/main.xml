@@ -250,6 +250,10 @@
 			<!-- Keep the last loaded events and tasks in ~/.cache/plasma-eventcalendar for an offline start. -->
 			<default>true</default>
 		</entry>
+		<entry name="importRequest" type="string">
+			<!-- Settings > ICalendar > Import: "<time>|<file url>", the widget opens its import card for it (not a setting to keep) -->
+			<default></default>
+		</entry>
 		<entry name="icalCalendarList" type="string" stringType="base64json">
 			<default></default>
 		</entry>

@@ -165,7 +165,7 @@ class SecretStoreTests(unittest.TestCase):
 
     def test_scope_allowlist(self):
         parser = self.secret_store.build_parser()
-        for scope in ("google-account", "ticktick-account"):
+        for scope in ("google-account", "ticktick-account", "caldav-account"):
             args = parser.parse_args(["clear", "--scope", scope, "--key", "token", "--account-id", "tt_1"])
             self.assertEqual(args.scope, scope)
             self.assertEqual(

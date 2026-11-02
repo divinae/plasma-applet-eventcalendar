@@ -352,3 +352,38 @@ function search(query, limit, extra) {
 	}
 	return ranked[0].concat(ranked[1], ranked[2]).slice(0, limit || 50)
 }
+
+// The tooltip's time zones (selectedTimeZones) as a plain list: from an array, a Qt sequence (a
+// StringList setting can come as one, not an Array: it read as empty, and the next change saved
+// only "Local" and one zone, issue #15) or a comma separated string; trimmed, each once, "Local"
+// first.
+function normalizedList(list) {
+	var zones = []
+	if (typeof list === "string") {
+		zones = list.split(',')
+	} else if (list && typeof list.length === "number") {
+		zones = Array.prototype.slice.call(list)
+	}
+	var normalized = []
+	for (var i = 0; i < zones.length; i++) {
+		var zone = String(zones[i] || "").trim()
+		if (zone && zone !== "Local" && normalized.indexOf(zone) === -1) {
+			normalized.push(zone)
+		}
+	}
+	normalized.unshift("Local")
+	return normalized
+}
+
+// list with zone moved by delta places (-1: up, 1: down); "Local" stays first.
+function movedZone(list, zone, delta) {
+	var zones = normalizedList(list)
+	var i = zones.indexOf(zone)
+	var j = i + delta
+	if (i < 1 || j < 1 || j >= zones.length) {
+		return zones
+	}
+	zones.splice(i, 1)
+	zones.splice(j, 0, zone)
+	return zones
+}

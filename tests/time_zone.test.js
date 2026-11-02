@@ -14,7 +14,7 @@ const TimeZoneData = {}
 vm.runInNewContext(strip(fs.readFileSync(path.join(UI, 'code/TimeZoneData.js'), 'utf8')) + '\nObject.assign(out, { rules, recent, pickerZones })', { out: TimeZoneData })
 const T = {}
 vm.runInNewContext(strip(fs.readFileSync(path.join(UI, 'TimeZone.js'), 'utf8'))
-	+ '\nObject.assign(out, { parsePosix, offsetAt, abbreviation, wallClock, toUtc, toWallDate, fromWallDate, matchesLocal, guessLocal, cityName, offsetText, search, knows })',
+	+ '\nObject.assign(out, { parsePosix, offsetAt, abbreviation, wallClock, toUtc, toWallDate, fromWallDate, matchesLocal, guessLocal, cityName, offsetText, search, knows, normalizedList, movedZone })',
 	{ out: T, TimeZoneData, Date, Math })
 
 const plain = x => JSON.parse(JSON.stringify(x))
@@ -180,3 +180,17 @@ for (const zone of Object.keys(TimeZoneData.rules)) {
 assert.ok(TimeZoneData.pickerZones.every(z => T.knows(z)))
 
 console.log('time zone ok')
+
+// The tooltip's zones (#15): any list shape, each once, Local first; moving keeps Local first.
+{
+	assert.deepStrictEqual(plain(T.normalizedList(['Europe/London', 'Local', 'UTC', 'UTC'])), ['Local', 'Europe/London', 'UTC'])
+	const sequence = { length: 2, 0: 'Asia/Tokyo', 1: 'UTC' } // A Qt sequence: not an Array
+	assert.deepStrictEqual(plain(T.normalizedList(sequence)), ['Local', 'Asia/Tokyo', 'UTC'], 'a sequence keeps its zones')
+	assert.deepStrictEqual(plain(T.normalizedList(' UTC , Europe/Paris ')), ['Local', 'UTC', 'Europe/Paris'])
+	assert.deepStrictEqual(plain(T.normalizedList(null)), ['Local'])
+	const zones = ['Local', 'UTC', 'Asia/Tokyo', 'Europe/Paris']
+	assert.deepStrictEqual(plain(T.movedZone(zones, 'Europe/Paris', -1)), ['Local', 'UTC', 'Europe/Paris', 'Asia/Tokyo'])
+	assert.deepStrictEqual(plain(T.movedZone(zones, 'UTC', -1)), zones, 'not above Local')
+	assert.deepStrictEqual(plain(T.movedZone(zones, 'Europe/Paris', 1)), zones, 'the last stays')
+	assert.deepStrictEqual(plain(T.movedZone(zones, 'Local', 1)), zones, 'Local stays first')
+}

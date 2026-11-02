@@ -16,29 +16,11 @@ ConfigPage {
 	ListModel { id: timezoneListModel }
 
 	function normalizedTimezones(list) {
-		var zones = []
-		if (Array.isArray(list)) {
-			zones = list.slice(0)
-		} else if (typeof list === "string") {
-			zones = list.split(',')
-		}
-		var normalized = []
-		for (var i = 0; i < zones.length; i++) {
-			var zone = (zones[i] || "").trim()
-			if (!zone) {
-				continue
-			}
-			if (normalized.indexOf(zone) === -1) {
-				normalized.push(zone)
-			}
-		}
-		if (normalized.indexOf("Local") === -1) {
-			normalized.unshift("Local")
-		} else {
-			normalized.splice(normalized.indexOf("Local"), 1)
-			normalized.unshift("Local")
-		}
-		return normalized
+		return TimeZone.normalizedList(list)
+	}
+	function moveTimezone(zoneId, delta) {
+		updateConfig(TimeZone.movedZone(page.configBridge.read("selectedTimeZones", []), zoneId, delta))
+		syncFromConfig()
 	}
 
 	function syncFromConfig() {
@@ -131,6 +113,29 @@ ConfigPage {
 									color: Kirigami.Theme.disabledTextColor
 									font: Kirigami.Theme.smallFont
 								}
+							}
+							// The order they're listed in the tooltip (Local stays first).
+							ToolButton {
+								icon.name: "go-up"
+								display: AbstractButton.IconOnly
+								text: i18n("Move up")
+								visible: model.zoneId !== "Local"
+								enabled: index > 1
+								onClicked: moveTimezone(model.zoneId, -1)
+								ToolTip.text: text
+								ToolTip.visible: hovered
+								ToolTip.delay: Kirigami.Units.toolTipDelay
+							}
+							ToolButton {
+								icon.name: "go-down"
+								display: AbstractButton.IconOnly
+								text: i18n("Move down")
+								visible: model.zoneId !== "Local"
+								enabled: index < timezoneListModel.count - 1
+								onClicked: moveTimezone(model.zoneId, 1)
+								ToolTip.text: text
+								ToolTip.visible: hovered
+								ToolTip.delay: Kirigami.Units.toolTipDelay
 							}
 							ToolButton {
 								icon.name: "edit-delete"

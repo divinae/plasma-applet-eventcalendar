@@ -64,6 +64,32 @@ ConfigPage {
 		}
 	}
 
+	// Import: the events of an .ics file copied into one of your calendars (the widget opens its
+	// import card for it: importRequest, see main.qml), as the widget menu's "Import Events…".
+	HeaderText {
+		text: i18n("Import Events")
+	}
+	Label {
+		Layout.fillWidth: true
+		text: i18n("Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar.")
+		wrapMode: Text.Wrap
+	}
+	Button {
+		icon.name: "document-import"
+		text: i18n("Import Events from a File…")
+		onClicked: importFileDialog.open()
+	}
+	FileDialog {
+		id: importFileDialog
+		title: i18n("Import Events")
+		nameFilters: [ i18n("iCalendar (*.ics)") ]
+		onAccepted: {
+			// Straight to the widget (not a setting applied with OK, no cfg_ property): it opens the
+			// import card now.
+			page.configBridge.write("importRequest", Date.now() + "|" + String(selectedFile))
+		}
+	}
+
 	RowLayout {
 		HeaderText {
 			text: i18n("Calendars")
