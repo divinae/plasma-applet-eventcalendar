@@ -120,7 +120,7 @@ Item {
 				&& root.cameraCheckAvailable && Qt.application.screens.length > 0 && Screen.name === Qt.application.screens[0].name
 			readonly property bool soundAvailable: wanted && root.moduleAvailable("PlasmaPaProbe.qml")
 			property bool expanded: false
-			readonly property real pictureWidth: Kirigami.Units.gridUnit * 12
+			readonly property real pictureWidth: Kirigami.Units.gridUnit * 15
 			visible: wanted
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: Kirigami.Units.gridUnit
@@ -156,6 +156,8 @@ Item {
 					}
 					Loader {
 						Layout.fillWidth: true
+						// Unloaded it keeps its last height: out of the layout then (no gap after Show Less).
+						visible: active
 						active: cameraCheck.expanded && cameraCheck.soundAvailable
 						source: "MicMeter.qml"
 						onLoaded: item.running = Qt.binding(function() { return content.visible })
