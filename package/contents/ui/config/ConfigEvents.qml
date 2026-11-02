@@ -214,7 +214,7 @@ ConfigPage {
 				id: alertCamera
 				visible: page.multimediaAvailable
 				text: i18n("Camera check")
-				description: i18n("Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown.")
+				description: i18n("Before you join a meeting with a video link: your camera, and on request the microphone and the speaker. Nothing is recorded; they're on only while the alert is shown.")
 				configKey: 'meetingAlertCamera'
 			}
 		}

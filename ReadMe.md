@@ -86,9 +86,9 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   mirror, check that the microphone picks you up (its live level and sensitivity, hear yourself live
   in headphones, a warning when it's muted) and that the speaker works, pick the camera, microphone
   and speaker, then Join. From the widget's menu, an event's menu or details, or the reminder before
-  a meeting; optionally all of it in the full-screen alert too (Settings > Events > Full Screen);
-  nothing is recorded, and the camera is on only while it's open. Needs Qt Multimedia
-  (`qt6-multimedia`); the microphone part uses Plasma's audio applet.
+  a meeting; optionally the camera in the full-screen alert too, the microphone and speaker a click
+  away (Settings > Events > Full Screen); nothing is recorded, and the camera is on only while it's
+  open. Needs Qt Multimedia (`qt6-multimedia`); the microphone part uses Plasma's audio applet.
 - **Notifications** through KDE's notification system: reminders before events (with Snooze,
   optionally hidden after N seconds), when an event starts (optionally critical / persistent, or
   full screen),

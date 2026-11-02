@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -919,8 +919,8 @@ msgid "Camera check"
 msgstr "Kameran tarkistus"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
-msgstr "Ennen kuin liityt kokoukseen, jossa on videolinkki: kamerasi, mikrofonin taso ja herkkyys, oman äänen kuuntelu ja kaiutin. Mitään ei tallenneta; ne ovat päällä vain, kun ilmoitus näkyy."
+msgid "Before you join a meeting with a video link: your camera, and on request the microphone and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Ennen kuin liityt kokoukseen, jossa on videolinkki: kamerasi ja pyynnöstä mikrofoni ja kaiutin. Mitään ei tallenneta; ne ovat päällä vain, kun ilmoitus näkyy."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3187,6 +3187,18 @@ msgid "Starting now"
 msgstr "Alkaa nyt"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "Näytä vähemmän"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "Mikrofoni ja kaiutin…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "Valitse kamera…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "Torkku 1 min"
 
@@ -4189,6 +4201,9 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr "Ennen kuin liityt kokoukseen, jossa on videolinkki: kamerasi, mikrofonin taso ja herkkyys, oman äänen kuuntelu ja kaiutin. Mitään ei tallenneta; ne ovat päällä vain, kun ilmoitus näkyy."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "Koko näyttö vain kokouksille, joissa on videolinkki"

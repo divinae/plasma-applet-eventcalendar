@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1090,12 +1090,12 @@ msgstr "בדיקת מצלמה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"Before you join a meeting with a video link: your camera, the microphone's "
-"level and sensitivity, hearing yourself, and the speaker. Nothing is "
-"recorded; they're on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, and on request the "
+"microphone and the speaker. Nothing is recorded; they're on only while the "
+"alert is shown."
 msgstr ""
-"לפני הצטרפות לפגישה עם קישור וידאו: המצלמה, רמת המיקרופון ורגישותו, שמיעה "
-"עצמית והרמקול. שום דבר לא מוקלט; הם פועלים רק כל עוד ההתראה מוצגת."
+"לפני הצטרפות לפגישה עם קישור וידאו: המצלמה, ולפי בקשה גם המיקרופון והרמקול. "
+"שום דבר לא מוקלט; הם פועלים רק כל עוד ההתראה מוצגת."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3577,6 +3577,18 @@ msgid "Starting now"
 msgstr "מתחיל עכשיו"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "להציג פחות"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "מיקרופון ורמקול…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "בחירת המצלמה…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "נודניק דקה"
 
@@ -4616,6 +4628,14 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid ""
+#~ "Before you join a meeting with a video link: your camera, the "
+#~ "microphone's level and sensitivity, hearing yourself, and the speaker. "
+#~ "Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr ""
+#~ "לפני הצטרפות לפגישה עם קישור וידאו: המצלמה, רמת המיקרופון ורגישותו, שמיעה "
+#~ "עצמית והרמקול. שום דבר לא מוקלט; הם פועלים רק כל עוד ההתראה מוצגת."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "מסך מלא רק לפגישות עם קישור וידאו"

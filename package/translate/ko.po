@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1076,12 +1076,12 @@ msgstr "카메라 확인"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"Before you join a meeting with a video link: your camera, the microphone's "
-"level and sensitivity, hearing yourself, and the speaker. Nothing is "
-"recorded; they're on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, and on request the "
+"microphone and the speaker. Nothing is recorded; they're on only while the "
+"alert is shown."
 msgstr ""
-"화상 링크가 있는 회의에 참여하기 전: 카메라, 마이크 레벨과 감도, 내 목소리 듣"
-"기, 스피커. 아무것도 녹화되지 않으며 알림이 표시되는 동안에만 켜집니다."
+"화상 링크가 있는 회의에 참여하기 전: 카메라, 그리고 요청 시 마이크와 스피커. "
+"아무것도 녹화되지 않으며 알림이 표시되는 동안에만 켜집니다."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3504,6 +3504,18 @@ msgid "Starting now"
 msgstr "지금 시작"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "간단히 보기"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "마이크 및 스피커…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "카메라 선택…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "1분 후 다시 알림"
 
@@ -4497,6 +4509,15 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid ""
+#~ "Before you join a meeting with a video link: your camera, the "
+#~ "microphone's level and sensitivity, hearing yourself, and the speaker. "
+#~ "Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr ""
+#~ "화상 링크가 있는 회의에 참여하기 전: 카메라, 마이크 레벨과 감도, 내 목소"
+#~ "리 듣기, 스피커. 아무것도 녹화되지 않으며 알림이 표시되는 동안에만 켜집니"
+#~ "다."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "화상 링크가 있는 회의만 전체 화면"

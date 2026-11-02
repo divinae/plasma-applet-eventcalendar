@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -910,8 +910,8 @@ msgid "Camera check"
 msgstr "カメラチェック"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
-msgstr "ビデオリンクのある会議に参加する前に: カメラ、マイクのレベルと感度、自分の声の確認、スピーカー。何も録画・録音されず、通知の表示中だけ使われます。"
+msgid "Before you join a meeting with a video link: your camera, and on request the microphone and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "ビデオリンクのある会議に参加する前に: カメラと、必要に応じてマイクとスピーカー。何も録画・録音されず、通知の表示中だけ使われます。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3153,6 +3153,18 @@ msgid "Starting now"
 msgstr "開始します"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "表示を減らす"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "マイクとスピーカー…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "カメラを選択…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "1 分後に再通知"
 
@@ -4138,6 +4150,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr "ビデオリンクのある会議に参加する前に: カメラ、マイクのレベルと感度、自分の声の確認、スピーカー。何も録画・録音されず、通知の表示中だけ使われます。"
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "全画面はビデオリンクのある会議のみ"

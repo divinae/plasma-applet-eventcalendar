@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1094,13 +1094,13 @@ msgstr "Kamera denetimi"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"Before you join a meeting with a video link: your camera, the microphone's "
-"level and sensitivity, hearing yourself, and the speaker. Nothing is "
-"recorded; they're on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, and on request the "
+"microphone and the speaker. Nothing is recorded; they're on only while the "
+"alert is shown."
 msgstr ""
-"Görüntülü bağlantısı olan bir toplantıya katılmadan önce: kameranız, "
-"mikrofonun seviyesi ve hassasiyeti, kendinizi duymak ve hoparlör. Hiçbir şey "
-"kaydedilmez; yalnızca uyarı gösterilirken açıktırlar."
+"Görüntülü bağlantısı olan bir toplantıya katılmadan önce: kameranız ve "
+"isterseniz mikrofon ile hoparlör. Hiçbir şey kaydedilmez; yalnızca uyarı "
+"gösterilirken açıktırlar."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3555,6 +3555,18 @@ msgid "Starting now"
 msgstr "Şimdi başlıyor"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "Daha az göster"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "Mikrofon ve hoparlör…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "Kamerayı seç…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "1 dk ertele"
 
@@ -4568,6 +4580,15 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid ""
+#~ "Before you join a meeting with a video link: your camera, the "
+#~ "microphone's level and sensitivity, hearing yourself, and the speaker. "
+#~ "Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr ""
+#~ "Görüntülü bağlantısı olan bir toplantıya katılmadan önce: kameranız, "
+#~ "mikrofonun seviyesi ve hassasiyeti, kendinizi duymak ve hoparlör. Hiçbir "
+#~ "şey kaydedilmez; yalnızca uyarı gösterilirken açıktırlar."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "Tam ekran yalnızca video bağlantısı olan toplantılar için"

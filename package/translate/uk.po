@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1105,13 +1105,13 @@ msgstr "Перевірка камери"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"Before you join a meeting with a video link: your camera, the microphone's "
-"level and sensitivity, hearing yourself, and the speaker. Nothing is "
-"recorded; they're on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, and on request the "
+"microphone and the speaker. Nothing is recorded; they're on only while the "
+"alert is shown."
 msgstr ""
-"Перед приєднанням до зустрічі з посиланням на відео: ваша камера, рівень і "
-"чутливість мікрофона, прослуховування себе та динамік. Нічого не "
-"записується; вони увімкнені, лише поки показано сповіщення."
+"Перед приєднанням до зустрічі з посиланням на відео: ваша камера, а на запит "
+"мікрофон і динамік. Нічого не записується; вони увімкнені, лише поки "
+"показано сповіщення."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3591,6 +3591,18 @@ msgid "Starting now"
 msgstr "Починається"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "Згорнути"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "Мікрофон і динамік…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "Вибрати камеру…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "Відкласти на 1 хв"
 
@@ -4619,6 +4631,15 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid ""
+#~ "Before you join a meeting with a video link: your camera, the "
+#~ "microphone's level and sensitivity, hearing yourself, and the speaker. "
+#~ "Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr ""
+#~ "Перед приєднанням до зустрічі з посиланням на відео: ваша камера, рівень "
+#~ "і чутливість мікрофона, прослуховування себе та динамік. Нічого не "
+#~ "записується; вони увімкнені, лише поки показано сповіщення."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "На весь екран лише для зустрічей з відеопосиланням"

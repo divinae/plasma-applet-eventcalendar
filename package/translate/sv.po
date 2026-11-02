@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -916,8 +916,8 @@ msgid "Camera check"
 msgstr "Kamerakontroll"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
-msgstr "Innan du ansluter till ett möte med en videolänk: din kamera, mikrofonens nivå och känslighet, höra dig själv och högtalaren. Inget spelas in; de är bara på medan varningen visas."
+msgid "Before you join a meeting with a video link: your camera, and on request the microphone and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Innan du ansluter till ett möte med en videolänk: din kamera och på begäran mikrofonen och högtalaren. Inget spelas in; de är bara på medan varningen visas."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3184,6 +3184,18 @@ msgid "Starting now"
 msgstr "Börjar nu"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "Visa mindre"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "Mikrofon och högtalare…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "Välj kameran…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "Snooza 1 min"
 
@@ -4186,6 +4198,9 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr "Innan du ansluter till ett möte med en videolänk: din kamera, mikrofonens nivå och känslighet, höra dig själv och högtalaren. Inget spelas in; de är bara på medan varningen visas."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "Helskärm endast för möten med videolänk"

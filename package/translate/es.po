@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:02+0100\n"
+"POT-Creation-Date: 2026-11-02 13:09+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -918,8 +918,8 @@ msgid "Camera check"
 msgstr "Comprobar la cámara"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
-msgstr "Antes de unirte a una reunión con enlace de vídeo: tu cámara, el nivel y la sensibilidad del micrófono, escucharte y el altavoz. No se graba nada; solo están activos mientras se muestra el aviso."
+msgid "Before you join a meeting with a video link: your camera, and on request the microphone and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Antes de unirte a una reunión con enlace de vídeo: tu cámara y, si lo pides, el micrófono y el altavoz. No se graba nada; solo están activos mientras se muestra el aviso."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notification"
@@ -3186,6 +3186,18 @@ msgid "Starting now"
 msgstr "Empieza ahora"
 
 #: ../contents/ui/MeetingAlertContent.qml
+msgid "Show Less"
+msgstr "Mostrar menos"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Microphone and Speaker…"
+msgstr "Micrófono y altavoz…"
+
+#: ../contents/ui/MeetingAlertContent.qml
+msgid "Choose the Camera…"
+msgstr "Elegir la cámara…"
+
+#: ../contents/ui/MeetingAlertContent.qml
 msgid "Snooze 1 min"
 msgstr "Posponer 1 min"
 
@@ -4188,6 +4200,9 @@ msgstr "No hay más eventos hoy"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lugar de trabajo: %1"
+
+#~ msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+#~ msgstr "Antes de unirte a una reunión con enlace de vídeo: tu cámara, el nivel y la sensibilidad del micrófono, escucharte y el altavoz. No se graba nada; solo están activos mientras se muestra el aviso."
 
 #~ msgid "Full screen only for meetings with a video link"
 #~ msgstr "Pantalla completa solo para reuniones con enlace de vídeo"

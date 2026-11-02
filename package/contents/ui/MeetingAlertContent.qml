@@ -109,29 +109,46 @@ Item {
 		}
 
 		// The camera check before you join (Settings > Events > Full Screen > Camera check): the
-		// camera as a mirror with its choice, the microphone's level, sensitivity and "hear yourself",
-		// the speaker and its test (CameraMirror.qml, MicMeter.qml), for a meeting with a link, on the
-		// first screen only (a camera serves one window), while the alert is shown. Loaded by URL:
-		// needs Qt Multimedia (the sound part plasma-pa).
+		// camera as a mirror, for a meeting with a link, on the first screen only (a camera serves
+		// one window), while the alert is shown; "Microphone and speaker" adds the camera's choice,
+		// the microphone's level, sensitivity and "hear yourself", the speaker and its test (the
+		// microphone is used only then). CameraMirror.qml, MicMeter.qml, loaded by URL: they need
+		// Qt Multimedia (the sound part plasma-pa).
 		ColumnLayout {
+			id: cameraCheck
 			readonly property bool wanted: plasmoid.configuration.meetingAlertCamera && !!content.meetingLink
 				&& root.cameraCheckAvailable && Qt.application.screens.length > 0 && Screen.name === Qt.application.screens[0].name
+			readonly property bool soundAvailable: wanted && root.moduleAvailable("PlasmaPaProbe.qml")
+			property bool expanded: false
 			visible: wanted
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: Kirigami.Units.gridUnit
-			Layout.preferredWidth: Kirigami.Units.gridUnit * 26
+			Layout.preferredWidth: Kirigami.Units.gridUnit * (expanded ? 26 : 22)
 			spacing: Kirigami.Units.largeSpacing
 			Loader {
 				Layout.fillWidth: true
-				active: parent.wanted
+				active: cameraCheck.wanted
 				source: "CameraMirror.qml"
-				onLoaded: item.running = Qt.binding(function() { return content.visible })
+				onLoaded: {
+					item.running = Qt.binding(function() { return content.visible })
+					item.showControls = Qt.binding(function() { return cameraCheck.expanded })
+				}
 			}
 			Loader {
 				Layout.fillWidth: true
-				active: parent.wanted && root.moduleAvailable("PlasmaPaProbe.qml")
+				active: cameraCheck.expanded && cameraCheck.soundAvailable
 				source: "MicMeter.qml"
 				onLoaded: item.running = Qt.binding(function() { return content.visible })
+			}
+			PlasmaComponents3.ToolButton {
+				Layout.alignment: Qt.AlignHCenter
+				icon.name: cameraCheck.expanded ? "go-up-symbolic" : "audio-input-microphone-symbolic"
+				text: cameraCheck.expanded ? i18n("Show Less")
+					: cameraCheck.soundAvailable ? i18n("Microphone and Speaker…") : i18n("Choose the Camera…")
+				onClicked: {
+					cameraCheck.expanded = !cameraCheck.expanded
+					content.forceActiveFocus() // Esc and Return stay the alert's
+				}
 			}
 		}
 
