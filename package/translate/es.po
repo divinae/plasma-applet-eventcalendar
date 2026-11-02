@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-11-02 09:02+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -37,6 +37,10 @@ msgstr "ICalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Calendario de Google"
+
+#: ../contents/config/config.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml ../contents/ui/SearchView.qml
 msgid "Tasks"
@@ -89,6 +93,34 @@ msgctxt "more events not shown in a month day cell"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1 didn't accept the user name or password"
+msgstr "CalDAV: %1 no aceptó el nombre de usuario o la contraseña"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Could not connect"
+msgstr "No se pudo conectar"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "The event was changed elsewhere meanwhile; it's loaded again"
+msgstr "El evento se cambió en otro lugar mientras tanto; se ha vuelto a cargar"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/config/ConfigCalDAV.qml
+msgid "Unknown error"
+msgstr "Error desconocido"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1"
+msgstr "CalDAV: %1"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: an unexpected answer"
+msgstr "CalDAV: una respuesta inesperada"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "Este calendario no puede importar eventos"
+
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
@@ -101,10 +133,6 @@ msgstr "[Sin Calendarios]"
 #: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Error HTTP %1: %2"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
-msgid "Could not connect"
-msgstr "No se pudo conectar"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "Will try again soon."
@@ -258,6 +286,88 @@ msgstr "Color"
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Guardar"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
+msgstr "El servidor no aceptó el nombre de usuario o la contraseña. Algunos servicios necesitan una contraseña de aplicación (iCloud, Fastmail, Nextcloud con inicio de sesión en dos pasos)."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Couldn't connect to the server. Check the address and your connection."
+msgstr "No se pudo conectar con el servidor. Comprueba la dirección y tu conexión."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "No CalDAV calendars at that address. Try the address your service gives for CalDAV."
+msgstr "No hay calendarios CalDAV en esa dirección. Prueba la dirección que tu servicio indica para CalDAV."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The server's answer couldn't be read"
+msgstr "No se pudo leer la respuesta del servidor"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Enter the server address (https://…), your user name and your password."
+msgstr "Introduce la dirección del servidor (https://…), tu nombre de usuario y tu contraseña."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connecting…"
+msgstr "Conectando…"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The password couldn't be stored in the keyring: %1"
+msgstr "No se pudo guardar la contraseña en el anillo de claves: %1"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected: %1 calendar"
+msgid_plural "Connected: %1 calendars"
+msgstr[0] "Conectado: %1 calendario"
+msgstr[1] "Conectado: %1 calendarios"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected, but the account has no calendars for events."
+msgstr "Conectado, pero la cuenta no tiene calendarios para eventos."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Read-only"
+msgstr "Solo lectura"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Refresh Calendars"
+msgstr "Refrescar calendarios"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Remove Account"
+msgstr "Eliminar cuenta"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Add a CalDAV Account"
+msgstr "Añadir una cuenta CalDAV"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Servidor"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "eg: https://cloud.example.org/remote.php/dav"
+msgstr "p. ej.: https://cloud.example.org/remote.php/dav"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "User name"
+msgstr "Nombre de usuario"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Password"
+msgstr "Contraseña"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Conectar"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Plain http works only for a server on your own network; the password isn't encrypted on the way."
+msgstr "El http sin cifrar solo funciona con un servidor de tu propia red; la contraseña no se cifra por el camino."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others. The password is kept in the system keyring. Repeating events are shown, but changed only in their own app for now."
+msgstr "Nextcloud, Fastmail, iCloud (con una contraseña de aplicación), Radicale, Baïkal y otros. La contraseña se guarda en el anillo de claves del sistema. Los eventos repetidos se muestran, pero por ahora solo se cambian en su propia aplicación."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -704,10 +814,6 @@ msgid "Reload calendars and task lists"
 msgstr "Recargar calendarios y listas de tareas"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
-msgid "Remove Account"
-msgstr "Eliminar cuenta"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -843,6 +949,22 @@ msgstr "Opciones"
 msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr "Ocultar descripción \"Este evento fue añadido desde Goals en Google Calendar\""
 
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Importar eventos"
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Copy the events of an .ics file (exported from another calendar app) into one of your calendars. The widget shows them first, to pick the calendar."
+msgstr "Copia los eventos de un archivo .ics (exportado de otra aplicación de calendario) a uno de tus calendarios. El widget los muestra primero para elegir el calendario."
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Import Events from a File…"
+msgstr "Importar eventos de un archivo…"
+
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Agregar calendario"
@@ -862,10 +984,6 @@ msgstr "URL https:// o archivo local %1/*.ics"
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Browse"
 msgstr "Examinar"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1001,10 +1119,6 @@ msgid "No projects loaded yet. Use the reload button."
 msgstr "Aún no se han cargado proyectos. Usa el botón de recarga."
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Server"
-msgstr "Servidor"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick (ticktick.com)"
 msgstr "TickTick (ticktick.com)"
 
@@ -1025,10 +1139,6 @@ msgid "Connect Another Account"
 msgstr "Conectar otra cuenta"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Connect"
-msgstr "Conectar"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "Create an API token on the TickTick website: Settings > Account > API Token (on dida365.com for Dida365). The token is kept in the system keyring (KWallet or Secret Service), not in the widget's settings."
 msgstr "Crea un token de API en el sitio web de TickTick: Settings > Account > API Token (en dida365.com para Dida365). El token se guarda en el anillo de claves del sistema (KWallet o Secret Service), no en los ajustes del widget."
 
@@ -1039,6 +1149,14 @@ msgstr "Local"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Extra Time Zones in the Tooltip"
 msgstr "Zonas horarias adicionales en la información emergente"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move up"
+msgstr "Subir"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move down"
+msgstr "Bajar"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Remove time zone"
@@ -2576,10 +2694,6 @@ msgid "Elsewhere"
 msgstr "Otro lugar"
 
 #: ../contents/ui/EventModel.qml
-msgid "This calendar can't import events"
-msgstr "Este calendario no puede importar eventos"
-
-#: ../contents/ui/EventModel.qml
 msgid "This calendar can't show free / busy times"
 msgstr "Este calendario no puede mostrar la disponibilidad"
 
@@ -2722,10 +2836,6 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 excepción"
 msgstr[1] "%1 excepciones"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Importar eventos"
 
 #: ../contents/ui/ImportView.qml
 msgid "Close"

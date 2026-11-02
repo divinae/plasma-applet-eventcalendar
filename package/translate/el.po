@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-11-02 09:02+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -40,6 +40,10 @@ msgstr "ICalendar (*.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Ημερολόγιο Google"
+
+#: ../contents/config/config.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -97,6 +101,39 @@ msgctxt "more events not shown in a month day cell"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1 didn't accept the user name or password"
+msgstr "CalDAV: Το %1 δεν αποδέχτηκε το όνομα χρήστη ή τον κωδικό πρόσβασης"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Could not connect"
+msgstr "Αδυναμία σύνδεσης"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "The event was changed elsewhere meanwhile; it's loaded again"
+msgstr "Το συμβάν άλλαξε στο μεταξύ από αλλού· φορτώθηκε ξανά"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Unknown error"
+msgstr "Άγνωστο σφάλμα"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1"
+msgstr "CalDAV: %1"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: an unexpected answer"
+msgstr "CalDAV: μια μη αναμενόμενη απάντηση"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "Αυτό το ημερολόγιο δεν μπορεί να εισαγάγει συμβάντα"
+
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
@@ -111,13 +148,6 @@ msgstr "[Χωρίς Ημερολόγια]"
 #: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Σφάλμα HTTP %1: %2"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/ICalManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml
-msgid "Could not connect"
-msgstr "Αδυναμία σύνδεσης"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
@@ -300,6 +330,113 @@ msgstr "Χρώμα"
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Αποθήκευση"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"The server didn't accept the user name or password. Some services need an "
+"app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
+msgstr ""
+"Ο διακομιστής δεν αποδέχτηκε το όνομα χρήστη ή τον κωδικό πρόσβασης. "
+"Ορισμένες υπηρεσίες χρειάζονται κωδικό εφαρμογής (iCloud, Fastmail, "
+"Nextcloud με σύνδεση δύο παραγόντων)."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Couldn't connect to the server. Check the address and your connection."
+msgstr ""
+"Αδυναμία σύνδεσης με τον διακομιστή. Ελέγξτε τη διεύθυνση και τη σύνδεσή σας."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"No CalDAV calendars at that address. Try the address your service gives for "
+"CalDAV."
+msgstr ""
+"Δεν υπάρχουν ημερολόγια CalDAV σε αυτή τη διεύθυνση. Δοκιμάστε τη διεύθυνση "
+"που δίνει η υπηρεσία σας για το CalDAV."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The server's answer couldn't be read"
+msgstr "Η απάντηση του διακομιστή δεν ήταν δυνατό να διαβαστεί"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Enter the server address (https://…), your user name and your password."
+msgstr ""
+"Εισαγάγετε τη διεύθυνση του διακομιστή (https://…), το όνομα χρήστη και τον "
+"κωδικό πρόσβασής σας."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connecting…"
+msgstr "Σύνδεση…"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The password couldn't be stored in the keyring: %1"
+msgstr "Ο κωδικός πρόσβασης δεν ήταν δυνατό να αποθηκευτεί στην κλειδοθήκη: %1"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected: %1 calendar"
+msgid_plural "Connected: %1 calendars"
+msgstr[0] "Συνδέθηκε: %1 ημερολόγιο"
+msgstr[1] "Συνδέθηκε: %1 ημερολόγια"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected, but the account has no calendars for events."
+msgstr "Συνδέθηκε, αλλά ο λογαριασμός δεν έχει ημερολόγια για συμβάντα."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Read-only"
+msgstr "Μόνο για ανάγνωση"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Refresh Calendars"
+msgstr "Ανανέωση ημερολογίων"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove Account"
+msgstr "Αφαίρεση λογαριασμού"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Add a CalDAV Account"
+msgstr "Προσθήκη λογαριασμού CalDAV"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Διακομιστής"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "eg: https://cloud.example.org/remote.php/dav"
+msgstr "π.χ.: https://cloud.example.org/remote.php/dav"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "User name"
+msgstr "Όνομα χρήστη"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Σύνδεση"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Plain http works only for a server on your own network; the password isn't "
+"encrypted on the way."
+msgstr ""
+"Το απλό http λειτουργεί μόνο για διακομιστή στο δικό σας δίκτυο· ο κωδικός "
+"πρόσβασης δεν κρυπτογραφείται κατά τη μετάδοση."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
+"others. The password is kept in the system keyring. Repeating events are "
+"shown, but changed only in their own app for now."
+msgstr ""
+"Nextcloud, Fastmail, iCloud (με κωδικό εφαρμογής), Radicale, Baïkal και "
+"άλλα. Ο κωδικός πρόσβασης φυλάσσεται στην κλειδοθήκη του συστήματος. Τα "
+"επαναλαμβανόμενα συμβάντα εμφανίζονται, αλλά προς το παρόν αλλάζουν μόνο στη "
+"δική τους εφαρμογή."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -825,11 +962,6 @@ msgstr "Επαναφόρτωση ημερολογίων και λιστών ερ
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove Account"
-msgstr "Αφαίρεση λογαριασμού"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -1022,6 +1154,28 @@ msgstr ""
 "Απόκρυψη της περιγραφής «Αυτό το συμβάν προστέθηκε από τους Στόχους στο "
 "Ημερολόγιο Google»"
 
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Εισαγωγή συμβάντων"
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Αντιγράψτε τα συμβάντα ενός αρχείου .ics (που εξήχθη από άλλη εφαρμογή "
+"ημερολογίου) σε ένα από τα ημερολόγιά σας. Το γραφικό συστατικό τα εμφανίζει "
+"πρώτα, για να επιλέξετε το ημερολόγιο."
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Import Events from a File…"
+msgstr "Εισαγωγή συμβάντων από αρχείο…"
+
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Προσθήκη Ημερολογίου"
@@ -1041,10 +1195,6 @@ msgstr "URL https:// ή τοπικό αρχείο %1/*.ics"
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Browse"
 msgstr "Πλοήγηση"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1214,10 +1364,6 @@ msgid "No projects loaded yet. Use the reload button."
 msgstr "Δεν έχουν φορτωθεί έργα ακόμη. Χρησιμοποιήστε το κουμπί επαναφόρτωσης."
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Server"
-msgstr "Διακομιστής"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick (ticktick.com)"
 msgstr "TickTick (ticktick.com)"
 
@@ -1238,10 +1384,6 @@ msgid "Connect Another Account"
 msgstr "Σύνδεση άλλου λογαριασμού"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Connect"
-msgstr "Σύνδεση"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid ""
 "Create an API token on the TickTick website: Settings > Account > API Token "
 "(on dida365.com for Dida365). The token is kept in the system keyring "
@@ -1259,6 +1401,14 @@ msgstr "Τοπικό"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Extra Time Zones in the Tooltip"
 msgstr "Επιπλέον ζώνες ώρας στη συμβουλή οθόνης"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move up"
+msgstr "Μετακίνηση πάνω"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move down"
+msgstr "Μετακίνηση κάτω"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Remove time zone"
@@ -2892,10 +3042,6 @@ msgid "Elsewhere"
 msgstr "Αλλού"
 
 #: ../contents/ui/EventModel.qml
-msgid "This calendar can't import events"
-msgstr "Αυτό το ημερολόγιο δεν μπορεί να εισαγάγει συμβάντα"
-
-#: ../contents/ui/EventModel.qml
 msgid "This calendar can't show free / busy times"
 msgstr ""
 "Αυτό το ημερολόγιο δεν μπορεί να εμφανίσει ελεύθερες / απασχολημένες ώρες"
@@ -3048,10 +3194,6 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 εξαίρεση"
 msgstr[1] "%1 εξαιρέσεις"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Εισαγωγή συμβάντων"
 
 #: ../contents/ui/ImportView.qml
 msgid "Close"

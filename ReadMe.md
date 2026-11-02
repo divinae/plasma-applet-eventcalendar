@@ -25,8 +25,8 @@ again.
 - ✍️ **Plan without leaving the panel.** Create, edit, move and answer events right in the widget;
   quick add understands plain sentences ("Lunch with Anna tomorrow 13:00"), and *Go to date* takes
   "next friday" or "+2w".
-- ☁️ **All your calendars.** Several Google accounts, KDE PIM (Akonadi), holidays and .ics files;
-  an event that's in two calendars shows once.
+- ☁️ **All your calendars.** Several Google accounts, CalDAV (Nextcloud, Fastmail, iCloud…), KDE
+  PIM (Akonadi), holidays and .ics files; an event that's in two calendars shows once.
 - ⚡ **Fast and offline-ready.** It opens instantly with your last events and tasks, even without a
   network, and stays quick with busy calendars and long task lists.
 - 🎨 **Looks at home in Plasma.** Rounded "islands" cards or a flat look, light and dark themes,
@@ -87,6 +87,10 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   full screen),
   new invitations for today (with Yes / Maybe / No) and a daily agenda, each configurable in
   System Settings > Notifications > Event Calendar NG. Clicking one opens the event in the widget.
+- **CalDAV** (Nextcloud, Fastmail, iCloud with an app password, Radicale, Baïkal…): add an account in
+  Settings > CalDAV and choose its calendars; create, edit, move and delete events there, import
+  .ics files into them. The password stays in the system keyring. Repeating events are shown, and
+  changed in their own app for now.
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
   direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
@@ -162,7 +166,7 @@ dependencies below on Debian/Ubuntu, Arch and Fedora.
 Optional:
 
 - `pw-play` (PipeWire), `paplay` (PulseAudio) or `canberra-gtk-play`, for custom notification sounds
-- iCalendar (.ics) files: the Python packages `icalendar>=6.1,<8` and
+- iCalendar (.ics) files and CalDAV: the Python packages `icalendar>=6.1,<8` and
   `recurring-ical-events>=3.8,<4` (RRULE / RDATE / EXDATE / RECURRENCE-ID expansion). The install
   script puts them under `~/.local/share/plasma_org.kde.plasma.eventcalendar/python`.
 - Akonadi / KDE PIM calendars: `akonadi` + `kdepim-addons`; creating local events: `konsolekalendar`

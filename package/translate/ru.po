@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-11-02 09:02+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -43,6 +43,10 @@ msgstr "ICalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Google календарь"
+
+#: ../contents/config/config.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -100,6 +104,40 @@ msgctxt "more events not shown in a month day cell"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1 didn't accept the user name or password"
+msgstr "CalDAV: %1 не принял имя пользователя или пароль"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Could not connect"
+msgstr "Невозможно установить соединение"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "The event was changed elsewhere meanwhile; it's loaded again"
+msgstr ""
+"Событие тем временем было изменено в другом месте; оно загружено заново"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1"
+msgstr "CalDAV: %1"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: an unexpected answer"
+msgstr "CalDAV: неожиданный ответ"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "В этот календарь нельзя импортировать события"
+
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
@@ -114,13 +152,6 @@ msgstr "[Без календарей]"
 #: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "Ошибка HTTP %1: %2"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/ICalManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml
-msgid "Could not connect"
-msgstr "Невозможно установить соединение"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
@@ -305,6 +336,109 @@ msgstr "Цвет"
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Сохранить"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"The server didn't accept the user name or password. Some services need an "
+"app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
+msgstr ""
+"Сервер не принял имя пользователя или пароль. Некоторым службам нужен пароль "
+"приложения (iCloud, Fastmail, Nextcloud с двухфакторным входом)."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Couldn't connect to the server. Check the address and your connection."
+msgstr "Не удалось подключиться к серверу. Проверьте адрес и подключение."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"No CalDAV calendars at that address. Try the address your service gives for "
+"CalDAV."
+msgstr ""
+"По этому адресу нет календарей CalDAV. Попробуйте адрес, который ваша служба "
+"указывает для CalDAV."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The server's answer couldn't be read"
+msgstr "Не удалось прочитать ответ сервера"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Enter the server address (https://…), your user name and your password."
+msgstr "Введите адрес сервера (https://…), имя пользователя и пароль."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connecting…"
+msgstr "Подключение…"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The password couldn't be stored in the keyring: %1"
+msgstr "Не удалось сохранить пароль в связке ключей: %1"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected: %1 calendar"
+msgid_plural "Connected: %1 calendars"
+msgstr[0] "Подключено: %1 календарь"
+msgstr[1] "Подключено: %1 календаря"
+msgstr[2] "Подключено: %1 календарей"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected, but the account has no calendars for events."
+msgstr "Подключено, но в учетной записи нет календарей для событий."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Read-only"
+msgstr "Только для чтения"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Refresh Calendars"
+msgstr "Обновить календари"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove Account"
+msgstr "Удалить учетную запись"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Add a CalDAV Account"
+msgstr "Добавить учетную запись CalDAV"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Сервер"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "eg: https://cloud.example.org/remote.php/dav"
+msgstr "например: https://cloud.example.org/remote.php/dav"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "User name"
+msgstr "Имя пользователя"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Password"
+msgstr "Пароль"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Подключить"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Plain http works only for a server on your own network; the password isn't "
+"encrypted on the way."
+msgstr ""
+"Обычный http работает только с сервером в вашей собственной сети; пароль по "
+"пути не шифруется."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
+"others. The password is kept in the system keyring. Repeating events are "
+"shown, but changed only in their own app for now."
+msgstr ""
+"Nextcloud, Fastmail, iCloud (с паролем приложения), Radicale, Baïkal и "
+"другие. Пароль хранится в системной связке ключей. Повторяющиеся события "
+"показываются, но пока изменяются только в своем приложении."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -824,11 +958,6 @@ msgstr "Перезагрузить календари и списки задач
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove Account"
-msgstr "Удалить учетную запись"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Удалить"
 
@@ -1016,6 +1145,28 @@ msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "Скрыть описание \"Это событие было добавлено из целей Google календаря\""
 
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Импорт событий"
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Скопируйте события из файла .ics (экспортированного из другого приложения "
+"календаря) в один из своих календарей. Виджет сначала покажет их, чтобы "
+"выбрать календарь."
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Import Events from a File…"
+msgstr "Импортировать события из файла…"
+
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Добавить календарь"
@@ -1035,10 +1186,6 @@ msgstr "URL https:// или локальный файл %1/*.ics"
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Browse"
 msgstr "Обзор"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1204,10 +1351,6 @@ msgid "No projects loaded yet. Use the reload button."
 msgstr "Проекты еще не загружены. Нажмите кнопку перезагрузки."
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Server"
-msgstr "Сервер"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick (ticktick.com)"
 msgstr "TickTick (ticktick.com)"
 
@@ -1228,10 +1371,6 @@ msgid "Connect Another Account"
 msgstr "Подключить другую учетную запись"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Connect"
-msgstr "Подключить"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid ""
 "Create an API token on the TickTick website: Settings > Account > API Token "
 "(on dida365.com for Dida365). The token is kept in the system keyring "
@@ -1248,6 +1387,14 @@ msgstr "Локальный"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Extra Time Zones in the Tooltip"
 msgstr "Дополнительные часовые пояса во всплывающей подсказке"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move up"
+msgstr "Переместить вверх"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move down"
+msgstr "Переместить вниз"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Remove time zone"
@@ -2883,10 +3030,6 @@ msgid "Elsewhere"
 msgstr "Другое место"
 
 #: ../contents/ui/EventModel.qml
-msgid "This calendar can't import events"
-msgstr "В этот календарь нельзя импортировать события"
-
-#: ../contents/ui/EventModel.qml
 msgid "This calendar can't show free / busy times"
 msgstr "Этот календарь не может показать сведения о занятости"
 
@@ -3040,10 +3183,6 @@ msgid_plural "%1 exceptions"
 msgstr[0] "%1 исключение"
 msgstr[1] "%1 исключения"
 msgstr[2] "%1 исключений"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Импорт событий"
 
 #: ../contents/ui/ImportView.qml
 msgid "Close"

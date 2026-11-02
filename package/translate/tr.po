@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-10-30 10:59+0100\n"
+"POT-Creation-Date: 2026-11-02 09:02+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,6 +40,10 @@ msgstr "ICalendar (.ics)"
 #: ../contents/config/config.qml
 msgid "Google Calendar"
 msgstr "Google Takvim"
+
+#: ../contents/config/config.qml
+msgid "CalDAV"
+msgstr "CalDAV"
 
 #: ../contents/config/config.qml ../contents/ui/config/ConfigViews.qml
 #: ../contents/ui/DayTasksPanel.qml ../contents/ui/PopupHeader.qml
@@ -97,6 +101,39 @@ msgctxt "more events not shown in a month day cell"
 msgid "+%1"
 msgstr "+%1"
 
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1 didn't accept the user name or password"
+msgstr "CalDAV: %1 kullanıcı adını veya parolayı kabul etmedi"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/calendars/GoogleTasksManager.qml
+#: ../contents/ui/calendars/ICalManager.qml
+#: ../contents/ui/calendars/TickTickTasksManager.qml
+msgid "Could not connect"
+msgstr "Bağlanılamadı"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "The event was changed elsewhere meanwhile; it's loaded again"
+msgstr "Etkinlik bu arada başka bir yerde değiştirildi; yeniden yüklendi"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: %1"
+msgstr "CalDAV: %1"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: an unexpected answer"
+msgstr "CalDAV: beklenmeyen bir yanıt"
+
+#: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/EventModel.qml
+msgid "This calendar can't import events"
+msgstr "Bu takvim etkinlikleri içe aktaramaz"
+
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
@@ -111,13 +148,6 @@ msgstr "[Takvim Yok]"
 #: ../contents/ui/calendars/TickTickTasksManager.qml ../contents/ui/Logic.qml
 msgid "HTTP Error %1: %2"
 msgstr "HTTP Hatası %1: %2"
-
-#: ../contents/ui/calendars/GoogleCalendarManager.qml
-#: ../contents/ui/calendars/GoogleTasksManager.qml
-#: ../contents/ui/calendars/ICalManager.qml
-#: ../contents/ui/calendars/TickTickTasksManager.qml
-msgid "Could not connect"
-msgstr "Bağlanılamadı"
 
 #: ../contents/ui/calendars/GoogleCalendarManager.qml
 #: ../contents/ui/calendars/GoogleTasksManager.qml
@@ -298,6 +328,109 @@ msgstr "Renk"
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Kaydet"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"The server didn't accept the user name or password. Some services need an "
+"app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
+msgstr ""
+"Sunucu kullanıcı adını veya parolayı kabul etmedi. Bazı hizmetler bir "
+"uygulama parolası gerektirir (iCloud, Fastmail, iki aşamalı oturum açmalı "
+"Nextcloud)."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Couldn't connect to the server. Check the address and your connection."
+msgstr "Sunucuya bağlanılamadı. Adresi ve bağlantınızı denetleyin."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"No CalDAV calendars at that address. Try the address your service gives for "
+"CalDAV."
+msgstr ""
+"Bu adreste CalDAV takvimi yok. Hizmetinizin CalDAV için verdiği adresi "
+"deneyin."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The server's answer couldn't be read"
+msgstr "Sunucunun yanıtı okunamadı"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Enter the server address (https://…), your user name and your password."
+msgstr "Sunucu adresini (https://…), kullanıcı adınızı ve parolanızı girin."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connecting…"
+msgstr "Bağlanıyor…"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "The password couldn't be stored in the keyring: %1"
+msgstr "Parola anahtar zincirinde saklanamadı: %1"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected: %1 calendar"
+msgid_plural "Connected: %1 calendars"
+msgstr[0] "Bağlandı: %1 takvim"
+msgstr[1] "Bağlandı: %1 takvim"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Connected, but the account has no calendars for events."
+msgstr "Bağlandı, ancak hesabın etkinlikler için takvimi yok."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Read-only"
+msgstr "Salt okunur"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Refresh Calendars"
+msgstr "Takvimleri Yenile"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "Remove Account"
+msgstr "Hesabı Kaldır"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Add a CalDAV Account"
+msgstr "CalDAV Hesabı Ekle"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Server"
+msgstr "Sunucu"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "eg: https://cloud.example.org/remote.php/dav"
+msgstr "örn.: https://cloud.example.org/remote.php/dav"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "User name"
+msgstr "Kullanıcı adı"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid "Password"
+msgstr "Parola"
+
+#: ../contents/ui/config/ConfigCalDAV.qml ../contents/ui/config/ConfigTasks.qml
+msgid "Connect"
+msgstr "Bağlan"
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Plain http works only for a server on your own network; the password isn't "
+"encrypted on the way."
+msgstr ""
+"Şifrelenmemiş http yalnızca kendi ağınızdaki bir sunucuyla çalışır; parola "
+"yolda şifrelenmez."
+
+#: ../contents/ui/config/ConfigCalDAV.qml
+msgid ""
+"Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and "
+"others. The password is kept in the system keyring. Repeating events are "
+"shown, but changed only in their own app for now."
+msgstr ""
+"Nextcloud, Fastmail, iCloud (uygulama parolasıyla), Radicale, Baïkal ve "
+"diğerleri. Parola sistem anahtar zincirinde saklanır. Yinelenen etkinlikler "
+"gösterilir, ancak şimdilik yalnızca kendi uygulamalarında değiştirilebilir."
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Default (%1)"
@@ -814,11 +947,6 @@ msgstr "Takvimleri ve görev listelerini yeniden yükle"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Remove Account"
-msgstr "Hesabı Kaldır"
-
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "Remove"
 msgstr "Kaldır"
 
@@ -1006,6 +1134,28 @@ msgid "Hide \"This event was added from Goals in Google Calendar\" description"
 msgstr ""
 "\"Bu etkinlik Google Takvim'deki Hedefler'den eklendi\" açıklamasını gizle"
 
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/main.qml
+msgid "Import Events"
+msgstr "Etkinlikleri İçe Aktar"
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid ""
+"Copy the events of an .ics file (exported from another calendar app) into "
+"one of your calendars. The widget shows them first, to pick the calendar."
+msgstr ""
+"Bir .ics dosyasındaki (başka bir takvim uygulamasından dışa aktarılmış) "
+"etkinlikleri takvimlerinizden birine kopyalayın. Araç takımı, takvimi "
+"seçebilmeniz için önce onları gösterir."
+
+#: ../contents/ui/config/ConfigICal.qml
+msgid "Import Events from a File…"
+msgstr "Dosyadan Etkinlikleri İçe Aktar…"
+
+#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
+msgid "iCalendar (*.ics)"
+msgstr "iCalendar (*.ics)"
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Takvim Ekle"
@@ -1025,10 +1175,6 @@ msgstr "https:// URL'si veya yerel %1/*.ics dosyası"
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Browse"
 msgstr "Tara"
-
-#: ../contents/ui/config/ConfigICal.qml ../contents/ui/main.qml
-msgid "iCalendar (*.ics)"
-msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1190,10 +1336,6 @@ msgid "No projects loaded yet. Use the reload button."
 msgstr "Henüz proje yüklenmedi. Yeniden yükle düğmesini kullanın."
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Server"
-msgstr "Sunucu"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick (ticktick.com)"
 msgstr "TickTick (ticktick.com)"
 
@@ -1214,10 +1356,6 @@ msgid "Connect Another Account"
 msgstr "Başka Bir Hesap Bağla"
 
 #: ../contents/ui/config/ConfigTasks.qml
-msgid "Connect"
-msgstr "Bağlan"
-
-#: ../contents/ui/config/ConfigTasks.qml
 msgid ""
 "Create an API token on the TickTick website: Settings > Account > API Token "
 "(on dida365.com for Dida365). The token is kept in the system keyring "
@@ -1234,6 +1372,14 @@ msgstr "Yerel"
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Extra Time Zones in the Tooltip"
 msgstr "Araç İpucunda Ek Saat Dilimleri"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move up"
+msgstr "Yukarı taşı"
+
+#: ../contents/ui/config/ConfigTimezones.qml
+msgid "Move down"
+msgstr "Aşağı taşı"
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Remove time zone"
@@ -2860,10 +3006,6 @@ msgid "Elsewhere"
 msgstr "Başka bir yer"
 
 #: ../contents/ui/EventModel.qml
-msgid "This calendar can't import events"
-msgstr "Bu takvim etkinlikleri içe aktaramaz"
-
-#: ../contents/ui/EventModel.qml
 msgid "This calendar can't show free / busy times"
 msgstr "Bu takvim meşgul / müsait zamanları gösteremiyor"
 
@@ -3012,10 +3154,6 @@ msgid "%1 exception"
 msgid_plural "%1 exceptions"
 msgstr[0] "%1 istisna"
 msgstr[1] "%1 istisna"
-
-#: ../contents/ui/ImportView.qml ../contents/ui/main.qml
-msgid "Import Events"
-msgstr "Etkinlikleri İçe Aktar"
 
 #: ../contents/ui/ImportView.qml
 msgid "Close"
