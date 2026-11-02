@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:28+0100\n"
+"POT-Creation-Date: 2026-11-02 09:30+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -168,10 +168,9 @@ msgctxt "separator of names in a list"
 msgid ", "
 msgstr ", "
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml
-msgctxt "%1 = a few event titles"
-msgid "Akonadi calendar: %1"
-msgstr "Calendário do Akonadi: %1"
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/WeekView.qml
 msgid "%1 event"
@@ -179,9 +178,10 @@ msgid_plural "%1 events"
 msgstr[0] "%1 evento"
 msgstr[1] "%1 eventos"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr "Akonadi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/EventModel.qml
 msgid "Holidays"
@@ -847,8 +847,28 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "As listas de tarefas são escolhidas na página Tarefas."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
-msgstr "Mostrados apenas para leitura. Os calendários do Akonadi mostrados são definidos na página de configuração do plugin de eventos PIM (Eventos > Calendários do Plasma). No menu de calendários da janela, são mostrados e ocultados por cor: calendários da mesma cor em conjunto. Os calendários Google de uma conta com sessão iniciada aqui aparecem acima, com a conta."
+msgid "One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] "Um calendário seleccionado no 'plugin' de eventos PIM já não existe no Akonadi, p. ex. porque a sua conta foi configurada de novo, o que dá novos IDs aos seus calendários."
+msgstr[1] "%1 calendários seleccionados no 'plugin' de eventos PIM já não existem no Akonadi, p. ex. porque a sua conta foi configurada de novo, o que dá novos IDs aos seus calendários."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
+msgstr "Não seleccionados agora: %1. Seleccione-os na página PIM Events Plugin da configuração do Relógio Digital."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Todos os calendários que o Akonadi tem agora estão seleccionados."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr "Esquecer os em falta"
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+msgstr ""
+"Mostrados apenas para leitura. Os calendários do Akonadi mostrados são definidos na página do plugin de eventos PIM na configuração do Relógio digital (o próprio plugin é ativado em Eventos > Calendários do Plasma). No menu de calendários da janela, são mostrados e ocultados por cor: calendários da mesma cor em conjunto. Os calendários Google de uma conta com sessão iniciada aqui aparecem "
+"acima, com a conta."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4081,6 +4101,13 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgctxt "%1 = a few event titles"
+#~ msgid "Akonadi calendar: %1"
+#~ msgstr "Calendário do Akonadi: %1"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr "Mostrados apenas para leitura. Os calendários do Akonadi mostrados são definidos na página de configuração do plugin de eventos PIM (Eventos > Calendários do Plasma). No menu de calendários da janela, são mostrados e ocultados por cor: calendários da mesma cor em conjunto. Os calendários Google de uma conta com sessão iniciada aqui aparecem acima, com a conta."
 
 #~ msgctxt "number of days"
 #~ msgid " days"

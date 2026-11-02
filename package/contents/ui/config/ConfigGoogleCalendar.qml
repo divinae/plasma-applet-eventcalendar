@@ -105,6 +105,7 @@ ConfigPage {
 	Component.onCompleted: {
 		loadAkonadiGoogleAccounts()
 		loadAkonadiCalendars()
+		loadPimSelection()
 		updateShownPimCalendars() // The model may be filled already: no reset or insert comes then
 	}
 
@@ -116,7 +117,35 @@ ConfigPage {
 			return null
 		}
 	}
-	property var shownPimCalendars: []
+	property var pimCalendarRows: [] // All of them, with the accounts
+	readonly property var shownPimCalendars: pimCalendarRows.filter(function(row) {
+		return row.checked
+	})
+	// The plugin's selection as saved: ids Akonadi no longer has (eg: an account set up anew, its
+	// calendars got new ids) are kept by the plugin, but show nothing; its new calendars aren't
+	// selected yet.
+	ExecUtil { id: pimSelectionReader }
+	property var pimSelection: []
+	function loadPimSelection() {
+		pimSelectionReader.execArgv(PlasmaCalendarUtils.pimSelectionCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			page.pimSelection = PlasmaCalendarUtils.parsePimSelection(stdout)
+		})
+	}
+	readonly property var stalePimSelection: PlasmaCalendarUtils.stalePimSelection(pimSelection, pimCalendarRows)
+	readonly property var unselectedPimCalendars: pimCalendarRows.filter(function(row) {
+		return !row.checked && !row.account && !mirroredPimCalendars[row.id]
+	})
+	// Through the plugin's model, so plasmashell's copy of the config and the plugin follow.
+	function forgetStalePimSelection() {
+		if (!pimCalendarsModel || typeof pimCalendarsModel.setChecked !== "function") { // Older kdepim-addons
+			return
+		}
+		stalePimSelection.forEach(function(id) {
+			pimCalendarsModel.setChecked(Number(id), false)
+		})
+		pimCalendarsModel.saveConfig()
+		loadPimSelection()
+	}
 	// From Akonadi's database, in one run (PlasmaCalendarUtils.akonadiCalendarsCommand, as the
 	// widget reads it): their colors (none when it can't be read), and the Google calendars Akonadi
 	// syncs for an account signed in here too (listed above with the account, so not here again).
@@ -135,9 +164,7 @@ ConfigPage {
 		return !mirroredPimCalendars[row.id]
 	})
 	function updateShownPimCalendars() {
-		shownPimCalendars = PlasmaCalendarUtils.pimCalendarRows(pimCalendarsModel, Qt.UserRole, Qt.DisplayRole).filter(function(row) {
-			return row.checked
-		})
+		pimCalendarRows = PlasmaCalendarUtils.pimCalendarRows(pimCalendarsModel, Qt.UserRole, Qt.DisplayRole, true)
 	}
 	Connections { // Akonadi fills the model asynchronously
 		target: page.pimCalendarsModel
@@ -468,9 +495,34 @@ ConfigPage {
 				}
 			}
 		}
+		FormCard.FormCard {
+			visible: page.pimEventsEnabled && page.stalePimSelection.length > 0
+			Layout.topMargin: page.listedPimCalendars.length > 0 ? 0 : Kirigami.Units.largeSpacing
+			FormCard.AbstractFormDelegate {
+				background: null
+				contentItem: Kirigami.InlineMessage {
+					visible: true
+					type: Kirigami.MessageType.Warning
+					text: i18np("One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids.",
+							"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids.",
+							page.stalePimSelection.length)
+						+ " " + (page.unselectedPimCalendars.length > 0
+							? i18n("Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings.",
+								page.unselectedPimCalendars.map(function(row) { return row.name }).join(", "))
+							: i18n("All the calendars Akonadi has now are selected."))
+					actions: [
+						Kirigami.Action {
+							icon.name: "edit-clear-history"
+							text: i18n("Forget the Missing Ones")
+							onTriggered: page.forgetStalePimSelection()
+						}
+					]
+				}
+			}
+		}
 		FormCard.FormSectionText {
 			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the settings page of the PIM events plugin (Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
+			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Events > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account

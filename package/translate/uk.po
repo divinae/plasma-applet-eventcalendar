@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 09:28+0100\n"
+"POT-Creation-Date: 2026-11-02 09:30+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -198,9 +198,9 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-msgctxt "%1 = a few event titles"
-msgid "Akonadi calendar: %1"
-msgstr "Календар Akonadi: %1"
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "KDE PIM (Akonadi)"
+msgstr "KDE PIM (Akonadi)"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/WeekView.qml
@@ -211,9 +211,9 @@ msgstr[1] "%1 події"
 msgstr[2] "%1 подій"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "KDE PIM (Akonadi)"
-msgstr "KDE PIM (Akonadi)"
+msgctxt "%1 = calendar names"
+msgid "Akonadi: %1"
+msgstr "Akonadi: %1"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
 #: ../contents/ui/EventModel.qml
@@ -1005,17 +1005,54 @@ msgstr "Списки завдань вибираються на сторінці
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the settings "
-"page of the PIM events plugin (Events > Plasma calendars). In the popup's "
-"calendar menu they are shown and hidden by color: calendars of one color "
-"together. The Google calendars of an account signed in here are listed "
-"above, with the account."
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"%1 календар, вибраний у додатку подій PIM, більше не існує в Akonadi, "
+"наприклад, тому що його обліковий запис налаштували заново, і його календарі "
+"отримали нові ідентифікатори."
+msgstr[1] ""
+"%1 календарі, вибрані в додатку подій PIM, більше не існують в Akonadi, "
+"наприклад, тому що їхній обліковий запис налаштували заново, і його "
+"календарі отримали нові ідентифікатори."
+msgstr[2] ""
+"%1 календарів, вибраних у додатку подій PIM, більше не існують в Akonadi, "
+"наприклад, тому що їхній обліковий запис налаштували заново, і його "
+"календарі отримали нові ідентифікатори."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Not selected now: %1. Select them on the PIM Events Plugin page of the "
+"Digital Clock's settings."
+msgstr ""
+"Зараз не вибрані: %1. Виберіть їх на сторінці PIM Events Plugin у "
+"налаштуваннях Цифрового годинника."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "All the calendars Akonadi has now are selected."
+msgstr "Усі календарі, які зараз є в Akonadi, вибрано."
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Forget the Missing Ones"
+msgstr "Забути відсутні"
+
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid ""
+"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
+"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
+"in Events > Plasma calendars). In the popup's calendar menu they are shown "
+"and hidden by color: calendars of one color together. The Google calendars "
+"of an account signed in here are listed above, with the account."
 msgstr ""
 "Показуються лише для читання. Які календарі Akonadi показувати, задається на "
-"сторінці налаштувань додатка подій PIM («Події» > «Календарі Plasma»). У "
-"меню календарів контекстного вікна вони показуються і ховаються за кольором: "
-"календарі одного кольору разом. Календарі Google облікового запису, до якого "
-"тут виконано вхід, наведено вище, разом з обліковим записом."
+"сторінці додатка подій PIM у налаштуваннях цифрового годинника (сам додаток "
+"вмикається у розділі «Події» > «Календарі Plasma»). У меню календарів "
+"контекстного вікна вони показуються і ховаються за кольором: календарі "
+"одного кольору разом. Календарі Google облікового запису, до якого тут "
+"виконано вхід, наведено вище, разом з обліковим записом."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Add Account…"
@@ -4483,6 +4520,24 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgctxt "%1 = a few event titles"
+#~ msgid "Akonadi calendar: %1"
+#~ msgstr "Календар Akonadi: %1"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the settings "
+#~ "page of the PIM events plugin (Events > Plasma calendars). In the popup's "
+#~ "calendar menu they are shown and hidden by color: calendars of one color "
+#~ "together. The Google calendars of an account signed in here are listed "
+#~ "above, with the account."
+#~ msgstr ""
+#~ "Показуються лише для читання. Які календарі Akonadi показувати, задається "
+#~ "на сторінці налаштувань додатка подій PIM («Події» > «Календарі Plasma»). "
+#~ "У меню календарів контекстного вікна вони показуються і ховаються за "
+#~ "кольором: календарі одного кольору разом. Календарі Google облікового "
+#~ "запису, до якого тут виконано вхід, наведено вище, разом з обліковим "
+#~ "записом."
 
 #~ msgctxt "number of days"
 #~ msgid " days"

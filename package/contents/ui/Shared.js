@@ -272,6 +272,24 @@ function isHiddenDeclined(eventItem, showDeclined) {
 	return !showDeclined && myResponse(eventItem) === 'declined'
 }
 
+// The popup's calendar menu (EventModel.getSelectedCalendars, [{ id, group, ... }]) in sections,
+// each entry's in its section: 0 the accounts' calendars (a group: Google, TickTick), 1 Akonadi's
+// (plasma_Events...), 2 the others (holidays, iCalendar files). In their order within a section.
+function calendarMenuSections(entries) {
+	function section(entry) {
+		if (entry.group) {
+			return 0
+		}
+		return String(entry.id).indexOf("plasma_Events") === 0 ? 1 : 2
+	}
+	var sections = [[], [], []]
+	;(entries || []).forEach(function(entry) {
+		entry.section = section(entry)
+		sections[entry.section].push(entry)
+	})
+	return sections[0].concat(sections[1], sections[2])
+}
+
 // Hidden with the popup header's calendar toggles (hiddenCalendarIds). A view filter: the events
 // are still fetched and their reminders still come.
 function isHiddenCalendar(calendarId, hiddenCalendarIds) {
