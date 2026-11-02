@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -900,20 +900,32 @@ msgid "Full screen"
 msgstr "Helskärm"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Helskärm endast för möten med videolänk"
+msgid "Full Screen"
+msgstr "Helskärm"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Endast för möten med en videolänk"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Andra händelser: en avisering. Tystade: ingen."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Visa kameran"
+msgid "Camera check"
+msgstr "Kamerakontroll"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
-msgstr "Hur du ser ut innan du ansluter, för möten med en videolänk. Inget spelas in; kameran är bara på medan varningen visas."
+msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Innan du ansluter till ett möte med en videolänk: din kamera, mikrofonens nivå och känslighet, höra dig själv och högtalaren. Inget spelas in; de är bara på medan varningen visas."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Avisering"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "För händelser utan videolänk."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4174,6 +4186,15 @@ msgstr "Inga fler händelser i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbetsplats: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Helskärm endast för möten med videolänk"
+
+#~ msgid "Show the camera"
+#~ msgstr "Visa kameran"
+
+#~ msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
+#~ msgstr "Hur du ser ut innan du ansluter, för möten med en videolänk. Inget spelas in; kameran är bara på medan varningen visas."
 
 #~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
 #~ msgstr "Inget sparas. Kameran och mikrofonen används bara medan detta är öppet; ett mikrofontest hålls i minnet tills det har spelats upp."

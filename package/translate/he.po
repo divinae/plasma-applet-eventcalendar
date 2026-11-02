@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1073,24 +1073,37 @@ msgid "Full screen"
 msgstr "מסך מלא"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "מסך מלא רק לפגישות עם קישור וידאו"
+msgid "Full Screen"
+msgstr "מסך מלא"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "רק לפגישות עם קישור וידאו"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "אירועים אחרים: התראה. מושתקים: ללא."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "הצגת המצלמה"
+msgid "Camera check"
+msgstr "בדיקת מצלמה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"איך את/ה נראה/ית לפני ההצטרפות, לפגישות עם קישור וידאו. שום דבר לא מוקלט; "
-"המצלמה פועלת רק כל עוד ההתראה מוצגת."
+"לפני הצטרפות לפגישה עם קישור וידאו: המצלמה, רמת המיקרופון ורגישותו, שמיעה "
+"עצמית והרמקול. שום דבר לא מוקלט; הם פועלים רק כל עוד ההתראה מוצגת."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "התראה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "לאירועים ללא קישור וידאו."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4603,6 +4616,19 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "מסך מלא רק לפגישות עם קישור וידאו"
+
+#~ msgid "Show the camera"
+#~ msgstr "הצגת המצלמה"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "איך את/ה נראה/ית לפני ההצטרפות, לפגישות עם קישור וידאו. שום דבר לא מוקלט; "
+#~ "המצלמה פועלת רק כל עוד ההתראה מוצגת."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

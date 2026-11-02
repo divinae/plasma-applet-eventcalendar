@@ -108,20 +108,30 @@ Item {
 			opacity: 0.75
 		}
 
-		// How you look before you join (Settings > Events > When an Event Starts > Show the camera):
-		// the camera as a mirror, for a meeting with a link, on the first screen only (a camera
-		// serves one window), while the alert is shown. Loaded by URL: needs Qt Multimedia.
-		Loader {
+		// The camera check before you join (Settings > Events > Full Screen > Camera check): the
+		// camera as a mirror with its choice, the microphone's level, sensitivity and "hear yourself",
+		// the speaker and its test (CameraMirror.qml, MicMeter.qml), for a meeting with a link, on the
+		// first screen only (a camera serves one window), while the alert is shown. Loaded by URL:
+		// needs Qt Multimedia (the sound part plasma-pa).
+		ColumnLayout {
 			readonly property bool wanted: plasmoid.configuration.meetingAlertCamera && !!content.meetingLink
 				&& root.cameraCheckAvailable && Qt.application.screens.length > 0 && Screen.name === Qt.application.screens[0].name
+			visible: wanted
 			Layout.alignment: Qt.AlignHCenter
 			Layout.topMargin: Kirigami.Units.gridUnit
-			Layout.preferredWidth: Kirigami.Units.gridUnit * 22
-			active: wanted
-			source: "CameraMirror.qml"
-			onLoaded: {
-				item.showControls = false
-				item.running = Qt.binding(function() { return content.visible })
+			Layout.preferredWidth: Kirigami.Units.gridUnit * 26
+			spacing: Kirigami.Units.largeSpacing
+			Loader {
+				Layout.fillWidth: true
+				active: parent.wanted
+				source: "CameraMirror.qml"
+				onLoaded: item.running = Qt.binding(function() { return content.visible })
+			}
+			Loader {
+				Layout.fillWidth: true
+				active: parent.wanted && root.moduleAvailable("PlasmaPaProbe.qml")
+				source: "MicMeter.qml"
+				onLoaded: item.running = Qt.binding(function() { return content.visible })
 			}
 		}
 

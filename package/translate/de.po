@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -1101,25 +1101,38 @@ msgid "Full screen"
 msgstr "Vollbild"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Vollbild nur für Besprechungen mit Videolink"
+msgid "Full Screen"
+msgstr "Vollbild"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Nur für Besprechungen mit Videolink"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Andere Termine: eine Benachrichtigung. Stummgeschaltete: keine."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Kamera anzeigen"
+msgid "Camera check"
+msgstr "Kameratest"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"Wie Sie aussehen, bevor Sie teilnehmen, bei Besprechungen mit Videolink. Es "
-"wird nichts aufgenommen; die Kamera ist nur an, solange die Meldung "
-"angezeigt wird."
+"Bevor Sie einer Besprechung mit Videolink beitreten: Ihre Kamera, Pegel und "
+"Empfindlichkeit des Mikrofons, sich selbst hören und der Lautsprecher. Es "
+"wird nichts aufgenommen; sie sind nur an, solange die Meldung angezeigt wird."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Benachrichtigung"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Für Termine ohne Videolink."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4603,6 +4616,20 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Vollbild nur für Besprechungen mit Videolink"
+
+#~ msgid "Show the camera"
+#~ msgstr "Kamera anzeigen"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "Wie Sie aussehen, bevor Sie teilnehmen, bei Besprechungen mit Videolink. "
+#~ "Es wird nichts aufgenommen; die Kamera ist nur an, solange die Meldung "
+#~ "angezeigt wird."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

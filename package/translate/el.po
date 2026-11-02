@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1099,24 +1099,38 @@ msgid "Full screen"
 msgstr "Πλήρης οθόνη"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Πλήρης οθόνη μόνο για συσκέψεις με σύνδεσμο βίντεο"
+msgid "Full Screen"
+msgstr "Πλήρης οθόνη"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Μόνο για συσκέψεις με σύνδεσμο βίντεο"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Άλλα συμβάντα: ειδοποίηση. Σε σίγαση: καμία."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Εμφάνιση της κάμερας"
+msgid "Camera check"
+msgstr "Έλεγχος κάμερας"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"Πώς φαίνεστε πριν συμμετάσχετε, για συσκέψεις με σύνδεσμο βίντεο. Τίποτα δεν "
-"καταγράφεται· η κάμερα είναι ανοιχτή μόνο όσο εμφανίζεται η ειδοποίηση."
+"Πριν συμμετάσχετε σε σύσκεψη με σύνδεσμο βίντεο: η κάμερά σας, η στάθμη και "
+"η ευαισθησία του μικροφώνου, η ακρόαση του εαυτού σας και το ηχείο. Τίποτα "
+"δεν καταγράφεται· είναι ενεργά μόνο όσο εμφανίζεται η ειδοποίηση."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Ειδοποίηση"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Για τα συμβάντα χωρίς σύνδεσμο βίντεο."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4605,6 +4619,20 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Πλήρης οθόνη μόνο για συσκέψεις με σύνδεσμο βίντεο"
+
+#~ msgid "Show the camera"
+#~ msgstr "Εμφάνιση της κάμερας"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "Πώς φαίνεστε πριν συμμετάσχετε, για συσκέψεις με σύνδεσμο βίντεο. Τίποτα "
+#~ "δεν καταγράφεται· η κάμερα είναι ανοιχτή μόνο όσο εμφανίζεται η "
+#~ "ειδοποίηση."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

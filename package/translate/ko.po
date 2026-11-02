@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1059,24 +1059,37 @@ msgid "Full screen"
 msgstr "전체 화면"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "화상 링크가 있는 회의만 전체 화면"
+msgid "Full Screen"
+msgstr "전체 화면"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "화상 링크가 있는 회의에만"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "다른 일정: 알림. 음소거한 일정: 없음."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "카메라 표시"
+msgid "Camera check"
+msgstr "카메라 확인"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"화상 링크가 있는 회의에 참여하기 전 내 모습을 보여 줍니다. 아무것도 녹화되지 "
-"않으며, 카메라는 알림이 표시되는 동안에만 켜집니다."
+"화상 링크가 있는 회의에 참여하기 전: 카메라, 마이크 레벨과 감도, 내 목소리 듣"
+"기, 스피커. 아무것도 녹화되지 않으며 알림이 표시되는 동안에만 켜집니다."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "알림"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "화상 링크가 없는 일정용."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4484,6 +4497,19 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "화상 링크가 있는 회의만 전체 화면"
+
+#~ msgid "Show the camera"
+#~ msgstr "카메라 표시"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "화상 링크가 있는 회의에 참여하기 전 내 모습을 보여 줍니다. 아무것도 녹화되"
+#~ "지 않으며, 카메라는 알림이 표시되는 동안에만 켜집니다."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

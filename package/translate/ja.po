@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -894,20 +894,32 @@ msgid "Full screen"
 msgstr "全画面"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "全画面はビデオリンクのある会議のみ"
+msgid "Full Screen"
+msgstr "全画面"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "ビデオリンクのある会議のみ"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "その他のイベント: 通知。ミュートしたイベント: なし。"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "カメラを表示"
+msgid "Camera check"
+msgstr "カメラチェック"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
-msgstr "参加する前の自分の映り方を、ビデオリンクのある会議で表示します。何も録画されず、カメラは通知の表示中だけオンになります。"
+msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "ビデオリンクのある会議に参加する前に: カメラ、マイクのレベルと感度、自分の声の確認、スピーカー。何も録画・録音されず、通知の表示中だけ使われます。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "通知"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "ビデオリンクのないイベント用。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4126,6 +4138,15 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "全画面はビデオリンクのある会議のみ"
+
+#~ msgid "Show the camera"
+#~ msgstr "カメラを表示"
+
+#~ msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
+#~ msgstr "参加する前の自分の映り方を、ビデオリンクのある会議で表示します。何も録画されず、カメラは通知の表示中だけオンになります。"
 
 #~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
 #~ msgstr "何も保存されません。カメラとマイクはこれを開いている間だけ使われます。マイクテストは再生されるまでメモリーにのみ保持されます。"

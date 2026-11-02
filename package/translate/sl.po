@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1095,24 +1095,38 @@ msgid "Full screen"
 msgstr "Celozaslonsko"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Celozaslonsko samo za sestanke z video povezavo"
+msgid "Full Screen"
+msgstr "Celozaslonsko"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Samo za sestanke s povezavo do videa"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Drugi dogodki: obvestilo. Utišani: nič."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Pokaži kamero"
+msgid "Camera check"
+msgstr "Preverjanje kamere"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"Kako izgledate, preden se pridružite, za sestanke s povezavo do videa. Nič "
-"se ne snema; kamera je vklopljena le, dokler je opozorilo prikazano."
+"Preden se pridružite sestanku s povezavo do videa: vaša kamera, raven in "
+"občutljivost mikrofona, poslušanje sebe in zvočnik. Nič se ne snema; "
+"vklopljeni so le, dokler je opozorilo prikazano."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Obvestilo"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Za dogodke brez povezave do videa."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4649,6 +4663,19 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Celozaslonsko samo za sestanke z video povezavo"
+
+#~ msgid "Show the camera"
+#~ msgstr "Pokaži kamero"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "Kako izgledate, preden se pridružite, za sestanke s povezavo do videa. "
+#~ "Nič se ne snema; kamera je vklopljena le, dokler je opozorilo prikazano."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

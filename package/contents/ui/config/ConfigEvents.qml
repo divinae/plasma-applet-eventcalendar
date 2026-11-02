@@ -30,6 +30,9 @@ ConfigPage {
 		})
 	}
 
+	// When an Event Starts: which of its two forms the options are shown for.
+	readonly property bool fullScreenStyle: startingEnabled.checked && startingStyle.configValue === true
+	readonly property bool startNotification: startingEnabled.checked && (!fullScreenStyle || fullScreenLinkOnly.checked)
 	readonly property bool multimediaAvailable: {
 		var probe = Qt.createComponent("../MultimediaProbe.qml", Component.PreferSynchronous)
 		var ok = probe.status === Component.Ready
@@ -188,10 +191,19 @@ ConfigPage {
 					{ value: true, text: i18nc("the notification's style", "Full screen") },
 				]
 			}
-			FormCard.FormDelegateSeparator { visible: startingEnabled.checked && startingStyle.configValue === true }
+		}
+
+		// The full-screen style's own options (MeetingAlertContent): it comes instead of the
+		// notification, without a sound.
+		FormCard.FormHeader {
+			visible: page.fullScreenStyle
+			title: i18n("Full Screen")
+		}
+		FormCard.FormCard {
+			visible: page.fullScreenStyle
 			FormConfigSwitch {
-				visible: startingEnabled.checked && startingStyle.configValue === true
-				text: i18n("Full screen only for meetings with a video link")
+				id: fullScreenLinkOnly
+				text: i18n("Only for meetings with a video link")
 				description: i18n("Other events: a notification. Muted events: none.")
 				configKey: 'meetingFullScreenAlertLinkOnly'
 			}
@@ -200,33 +212,43 @@ ConfigPage {
 			FormCard.FormDelegateSeparator { visible: alertCamera.visible }
 			FormConfigSwitch {
 				id: alertCamera
-				visible: startingEnabled.checked && startingStyle.configValue === true && page.multimediaAvailable
-				text: i18n("Show the camera")
-				description: i18n("How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown.")
+				visible: page.multimediaAvailable
+				text: i18n("Camera check")
+				description: i18n("Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown.")
 				configKey: 'meetingAlertCamera'
 			}
-			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+		}
+
+		// The notification's options: with the notification style, or full screen only for meetings
+		// with a link (the other events still get the notification).
+		FormCard.FormHeader {
+			visible: page.startNotification
+			title: i18n("Notification")
+		}
+		FormCard.FormCard {
+			visible: page.startNotification
+			FormCard.FormTextDelegate {
+				visible: page.fullScreenStyle
+				description: i18n("For the events without a video link.")
+			}
+			FormCard.FormDelegateSeparator { visible: page.fullScreenStyle }
 			FormConfigSwitch {
-				visible: startingEnabled.checked
 				text: i18n("Keep until dismissed")
 				configKey: 'eventStartingPersistent'
 			}
-			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
-				visible: startingEnabled.checked
 				text: i18n("Critical")
 				description: i18n("Shown even in Do Not Disturb")
 				configKey: 'eventStartingCritical'
 			}
-			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
-				visible: startingEnabled.checked
 				text: i18n("\"Join meeting\" button")
 				configKey: 'eventNotificationActions'
 			}
-			FormCard.FormDelegateSeparator { visible: startingEnabled.checked }
+			FormCard.FormDelegateSeparator {}
 			SoundRow {
-				visible: startingEnabled.checked
 				label: i18n("Sound")
 				sfxEnabledKey: 'eventStartingSfxEnabled'
 				sfxPathKey: 'eventStartingSfxPath'

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1075,24 +1075,38 @@ msgid "Full screen"
 msgstr "Fuld skærm"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Fuld skærm kun for møder med et videolink"
+msgid "Full Screen"
+msgstr "Fuld skærm"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Kun for møder med et videolink"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Andre begivenheder: en notifikation. Slåede fra begivenheder: ingen."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Vis kameraet"
+msgid "Camera check"
+msgstr "Kameratjek"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"Hvordan du ser ud, før du deltager, for møder med et videolink. Intet "
-"optages; kameraet er kun tændt, mens advarslen vises."
+"Før du deltager i et møde med et videolink: dit kamera, mikrofonens niveau "
+"og følsomhed, at høre dig selv og højttaleren. Intet optages; de er kun "
+"tændt, mens advarslen vises."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Notifikation"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "For begivenheder uden et videolink."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4534,6 +4548,19 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Fuld skærm kun for møder med et videolink"
+
+#~ msgid "Show the camera"
+#~ msgstr "Vis kameraet"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "Hvordan du ser ud, før du deltager, for møder med et videolink. Intet "
+#~ "optages; kameraet er kun tændt, mens advarslen vises."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

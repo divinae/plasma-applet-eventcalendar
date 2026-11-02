@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -1039,24 +1039,37 @@ msgid "Full screen"
 msgstr "全屏"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "仅对有视频链接的会议全屏"
+msgid "Full Screen"
+msgstr "全屏"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "仅限带视频链接的会议"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "其他事件：通知。静音的事件：无。"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "显示摄像头"
+msgid "Camera check"
+msgstr "摄像头检查"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"加入带视频链接的会议前查看自己的样子。不会录制任何内容；摄像头仅在提醒显示期"
-"间开启。"
+"加入带视频链接的会议前：摄像头、麦克风电平和灵敏度、监听自己以及扬声器。不会"
+"录制任何内容；仅在提醒显示期间开启。"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "通知"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "适用于没有视频链接的事件。"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4421,6 +4434,19 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "仅对有视频链接的会议全屏"
+
+#~ msgid "Show the camera"
+#~ msgstr "显示摄像头"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "加入带视频链接的会议前查看自己的样子。不会录制任何内容；摄像头仅在提醒显示"
+#~ "期间开启。"
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "

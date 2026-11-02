@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -902,20 +902,32 @@ msgid "Full screen"
 msgstr "Pantalla completa"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Pantalla completa solo para reuniones con enlace de vídeo"
+msgid "Full Screen"
+msgstr "Pantalla completa"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Solo para reuniones con enlace de vídeo"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Otros eventos: una notificación. Silenciados: ninguna."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Mostrar la cámara"
+msgid "Camera check"
+msgstr "Comprobar la cámara"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
-msgstr "Cómo te ves antes de unirte, en reuniones con enlace de vídeo. No se graba nada; la cámara solo está encendida mientras se muestra el aviso."
+msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Antes de unirte a una reunión con enlace de vídeo: tu cámara, el nivel y la sensibilidad del micrófono, escucharte y el altavoz. No se graba nada; solo están activos mientras se muestra el aviso."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Notificación"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Para los eventos sin enlace de vídeo."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4176,6 +4188,15 @@ msgstr "No hay más eventos hoy"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Lugar de trabajo: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Pantalla completa solo para reuniones con enlace de vídeo"
+
+#~ msgid "Show the camera"
+#~ msgstr "Mostrar la cámara"
+
+#~ msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
+#~ msgstr "Cómo te ves antes de unirte, en reuniones con enlace de vídeo. No se graba nada; la cámara solo está encendida mientras se muestra el aviso."
 
 #~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
 #~ msgstr "No se guarda nada. La cámara y el micrófono solo se usan mientras esto está abierto; una prueba de micrófono se guarda en memoria hasta que se reproduce."

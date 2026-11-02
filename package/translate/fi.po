@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -903,20 +903,32 @@ msgid "Full screen"
 msgstr "Koko näyttö"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Koko näyttö vain kokouksille, joissa on videolinkki"
+msgid "Full Screen"
+msgstr "Koko näyttö"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Vain kokouksille, joissa on videolinkki"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Muut tapahtumat: ilmoitus. Mykistetyt: ei mitään."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Näytä kamera"
+msgid "Camera check"
+msgstr "Kameran tarkistus"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
-msgstr "Miltä näytät ennen liittymistä, kokouksissa, joissa on videolinkki. Mitään ei tallenneta; kamera on päällä vain, kun ilmoitus näkyy."
+msgid "Before you join a meeting with a video link: your camera, the microphone's level and sensitivity, hearing yourself, and the speaker. Nothing is recorded; they're on only while the alert is shown."
+msgstr "Ennen kuin liityt kokoukseen, jossa on videolinkki: kamerasi, mikrofonin taso ja herkkyys, oman äänen kuuntelu ja kaiutin. Mitään ei tallenneta; ne ovat päällä vain, kun ilmoitus näkyy."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Ilmoitus"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Tapahtumille, joissa ei ole videolinkkiä."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4177,6 +4189,15 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Koko näyttö vain kokouksille, joissa on videolinkki"
+
+#~ msgid "Show the camera"
+#~ msgstr "Näytä kamera"
+
+#~ msgid "How you look before you join, for meetings with a video link. Nothing is recorded; the camera is on only while the alert is shown."
+#~ msgstr "Miltä näytät ennen liittymistä, kokouksissa, joissa on videolinkki. Mitään ei tallenneta; kamera on päällä vain, kun ilmoitus näkyy."
 
 #~ msgid "Nothing is saved. The camera and the microphone are used only while this is open; a microphone test is kept in memory until it's played."
 #~ msgstr "Mitään ei tallenneta. Kameraa ja mikrofonia käytetään vain, kun tämä on auki; mikrofonitesti pidetään muistissa, kunnes se on toistettu."

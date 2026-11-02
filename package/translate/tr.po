@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 12:15+0100\n"
+"POT-Creation-Date: 2026-11-02 13:02+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1077,24 +1077,38 @@ msgid "Full screen"
 msgstr "Tam ekran"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Full screen only for meetings with a video link"
-msgstr "Tam ekran yalnızca video bağlantısı olan toplantılar için"
+msgid "Full Screen"
+msgstr "Tam ekran"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only for meetings with a video link"
+msgstr "Yalnızca görüntülü bağlantısı olan toplantılar için"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Other events: a notification. Muted events: none."
 msgstr "Diğer etkinlikler: bildirim. Sessize alınanlar: yok."
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Show the camera"
-msgstr "Kamerayı göster"
+msgid "Camera check"
+msgstr "Kamera denetimi"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""
-"How you look before you join, for meetings with a video link. Nothing is "
-"recorded; the camera is on only while the alert is shown."
+"Before you join a meeting with a video link: your camera, the microphone's "
+"level and sensitivity, hearing yourself, and the speaker. Nothing is "
+"recorded; they're on only while the alert is shown."
 msgstr ""
-"Görüntülü bağlantısı olan toplantılarda katılmadan önce nasıl göründüğünüz. "
-"Hiçbir şey kaydedilmez; kamera yalnızca uyarı gösterilirken açıktır."
+"Görüntülü bağlantısı olan bir toplantıya katılmadan önce: kameranız, "
+"mikrofonun seviyesi ve hassasiyeti, kendinizi duymak ve hoparlör. Hiçbir şey "
+"kaydedilmez; yalnızca uyarı gösterilirken açıktırlar."
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Notification"
+msgstr "Bildirim"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "For the events without a video link."
+msgstr "Görüntülü bağlantısı olmayan etkinlikler için."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Critical"
@@ -4554,6 +4568,20 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Full screen only for meetings with a video link"
+#~ msgstr "Tam ekran yalnızca video bağlantısı olan toplantılar için"
+
+#~ msgid "Show the camera"
+#~ msgstr "Kamerayı göster"
+
+#~ msgid ""
+#~ "How you look before you join, for meetings with a video link. Nothing is "
+#~ "recorded; the camera is on only while the alert is shown."
+#~ msgstr ""
+#~ "Görüntülü bağlantısı olan toplantılarda katılmadan önce nasıl "
+#~ "göründüğünüz. Hiçbir şey kaydedilmez; kamera yalnızca uyarı gösterilirken "
+#~ "açıktır."
 
 #~ msgid ""
 #~ "Nothing is saved. The camera and the microphone are used only while this "
