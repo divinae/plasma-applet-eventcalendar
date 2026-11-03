@@ -32,7 +32,7 @@ ConfigModel {
 	}
 	ConfigCategory {
 		name: i18n("Calendars")
-		icon: "view-calendar" // The PIM events plugin's: its page is in here now
+		icon: "office-calendar"
 		source: "config/ConfigCalendars.qml"
 	}
 	ConfigCategory {

@@ -40,6 +40,7 @@ AbstractButton {
 	Popup {
 		id: popup
 		y: button.height + Kirigami.Units.smallSpacing
+		margins: 0 // Kept inside the window (a row at the bottom: shown above it)
 		padding: Kirigami.Units.largeSpacing
 		// Built when opened: a settings page has one of these per calendar.
 		contentItem: Loader {

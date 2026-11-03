@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -498,12 +498,12 @@ msgid ""
 msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "서버 색상"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "읽기 전용"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "서버 색상"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -1952,9 +1952,15 @@ msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
 msgstr[0] "설정 %1개를 가져왔습니다. 유지하려면 적용 또는 확인을 누르세요."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "이 버전에 없는 설정 %1개를 건너뛰었습니다: %2"
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"%1개를 가져오지 않았습니다 (이 버전에 없음, 비밀번호나 로그인, 또는 다른 종류"
+"의 값): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4684,6 +4690,10 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "이 버전에 없는 설정 %1개를 건너뛰었습니다: %2"
 
 #~ msgid ""
 #~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "

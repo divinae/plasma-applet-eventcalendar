@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -521,12 +521,12 @@ msgstr ""
 "στοιχείου."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "Χρώμα του διακομιστή"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Μόνο για ανάγνωση"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Χρώμα του διακομιστή"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -2023,10 +2023,18 @@ msgstr[1] ""
 "Εισήχθησαν %1 ρυθμίσεις. Πατήστε Εφαρμογή ή OK για να τις κρατήσετε."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "Παραλείφθηκε %1 ρύθμιση που δεν έχει αυτή η έκδοση: %2"
-msgstr[1] "Παραλείφθηκαν %1 ρυθμίσεις που δεν έχει αυτή η έκδοση: %2"
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Δεν εισήχθη (δεν υπάρχει σε αυτή την έκδοση, κωδικός ή σύνδεση, ή τιμή άλλου "
+"είδους): %2"
+msgstr[1] ""
+"%1 δεν εισήχθησαν (δεν υπάρχουν σε αυτή την έκδοση, κωδικοί ή συνδέσεις, ή "
+"τιμές άλλου είδους): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4818,6 +4826,11 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "Παραλείφθηκε %1 ρύθμιση που δεν έχει αυτή η έκδοση: %2"
+#~ msgstr[1] "Παραλείφθηκαν %1 ρυθμίσεις που δεν έχει αυτή η έκδοση: %2"
 
 #~ msgid ""
 #~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "

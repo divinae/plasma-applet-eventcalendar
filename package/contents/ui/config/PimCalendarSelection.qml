@@ -35,9 +35,20 @@ Item {
 	readonly property bool canChange: PlasmaCalendarUtils.pimModelCanChoose(model)
 	property var rows: [] // pimCalendarRows, with the accounts
 	property bool ticking: false // A tick from here: no need to read the database again
+	property bool dirty: false // Something ticked or forgotten here: saved with the page
+	// Akonadi fills the model in parts: settled once no change came for a moment (until then a
+	// calendar of an account still loading would count as missing).
+	property bool settled: false
+	Timer {
+		id: settleTimer
+		interval: 2000
+		onTriggered: selection.settled = true
+	}
 	function updateRows() {
 		rows = PlasmaCalendarUtils.pimCalendarRows(model, Qt.UserRole, Qt.DisplayRole, true)
 		if (!ticking) {
+			settled = false
+			settleTimer.restart()
 			databaseTimer.restart() // A calendar added or changed (eg: given a color): read them again
 		}
 	}
@@ -80,7 +91,7 @@ Item {
 	// got new ids) are kept by the plugin, but show nothing. Forgotten ones go with the page.
 	ExecUtil { id: savedReader }
 	property var saved: []
-	readonly property var missing: PlasmaCalendarUtils.stalePimSelection(saved, rows)
+	readonly property var missing: settled ? PlasmaCalendarUtils.stalePimSelection(saved, rows) : []
 
 	function tick(id, checked) {
 		ticking = true
@@ -90,6 +101,7 @@ Item {
 	function setChecked(id, checked) {
 		if (canChange) {
 			tick(id, checked)
+			dirty = true
 			changed()
 		}
 	}
@@ -100,12 +112,16 @@ Item {
 		var forget = missing
 		forget.forEach(function(id) { tick(id, false) })
 		saved = saved.filter(function(id) { return forget.indexOf(id) < 0 })
+		dirty = true
 		changed()
 	}
-	// Through the plugin's model: plasmashell's copy of the config and the plugins follow.
+	// Through the plugin's model: plasmashell's copy of the config and the plugins follow. Only
+	// after a change here: the model would write back the selection it was made with, over one
+	// made meanwhile in the Digital Clock's settings.
 	function save() {
-		if (model) {
+		if (dirty && canChange && typeof model.saveConfig === "function") {
 			model.saveConfig()
+			dirty = false
 		}
 	}
 }

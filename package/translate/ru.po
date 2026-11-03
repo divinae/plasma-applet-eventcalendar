@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -524,12 +524,12 @@ msgstr ""
 "Загружает icalendar и recurring-ical-events в собственную папку виджета."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "Цвет с сервера"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Только для чтения"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Цвет с сервера"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -2004,11 +2004,21 @@ msgstr[2] ""
 "Импортировано %1 настроек. Нажмите «Применить» или «OK», чтобы сохранить их."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "Пропущена %1 настройка, которой нет в этой версии: %2"
-msgstr[1] "Пропущено %1 настройки, которых нет в этой версии: %2"
-msgstr[2] "Пропущено %1 настроек, которых нет в этой версии: %2"
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Не импортирована %1 настройка (нет в этой версии, пароль или вход, либо "
+"значение другого типа): %2"
+msgstr[1] ""
+"Не импортировано %1 настройки (нет в этой версии, пароли или входы, либо "
+"значения другого типа): %2"
+msgstr[2] ""
+"Не импортировано %1 настроек (нет в этой версии, пароли или входы, либо "
+"значения другого типа): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4827,6 +4837,12 @@ msgstr "Сегодня событий больше нет"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Место работы: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "Пропущена %1 настройка, которой нет в этой версии: %2"
+#~ msgstr[1] "Пропущено %1 настройки, которых нет в этой версии: %2"
+#~ msgstr[2] "Пропущено %1 настроек, которых нет в этой версии: %2"
 
 #~ msgid ""
 #~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "

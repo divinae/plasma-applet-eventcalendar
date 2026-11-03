@@ -488,12 +488,18 @@ ConfigPage {
 			isError = !!error
 		}
 
-		// The settings this page has (every one of the widget's: ConfigPage's cfg_ properties).
+		// Every setting of the widget: the configuration's keys (also those without a cfg_ property on
+		// this page, read and written through the configuration then), and the page's. The *Default
+		// ones are left out by SettingsTransfer.
 		function keys() {
-			var out = []
+			var out = (typeof plasmoid !== "undefined" && plasmoid && plasmoid.configuration) ? Array.prototype.slice.call(plasmoid.configuration.keys()) : []
+			var plasmaOwn = out.indexOf("minimumWidth") // Plasma's own keys from there (see ConfigAdvanced)
+			if (plasmaOwn >= 0) {
+				out = out.slice(0, plasmaOwn)
+			}
 			for (var prop in page) {
-				if (prop.indexOf("cfg_") === 0) {
-					out.push(prop.slice(4)) // The *Default ones: left out by SettingsTransfer
+				if (prop.indexOf("cfg_") === 0 && out.indexOf(prop.slice(4)) < 0) {
+					out.push(prop.slice(4))
 				}
 			}
 			return out
@@ -550,7 +556,7 @@ ConfigPage {
 				})
 				var text = i18np("Imported %1 setting. Press Apply or OK to keep it.", "Imported %1 settings. Press Apply or OK to keep them.", keys.length)
 				if (result.skipped.length) {
-					text += " " + i18np("Skipped %1 setting this version doesn't have: %2", "Skipped %1 settings this version doesn't have: %2", result.skipped.length, result.skipped.join(", "))
+					text += " " + i18np("Not imported (not in this version, a password or sign-in, or a value of another kind): %2", "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2", result.skipped.length, result.skipped.join(", "))
 				}
 				settingsBackup.say(text, false)
 			})
@@ -563,6 +569,7 @@ ConfigPage {
 		title: i18n("Export Settings")
 		fileMode: FileDialog.SaveFile
 		nameFilters: [i18n("Settings (*.json)")]
+		defaultSuffix: "json" // Added by the dialog, so it asks before replacing that file
 		currentFolder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
 		selectedFile: currentFolder + "/" + SettingsTransfer.fileName(new Date())
 		onAccepted: settingsBackup.exportTo(selectedFile)

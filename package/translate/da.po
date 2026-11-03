@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -506,12 +506,12 @@ msgid ""
 msgstr "Henter icalendar og recurring-ical-events til widgettens egen mappe."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "Serverens farve"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Skrivebeskyttet"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Serverens farve"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -1977,10 +1977,18 @@ msgstr[1] ""
 "Importerede %1 indstillinger. Tryk Anvend eller OK for at beholde dem."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "Sprang %1 indstilling over, som denne version ikke har: %2"
-msgstr[1] "Sprang %1 indstillinger over, som denne version ikke har: %2"
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Ikke importeret (ikke i denne version, en adgangskode eller et login eller "
+"en værdi af en anden slags): %2"
+msgstr[1] ""
+"%1 ikke importeret (ikke i denne version, adgangskoder eller logins eller "
+"værdier af en anden slags): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4745,6 +4753,11 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "Sprang %1 indstilling over, som denne version ikke har: %2"
+#~ msgstr[1] "Sprang %1 indstillinger over, som denne version ikke har: %2"
 
 #~ msgid ""
 #~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "

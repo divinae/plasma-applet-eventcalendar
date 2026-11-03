@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -417,11 +417,11 @@ msgid "Downloads icalendar and recurring-ical-events into the widget's own folde
 msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
+msgid "Read-only"
 msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Read-only"
+msgid "Server's Color"
 msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
@@ -1686,8 +1686,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgid "Not imported (not in this version, a password or sign-in, or a value of another kind): %2"
+msgid_plural "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2"
 msgstr[0] ""
 msgstr[1] ""
 

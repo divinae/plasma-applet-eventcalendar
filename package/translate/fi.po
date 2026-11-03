@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -415,12 +415,12 @@ msgid "Downloads icalendar and recurring-ical-events into the widget's own folde
 msgstr "Lataa icalendarin ja recurring-ical-eventsin sovelman omaan kansioon."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "Palvelimen väri"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Vain luku"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Palvelimen väri"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -1669,10 +1669,10 @@ msgstr[0] "Tuotiin %1 asetus. Säilytä se painamalla Käytä tai OK."
 msgstr[1] "Tuotiin %1 asetusta. Säilytä ne painamalla Käytä tai OK."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "Ohitettiin %1 asetus, jota tässä versiossa ei ole: %2"
-msgstr[1] "Ohitettiin %1 asetusta, joita tässä versiossa ei ole: %2"
+msgid "Not imported (not in this version, a password or sign-in, or a value of another kind): %2"
+msgid_plural "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2"
+msgstr[0] "Ei tuotu (ei tässä versiossa, salasana tai kirjautuminen tai erityyppinen arvo): %2"
+msgstr[1] "%1 ei tuotu (ei tässä versiossa, salasanoja tai kirjautumisia tai erityyppisiä arvoja): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4344,6 +4344,11 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "Ohitettiin %1 asetus, jota tässä versiossa ei ole: %2"
+#~ msgstr[1] "Ohitettiin %1 asetusta, joita tässä versiossa ei ole: %2"
 
 #~ msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
 #~ msgstr "Ei nyt valittuna: %1. Valitse ne Digitaalikellon asetusten PIM Events Plugin -sivulla."

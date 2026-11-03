@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 15:00+0100\n"
+"POT-Creation-Date: 2026-11-03 15:22+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -410,12 +410,12 @@ msgid "Downloads icalendar and recurring-ical-events into the widget's own folde
 msgstr "Transfere icalendar e recurring-ical-events para a pasta própria do widget."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
-msgid "Server's Color"
-msgstr "Cor do servidor"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Só de leitura"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Cor do servidor"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Refresh Calendars"
@@ -1664,10 +1664,10 @@ msgstr[0] "%1 definição importada. Prima Aplicar ou OK para a manter."
 msgstr[1] "%1 definições importadas. Prima Aplicar ou OK para as manter."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Skipped %1 setting this version doesn't have: %2"
-msgid_plural "Skipped %1 settings this version doesn't have: %2"
-msgstr[0] "%1 definição ignorada que esta versão não tem: %2"
-msgstr[1] "%1 definições ignoradas que esta versão não tem: %2"
+msgid "Not imported (not in this version, a password or sign-in, or a value of another kind): %2"
+msgid_plural "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2"
+msgstr[0] "Não importada (não existe nesta versão, uma palavra-passe ou sessão, ou um valor de outro tipo): %2"
+msgstr[1] "%1 não importadas (não existem nesta versão, palavras-passe ou sessões, ou valores de outro tipo): %2"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Export Settings"
@@ -4339,6 +4339,11 @@ msgstr "Não há mais eventos hoje"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Local de trabalho: %1"
+
+#~ msgid "Skipped %1 setting this version doesn't have: %2"
+#~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
+#~ msgstr[0] "%1 definição ignorada que esta versão não tem: %2"
+#~ msgstr[1] "%1 definições ignoradas que esta versão não tem: %2"
 
 #~ msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
 #~ msgstr "Não seleccionados agora: %1. Seleccione-os na página PIM Events Plugin da configuração do Relógio Digital."
