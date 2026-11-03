@@ -27,6 +27,7 @@ Item {
 	property var rows: [] // pimCalendarRows, with the accounts
 	function updateRows() {
 		rows = PlasmaCalendarUtils.pimCalendarRows(model, Qt.UserRole, Qt.DisplayRole, true)
+		databaseTimer.restart() // A calendar added or changed (eg: given a color): read them again
 	}
 	Connections { // Akonadi fills the model asynchronously
 		target: selection.model
@@ -43,6 +44,17 @@ Item {
 	property var colors: ({})
 	property string googleCollections: ""
 	readonly property var groups: PlasmaCalendarUtils.pimCalendarGroups(rows, googleCollections)
+	function readDatabase() {
+		databaseReader.execArgv(PlasmaCalendarUtils.akonadiCalendarsCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			selection.colors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
+			selection.googleCollections = String(stdout || "")
+		})
+	}
+	Timer {
+		id: databaseTimer
+		interval: 1000 // Akonadi sends a change in parts: read once they're in
+		onTriggered: selection.readDatabase()
+	}
 
 	// Akonadi's copies of calendars shown through a Google account signed in to in the widget (the
 	// setting, so it follows the Google tab): the widget shows their events once, the account's.
@@ -89,10 +101,7 @@ Item {
 	onModelChanged: updateRows()
 	Component.onCompleted: {
 		updateRows() // The model may be filled already: no reset or insert comes then
-		databaseReader.execArgv(PlasmaCalendarUtils.akonadiCalendarsCommand(), function(cmd, exitCode, exitStatus, stdout) {
-			selection.colors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
-			selection.googleCollections = String(stdout || "")
-		})
+		readDatabase()
 		savedReader.execArgv(PlasmaCalendarUtils.pimSelectionCommand(), function(cmd, exitCode, exitStatus, stdout) {
 			selection.saved = PlasmaCalendarUtils.parsePimSelection(stdout)
 		})
