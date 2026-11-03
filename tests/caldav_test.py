@@ -355,6 +355,27 @@ class CtagTests(unittest.TestCase):
 		self.assertEqual(result["ctag"], "")
 		self.assertEqual([m for m, _, _, _ in client.sent], ["PROPFIND", "REPORT"])
 
+	def test_no_ctag_skips_the_tag_request(self):
+		client = FakeClient([(207, {}, report_response())])
+		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "", False)
+		self.assertEqual([m for m, _, _, _ in client.sent], ["REPORT"])
+		self.assertEqual(result["ctag"], "")
+
+	def test_network_error_on_the_tag_is_reported_once(self):
+		class Offline(FakeClient):
+			def _send(self, method, url, body, headers):
+				self.sent.append((method, url, body, dict(headers or {})))
+				raise caldav.CalDavError("NETWORK", "unreachable")
+		client = Offline([])
+		with self.assertRaises(caldav.CalDavError) as ctx:
+			caldav.query(client, BASE + "/cal/", self.start, self.end, "tag-7")
+		self.assertEqual(ctx.exception.kind, "NETWORK")
+		self.assertEqual(len(client.sent), 1, "no second wait for the events")
+
+	def test_tag_starting_with_a_dash_parses(self):
+		args = caldav.build_parser().parse_args(["query", "--url", "https://x/", "--if-ctag=-1a2b", "--user", "u", "2026-11-01", "2026-11-08"])
+		self.assertEqual(args.if_ctag, "-1a2b")
+
 	def test_tag_request_failing_still_fetches(self):
 		client = FakeClient([(500, {}, "oops"), (207, {}, report_response())])
 		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "tag-7")

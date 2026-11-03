@@ -38,8 +38,8 @@ CalendarManager {
 		// Already parsed by the child manager. Skip calendarParsing.
 		eventModel.eventsByCalendar[calendarId] = data
 		eventModel.calendarFetched(calendarId, data)
-		if (eventModel.fetchRound) {
-			partialMerge.restart()
+		if (eventModel.fetchRound && !partialMerge.running) {
+			partialMerge.start() // Throttled, not restarted: a burst of calendars still shows
 		}
 	}
 	// Calendars shown as they come: a slow one (a CalDAV server, an .ics link) doesn't hold back
@@ -56,8 +56,11 @@ CalendarManager {
 			eventModel.getCalendarList().forEach(function(calendar) { known[calendar.id] = true })
 			var overlay = {}
 			var previous = eventModel.previousEventsByCalendar
+			var cached = eventModel.cachedEventsByCalendar || {}
 			for (var oldId in previous) {
-				if (known[oldId]) { // Not a calendar deselected meanwhile
+				// Not a calendar deselected meanwhile; a cached one (its manager not made yet, at
+				// start) stays, as restoreCachedCalendars keeps it at the round's end.
+				if (known[oldId] || cached[oldId]) {
 					overlay[oldId] = previous[oldId]
 				}
 			}

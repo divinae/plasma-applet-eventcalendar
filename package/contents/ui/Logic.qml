@@ -529,7 +529,8 @@ Item {
 				}
 				logic.networkRecovered()
 			}
-			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
+			// UI is rebuilt from eventsData: merged in full here (allDataFetched); during the round it
+			// also holds the calendars arrived so far over the last round's (EventModel.partialMerge).
 			if (popup) popup.deferredUpdateUI()
 		}
 		// A calendar arrived while others are still loading: shown already (EventModel.partialMerge).

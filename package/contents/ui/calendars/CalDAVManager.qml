@@ -106,26 +106,34 @@ CalendarManager {
 
 	//--- Reading
 	// The calendar unchanged since the last fetch of the same range (its change tag, see caldav.py
-	// query --if-ctag): its events aren't downloaded and parsed again, the last ones are kept.
+	// query --if-ctag): its events aren't downloaded and parsed again, the last ones are kept (with
+	// the calendar's color and rights applied again). A server that gave no tag isn't asked again.
 	function fetchCalendar(calendar) {
 		caldavManager.asyncRequests += 1
 		var calendarId = calendar.id
+		var generation = caldavManager.fetchGeneration
 		var range = Shared.localDateString(dateMin) + '/' + Shared.localDateString(dateMax)
 		var previous = previousEventsByCalendar[calendarId]
 		var args = ['query', '--url', calendar.caldavHref, Shared.localDateString(dateMin), Shared.localDateString(dateMax)]
-		if (previous && previous.ctag && previous.range === range) {
-			args.push('--if-ctag', String(previous.ctag))
+		if (previous && typeof previous.ctag === "string") {
+			if (!previous.ctag) {
+				args.push('--no-ctag') // The server has none
+			} else if (previous.range === range) {
+				args.push('--if-ctag=' + previous.ctag) // One argument: a tag may start with "-"
+			}
 		}
 		helper(args, calendar, function(err, data) {
+			if (generation !== caldavManager.fetchGeneration) {
+				return // A newer round started meanwhile (its own counts)
+			}
 			try {
 				if (err) {
 					restorePreviousCalendar(calendarId) // Keep what was shown
 					caldavManager.error(err.message, err.kind === "NETWORK" ? ErrorType.NetworkError : ErrorType.UnknownError)
 					return
 				}
-				if (data && data.unchanged && previous && !eventsByCalendar[calendarId]) {
-					eventsByCalendar[calendarId] = previous // Already parsed; this range's, current
-					calendarFetched(calendarId, previous)
+				if (data && data.unchanged && previous) {
+					setCalendarData(calendarId, previous) // This range's, current; parsed again
 					return
 				}
 				if (!(data && Array.isArray(data.items))) {
