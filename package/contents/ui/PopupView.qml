@@ -490,6 +490,50 @@ MouseArea {
 		onGoToDateRequested: popup.openGoToDate()
 	}
 
+	// Calendars still loading (a fetch round under way, see EventModel.partialMerge): a thin line
+	// running under the header, so the wait is seen (the Refresh button spins too). Only after a
+	// moment: a quick load shows nothing. Over the view, no room taken from it.
+	Item {
+		id: loadingLine
+		anchors.top: header.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		height: 2
+		z: 10
+		property bool shown: false
+		visible: shown
+		Timer {
+			running: popup.refreshing
+			interval: 400
+			onTriggered: loadingLine.shown = true
+		}
+		Connections {
+			target: popup
+			function onRefreshingChanged() {
+				if (!popup.refreshing) {
+					loadingLine.shown = false
+				}
+			}
+		}
+		clip: true
+		Rectangle {
+			id: loadingRunner
+			height: parent.height
+			width: appletConfig.animations ? parent.width * 0.3 : parent.width
+			radius: height / 2
+			color: Kirigami.Theme.highlightColor
+			opacity: appletConfig.animations ? 1 : 0.6
+			NumberAnimation on x {
+				running: loadingLine.visible && appletConfig.animations
+				loops: Animation.Infinite
+				from: -loadingRunner.width
+				to: loadingLine.width
+				duration: 1200
+				easing.type: Easing.InOutQuad
+			}
+		}
+	}
+
 	// Problems fetching data, above every view. Offline: the last loaded events stay visible and
 	// the fetch is retried with a growing delay (Logic.networkFailed).
 	Kirigami.InlineMessage {

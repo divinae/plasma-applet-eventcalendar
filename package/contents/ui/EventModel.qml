@@ -38,6 +38,36 @@ CalendarManager {
 		// Already parsed by the child manager. Skip calendarParsing.
 		eventModel.eventsByCalendar[calendarId] = data
 		eventModel.calendarFetched(calendarId, data)
+		if (eventModel.fetchRound) {
+			partialMerge.restart()
+		}
+	}
+	// Calendars shown as they come: a slow one (a CalDAV server, an .ics link) doesn't hold back
+	// the others until the round ends. Merged with the last round's data of the calendars still on
+	// their way (not emptied meanwhile), every 150 ms at most; the round's end merges as before.
+	signal partialDataFetched()
+	property var partialMerge: Timer {
+		interval: 150
+		onTriggered: {
+			if (!eventModel.fetchRound) {
+				return
+			}
+			var known = {}
+			eventModel.getCalendarList().forEach(function(calendar) { known[calendar.id] = true })
+			var overlay = {}
+			var previous = eventModel.previousEventsByCalendar
+			for (var oldId in previous) {
+				if (known[oldId]) { // Not a calendar deselected meanwhile
+					overlay[oldId] = previous[oldId]
+				}
+			}
+			var arrived = eventModel.eventsByCalendar
+			for (var id in arrived) {
+				overlay[id] = arrived[id]
+			}
+			eventModel.mergeEvents(overlay)
+			eventModel.partialDataFetched()
+		}
 	}
 	// Child managers change their own event lists. Ours holds copies (Qt 6.12+ copies JS objects
 	// passed through var signal arguments), so mirror adds, removes and updates here.
@@ -453,6 +483,7 @@ CalendarManager {
 	}
 
 	onAllDataFetched: {
+		partialMerge.stop()
 		restoreCachedCalendars()
 		mergeEvents()
 		fetchRound = false
@@ -665,8 +696,11 @@ CalendarManager {
 		mergeEvents()
 	}
 
-	function mergeEvents() {
+	// byCalendar: the calendars to merge, eventsByCalendar when not given (partialMerge: with the
+	// last round's data of those not arrived yet).
+	function mergeEvents(byCalendar) {
 		logger.debug('eventModel.mergeEvents')
+		var source = byCalendar || eventModel.eventsByCalendar
 		// Build the list first and assign once: bindings on eventsData must not see it half-filled.
 		// Declined events and calendars hidden in the header's calendar menu may be left out;
 		// eventsByCalendar keeps them (lookups, undo, cache).
@@ -675,8 +709,8 @@ CalendarManager {
 		var all = []
 		var inHiddenCalendar = [] // Per item of all
 		var workingLocationItems = []
-		for (var calendarId in eventModel.eventsByCalendar) {
-			var calendarData = eventModel.eventsByCalendar[calendarId]
+		for (var calendarId in source) {
+			var calendarData = source[calendarId]
 			var calendarItems = calendarData.items
 			var calendarHidden = Shared.isHiddenCalendar(calendarId, hiddenCalendarIds)
 			for (var j = 0; j < calendarItems.length; j++) {

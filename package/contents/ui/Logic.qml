@@ -532,6 +532,10 @@ Item {
 			// UI is rebuilt from eventsData, which only changes in mergeEvents() on allDataFetched.
 			if (popup) popup.deferredUpdateUI()
 		}
+		// A calendar arrived while others are still loading: shown already (EventModel.partialMerge).
+		function onPartialDataFetched() {
+			if (popup) popup.deferredUpdateUI()
+		}
 		function onEventCreated(calendarId, data) {
 			if (popup) popup.deferredUpdateUI()
 		}
