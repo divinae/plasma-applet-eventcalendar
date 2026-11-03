@@ -1,3 +1,25 @@
+## v1.16.0 - November 3 2026
+
+### Faster, and you see it load
+* **Calendars show as they come:** a slow CalDAV server or .ics link no longer holds back the others.
+* **A loading bar** under the header while calendars load (only when it takes a moment).
+* **CalDAV:** a calendar unchanged on the server isn't downloaded again on Refresh or the poll (one small request to ask).
+
+### Agenda (#16)
+* The header shows the day at the top of the list and follows the scroll; the arrows go day by day, Today back to today.
+
+### Time zones (#17)
+* Your own names for time zones (Settings > Time Zones), eg: "Boston" for America/New_York, shown in the clock's tooltip.
+
+### Notifications (thanks to frispete, #18)
+* Settings > Events > Other Notifications > "Only calendars in the clock's countdown".
+* Akonadi events without a color named in the calendar menu, not "plasma_Events".
+
+### Fixes
+* Refresh reloads Plasma's calendar plugins (holidays, KDE PIM) at most every 30 s: reloading them again while still loading could crash Plasma 6.3 (#14).
+* The reminder before a meeting no longer offers Check Camera (it's in the menus, details and the full-screen alert).
+* README: how to collect the widget's log and a Plasma crash's backtrace for a bug report.
+
 ## v1.15.0 - November 2 2026
 
 ### Camera check
