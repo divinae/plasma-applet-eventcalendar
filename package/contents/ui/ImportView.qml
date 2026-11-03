@@ -27,30 +27,18 @@ Item {
 	property int skippedCount: 0 // Cancelled events in the file
 	property bool loading: false
 	property string loadError: ""
-	// The Python modules for .ics files are missing: the card offers to install them
-	// (scripts/install_python_deps.py, into the widget's own folder, no root).
+	// The Python modules for .ics files are missing: the card offers to install them.
 	property bool modulesMissing: false
-	// icalendar, recurring-ical-events and what they need (scripts/install_python_deps.py installs them all).
-	readonly property var moduleMissingPattern: /No module named '?(icalendar|recurring_ical_events|x_wr_timezone|dateutil|tzdata|six|click|typing_extensions)\b/
-	property bool installingModules: false
+	PythonModules { id: pythonModules }
+	readonly property bool installingModules: pythonModules.installing
 	function installModules() {
-		installingModules = true
 		loadError = ""
-		executable.execArgv(['python3', ScriptPath.scriptPath("install_python_deps.py")], function(cmd, exitCode, exitStatus, stdout, stderr) {
-			importView.installingModules = false
-			var result = {}
-			try {
-				var lines = String(stdout || "").trim().split('\n')
-				result = JSON.parse(lines[lines.length - 1])
-			} catch (e) {
-			}
-			if (result.ok) {
+		pythonModules.install(function(error) {
+			if (error) {
+				importView.loadError = error
+			} else {
 				importView.readFile() // Read again, with the modules
-				return
 			}
-			importView.loadError = result.noInstaller
-				? i18n("Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager.")
-				: i18n("Couldn't install the modules: %1", String(result.error || stderr || "").slice(0, 200))
 		})
 	}
 	property bool importing: false
@@ -103,7 +91,7 @@ Item {
 			}
 			importView.loading = false
 			if (exitCode) {
-				importView.modulesMissing = importView.moduleMissingPattern.test(String(stderr || stdout))
+				importView.modulesMissing = pythonModules.isMissing(stderr || stdout)
 				importView.loadError = importView.processError(stderr || stdout)
 				return
 			}
@@ -125,7 +113,7 @@ Item {
 	// The helper's error, for the card only (it's never logged: it may quote the file).
 	function processError(output) {
 		var text = String(output || "")
-		if (moduleMissingPattern.test(text)) {
+		if (pythonModules.isMissing(text)) {
 			return i18n("Reading .ics files needs the Python icalendar module.")
 		}
 		var lines = text.split('\n').map(function(l) { return l.trim() }).filter(function(l) { return l })

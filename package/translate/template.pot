@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,6 +93,10 @@ msgstr ""
 #: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
+msgstr ""
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
 msgstr ""
 
 #: ../contents/ui/calendars/CalDAVManager.qml
@@ -320,6 +324,14 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr ""
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
 msgstr ""
@@ -392,6 +404,14 @@ msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr ""
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
@@ -2891,14 +2911,6 @@ msgid "No day found in the text"
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
-msgstr ""
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr ""
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr ""
 
@@ -2990,18 +3002,6 @@ msgid "Choose File…"
 msgstr ""
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr ""
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr ""
-
-#: ../contents/ui/ImportView.qml
-msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr ""
 
@@ -3074,6 +3074,14 @@ msgstr ""
 
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
+msgstr ""
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
+msgstr ""
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
 msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js

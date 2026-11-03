@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -106,6 +106,13 @@ msgstr "CalDAV: %1 kullanıcı adını veya parolayı kabul etmedi"
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Bağlanılamadı"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"CalDAV için Python modülleri gerekli: Ayarlar > Takvimler > CalDAV "
+"bölümünden kurun"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
@@ -364,6 +371,15 @@ msgstr "Renk"
 msgid "Save"
 msgstr "Kaydet"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Kuruluyor…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr ""
+"CalDAV için icalendar ve recurring-ical-events Python modülleri gerekli."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
@@ -450,6 +466,16 @@ msgstr "Parola"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Bağlan"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Kur"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"icalendar ve recurring-ical-events'i bileşenin kendi klasörüne indirir."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -3216,18 +3242,6 @@ msgid "No day found in the text"
 msgstr "Metinde gün bulunamadı"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"Modüller kurulamadı. python3-icalendar paketini (Arch'ta python-icalendar) "
-"paket yöneticinizle kurun."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Modüller kurulamadı: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Dosya okunamadı."
 
@@ -3322,20 +3336,6 @@ msgid "Choose File…"
 msgstr "Dosya Seç…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Kuruluyor…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Kur"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-"icalendar ve recurring-ical-events'i bileşenin kendi klasörüne indirir."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Dosya okunuyor…"
 
@@ -3417,6 +3417,18 @@ msgstr "Ses dosyaları (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Tüm dosyalar (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Modüller kurulamadı. python3-icalendar paketini (Arch'ta python-icalendar) "
+"paket yöneticinizle kurun."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Modüller kurulamadı: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

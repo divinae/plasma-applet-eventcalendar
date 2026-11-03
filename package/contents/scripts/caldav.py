@@ -37,8 +37,17 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 if SCRIPT_DIR not in sys.path:
 	sys.path.insert(0, SCRIPT_DIR)
 
-import icsjson  # noqa: E402  (also puts the bundled icalendar / recurring_ical_events on sys.path)
-from icalendar import Calendar, Event  # noqa: E402
+# The .ics modules (icalendar, recurring-ical-events): missing (an install from the KDE Store), every
+# command answers "DEPS: ..." (the widget offers to install them), not a traceback.
+try:
+	import icsjson  # noqa: E402  (also puts the bundled icalendar / recurring_ical_events on sys.path)
+	from icalendar import Calendar, Event  # noqa: E402
+except ImportError as import_error:
+	icsjson = None
+	Calendar = Event = None
+	MISSING_MODULE = getattr(import_error, "name", None) or str(import_error)
+else:
+	MISSING_MODULE = ""
 
 REQUEST_TIMEOUT = 20
 MAX_RESPONSE_BYTES = 20 * 1024 * 1024
@@ -55,7 +64,7 @@ NS_CS = "http://calendarserver.org/ns/"
 NS_ICAL = "http://apple.com/ns/ical/"
 PREFIXES = {NS_DAV: "d", NS_CALDAV: "c", NS_CS: "cs", NS_ICAL: "ical"}
 
-ERROR_KINDS = ("AUTH", "NOTFOUND", "CONFLICT", "NETWORK", "PROTOCOL", "INPUT")
+ERROR_KINDS = ("AUTH", "NOTFOUND", "CONFLICT", "NETWORK", "PROTOCOL", "INPUT", "DEPS")
 
 
 def tag(ns, name):
@@ -978,6 +987,9 @@ def main(argv=None, stdin=None, stdout=None, stderr=None):
 	stdout = stdout if stdout is not None else sys.stdout
 	stderr = stderr if stderr is not None else sys.stderr
 	run.password = ""
+	if MISSING_MODULE:
+		stderr.write("DEPS: The Python module {} is missing (icalendar, recurring-ical-events)\n".format(MISSING_MODULE))
+		return 1
 	try:
 		args = build_parser().parse_args(argv)
 		result = run(args, stdin)

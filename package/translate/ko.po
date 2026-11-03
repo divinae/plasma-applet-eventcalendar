@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -106,6 +106,12 @@ msgstr "CalDAV: %1에서 사용자 이름이나 암호를 받아들이지 않음
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "연결 실패"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"CalDAV에 Python 모듈이 필요합니다: 설정 > 달력 > CalDAV에서 설치하십시오"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
@@ -360,6 +366,14 @@ msgstr "색상"
 msgid "Save"
 msgstr "저장"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "설치 중…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "CalDAV에는 Python 모듈 icalendar와 recurring-ical-events가 필요합니다."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
@@ -444,6 +458,15 @@ msgstr "암호"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "연결"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "설치"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -3175,18 +3198,6 @@ msgid "No day found in the text"
 msgstr "텍스트에서 날짜를 찾을 수 없습니다"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"모듈을 설치할 수 없습니다. 패키지 관리자로 python3-icalendar(Arch에서는 "
-"python-icalendar)를 설치하십시오."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "모듈을 설치할 수 없음: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "파일을 읽을 수 없습니다."
 
@@ -3275,19 +3286,6 @@ msgid "Choose File…"
 msgstr "파일 선택…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "설치 중…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "설치"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "파일을 읽는 중…"
 
@@ -3366,6 +3364,18 @@ msgstr "소리 파일 (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "모든 파일 (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"모듈을 설치할 수 없습니다. 패키지 관리자로 python3-icalendar(Arch에서는 "
+"python-icalendar)를 설치하십시오."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "모듈을 설치할 수 없음: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

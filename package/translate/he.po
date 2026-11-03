@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -107,6 +107,12 @@ msgstr "CalDAV: ‏%1 לא קיבל את שם המשתמש או את הסיסמ�
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "לא היה ניתן להתחבר"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"‏CalDAV זקוק למודולים של Python: יש להתקין אותם בהגדרות > לוחות שנה > CalDAV"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
@@ -366,6 +372,14 @@ msgstr "צבע"
 msgid "Save"
 msgstr "שמירה"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "מתקין…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "‏CalDAV זקוק למודולי Python בשם icalendar ו־recurring-ical-events."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
@@ -453,6 +467,15 @@ msgstr "סיסמה"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "התחברות"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "התקנה"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -3220,18 +3243,6 @@ msgid "No day found in the text"
 msgstr "לא נמצא יום בטקסט"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"לא ניתן היה להתקין את המודולים. יש להתקין את python3-icalendar (python-"
-"icalendar ב־Arch) עם מנהל החבילות."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "לא ניתן היה להתקין את המודולים: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "לא ניתן לקרוא את הקובץ."
 
@@ -3338,19 +3349,6 @@ msgid "Choose File…"
 msgstr "בחירת קובץ…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "מתקין…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "התקנה"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "הקובץ נקרא…"
 
@@ -3438,6 +3436,18 @@ msgstr "קובצי שמע (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "כל הקבצים (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"לא ניתן היה להתקין את המודולים. יש להתקין את python3-icalendar (python-"
+"icalendar ב־Arch) עם מנהל החבילות."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "לא ניתן היה להתקין את המודולים: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

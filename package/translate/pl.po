@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -90,6 +90,10 @@ msgstr "CalDAV: %1 nie zaakceptował nazwy użytkownika lub hasła"
 #: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Nie można połączyć"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr "CalDAV potrzebuje modułów Pythona: zainstaluj je w Ustawienia > Kalendarze > CalDAV"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
@@ -317,6 +321,14 @@ msgstr "Kolor"
 msgid "Save"
 msgstr "Zapisz"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Instalowanie…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "CalDAV potrzebuje modułów Pythona icalendar i recurring-ical-events."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
 msgstr "Serwer nie zaakceptował nazwy użytkownika lub hasła. Niektóre usługi wymagają hasła aplikacji (iCloud, Fastmail, Nextcloud z logowaniem dwuskładnikowym)."
@@ -391,6 +403,14 @@ msgstr "Hasło"
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Połącz"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Zainstaluj"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Pobiera icalendar i recurring-ical-events do własnego folderu widżetu."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Plain http works only for a server on your own network; the password isn't encrypted on the way."
@@ -2885,14 +2905,6 @@ msgid "No day found in the text"
 msgstr "Nie znaleziono dnia w tekście"
 
 #: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
-msgstr "Nie udało się zainstalować modułów. Zainstaluj python3-icalendar (python-icalendar w Arch) menedżerem pakietów."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Nie udało się zainstalować modułów: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Nie można odczytać pliku."
 
@@ -2990,18 +3002,6 @@ msgid "Choose File…"
 msgstr "Wybierz plik…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Instalowanie…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Zainstaluj"
-
-#: ../contents/ui/ImportView.qml
-msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "Pobiera icalendar i recurring-ical-events do własnego folderu widżetu."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Odczytywanie pliku…"
 
@@ -3078,6 +3078,14 @@ msgstr "Pliki dźwiękowe (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Wszystkie pliki (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
+msgstr "Nie udało się zainstalować modułów. Zainstaluj python3-icalendar (python-icalendar w Arch) menedżerem pakietów."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Nie udało się zainstalować modułów: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

@@ -47,7 +47,26 @@ ConfigSection {
 		return m ? m[1] : String(url || "")
 	}
 	// The helper's error (CalDAVErrors.parse) as a message for the user.
+	// The Python modules CalDAV is read with, missing (an install from the KDE Store): the error
+	// offers to install them, then connects again.
+	PythonModules { id: pythonModules }
+	property bool modulesMissing: false
+	function installModules() {
+		setStatus(i18n("Installing…"), false)
+		pythonModules.install(function(error) {
+			if (error) {
+				page.setStatus(error, true)
+				return
+			}
+			page.modulesMissing = false
+			page.connect() // With what's typed (the password is kept until connected)
+		})
+	}
+
 	function errorText(stderr) {
+		if (pythonModules.isMissing(stderr)) {
+			return i18n("CalDAV needs the Python modules icalendar and recurring-ical-events.")
+		}
 		var parsed = CalDAVErrors.parse(stderr)
 		var kind = parsed.kind
 		if (kind === "AUTH") {
@@ -67,6 +86,7 @@ ConfigSection {
 		executable.execArgv(['python3', helperPath, 'discover', '--url', account.url, '--account', account.id,
 			'--user', account.username], function(cmd, exitCode, exitStatus, stdout, stderr) {
 			if (exitCode) {
+				page.modulesMissing = pythonModules.isMissing(stderr)
 				done(errorText(stderr), null)
 				return
 			}
@@ -265,6 +285,16 @@ ConfigSection {
 						visible: page.statusIsError && !!page.statusText
 						type: Kirigami.MessageType.Error
 						text: page.statusText
+						actions: [
+							Kirigami.Action {
+								visible: page.modulesMissing
+								icon.name: "download"
+								text: i18n("Install")
+								enabled: !pythonModules.installing && !page.busy
+								tooltip: i18n("Downloads icalendar and recurring-ical-events into the widget's own folder.")
+								onTriggered: page.installModules()
+							}
+						]
 					}
 					Kirigami.InlineMessage {
 						Layout.fillWidth: true

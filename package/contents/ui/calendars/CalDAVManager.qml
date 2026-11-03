@@ -67,6 +67,9 @@ CalendarManager {
 		if (kind === "NETWORK") {
 			return { kind: kind, message: i18n("Could not connect") }
 		}
+		if (kind === "DEPS") {
+			return { kind: kind, message: i18n("CalDAV needs Python modules: install them in Settings > Calendars > CalDAV") }
+		}
 		if (kind === "CONFLICT") {
 			return { kind: kind, message: i18n("The event was changed elsewhere meanwhile; it's loaded again") }
 		}

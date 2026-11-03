@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:21+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -109,6 +109,13 @@ msgstr "CalDAV: %1 не принял имя пользователя или па
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Невозможно установить соединение"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"Для CalDAV нужны модули Python: установите их в Настройки > Календари > "
+"CalDAV"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
@@ -373,6 +380,14 @@ msgstr "Цвет"
 msgid "Save"
 msgstr "Сохранить"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Установка…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "Для CalDAV нужны модули Python icalendar и recurring-ical-events."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
@@ -459,6 +474,16 @@ msgstr "Пароль"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Подключить"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Установить"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Загружает icalendar и recurring-ical-events в собственную папку виджета."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -3247,18 +3272,6 @@ msgid "No day found in the text"
 msgstr "В тексте не найден день"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"Не удалось установить модули. Установите python3-icalendar (python-icalendar "
-"в Arch) менеджером пакетов."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Не удалось установить модули: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Не удалось прочитать файл."
 
@@ -3359,20 +3372,6 @@ msgid "Choose File…"
 msgstr "Выбрать файл…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Установка…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Установить"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-"Загружает icalendar и recurring-ical-events в собственную папку виджета."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Чтение файла…"
 
@@ -3457,6 +3456,18 @@ msgstr "Звуковой файл (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Все файлы (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Не удалось установить модули. Установите python3-icalendar (python-icalendar "
+"в Arch) менеджером пакетов."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Не удалось установить модули: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"
