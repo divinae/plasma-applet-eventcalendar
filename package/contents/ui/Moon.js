@@ -1,7 +1,8 @@
 .pragma library
 
 // The moon on a day, worked out here (no service): its phase, how much of it is lit, when it rises
-// and sets at a place, and the next full or new moon. The positions and the rise / set search are
+// and sets at a place, and the next full or new moon; and whether the sun is down (the weather
+// charts' nights). The positions and the rise / set search are
 // SunCalc's (https://github.com/mourner/suncalc), the moon's with the larger terms of Meeus' lower
 // accuracy theory added (Astronomical Algorithms, ch. 47): the main phases within about 20 minutes.
 // Times are Date objects, days the local ones.
@@ -86,6 +87,24 @@ function moonAltitude(date, lat, lon) {
 	var c = moonCoords(d)
 	var h = altitude(siderealTime(d, rad * -lon) - c.ra, rad * lat, c.dec)
 	return h + astroRefraction(h)
+}
+
+// How high the sun is (degrees, its centre) at date for latitude / longitude: it has set below
+// -0.833 (refraction and its radius).
+function sunAltitude(date, lat, lon) {
+	var d = toDays(date)
+	var c = sunCoords(d)
+	return altitude(siderealTime(d, rad * -lon) - c.ra, rad * lat, c.dec) / rad
+}
+// For ForecastChart.nightFlags: whether the sun is down at a time (ms) at latitude / longitude,
+// null without a place.
+function sunDownAt(lat, lon) {
+	if (typeof lat !== 'number' || typeof lon !== 'number' || !isFinite(lat) || !isFinite(lon)) {
+		return null
+	}
+	return function(ms) {
+		return sunAltitude(new Date(ms), lat, lon) < -0.833
+	}
 }
 
 // { fraction (lit, 0..1), phase } at date: phase 0 new moon, 0.25 first quarter, 0.5 full moon,

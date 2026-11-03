@@ -108,7 +108,8 @@ Item {
 	readonly property bool weatherBeside: rightBeside && dayWantsWeather && showWeather
 	readonly property bool tasksBeside: rightBeside && dayWantsTasks && dayHasTaskLists
 	readonly property bool moonBeside: rightBeside && dayWantsMoon
-	readonly property var moonPlace: WeatherApi.place(plasmoid.configuration, weatherCurrent) // For its rise and set
+	// The weather's place: the moon's rise and set, the weather chart's nights.
+	readonly property var weatherPlace: WeatherApi.place(plasmoid.configuration, weatherCurrent)
 	readonly property real leftPanelSpace: leftBeside ? sidePanelWidth + panelGap : 0
 	readonly property real rightPanelSpace: rightBeside ? tasksPanelWidth + panelGap : 0
 	readonly property real contentWidth: {
@@ -680,6 +681,8 @@ Item {
 		isToday: weekView.showingToday
 		current: weekView.showingToday ? weekView.weatherCurrent : null
 		today: weekView.dayWeather(weekView.weekStart)
+		latitude: weekView.weatherPlace.latitude
+		longitude: weekView.weatherPlace.longitude
 	}
 
 	// The side columns end with the grid's card (islands): its bottom edge.
@@ -747,8 +750,8 @@ Item {
 
 		MoonPanel {
 			day: weekView.weekStart
-			latitude: weekView.moonPlace.latitude
-			longitude: weekView.moonPlace.longitude
+			latitude: weekView.weatherPlace.latitude
+			longitude: weekView.weatherPlace.longitude
 		}
 	}
 

@@ -55,6 +55,8 @@ Item {
 	function dayWeather(d) {
 		return weatherByDay ? weatherByDay[Shared.dayKey(d)] : null
 	}
+	// The weather's place: the moon's rise and set, the weather chart's nights.
+	readonly property var weatherPlace: WeatherApi.place(plasmoid.configuration, weatherCurrent)
 
 	// Left: the small month.
 	IslandCard {
@@ -119,7 +121,6 @@ Item {
 	// Under the tasks (or at the top without them): the day's moon.
 	IslandCard {
 		id: moonCard
-		readonly property var place: WeatherApi.place(plasmoid.configuration, panels.weatherCurrent) // For its rise and set
 		visible: panels.moonShown
 		x: panels.rightX
 		y: panels.tasksShown ? tasksCard.y + tasksCard.height + panels.cardGap : panels.topY
@@ -127,8 +128,8 @@ Item {
 		height: implicitHeight
 		MoonPanel {
 			day: panels.day
-			latitude: moonCard.place.latitude
-			longitude: moonCard.place.longitude
+			latitude: panels.weatherPlace.latitude
+			longitude: panels.weatherPlace.longitude
 		}
 	}
 
@@ -150,6 +151,8 @@ Item {
 			isToday: panels.showingToday
 			current: panels.showingToday ? panels.weatherCurrent : null
 			today: panels.dayWeather(panels.day)
+			latitude: panels.weatherPlace.latitude
+			longitude: panels.weatherPlace.longitude
 			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
 			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
 			forecastUrl: WeatherApi.forecastPageUrl(plasmoid.configuration)

@@ -17,13 +17,14 @@ function nowIndex(points, nowMs) {
 
 // Night or day for each point, from its icon: a night icon (weather-clear-night, ...) is night,
 // one that has a night variant (weather-clear, ...) is day. The others (overcast, fog, snow, ...)
-// look the same at night: by their local hour (dt: night from 20:00 to 6:00), else (no dt) they
-// take the nearest point that tells, earlier ones first.
+// look the same at night: by the sun (sunDown(ms), eg: Moon.sunDownAt the weather's place), else by
+// their local hour (dt: night from 20:00 to 6:00, wrong by an hour or more much of the year), else
+// (no dt) they take the nearest point that tells, earlier ones first.
 var DAY_ICONS = [
 	'weather-clear', 'weather-few-clouds', 'weather-clouds', 'weather-showers', 'weather-showers-scattered',
 	'weather-snow-rain', 'weather-snow-scattered-day', 'weather-storm',
 ]
-function nightFlags(points) {
+function nightFlags(points, sunDown) {
 	var known = points.map(function(point) {
 		var name = String(point.iconName || '')
 		if (name.indexOf('night') >= 0) {
@@ -33,6 +34,9 @@ function nightFlags(points) {
 			return false
 		}
 		if (isFinite(point.dt)) {
+			if (typeof sunDown === 'function') {
+				return sunDown(point.dt * 1000)
+			}
 			var hour = new Date(point.dt * 1000).getHours()
 			return hour >= 20 || hour < 6
 		}
@@ -51,9 +55,9 @@ function nightFlags(points) {
 }
 
 // Night stretches as point index ranges [{ from, to }]; a stretch reaches halfway to its day
-// neighbours (the step between two points is the change).
-function nightRanges(points) {
-	var flags = nightFlags(points)
+// neighbours (the step between two points is the change). sunDown: as nightFlags.
+function nightRanges(points, sunDown) {
+	var flags = nightFlags(points, sunDown)
 	var ranges = []
 	for (var i = 0; i < flags.length; i++) {
 		if (!flags[i]) {

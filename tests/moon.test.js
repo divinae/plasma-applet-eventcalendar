@@ -68,4 +68,12 @@ for (let day = 1; day <= 28; day++) {
 }
 assert.ok(polar.includes('up') && polar.includes('down'), 'days always up and always down: ' + polar.join())
 
+// The sun: high at noon on the June solstice (Berlin: 90 - 52.5 + 23.4 = about 61 degrees), and
+// in Bingen on 3 November 2026 still down at 07:00, up at 08:00 (it rises about 07:20).
+const noon = M.sunAltitude(new Date(2024, 5, 21, 13, 10), berlin[0], berlin[1])
+assert.ok(Math.abs(noon - 61) < 1, 'June noon: ' + noon)
+const bingen = M.sunDownAt(49.967, 7.899)
+assert.deepStrictEqual([bingen(new Date(2026, 10, 3, 7).getTime()), bingen(new Date(2026, 10, 3, 8).getTime())], [true, false])
+assert.strictEqual(M.sunDownAt(NaN, 7.9), null, 'no place: none')
+
 console.log('PASS moon')
