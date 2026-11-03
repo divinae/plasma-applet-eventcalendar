@@ -93,6 +93,11 @@ assert.deepStrictEqual(plain(hourly[0]), {
 })
 assert.strictEqual(response.list[0].temp, undefined, 'the cached response is left as it was')
 
+// A day (One Call's daily, /forecast/daily): its text the description in the language asked for, as
+// the hours' (weather.main is always English).
+const day = OWM.parseDay({ dt: 200, temp: { min: 5, max: 9 }, weather: [{ id: 804, icon: '04d', main: 'Clouds', description: 'bedeckt' }] }, 'metric')
+assert.deepStrictEqual([day.text, day.description], ['Bedeckt', 'bedeckt'], 'not "Clouds"')
+
 const current = OWM.parseCurrentData({ dt: 90, main: { temp: 12.5 }, weather: w(800, '01d', 'clear sky') }, 'metric')
 assert.deepStrictEqual(plain(current), { dt: 90, temp: 12.5, iconName: 'weather-clear', text: 'Clear sky', description: 'clear sky', precipitation: 0, place: '' })
 assert.strictEqual(OWM.parseCurrentData({ dt: 90, main: { temp: 1 }, name: 'Warsaw', sys: { country: 'PL' } }, 'metric').place, 'Warsaw, PL', 'the city as the location')
