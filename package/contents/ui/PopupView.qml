@@ -1118,7 +1118,9 @@ MouseArea {
 			view.resetScroll()
 			// The month paged meanwhile: the events fetched are its own, back to this week's.
 			syncMonthToWeek(view)
-			if (weekStale) {
+			// Rebuilt meanwhile for the other column count (a fetch while the Agenda showed: the
+			// week's), not just for stale events: the Day view's all-day bars were a week wide.
+			if (weekStale || view.days.length !== view.columnCount) {
 				view.rebuild()
 			}
 		}
