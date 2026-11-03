@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,6 +302,18 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "%1 päästä"
 
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "Väri"
+
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "Mukautettu…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "Kalenterin väri"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "Muokkaa kalenteria"
@@ -317,10 +329,6 @@ msgstr "Nimi omassa luettelossa"
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "Vain sinä näet tämän nimen. Muille kalenteri näkyy omalla nimellään."
-
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "Väri"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
@@ -383,6 +391,10 @@ msgstr "Asenna"
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "Lataa icalendarin ja recurring-ical-eventsin sovelman omaan kansioon."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Palvelimen väri"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -749,10 +761,6 @@ msgstr "(12-tuntinen)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(sekuntien kanssa)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "Mukautettu…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1610,6 +1618,70 @@ msgstr "Vianmääritys"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Vianjäljityslokit ja lisäasetussivut"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "Asetusten varmuuskopio"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "Vie asetukset…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Kaikki tämän sovelman asetukset tiedostoon, ilman salasanoja ja kirjautumisia"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "Tuo asetukset…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Viedystä tiedostosta; säilytä ne painamalla Käytä tai OK"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring)."
+msgstr "Tilit palaavat kalentereineen. Tällä tietokoneella ne pysyvät kirjautuneina; toisella kirjaudu uudelleen (salasanat ja kirjautumiset pysyvät järjestelmän avainnipussa)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "Tiedostoa ei voitu kirjoittaa: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "Viety kohteeseen %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "Tiedostoa ei voitu lukea: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Tämä ei ole Event Calendarin asetustiedosto."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "Tuotiin %1 asetus. Säilytä se painamalla Käytä tai OK."
+msgstr[1] "Tuotiin %1 asetusta. Säilytä ne painamalla Käytä tai OK."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "Ohitettiin %1 asetus, jota tässä versiossa ei ole: %2"
+msgstr[1] "Ohitettiin %1 asetusta, joita tässä versiossa ei ole: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "Vie asetukset"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "Asetukset (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "Tuo asetukset"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

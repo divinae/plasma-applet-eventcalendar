@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -296,6 +296,18 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "%1 後"
 
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "色"
+
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "カスタム…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "カレンダーの色"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "カレンダーを編集"
@@ -311,10 +323,6 @@ msgstr "自分のリストでの名前"
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "この名前はあなたにだけ表示されます。他のユーザーには元のカレンダー名が表示されます。"
-
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "色"
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
@@ -376,6 +384,10 @@ msgstr "インストール"
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "icalendar と recurring-ical-events をウィジェット専用フォルダーにダウンロードします。"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "サーバーの色"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -741,10 +753,6 @@ msgstr "(12 時間制)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(秒付き)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "カスタム…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1600,6 +1608,68 @@ msgstr "トラブルシューティング"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "デバッグログと追加の設定ページ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "設定のバックアップ"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "設定をエクスポート…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "このウィジェットのすべての設定をファイルへ（パスワードとサインインを除く）"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "設定をインポート…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "エクスポートしたファイルから。保持するには「適用」または「OK」を押します"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring)."
+msgstr "アカウントはカレンダーと一緒に戻ります。このコンピューターではサインインしたままです。別のコンピューターでは再度サインインしてください（パスワードとサインインはシステムのキーリングに残ります）。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "ファイルを書き込めませんでした: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "%1 にエクスポートしました"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "ファイルを読み込めませんでした: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "これは Event Calendar の設定ファイルではありません。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "%1 件の設定をインポートしました。保持するには「適用」または「OK」を押します。"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "このバージョンにない %1 件の設定をスキップしました: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "設定をエクスポート"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "設定 (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "設定をインポート"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

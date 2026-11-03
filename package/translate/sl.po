@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -356,6 +356,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "čez %1"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "Barva"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "Po meri…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "Barva koledarja"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "Uredi koledar"
@@ -372,11 +387,6 @@ msgstr "Ime na mojem seznamu"
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "To ime vidite samo vi. Za druge koledar obdrži svoje ime."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "Barva"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -460,6 +470,10 @@ msgstr "Namesti"
 msgid ""
 "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "Prenese icalendar in recurring-ical-events v lastno mapo gradnika."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Barva s strežnika"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -951,10 +965,6 @@ msgstr "(12-urno)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(s sekundami)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "Po meri…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1932,6 +1942,81 @@ msgstr "Odpravljanje težav"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "Varnostna kopija nastavitev"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "Izvozi nastavitve …"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Vse nastavitve tega gradnika v datoteko, brez gesel in prijav"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "Uvozi nastavitve …"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Iz izvožene datoteke; za ohranitev pritisnite Uveljavi ali V redu"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Računi se vrnejo s svojimi koledarji. Na tem računalniku ostanejo "
+"prijavljeni; na drugem se znova prijavite (gesla in prijave ostanejo v "
+"sistemski shrambi ključev)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "Datoteke ni bilo mogoče zapisati: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "Izvoženo v %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "Datoteke ni bilo mogoče prebrati: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "To ni datoteka z nastavitvami Event Calendar."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+"Uvoženih %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[1] "Uvožena %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[2] "Uvoženi %1 nastavitvi. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[3] "Uvožene %1 nastavitve. Za ohranitev pritisnite Uveljavi ali V redu."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "Preskočenih %1 nastavitev, ki jih ta različica nima: %2"
+msgstr[1] "Preskočena %1 nastavitev, ki je ta različica nima: %2"
+msgstr[2] "Preskočeni %1 nastavitvi, ki ju ta različica nima: %2"
+msgstr[3] "Preskočene %1 nastavitve, ki jih ta različica nima: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "Izvozi nastavitve"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "Nastavitve (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "Uvozi nastavitve"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

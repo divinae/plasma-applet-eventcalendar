@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2021-10-19 20:30-0300\n"
 "Last-Translator: Bernardo Barzotto Zomer <bernardobarzottoz@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -355,6 +355,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "em %1"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "Cor"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "Personalizado…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "Cor da agenda"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "Editar calendário"
@@ -372,11 +387,6 @@ msgstr "Nome na minha lista"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Só você vê este nome. Para os outros, o calendário mantém o nome original."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "Cor"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -459,6 +469,10 @@ msgstr "Instalar"
 msgid ""
 "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "Baixa icalendar e recurring-ical-events na pasta própria do widget."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Cor do servidor"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -945,10 +959,6 @@ msgstr "(12 horas)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(com segundos)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "Personalizado…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1928,6 +1938,77 @@ msgstr "Solução de problemas"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Registro de depuração e páginas de configuração extras"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "Backup das configurações"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "Exportar configurações…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr ""
+"Todas as configurações deste widget para um arquivo, sem senhas nem logins"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "Importar configurações…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "De um arquivo exportado; pressione Aplicar ou OK para mantê-las"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"As contas voltam com suas agendas. Neste computador continuam conectadas; em "
+"outro, entre novamente (senhas e logins ficam no chaveiro do sistema)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "Não foi possível gravar o arquivo: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "Exportado para %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "Não foi possível ler o arquivo: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Este não é um arquivo de configurações do Event Calendar."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "%1 configuração importada. Pressione Aplicar ou OK para mantê-la."
+msgstr[1] ""
+"%1 configurações importadas. Pressione Aplicar ou OK para mantê-las."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "%1 configuração ignorada que esta versão não tem: %2"
+msgstr[1] "%1 configurações ignoradas que esta versão não tem: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "Exportar configurações"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "Configurações (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "Importar configurações"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

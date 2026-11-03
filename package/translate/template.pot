@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,6 +304,18 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr ""
 
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr ""
+
+#: ../contents/ui/config/CalendarColorButton.qml ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr ""
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr ""
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr ""
@@ -318,10 +330,6 @@ msgstr ""
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
-msgstr ""
-
-#: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
 msgstr ""
 
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -384,6 +392,10 @@ msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
 msgstr ""
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
@@ -760,10 +772,6 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
-msgstr ""
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
 msgstr ""
 
 #: ../contents/ui/config/ConfigClock.qml
@@ -1627,6 +1635,70 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring)."
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
 msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml

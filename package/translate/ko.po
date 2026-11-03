@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -346,6 +346,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "%1 후"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "색상"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "사용자 정의…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "캘린더 색상"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "달력 편집"
@@ -363,11 +378,6 @@ msgstr "내 목록에 표시할 이름"
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "이 이름은 나에게만 보입니다. 다른 사람에게는 달력의 원래 이름이 표시됩니다."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "색상"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -447,6 +457,10 @@ msgstr "설치"
 msgid ""
 "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "서버 색상"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -918,10 +932,6 @@ msgstr "(12시간제)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(초 포함)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "사용자 정의…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1887,6 +1897,74 @@ msgstr "문제 해결"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "디버그 로그 및 추가 설정 페이지"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "설정 백업"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "설정 내보내기…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "이 위젯의 모든 설정을 파일로 (비밀번호와 로그인 제외)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "설정 가져오기…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "내보낸 파일에서; 유지하려면 적용 또는 확인을 누르세요"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"계정은 캘린더와 함께 돌아옵니다. 이 컴퓨터에서는 로그인 상태가 유지되고, 다"
+"른 컴퓨터에서는 다시 로그인하세요 (비밀번호와 로그인은 시스템 키링에 남습니"
+"다)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "파일을 쓸 수 없습니다: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "%1(으)로 내보냈습니다"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "파일을 읽을 수 없습니다: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Event Calendar 설정 파일이 아닙니다."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "설정 %1개를 가져왔습니다. 유지하려면 적용 또는 확인을 누르세요."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "이 버전에 없는 설정 %1개를 건너뛰었습니다: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "설정 내보내기"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "설정 (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "설정 가져오기"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

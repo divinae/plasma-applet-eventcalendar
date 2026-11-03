@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -359,6 +359,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "через %1"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "Цвет"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "Другой…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "Цвет календаря"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "Редактировать календарь"
@@ -377,11 +392,6 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Это название видите только вы. Для остальных у календаря остается прежнее "
 "название."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "Цвет"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -464,6 +474,10 @@ msgid ""
 "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr ""
 "Загружает icalendar и recurring-ical-events в собственную папку виджета."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Цвет с сервера"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -953,10 +967,6 @@ msgstr "(12-часовой)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(с секундами)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "Другой…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1934,6 +1944,82 @@ msgstr "Устранение неполадок"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Журнал отладки и дополнительные страницы настроек"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "Резервная копия настроек"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "Экспортировать настройки…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Все настройки этого виджета в файл, без паролей и входов"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "Импортировать настройки…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr ""
+"Из экспортированного файла; нажмите «Применить» или «OK», чтобы сохранить их"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Учётные записи возвращаются со своими календарями. На этом компьютере вход "
+"сохраняется; на другом войдите снова (пароли и входы остаются в системной "
+"связке ключей)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "Не удалось записать файл: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "Экспортировано в %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "Не удалось прочитать файл: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Это не файл настроек Event Calendar."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+"Импортирована %1 настройка. Нажмите «Применить» или «OK», чтобы сохранить её."
+msgstr[1] ""
+"Импортировано %1 настройки. Нажмите «Применить» или «OK», чтобы сохранить их."
+msgstr[2] ""
+"Импортировано %1 настроек. Нажмите «Применить» или «OK», чтобы сохранить их."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "Пропущена %1 настройка, которой нет в этой версии: %2"
+msgstr[1] "Пропущено %1 настройки, которых нет в этой версии: %2"
+msgstr[2] "Пропущено %1 настроек, которых нет в этой версии: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "Экспорт настроек"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "Настройки (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "Импорт настроек"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

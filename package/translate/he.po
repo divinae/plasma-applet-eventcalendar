@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -353,6 +353,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "בעוד %1"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "צבע"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "מותאם אישית…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "צבע לוח השנה"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "עריכת לוח שנה"
@@ -369,11 +384,6 @@ msgstr "השם ברשימה שלי"
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Only you see this name. The calendar keeps its name for others."
 msgstr "רק את/ה רואה את השם הזה. עבור אחרים לוח השנה שומר על שמו."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "צבע"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -456,6 +466,10 @@ msgstr "התקנה"
 msgid ""
 "Downloads icalendar and recurring-ical-events into the widget's own folder."
 msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "הצבע מהשרת"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -929,10 +943,6 @@ msgstr "(12 שעות)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(עם שניות)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "מותאם אישית…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1894,6 +1904,79 @@ msgstr "פתרון תקלות"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "רישום ניפוי שגיאות ועמודי הגדרות נוספים"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "גיבוי הגדרות"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "ייצוא הגדרות…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "כל ההגדרות של יישומון זה לקובץ, ללא סיסמאות והתחברויות"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "ייבוא הגדרות…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "מקובץ שיוצא; יש ללחוץ על החלה או אישור כדי לשמור אותן"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"החשבונות חוזרים עם לוחות השנה שלהם. במחשב זה הם נשארים מחוברים; במחשב אחר יש "
+"להתחבר שוב (הסיסמאות וההתחברויות נשארות במחזיק המפתחות של המערכת)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "לא ניתן לכתוב את הקובץ: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "יוצא אל %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "לא ניתן לקרוא את הקובץ: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "זה אינו קובץ הגדרות של Event Calendar."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "יובאה הגדרה %1. יש ללחוץ על החלה או אישור כדי לשמור אותה."
+msgstr[1] "יובאו %1 הגדרות. יש ללחוץ על החלה או אישור כדי לשמור אותן."
+msgstr[2] "יובאו %1 הגדרות. יש ללחוץ על החלה או אישור כדי לשמור אותן."
+msgstr[3] "יובאו %1 הגדרות. יש ללחוץ על החלה או אישור כדי לשמור אותן."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "דולגה הגדרה %1 שאין בגרסה זו: %2"
+msgstr[1] "דולגו %1 הגדרות שאין בגרסה זו: %2"
+msgstr[2] "דולגו %1 הגדרות שאין בגרסה זו: %2"
+msgstr[3] "דולגו %1 הגדרות שאין בגרסה זו: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "ייצוא הגדרות"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "הגדרות (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "ייבוא הגדרות"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

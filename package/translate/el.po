@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:25+0100\n"
+"POT-Creation-Date: 2026-11-03 14:50+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -354,6 +354,21 @@ msgctxt "meeting starts in, %1 = 1h20m"
 msgid "in %1"
 msgstr "σε %1"
 
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/CalendarEditDialog.qml
+#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
+msgid "Color"
+msgstr "Χρώμα"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
+msgid "Custom…"
+msgstr "Προσαρμοσμένο…"
+
+#: ../contents/ui/config/CalendarColorButton.qml
+msgid "Calendar Color"
+msgstr "Χρώμα ημερολογίου"
+
 #: ../contents/ui/config/CalendarEditDialog.qml
 msgid "Edit Calendar"
 msgstr "Επεξεργασία ημερολογίου"
@@ -372,11 +387,6 @@ msgid "Only you see this name. The calendar keeps its name for others."
 msgstr ""
 "Μόνο εσείς βλέπετε αυτό το όνομα. Για τους άλλους το ημερολόγιο διατηρεί το "
 "όνομά του."
-
-#: ../contents/ui/config/CalendarEditDialog.qml
-#: ../contents/ui/ManageListsView.qml ../contents/ui/TasksView.qml
-msgid "Color"
-msgstr "Χρώμα"
 
 #: ../contents/ui/config/CalendarEditDialog.qml
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
@@ -465,6 +475,10 @@ msgid ""
 msgstr ""
 "Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
 "στοιχείου."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "Server's Color"
+msgstr "Χρώμα του διακομιστή"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -959,10 +973,6 @@ msgstr "(12ωρο)"
 #: ../contents/ui/config/ConfigClock.qml
 msgid "(with seconds)"
 msgstr "(με δευτερόλεπτα)"
-
-#: ../contents/ui/config/ConfigClock.qml ../contents/ui/EventEditView.qml
-msgid "Custom…"
-msgstr "Προσαρμοσμένο…"
 
 #: ../contents/ui/config/ConfigClock.qml
 msgid "Time"
@@ -1956,6 +1966,79 @@ msgstr "Αντιμετώπιση προβλημάτων"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Debug logging and extra settings pages"
 msgstr "Καταγραφή αποσφαλμάτωσης και επιπλέον σελίδες ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings Backup"
+msgstr "Αντίγραφο ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings…"
+msgstr "Εξαγωγή ρυθμίσεων…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr ""
+"Όλες οι ρυθμίσεις αυτού του γραφικού στοιχείου σε αρχείο, χωρίς κωδικούς και "
+"συνδέσεις"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings…"
+msgstr "Εισαγωγή ρυθμίσεων…"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Από αρχείο εξαγωγής· πατήστε Εφαρμογή ή OK για να τις κρατήσετε"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Οι λογαριασμοί επιστρέφουν με τα ημερολόγιά τους. Σε αυτόν τον υπολογιστή "
+"παραμένουν συνδεδεμένοι· σε άλλον, συνδεθείτε ξανά (οι κωδικοί και οι "
+"συνδέσεις μένουν στη θήκη κλειδιών του συστήματος)."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be written: %1"
+msgstr "Δεν ήταν δυνατή η εγγραφή του αρχείου: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Exported to %1"
+msgstr "Εξήχθη στο %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The file couldn't be read: %1"
+msgstr "Δεν ήταν δυνατή η ανάγνωση του αρχείου: %1"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Αυτό δεν είναι αρχείο ρυθμίσεων του Event Calendar."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "Εισήχθη %1 ρύθμιση. Πατήστε Εφαρμογή ή OK για να την κρατήσετε."
+msgstr[1] ""
+"Εισήχθησαν %1 ρυθμίσεις. Πατήστε Εφαρμογή ή OK για να τις κρατήσετε."
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Skipped %1 setting this version doesn't have: %2"
+msgid_plural "Skipped %1 settings this version doesn't have: %2"
+msgstr[0] "Παραλείφθηκε %1 ρύθμιση που δεν έχει αυτή η έκδοση: %2"
+msgstr[1] "Παραλείφθηκαν %1 ρυθμίσεις που δεν έχει αυτή η έκδοση: %2"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Export Settings"
+msgstr "Εξαγωγή ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Settings (*.json)"
+msgstr "Ρυθμίσεις (*.json)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Import Settings"
+msgstr "Εισαγωγή ρυθμίσεων"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"
