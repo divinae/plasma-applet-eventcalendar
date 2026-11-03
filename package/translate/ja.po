@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:33+0100\n"
+"POT-Creation-Date: 2026-11-03 09:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -2039,7 +2039,7 @@ msgstr "進行中にする"
 msgid "Show Details"
 msgstr "詳細を表示"
 
-#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml ../contents/ui/UpcomingEvents.qml
+#: ../contents/ui/EventContextMenu.qml ../contents/ui/EventDetailsView.qml
 msgid "Check Camera"
 msgstr "カメラをチェック"
 
