@@ -196,7 +196,7 @@ function parseCurrentData(data, units) {
 		return null
 	}
 	var weather = data.weather && data.weather[0]
-	return {
+	var current = {
 		dt: data.dt, // When it was measured
 		temp: temperature(data.main ? data.main.temp : data.temp, units),
 		iconName: iconName(weather),
@@ -206,6 +206,12 @@ function parseCurrentData(data, units) {
 		// The city's name (/weather; One Call has none), shown as the panel's location.
 		place: data.name ? String(data.name) + (data.sys && data.sys.country ? ', ' + data.sys.country : '') : '',
 	}
+	// Its place (/weather; One Call has it apart), eg: for the moon's rise and set.
+	if (data.coord) {
+		current.latitude = Number(data.coord.lat)
+		current.longitude = Number(data.coord.lon)
+	}
+	return current
 }
 
 // The days from the 3 hour steps (no /forecast/daily): per local day the low and the high, the rain,

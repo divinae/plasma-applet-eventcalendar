@@ -326,6 +326,7 @@ ConfigPage {
 							model: [
 								{ key: 'dayShowMiniMonth', text: i18n("Small calendar") },
 								{ key: 'dayShowUpNext', text: i18n("Up next") },
+								{ key: 'dayShowMoon', text: i18n("Moon") },
 								{ key: 'dayShowWeather', text: i18n("Weather") },
 								{ key: 'dayShowTasks', text: i18n("Tasks") },
 							]

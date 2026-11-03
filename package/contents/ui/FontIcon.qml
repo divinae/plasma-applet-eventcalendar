@@ -56,6 +56,11 @@ Item {
 			'wi-tornado': '\uf056', // wi-tornado
 			'wi-windy': '\uf021', // wi-windy
 		}
+		// The moon by its age: moon-0 (new) .. moon-14 (full) .. moon-27, wi-moon-new .. wi-moon-waning-crescent-6.
+		var moon = /^moon-(\d+)$/.exec(name)
+		if (moon) {
+			return String.fromCharCode(0xf095 + Number(moon[1]) % 28)
+		}
 		return codeByName[name]
 	}
 

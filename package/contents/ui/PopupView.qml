@@ -804,7 +804,7 @@ MouseArea {
 		readonly property real viewWidth: popup.width - popup.padding * 2
 		readonly property real gap: appletConfig.islands ? appletConfig.cardGap : Kirigami.Units.gridUnit * 2
 		readonly property real minAgendaWidth: Kirigami.Units.gridUnit * 20
-		readonly property bool rightWanted: wantsTasks || wantsWeather
+		readonly property bool rightWanted: wantsTasks || wantsWeather || wantsMoon
 		readonly property bool leftWanted: wantsMiniMonth || (wantsUpNext && islands)
 		readonly property bool rightRoom: popup.showAgenda && rightWanted && viewWidth >= minAgendaWidth + sideWidth + gap
 		readonly property bool leftRoom: popup.showAgenda && leftWanted
