@@ -38,7 +38,10 @@ CalendarManager {
 		// Already parsed by the child manager. Skip calendarParsing.
 		eventModel.eventsByCalendar[calendarId] = data
 		eventModel.calendarFetched(calendarId, data)
-		if (eventModel.fetchRound && !partialMerge.running) {
+		// The same as the last round (a CalDAV calendar unchanged on the server): already shown.
+		var previous = eventModel.previousEventsByCalendar[calendarId]
+		var unchanged = !!previous && !!data.ctag && previous.ctag === data.ctag && previous.range === data.range
+		if (eventModel.fetchRound && !unchanged && !partialMerge.running) {
 			partialMerge.start() // Throttled, not restarted: a burst of calendars still shows
 		}
 	}
@@ -52,21 +55,22 @@ CalendarManager {
 			if (!eventModel.fetchRound) {
 				return
 			}
-			var known = {}
-			eventModel.getCalendarList().forEach(function(calendar) { known[calendar.id] = true })
-			var overlay = {}
-			var previous = eventModel.previousEventsByCalendar
-			var cached = eventModel.cachedEventsByCalendar || {}
-			for (var oldId in previous) {
-				// Not a calendar deselected meanwhile; a cached one (its manager not made yet, at
-				// start) stays, as restoreCachedCalendars keeps it at the round's end.
-				if (known[oldId] || cached[oldId]) {
-					overlay[oldId] = previous[oldId]
-				}
+			if (!eventModel.roundCalendarIds) { // Once per round: the calendars selected now
+				var known = {}
+				eventModel.getCalendarList().forEach(function(calendar) { known[calendar.id] = true })
+				eventModel.roundCalendarIds = known
 			}
-			var arrived = eventModel.eventsByCalendar
-			for (var id in arrived) {
-				overlay[id] = arrived[id]
+			// Each calendar as loadedCalendar has it (arrived, else the last round's, else the
+			// cache's), but not one deselected meanwhile; a cached one (its manager not made yet,
+			// at start) stays, as restoreCachedCalendars keeps it at the round's end.
+			var overlay = {}
+			var cached = eventModel.cachedEventsByCalendar || {}
+			var ids = Object.keys(eventModel.previousEventsByCalendar).concat(Object.keys(eventModel.eventsByCalendar))
+			for (var i = 0; i < ids.length; i++) {
+				var id = ids[i]
+				if (eventModel.eventsByCalendar[id] || eventModel.roundCalendarIds[id] || cached[id]) {
+					overlay[id] = eventModel.loadedCalendar(id)
+				}
 			}
 			eventModel.mergeEvents(overlay)
 			eventModel.partialDataFetched()
@@ -494,8 +498,10 @@ CalendarManager {
 
 	// A fetch round runs: eventsByCalendar was emptied and fills up calendar by calendar.
 	property bool fetchRound: false
+	property var roundCalendarIds: null // The selected calendars, for partialMerge (once per round)
 	onFetchingData: {
 		fetchRound = true
+		roundCalendarIds = null
 		shownRange = null
 		restoredCachedInRound = false
 	}

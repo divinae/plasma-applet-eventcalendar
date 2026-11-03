@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -3752,24 +3752,24 @@ msgid "Buttons in the header"
 msgstr "Кнопки в заголовку"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "Попередній день"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Попередній тиждень"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "Попередній день"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "Сьогодні (утримуйте або G: перейти до дати)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "Наступний день"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Наступний тиждень"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "Наступний день"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3810,6 +3810,10 @@ msgstr "Подію вилучено"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "Не вдалося вилучити завдання"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "Завантаження календарів…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

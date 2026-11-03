@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -3764,24 +3764,24 @@ msgid "Buttons in the header"
 msgstr "Κουμπιά στην κεφαλίδα"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "Προηγούμενη ημέρα"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Προηγούμενη εβδομάδα"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "Προηγούμενη ημέρα"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "Σήμερα (πατήστε παρατεταμένα ή G: μετάβαση σε ημερομηνία)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "Επόμενη ημέρα"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Επόμενη εβδομάδα"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "Επόμενη ημέρα"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3822,6 +3822,10 @@ msgstr "Το συμβάν διαγράφηκε"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "Δεν ήταν δυνατή η διαγραφή της εργασίας"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "Φόρτωση ημερολογίων…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

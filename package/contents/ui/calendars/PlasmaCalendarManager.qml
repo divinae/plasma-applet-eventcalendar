@@ -103,7 +103,7 @@ CalendarManager {
 		})
 		// Events without a color: all the Akonadi events as one calendar, named after the calendars shown;
 		// besides ones by color (a calendar without a color), after the shown calendars without one.
-		if (pimColorCalendars.length === 0 || pimColorlessCount > 0) {
+		if (pimColorCalendars.length === 0 || pimHasColorless) {
 			if (shownNames.length === 0 && !pimEventsColor) {
 				return // No Akonadi events either
 			}
@@ -168,10 +168,10 @@ CalendarManager {
 	function updatePimColorCalendars(events) {
 		pimColorCalendars = PlasmaCalendarUtils.colorCalendars(events, calendarManagerId + "_EventsColor_")
 		var colorlessId = calendarManagerId + "_Events"
-		pimColorlessCount = events.filter(function(event) { return event.calendarId === colorlessId }).length
+		pimHasColorless = events.some(function(event) { return event.calendarId === colorlessId })
 	}
 	// The last fetched Akonadi events without a color (calendar plasma_Events), besides any by color.
-	property int pimColorlessCount: 0
+	property bool pimHasColorless: false
 	function pimEventsPluginEnabled() {
 		return PlasmaCalendarUtils.hasPlugin(plasmoid.configuration.enabledCalendarPlugins, "pimevents")
 	}
@@ -237,42 +237,25 @@ CalendarManager {
 
 	// Refresh: the plugins loaded anew, so they ask their sources again. A plugin can miss changes:
 	// the PIM one didn't see an event Akonadi synced later (only a plasmashell restart showed it).
-	// Not twice at once, and at most every 30 s: the plugins are C++ inside plasmashell, unloaded
-	// while they're still loading or sending their data (Refresh clicked again, Akonadi slow) Plasma
-	// can crash (#14). Otherwise Refresh just reads their data again (the fetch that follows).
-	property bool pluginsReloading: false
+	// At most every 30 s: the plugins are C++ inside plasmashell, unloaded while they're still
+	// loading or sending their data (Refresh clicked again, Akonadi slow) Plasma can crash (#14).
+	// Otherwise Refresh just reads their data again (the fetch that follows).
 	property double lastPluginReload: 0
 	readonly property int pluginReloadInterval: 30000
 	function reloadSources() {
-		if (!ensureEventPluginsManager()) {
+		if (!ensureEventPluginsManager() || Date.now() - lastPluginReload < pluginReloadInterval) {
 			return
 		}
-		var now = Date.now()
-		if (pluginsReloading || now - lastPluginReload < pluginReloadInterval) {
-			return
-		}
-		pluginsReloading = true
-		lastPluginReload = now
-		pluginReloadDone.restart()
+		lastPluginReload = Date.now()
 		eventPluginsManager.enabledPlugins = []
 		syncEnabledPlugins()
-	}
-	// The reload is over when a plugin sends its data, or after a while (none enabled, none answers).
-	Timer {
-		id: pluginReloadDone
-		interval: 10000
-		onTriggered: plasmaCalendarManager.pluginsReloading = false
 	}
 
 	// The plugins' data comes after they're asked (Akonadi takes a while) and changes (an event
 	// added, edited or removed in KOrganizer): read it again, ours only (no Google requests).
 	Connections {
 		target: plasmaCalendarManager.eventPluginsManager
-		function onDataReady() {
-			plasmaCalendarManager.pluginsReloading = false
-			pluginReloadDone.stop()
-			pluginDataTimer.restart()
-		}
+		function onDataReady() { pluginDataTimer.restart() }
 		function onEventModified() { pluginDataTimer.restart() }
 		function onEventRemoved() { pluginDataTimer.restart() }
 		function onPluginsChanged() { pluginDataTimer.restart() }

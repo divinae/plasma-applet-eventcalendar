@@ -18,6 +18,20 @@ PlasmaExtras.PlasmoidHeading {
 	property Item weekViewItem
 	// The Agenda (its title the day at the top, its arrows day by day), null in the other views.
 	property Item agendaViewItem
+	// The shown view's title and navigation (title, goPrevious, goNext, goToday): the Week / Day
+	// view, the Agenda, else the month. The keys (PopupView.runKeyAction) go through these too.
+	readonly property Item navItem: weekViewItem || agendaViewItem || monthViewItem
+	function goPrevious() {
+		if (navItem.goPrevious() === false) {
+			monthViewItem.goPrevious() // The Agenda at its first day: a month back
+		}
+	}
+	function goNext() {
+		navItem.goNext()
+	}
+	function goToday() {
+		navItem.goToday()
+	}
 	// 'tabs': a button per view; 'menu': one button with the view shown, the others in its menu
 	// (little room taken).
 	property string viewSwitcher: 'tabs'
@@ -360,17 +374,6 @@ PlasmaExtras.PlasmoidHeading {
 			property real widestTitleSeen: 0
 			readonly property string titleMode: header.tasksMode ? "tasks" : header.weekViewItem ? (header.weekViewItem.singleDay ? "day" : "week")
 				: header.agendaViewItem ? "agenda" : "month"
-			// The agenda: the day at the top of its list, following the scroll (#16): weekday, day,
-			// month (the locale's long format; the year only when it's another one).
-			readonly property string agendaTitle: {
-				var top = header.agendaViewItem ? header.agendaViewItem.topDate : null
-				var day = top && !isNaN(top.getTime()) ? top : timeModel.currentTime
-				var format = Qt.locale().dateFormat(Locale.LongFormat)
-				if (day.getFullYear() === timeModel.currentTime.getFullYear()) {
-					format = format.replace(/[\s,.\/-]*y+\s*(年|년|'г'\.?)?[\s,.\/-]*/g, " ").replace(/\s+/g, " ").trim() // With the year's own word (ru, ja, ko)
-				}
-				return Shared.formatDate(day, format)
-			}
 			onTitleModeChanged: widestTitleSeen = 0
 			readonly property real titleWidth: Math.ceil(Math.max(titleHeading.implicitWidth, widestTitleSeen,
 				titleMode === "month" ? widestMonthTitle : 0))
@@ -386,10 +389,7 @@ PlasmaExtras.PlasmoidHeading {
 				elide: Text.ElideRight
 				wrapMode: Text.NoWrap
 				font.capitalization: Font.Capitalize
-				text: header.tasksMode ? i18n("Tasks")
-					: header.weekViewItem ? header.weekViewItem.title
-					: centerGroup.titleMode === "agenda" ? centerGroup.agendaTitle
-					: (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+				text: header.tasksMode ? i18n("Tasks") : header.navItem ? header.navItem.title : ""
 				// Year / decade view: only in the month view. The agenda shows the month's title too, but
 				// zooming the hidden month changed only the title (and the arrows paged years, #16).
 				MouseArea {
@@ -405,22 +405,15 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-previous"
-				onClicked: {
-					if (header.weekViewItem) {
-						header.weekViewItem.goPrevious()
-					} else if (!(header.agendaViewItem && header.agendaViewItem.goPrevious())) {
-						header.monthViewItem.goPrevious() // The month view, or the agenda at its first day
-					}
-				}
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week"))
-					: header.agendaViewItem ? i18n("Previous Day") : i18n("Previous Month")
+				onClicked: header.goPrevious()
+				PlasmaComponents3.ToolTip.text: centerGroup.titleMode === "week" ? i18n("Previous Week")
+					: centerGroup.titleMode === "month" ? i18n("Previous Month") : i18n("Previous Day")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-jump-today"
-				onClicked: header.weekViewItem ? header.weekViewItem.goToday()
-					: header.agendaViewItem ? header.agendaViewItem.goToday() : header.monthViewItem.resetToToday()
+				onClicked: header.goToday()
 				onPressAndHold: header.goToDateRequested()
 				PlasmaComponents3.ToolTip.text: i18n("Today (press and hold, or G: go to a date)")
 				PlasmaComponents3.ToolTip.visible: hovered
@@ -428,10 +421,9 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-next"
-				onClicked: header.weekViewItem ? header.weekViewItem.goNext()
-					: header.agendaViewItem ? header.agendaViewItem.goNext() : header.monthViewItem.goNext()
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week"))
-					: header.agendaViewItem ? i18n("Next Day") : i18n("Next Month")
+				onClicked: header.goNext()
+				PlasmaComponents3.ToolTip.text: centerGroup.titleMode === "week" ? i18n("Next Week")
+					: centerGroup.titleMode === "month" ? i18n("Next Month") : i18n("Next Day")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 		}

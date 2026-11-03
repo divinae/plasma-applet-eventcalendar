@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3739,24 +3739,24 @@ msgid "Buttons in the header"
 msgstr "כפתורים בכותרת"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "היום הקודם"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "השבוע הקודם"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "היום הקודם"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "היום (לחיצה ארוכה או G: מעבר לתאריך)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "היום הבא"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "השבוע הבא"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "היום הבא"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3797,6 +3797,10 @@ msgstr "האירוע נמחק"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "לא ניתן היה למחוק את המשימה"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "טוען לוחות שנה…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

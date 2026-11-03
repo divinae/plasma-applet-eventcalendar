@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -3296,24 +3296,24 @@ msgid "Buttons in the header"
 msgstr "ヘッダーのボタン"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "前の日"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "前の週"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "前の日"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "今日 (長押しまたは G: 日付へ移動)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "次の日"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "次の週"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "次の日"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3354,6 +3354,10 @@ msgstr "イベントを削除しました"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "タスクを削除できませんでした"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "カレンダーを読み込んでいます…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

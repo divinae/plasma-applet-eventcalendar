@@ -183,6 +183,11 @@ QtObject {
 	property int meteogramIconSize: 24 * Screen.devicePixelRatio
 	property int meteogramColumnWidth: 32 * Screen.devicePixelRatio // weatherIconSize = 32px (height = 24px but most icons are landscape)
 
+	// Own names of the tooltip's time zones (Settings > Time Zones, #17): { zone: name }.
+	property QtObject timezoneNames: Base64Json {
+		configKey: 'timezoneNames'
+		defaultValue: ({})
+	}
 	property QtObject caldavAccounts: Base64Json {
 		configKey: 'caldavAccounts'
 	}

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -3760,24 +3760,24 @@ msgid "Buttons in the header"
 msgstr "Boutons dans l'en-tête"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "Jour précédent"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Semaine précédente"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "Jour précédent"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "Aujourd'hui (appui long ou G : aller à une date)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "Jour suivant"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Semaine suivante"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "Jour suivant"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3818,6 +3818,10 @@ msgstr "Événement supprimé"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "Impossible de supprimer la tâche"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "Chargement des agendas…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3783,24 +3783,24 @@ msgid "Buttons in the header"
 msgstr "Gumbi v glavi"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "Prejšnji dan"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Prejšnji teden"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "Prejšnji dan"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "Danes (pridržite ali G: pojdi na datum)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "Naslednji dan"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Naslednji teden"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "Naslednji dan"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3841,6 +3841,10 @@ msgstr "Dogodek izbrisan"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "Opravila ni bilo mogoče izbrisati"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "Nalaganje koledarjev …"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

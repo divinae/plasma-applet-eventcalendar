@@ -13,16 +13,32 @@ Item {
 	signal endReached()
 	// The first and last day in sight (the small month beside it marks them).
 	property date topDate: new Date(NaN)
+	property int topRow: -1 // Its row in the list
+	// The header's title (#16): the day at the top of the list, following the scroll, in the
+	// locale's long format; the year only when it's another one.
+	readonly property string title: {
+		var day = isNaN(topDate.getTime()) ? timeModel.currentTime : topDate
+		var format = Qt.locale().dateFormat(Locale.LongFormat)
+		if (day.getFullYear() === timeModel.currentTime.getFullYear()) {
+			format = Shared.formatWithoutYear(format)
+		}
+		return Shared.formatDate(day, format)
+	}
 	property date bottomDate: new Date(NaN)
-	function dateAt(y) {
+	function rowAt(y) {
 		var index = agendaList.indexAt(0, y)
 		if (index < 0) {
 			index = agendaList.indexAt(0, y + agendaList.spacing + 1)
 		}
-		var agendaItem = index >= 0 && index < root.agendaModel.count ? root.agendaModel.get(index) : null
+		return index >= 0 && index < root.agendaModel.count ? index : -1
+	}
+	function dateAt(y) {
+		var index = rowAt(y)
+		var agendaItem = index >= 0 ? root.agendaModel.get(index) : null
 		return agendaItem && agendaItem.date ? agendaItem.date : null
 	}
 	function updateTopDate() {
+		topRow = rowAt(agendaList.contentY + 1)
 		var top = dateAt(agendaList.contentY + 1)
 		var bottom = dateAt(agendaList.contentY + agendaList.height - agendaList.spacing - 2) || (agendaList.count > 0 ? root.agendaModel.get(agendaList.count - 1).date : null)
 		if (top && top.getTime() !== topDate.getTime()) {
@@ -90,16 +106,8 @@ Item {
 
 	// The header's arrows and Today in the agenda (#16): day by day through the listed days (those
 	// with something on them). false: at the first one (the popup goes a month back then).
-	function topIndex() {
-		for (var i = 0; i < root.agendaModel.count; i++) {
-			if (Shared.isSameDate(root.agendaModel.get(i).date, topDate)) {
-				return i
-			}
-		}
-		return -1
-	}
 	function goPrevious() {
-		var i = topIndex()
+		var i = topRow
 		if (i <= 0) {
 			return false
 		}
@@ -107,7 +115,7 @@ Item {
 		return true
 	}
 	function goNext() {
-		var i = topIndex()
+		var i = topRow
 		if (i >= 0 && i + 1 < root.agendaModel.count) {
 			agendaList.positionViewAtIndex(i + 1, ListView.Beginning)
 		} else {

@@ -493,44 +493,21 @@ MouseArea {
 	// Calendars still loading (a fetch round under way, see EventModel.partialMerge): a thin line
 	// running under the header, so the wait is seen (the Refresh button spins too). Only after a
 	// moment: a quick load shows nothing. Over the view, no room taken from it.
-	Item {
+	PlasmaComponents3.ProgressBar {
 		id: loadingLine
 		anchors.top: header.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		height: 2
+		height: 3
 		z: 10
-		property bool shown: false
-		visible: shown
+		indeterminate: true
+		visible: popup.refreshing && !loadingDelay.running
+		Accessible.name: i18n("Loading calendars…")
+		// Only after a moment (a quick load shows nothing); stops itself, starts again with the next load.
 		Timer {
-			running: popup.refreshing
+			id: loadingDelay
 			interval: 400
-			onTriggered: loadingLine.shown = true
-		}
-		Connections {
-			target: popup
-			function onRefreshingChanged() {
-				if (!popup.refreshing) {
-					loadingLine.shown = false
-				}
-			}
-		}
-		clip: true
-		Rectangle {
-			id: loadingRunner
-			height: parent.height
-			width: appletConfig.animations ? parent.width * 0.3 : parent.width
-			radius: height / 2
-			color: Kirigami.Theme.highlightColor
-			opacity: appletConfig.animations ? 1 : 0.6
-			NumberAnimation on x {
-				running: loadingLine.visible && appletConfig.animations
-				loops: Animation.Infinite
-				from: -loadingRunner.width
-				to: loadingLine.width
-				duration: 1200
-				easing.type: Easing.InOutQuad
-			}
+			running: popup.refreshing
 		}
 	}
 
@@ -1183,16 +1160,15 @@ MouseArea {
 	}
 
 	function runKeyAction(action) {
-		var nav = hourGridMode ? weekViewLoader.item : showAgenda ? agendaView : null
 		switch (action.type) {
 			case 'previous':
-				if (!(nav && nav.goPrevious() !== false)) monthView.goPrevious() // The agenda at its first day: a month back
+				header.goPrevious() // The shown view's (PopupHeader.navItem)
 				return true
 			case 'next':
-				if (nav) nav.goNext(); else monthView.goNext()
+				header.goNext()
 				return true
 			case 'today':
-				if (nav) nav.goToday(); else monthView.resetToToday()
+				header.goToday()
 				return true
 			case 'goToDate':
 				openGoToDate()

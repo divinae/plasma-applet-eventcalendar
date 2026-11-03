@@ -58,9 +58,16 @@ ConfigPage {
 	}
 
 	// Own names (#17): "Boston" for America/New_York, shown in the tooltip instead of the city.
-	readonly property var zoneNames: TimeZone.parseNames(page.cfg_timezoneNames)
+	Base64Json {
+		id: zoneNamesConfig
+		configKey: 'timezoneNames'
+		configBridge: page.configBridge
+		defaultValue: ({})
+	}
+	readonly property var zoneNames: zoneNamesConfig.value || ({})
 	function setZoneName(zoneId, name) {
-		page.configBridge.write("timezoneNames", TimeZone.namesWith(page.cfg_timezoneNames, zoneId, name))
+		zoneNamesConfig.value = TimeZone.namesWith(zoneNames, zoneId, name)
+		zoneNamesConfig.serialize()
 	}
 
 	function prettyZoneName(zoneId) {

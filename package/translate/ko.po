@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3660,24 +3660,24 @@ msgid "Buttons in the header"
 msgstr "헤더의 버튼"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "이전 날"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "이전 주"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "이전 날"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "오늘 (길게 누르거나 G: 날짜로 이동)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "다음 날"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "다음 주"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "다음 날"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3718,6 +3718,10 @@ msgstr "이벤트 삭제됨"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "할 일을 삭제할 수 없습니다"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "달력 불러오는 중…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

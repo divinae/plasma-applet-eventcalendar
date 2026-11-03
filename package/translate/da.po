@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:03+0100\n"
+"POT-Creation-Date: 2026-11-03 09:33+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -3703,24 +3703,24 @@ msgid "Buttons in the header"
 msgstr "Knapper i toppen"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Previous Day"
-msgstr "Forrige dag"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Previous Week"
 msgstr "Forrige uge"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Previous Day"
+msgstr "Forrige dag"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "Today (press and hold, or G: go to a date)"
 msgstr "I dag (tryk og hold, eller G: gå til en dato)"
 
 #: ../contents/ui/PopupHeader.qml
-msgid "Next Day"
-msgstr "Næste dag"
-
-#: ../contents/ui/PopupHeader.qml
 msgid "Next Week"
 msgstr "Næste uge"
+
+#: ../contents/ui/PopupHeader.qml
+msgid "Next Day"
+msgstr "Næste dag"
 
 #: ../contents/ui/PopupHeader.qml
 msgid "New Event (press and hold: a meeting now)"
@@ -3761,6 +3761,10 @@ msgstr "Begivenhed slettet"
 #: ../contents/ui/PopupView.qml
 msgid "Couldn't delete the task"
 msgstr "Kunne ikke slette opgaven"
+
+#: ../contents/ui/PopupView.qml
+msgid "Loading calendars…"
+msgstr "Indlæser kalendere…"
 
 #: ../contents/ui/PopupView.qml
 msgid "Retrying…"

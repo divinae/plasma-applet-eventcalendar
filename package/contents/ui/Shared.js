@@ -645,6 +645,12 @@ function eventDayCount(e) {
 	}
 	return Math.round((last - start) / 86400000) + 1
 }
+// A Qt date format without its year, and the year's own word (ru "'г'.", ja "年", ko "년"):
+// "dddd, d MMMM yyyy" -> "dddd, d MMMM", "yyyy年M月d日dddd" -> "M月d日dddd".
+function formatWithoutYear(format) {
+	return String(format).replace(/[\s,.\/-]*y+\s*(年|년|'г'\.?)?[\s,.\/-]*/g, " ").replace(/\s+/g, " ").trim()
+}
+
 // Date format for a span: the year only when it isn't the current one (or the span crosses years).
 function spanDateFormat(a, b, now) {
 	var sameYear = a.getFullYear() === b.getFullYear() && a.getFullYear() === now.getFullYear()

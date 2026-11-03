@@ -35,6 +35,11 @@ PinchArea {
 	// false: the popup shows title and navigation in its own header (see currentTitle, goPrevious, ...).
 	property bool showHeader: true
 	readonly property string currentTitle: stack.currentItem ? stack.currentItem.title : ""
+	// The popup header's navigation, as WeekView and AgendaView have it.
+	readonly property string title: currentTitle
+	function goToday() {
+		resetToToday()
+	}
 	function goPrevious() {
 		if (stack.currentItem) {
 			stack.currentItem.previous()

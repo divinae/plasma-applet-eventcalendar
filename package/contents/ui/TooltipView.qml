@@ -64,7 +64,7 @@ Item {
 
 	function nameForZone(zone) {
 		// An own name (Settings > Time Zones, #17) comes first, in either style.
-		var own = TimeZone.displayName(zone, TimeZone.parseNames(plasmoid.configuration.timezoneNames), "")
+		var own = TimeZone.displayName(zone, appletConfig.timezoneNames.value, "")
 		if (own) {
 			return own
 		}

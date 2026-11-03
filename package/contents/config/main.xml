@@ -140,8 +140,8 @@
 	</group>
 
 	<group name="Tooltip">
-		<entry name="timezoneNames" type="String">
-			<!-- Own names of the tooltip's time zones, JSON: { "America/New_York": "Boston" } (#17). -->
+		<entry name="timezoneNames" type="string" stringType="base64json">
+			<!-- Own names of the tooltip's time zones: { "America/New_York": "Boston" } (#17). -->
 			<default></default>
 		</entry>
 		<entry name="selectedTimeZones" type="StringList">

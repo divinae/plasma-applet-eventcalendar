@@ -32,3 +32,19 @@ assert.deepStrictEqual(menu([{ id: 'plasma_Events', group: '' }, { id: 'plasma_H
 assert.deepStrictEqual(menu(undefined), [])
 
 console.log('calendar_menu: ok')
+
+// A date format without its year (the Agenda's title, #16), with the year's own word.
+{
+	const cases = {
+		'dddd, d MMMM yyyy': 'dddd, d MMMM', // pl, en_GB
+		'dddd, MMMM d, yyyy': 'dddd, MMMM d', // en_US
+		'dddd, d. MMMM yyyy': 'dddd, d. MMMM', // de
+		'yyyy年M月d日dddd': 'M月d日dddd', // ja, zh
+		"dddd, d MMMM yyyy 'г'.": 'dddd, d MMMM', // ru
+		'yyyy년 MMMM d일 dddd': 'MMMM d일 dddd', // ko
+		'dddd, d בMMMM yyyy': 'dddd, d בMMMM', // he
+	}
+	for (const [format, expected] of Object.entries(cases)) {
+		assert.strictEqual(S.formatWithoutYear(format), expected, format)
+	}
+}

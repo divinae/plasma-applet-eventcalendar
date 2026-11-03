@@ -14,7 +14,7 @@ const TimeZoneData = {}
 vm.runInNewContext(strip(fs.readFileSync(path.join(UI, 'code/TimeZoneData.js'), 'utf8')) + '\nObject.assign(out, { rules, recent, pickerZones })', { out: TimeZoneData })
 const T = {}
 vm.runInNewContext(strip(fs.readFileSync(path.join(UI, 'TimeZone.js'), 'utf8'))
-	+ '\nObject.assign(out, { parsePosix, offsetAt, abbreviation, wallClock, toUtc, toWallDate, fromWallDate, matchesLocal, guessLocal, cityName, offsetText, search, knows, normalizedList, movedZone, parseNames, displayName, namesWith })',
+	+ '\nObject.assign(out, { parsePosix, offsetAt, abbreviation, wallClock, toUtc, toWallDate, fromWallDate, matchesLocal, guessLocal, cityName, offsetText, search, knows, normalizedList, movedZone, displayName, namesWith })',
 	{ out: T, TimeZoneData, Date, Math })
 
 const plain = x => JSON.parse(JSON.stringify(x))
@@ -197,14 +197,14 @@ console.log('time zone ok')
 
 // Own names (#17).
 {
-	assert.deepStrictEqual(plain(T.parseNames('')), {})
-	assert.deepStrictEqual(plain(T.parseNames('not json')), {})
-	assert.deepStrictEqual(plain(T.parseNames('[1]')), {})
-	const names = T.parseNames('{"America/New_York":" Boston "}')
+	const names = { 'America/New_York': ' Boston ' }
 	assert.strictEqual(T.displayName('America/New_York', names, 'New York'), 'Boston')
 	assert.strictEqual(T.displayName('Europe/Paris', names, 'Paris'), 'Paris')
 	assert.strictEqual(T.displayName('Europe/Paris', null, 'Paris'), 'Paris')
-	assert.strictEqual(T.namesWith('', 'America/New_York', 'Boston'), '{"America/New_York":"Boston"}')
-	assert.strictEqual(T.namesWith('{"America/New_York":"Boston"}', 'America/New_York', '  '), '', 'an empty name removes it')
-	assert.strictEqual(T.namesWith('{"A/B":"x"}', 'C/D', 'y'), '{"A/B":"x","C/D":"y"}')
+	assert.deepStrictEqual(plain(T.namesWith({}, 'America/New_York', 'Boston')), { 'America/New_York': 'Boston' })
+	assert.deepStrictEqual(plain(T.namesWith({ 'America/New_York': 'Boston' }, 'America/New_York', '  ')), {}, 'an empty name removes it')
+	assert.deepStrictEqual(plain(T.namesWith({ 'A/B': 'x' }, 'C/D', 'y')), { 'A/B': 'x', 'C/D': 'y' })
+	const before = { 'A/B': 'x' }
+	T.namesWith(before, 'A/B', '')
+	assert.deepStrictEqual(before, { 'A/B': 'x' }, 'a new object, the old one kept')
 }
