@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:31+0100\n"
+"POT-Creation-Date: 2026-11-02 13:41+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -1323,6 +1323,18 @@ msgstr "Στις"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
 msgstr "Παράλειψη συμβάντων που απέρριψα"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only calendars in the clock's countdown"
+msgstr "Μόνο ημερολόγια στην αντίστροφη μέτρηση του ρολογιού"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Reminders and starting events only of the calendars with the clock button on "
+"in the popup's calendar menu."
+msgstr ""
+"Υπενθυμίσεις και συμβάντα που ξεκινούν μόνο από τα ημερολόγια με ενεργό το "
+"κουμπί ρολογιού στο μενού ημερολογίων του αναδυόμενου."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""

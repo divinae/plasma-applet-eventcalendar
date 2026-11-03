@@ -74,6 +74,11 @@ CalendarManager {
 		if (plasmoid.configuration.eventNotifySkipAllDay && eventItem.start && eventItem.start.date) {
 			return false
 		}
+		// Only the calendars in the clock's countdown (the clock button in the popup's calendar menu).
+		if (plasmoid.configuration.eventNotifyClockCalendarsOnly
+				&& Shared.isHiddenCalendar(eventItem.calendarId, plasmoid.configuration.clockHiddenCalendarIds)) {
+			return false
+		}
 		return !(plasmoid.configuration.eventNotifySkipDeclined && Shared.myResponse(eventItem) === 'declined')
 	}
 

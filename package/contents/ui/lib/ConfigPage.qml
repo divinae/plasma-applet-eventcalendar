@@ -238,6 +238,8 @@ KCM.SimpleKCM {
 	property var cfg_eventNotifySkipAllDayDefault
 	property var cfg_eventNotifySkipDeclined
 	property var cfg_eventNotifySkipDeclinedDefault
+	property var cfg_eventNotifyClockCalendarsOnly
+	property var cfg_eventNotifyClockCalendarsOnlyDefault
 	property var cfg_enabledCalendarPlugins
 	property var cfg_enabledCalendarPluginsDefault
 	property var cfg_enabledCalendarPluginsAllowEmpty

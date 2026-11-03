@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:31+0100\n"
+"POT-Creation-Date: 2026-11-02 13:41+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1078,6 +1078,14 @@ msgstr "Klo"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
 msgstr "Ohita tapahtumat, joista olen kieltäytynyt"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only calendars in the clock's countdown"
+msgstr "Vain kellon lähtölaskennan kalenterit"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Reminders and starting events only of the calendars with the clock button on in the popup's calendar menu."
+msgstr "Muistutukset ja alkavat tapahtumat vain kalentereista, joiden kellopainike on päällä ponnahdusikkunan kalenterivalikossa."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."

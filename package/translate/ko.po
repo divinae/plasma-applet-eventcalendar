@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:31+0100\n"
+"POT-Creation-Date: 2026-11-02 13:41+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1277,6 +1277,16 @@ msgstr "시각"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
 msgstr "거절한 이벤트 건너뛰기"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only calendars in the clock's countdown"
+msgstr "시계 카운트다운의 달력만"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Reminders and starting events only of the calendars with the clock button on "
+"in the popup's calendar menu."
+msgstr "팝업 달력 메뉴에서 시계 단추가 켜진 달력의 미리 알림과 시작 일정만."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""

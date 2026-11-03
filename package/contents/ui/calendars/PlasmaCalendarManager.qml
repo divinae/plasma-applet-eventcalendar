@@ -101,14 +101,18 @@ CalendarManager {
 				"isTasklist": false,
 			})
 		})
-		// Events without a color: all the Akonadi events as one calendar, named after the calendars shown.
-		if (pimColorCalendars.length === 0) {
+		// Events without a color: all the Akonadi events as one calendar, named after the calendars shown;
+		// besides ones by color (a calendar without a color), after the shown calendars without one.
+		if (pimColorCalendars.length === 0 || pimColorlessCount > 0) {
 			if (shownNames.length === 0 && !pimEventsColor) {
 				return // No Akonadi events either
 			}
+			var colorlessNames = pimColorCalendars.length === 0 ? shownNames : rows.filter(function(row) {
+				return row.checked && !mirroredCollections[row.id] && !PlasmaCalendarUtils.colorKey(akonadiColors[row.id])
+			}).map(function(row) { return row.name })
 			calendarList.push({
 				"id": calendarManagerId + "_Events",
-				"summary": shownNames.length ? akonadiCalendarName(shownNames.join(separator)) : i18n("KDE PIM (Akonadi)"),
+				"summary": colorlessNames.length ? akonadiCalendarName(colorlessNames.join(separator)) : i18n("KDE PIM (Akonadi)"),
 				"backgroundColor": pimEventsColor || Kirigami.Theme.highlightColor.toString(),
 				"accessRole": "reader",
 				"isTasklist": false,
@@ -163,7 +167,11 @@ CalendarManager {
 	property var pimColorCalendars: []
 	function updatePimColorCalendars(events) {
 		pimColorCalendars = PlasmaCalendarUtils.colorCalendars(events, calendarManagerId + "_EventsColor_")
+		var colorlessId = calendarManagerId + "_Events"
+		pimColorlessCount = events.filter(function(event) { return event.calendarId === colorlessId }).length
 	}
+	// The last fetched Akonadi events without a color (calendar plasma_Events), besides any by color.
+	property int pimColorlessCount: 0
 	function pimEventsPluginEnabled() {
 		return PlasmaCalendarUtils.hasPlugin(plasmoid.configuration.enabledCalendarPlugins, "pimevents")
 	}

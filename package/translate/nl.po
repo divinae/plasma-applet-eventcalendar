@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-02 13:31+0100\n"
+"POT-Creation-Date: 2026-11-02 13:41+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -1312,6 +1312,18 @@ msgstr "Om"
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Skip events I declined"
 msgstr "Afgewezen afspraken overslaan"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Only calendars in the clock's countdown"
+msgstr "Alleen agenda's in het aftellen van de klok"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Reminders and starting events only of the calendars with the clock button on "
+"in the popup's calendar menu."
+msgstr ""
+"Herinneringen en beginnende afspraken alleen van de agenda's met de klokknop "
+"aan in het agendamenu van de pop-up."
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid ""

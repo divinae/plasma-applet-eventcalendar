@@ -418,6 +418,12 @@ ConfigPage {
 				text: i18n("Skip events I declined")
 				configKey: 'eventNotifySkipDeclined'
 			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
+				text: i18n("Only calendars in the clock's countdown")
+				description: i18n("Reminders and starting events only of the calendars with the clock button on in the popup's calendar menu.")
+				configKey: 'eventNotifyClockCalendarsOnly'
+			}
 		}
 		FormCard.FormSectionText {
 			text: i18n("Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar.")
