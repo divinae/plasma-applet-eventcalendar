@@ -5,6 +5,8 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
 
+import "Shared.js" as Shared
+
 // Native Plasma header for all popup views: view switcher, title with navigation (month or
 // week / day), new event, refresh and pin. The month and week views hide their own header rows.
 PlasmaExtras.PlasmoidHeading {
@@ -354,7 +356,20 @@ PlasmaExtras.PlasmoidHeading {
 				return widest
 			}
 			property real widestTitleSeen: 0
-			readonly property string titleMode: header.tasksMode ? "tasks" : header.weekViewItem ? (header.weekViewItem.singleDay ? "day" : "week") : "month"
+			readonly property string titleMode: header.tasksMode ? "tasks" : header.weekViewItem ? (header.weekViewItem.singleDay ? "day" : "week")
+				: header.currentMode === 'classic' ? "agenda" : "month"
+			// The agenda on this month: today's date (weekday, day, month: the locale's long format
+			// without the year), on another month its name, where the arrows went (#16).
+			readonly property string agendaTitle: {
+				var shown = header.monthViewItem ? header.monthViewItem.displayedDate : null
+				var today = timeModel.currentTime
+				if (!shown || shown.getFullYear() !== today.getFullYear() || shown.getMonth() !== today.getMonth()) {
+					return header.monthViewItem ? header.monthViewItem.currentTitle : ""
+				}
+				var format = Qt.locale().dateFormat(Locale.LongFormat)
+					.replace(/[\s,.\/-]*y+\s*(年|년|'г'\.?)?[\s,.\/-]*/g, " ").replace(/\s+/g, " ").trim() // With the year's own word (ru, ja, ko)
+				return Shared.formatDate(today, format)
+			}
 			onTitleModeChanged: widestTitleSeen = 0
 			readonly property real titleWidth: Math.ceil(Math.max(titleHeading.implicitWidth, widestTitleSeen,
 				titleMode === "month" ? widestMonthTitle : 0))
@@ -371,7 +386,9 @@ PlasmaExtras.PlasmoidHeading {
 				wrapMode: Text.NoWrap
 				font.capitalization: Font.Capitalize
 				text: header.tasksMode ? i18n("Tasks")
-					: header.weekViewItem ? header.weekViewItem.title : (header.monthViewItem ? header.monthViewItem.currentTitle : "")
+					: header.weekViewItem ? header.weekViewItem.title
+					: centerGroup.titleMode === "agenda" ? centerGroup.agendaTitle
+					: (header.monthViewItem ? header.monthViewItem.currentTitle : "")
 				// Year / decade view: only in the month view. The agenda shows the month's title too, but
 				// zooming the hidden month changed only the title (and the arrows paged years, #16).
 				MouseArea {
