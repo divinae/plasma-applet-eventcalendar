@@ -611,9 +611,23 @@ Item {
 			// tenth, the sky, the rain. Drawn in the chart (a tooltip window showed at the screen's edge).
 			HoverHandler {
 				id: chartHover
+				onHoveredChanged: {
+					chartHoverDelay.stop()
+					graph.hoverReady = false
+					if (hovered) {
+						chartHoverDelay.start()
+					}
+				}
+			}
+			// Shown once the mouse rests on the chart a moment: not while it just passes over it.
+			property bool hoverReady: false
+			Timer {
+				id: chartHoverDelay
+				interval: 700
+				onTriggered: graph.hoverReady = true
 			}
 			readonly property int hoverIndex: {
-				if (!chartHover.hovered || gridData.length < 2 || gridWidth <= 0) {
+				if (!hoverReady || !chartHover.hovered || gridData.length < 2 || gridWidth <= 0) {
 					return -1
 				}
 				var i = Math.round((chartHover.point.position.x - gridX) / gridWidth * (xAxisMax - xAxisMin) + xAxisMin)

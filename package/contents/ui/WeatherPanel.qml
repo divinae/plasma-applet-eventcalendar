@@ -719,8 +719,22 @@ ColumnLayout {
 		// beside the line: its day and time, the temperature to a tenth (the labels round), the sky, the rain.
 		HoverHandler {
 			id: chartHover
+			onHoveredChanged: {
+				chartHoverDelay.stop()
+				hourChart.hoverReady = false
+				if (hovered) {
+					chartHoverDelay.start()
+				}
+			}
 		}
-		readonly property int hoverIndex: chartHover.hovered && points.length > 1
+		// Shown once the mouse rests on the chart a moment: not while it just passes over it.
+		property bool hoverReady: false
+		Timer {
+			id: chartHoverDelay
+			interval: 700
+			onTriggered: hourChart.hoverReady = true
+		}
+		readonly property int hoverIndex: hoverReady && chartHover.hovered && points.length > 1
 			? Math.max(0, Math.min(points.length - 1, Math.round((chartHover.point.position.x - 6) / ((width - 12) / (points.length - 1)))))
 			: -1
 		readonly property var hoverPoint: hoverIndex >= 0 ? points[hoverIndex] : null
