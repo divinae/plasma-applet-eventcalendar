@@ -49,8 +49,9 @@ function toArray(listLike) {
 // an account) and checked. Older ones: a tree with a { id, enabled } object in UserRole + 1.
 // withAccounts: the accounts too, as { id, name, checked: false, account: true } (also a folder
 // without events of its own), and the calendars in an account's tree with the top account's id as
-// accountId (none: a calendar that is a resource of its own, eg: a local .ics file).
-var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4
+// accountId (none: a calendar that is a resource of its own, eg: a local .ics file); with the
+// model's icon name as icon (eg: view-pim-tasks for a task list, which has no color).
+var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4, PIM_ROLE_ICON = 5
 function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 	var rows = []
 	if (!model) {
@@ -83,6 +84,10 @@ function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 		if (row) {
 			if (withAccounts && accountId && !row.account) {
 				row.accountId = accountId
+			}
+			var iconName = withAccounts ? model.data(index, userRole + PIM_ROLE_ICON) : ''
+			if (iconName && typeof iconName === 'string') {
+				row.icon = iconName
 			}
 			rows.push(row)
 		}

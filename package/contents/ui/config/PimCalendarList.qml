@@ -4,7 +4,8 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
 // KDE PIM (Akonadi) calendars to tick, under their accounts (PimCalendarSelection.groups): a
-// header and a card per account, a calendar's color as in the popup's calendar menu.
+// header and a card per account; a calendar's kind as its icon (eg: a task list, which has no
+// color), its color as in the popup's calendar menu.
 ColumnLayout {
 	id: list
 	property var selection: null // PimCalendarSelection
@@ -36,6 +37,12 @@ ColumnLayout {
 						checked: modelData.checked
 						enabled: list.selection.canChange
 						onToggled: list.selection.setChecked(modelData.id, checked)
+						leading: Kirigami.Icon {
+							visible: !!calendarRow.modelData.icon
+							source: calendarRow.modelData.icon || ""
+							implicitWidth: Kirigami.Units.iconSizes.smallMedium
+							implicitHeight: implicitWidth
+						}
 						trailing: Rectangle {
 							visible: !!calendarRow.calendarColor
 							implicitWidth: Kirigami.Units.iconSizes.small * 0.75

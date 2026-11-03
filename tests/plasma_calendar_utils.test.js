@@ -170,7 +170,7 @@ const accountTree = model([
 	{ [UserRole + 1]: 1490, [UserRole + 2]: 'Google Groupware', [UserRole + 3]: false, [UserRole + 4]: false, children: [
 		{ [UserRole + 1]: 1617, [UserRole + 2]: 'work@example.com', [UserRole + 3]: true, [UserRole + 4]: true },
 	] },
-	{ [UserRole + 1]: 5, [UserRole + 2]: 'Personal calendar', [UserRole + 3]: true, [UserRole + 4]: false },
+	{ [UserRole + 1]: 5, [UserRole + 2]: 'Personal calendar', [UserRole + 3]: true, [UserRole + 4]: false, [UserRole + 5]: 'office-calendar' },
 	{ [UserRole + 1]: 20, [UserRole + 2]: 'Work (DAV)', [UserRole + 3]: false, [UserRole + 4]: false, children: [
 		{ [UserRole + 1]: 21, [UserRole + 2]: 'Team', [UserRole + 3]: false, [UserRole + 4]: false, children: [
 			{ [UserRole + 1]: 22, [UserRole + 2]: 'Releases', [UserRole + 3]: true, [UserRole + 4]: true },
@@ -180,6 +180,7 @@ const accountTree = model([
 const treeRows = U.pimCalendarRows(accountTree, UserRole, DisplayRole, true)
 assert.deepStrictEqual(JSON.parse(JSON.stringify(treeRows)).filter(r => !r.account).map(r => [r.id, r.accountId || '']),
 	[['1617', '1490'], ['5', ''], ['22', '20']], 'each calendar with its top account from the tree; in a folder too')
+assert.strictEqual(treeRows.filter(r => r.id === '5')[0].icon, 'office-calendar', 'the model\'s icon (eg: a task list\'s)')
 const treeGroups = JSON.parse(JSON.stringify(U.pimCalendarGroups(treeRows,
 	'account|akonadi_google_resource_15|work@example.com\ncollection|1490|akonadi_google_resource_15|RootCollection\ncollection|1617|akonadi_google_resource_15|work@example.com')))
 assert.deepStrictEqual(treeGroups.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['work@example.com', ['1617']]])
