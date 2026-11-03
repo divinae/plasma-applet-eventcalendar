@@ -138,4 +138,55 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.googleCalendarIdsByAccount([
 ]))), { 'me@gmail.com': ['x@group.calendar.google.com', 'Me@Gmail.com'] },
 	'only the calendars shown in the widget ("primary" as its id): an Akonadi copy of another one stays')
 
+//--- The Akonadi calendars under their accounts, Google's apart (the Google and Akonadi tabs)
+const dbLines = [
+	'account|akonadi_google_resource_14|Me@Gmail.com',
+	'collection|1466|akonadi_google_resource_14|RootCollection',
+	'collection|1486|akonadi_google_resource_14|me@gmail.com',
+	'collection|1488|akonadi_google_resource_14|e_2_de#weeknum@group.v.calendar.google.com',
+].join('\n')
+const groupRows = [
+	{ id: '1466', name: 'Google Groupware', checked: false, account: true },
+	{ id: '1486', name: 'me@gmail.com', checked: true },
+	{ id: '1488', name: 'Week numbers', checked: false },
+	{ id: '10', name: 'Personal calendar', checked: false, account: true },
+	{ id: '11', name: 'Personal', checked: true },
+	{ id: '20', name: 'Birthdays & Anniversaries', checked: false, account: true },
+]
+const g = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, dbLines)))
+assert.deepStrictEqual(g.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['me@gmail.com', ['1486', '1488']]],
+	'a Google account by its email, with its calendars')
+assert.deepStrictEqual(g.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Personal calendar', ['11']]],
+	'the others under their accounts; an account without calendars left out')
+const noDb = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, '')))
+assert.deepStrictEqual([noDb.google.length, noDb.other.map(x => x.name)], [0, ['Google Groupware', 'Personal calendar']],
+	'without Akonadi\'s database all are others')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarGroups([{ id: '7', name: 'Old', checked: true }], ''))).other,
+	[{ name: '', calendars: [{ id: '7', name: 'Old', checked: true }] }], 'calendars without an account (older models)')
+
+// From the model's tree: a calendar that is a resource of its own (a local calendar file) after a
+// Google account isn't that account's: in its own group, the last.
+const accountTree = model([
+	{ [UserRole + 1]: 1490, [UserRole + 2]: 'Google Groupware', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+		{ [UserRole + 1]: 1617, [UserRole + 2]: 'work@example.com', [UserRole + 3]: true, [UserRole + 4]: true },
+	] },
+	{ [UserRole + 1]: 5, [UserRole + 2]: 'Personal calendar', [UserRole + 3]: true, [UserRole + 4]: false, [UserRole + 5]: 'office-calendar' },
+	{ [UserRole + 1]: 20, [UserRole + 2]: 'Work (DAV)', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+		{ [UserRole + 1]: 21, [UserRole + 2]: 'Team', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+			{ [UserRole + 1]: 22, [UserRole + 2]: 'Releases', [UserRole + 3]: true, [UserRole + 4]: true },
+		] },
+	] },
+])
+const treeRows = U.pimCalendarRows(accountTree, UserRole, DisplayRole, true)
+assert.deepStrictEqual(JSON.parse(JSON.stringify(treeRows)).filter(r => !r.account).map(r => [r.id, r.accountId || '']),
+	[['1617', '1490'], ['5', ''], ['22', '20']], 'each calendar with its top account from the tree; in a folder too')
+assert.strictEqual(treeRows.filter(r => r.id === '5')[0].icon, 'office-calendar', 'the model\'s icon (eg: a task list\'s)')
+const treeGroups = JSON.parse(JSON.stringify(U.pimCalendarGroups(treeRows,
+	'account|akonadi_google_resource_15|work@example.com\ncollection|1490|akonadi_google_resource_15|RootCollection\ncollection|1617|akonadi_google_resource_15|work@example.com')))
+assert.deepStrictEqual(treeGroups.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['work@example.com', ['1617']]])
+assert.deepStrictEqual(treeGroups.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Work (DAV)', ['22']], ['', ['5']]],
+	'the local calendar in its own group, the last; not under the Google account')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(accountTree, UserRole, DisplayRole))).map(r => Object.keys(r).join()),
+	['id,name,checked', 'id,name,checked', 'id,name,checked'], 'without the accounts: rows as before')
+
 console.log('PASS plasma_calendar_utils')

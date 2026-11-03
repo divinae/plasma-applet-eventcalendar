@@ -32,7 +32,7 @@ ConfigModel {
 	}
 	ConfigCategory {
 		name: i18n("Calendars")
-		icon: "office-calendar"
+		icon: "view-calendar" // The PIM events plugin's: its page is in here now
 		source: "config/ConfigCalendars.qml"
 	}
 	ConfigCategory {
@@ -42,12 +42,12 @@ ConfigModel {
 	}
 	ConfigCategory {
 		name: i18n("Weather")
-		icon: "weather-clear"
+		icon: "weather-clouds"
 		source: "config/ConfigWeather.qml"
 	}
 	ConfigCategory {
 		name: i18n("Time Zones")
-		icon: "preferences-system-time"
+		icon: "globe"
 		source: "config/ConfigTimezones.qml"
 	}
 	ConfigCategory {
@@ -75,8 +75,11 @@ ConfigModel {
 			icon: model.decoration
 			source: model.configUi
 			readonly property string pluginFilename: PlasmaCalendarUtils.getModelPluginFilename(eventPluginsManager, index, model)
+			// Not the PIM events plugin's: its calendars are chosen in Calendars (Google Calendar and
+			// Akonadi tabs, see PimCalendarSelection).
 			visible: hasPlasmoidConfig
 				&& effectiveEnabledCalendarPlugins.indexOf(pluginFilename) > -1
+				&& !PlasmaCalendarUtils.hasPlugin([pluginFilename], "pimevents")
 		}
 
 		onObjectAdded: function(index, object) {

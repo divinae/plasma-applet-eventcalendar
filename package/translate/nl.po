@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 14:50+0100\n"
+"POT-Creation-Date: 2026-11-03 15:00+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -205,7 +205,7 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -389,6 +389,50 @@ msgstr ""
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Opslaan"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"Turn on the PIM Events plugin in the General tab (Plasma calendars) to show "
+"the calendars of KDE PIM (Akonadi)."
+msgstr ""
+"Zet de plug-in PIM Events aan op het tabblad Algemeen (Plasma-agenda's) om "
+"de agenda's van KDE PIM (Akonadi) te tonen."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"This version of KDE PIM can't change the selection here: choose the "
+"calendars on the PIM Events Plugin page of these settings."
+msgstr ""
+"Deze versie van KDE PIM kan de keuze hier niet wijzigen: kies de agenda's op "
+"de pagina van de plug-in PIM Events in deze instellingen."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"Eén agenda die in de PIM-gebeurtenissenplug-in is geselecteerd, bestaat niet "
+"meer in Akonadi, bijv. omdat het account opnieuw is ingesteld, waardoor de "
+"agenda's nieuwe id's krijgen."
+msgstr[1] ""
+"%1 agenda's die in de PIM-gebeurtenissenplug-in zijn geselecteerd, bestaan "
+"niet meer in Akonadi, bijv. omdat hun account opnieuw is ingesteld, waardoor "
+"de agenda's nieuwe id's krijgen."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "De ontbrekende vergeten"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"In the popup's calendar menu they are shown and hidden by color: calendars "
+"of one color together."
+msgstr ""
+"In het agendamenu van de pop-up worden ze per kleur getoond en verborgen: "
+"agenda's van één kleur samen."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 #: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
@@ -698,53 +742,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Takenlijsten worden gekozen op de pagina Taken."
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"Eén agenda die in de PIM-gebeurtenissenplug-in is geselecteerd, bestaat niet "
-"meer in Akonadi, bijv. omdat het account opnieuw is ingesteld, waardoor de "
-"agenda's nieuwe id's krijgen."
-msgstr[1] ""
-"%1 agenda's die in de PIM-gebeurtenissenplug-in zijn geselecteerd, bestaan "
-"niet meer in Akonadi, bijv. omdat hun account opnieuw is ingesteld, waardoor "
-"de agenda's nieuwe id's krijgen."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Nu niet geselecteerd: %1. Selecteer ze op de pagina PIM Events Plugin in de "
-"instellingen van de Digitale klok."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Alle agenda's die Akonadi nu heeft, zijn geselecteerd."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "De ontbrekende vergeten"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
-"ingesteld op de pagina van de PIM-afsprakenplug-in in de instellingen van de "
-"Digitale klok (de plug-in zelf wordt aangezet in Agenda's > Plasma-"
-"agenda's). In het agendamenu van de pop-up worden ze per kleur getoond en "
-"verborgen: agenda's van één kleur samen. De Google-agenda's van een hier "
-"aangemeld account staan hierboven, bij het account."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "Account toevoegen…"
 
@@ -942,6 +939,10 @@ msgstr "Algemeen"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Google Agenda"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr "Akonadi"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -2358,6 +2359,13 @@ msgstr "Geen plaats gevonden."
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "Geen app-id ingesteld."
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid ""
+"Its events come from the account signed in to in the Google Calendar tab."
+msgstr ""
+"De afspraken komen van het account dat is aangemeld op het tabblad Google "
+"Agenda."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4786,6 +4794,31 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid ""
+#~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "
+#~ "Digital Clock's settings."
+#~ msgstr ""
+#~ "Nu niet geselecteerd: %1. Selecteer ze op de pagina PIM Events Plugin in "
+#~ "de instellingen van de Digitale klok."
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "Alle agenda's die Akonadi nu heeft, zijn geselecteerd."
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Calendars > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Alleen-lezen weergegeven. Welke Akonadi-agenda's getoond worden, wordt "
+#~ "ingesteld op de pagina van de PIM-afsprakenplug-in in de instellingen van "
+#~ "de Digitale klok (de plug-in zelf wordt aangezet in Agenda's > Plasma-"
+#~ "agenda's). In het agendamenu van de pop-up worden ze per kleur getoond en "
+#~ "verborgen: agenda's van één kleur samen. De Google-agenda's van een hier "
+#~ "aangemeld account staan hierboven, bij het account."
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "ICalendar (.ics)"

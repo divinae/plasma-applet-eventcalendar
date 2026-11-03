@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 14:50+0100\n"
+"POT-Creation-Date: 2026-11-03 15:00+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -207,7 +207,7 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -385,6 +385,50 @@ msgstr "Kun du ser dette navn. Kalenderen beholder sit navn for andre."
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Gem"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"Turn on the PIM Events plugin in the General tab (Plasma calendars) to show "
+"the calendars of KDE PIM (Akonadi)."
+msgstr ""
+"Slå PIM Events-plugin til i fanen Generelt (Plasma-kalendere) for at vise "
+"kalenderne fra KDE PIM (Akonadi)."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"This version of KDE PIM can't change the selection here: choose the "
+"calendars on the PIM Events Plugin page of these settings."
+msgstr ""
+"Denne version af KDE PIM kan ikke ændre valget her: vælg kalenderne på siden "
+"for PIM Events-plugin i disse indstillinger."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"Én kalender, der er valgt i PIM-begivenhedsplugin'et, findes ikke længere i "
+"Akonadi, fx fordi dens konto blev oprettet igen, hvilket giver dens "
+"kalendere nye id'er."
+msgstr[1] ""
+"%1 kalendere, der er valgt i PIM-begivenhedsplugin'et, findes ikke længere i "
+"Akonadi, fx fordi deres konto blev oprettet igen, hvilket giver dens "
+"kalendere nye id'er."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "Glem de manglende"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"In the popup's calendar menu they are shown and hidden by color: calendars "
+"of one color together."
+msgstr ""
+"I pop op-vinduets kalendermenu vises og skjules de efter farve: kalendere "
+"med samme farve sammen."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 #: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
@@ -683,53 +727,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Opgavelister vælges på siden Opgaver."
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"Én kalender, der er valgt i PIM-begivenhedsplugin'et, findes ikke længere i "
-"Akonadi, fx fordi dens konto blev oprettet igen, hvilket giver dens "
-"kalendere nye id'er."
-msgstr[1] ""
-"%1 kalendere, der er valgt i PIM-begivenhedsplugin'et, findes ikke længere i "
-"Akonadi, fx fordi deres konto blev oprettet igen, hvilket giver dens "
-"kalendere nye id'er."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Ikke valgt nu: %1. Vælg dem på siden PIM Events Plugin i Digitalt urs "
-"indstillinger."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Alle de kalendere, Akonadi har nu, er valgt."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "Glem de manglende"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Vises skrivebeskyttet. Hvilke Akonadi-kalendere der vises, angives på siden "
-"for PIM-begivenhedsplugin'et i indstillingerne for Digitalur (selve "
-"plugin'et slås til under Kalendere > Plasma-kalendere). I pop op-vinduets "
-"kalendermenu vises og skjules de efter farve: kalendere med samme farve "
-"sammen. Google-kalenderne for en konto, der er logget ind her, står ovenfor "
-"sammen med kontoen."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "Tilføj konto…"
 
@@ -928,6 +925,10 @@ msgstr "Generelt"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Google Kalender"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr "Akonadi"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -2322,6 +2323,13 @@ msgstr "Ingen by fundet."
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "Intet app-id angivet."
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid ""
+"Its events come from the account signed in to in the Google Calendar tab."
+msgstr ""
+"Dens begivenheder kommer fra kontoen, der er logget ind i fanen Google "
+"Kalender."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4737,6 +4745,31 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid ""
+#~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "
+#~ "Digital Clock's settings."
+#~ msgstr ""
+#~ "Ikke valgt nu: %1. Vælg dem på siden PIM Events Plugin i Digitalt urs "
+#~ "indstillinger."
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "Alle de kalendere, Akonadi har nu, er valgt."
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Calendars > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Vises skrivebeskyttet. Hvilke Akonadi-kalendere der vises, angives på "
+#~ "siden for PIM-begivenhedsplugin'et i indstillingerne for Digitalur (selve "
+#~ "plugin'et slås til under Kalendere > Plasma-kalendere). I pop op-vinduets "
+#~ "kalendermenu vises og skjules de efter farve: kalendere med samme farve "
+#~ "sammen. Google-kalenderne for en konto, der er logget ind her, står "
+#~ "ovenfor sammen med kontoen."
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "ICalendar (.ics)"

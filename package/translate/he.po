@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 14:50+0100\n"
+"POT-Creation-Date: 2026-11-03 15:00+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -205,7 +205,7 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -389,6 +389,54 @@ msgstr "רק את/ה רואה את השם הזה. עבור אחרים לוח ה�
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "שמירה"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"Turn on the PIM Events plugin in the General tab (Plasma calendars) to show "
+"the calendars of KDE PIM (Akonadi)."
+msgstr ""
+"יש להפעיל את התוסף PIM Events בלשונית כללי (לוחות השנה של Plasma) כדי להציג "
+"את לוחות השנה של KDE PIM‏ (Akonadi)."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"This version of KDE PIM can't change the selection here: choose the "
+"calendars on the PIM Events Plugin page of these settings."
+msgstr ""
+"גרסה זו של KDE PIM לא יכולה לשנות כאן את הבחירה: יש לבחור את לוחות השנה "
+"בעמוד התוסף PIM Events בהגדרות אלה."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"לוח שנה אחד שנבחר בתוסף אירועי PIM כבר לא קיים ב־Akonadi, למשל כי החשבון שלו "
+"הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
+msgstr[1] ""
+"שני לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי "
+"החשבון שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
+msgstr[2] ""
+"%1 לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי החשבון "
+"שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
+msgstr[3] ""
+"%1 לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי החשבון "
+"שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "לשכוח את החסרים"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"In the popup's calendar menu they are shown and hidden by color: calendars "
+"of one color together."
+msgstr ""
+"בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי צבע: לוחות שנה באותו "
+"צבע יחד."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 #: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
@@ -683,55 +731,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "רשימות המשימות נבחרות בעמוד המשימות."
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"לוח שנה אחד שנבחר בתוסף אירועי PIM כבר לא קיים ב־Akonadi, למשל כי החשבון שלו "
-"הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
-msgstr[1] ""
-"שני לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי "
-"החשבון שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
-msgstr[2] ""
-"%1 לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי החשבון "
-"שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
-msgstr[3] ""
-"%1 לוחות שנה שנבחרו בתוסף אירועי PIM כבר לא קיימים ב־Akonadi, למשל כי החשבון "
-"שלהם הוגדר מחדש, מה שנותן ללוחות השנה שלו מזהים חדשים."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"לא נבחרו כעת: %1. בחרו אותם בעמוד PIM Events Plugin בהגדרות השעון הדיגיטלי."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "כל לוחות השנה שיש כעת ב־Akonadi נבחרו."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "לשכוח את החסרים"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד תוסף אירועי "
-"ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־לוחות שנה > לוחות שנה של "
-"Plasma). בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי צבע: לוחות "
-"שנה באותו צבע יחד. לוחות השנה של Google של חשבון שמחובר כאן מופיעים למעלה, "
-"יחד עם החשבון."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "הוספת חשבון…"
 
@@ -923,6 +922,10 @@ msgstr "כללי"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Google Calendar"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr "Akonadi"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -2309,6 +2312,11 @@ msgstr "לא נמצאה עיר."
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "לא הוגדר מזהה יישום."
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid ""
+"Its events come from the account signed in to in the Google Calendar tab."
+msgstr "האירועים שלו מגיעים מהחשבון המחובר בלשונית יומן Google."
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4804,6 +4812,30 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid ""
+#~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "
+#~ "Digital Clock's settings."
+#~ msgstr ""
+#~ "לא נבחרו כעת: %1. בחרו אותם בעמוד PIM Events Plugin בהגדרות השעון "
+#~ "הדיגיטלי."
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "כל לוחות השנה שיש כעת ב־Akonadi נבחרו."
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Calendars > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "מוצגים לקריאה בלבד. אילו לוחות שנה של Akonadi מוצגים נקבע בעמוד תוסף "
+#~ "אירועי ה־PIM בהגדרות השעון הדיגיטלי (התוסף עצמו מופעל ב־לוחות שנה > לוחות "
+#~ "שנה של Plasma). בתפריט לוחות השנה של החלון הקופץ הם מוצגים ומוסתרים לפי "
+#~ "צבע: לוחות שנה באותו צבע יחד. לוחות השנה של Google של חשבון שמחובר כאן "
+#~ "מופיעים למעלה, יחד עם החשבון."
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "ICalendar (.ics)"

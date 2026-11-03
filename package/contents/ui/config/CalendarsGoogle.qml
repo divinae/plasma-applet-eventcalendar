@@ -9,7 +9,6 @@ import "../lib"
 import "../ScriptPath.js" as ScriptPath
 import "../Shared.js" as Shared
 import "../code/GooglePalette.js" as GooglePalette
-import "../calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
 ConfigSection {
 	id: page
@@ -75,11 +74,12 @@ ConfigSection {
 	ExecUtil { id: callbackListener }
 
 	//--- Google accounts KDE PIM (Akonadi) syncs: their events also come in, read-only, through the
-	// PIM events plugin of the Plasma calendars (Events page). The widget shows an event signed in
-	// to here as well only once (see PlasmaCalendarEventState.pimDuplicates).
+	// PIM events plugin of the Plasma calendars (their calendars are ticked in the Akonadi tab). The
+	// widget shows an event signed in to here as well only once (see
+	// PlasmaCalendarEventState.pimDuplicates).
 	ExecUtil { id: akonadiReader }
 	property var akonadiGoogleAccounts: [] // Email addresses
-	readonly property bool pimEventsEnabled: PlasmaCalendarUtils.hasPlugin(page.configBridge.read("enabledCalendarPlugins", []), "pimevents")
+	readonly property bool pimEventsEnabled: !!pimSelection && pimSelection.pimEventsEnabled
 	readonly property var directGoogleAccounts: Shared.toArray(googleLoginManager.accounts).map(function(account) {
 		return primaryCalendarId(account).toLowerCase()
 	}).filter(function(email) {
@@ -104,76 +104,7 @@ ConfigSection {
 	}
 	Component.onCompleted: {
 		loadAkonadiGoogleAccounts()
-		loadAkonadiCalendars()
-		loadPimSelection()
-		updateShownPimCalendars() // The model may be filled already: no reset or insert comes then
 	}
-
-	// The Akonadi calendars the widget shows (the pimevents plugin's own selection), read-only here.
-	property var pimCalendarsModel: {
-		try { // kdepim-addons is optional
-			return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", page)
-		} catch (e) {
-			return null
-		}
-	}
-	property var pimCalendarRows: [] // All of them, with the accounts
-	readonly property var shownPimCalendars: pimCalendarRows.filter(function(row) {
-		return row.checked
-	})
-	// The plugin's selection as saved: ids Akonadi no longer has (eg: an account set up anew, its
-	// calendars got new ids) are kept by the plugin, but show nothing; its new calendars aren't
-	// selected yet.
-	ExecUtil { id: pimSelectionReader }
-	property var pimSelection: []
-	function loadPimSelection() {
-		pimSelectionReader.execArgv(PlasmaCalendarUtils.pimSelectionCommand(), function(cmd, exitCode, exitStatus, stdout) {
-			page.pimSelection = PlasmaCalendarUtils.parsePimSelection(stdout)
-		})
-	}
-	readonly property var stalePimSelection: PlasmaCalendarUtils.stalePimSelection(pimSelection, pimCalendarRows)
-	readonly property var unselectedPimCalendars: pimCalendarRows.filter(function(row) {
-		return !row.checked && !row.account && !mirroredPimCalendars[row.id]
-	})
-	// Through the plugin's model, so plasmashell's copy of the config and the plugin follow.
-	function forgetStalePimSelection() {
-		if (!pimCalendarsModel || typeof pimCalendarsModel.setChecked !== "function") { // Older kdepim-addons
-			return
-		}
-		stalePimSelection.forEach(function(id) {
-			pimCalendarsModel.setChecked(Number(id), false)
-		})
-		pimCalendarsModel.saveConfig()
-		loadPimSelection()
-	}
-	// From Akonadi's database, in one run (PlasmaCalendarUtils.akonadiCalendarsCommand, as the
-	// widget reads it): their colors (none when it can't be read), and the Google calendars Akonadi
-	// syncs for an account signed in here too (listed above with the account, so not here again).
-	ExecUtil { id: akonadiCalendarsReader }
-	property var akonadiColors: ({})
-	property string akonadiGoogleCollections: ""
-	function loadAkonadiCalendars() {
-		akonadiCalendarsReader.execArgv(PlasmaCalendarUtils.akonadiCalendarsCommand(), function(cmd, exitCode, exitStatus, stdout) {
-			page.akonadiColors = PlasmaCalendarUtils.parseAkonadiColors(stdout)
-			page.akonadiGoogleCollections = String(stdout || "")
-		})
-	}
-	readonly property var mirroredPimCalendars: PlasmaCalendarUtils.akonadiMirroredCollections(akonadiGoogleCollections,
-		PlasmaCalendarUtils.googleCalendarIdsByAccount(Shared.toArray(googleLoginManager.accounts)))
-	readonly property var listedPimCalendars: shownPimCalendars.filter(function(row) {
-		return !mirroredPimCalendars[row.id]
-	})
-	function updateShownPimCalendars() {
-		pimCalendarRows = PlasmaCalendarUtils.pimCalendarRows(pimCalendarsModel, Qt.UserRole, Qt.DisplayRole, true)
-	}
-	Connections { // Akonadi fills the model asynchronously
-		target: page.pimCalendarsModel
-		function onModelReset() { page.updateShownPimCalendars() }
-		function onRowsInserted() { page.updateShownPimCalendars() }
-		function onRowsRemoved() { page.updateShownPimCalendars() }
-		function onDataChanged() { page.updateShownPimCalendars() }
-	}
-	onPimCalendarsModelChanged: updateShownPimCalendars()
 
 	property bool autoLoginInProgress: false
 	property bool autoLoginCancelled: false
@@ -468,61 +399,6 @@ ConfigSection {
 		FormCard.FormSectionText {
 			visible: googleLoginManager.isLoggedIn
 			text: i18n("Task lists are chosen on the Tasks page.")
-		}
-
-		// Calendars that come in through KDE PIM: listed, chosen in the pimevents plugin's settings.
-		FormCard.FormHeader {
-			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			title: i18n("KDE PIM (Akonadi)")
-		}
-		FormCard.FormCard {
-			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			Repeater {
-				model: page.listedPimCalendars
-				FormCard.FormTextDelegate {
-					id: pimCalendarRow
-					readonly property string calendarColor: page.akonadiColors[modelData.id] || ""
-					icon.name: calendarColor ? "" : "view-calendar"
-					text: modelData.name
-					// The calendar's color, like the popup's calendar list.
-					leading: Rectangle {
-						visible: !!pimCalendarRow.calendarColor
-						implicitWidth: Kirigami.Units.iconSizes.small * 0.75
-						implicitHeight: implicitWidth
-						radius: width / 2
-						color: pimCalendarRow.calendarColor || "transparent"
-					}
-				}
-			}
-		}
-		FormCard.FormCard {
-			visible: page.pimEventsEnabled && page.stalePimSelection.length > 0
-			Layout.topMargin: page.listedPimCalendars.length > 0 ? 0 : Kirigami.Units.largeSpacing
-			FormCard.AbstractFormDelegate {
-				background: null
-				contentItem: Kirigami.InlineMessage {
-					visible: true
-					type: Kirigami.MessageType.Warning
-					text: i18np("One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids.",
-							"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids.",
-							page.stalePimSelection.length)
-						+ " " + (page.unselectedPimCalendars.length > 0
-							? i18n("Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings.",
-								page.unselectedPimCalendars.map(function(row) { return row.name }).join(", "))
-							: i18n("All the calendars Akonadi has now are selected."))
-					actions: [
-						Kirigami.Action {
-							icon.name: "edit-clear-history"
-							text: i18n("Forget the Missing Ones")
-							onTriggered: page.forgetStalePimSelection()
-						}
-					]
-				}
-			}
-		}
-		FormCard.FormSectionText {
-			visible: page.pimEventsEnabled && page.listedPimCalendars.length > 0
-			text: i18n("Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account.")
 		}
 
 		// Sign in / add another account

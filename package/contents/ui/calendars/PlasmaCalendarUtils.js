@@ -47,27 +47,32 @@ function toArray(listLike) {
 // [PIMEventsPlugin] calendars= in plasmashellrc). Accounts (resources) are left out.
 // Current versions: a flat list with the roles collectionId (UserRole + 1), name, enabled (false:
 // an account) and checked. Older ones: a tree with a { id, enabled } object in UserRole + 1.
-// withAccounts: the accounts too, as { id, name, checked: false, account: true }.
-var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4
+// withAccounts: the accounts too, as { id, name, checked: false, account: true } (also a folder
+// without events of its own), and the calendars in an account's tree with the top account's id as
+// accountId (none: a calendar that is a resource of its own, eg: a local .ics file); with the
+// model's icon name as icon (eg: view-pim-tasks for a task list, which has no color).
+var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4, PIM_ROLE_ICON = 5
 function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 	var rows = []
 	if (!model) {
 		return rows
 	}
-	function push(index) {
+	// The row of index (pushed), or null for none (an account without withAccounts, or no data).
+	function push(index, accountId) {
 		var data = model.data(index, userRole + PIM_ROLE_ID)
+		var row = null
 		if (data && typeof data === 'object') {
-			rows.push({
+			row = {
 				id: String(data.id),
 				name: String(model.data(index, displayRole) || ''),
 				checked: !!data.enabled,
-			})
+			}
 		} else if (data !== undefined && data !== null) {
 			var account = model.data(index, userRole + PIM_ROLE_ENABLED) === false
 			if (account && !withAccounts) {
-				return
+				return null
 			}
-			var row = {
+			row = {
 				id: String(data),
 				name: String(model.data(index, userRole + PIM_ROLE_NAME) || model.data(index, displayRole) || ''),
 				checked: !account && !!model.data(index, userRole + PIM_ROLE_CHECKED),
@@ -75,21 +80,31 @@ function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 			if (account) {
 				row.account = true
 			}
+		}
+		if (row) {
+			if (withAccounts && accountId && !row.account) {
+				row.accountId = accountId
+			}
+			var iconName = withAccounts ? model.data(index, userRole + PIM_ROLE_ICON) : ''
+			if (iconName && typeof iconName === 'string') {
+				row.icon = iconName
+			}
 			rows.push(row)
 		}
+		return row
 	}
 	// A tree under the accounts (Akonadi's EntityTreeModel): calendars can be folders in folders.
-	function walk(parent, depth) {
+	function walk(parent, depth, accountId) {
 		var count = parent ? model.rowCount(parent) : model.rowCount()
 		for (var i = 0; i < count; i++) {
 			var index = parent ? model.index(i, 0, parent) : model.index(i, 0)
-			push(index)
+			var row = push(index, accountId)
 			if (depth < 8 && model.hasChildren(index)) {
-				walk(index, depth + 1)
+				walk(index, depth + 1, accountId || (row && row.account ? row.id : '')) // The top account
 			}
 		}
 	}
-	walk(null, 0)
+	walk(null, 0, '')
 	return rows
 }
 
@@ -434,6 +449,19 @@ function googleCalendarIdsByAccount(accounts) {
 // in the widget: { "collection id": true }. calendarIds: { "email": ["calendar id", ...] }, the
 // emails in lower case.
 function akonadiMirroredCollections(stdout, calendarIds) {
+	var parsed = parseAkonadiGoogleCollections(stdout)
+	var mirrored = {}
+	parsed.collections.forEach(function(collection) {
+		var ids = (calendarIds || {})[parsed.accounts[collection.resource]]
+		if (ids && ids.indexOf(collection.remoteId) >= 0) {
+			mirrored[collection.id] = true
+		}
+	})
+	return mirrored
+}
+// akonadiGoogleCollectionsCommand's output: { accounts: { resource: "email" }, collections:
+// [{ id, resource, remoteId }] }, the emails in lower case.
+function parseAkonadiGoogleCollections(stdout) {
 	var accounts = {}
 	var collections = []
 	String(stdout || '').split('\n').forEach(function(line) {
@@ -444,14 +472,41 @@ function akonadiMirroredCollections(stdout, calendarIds) {
 			collections.push({ id: fields[1], resource: fields[2], remoteId: fields.slice(3).join('|') })
 		}
 	})
-	var mirrored = {}
-	collections.forEach(function(collection) {
-		var ids = (calendarIds || {})[accounts[collection.resource]]
-		if (ids && ids.indexOf(collection.remoteId) >= 0) {
-			mirrored[collection.id] = true
+	return { accounts: accounts, collections: collections }
+}
+// The Akonadi calendars (pimCalendarRows with the accounts) under their accounts, apart: of
+// Akonadi's Google accounts (by akonadiGoogleCollectionsCommand's output: none without it) and the
+// others. { google: [group], other: [group] }, a group being { name, calendars: [row] }: a Google
+// account named by its email; the calendars without an account (a resource of its own, eg: a local
+// calendar file) in one group without a name, the last. Accounts without a calendar are left out.
+// From a tree, by a calendar's accountId; from a flat list (older models), each account before its
+// calendars.
+function pimCalendarGroups(rows, stdout) {
+	var parsed = parseAkonadiGoogleCollections(stdout)
+	var googleAccountOf = {}
+	parsed.collections.forEach(function(collection) {
+		googleAccountOf[collection.id] = parsed.accounts[collection.resource] || ''
+	})
+	var groups = { google: [], other: [] }
+	var groupOf = {} // Account id -> its group
+	var ownGroup = { name: '', calendars: [] } // Calendars without an account
+	var tree = (rows || []).some(function(row) { return !!row.accountId })
+	var group = null // A flat list's last account
+	;(rows || []).forEach(function(row) {
+		if (row.account) {
+			var google = row.id in googleAccountOf
+			group = groupOf[row.id] = { name: (google && googleAccountOf[row.id]) || row.name, calendars: [] }
+			;(google ? groups.google : groups.other).push(group)
+		} else {
+			var into = tree ? groupOf[row.accountId] : group
+			;(into || ownGroup).calendars.push(row)
 		}
 	})
-	return mirrored
+	groups.other.push(ownGroup)
+	function withCalendars(list) {
+		return list.filter(function(g) { return g.calendars.length > 0 })
+	}
+	return { google: withCalendars(groups.google), other: withCalendars(groups.other) }
 }
 // The command's output as { "collection id": "#rrggbb" }.
 function parseAkonadiColors(stdout) {
@@ -487,7 +542,8 @@ function mirroredColorKeys(rows, colors, mirrored) {
 
 // Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color; without
 // one, of the others in it. A model keeps the selection it was made with (a calendar selected
-// later in the Digital Clock's settings isn't checked in it), while the plugin shows its events.
+// later, in the widget's settings or the Digital Clock's, isn't checked in it), while the plugin
+// shows its events.
 function namesByColor(rows, colors) {
 	var shown = {}
 	var others = {}
