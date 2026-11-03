@@ -57,7 +57,17 @@ ConfigModel {
 		visible: hasPlasmoidConfig && plasmoid.configuration.debugging
 	}
 
+	// The Akonadi tab can tick calendars (PimCalendarsModel.setChecked, newer kdepim-addons): then
+	// the PIM events plugin's own page isn't needed. Without it, that page stays.
+	property bool pimTabCanChoose: false
 	Component.onCompleted: {
+		try {
+			var pimModel = Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", configModel)
+			pimTabCanChoose = typeof pimModel.setChecked === "function"
+			pimModel.destroy()
+		} catch (e) {
+			pimTabCanChoose = false // kdepim-addons is optional
+		}
 		try {
 			eventPluginsManager = Qt.createQmlObject(
 				"import org.kde.plasma.workspace.calendar as PlasmaCalendar; PlasmaCalendar.EventPluginsManager {}",
@@ -75,11 +85,11 @@ ConfigModel {
 			icon: model.decoration
 			source: model.configUi
 			readonly property string pluginFilename: PlasmaCalendarUtils.getModelPluginFilename(eventPluginsManager, index, model)
-			// Not the PIM events plugin's: its calendars are chosen in Calendars (Google Calendar and
-			// Akonadi tabs, see PimCalendarSelection).
+			// Not the PIM events plugin's when its calendars can be chosen in Calendars > Akonadi
+			// (see PimCalendarSelection).
 			visible: hasPlasmoidConfig
 				&& effectiveEnabledCalendarPlugins.indexOf(pluginFilename) > -1
-				&& !PlasmaCalendarUtils.hasPlugin([pluginFilename], "pimevents")
+				&& !(configModel.pimTabCanChoose && PlasmaCalendarUtils.hasPlugin([pluginFilename], "pimevents"))
 		}
 
 		onObjectAdded: function(index, object) {

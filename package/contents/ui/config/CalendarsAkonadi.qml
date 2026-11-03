@@ -21,6 +21,12 @@ ConfigSection {
 			text: i18n("Turn on the PIM Events plugin in the General tab (Plasma calendars) to show the calendars of KDE PIM (Akonadi).")
 		}
 
+		// Older kdepim-addons: the model can't tick (config.qml keeps the plugin's own page then).
+		FormCard.FormSectionText {
+			visible: page.pimEventsEnabled && !!page.pimSelection && !!page.pimSelection.model && !page.pimSelection.canChange
+			text: i18n("This version of KDE PIM can't change the selection here: choose the calendars on the PIM Events Plugin page of these settings.")
+		}
+
 		PimCalendarList {
 			Layout.fillWidth: true
 			visible: page.pimEventsEnabled
