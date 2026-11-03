@@ -434,6 +434,19 @@ function googleCalendarIdsByAccount(accounts) {
 // in the widget: { "collection id": true }. calendarIds: { "email": ["calendar id", ...] }, the
 // emails in lower case.
 function akonadiMirroredCollections(stdout, calendarIds) {
+	var parsed = parseAkonadiGoogleCollections(stdout)
+	var mirrored = {}
+	parsed.collections.forEach(function(collection) {
+		var ids = (calendarIds || {})[parsed.accounts[collection.resource]]
+		if (ids && ids.indexOf(collection.remoteId) >= 0) {
+			mirrored[collection.id] = true
+		}
+	})
+	return mirrored
+}
+// akonadiGoogleCollectionsCommand's output: { accounts: { resource: "email" }, collections:
+// [{ id, resource, remoteId }] }, the emails in lower case.
+function parseAkonadiGoogleCollections(stdout) {
 	var accounts = {}
 	var collections = []
 	String(stdout || '').split('\n').forEach(function(line) {
@@ -444,14 +457,35 @@ function akonadiMirroredCollections(stdout, calendarIds) {
 			collections.push({ id: fields[1], resource: fields[2], remoteId: fields.slice(3).join('|') })
 		}
 	})
-	var mirrored = {}
-	collections.forEach(function(collection) {
-		var ids = (calendarIds || {})[accounts[collection.resource]]
-		if (ids && ids.indexOf(collection.remoteId) >= 0) {
-			mirrored[collection.id] = true
+	return { accounts: accounts, collections: collections }
+}
+// The Akonadi calendars (pimCalendarRows with the accounts, each account before its calendars)
+// under their accounts, apart: of Akonadi's Google accounts (by akonadiGoogleCollectionsCommand's
+// output: none without it) and the others. { google: [group], other: [group] }, a group being
+// { name, calendars: [row] }: a Google account named by its email. Accounts without a calendar
+// are left out.
+function pimCalendarGroups(rows, stdout) {
+	var parsed = parseAkonadiGoogleCollections(stdout)
+	var googleAccountOf = {}
+	parsed.collections.forEach(function(collection) {
+		googleAccountOf[collection.id] = parsed.accounts[collection.resource] || ''
+	})
+	var groups = { google: [], other: [] }
+	var group = null
+	;(rows || []).forEach(function(row) {
+		if (row.account || !group) {
+			var google = row.account && row.id in googleAccountOf
+			group = { name: row.account ? (google && googleAccountOf[row.id]) || row.name : '', calendars: [] }
+			;(google ? groups.google : groups.other).push(group)
+		}
+		if (!row.account) {
+			group.calendars.push(row)
 		}
 	})
-	return mirrored
+	function withCalendars(list) {
+		return list.filter(function(g) { return g.calendars.length > 0 })
+	}
+	return { google: withCalendars(groups.google), other: withCalendars(groups.other) }
 }
 // The command's output as { "collection id": "#rrggbb" }.
 function parseAkonadiColors(stdout) {
@@ -487,7 +521,8 @@ function mirroredColorKeys(rows, colors, mirrored) {
 
 // Color key -> the names of the shown calendars (pimCalendarRows, checked) in that color; without
 // one, of the others in it. A model keeps the selection it was made with (a calendar selected
-// later in the Digital Clock's settings isn't checked in it), while the plugin shows its events.
+// later, in the widget's settings or the Digital Clock's, isn't checked in it), while the plugin
+// shows its events.
 function namesByColor(rows, colors) {
 	var shown = {}
 	var others = {}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -162,7 +162,7 @@ msgctxt "separator of names in a list"
 msgid ", "
 msgstr "、"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -311,6 +311,23 @@ msgstr "色"
 #: ../contents/ui/config/CalendarEditDialog.qml ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "保存"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Turn on the PIM Events plugin in the General tab (Plasma calendars) to show the calendars of KDE PIM (Akonadi)."
+msgstr ""
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] "PIM イベントプラグインで選択されている %1 個のカレンダーが Akonadi にもう存在しません。たとえばアカウントを設定し直すと、そのカレンダーに新しい ID が付きます。"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "見つからないものを削除"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "In the popup's calendar menu they are shown and hidden by color: calendars of one color together."
+msgstr "ポップアップのカレンダーメニューでは色ごとに表示・非表示を切り替えます: 同じ色のカレンダーはまとめて切り替わります。"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -517,28 +534,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "タスクリストはタスクのページで選択します。"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid "One calendar selected in the PIM events plugin no longer exists in Akonadi, eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural "%1 calendars selected in the PIM events plugin no longer exist in Akonadi, eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] "PIM イベントプラグインで選択されている %1 個のカレンダーが Akonadi にもう存在しません。たとえばアカウントを設定し直すと、そのカレンダーに新しい ID が付きます。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
-msgstr "現在選択されていません: %1。デジタル時計の設定の PIM Events Plugin ページで選択してください。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Akonadi にある現在のカレンダーはすべて選択されています。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "見つからないものを削除"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"読み取り専用で表示されます。表示する Akonadi カレンダーはデジタル時計の設定の PIM イベントプラグインのページで設定します (プラグイン自体は カレンダー > Plasma カレンダー で有効にします)。ポップアップのカレンダーメニューでは色ごとに表示・非表示を切り替えます: 同じ色のカレンダーはまとめて切り替わります。ここでサインインしたアカウントの Google カレンダーは、上にアカウントとともに表示されます。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "アカウントを追加…"
 
@@ -693,6 +688,10 @@ msgstr "一般"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Google Calendar"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -1869,6 +1868,10 @@ msgstr "都市が見つかりません。"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "アプリ ID が設定されていません。"
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid "Its events come from the account signed in to in the Google Calendar tab."
+msgstr ""
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4198,6 +4201,16 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Not selected now: %1. Select them on the PIM Events Plugin page of the Digital Clock's settings."
+#~ msgstr "現在選択されていません: %1。デジタル時計の設定の PIM Events Plugin ページで選択してください。"
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "Akonadi にある現在のカレンダーはすべて選択されています。"
+
+#~ msgid "Shown read-only. Which Akonadi calendars are shown is set on the PIM Events Plugin page of the Digital Clock's settings (the plugin itself is turned on in Calendars > Plasma calendars). In the popup's calendar menu they are shown and hidden by color: calendars of one color together. The Google calendars of an account signed in here are listed above, with the account."
+#~ msgstr ""
+#~ "読み取り専用で表示されます。表示する Akonadi カレンダーはデジタル時計の設定の PIM イベントプラグインのページで設定します (プラグイン自体は カレンダー > Plasma カレンダー で有効にします)。ポップアップのカレンダーメニューでは色ごとに表示・非表示を切り替えます: 同じ色のカレンダーはまとめて切り替わります。ここでサインインしたアカウントの Google カレンダーは、上にアカウントとともに表示されます。"
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "ICalendar (.ics)"

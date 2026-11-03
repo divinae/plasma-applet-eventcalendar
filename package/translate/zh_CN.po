@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:53+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -190,7 +190,7 @@ msgid ", "
 msgstr "、"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -355,6 +355,33 @@ msgstr "颜色"
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "保存"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"Turn on the PIM Events plugin in the General tab (Plasma calendars) to show "
+"the calendars of KDE PIM (Akonadi)."
+msgstr ""
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"PIM 事件插件中选择的 %1 个日历已不存在于 Akonadi 中，例如其账户被重新设置，日"
+"历因此获得了新的 ID。"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "忘记缺失的日历"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"In the popup's calendar menu they are shown and hidden by color: calendars "
+"of one color together."
+msgstr "在弹出窗口的日历菜单中，它们按颜色显示和隐藏：同一颜色的日历一起切换。"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -608,44 +635,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "任务列表在“任务”页面中选择。"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"PIM 事件插件中选择的 %1 个日历已不存在于 Akonadi 中，例如其账户被重新设置，日"
-"历因此获得了新的 ID。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr "当前未选择：%1。请在数字时钟设置的 PIM Events Plugin 页面中选择它们。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Akonadi 当前的所有日历均已选择。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "忘记缺失的日历"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"以只读方式显示。显示哪些 Akonadi 日历在数字时钟设置的 PIM 事件插件页面中设置"
-"（插件本身在 日历 > Plasma 日历 中启用）。在弹出窗口的日历菜单中，它们按颜色"
-"显示和隐藏：同一颜色的日历一起切换。在此登录的账户的 Google 日历与账户一起列"
-"在上方。"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "添加账户…"
 
@@ -834,6 +823,10 @@ msgstr "常规"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Google 日历"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -2125,6 +2118,11 @@ msgstr "未找到城市。"
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "未设置应用 ID。"
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid ""
+"Its events come from the account signed in to in the Google Calendar tab."
+msgstr ""
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4506,6 +4504,28 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgid ""
+#~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "
+#~ "Digital Clock's settings."
+#~ msgstr ""
+#~ "当前未选择：%1。请在数字时钟设置的 PIM Events Plugin 页面中选择它们。"
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "Akonadi 当前的所有日历均已选择。"
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Calendars > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "以只读方式显示。显示哪些 Akonadi 日历在数字时钟设置的 PIM 事件插件页面中设"
+#~ "置（插件本身在 日历 > Plasma 日历 中启用）。在弹出窗口的日历菜单中，它们按"
+#~ "颜色显示和隐藏：同一颜色的日历一起切换。在此登录的账户的 Google 日历与账户"
+#~ "一起列在上方。"
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "iCalendar (.ics)"

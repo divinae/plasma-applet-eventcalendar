@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 09:40+0100\n"
+"POT-Creation-Date: 2026-11-03 11:53+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -192,7 +192,7 @@ msgid ", "
 msgstr ", "
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/CalendarsGoogle.qml
+#: ../contents/ui/config/PimCalendarList.qml
 msgid "KDE PIM (Akonadi)"
 msgstr "KDE PIM (Akonadi)"
 
@@ -367,6 +367,48 @@ msgstr "Barva"
 #: ../contents/ui/EventEditView.qml ../contents/ui/ManageListsView.qml
 msgid "Save"
 msgstr "Shrani"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"Turn on the PIM Events plugin in the General tab (Plasma calendars) to show "
+"the calendars of KDE PIM (Akonadi)."
+msgstr ""
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
+"eg because its account was set up anew, which gives its calendars new ids."
+msgid_plural ""
+"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
+"eg because their account was set up anew, which gives its calendars new ids."
+msgstr[0] ""
+"%1 koledar, izbran v vtičniku dogodkov PIM, ne obstaja več v Akonadi, npr. "
+"ker je bil njegov račun znova nastavljen, kar njegovim koledarjem da nove ID-"
+"je."
+msgstr[1] ""
+"%1 koledarja, izbrana v vtičniku dogodkov PIM, ne obstajata več v Akonadi, "
+"npr. ker je bil njun račun znova nastavljen, kar njegovim koledarjem da nove "
+"ID-je."
+msgstr[2] ""
+"%1 koledarji, izbrani v vtičniku dogodkov PIM, ne obstajajo več v Akonadi, "
+"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
+"nove ID-je."
+msgstr[3] ""
+"%1 koledarjev, izbranih v vtičniku dogodkov PIM, ne obstaja več v Akonadi, "
+"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
+"nove ID-je."
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid "Forget the Missing Ones"
+msgstr "Pozabi manjkajoče"
+
+#: ../contents/ui/config/CalendarsAkonadi.qml
+msgid ""
+"In the popup's calendar menu they are shown and hidden by color: calendars "
+"of one color together."
+msgstr ""
+"V meniju koledarjev v pojavnem oknu jih prikazujete in skrivate po barvi: "
+"koledarje ene barve skupaj."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
@@ -637,60 +679,6 @@ msgid "Task lists are chosen on the Tasks page."
 msgstr "Sezname opravil izberete na strani Opravila."
 
 #: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"One calendar selected in the PIM events plugin no longer exists in Akonadi, "
-"eg because its account was set up anew, which gives its calendars new ids."
-msgid_plural ""
-"%1 calendars selected in the PIM events plugin no longer exist in Akonadi, "
-"eg because their account was set up anew, which gives its calendars new ids."
-msgstr[0] ""
-"%1 koledar, izbran v vtičniku dogodkov PIM, ne obstaja več v Akonadi, npr. "
-"ker je bil njegov račun znova nastavljen, kar njegovim koledarjem da nove ID-"
-"je."
-msgstr[1] ""
-"%1 koledarja, izbrana v vtičniku dogodkov PIM, ne obstajata več v Akonadi, "
-"npr. ker je bil njun račun znova nastavljen, kar njegovim koledarjem da nove "
-"ID-je."
-msgstr[2] ""
-"%1 koledarji, izbrani v vtičniku dogodkov PIM, ne obstajajo več v Akonadi, "
-"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
-"nove ID-je."
-msgstr[3] ""
-"%1 koledarjev, izbranih v vtičniku dogodkov PIM, ne obstaja več v Akonadi, "
-"npr. ker je bil njihov račun znova nastavljen, kar njegovim koledarjem da "
-"nove ID-je."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Not selected now: %1. Select them on the PIM Events Plugin page of the "
-"Digital Clock's settings."
-msgstr ""
-"Trenutno niso izbrani: %1. Izberite jih na strani PIM Events Plugin v "
-"nastavitvah Digitalne ure."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "All the calendars Akonadi has now are selected."
-msgstr "Vsi koledarji, ki jih Akonadi ima zdaj, so izbrani."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid "Forget the Missing Ones"
-msgstr "Pozabi manjkajoče"
-
-#: ../contents/ui/config/CalendarsGoogle.qml
-msgid ""
-"Shown read-only. Which Akonadi calendars are shown is set on the PIM Events "
-"Plugin page of the Digital Clock's settings (the plugin itself is turned on "
-"in Calendars > Plasma calendars). In the popup's calendar menu they are "
-"shown and hidden by color: calendars of one color together. The Google "
-"calendars of an account signed in here are listed above, with the account."
-msgstr ""
-"Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, nastavite "
-"na strani vstavka za dogodke PIM v nastavitvah Digitalne ure (sam vstavek "
-"vklopite v Koledar > Koledarji Plasma). V meniju koledarjev v pojavnem oknu "
-"jih prikazujete in skrivate po barvi: koledarje ene barve skupaj. Googlovi "
-"koledarji računa, ki je tu prijavljen, so navedeni zgoraj, pri računu."
-
-#: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Add Account…"
 msgstr "Dodaj račun…"
 
@@ -887,6 +875,10 @@ msgstr "Splošno"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
 msgstr "Googlov koledar"
+
+#: ../contents/ui/config/ConfigCalendars.qml
+msgid "Akonadi"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "CalDAV"
@@ -2221,6 +2213,11 @@ msgstr "Mesta ni bilo mogoče najti."
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml
 msgid "No app id set."
 msgstr "ID aplikacije ni nastavljen."
+
+#: ../contents/ui/config/PimCalendarList.qml
+msgid ""
+"Its events come from the account signed in to in the Google Calendar tab."
+msgstr ""
 
 #: ../contents/ui/config/SelectionRow.qml
 msgid "Edit calendar…"
@@ -4738,6 +4735,31 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid ""
+#~ "Not selected now: %1. Select them on the PIM Events Plugin page of the "
+#~ "Digital Clock's settings."
+#~ msgstr ""
+#~ "Trenutno niso izbrani: %1. Izberite jih na strani PIM Events Plugin v "
+#~ "nastavitvah Digitalne ure."
+
+#~ msgid "All the calendars Akonadi has now are selected."
+#~ msgstr "Vsi koledarji, ki jih Akonadi ima zdaj, so izbrani."
+
+#~ msgid ""
+#~ "Shown read-only. Which Akonadi calendars are shown is set on the PIM "
+#~ "Events Plugin page of the Digital Clock's settings (the plugin itself is "
+#~ "turned on in Calendars > Plasma calendars). In the popup's calendar menu "
+#~ "they are shown and hidden by color: calendars of one color together. The "
+#~ "Google calendars of an account signed in here are listed above, with the "
+#~ "account."
+#~ msgstr ""
+#~ "Prikazani samo za branje. Kateri koledarji Akonadi so prikazani, "
+#~ "nastavite na strani vstavka za dogodke PIM v nastavitvah Digitalne ure "
+#~ "(sam vstavek vklopite v Koledar > Koledarji Plasma). V meniju koledarjev "
+#~ "v pojavnem oknu jih prikazujete in skrivate po barvi: koledarje ene barve "
+#~ "skupaj. Googlovi koledarji računa, ki je tu prijavljen, so navedeni "
+#~ "zgoraj, pri računu."
 
 #~ msgid "ICalendar (.ics)"
 #~ msgstr "iCalendar (.ics)"

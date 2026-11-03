@@ -138,4 +138,30 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.googleCalendarIdsByAccount([
 ]))), { 'me@gmail.com': ['x@group.calendar.google.com', 'Me@Gmail.com'] },
 	'only the calendars shown in the widget ("primary" as its id): an Akonadi copy of another one stays')
 
+//--- The Akonadi calendars under their accounts, Google's apart (the Google and Akonadi tabs)
+const dbLines = [
+	'account|akonadi_google_resource_14|Me@Gmail.com',
+	'collection|1466|akonadi_google_resource_14|RootCollection',
+	'collection|1486|akonadi_google_resource_14|me@gmail.com',
+	'collection|1488|akonadi_google_resource_14|e_2_de#weeknum@group.v.calendar.google.com',
+].join('\n')
+const groupRows = [
+	{ id: '1466', name: 'Google Groupware', checked: false, account: true },
+	{ id: '1486', name: 'me@gmail.com', checked: true },
+	{ id: '1488', name: 'Week numbers', checked: false },
+	{ id: '10', name: 'Personal calendar', checked: false, account: true },
+	{ id: '11', name: 'Personal', checked: true },
+	{ id: '20', name: 'Birthdays & Anniversaries', checked: false, account: true },
+]
+const g = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, dbLines)))
+assert.deepStrictEqual(g.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['me@gmail.com', ['1486', '1488']]],
+	'a Google account by its email, with its calendars')
+assert.deepStrictEqual(g.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Personal calendar', ['11']]],
+	'the others under their accounts; an account without calendars left out')
+const noDb = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, '')))
+assert.deepStrictEqual([noDb.google.length, noDb.other.map(x => x.name)], [0, ['Google Groupware', 'Personal calendar']],
+	'without Akonadi\'s database all are others')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarGroups([{ id: '7', name: 'Old', checked: true }], ''))).other,
+	[{ name: '', calendars: [{ id: '7', name: 'Old', checked: true }] }], 'calendars without an account (older models)')
+
 console.log('PASS plasma_calendar_utils')
