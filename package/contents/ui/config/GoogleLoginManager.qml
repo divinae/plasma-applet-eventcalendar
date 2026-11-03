@@ -6,7 +6,7 @@ import "../lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "../lib/Pkce.js" as Pkce
 import "../lib/ConfigUtils.js" as ConfigUtils
 import "../lib/Requests.js" as Requests
-import "../code/GooglePalette.js" as GooglePalette
+import "../Shared.js" as Shared
 
 Item {
 	id: session
@@ -717,11 +717,6 @@ Item {
 		return !!calendar && calendar.accessRole === 'owner' && !calendar.primary
 	}
 
-	// Black or white text, whichever reads better on the color.
-	function foregroundColorFor(hex) {
-		return GooglePalette.foregroundFor(hex)
-	}
-
 	// Google APIs take PATCH as a POST with an override header (QML's XMLHttpRequest may not
 	// send a PATCH body). Only the given fields change; null clears one.
 	function patchJSON(url, accessToken, data, callback) {
@@ -784,7 +779,7 @@ Item {
 		var color = String(changes.color || '').toLowerCase()
 		if (color && color !== String(calendar.backgroundColor || '').toLowerCase()) {
 			listFields.backgroundColor = color
-			listFields.foregroundColor = foregroundColorFor(color)
+			listFields.foregroundColor = Shared.contrastTextColor(color)
 		}
 		if (Object.keys(listFields).length) {
 			requests.push({ kind: 'calendarList', fields: listFields })

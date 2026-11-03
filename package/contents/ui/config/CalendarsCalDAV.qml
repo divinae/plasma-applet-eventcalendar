@@ -96,24 +96,19 @@ ConfigSection {
 			}
 			try {
 				var data = JSON.parse(stdout)
-				var previous = {}
-				var userColors = {} // Picked in the widget: kept over the server's color
-				;(account.calendars || []).forEach(function(c) {
-					previous[c.href] = c.selected !== false
-					if (c.userColor) {
-						userColors[c.href] = c.userColor
-					}
-				})
+				var previous = {} // href -> the calendar as it was: what was set here is kept
+				;(account.calendars || []).forEach(function(c) { previous[c.href] = c })
 				var calendars = (data.calendars || []).map(function(c) {
+					var before = previous[c.href]
 					var calendar = {
 						href: c.href,
 						name: c.name || c.href,
 						color: c.color || "",
 						writable: c.writable !== false,
-						selected: previous[c.href] === undefined ? true : previous[c.href],
+						selected: before ? before.selected !== false : true,
 					}
-					if (userColors[c.href]) {
-						calendar.userColor = userColors[c.href]
+					if (before && before.userColor) {
+						calendar.userColor = before.userColor // Picked here: kept over the server's
 					}
 					return calendar
 				})
@@ -250,40 +245,15 @@ ConfigSection {
 				FormCard.FormCard {
 					Repeater {
 						model: accountBlock.account.calendars || []
-						// Not a FormCheckDelegate: its leading item (the color) isn't shown.
-						FormCard.AbstractFormDelegate {
-							id: calendarRow
-							readonly property bool shown: modelData.selected !== false
-							onClicked: page.setSelected(accountBlock.accountIndex, modelData.href, !shown)
-							contentItem: RowLayout {
-								spacing: Kirigami.Units.largeSpacing
-								CheckBox {
-									focusPolicy: Qt.NoFocus // The row has it
-									checked: calendarRow.shown
-									onToggled: page.setSelected(accountBlock.accountIndex, modelData.href, checked)
-									Accessible.name: modelData.name
-								}
-								CalendarColorButton {
-									shownColor: modelData.userColor || modelData.color || Kirigami.Theme.highlightColor
-									resetText: modelData.userColor ? i18n("Server's Color") : ""
-									onColorChosen: function(color) { page.setUserColor(accountBlock.accountIndex, modelData.href, color) }
-								}
-								ColumnLayout {
-									Layout.fillWidth: true
-									spacing: 0
-									Label {
-										Layout.fillWidth: true
-										text: modelData.name
-										elide: Text.ElideRight
-									}
-									Label {
-										Layout.fillWidth: true
-										visible: modelData.writable === false
-										text: i18n("Read-only")
-										color: Kirigami.Theme.disabledTextColor
-										font: Kirigami.Theme.smallFont
-									}
-								}
+						FormCard.FormCheckDelegate {
+							text: modelData.name
+							description: modelData.writable === false ? i18n("Read-only") : ""
+							checked: modelData.selected !== false
+							onToggled: page.setSelected(accountBlock.accountIndex, modelData.href, checked)
+							leading: CalendarColorButton {
+								shownColor: modelData.userColor || modelData.color || Kirigami.Theme.highlightColor
+								resetText: modelData.userColor ? i18n("Server's Color") : ""
+								onColorChosen: function(color) { page.setUserColor(accountBlock.accountIndex, modelData.href, color) }
 							}
 						}
 					}

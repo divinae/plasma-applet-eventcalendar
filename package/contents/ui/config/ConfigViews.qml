@@ -476,7 +476,6 @@ ConfigPage {
 		}
 	}
 
-	readonly property alias settingsBackup: settingsBackup // Tests
 	QtObject {
 		id: settingsBackup
 		property bool busy: false
@@ -489,23 +488,19 @@ ConfigPage {
 			isError = !!error
 		}
 
-		function pathOf(url) {
-			return decodeURIComponent(String(url).replace(/^file:\/\//, ""))
-		}
-
 		// The settings this page has (every one of the widget's: ConfigPage's cfg_ properties).
 		function keys() {
 			var out = []
 			for (var prop in page) {
-				if (prop.indexOf("cfg_") === 0 && !/Default$/.test(prop)) {
-					out.push(prop.slice(4))
+				if (prop.indexOf("cfg_") === 0) {
+					out.push(prop.slice(4)) // The *Default ones: left out by SettingsTransfer
 				}
 			}
 			return out
 		}
 
 		function exportTo(url) {
-			var path = pathOf(url)
+			var path = ScriptPath.localPath(url)
 			if (!/\.json$/i.test(path)) {
 				path += ".json"
 			}
@@ -535,7 +530,7 @@ ConfigPage {
 		}
 
 		function importFrom(url) {
-			var path = pathOf(url)
+			var path = ScriptPath.localPath(url)
 			busy = true
 			say("", false)
 			backupExec.execArgv(["python3", helperPath, "read", "--path", path], function(cmd, exitCode, exitStatus, stdout, stderr) {

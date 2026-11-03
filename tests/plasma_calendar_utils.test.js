@@ -154,15 +154,15 @@ const groupRows = [
 	{ id: '20', name: 'Birthdays & Anniversaries', checked: false, account: true },
 ]
 const g = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, dbLines)))
-assert.deepStrictEqual(g.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['me@gmail.com', ['1486', '1488']]],
+assert.deepStrictEqual(g.filter(x => x.google).map(x => [x.name, x.calendars.map(c => c.id)]), [['me@gmail.com', ['1486', '1488']]],
 	'a Google account by its email, with its calendars')
-assert.deepStrictEqual(g.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Personal calendar', ['11']]],
+assert.deepStrictEqual(g.filter(x => !x.google).map(x => [x.name, x.calendars.map(c => c.id)]), [['Personal calendar', ['11']]],
 	'the others under their accounts; an account without calendars left out')
 const noDb = JSON.parse(JSON.stringify(U.pimCalendarGroups(groupRows, '')))
-assert.deepStrictEqual([noDb.google.length, noDb.other.map(x => x.name)], [0, ['Google Groupware', 'Personal calendar']],
+assert.deepStrictEqual([noDb.filter(x => x.google).length, noDb.filter(x => !x.google).map(x => x.name)], [0, ['Google Groupware', 'Personal calendar']],
 	'without Akonadi\'s database all are others')
-assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarGroups([{ id: '7', name: 'Old', checked: true }], ''))).other,
-	[{ name: '', calendars: [{ id: '7', name: 'Old', checked: true }] }], 'calendars without an account (older models)')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarGroups([{ id: '7', name: 'Old', checked: true }], ''))).filter(x => !x.google),
+	[{ name: '', calendars: [{ id: '7', name: 'Old', checked: true }], google: false }], 'calendars without an account (older models)')
 
 // From the model's tree: a calendar that is a resource of its own (a local calendar file) after a
 // Google account isn't that account's: in its own group, the last.
@@ -183,8 +183,8 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(treeRows)).filter(r => !r.accou
 assert.strictEqual(treeRows.filter(r => r.id === '5')[0].icon, 'office-calendar', 'the model\'s icon (eg: a task list\'s)')
 const treeGroups = JSON.parse(JSON.stringify(U.pimCalendarGroups(treeRows,
 	'account|akonadi_google_resource_15|work@example.com\ncollection|1490|akonadi_google_resource_15|RootCollection\ncollection|1617|akonadi_google_resource_15|work@example.com')))
-assert.deepStrictEqual(treeGroups.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['work@example.com', ['1617']]])
-assert.deepStrictEqual(treeGroups.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Work (DAV)', ['22']], ['', ['5']]],
+assert.deepStrictEqual(treeGroups.filter(x => x.google).map(x => [x.name, x.calendars.map(c => c.id)]), [['work@example.com', ['1617']]])
+assert.deepStrictEqual(treeGroups.filter(x => !x.google).map(x => [x.name, x.calendars.map(c => c.id)]), [['Work (DAV)', ['22']], ['', ['5']]],
 	'the local calendar in its own group, the last; not under the Google account')
 assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(accountTree, UserRole, DisplayRole))).map(r => Object.keys(r).join()),
 	['id,name,checked', 'id,name,checked', 'id,name,checked'], 'without the accounts: rows as before')

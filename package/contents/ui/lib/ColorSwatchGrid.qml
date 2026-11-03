@@ -5,6 +5,7 @@ import org.kde.kirigami as Kirigami
 
 import "ColorUtil.js" as ColorUtil
 import "../code/GooglePalette.js" as GooglePalette
+import "../Shared.js" as Shared
 
 // Round color swatches to pick one from (Google Calendar's colors by default): the selected one
 // has a checkmark. Used by the Google calendar edit dialog and the CalDAV / iCalendar color button.
@@ -49,7 +50,7 @@ GridLayout {
 					height: width
 					visible: swatch.selected
 					source: "checkmark"
-					color: GooglePalette.foregroundFor(modelData.color)
+					color: Shared.contrastTextColor(modelData.color)
 					isMask: true
 				}
 			}

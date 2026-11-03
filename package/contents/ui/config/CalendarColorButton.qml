@@ -41,7 +41,15 @@ AbstractButton {
 		id: popup
 		y: button.height + Kirigami.Units.smallSpacing
 		padding: Kirigami.Units.largeSpacing
-		contentItem: ColumnLayout {
+		// Built when opened: a settings page has one of these per calendar.
+		contentItem: Loader {
+			active: popup.visible
+			sourceComponent: popupContent
+		}
+	}
+	Component {
+		id: popupContent
+		ColumnLayout {
 			spacing: Kirigami.Units.largeSpacing
 			ColorSwatchGrid {
 				selectedColor: String(button.shownColor)
@@ -52,9 +60,10 @@ AbstractButton {
 					icon.name: "color-picker"
 					text: i18n("Custom…")
 					onClicked: {
-						popup.close()
-						colorDialog.selectedColor = button.shownColor
-						colorDialog.open()
+						colorDialogLoader.active = true
+						colorDialogLoader.item.selectedColor = button.shownColor
+						colorDialogLoader.item.open()
+						popup.close() // Last: it unloads this button
 					}
 				}
 				Item { Layout.fillWidth: true }
@@ -68,9 +77,12 @@ AbstractButton {
 		}
 	}
 
-	ColorDialog {
-		id: colorDialog
-		title: i18n("Calendar Color")
-		onAccepted: button.colorChosen(String(selectedColor))
+	Loader {
+		id: colorDialogLoader
+		active: false // On first use
+		sourceComponent: ColorDialog {
+			title: i18n("Calendar Color")
+			onAccepted: button.colorChosen(String(selectedColor))
+		}
 	}
 }

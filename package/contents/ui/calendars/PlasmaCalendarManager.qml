@@ -13,14 +13,7 @@ CalendarManager {
 	calendarManagerId: "plasma"
 
 	property var executable: ExecUtil { id: executable }
-	property var calendarModel: {
-		// kdepim-addons is optional.
-		try {
-			return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", plasmaCalendarManager)
-		} catch (e) {
-			return null
-		}
-	}
+	property var calendarModel: PlasmaCalendarUtils.createPimCalendarsModel(plasmaCalendarManager)
 	property var eventPluginsManager: null
 
 	function ensureEventPluginsManager() {

@@ -148,6 +148,19 @@ function getPluginFilename(pluginPath) {
 	return pluginPath.substr(lastSlash + 1)
 }
 
+// The PIM events plugin's calendars model (kdepim-addons), or null without it (it's optional).
+function createPimCalendarsModel(parent) {
+	try {
+		return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", parent)
+	} catch (e) {
+		return null
+	}
+}
+// Whether calendars can be ticked through the model (newer kdepim-addons).
+function pimModelCanChoose(model) {
+	return !!model && typeof model.setChecked === "function"
+}
+
 // Whether pluginList (enabledCalendarPlugins) has the plugin named stem ("pimevents").
 function hasPlugin(pluginList, stem) {
 	return toArray(pluginList).some(function(plugin) {
@@ -476,8 +489,7 @@ function parseAkonadiGoogleCollections(stdout) {
 }
 // The Akonadi calendars (pimCalendarRows with the accounts) under their accounts, apart: of
 // Akonadi's Google accounts (by akonadiGoogleCollectionsCommand's output: none without it) and the
-// others. { google: [group], other: [group] }, a group being { name, calendars: [row] }: a Google
-// account named by its email; the calendars without an account (a resource of its own, eg: a local
+// others, in that order: [{ name, google, calendars: [row] }], a Google account named by its email; the calendars without an account (a resource of its own, eg: a local
 // calendar file) in one group without a name, the last. Accounts without a calendar are left out.
 // From a tree, by a calendar's accountId; from a flat list (older models), each account before its
 // calendars.
@@ -487,26 +499,23 @@ function pimCalendarGroups(rows, stdout) {
 	parsed.collections.forEach(function(collection) {
 		googleAccountOf[collection.id] = parsed.accounts[collection.resource] || ''
 	})
-	var groups = { google: [], other: [] }
+	var google = [], other = []
 	var groupOf = {} // Account id -> its group
 	var ownGroup = { name: '', calendars: [] } // Calendars without an account
 	var tree = (rows || []).some(function(row) { return !!row.accountId })
 	var group = null // A flat list's last account
 	;(rows || []).forEach(function(row) {
 		if (row.account) {
-			var google = row.id in googleAccountOf
-			group = groupOf[row.id] = { name: (google && googleAccountOf[row.id]) || row.name, calendars: [] }
-			;(google ? groups.google : groups.other).push(group)
+			var isGoogle = row.id in googleAccountOf
+			group = groupOf[row.id] = { name: (isGoogle && googleAccountOf[row.id]) || row.name, google: isGoogle, calendars: [] }
+			;(isGoogle ? google : other).push(group)
 		} else {
 			var into = tree ? groupOf[row.accountId] : group
 			;(into || ownGroup).calendars.push(row)
 		}
 	})
-	groups.other.push(ownGroup)
-	function withCalendars(list) {
-		return list.filter(function(g) { return g.calendars.length > 0 })
-	}
-	return { google: withCalendars(groups.google), other: withCalendars(groups.other) }
+	ownGroup.google = false
+	return google.concat(other, [ownGroup]).filter(function(g) { return g.calendars.length > 0 })
 }
 // The command's output as { "collection id": "#rrggbb" }.
 function parseAkonadiColors(stdout) {

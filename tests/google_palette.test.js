@@ -55,12 +55,6 @@ function testDisplayCalendarColor() {
 	assert.strictEqual(palette.displayCalendarColor(calendar, 'classic'), '#92e1c0')
 }
 
-function testForegroundFor() {
-	assert.strictEqual(palette.foregroundFor('#f6bf26'), '#1d1d1d')
-	assert.strictEqual(palette.foregroundFor('#3f51b5'), '#ffffff')
-	assert.strictEqual(palette.foregroundFor('nonsense'), '#ffffff')
-}
-
 function testNextUnusedColor() {
 	assert.strictEqual(palette.nextUnusedColor([]), '#d50000')
 	assert.strictEqual(palette.nextUnusedColor(['#D50000', '#3daee9']), '#e67c73')
@@ -68,7 +62,6 @@ function testNextUnusedColor() {
 	assert.strictEqual(palette.nextUnusedColor(all), all[0])
 }
 
-testForegroundFor()
 testNextUnusedColor()
 testPaletteListsTheCurrentColors()
 testEventPalette()

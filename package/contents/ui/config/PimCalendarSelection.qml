@@ -16,18 +16,30 @@ Item {
 
 	readonly property bool pimEventsEnabled: PlasmaCalendarUtils.hasPlugin(configBridge.read("enabledCalendarPlugins", []), "pimevents")
 
-	property var model: {
-		try { // kdepim-addons is optional
-			return Qt.createQmlObject("import org.kde.plasma.PimCalendars; PimCalendarsModel {}", selection)
-		} catch (e) {
-			return null
+	// Made (with the reads below) only once the plugin is on: nothing for Akonadi otherwise.
+	property var model: null
+	function start() {
+		if (model || !pimEventsEnabled) {
+			return
 		}
+		model = PlasmaCalendarUtils.createPimCalendarsModel(selection)
+		updateRows() // The model may be filled already: no reset or insert comes then
+		readDatabase()
+		savedReader.execArgv(PlasmaCalendarUtils.pimSelectionCommand(), function(cmd, exitCode, exitStatus, stdout) {
+			selection.saved = PlasmaCalendarUtils.parsePimSelection(stdout)
+		})
 	}
-	readonly property bool canChange: !!model && typeof model.setChecked === "function"
+	onPimEventsEnabledChanged: start()
+	Component.onCompleted: start()
+
+	readonly property bool canChange: PlasmaCalendarUtils.pimModelCanChoose(model)
 	property var rows: [] // pimCalendarRows, with the accounts
+	property bool ticking: false // A tick from here: no need to read the database again
 	function updateRows() {
 		rows = PlasmaCalendarUtils.pimCalendarRows(model, Qt.UserRole, Qt.DisplayRole, true)
-		databaseTimer.restart() // A calendar added or changed (eg: given a color): read them again
+		if (!ticking) {
+			databaseTimer.restart() // A calendar added or changed (eg: given a color): read them again
+		}
 	}
 	Connections { // Akonadi fills the model asynchronously
 		target: selection.model
@@ -61,21 +73,23 @@ Item {
 	readonly property var mirrored: {
 		var accounts = SafeConfig.parseBase64Json(configBridge.read("googleAccounts", ""), [])
 		return PlasmaCalendarUtils.akonadiMirroredCollections(googleCollections,
-			PlasmaCalendarUtils.googleCalendarIdsByAccount(Array.isArray(accounts) ? accounts : []))
+			PlasmaCalendarUtils.googleCalendarIdsByAccount(PlasmaCalendarUtils.toArray(accounts)))
 	}
 
 	// The selection as saved: ids Akonadi no longer has (eg: an account set up anew, its calendars
 	// got new ids) are kept by the plugin, but show nothing. Forgotten ones go with the page.
 	ExecUtil { id: savedReader }
 	property var saved: []
-	property var forgotten: ({})
-	readonly property var missing: PlasmaCalendarUtils.stalePimSelection(saved, rows).filter(function(id) {
-		return !forgotten[id]
-	})
+	readonly property var missing: PlasmaCalendarUtils.stalePimSelection(saved, rows)
 
+	function tick(id, checked) {
+		ticking = true
+		model.setChecked(Number(id), checked)
+		ticking = false
+	}
 	function setChecked(id, checked) {
 		if (canChange) {
-			model.setChecked(Number(id), checked)
+			tick(id, checked)
 			changed()
 		}
 	}
@@ -83,12 +97,9 @@ Item {
 		if (!canChange) {
 			return
 		}
-		var next = Object.assign({}, forgotten)
-		missing.forEach(function(id) {
-			model.setChecked(Number(id), false)
-			next[id] = true
-		})
-		forgotten = next
+		var forget = missing
+		forget.forEach(function(id) { tick(id, false) })
+		saved = saved.filter(function(id) { return forget.indexOf(id) < 0 })
 		changed()
 	}
 	// Through the plugin's model: plasmashell's copy of the config and the plugins follow.
@@ -96,14 +107,5 @@ Item {
 		if (model) {
 			model.saveConfig()
 		}
-	}
-
-	onModelChanged: updateRows()
-	Component.onCompleted: {
-		updateRows() // The model may be filled already: no reset or insert comes then
-		readDatabase()
-		savedReader.execArgv(PlasmaCalendarUtils.pimSelectionCommand(), function(cmd, exitCode, exitStatus, stdout) {
-			selection.saved = PlasmaCalendarUtils.parsePimSelection(stdout)
-		})
 	}
 }

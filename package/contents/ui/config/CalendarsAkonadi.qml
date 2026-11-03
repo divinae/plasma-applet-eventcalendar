@@ -31,7 +31,7 @@ ConfigSection {
 			Layout.fillWidth: true
 			visible: page.pimEventsEnabled
 			selection: page.pimSelection
-			groups: page.pimSelection ? page.pimSelection.groups.google.concat(page.pimSelection.groups.other) : []
+			groups: page.pimSelection ? page.pimSelection.groups : []
 		}
 
 		// Calendars still selected that Akonadi no longer has: forgotten with the page (OK / Apply).
