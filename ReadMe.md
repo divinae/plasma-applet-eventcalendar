@@ -103,7 +103,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **Settings backup:** export the widget's settings to a file and import them again (Settings > Views),
   without passwords or sign-ins.
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
-  direct Google sign-in (an event synced both ways shows once).
+  direct Google sign-in (an event synced both ways shows once). Pick the Akonadi calendars in
+  Settings > Calendars > Akonadi.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap (free or One Call 3.0) / Weather Canada; the system's icons or Yr's colored ones,
   a simple or a fancy forecast chart.

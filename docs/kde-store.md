@@ -136,6 +136,7 @@ Support the development: https://ko-fi.com/divinae4535
 ```
 - Pick a color for CalDAV and iCalendar calendars (Settings > Calendars)
 - Export and import the widget's settings to a file (Settings > Views > Settings Backup), without passwords or sign-ins
+- KDE PIM (Akonadi) calendars chosen in a new Akonadi tab of Settings > Calendars (thanks to frispete)
 ```
 
 **Changelog (1.16.1)**

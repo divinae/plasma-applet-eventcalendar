@@ -4,6 +4,10 @@
 * **CalDAV and iCalendar calendars get a color you pick:** click the calendar's color dot in Settings > Calendars > CalDAV or iCalendar: Google Calendar's colors, or Custom… for any color. A CalDAV calendar keeps its color over Refresh Calendars, and "Server's Color" goes back to the server's. New .ics calendars each get a different color.
 * The color dot of CalDAV calendars in their settings wasn't shown at all.
 
+### KDE PIM calendars in Settings (thanks to frispete, #19)
+* **A new Akonadi tab in Settings > Calendars:** tick which KDE PIM (Akonadi) calendars to show, under their accounts (Akonadi's Google accounts first), with their colors. The PIM events plugin's own settings page isn't needed any more (with an older KDE PIM it stays).
+* Icons: Calendars, Weather and Time Zones got new ones.
+
 ### Settings backup (#21)
 * **Export and import the widget's settings** (Settings > Views > Settings Backup): to a JSON file and back, eg: before removing the widget or for another computer. Passwords and sign-ins aren't in the file (they stay in the system keyring); an imported file can't set them either. Imported settings are kept with Apply or OK.
 
