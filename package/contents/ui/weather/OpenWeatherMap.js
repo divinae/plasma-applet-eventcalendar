@@ -347,17 +347,27 @@ function fetchOneCall(config, callback) {
 	})
 }
 
+// One Call's current weather, with its place (the response's, eg: for the moon's rise and set).
+function parseOneCallCurrent(data, units) {
+	var current = parseCurrentData(data.current, units)
+	if (current && isFinite(data.lat) && isFinite(data.lon)) {
+		current.latitude = Number(data.lat)
+		current.longitude = Number(data.lon)
+	}
+	return current
+}
+
 function parseOneCallDaily(data, units) {
 	return {
 		list: (data.daily || []).map(function(item) { return parseDay(item, units) }),
-		current: parseCurrentData(data.current, units),
+		current: parseOneCallCurrent(data, units),
 	}
 }
 
 function parseOneCallHourly(data, units) {
 	return {
 		list: (data.hourly || []).map(function(item) { return parseHour(item, units, '1h') }),
-		current: parseCurrentData(data.current, units),
+		current: parseOneCallCurrent(data, units),
 	}
 }
 
