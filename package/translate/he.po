@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -181,6 +181,14 @@ msgstr "לא ניתן לקבל את זמני הפנוי / עסוק"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"קריאת לוחות שנה .ics דורשת מודולים של Python: יש להתקין אותם בהגדרות > לוחות "
+"שנה > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -372,7 +380,8 @@ msgstr "צבע"
 msgid "Save"
 msgstr "שמירה"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "מתקין…"
 
@@ -429,6 +438,26 @@ msgid "Connected, but the account has no calendars for events."
 msgstr "מחובר, אך אין בחשבון לוחות שנה לאירועים."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"מודולי Python בשם icalendar ו־recurring-ical-events אינם כולם מותקנים: לוחות "
+"שנה, או האירועים החוזרים שלהם, עלולים לחסור."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "התקנה"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "לקריאה בלבד"
 
@@ -467,15 +496,6 @@ msgstr "סיסמה"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "התחברות"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "התקנה"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""

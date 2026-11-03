@@ -149,6 +149,7 @@ def with_wheels(target):
 def main(argv=None):
 	parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
 	parser.add_argument("--target", default=TARGET, help=argparse.SUPPRESS) # Tests
+	parser.add_argument("--check", action="store_true", help="Only say whether they're there ({\"ok\": true / false})")
 	args = parser.parse_args(argv)
 	target = os.path.abspath(args.target)
 
@@ -158,6 +159,8 @@ def main(argv=None):
 
 	if all_present(target):
 		return done({"ok": True, "method": "present"})
+	if args.check:
+		return done({"ok": False, "missing": True})
 	os.makedirs(target, exist_ok=True)
 	attempts = []
 	if has_pip():

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -152,6 +152,10 @@ msgstr "空き時間情報を取得できませんでした"
 #: ../contents/ui/calendars/ICalManager.qml ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid "Reading .ics calendars needs Python modules: install them in Settings > Calendars > iCalendar"
+msgstr ".ics カレンダーの読み込みには Python モジュールが必要です: 設定 > カレンダー > iCalendar でインストールしてください"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -316,7 +320,7 @@ msgstr "色"
 msgid "Save"
 msgstr "保存"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "インストール中…"
 
@@ -361,6 +365,18 @@ msgstr[0] "接続しました: %1 個のカレンダー"
 msgid "Connected, but the account has no calendars for events."
 msgstr "接続しましたが、このアカウントには予定用のカレンダーがありません。"
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml
+msgid "The Python modules icalendar and recurring-ical-events aren't all installed: calendars, or their repeating events, can be missing."
+msgstr "Python モジュール icalendar と recurring-ical-events がすべてはインストールされていません: カレンダーや繰り返しイベントが表示されないことがあります。"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "インストール"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "icalendar と recurring-ical-events をウィジェット専用フォルダーにダウンロードします。"
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "読み取り専用"
@@ -396,14 +412,6 @@ msgstr "パスワード"
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "接続"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "インストール"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "icalendar と recurring-ical-events をウィジェット専用フォルダーにダウンロードします。"
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Plain http works only for a server on your own network; the password isn't encrypted on the way."

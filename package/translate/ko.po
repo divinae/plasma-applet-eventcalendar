@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -181,6 +181,14 @@ msgstr "바쁨 / 한가함 시간을 가져올 수 없습니다"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+".ics 달력을 읽으려면 Python 모듈이 필요합니다: 설정 > 달력 > iCalendar에서 설"
+"치하십시오"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -366,7 +374,8 @@ msgstr "색상"
 msgid "Save"
 msgstr "저장"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "설치 중…"
 
@@ -420,6 +429,26 @@ msgid "Connected, but the account has no calendars for events."
 msgstr "연결되었지만 계정에 일정용 달력이 없습니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Python 모듈 icalendar와 recurring-ical-events가 모두 설치되어 있지 않습니다: "
+"달력이나 반복 일정이 빠질 수 있습니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "설치"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "읽기 전용"
 
@@ -458,15 +487,6 @@ msgstr "암호"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "연결"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "설치"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""

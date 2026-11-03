@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -183,6 +183,14 @@ msgstr "Kunne ikke hente ledige / optagede tider"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"Læsning af .ics-kalendere kræver Python-moduler: installer dem i "
+"Indstillinger > Kalendere > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -368,7 +376,8 @@ msgstr "Farve"
 msgid "Save"
 msgstr "Gem"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "Installerer…"
 
@@ -423,6 +432,26 @@ msgid "Connected, but the account has no calendars for events."
 msgstr "Forbundet, men kontoen har ingen kalendere til begivenheder."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Python-modulerne icalendar og recurring-ical-events er ikke alle "
+"installeret: kalendere, eller deres gentagne begivenheder, kan mangle."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Installer"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Henter icalendar og recurring-ical-events til widgettens egen mappe."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Skrivebeskyttet"
 
@@ -461,15 +490,6 @@ msgstr "Adgangskode"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Forbind"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Installer"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "Henter icalendar og recurring-ical-events til widgettens egen mappe."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""

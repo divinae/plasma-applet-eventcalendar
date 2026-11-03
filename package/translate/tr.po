@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -183,6 +183,14 @@ msgstr "Meşgul / müsait zamanlar alınamadı"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+".ics takvimlerini okumak için Python modülleri gerekir: Ayarlar > Takvimler "
+"> iCalendar bölümünden kurun"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -371,7 +379,8 @@ msgstr "Renk"
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "Kuruluyor…"
 
@@ -428,6 +437,27 @@ msgid "Connected, but the account has no calendars for events."
 msgstr "Bağlandı, ancak hesabın etkinlikler için takvimi yok."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"icalendar ve recurring-ical-events Python modüllerinin hepsi kurulu değil: "
+"takvimler veya yinelenen etkinlikleri eksik olabilir."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Kur"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"icalendar ve recurring-ical-events'i bileşenin kendi klasörüne indirir."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Salt okunur"
 
@@ -466,16 +496,6 @@ msgstr "Parola"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Bağlan"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Kur"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-"icalendar ve recurring-ical-events'i bileşenin kendi klasörüne indirir."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""

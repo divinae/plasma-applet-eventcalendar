@@ -16,6 +16,14 @@ QtObject {
 		return missingPattern.test(String(output || ""))
 	}
 
+	// Whether they're there (the settings say so before anything is tried): null until checked.
+	property var present: null
+	function check() {
+		executable.execArgv(['python3', ScriptPath.scriptPath("install_python_deps.py"), '--check'], function(cmd, exitCode) {
+			modules.present = exitCode === 0
+		})
+	}
+
 	property bool installing: false
 	// done(errorText): "" once installed, else what went wrong (for the user).
 	function install(done) {
@@ -27,6 +35,9 @@ QtObject {
 				var lines = String(stdout || "").trim().split('\n')
 				result = JSON.parse(lines[lines.length - 1])
 			} catch (e) {
+			}
+			if (result.ok) {
+				modules.present = true
 			}
 			done(result.ok ? ""
 				: result.noInstaller

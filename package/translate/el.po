@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -183,6 +183,14 @@ msgstr "Δεν ήταν δυνατή η λήψη των ελεύθερων / α�
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"Η ανάγνωση ημερολογίων .ics χρειάζεται αρθρώματα Python: εγκαταστήστε τα "
+"στις Ρυθμίσεις > Ημερολόγια > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -375,7 +383,8 @@ msgstr "Χρώμα"
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "Εγκατάσταση…"
 
@@ -435,6 +444,29 @@ msgid "Connected, but the account has no calendars for events."
 msgstr "Συνδέθηκε, αλλά ο λογαριασμός δεν έχει ημερολόγια για συμβάντα."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Τα αρθρώματα Python icalendar και recurring-ical-events δεν είναι όλα "
+"εγκατεστημένα: ημερολόγια ή τα επαναλαμβανόμενα συμβάντα τους μπορεί να "
+"λείπουν."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Εγκατάσταση"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
+"στοιχείου."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Μόνο για ανάγνωση"
 
@@ -473,17 +505,6 @@ msgstr "Κωδικός πρόσβασης"
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Σύνδεση"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Εγκατάσταση"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-"Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
-"στοιχείου."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""

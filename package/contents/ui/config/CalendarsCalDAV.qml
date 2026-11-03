@@ -49,7 +49,11 @@ ConfigSection {
 	// The helper's error (CalDAVErrors.parse) as a message for the user.
 	// The Python modules CalDAV is read with, missing (an install from the KDE Store): the error
 	// offers to install them, then connects again.
-	PythonModules { id: pythonModules }
+	PythonModules {
+		id: pythonModules
+		property string installError: ""
+		Component.onCompleted: check()
+	}
 	property bool modulesMissing: false
 	function installModules() {
 		setStatus(i18n("Installing…"), false)
@@ -176,6 +180,34 @@ ConfigSection {
 			}
 		})
 		saveAccounts(list)
+	}
+
+	// The Python modules missing (an install from the KDE Store): said before anything is tried,
+	// with Install (lib/PythonModules.qml).
+	Kirigami.InlineMessage {
+		Layout.fillWidth: true
+		Layout.margins: Kirigami.Units.largeSpacing
+		visible: pythonModules.present === false
+		type: Kirigami.MessageType.Warning
+		text: pythonModules.installing ? i18n("Installing…")
+			: i18n("The Python modules icalendar and recurring-ical-events aren't all installed: calendars, or their repeating events, can be missing.")
+		actions: [
+			Kirigami.Action {
+				icon.name: "download"
+				text: i18n("Install")
+				enabled: !pythonModules.installing
+				tooltip: i18n("Downloads icalendar and recurring-ical-events into the widget's own folder.")
+				onTriggered: pythonModules.install(function(error) { pythonModules.installError = error })
+			}
+		]
+	}
+	Kirigami.InlineMessage {
+		Layout.fillWidth: true
+		Layout.leftMargin: Kirigami.Units.largeSpacing
+		Layout.rightMargin: Kirigami.Units.largeSpacing
+		visible: !!pythonModules.installError
+		type: Kirigami.MessageType.Error
+		text: pythonModules.installError
 	}
 
 	ColumnLayout {

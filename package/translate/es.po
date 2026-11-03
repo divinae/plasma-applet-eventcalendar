@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:21+0100\n"
+"POT-Creation-Date: 2026-11-03 11:25+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -153,6 +153,10 @@ msgstr "No se pudo obtener la disponibilidad"
 #: ../contents/ui/calendars/ICalManager.qml ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid "Reading .ics calendars needs Python modules: install them in Settings > Calendars > iCalendar"
+msgstr "Leer calendarios .ics necesita módulos de Python: instálalos en Ajustes > Calendarios > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -320,7 +324,7 @@ msgstr "Color"
 msgid "Save"
 msgstr "Guardar"
 
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
 msgid "Installing…"
 msgstr "Instalando…"
 
@@ -366,6 +370,18 @@ msgstr[1] "Conectado: %1 calendarios"
 msgid "Connected, but the account has no calendars for events."
 msgstr "Conectado, pero la cuenta no tiene calendarios para eventos."
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml
+msgid "The Python modules icalendar and recurring-ical-events aren't all installed: calendars, or their repeating events, can be missing."
+msgstr "Los módulos de Python icalendar y recurring-ical-events no están todos instalados: pueden faltar calendarios o sus eventos repetidos."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Instalar"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Descarga icalendar y recurring-ical-events en la carpeta propia del widget."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
 msgstr "Solo lectura"
@@ -401,14 +417,6 @@ msgstr "Contraseña"
 #: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/ConfigTasks.qml
 msgid "Connect"
 msgstr "Conectar"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Instalar"
-
-#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/ImportView.qml
-msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "Descarga icalendar y recurring-ical-events en la carpeta propia del widget."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Plain http works only for a server on your own network; the password isn't encrypted on the way."
