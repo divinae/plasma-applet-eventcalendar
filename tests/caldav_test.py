@@ -328,15 +328,49 @@ def report_response(*resources):
 	])
 
 
+def ctag_response(ctag):
+	return ms(resp("/cal/", "<cs:getctag>{}</cs:getctag>".format(xml_escape(ctag))))
+
+
+@mock.patch.object(caldav, "resolve_host", fake_resolve)
+class CtagTests(unittest.TestCase):
+	start = datetime.datetime(2026, 11, 2)
+	end = datetime.datetime(2026, 11, 9)
+
+	def test_unchanged_skips_the_events(self):
+		client = FakeClient([(207, {}, ctag_response("tag-7"))])
+		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "tag-7")
+		self.assertEqual(result, {"unchanged": True, "ctag": "tag-7"})
+		self.assertEqual([m for m, _, _, _ in client.sent], ["PROPFIND"], "no REPORT")
+
+	def test_changed_fetches_with_the_new_tag(self):
+		client = FakeClient([(207, {}, ctag_response("tag-8")), (207, {}, report_response(("/cal/single-1.ics", '"e1"', SINGLE)))])
+		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "tag-7")
+		self.assertEqual(result["ctag"], "tag-8")
+		self.assertEqual(len(result["items"]), 1)
+
+	def test_no_tag_on_the_server_always_fetches(self):
+		client = FakeClient([(207, {}, ms(resp("/cal/", "<d:displayname>x</d:displayname>"))), (207, {}, report_response())])
+		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "")
+		self.assertEqual(result["ctag"], "")
+		self.assertEqual([m for m, _, _, _ in client.sent], ["PROPFIND", "REPORT"])
+
+	def test_tag_request_failing_still_fetches(self):
+		client = FakeClient([(500, {}, "oops"), (207, {}, report_response())])
+		result = caldav.query(client, BASE + "/cal/", self.start, self.end, "tag-7")
+		self.assertEqual(result, {"items": [], "ctag": ""})
+
+
 @mock.patch.object(caldav, "resolve_host", fake_resolve)
 class QueryTests(unittest.TestCase):
 	start = datetime.datetime(2026, 11, 2)
 	end = datetime.datetime(2026, 11, 9)
 
 	def run_query(self, *resources):
-		client = FakeClient([(207, {}, report_response(*resources))])
+		client = FakeClient([(207, {}, ctag_response('"c1"')), (207, {}, report_response(*resources))])
 		result = caldav.query(client, BASE + "/cal/", self.start, self.end)
-		method, url, body, headers = client.sent[0]
+		self.assertEqual(result["ctag"], '"c1"')
+		method, url, body, headers = client.sent[1]
 		self.assertEqual((method, url, headers["Depth"]), ("REPORT", BASE + "/cal/", "1"))
 		self.assertIn(b'comp-filter name="VEVENT"', body)
 		self.assertIn(b"<c:time-range start=", body)

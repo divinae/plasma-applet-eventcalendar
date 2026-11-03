@@ -493,8 +493,30 @@ def local_midnight_utc(day):
 	return datetime.datetime.combine(day, datetime.time.min).astimezone(datetime.timezone.utc)
 
 
-def query(client, url, start, end):
-	"""start/end: naive datetimes (local midnight), end exclusive."""
+def calendar_ctag(client, url):
+	"""The calendar's change tag (CalendarServer's getctag, else the sync-token), "" when the server has
+	neither or the request fails: the events are then always fetched."""
+	try:
+		entries, _ = client.propfind(url, [(NS_CS, "getctag"), (NS_DAV, "sync-token")], 0)
+	except CalDavError as err:
+		if err.kind == "AUTH":
+			raise
+		return ""
+	for entry in entries:
+		props = entry["props"]
+		ctag = prop_text(props, tag(NS_CS, "getctag")) or prop_text(props, tag(NS_DAV, "sync-token"))
+		if ctag:
+			return ctag
+	return ""
+
+
+def query(client, url, start, end, if_ctag=""):
+	"""start/end: naive datetimes (local midnight), end exclusive. if_ctag: the calendar's change tag
+	at the last fetch of the same range: unchanged, the events aren't downloaded again ({"unchanged":
+	true}). The tag is read before the events, so a change meanwhile is seen next time."""
+	ctag = calendar_ctag(client, url)
+	if if_ctag and ctag and ctag == if_ctag:
+		return {"unchanged": True, "ctag": ctag}
 	# One day of margin on both sides: servers compare floating and all-day events in UTC.
 	range_start = local_midnight_utc(start.date()) - datetime.timedelta(days=1)
 	range_end = local_midnight_utc(end.date()) + datetime.timedelta(days=1)
@@ -503,7 +525,7 @@ def query(client, url, start, end):
 		{"Depth": "1", "Content-Type": "application/xml; charset=utf-8"},
 		ok=(207,),
 	)
-	return {"items": query_items(parse_multistatus(data, final_url), start, end)}
+	return {"items": query_items(parse_multistatus(data, final_url), start, end), "ctag": ctag}
 
 
 #--- put
@@ -858,6 +880,7 @@ def build_parser():
 
 	cmd = sub.add_parser("query")
 	cmd.add_argument("--url", required=True)
+	cmd.add_argument("--if-ctag", default="", help="The change tag of the last fetch: unchanged, no events are downloaded")
 	cmd.add_argument("start")
 	cmd.add_argument("end")
 	common(cmd)
@@ -918,7 +941,7 @@ def run(args, stdin):
 	if args.command == "discover":
 		return discover(client, args.url)
 	if args.command == "query":
-		return query(client, args.url, start, end)
+		return query(client, args.url, start, end, args.if_ctag)
 	if args.command == "put":
 		try:
 			if args.event_b64 is not None:

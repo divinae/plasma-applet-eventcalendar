@@ -105,19 +105,33 @@ CalendarManager {
 	}
 
 	//--- Reading
+	// The calendar unchanged since the last fetch of the same range (its change tag, see caldav.py
+	// query --if-ctag): its events aren't downloaded and parsed again, the last ones are kept.
 	function fetchCalendar(calendar) {
 		caldavManager.asyncRequests += 1
 		var calendarId = calendar.id
-		helper(['query', '--url', calendar.caldavHref, Shared.localDateString(dateMin), Shared.localDateString(dateMax)], calendar, function(err, data) {
+		var range = Shared.localDateString(dateMin) + '/' + Shared.localDateString(dateMax)
+		var previous = previousEventsByCalendar[calendarId]
+		var args = ['query', '--url', calendar.caldavHref, Shared.localDateString(dateMin), Shared.localDateString(dateMax)]
+		if (previous && previous.ctag && previous.range === range) {
+			args.push('--if-ctag', String(previous.ctag))
+		}
+		helper(args, calendar, function(err, data) {
 			try {
 				if (err) {
 					restorePreviousCalendar(calendarId) // Keep what was shown
 					caldavManager.error(err.message, err.kind === "NETWORK" ? ErrorType.NetworkError : ErrorType.UnknownError)
 					return
 				}
+				if (data && data.unchanged && previous && !eventsByCalendar[calendarId]) {
+					eventsByCalendar[calendarId] = previous // Already parsed; this range's, current
+					calendarFetched(calendarId, previous)
+					return
+				}
 				if (!(data && Array.isArray(data.items))) {
 					return
 				}
+				data.range = range
 				setCalendarData(calendarId, data) // Parsed by parseCalendarData
 			} finally {
 				caldavManager.asyncRequestsDone += 1
