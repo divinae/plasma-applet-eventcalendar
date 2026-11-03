@@ -1,6 +1,6 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
-import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents3
 
 import "ForecastChart.js" as ForecastChart
 import "Shared.js" as Shared
@@ -580,15 +580,6 @@ Item {
 					height: modelData.areaHeight
 					color: "transparent"
 
-					PlasmaCore.ToolTipArea {
-						id: tooltip
-						anchors.fill: parent
-						icon: WeatherIcons.largeSource(modelData.gridItem.weatherIcon, plasmoid.configuration.weatherIconStyle)
-						mainText: modelData.gridItem.tooltipMainText
-						subText: modelData.gridItem.tooltipSubText
-						location: PlasmaCore.Types.BottomEdge
-					}
-
 					// Yr icons (Settings > Weather > Icons) or the fancy chart: the icons of that setting.
 					// Otherwise the Weather Icons font, as before (it also has the few without an icon:
 					// wi-tornado, wi-dust, ... from Weather Canada).
@@ -602,7 +593,6 @@ Item {
 						source: parent.styledIcon ? WeatherIcons.source(modelData.aggregratedIcon, plasmoid.configuration.weatherIconStyle) : ""
 						fallback: parent.styledIcon ? modelData.aggregratedIcon : ""
 						color: appletConfig.meteogramIconColor
-						opacity: tooltip.containsMouse ? 0.1 : 1
 					}
 					FontIcon {
 						id: weatherIcon
@@ -611,12 +601,96 @@ Item {
 						color: appletConfig.meteogramIconColor
 						source: modelData.aggregratedIcon
 						height: appletConfig.meteogramIconSize
-						opacity: tooltip.containsMouse ? 0.1 : 1
 						showOutline: false
 					}
 				}
 			}
 
+			// Mouse over: the point under it, marked (a line, the point ringed) with what it brings in a box
+			// beside the line (as the Weather panel's chart): its icon, day and time, the temperature to a
+			// tenth, the sky, the rain. Drawn in the chart (a tooltip window showed at the screen's edge).
+			HoverHandler {
+				id: chartHover
+			}
+			readonly property int hoverIndex: {
+				if (!chartHover.hovered || gridData.length < 2 || gridWidth <= 0) {
+					return -1
+				}
+				var i = Math.round((chartHover.point.position.x - gridX) / gridWidth * (xAxisMax - xAxisMin) + xAxisMin)
+				return Math.max(0, Math.min(gridData.length - 1, i))
+			}
+			readonly property var hoverItem: hoverIndex >= 0 ? gridData[hoverIndex] : null
+			readonly property var hoverAt: hoverItem ? gridPoint(hoverIndex, hoverItem.y) : null
+			readonly property color hoverColor: appletConfig.eventColoredTextColor(Kirigami.Theme.highlightColor)
+			Rectangle {
+				visible: !!graph.hoverAt
+				x: graph.hoverAt ? Math.round(graph.hoverAt.x) : 0
+				y: graph.gridY
+				width: 1
+				height: graph.gridHeight
+				color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
+			}
+			Rectangle {
+				readonly property real size: 9
+				visible: !!graph.hoverAt
+				x: graph.hoverAt ? graph.hoverAt.x - size / 2 : 0
+				y: graph.hoverAt ? graph.hoverAt.y - size / 2 : 0
+				width: size
+				height: size
+				radius: size / 2
+				color: Kirigami.Theme.backgroundColor
+				border.width: 2
+				border.color: graph.hoverColor
+			}
+			Rectangle {
+				readonly property real lineX: graph.hoverAt ? graph.hoverAt.x : 0
+				readonly property real gap: Kirigami.Units.smallSpacing * 2
+				visible: !!graph.hoverItem && !!graph.hoverItem.xTimestamp
+				// Right of the line, or left of it where there's no room.
+				x: lineX + gap + width <= graph.width ? lineX + gap : Math.max(0, lineX - gap - width)
+				y: graph.gridY
+				width: hoverRow.implicitWidth + Kirigami.Units.smallSpacing * 3
+				height: hoverRow.implicitHeight + Kirigami.Units.smallSpacing * 2
+				radius: 4
+				color: Kirigami.Theme.backgroundColor
+				border.width: 1
+				border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.25)
+				Row {
+					id: hoverRow
+					anchors.centerIn: parent
+					spacing: Kirigami.Units.smallSpacing
+					Kirigami.Icon {
+						anchors.verticalCenter: parent.verticalCenter
+						width: Kirigami.Units.iconSizes.medium
+						height: width
+						visible: !!graph.hoverItem && !!graph.hoverItem.weatherIcon
+						source: graph.hoverItem ? WeatherIcons.largeSource(graph.hoverItem.weatherIcon, plasmoid.configuration.weatherIconStyle) : ""
+					}
+					PlasmaComponents3.Label {
+						anchors.verticalCenter: parent.verticalCenter
+						font: Kirigami.Theme.smallFont
+						textFormat: Text.PlainText
+						text: {
+							var item = graph.hoverItem
+							if (!item || !item.xTimestamp) {
+								return ""
+							}
+							var date = new Date(item.xTimestamp)
+							var lines = [
+								Qt.locale().toString(date, "ddd") + " " + Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h AP'),
+								Number(item.y).toLocaleString(Qt.locale(), 'f', 1) + "°",
+							]
+							if (item.description) {
+								lines.push(item.description)
+							}
+							if (item.precipitation > 0) {
+								lines.push(meteogramView.formatPrecipitation(item.precipitation))
+							}
+							return lines.join("\n")
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -641,6 +715,7 @@ Item {
 				tooltipMainText: new Date(item.dt * 1000),
 				tooltipSubText: tooltipSubText,
 				weatherIcon: item.iconName || 'question',
+				description: item.text || item.description || '',
 			}
 		}
 
