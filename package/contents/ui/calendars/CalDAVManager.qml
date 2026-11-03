@@ -17,7 +17,7 @@ CalendarManager {
 	id: caldavManager
 
 	calendarManagerId: "CalDAV"
-	property var accounts: [] // caldavAccounts: [{ id, label, url, username, calendars: [{ href, name, color, writable, selected }] }]
+	property var accounts: [] // caldavAccounts: [{ id, label, url, username, calendars: [{ href, name, color, writable, selected, userColor }] }]
 
 	ExecUtil { id: executable }
 	Logger {
@@ -43,7 +43,7 @@ CalendarManager {
 				out.push({
 					id: calendarIdOf(account, calendar),
 					summary: String(calendar.name || calendar.href),
-					backgroundColor: String(calendar.color || Kirigami.Theme.highlightColor),
+					backgroundColor: String(calendar.userColor || calendar.color || Kirigami.Theme.highlightColor), // userColor: picked in the widget
 					accessRole: calendar.writable === false ? 'reader' : 'owner',
 					isTasklist: false,
 					accountId: account.id,

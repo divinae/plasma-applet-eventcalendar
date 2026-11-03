@@ -259,7 +259,7 @@
 			<default></default>
 		</entry>
 		<entry name="caldavAccounts" type="string" stringType="base64json">
-			<!-- CalDAV accounts (Settings > CalDAV): [{ id, label, url, username, calendars: [{ href, name, color, writable, selected }] }]; passwords in the keyring -->
+			<!-- CalDAV accounts (Settings > CalDAV): [{ id, label, url, username, calendars: [{ href, name, color, writable, selected, userColor }] }]; passwords in the keyring -->
 			<default></default>
 		</entry>
 		<entry name="icalCalendarList" type="string" stringType="base64json">

@@ -116,3 +116,26 @@ function displayCalendarColor(calendar, palette) {
 function eventColor(colorId) {
 	return eventColors[String(colorId)] || null
 }
+
+// Black or white text (or a checkmark), whichever reads better on the color "#rrggbb".
+function foregroundFor(hex) {
+	var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex || '')
+	if (!m) {
+		return '#ffffff'
+	}
+	var luma = 0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)
+	return luma > 160 ? '#1d1d1d' : '#ffffff'
+}
+
+// The first picker color not in `used` (colors in any case), so a new calendar looks different
+// from the others; when all are used, they come round again.
+function nextUnusedColor(used) {
+	var taken = {}
+	;(used || []).forEach(function(color) { taken[String(color || '').toLowerCase()] = true })
+	for (var i = 0; i < calendarPalette.length; i++) {
+		if (!taken[calendarPalette[i].color]) {
+			return calendarPalette[i].color
+		}
+	}
+	return calendarPalette[(used || []).length % calendarPalette.length].color
+}

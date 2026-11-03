@@ -6,6 +6,7 @@ import "../lib/GoogleOAuthConfig.js" as GoogleOAuthConfig
 import "../lib/Pkce.js" as Pkce
 import "../lib/ConfigUtils.js" as ConfigUtils
 import "../lib/Requests.js" as Requests
+import "../code/GooglePalette.js" as GooglePalette
 
 Item {
 	id: session
@@ -718,12 +719,7 @@ Item {
 
 	// Black or white text, whichever reads better on the color.
 	function foregroundColorFor(hex) {
-		var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex || '')
-		if (!m) {
-			return '#ffffff'
-		}
-		var luma = 0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)
-		return luma > 160 ? '#1d1d1d' : '#ffffff'
+		return GooglePalette.foregroundFor(hex)
 	}
 
 	// Google APIs take PATCH as a POST with an override header (QML's XMLHttpRequest may not

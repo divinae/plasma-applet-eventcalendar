@@ -9,6 +9,7 @@ import QtCore
 
 import ".."
 import "../lib"
+import "../code/GooglePalette.js" as GooglePalette
 
 // Settings > Calendars > iCalendar: .ics files and links shown as calendars, read-only (also
 // offline: a file is read where it is). Local files only from the widget's data folder (it reads
@@ -46,11 +47,20 @@ ConfigSection {
 		configKey: 'icalCalendarList'
 		configBridge: page.configBridge
 
+		// A color the other calendars here don't have yet.
+		function unusedColor() {
+			var used = []
+			for (var i = 0; i < count; i++) {
+				used.push(get(i).backgroundColor)
+			}
+			return GooglePalette.nextUnusedColor(used)
+		}
+
 		function addCalendar() {
 			addItem({
 				url: '',
 				name: 'Label',
-				backgroundColor: '' + Kirigami.Theme.highlightColor,
+				backgroundColor: unusedColor(),
 				show: true,
 				isReadOnly: true,
 			})
@@ -61,7 +71,7 @@ ConfigSection {
 			addItem({
 				url: icsPath,
 				name: 'Label',
-				backgroundColor: '' + Kirigami.Theme.highlightColor,
+				backgroundColor: unusedColor(),
 				show: true,
 				isReadOnly: true,
 			})
@@ -125,11 +135,9 @@ ConfigSection {
 								ToolTip.text: i18n("Show this calendar")
 								ToolTip.visible: hovered
 							}
-							Rectangle {
-								implicitWidth: Kirigami.Units.iconSizes.small
-								implicitHeight: implicitWidth
-								radius: width / 2
-								color: model.backgroundColor
+							CalendarColorButton {
+								shownColor: model.backgroundColor || Kirigami.Theme.highlightColor
+								onColorChosen: function(color) { calendarsModel.setItemProperty(index, 'backgroundColor', color) }
 							}
 							TextField {
 								Layout.fillWidth: true

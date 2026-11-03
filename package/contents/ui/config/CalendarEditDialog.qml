@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 
-import "../lib/ColorUtil.js" as ColorUtil
+import "../lib"
 import "../code/GooglePalette.js" as GooglePalette
 
 // Edit a Google calendar: its name (the calendar's own name when the user owns it, otherwise the
@@ -87,51 +87,12 @@ Dialog {
 			Layout.topMargin: Kirigami.Units.largeSpacing
 			text: i18n("Color")
 		}
-		GridLayout {
+		ColorSwatchGrid {
 			id: colorGrid
 			Layout.alignment: Qt.AlignHCenter
-			columns: 8
-			rowSpacing: Kirigami.Units.smallSpacing
-			columnSpacing: Kirigami.Units.smallSpacing
 			enabled: !editDialog.saving
-
-			Repeater {
-				model: GooglePalette.calendarPalette
-				delegate: AbstractButton {
-					id: swatch
-					readonly property bool selected: editDialog.selectedColor === modelData.color
-					implicitWidth: Kirigami.Units.gridUnit * 1.75
-					implicitHeight: implicitWidth
-					// Google's color names aren't translated here; they're its own names.
-					text: modelData.name
-					checkable: true
-					checked: selected
-					onClicked: editDialog.selectedColor = modelData.color
-					Accessible.name: modelData.name
-					ToolTip.text: modelData.name
-					ToolTip.visible: hovered
-					ToolTip.delay: Kirigami.Units.toolTipDelay
-
-					contentItem: Item {}
-					background: Rectangle {
-						radius: width / 2
-						color: modelData.color
-						border.width: swatch.selected ? 2 : (swatch.visualFocus || swatch.hovered ? 2 : 1)
-						border.color: swatch.selected || swatch.visualFocus
-							? Kirigami.Theme.textColor
-							: ColorUtil.setAlpha(Kirigami.Theme.textColor, swatch.hovered ? 0.6 : 0.3)
-						Kirigami.Icon {
-							anchors.centerIn: parent
-							width: Kirigami.Units.iconSizes.small
-							height: width
-							visible: swatch.selected
-							source: "checkmark"
-							color: editDialog.loginManager ? editDialog.loginManager.foregroundColorFor(modelData.color) : "#ffffff"
-							isMask: true
-						}
-					}
-				}
-			}
+			selectedColor: editDialog.selectedColor
+			onPicked: function(color) { editDialog.selectedColor = color }
 		}
 
 		Kirigami.InlineMessage {

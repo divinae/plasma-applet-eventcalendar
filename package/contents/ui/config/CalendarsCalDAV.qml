@@ -12,7 +12,7 @@ import "../calendars/CalDAVErrors.js" as CalDAVErrors
 // CalDAV accounts (Nextcloud, Fastmail, iCloud, Radicale, …): server, user name and password (the
 // password goes to the keyring, scope caldav-account), then the account's calendars to show. Kept
 // in caldavAccounts: [{ id, label, url, username, calendars: [{ href, name, color, writable,
-// selected }] }]. The widget reads them through calendars/CalDAVManager.qml.
+// selected, userColor }] }]. The widget reads them through calendars/CalDAVManager.qml.
 ConfigSection {
 	id: page
 
@@ -97,15 +97,25 @@ ConfigSection {
 			try {
 				var data = JSON.parse(stdout)
 				var previous = {}
-				;(account.calendars || []).forEach(function(c) { previous[c.href] = c.selected !== false })
+				var userColors = {} // Picked in the widget: kept over the server's color
+				;(account.calendars || []).forEach(function(c) {
+					previous[c.href] = c.selected !== false
+					if (c.userColor) {
+						userColors[c.href] = c.userColor
+					}
+				})
 				var calendars = (data.calendars || []).map(function(c) {
-					return {
+					var calendar = {
 						href: c.href,
 						name: c.name || c.href,
 						color: c.color || "",
 						writable: c.writable !== false,
 						selected: previous[c.href] === undefined ? true : previous[c.href],
 					}
+					if (userColors[c.href]) {
+						calendar.userColor = userColors[c.href]
+					}
+					return calendar
 				})
 				done(null, calendars)
 			} catch (e) {
@@ -172,14 +182,25 @@ ConfigSection {
 		saveAccounts(list)
 	}
 
-	function setSelected(accountIndex, href, selected) {
+	function setCalendarProperty(accountIndex, href, key, value) {
 		var list = JSON.parse(JSON.stringify(page.accounts))
 		list[accountIndex].calendars.forEach(function(c) {
 			if (c.href === href) {
-				c.selected = selected
+				if (value === undefined) {
+					delete c[key]
+				} else {
+					c[key] = value
+				}
 			}
 		})
 		saveAccounts(list)
+	}
+	function setSelected(accountIndex, href, selected) {
+		setCalendarProperty(accountIndex, href, 'selected', selected)
+	}
+	// Its color in the widget; "" goes back to the server's.
+	function setUserColor(accountIndex, href, color) {
+		setCalendarProperty(accountIndex, href, 'userColor', color || undefined)
 	}
 
 	// The Python modules missing (an install from the KDE Store): said before anything is tried,
@@ -229,16 +250,40 @@ ConfigSection {
 				FormCard.FormCard {
 					Repeater {
 						model: accountBlock.account.calendars || []
-						FormCard.FormCheckDelegate {
-							text: modelData.name
-							description: modelData.writable === false ? i18n("Read-only") : ""
-							checked: modelData.selected !== false
-							onToggled: page.setSelected(accountBlock.accountIndex, modelData.href, checked)
-							leading: Rectangle {
-								width: Kirigami.Units.iconSizes.small * 0.75
-								height: width
-								radius: width / 2
-								color: modelData.color || Kirigami.Theme.highlightColor
+						// Not a FormCheckDelegate: its leading item (the color) isn't shown.
+						FormCard.AbstractFormDelegate {
+							id: calendarRow
+							readonly property bool shown: modelData.selected !== false
+							onClicked: page.setSelected(accountBlock.accountIndex, modelData.href, !shown)
+							contentItem: RowLayout {
+								spacing: Kirigami.Units.largeSpacing
+								CheckBox {
+									focusPolicy: Qt.NoFocus // The row has it
+									checked: calendarRow.shown
+									onToggled: page.setSelected(accountBlock.accountIndex, modelData.href, checked)
+									Accessible.name: modelData.name
+								}
+								CalendarColorButton {
+									shownColor: modelData.userColor || modelData.color || Kirigami.Theme.highlightColor
+									resetText: modelData.userColor ? i18n("Server's Color") : ""
+									onColorChosen: function(color) { page.setUserColor(accountBlock.accountIndex, modelData.href, color) }
+								}
+								ColumnLayout {
+									Layout.fillWidth: true
+									spacing: 0
+									Label {
+										Layout.fillWidth: true
+										text: modelData.name
+										elide: Text.ElideRight
+									}
+									Label {
+										Layout.fillWidth: true
+										visible: modelData.writable === false
+										text: i18n("Read-only")
+										color: Kirigami.Theme.disabledTextColor
+										font: Kirigami.Theme.smallFont
+									}
+								}
 							}
 						}
 					}
