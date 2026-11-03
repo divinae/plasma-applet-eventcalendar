@@ -16,6 +16,8 @@ PlasmaExtras.PlasmoidHeading {
 	// Week and Day views (their own title and navigation: goPrevious, goNext, goToday), null: the
 	// month view.
 	property Item weekViewItem
+	// The Agenda (its title the day at the top, its arrows day by day), null in the other views.
+	property Item agendaViewItem
 	// 'tabs': a button per view; 'menu': one button with the view shown, the others in its menu
 	// (little room taken).
 	property string viewSwitcher: 'tabs'
@@ -357,18 +359,17 @@ PlasmaExtras.PlasmoidHeading {
 			}
 			property real widestTitleSeen: 0
 			readonly property string titleMode: header.tasksMode ? "tasks" : header.weekViewItem ? (header.weekViewItem.singleDay ? "day" : "week")
-				: header.currentMode === 'classic' ? "agenda" : "month"
-			// The agenda on this month: today's date (weekday, day, month: the locale's long format
-			// without the year), on another month its name, where the arrows went (#16).
+				: header.agendaViewItem ? "agenda" : "month"
+			// The agenda: the day at the top of its list, following the scroll (#16): weekday, day,
+			// month (the locale's long format; the year only when it's another one).
 			readonly property string agendaTitle: {
-				var shown = header.monthViewItem ? header.monthViewItem.displayedDate : null
-				var today = timeModel.currentTime
-				if (!shown || shown.getFullYear() !== today.getFullYear() || shown.getMonth() !== today.getMonth()) {
-					return header.monthViewItem ? header.monthViewItem.currentTitle : ""
-				}
+				var top = header.agendaViewItem ? header.agendaViewItem.topDate : null
+				var day = top && !isNaN(top.getTime()) ? top : timeModel.currentTime
 				var format = Qt.locale().dateFormat(Locale.LongFormat)
-					.replace(/[\s,.\/-]*y+\s*(年|년|'г'\.?)?[\s,.\/-]*/g, " ").replace(/\s+/g, " ").trim() // With the year's own word (ru, ja, ko)
-				return Shared.formatDate(today, format)
+				if (day.getFullYear() === timeModel.currentTime.getFullYear()) {
+					format = format.replace(/[\s,.\/-]*y+\s*(年|년|'г'\.?)?[\s,.\/-]*/g, " ").replace(/\s+/g, " ").trim() // With the year's own word (ru, ja, ko)
+				}
+				return Shared.formatDate(day, format)
 			}
 			onTitleModeChanged: widestTitleSeen = 0
 			readonly property real titleWidth: Math.ceil(Math.max(titleHeading.implicitWidth, widestTitleSeen,
@@ -404,14 +405,22 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-previous"
-				onClicked: header.weekViewItem ? header.weekViewItem.goPrevious() : header.monthViewItem.goPrevious()
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week")) : i18n("Previous Month")
+				onClicked: {
+					if (header.weekViewItem) {
+						header.weekViewItem.goPrevious()
+					} else if (!(header.agendaViewItem && header.agendaViewItem.goPrevious())) {
+						header.monthViewItem.goPrevious() // The month view, or the agenda at its first day
+					}
+				}
+				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Previous Day") : i18n("Previous Week"))
+					: header.agendaViewItem ? i18n("Previous Day") : i18n("Previous Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-jump-today"
-				onClicked: header.weekViewItem ? header.weekViewItem.goToday() : header.monthViewItem.resetToToday()
+				onClicked: header.weekViewItem ? header.weekViewItem.goToday()
+					: header.agendaViewItem ? header.agendaViewItem.goToday() : header.monthViewItem.resetToToday()
 				onPressAndHold: header.goToDateRequested()
 				PlasmaComponents3.ToolTip.text: i18n("Today (press and hold, or G: go to a date)")
 				PlasmaComponents3.ToolTip.visible: hovered
@@ -419,8 +428,10 @@ PlasmaExtras.PlasmoidHeading {
 			PlasmaComponents3.ToolButton {
 				visible: !header.tasksMode
 				icon.name: "go-next"
-				onClicked: header.weekViewItem ? header.weekViewItem.goNext() : header.monthViewItem.goNext()
-				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week")) : i18n("Next Month")
+				onClicked: header.weekViewItem ? header.weekViewItem.goNext()
+					: header.agendaViewItem ? header.agendaViewItem.goNext() : header.monthViewItem.goNext()
+				PlasmaComponents3.ToolTip.text: header.weekViewItem ? (header.weekViewItem.singleDay ? i18n("Next Day") : i18n("Next Week"))
+					: header.agendaViewItem ? i18n("Next Day") : i18n("Next Month")
 				PlasmaComponents3.ToolTip.visible: hovered
 			}
 		}

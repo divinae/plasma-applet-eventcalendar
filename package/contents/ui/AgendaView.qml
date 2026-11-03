@@ -88,6 +88,36 @@ Item {
 		}
 	}
 
+	// The header's arrows and Today in the agenda (#16): day by day through the listed days (those
+	// with something on them). false: at the first one (the popup goes a month back then).
+	function topIndex() {
+		for (var i = 0; i < root.agendaModel.count; i++) {
+			if (Shared.isSameDate(root.agendaModel.get(i).date, topDate)) {
+				return i
+			}
+		}
+		return -1
+	}
+	function goPrevious() {
+		var i = topIndex()
+		if (i <= 0) {
+			return false
+		}
+		agendaList.positionViewAtIndex(i - 1, ListView.Beginning)
+		return true
+	}
+	function goNext() {
+		var i = topIndex()
+		if (i >= 0 && i + 1 < root.agendaModel.count) {
+			agendaList.positionViewAtIndex(i + 1, ListView.Beginning)
+		} else {
+			agendaList.positionViewAtEnd() // More months load at the end (endReached)
+		}
+	}
+	function goToday() {
+		scrollToDate(timeModel.currentTime)
+	}
+
 	function scrollToDate(date) {
 		for (var i = 0; i < root.agendaModel.count; i++) {
 			var agendaItem = root.agendaModel.get(i)

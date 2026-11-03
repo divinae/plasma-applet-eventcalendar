@@ -473,6 +473,7 @@ MouseArea {
 		anchors.right: parent.right
 		monthViewItem: monthView
 		weekViewItem: popup.hourGridMode ? weekViewLoader.item : null
+		agendaViewItem: popup.showAgenda ? agendaView : null
 		currentMode: popup.viewMode
 		showTasksTab: popup.taskListsSelected
 		tasksMode: popup.tasksMode
@@ -1138,10 +1139,10 @@ MouseArea {
 	}
 
 	function runKeyAction(action) {
-		var nav = hourGridMode ? weekViewLoader.item : null
+		var nav = hourGridMode ? weekViewLoader.item : showAgenda ? agendaView : null
 		switch (action.type) {
 			case 'previous':
-				if (nav) nav.goPrevious(); else monthView.goPrevious()
+				if (!(nav && nav.goPrevious() !== false)) monthView.goPrevious() // The agenda at its first day: a month back
 				return true
 			case 'next':
 				if (nav) nav.goNext(); else monthView.goNext()
