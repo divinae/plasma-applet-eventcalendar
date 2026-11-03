@@ -613,7 +613,7 @@ Item {
 				id: chartHover
 				onHoveredChanged: {
 					chartHoverDelay.stop()
-					graph.hoverReady = false
+					layers.hoverReady = false
 					if (hovered) {
 						chartHoverDelay.start()
 					}
@@ -624,21 +624,21 @@ Item {
 			Timer {
 				id: chartHoverDelay
 				interval: 700
-				onTriggered: graph.hoverReady = true
+				onTriggered: layers.hoverReady = true
 			}
 			readonly property int hoverIndex: {
-				if (!hoverReady || !chartHover.hovered || gridData.length < 2 || gridWidth <= 0) {
+				if (!hoverReady || !chartHover.hovered || graph.gridData.length < 2 || graph.gridWidth <= 0) {
 					return -1
 				}
-				var i = Math.round((chartHover.point.position.x - gridX) / gridWidth * (xAxisMax - xAxisMin) + xAxisMin)
-				return Math.max(0, Math.min(gridData.length - 1, i))
+				var i = Math.round((chartHover.point.position.x - graph.gridX) / graph.gridWidth * (graph.xAxisMax - graph.xAxisMin) + graph.xAxisMin)
+				return Math.max(0, Math.min(graph.gridData.length - 1, i))
 			}
-			readonly property var hoverItem: hoverIndex >= 0 ? gridData[hoverIndex] : null
-			readonly property var hoverAt: hoverItem ? gridPoint(hoverIndex, hoverItem.y) : null
+			readonly property var hoverItem: hoverIndex >= 0 ? graph.gridData[hoverIndex] : null
+			readonly property var hoverAt: hoverItem ? graph.gridPoint(hoverIndex, hoverItem.y) : null
 			readonly property color hoverColor: appletConfig.eventColoredTextColor(Kirigami.Theme.highlightColor)
 			Rectangle {
-				visible: !!graph.hoverAt
-				x: graph.hoverAt ? Math.round(graph.hoverAt.x) : 0
+				visible: !!layers.hoverAt
+				x: layers.hoverAt ? Math.round(layers.hoverAt.x) : 0
 				y: graph.gridY
 				width: 1
 				height: graph.gridHeight
@@ -646,20 +646,20 @@ Item {
 			}
 			Rectangle {
 				readonly property real size: 9
-				visible: !!graph.hoverAt
-				x: graph.hoverAt ? graph.hoverAt.x - size / 2 : 0
-				y: graph.hoverAt ? graph.hoverAt.y - size / 2 : 0
+				visible: !!layers.hoverAt
+				x: layers.hoverAt ? layers.hoverAt.x - size / 2 : 0
+				y: layers.hoverAt ? layers.hoverAt.y - size / 2 : 0
 				width: size
 				height: size
 				radius: size / 2
 				color: Kirigami.Theme.backgroundColor
 				border.width: 2
-				border.color: graph.hoverColor
+				border.color: layers.hoverColor
 			}
 			Rectangle {
-				readonly property real lineX: graph.hoverAt ? graph.hoverAt.x : 0
+				readonly property real lineX: layers.hoverAt ? layers.hoverAt.x : 0
 				readonly property real gap: Kirigami.Units.smallSpacing * 2
-				visible: !!graph.hoverItem && !!graph.hoverItem.xTimestamp
+				visible: !!layers.hoverItem && !!layers.hoverItem.xTimestamp
 				// Right of the line, or left of it where there's no room.
 				x: lineX + gap + width <= graph.width ? lineX + gap : Math.max(0, lineX - gap - width)
 				y: graph.gridY
@@ -677,15 +677,15 @@ Item {
 						anchors.verticalCenter: parent.verticalCenter
 						width: Kirigami.Units.iconSizes.medium
 						height: width
-						visible: !!graph.hoverItem && !!graph.hoverItem.weatherIcon
-						source: graph.hoverItem ? WeatherIcons.largeSource(graph.hoverItem.weatherIcon, plasmoid.configuration.weatherIconStyle) : ""
+						visible: !!layers.hoverItem && !!layers.hoverItem.weatherIcon
+						source: layers.hoverItem ? WeatherIcons.largeSource(layers.hoverItem.weatherIcon, plasmoid.configuration.weatherIconStyle) : ""
 					}
 					PlasmaComponents3.Label {
 						anchors.verticalCenter: parent.verticalCenter
 						font: Kirigami.Theme.smallFont
 						textFormat: Text.PlainText
 						text: {
-							var item = graph.hoverItem
+							var item = layers.hoverItem
 							if (!item || !item.xTimestamp) {
 								return ""
 							}

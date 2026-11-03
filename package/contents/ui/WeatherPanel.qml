@@ -477,6 +477,9 @@ ColumnLayout {
 		}
 		// The labeled points: every 3 hours, with the fancy chart also the high and the low.
 		function isExtreme(i) {
+			if (!points[i]) {
+				return false // A label left over while the points get fewer
+			}
 			var t = points[i].temp
 			return panel.fancyChart && maxTemp - minTemp >= 2 && (t === maxTemp || t === minTemp)
 				&& points.findIndex(function(p) { return p.temp === t }) === i
