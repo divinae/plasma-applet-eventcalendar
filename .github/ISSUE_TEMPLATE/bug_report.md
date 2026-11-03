@@ -22,10 +22,11 @@ Describe the bug clearly and concisely.
 
 ## Logs
 
-If possible, attach logs from one of:
+If possible, attach the widget's log, and for a crash of Plasma its backtrace: see
+[Logs and crashes](https://github.com/divinae/plasma-applet-eventcalendar#logs-and-crashes) in the README.
 
-- `plasmashell --replace` output
-- `journalctl --user -b | rg eventcalendar`
+- `journalctl --user -b --since "-15min" | grep -i -E "eventcalendar|plasmashell"`
+- A crash: `coredumpctl info plasmashell` (or the "Developer Information" tab of KDE's crash dialog)
 
 Redact any tokens, client secrets, or full OAuth redirect URLs.
 

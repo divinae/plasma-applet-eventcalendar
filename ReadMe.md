@@ -205,8 +205,37 @@ authors of the original Event Calendar (Chris Holland / Zren) or of the Plasma 6
 ## Bugs and ideas
 
 Report them in [GitHub Issues](https://github.com/divinae/plasma-applet-eventcalendar/issues): your distribution, the Plasma version, the widget version,
-and for a problem in the settings or the popup the output of
-`journalctl --user -b | grep -i eventcalendar`.
+and for a problem the logs below.
+
+### Logs and crashes
+
+**The widget's log** (something doesn't work, an error shows):
+
+1. Optional, for more detail: the widget's Settings > Views > Troubleshooting > "Debug logging and
+   extra settings pages" on.
+2. Do what goes wrong, then right after:
+   ```
+   journalctl --user -b --since "-15min" | grep -i -E "eventcalendar|plasmashell" > eventcalendar.log
+   ```
+3. Attach `eventcalendar.log`. The widget logs no event titles, tokens or passwords; still look it
+   over before posting.
+
+**A crash** (Plasma restarts, the panel disappears for a moment):
+
+- If KDE's crash dialog shows up: its "Developer Information" tab has the backtrace; copy it.
+- Otherwise the system keeps the crash ("core dump"):
+  ```
+  coredumpctl list plasmashell
+  coredumpctl info plasmashell > plasmashell-crash.txt
+  ```
+  and attach `plasmashell-crash.txt` (its "Stack trace" part is what helps). On Debian / Ubuntu,
+  `coredumpctl` needs `sudo apt install systemd-coredump` first, then make it crash once more.
+- A backtrace with function names (better still):
+  ```
+  export DEBUGINFOD_URLS="https://debuginfod.debian.net"   # Debian; Arch, Fedora, openSUSE: already set
+  coredumpctl debug plasmashell
+  ```
+  then in gdb `bt full`, copy the output, `quit`.
 
 ## Contributing
 
