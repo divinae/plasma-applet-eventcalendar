@@ -97,9 +97,11 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
 - **CalDAV** (Nextcloud, Fastmail, iCloud with an app password, Radicale, Baïkal…): add an account in
   Settings > Calendars > CalDAV and choose its calendars; create, edit, move and delete events there, import
   .ics files into them. The password stays in the system keyring. Repeating events are shown, and
-  changed in their own app for now.
-- **iCalendar** (.ics) files and links as calendars, read-only and offline too: Settings > Calendars >
-  iCalendar.
+  changed in their own app for now. Pick each calendar's color, or keep the server's.
+- **iCalendar** (.ics) files and links as calendars, read-only and offline too, in the color you pick:
+  Settings > Calendars > iCalendar.
+- **Settings backup:** export the widget's settings to a file and import them again (Settings > Views),
+  without passwords or sign-ins.
 - **KDE PIM (Akonadi)** calendars and holidays through Plasma's calendar plugins, side by side with a
   direct Google sign-in (an event synced both ways shows once).
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
@@ -144,9 +146,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.16.1.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.17.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.16.1.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.17.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a

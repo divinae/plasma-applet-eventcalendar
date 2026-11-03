@@ -1,3 +1,12 @@
+## v1.17.0 - November 3 2026
+
+### Calendar colors (#20)
+* **CalDAV and iCalendar calendars get a color you pick:** click the calendar's color dot in Settings > Calendars > CalDAV or iCalendar: Google Calendar's colors, or Custom… for any color. A CalDAV calendar keeps its color over Refresh Calendars, and "Server's Color" goes back to the server's. New .ics calendars each get a different color.
+* The color dot of CalDAV calendars in their settings wasn't shown at all.
+
+### Settings backup (#21)
+* **Export and import the widget's settings** (Settings > Views > Settings Backup): to a JSON file and back, eg: before removing the widget or for another computer. Passwords and sign-ins aren't in the file (they stay in the system keyring); an imported file can't set them either. Imported settings are kept with Apply or OK.
+
 ## v1.16.1 - November 3 2026
 
 ### Fixes

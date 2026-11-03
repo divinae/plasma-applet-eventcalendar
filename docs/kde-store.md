@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.16.1
+    1.17.0
 
 **License**
 
@@ -131,6 +131,13 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
+**Changelog (1.17.0)**
+
+```
+- Pick a color for CalDAV and iCalendar calendars (Settings > Calendars)
+- Export and import the widget's settings to a file (Settings > Views > Settings Backup), without passwords or sign-ins
+```
+
 **Changelog (1.16.1)**
 
 ```
@@ -194,8 +201,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.16.1.plasmoid` from the
-  [v1.16.1 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.16.1),
+- **Product file:** `eventcalendar-ng-v1.17.0.plasmoid` from the
+  [v1.17.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.17.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
