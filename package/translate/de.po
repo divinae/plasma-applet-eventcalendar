@@ -408,8 +408,8 @@ msgid ""
 "This version of KDE PIM can't change the selection here: choose the "
 "calendars on the PIM Events Plugin page of these settings."
 msgstr ""
-"Diese Version von KDE PIM kann die Auswahl hier nicht ändern: Wählen Sie "
-"die Kalender auf der Seite des PIM-Events-Plugins in diesen Einstellungen."
+"Diese Version von KDE PIM kann die Auswahl hier nicht ändern: Wählen Sie die "
+"Kalender auf der Seite des PIM-Events-Plugins in diesen Einstellungen."
 
 #: ../contents/ui/config/CalendarsAkonadi.qml
 msgid ""
