@@ -47,27 +47,31 @@ function toArray(listLike) {
 // [PIMEventsPlugin] calendars= in plasmashellrc). Accounts (resources) are left out.
 // Current versions: a flat list with the roles collectionId (UserRole + 1), name, enabled (false:
 // an account) and checked. Older ones: a tree with a { id, enabled } object in UserRole + 1.
-// withAccounts: the accounts too, as { id, name, checked: false, account: true }.
+// withAccounts: the accounts too, as { id, name, checked: false, account: true } (also a folder
+// without events of its own), and the calendars in an account's tree with the top account's id as
+// accountId (none: a calendar that is a resource of its own, eg: a local .ics file).
 var PIM_ROLE_ID = 1, PIM_ROLE_NAME = 2, PIM_ROLE_ENABLED = 3, PIM_ROLE_CHECKED = 4
 function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 	var rows = []
 	if (!model) {
 		return rows
 	}
-	function push(index) {
+	// The row of index (pushed), or null for none (an account without withAccounts, or no data).
+	function push(index, accountId) {
 		var data = model.data(index, userRole + PIM_ROLE_ID)
+		var row = null
 		if (data && typeof data === 'object') {
-			rows.push({
+			row = {
 				id: String(data.id),
 				name: String(model.data(index, displayRole) || ''),
 				checked: !!data.enabled,
-			})
+			}
 		} else if (data !== undefined && data !== null) {
 			var account = model.data(index, userRole + PIM_ROLE_ENABLED) === false
 			if (account && !withAccounts) {
-				return
+				return null
 			}
-			var row = {
+			row = {
 				id: String(data),
 				name: String(model.data(index, userRole + PIM_ROLE_NAME) || model.data(index, displayRole) || ''),
 				checked: !account && !!model.data(index, userRole + PIM_ROLE_CHECKED),
@@ -75,21 +79,27 @@ function pimCalendarRows(model, userRole, displayRole, withAccounts) {
 			if (account) {
 				row.account = true
 			}
+		}
+		if (row) {
+			if (withAccounts && accountId && !row.account) {
+				row.accountId = accountId
+			}
 			rows.push(row)
 		}
+		return row
 	}
 	// A tree under the accounts (Akonadi's EntityTreeModel): calendars can be folders in folders.
-	function walk(parent, depth) {
+	function walk(parent, depth, accountId) {
 		var count = parent ? model.rowCount(parent) : model.rowCount()
 		for (var i = 0; i < count; i++) {
 			var index = parent ? model.index(i, 0, parent) : model.index(i, 0)
-			push(index)
+			var row = push(index, accountId)
 			if (depth < 8 && model.hasChildren(index)) {
-				walk(index, depth + 1)
+				walk(index, depth + 1, accountId || (row && row.account ? row.id : '')) // The top account
 			}
 		}
 	}
-	walk(null, 0)
+	walk(null, 0, '')
 	return rows
 }
 
@@ -459,11 +469,13 @@ function parseAkonadiGoogleCollections(stdout) {
 	})
 	return { accounts: accounts, collections: collections }
 }
-// The Akonadi calendars (pimCalendarRows with the accounts, each account before its calendars)
-// under their accounts, apart: of Akonadi's Google accounts (by akonadiGoogleCollectionsCommand's
-// output: none without it) and the others. { google: [group], other: [group] }, a group being
-// { name, calendars: [row] }: a Google account named by its email. Accounts without a calendar
-// are left out.
+// The Akonadi calendars (pimCalendarRows with the accounts) under their accounts, apart: of
+// Akonadi's Google accounts (by akonadiGoogleCollectionsCommand's output: none without it) and the
+// others. { google: [group], other: [group] }, a group being { name, calendars: [row] }: a Google
+// account named by its email; the calendars without an account (a resource of its own, eg: a local
+// calendar file) in one group without a name, the last. Accounts without a calendar are left out.
+// From a tree, by a calendar's accountId; from a flat list (older models), each account before its
+// calendars.
 function pimCalendarGroups(rows, stdout) {
 	var parsed = parseAkonadiGoogleCollections(stdout)
 	var googleAccountOf = {}
@@ -471,17 +483,21 @@ function pimCalendarGroups(rows, stdout) {
 		googleAccountOf[collection.id] = parsed.accounts[collection.resource] || ''
 	})
 	var groups = { google: [], other: [] }
-	var group = null
+	var groupOf = {} // Account id -> its group
+	var ownGroup = { name: '', calendars: [] } // Calendars without an account
+	var tree = (rows || []).some(function(row) { return !!row.accountId })
+	var group = null // A flat list's last account
 	;(rows || []).forEach(function(row) {
-		if (row.account || !group) {
-			var google = row.account && row.id in googleAccountOf
-			group = { name: row.account ? (google && googleAccountOf[row.id]) || row.name : '', calendars: [] }
+		if (row.account) {
+			var google = row.id in googleAccountOf
+			group = groupOf[row.id] = { name: (google && googleAccountOf[row.id]) || row.name, calendars: [] }
 			;(google ? groups.google : groups.other).push(group)
-		}
-		if (!row.account) {
-			group.calendars.push(row)
+		} else {
+			var into = tree ? groupOf[row.accountId] : group
+			;(into || ownGroup).calendars.push(row)
 		}
 	})
+	groups.other.push(ownGroup)
 	function withCalendars(list) {
 		return list.filter(function(g) { return g.calendars.length > 0 })
 	}

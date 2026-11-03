@@ -164,4 +164,28 @@ assert.deepStrictEqual([noDb.google.length, noDb.other.map(x => x.name)], [0, ['
 assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarGroups([{ id: '7', name: 'Old', checked: true }], ''))).other,
 	[{ name: '', calendars: [{ id: '7', name: 'Old', checked: true }] }], 'calendars without an account (older models)')
 
+// From the model's tree: a calendar that is a resource of its own (a local calendar file) after a
+// Google account isn't that account's: in its own group, the last.
+const accountTree = model([
+	{ [UserRole + 1]: 1490, [UserRole + 2]: 'Google Groupware', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+		{ [UserRole + 1]: 1617, [UserRole + 2]: 'work@example.com', [UserRole + 3]: true, [UserRole + 4]: true },
+	] },
+	{ [UserRole + 1]: 5, [UserRole + 2]: 'Personal calendar', [UserRole + 3]: true, [UserRole + 4]: false },
+	{ [UserRole + 1]: 20, [UserRole + 2]: 'Work (DAV)', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+		{ [UserRole + 1]: 21, [UserRole + 2]: 'Team', [UserRole + 3]: false, [UserRole + 4]: false, children: [
+			{ [UserRole + 1]: 22, [UserRole + 2]: 'Releases', [UserRole + 3]: true, [UserRole + 4]: true },
+		] },
+	] },
+])
+const treeRows = U.pimCalendarRows(accountTree, UserRole, DisplayRole, true)
+assert.deepStrictEqual(JSON.parse(JSON.stringify(treeRows)).filter(r => !r.account).map(r => [r.id, r.accountId || '']),
+	[['1617', '1490'], ['5', ''], ['22', '20']], 'each calendar with its top account from the tree; in a folder too')
+const treeGroups = JSON.parse(JSON.stringify(U.pimCalendarGroups(treeRows,
+	'account|akonadi_google_resource_15|work@example.com\ncollection|1490|akonadi_google_resource_15|RootCollection\ncollection|1617|akonadi_google_resource_15|work@example.com')))
+assert.deepStrictEqual(treeGroups.google.map(x => [x.name, x.calendars.map(c => c.id)]), [['work@example.com', ['1617']]])
+assert.deepStrictEqual(treeGroups.other.map(x => [x.name, x.calendars.map(c => c.id)]), [['Work (DAV)', ['22']], ['', ['5']]],
+	'the local calendar in its own group, the last; not under the Google account')
+assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(accountTree, UserRole, DisplayRole))).map(r => Object.keys(r).join()),
+	['id,name,checked', 'id,name,checked', 'id,name,checked'], 'without the accounts: rows as before')
+
 console.log('PASS plasma_calendar_utils')
