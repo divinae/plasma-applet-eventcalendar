@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:53+0100\n"
+"POT-Creation-Date: 2026-11-03 13:58+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -109,6 +109,12 @@ msgid "Could not connect"
 msgstr "לא היה ניתן להתחבר"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"‏CalDAV זקוק למודולים של Python: יש להתקין אותם בהגדרות > לוחות שנה > CalDAV"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "האירוע שונה במקום אחר בינתיים; הוא נטען מחדש"
 
@@ -175,6 +181,14 @@ msgstr "לא ניתן לקבל את זמני הפנוי / עסוק"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"קריאת לוחות שנה .ics דורשת מודולים של Python: יש להתקין אותם בהגדרות > לוחות "
+"שנה > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -405,6 +419,15 @@ msgstr ""
 "צבע יחד."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "מתקין…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "‏CalDAV זקוק למודולי Python בשם icalendar ו־recurring-ical-events."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -451,6 +474,26 @@ msgstr[3] "מחובר: %1 לוחות שנה"
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "מחובר, אך אין בחשבון לוחות שנה לאירועים."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"מודולי Python בשם icalendar ו־recurring-ical-events אינם כולם מותקנים: לוחות "
+"שנה, או האירועים החוזרים שלהם, עלולים לחסור."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "התקנה"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -3218,18 +3261,6 @@ msgid "No day found in the text"
 msgstr "לא נמצא יום בטקסט"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"לא ניתן היה להתקין את המודולים. יש להתקין את python3-icalendar (python-"
-"icalendar ב־Arch) עם מנהל החבילות."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "לא ניתן היה להתקין את המודולים: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "לא ניתן לקרוא את הקובץ."
 
@@ -3336,19 +3367,6 @@ msgid "Choose File…"
 msgstr "בחירת קובץ…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "מתקין…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "התקנה"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "מוריד את icalendar ו־recurring-ical-events לתיקייה של היישומון."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "הקובץ נקרא…"
 
@@ -3436,6 +3454,18 @@ msgstr "קובצי שמע (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "כל הקבצים (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"לא ניתן היה להתקין את המודולים. יש להתקין את python3-icalendar (python-"
+"icalendar ב־Arch) עם מנהל החבילות."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "לא ניתן היה להתקין את המודולים: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

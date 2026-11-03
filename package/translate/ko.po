@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:53+0100\n"
+"POT-Creation-Date: 2026-11-03 13:58+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -108,6 +108,12 @@ msgid "Could not connect"
 msgstr "연결 실패"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"CalDAV에 Python 모듈이 필요합니다: 설정 > 달력 > CalDAV에서 설치하십시오"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "그 사이에 다른 곳에서 일정이 변경되어 다시 불러왔습니다"
 
@@ -175,6 +181,14 @@ msgstr "바쁨 / 한가함 시간을 가져올 수 없습니다"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+".ics 달력을 읽으려면 Python 모듈이 필요합니다: 설정 > 달력 > iCalendar에서 설"
+"치하십시오"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -390,6 +404,15 @@ msgstr ""
 "처리됩니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "설치 중…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "CalDAV에는 Python 모듈 icalendar와 recurring-ical-events가 필요합니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -433,6 +456,26 @@ msgstr[0] "연결됨: 달력 %1개"
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "연결되었지만 계정에 일정용 달력이 없습니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Python 모듈 icalendar와 recurring-ical-events가 모두 설치되어 있지 않습니다: "
+"달력이나 반복 일정이 빠질 수 있습니다."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "설치"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -3172,18 +3215,6 @@ msgid "No day found in the text"
 msgstr "텍스트에서 날짜를 찾을 수 없습니다"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"모듈을 설치할 수 없습니다. 패키지 관리자로 python3-icalendar(Arch에서는 "
-"python-icalendar)를 설치하십시오."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "모듈을 설치할 수 없음: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "파일을 읽을 수 없습니다."
 
@@ -3272,19 +3303,6 @@ msgid "Choose File…"
 msgstr "파일 선택…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "설치 중…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "설치"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "icalendar와 recurring-ical-events를 위젯 전용 폴더에 다운로드합니다."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "파일을 읽는 중…"
 
@@ -3363,6 +3381,18 @@ msgstr "소리 파일 (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "모든 파일 (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"모듈을 설치할 수 없습니다. 패키지 관리자로 python3-icalendar(Arch에서는 "
+"python-icalendar)를 설치하십시오."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "모듈을 설치할 수 없음: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

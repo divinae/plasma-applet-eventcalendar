@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:53+0100\n"
+"POT-Creation-Date: 2026-11-03 13:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -93,6 +93,10 @@ msgid "Could not connect"
 msgstr "Kunde inte ansluta"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr "CalDAV behöver Python-moduler: installera dem i Inställningar > Kalendrar > CalDAV"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Händelsen ändrades någon annanstans under tiden; den har lästs in igen"
 
@@ -148,6 +152,10 @@ msgstr "Kunde inte hämta upptagen / ledig tid"
 #: ../contents/ui/calendars/ICalManager.qml ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid "Reading .ics calendars needs Python modules: install them in Settings > Calendars > iCalendar"
+msgstr "Att läsa .ics-kalendrar kräver Python-moduler: installera dem i Inställningar > Kalendrar > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -333,6 +341,14 @@ msgstr "Glöm de saknade"
 msgid "In the popup's calendar menu they are shown and hidden by color: calendars of one color together."
 msgstr "I poppuppfönstrets kalendermeny visas och döljs de efter färg: kalendrar med samma färg tillsammans."
 
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Installerar…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "CalDAV behöver Python-modulerna icalendar och recurring-ical-events."
+
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "The server didn't accept the user name or password. Some services need an app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
 msgstr "Servern godtog inte användarnamnet eller lösenordet. Vissa tjänster kräver ett applösenord (iCloud, Fastmail, Nextcloud med tvåstegsinloggning)."
@@ -370,6 +386,18 @@ msgstr[1] "Ansluten: %1 kalendrar"
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Ansluten, men kontot har inga kalendrar för händelser."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml
+msgid "The Python modules icalendar and recurring-ical-events aren't all installed: calendars, or their repeating events, can be missing."
+msgstr "Python-modulerna icalendar och recurring-ical-events är inte alla installerade: kalendrar, eller deras återkommande händelser, kan saknas."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Installera"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Hämtar icalendar och recurring-ical-events till komponentens egen mapp."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -2868,14 +2896,6 @@ msgid "No day found in the text"
 msgstr "Ingen dag hittades i texten"
 
 #: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
-msgstr "Modulerna kunde inte installeras. Installera python3-icalendar (python-icalendar på Arch) med din pakethanterare."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Modulerna kunde inte installeras: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Det gick inte att läsa filen."
 
@@ -2967,18 +2987,6 @@ msgid "Choose File…"
 msgstr "Välj fil…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Installerar…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Installera"
-
-#: ../contents/ui/ImportView.qml
-msgid "Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "Hämtar icalendar och recurring-ical-events till komponentens egen mapp."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Läser filen…"
 
@@ -3052,6 +3060,14 @@ msgstr "Ljudfiler (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Alla filer (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules. Install python3-icalendar (python-icalendar on Arch) with your package manager."
+msgstr "Modulerna kunde inte installeras. Installera python3-icalendar (python-icalendar på Arch) med din pakethanterare."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Modulerna kunde inte installeras: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

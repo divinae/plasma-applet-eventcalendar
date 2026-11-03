@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:53+0100\n"
+"POT-Creation-Date: 2026-11-03 13:58+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -108,6 +108,13 @@ msgid "Could not connect"
 msgstr "Αδυναμία σύνδεσης"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"Το CalDAV χρειάζεται αρθρώματα Python: εγκαταστήστε τα στις Ρυθμίσεις > "
+"Ημερολόγια > CalDAV"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Το συμβάν άλλαξε στο μεταξύ από αλλού· φορτώθηκε ξανά"
 
@@ -176,6 +183,14 @@ msgstr "Δεν ήταν δυνατή η λήψη των ελεύθερων / α�
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"Η ανάγνωση ημερολογίων .ics χρειάζεται αρθρώματα Python: εγκαταστήστε τα "
+"στις Ρυθμίσεις > Ημερολόγια > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -403,6 +418,16 @@ msgstr ""
 "αποκρύπτονται ανά χρώμα: τα ημερολόγια ενός χρώματος μαζί."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Εγκατάσταση…"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr ""
+"Το CalDAV χρειάζεται τα αρθρώματα Python icalendar και recurring-ical-events."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -451,6 +476,29 @@ msgstr[1] "Συνδέθηκε: %1 ημερολόγια"
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Συνδέθηκε, αλλά ο λογαριασμός δεν έχει ημερολόγια για συμβάντα."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Τα αρθρώματα Python icalendar και recurring-ical-events δεν είναι όλα "
+"εγκατεστημένα: ημερολόγια ή τα επαναλαμβανόμενα συμβάντα τους μπορεί να "
+"λείπουν."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Εγκατάσταση"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr ""
+"Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
+"στοιχείου."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -3255,18 +3303,6 @@ msgid "No day found in the text"
 msgstr "Δεν βρέθηκε ημέρα στο κείμενο"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων. Εγκαταστήστε το python3-"
-"icalendar (python-icalendar στο Arch) με τη διαχείριση πακέτων σας."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Αδυναμία ανάγνωσης του αρχείου."
 
@@ -3361,21 +3397,6 @@ msgid "Choose File…"
 msgstr "Επιλογή αρχείου…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Εγκατάσταση…"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Εγκατάσταση"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr ""
-"Λήψη των icalendar και recurring-ical-events στον δικό φάκελο του γραφικού "
-"στοιχείου."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Ανάγνωση του αρχείου…"
 
@@ -3457,6 +3478,18 @@ msgstr "Αρχεία ήχου (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Όλα τα αρχεία (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων. Εγκαταστήστε το python3-"
+"icalendar (python-icalendar στο Arch) με τη διαχείριση πακέτων σας."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Δεν ήταν δυνατή η εγκατάσταση των αρθρωμάτων: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

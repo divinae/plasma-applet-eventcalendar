@@ -68,6 +68,39 @@ ConfigSection {
 		}
 	}
 
+	PythonModules {
+		id: modulesCheck
+		property string installError: ""
+		Component.onCompleted: check()
+	}
+	// The Python modules missing (an install from the KDE Store): said before anything is tried,
+	// with Install (lib/PythonModules.qml).
+	Kirigami.InlineMessage {
+		Layout.fillWidth: true
+		Layout.margins: Kirigami.Units.largeSpacing
+		visible: modulesCheck.present === false
+		type: Kirigami.MessageType.Warning
+		text: modulesCheck.installing ? i18n("Installing…")
+			: i18n("The Python modules icalendar and recurring-ical-events aren't all installed: calendars, or their repeating events, can be missing.")
+		actions: [
+			Kirigami.Action {
+				icon.name: "download"
+				text: i18n("Install")
+				enabled: !modulesCheck.installing
+				tooltip: i18n("Downloads icalendar and recurring-ical-events into the widget's own folder.")
+				onTriggered: modulesCheck.install(function(error) { modulesCheck.installError = error })
+			}
+		]
+	}
+	Kirigami.InlineMessage {
+		Layout.fillWidth: true
+		Layout.leftMargin: Kirigami.Units.largeSpacing
+		Layout.rightMargin: Kirigami.Units.largeSpacing
+		visible: !!modulesCheck.installError
+		type: Kirigami.MessageType.Error
+		text: modulesCheck.installError
+	}
+
 	FormCard.FormHeader {
 		title: i18n("Calendars")
 	}

@@ -33,6 +33,9 @@ CalendarManager {
 	}
 
 	function safeProcessError(stderr) {
+		if (/No module named '?(icalendar|recurring_ical_events|x_wr_timezone|dateutil|tzdata|six|click|typing_extensions)\b/.test(String(stderr || ""))) {
+			return i18n("Reading .ics calendars needs Python modules: install them in Settings > Calendars > iCalendar")
+		}
 		var message = String(stderr || i18n("Unknown iCalendar helper error")).trim()
 		return message.replace(/https?:\/\/\S+/gi, "[redacted URL]")
 	}

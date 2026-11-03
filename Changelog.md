@@ -1,3 +1,8 @@
+## v1.16.1 - November 3 2026
+
+### Fixes
+* **CalDAV and .ics calendars without the Python modules** (an install from the KDE Store, #14): Settings > Calendars > CalDAV and iCalendar check for icalendar and recurring-ical-events and offer **Install** (into the widget's own folder, no root). Connecting to a CalDAV server no longer fails with "No module named 'icalendar'", and a .ics calendar says where to install them instead of showing a Python error.
+
 ## v1.16.0 - November 3 2026
 
 ### Faster, and you see it load

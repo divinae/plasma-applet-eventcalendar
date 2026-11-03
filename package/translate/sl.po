@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 11:53+0100\n"
+"POT-Creation-Date: 2026-11-03 13:58+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -109,6 +109,13 @@ msgid "Could not connect"
 msgstr "Ni povezave"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
+msgid ""
+"CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"
+msgstr ""
+"CalDAV potrebuje module Python: namestite jih v Nastavitve > Koledarji > "
+"CalDAV"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
 msgid "The event was changed elsewhere meanwhile; it's loaded again"
 msgstr "Dogodek je bil medtem spremenjen drugje; znova je naložen"
 
@@ -176,6 +183,14 @@ msgstr "Ni bilo mogoče pridobiti zasedenih / prostih terminov"
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "iCalendar"
 msgstr "iCalendar"
+
+#: ../contents/ui/calendars/ICalManager.qml
+msgid ""
+"Reading .ics calendars needs Python modules: install them in Settings > "
+"Calendars > iCalendar"
+msgstr ""
+"Branje koledarjev .ics potrebuje module Python: namestite jih v Nastavitve > "
+"Koledarji > iCalendar"
 
 #: ../contents/ui/calendars/ICalManager.qml
 msgid "Unknown iCalendar helper error"
@@ -411,6 +426,15 @@ msgstr ""
 "koledarje ene barve skupaj."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Installing…"
+msgstr "Nameščanje …"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+msgid "CalDAV needs the Python modules icalendar and recurring-ical-events."
+msgstr "CalDAV potrebuje modula Python icalendar in recurring-ical-events."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
 msgid ""
 "The server didn't accept the user name or password. Some services need an "
 "app password (iCloud, Fastmail, Nextcloud with two-factor sign-in)."
@@ -458,6 +482,26 @@ msgstr[3] "Povezano: %1 koledarjev"
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Connected, but the account has no calendars for events."
 msgstr "Povezano, vendar račun nima koledarjev za dogodke."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml
+msgid ""
+"The Python modules icalendar and recurring-ical-events aren't all installed: "
+"calendars, or their repeating events, can be missing."
+msgstr ""
+"Modula Python icalendar in recurring-ical-events nista oba nameščena: "
+"koledarji ali njihovi ponavljajoči se dogodki lahko manjkajo."
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid "Install"
+msgstr "Namesti"
+
+#: ../contents/ui/config/CalendarsCalDAV.qml
+#: ../contents/ui/config/CalendarsICal.qml ../contents/ui/ImportView.qml
+msgid ""
+"Downloads icalendar and recurring-ical-events into the widget's own folder."
+msgstr "Prenese icalendar in recurring-ical-events v lastno mapo gradnika."
 
 #: ../contents/ui/config/CalendarsCalDAV.qml
 msgid "Read-only"
@@ -3255,18 +3299,6 @@ msgid "No day found in the text"
 msgstr "V besedilu ni najdenega dneva"
 
 #: ../contents/ui/ImportView.qml
-msgid ""
-"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
-"Arch) with your package manager."
-msgstr ""
-"Modulov ni bilo mogoče namestiti. Namestite python3-icalendar (python-"
-"icalendar v Archu) z upravljalnikom paketov."
-
-#: ../contents/ui/ImportView.qml
-msgid "Couldn't install the modules: %1"
-msgstr "Modulov ni bilo mogoče namestiti: %1"
-
-#: ../contents/ui/ImportView.qml
 msgid "Could not read the file."
 msgstr "Datoteke ni bilo mogoče prebrati."
 
@@ -3373,19 +3405,6 @@ msgid "Choose File…"
 msgstr "Izberi datoteko…"
 
 #: ../contents/ui/ImportView.qml
-msgid "Installing…"
-msgstr "Nameščanje …"
-
-#: ../contents/ui/ImportView.qml
-msgid "Install"
-msgstr "Namesti"
-
-#: ../contents/ui/ImportView.qml
-msgid ""
-"Downloads icalendar and recurring-ical-events into the widget's own folder."
-msgstr "Prenese icalendar in recurring-ical-events v lastno mapo gradnika."
-
-#: ../contents/ui/ImportView.qml
 msgid "Reading the file…"
 msgstr "Branje datoteke…"
 
@@ -3473,6 +3492,18 @@ msgstr "Zvokovne datoteke (%1)"
 #: ../contents/ui/lib/ConfigSound.qml
 msgid "All files (%1)"
 msgstr "Vse datoteke (%1)"
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid ""
+"Couldn't install the modules. Install python3-icalendar (python-icalendar on "
+"Arch) with your package manager."
+msgstr ""
+"Modulov ni bilo mogoče namestiti. Namestite python3-icalendar (python-"
+"icalendar v Archu) z upravljalnikom paketov."
+
+#: ../contents/ui/lib/PythonModules.qml
+msgid "Couldn't install the modules: %1"
+msgstr "Modulov ni bilo mogoče namestiti: %1"
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"

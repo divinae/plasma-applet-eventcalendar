@@ -332,6 +332,15 @@ def ctag_response(ctag):
 	return ms(resp("/cal/", "<cs:getctag>{}</cs:getctag>".format(xml_escape(ctag))))
 
 
+class MissingModuleTests(unittest.TestCase):
+	def test_missing_module_is_a_deps_line(self):
+		err = io.StringIO()
+		with mock.patch.object(caldav, "MISSING_MODULE", "icalendar"):
+			code = caldav.main(["discover", "--url", "https://x/", "--user", "u"], stdin=io.StringIO(""), stdout=io.StringIO(), stderr=err)
+		self.assertEqual(code, 1)
+		self.assertTrue(err.getvalue().startswith("DEPS: The Python module icalendar is missing"), err.getvalue())
+
+
 @mock.patch.object(caldav, "resolve_host", fake_resolve)
 class CtagTests(unittest.TestCase):
 	start = datetime.datetime(2026, 11, 2)
