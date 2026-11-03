@@ -140,6 +140,10 @@
 	</group>
 
 	<group name="Tooltip">
+		<entry name="timezoneNames" type="String">
+			<!-- Own names of the tooltip's time zones, JSON: { "America/New_York": "Boston" } (#17). -->
+			<default></default>
+		</entry>
 		<entry name="selectedTimeZones" type="StringList">
 			<label>A list of the time zones available on mouse wheel. Requires wheelChangesTimezone to be true. Format is "Europe/London". Special entry "Local" indicates system time zone.</label>
 			<default>Local</default>

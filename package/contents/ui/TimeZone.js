@@ -306,6 +306,33 @@ function guessLocal(utcMs) {
 	return ''
 }
 
+// Own names of time zones (the timezoneNames setting, #17): JSON { zone: name }, {} when empty
+// or not an object.
+function parseNames(text) {
+	try {
+		var names = JSON.parse(String(text || '') || '{}')
+		return names && typeof names === 'object' && !Array.isArray(names) ? names : {}
+	} catch (e) {
+		return {}
+	}
+}
+// The zone's own name, else `fallback`.
+function displayName(zone, names, fallback) {
+	var own = names && typeof names[zone] === 'string' ? names[zone].trim() : ''
+	return own || fallback
+}
+// The setting with the zone's name set (or removed: an empty name), as JSON.
+function namesWith(text, zone, name) {
+	var names = parseNames(text)
+	var trimmed = String(name || '').trim()
+	if (trimmed) {
+		names[zone] = trimmed
+	} else {
+		delete names[zone]
+	}
+	return Object.keys(names).length ? JSON.stringify(names) : ''
+}
+
 // "America/New_York" -> "New York", "America/Argentina/Buenos_Aires" -> "Buenos Aires".
 function cityName(zone) {
 	var parts = String(zone || '').split('/')

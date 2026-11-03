@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "Shared.js" as Shared
+import "TimeZone.js" as TimeZone
 import "WeatherIcons.js" as WeatherIcons
 
 Item {
@@ -62,6 +63,11 @@ Item {
 	}
 
 	function nameForZone(zone) {
+		// An own name (Settings > Time Zones, #17) comes first, in either style.
+		var own = TimeZone.displayName(zone, TimeZone.parseNames(plasmoid.configuration.timezoneNames), "")
+		if (own) {
+			return own
+		}
 		var zoneInfo = zoneData(zone)
 		if (plasmoid.configuration.displayTimezoneAsCode && zoneInfo) {
 			return zoneInfo["Timezone Abbreviation"] || ""

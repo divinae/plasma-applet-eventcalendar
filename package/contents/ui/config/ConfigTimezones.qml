@@ -52,8 +52,15 @@ ConfigPage {
 		if (index >= 0 && zoneId !== "Local") {
 			zones.splice(index, 1)
 			updateConfig(zones)
+			setZoneName(zoneId, "") // Its own name goes with it
 			syncFromConfig()
 		}
+	}
+
+	// Own names (#17): "Boston" for America/New_York, shown in the tooltip instead of the city.
+	readonly property var zoneNames: TimeZone.parseNames(page.cfg_timezoneNames)
+	function setZoneName(zoneId, name) {
+		page.configBridge.write("timezoneNames", TimeZone.namesWith(page.cfg_timezoneNames, zoneId, name))
 	}
 
 	function prettyZoneName(zoneId) {
@@ -98,9 +105,21 @@ ConfigPage {
 								spacing: 0
 								Label {
 									Layout.fillWidth: true
+									visible: model.zoneId === "Local"
 									text: prettyZoneName(model.zoneId)
 									textFormat: Text.PlainText // User text: never parsed as HTML
 									elide: Text.ElideRight
+								}
+								// Its name in the tooltip: the city, or one of your own.
+								TextField {
+									Layout.fillWidth: true
+									visible: model.zoneId !== "Local"
+									text: page.zoneNames[model.zoneId] || ""
+									placeholderText: prettyZoneName(model.zoneId)
+									onEditingFinished: page.setZoneName(model.zoneId, text)
+									ToolTip.text: i18n("The name shown in the tooltip (empty: the city)")
+									ToolTip.visible: hovered
+									ToolTip.delay: Kirigami.Units.toolTipDelay
 								}
 								Label {
 									Layout.fillWidth: true

@@ -60,6 +60,8 @@ KCM.SimpleKCM {
 	property var cfg_v72MigrationDefault
 	property var cfg_selectedTimeZones
 	property var cfg_selectedTimeZonesDefault
+	property var cfg_timezoneNames
+	property var cfg_timezoneNamesDefault
 	property var cfg_displayTimezoneAsCode
 	property var cfg_displayTimezoneAsCodeDefault
 	property var cfg_monthShowWeekNumbers
