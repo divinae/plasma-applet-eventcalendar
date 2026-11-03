@@ -306,15 +306,21 @@ function guessLocal(utcMs) {
 	return ''
 }
 
+// The timezoneNames setting as { zone: name }: {} when it's something else (hand-edited).
+function asNames(value) {
+	return value && typeof value === 'object' && !Array.isArray(value) ? value : {}
+}
 // The zone's own name (the timezoneNames setting, { zone: name }, #17), else `fallback`.
 function displayName(zone, names, fallback) {
-	var own = names && typeof names[zone] === 'string' ? names[zone].trim() : ''
+	names = asNames(names)
+	var own = typeof names[zone] === 'string' ? names[zone].trim() : ''
 	return own || fallback
 }
 // The names with the zone's set (or removed: an empty name), a new object.
 function namesWith(names, zone, name) {
 	var result = {}
-	for (var key in (names || {})) {
+	names = asNames(names)
+	for (var key in names) {
 		result[key] = names[key]
 	}
 	var trimmed = String(name || '').trim()

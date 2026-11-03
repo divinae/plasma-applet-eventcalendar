@@ -64,7 +64,7 @@ ConfigPage {
 		configBridge: page.configBridge
 		defaultValue: ({})
 	}
-	readonly property var zoneNames: zoneNamesConfig.value || ({})
+	readonly property var zoneNames: TimeZone.asNames(zoneNamesConfig.value)
 	function setZoneName(zoneId, name) {
 		zoneNamesConfig.value = TimeZone.namesWith(zoneNames, zoneId, name)
 		zoneNamesConfig.serialize()

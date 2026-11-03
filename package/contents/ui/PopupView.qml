@@ -500,14 +500,22 @@ MouseArea {
 		anchors.right: parent.right
 		height: 3
 		z: 10
-		indeterminate: true
-		visible: popup.refreshing && !loadingDelay.running
+		// Animations off (Settings > Views): a still line.
+		indeterminate: appletConfig.animations
+		value: 1
+		// Only after a moment: a quick load shows nothing. Set by the timer only (a binding on the
+		// timer's running could show it for a frame first); dropped when a load starts or ends.
+		property bool shown: false
+		visible: popup.refreshing && shown
 		Accessible.name: i18n("Loading calendars…")
-		// Only after a moment (a quick load shows nothing); stops itself, starts again with the next load.
 		Timer {
-			id: loadingDelay
 			interval: 400
 			running: popup.refreshing
+			onTriggered: loadingLine.shown = true
+		}
+		Connections {
+			target: popup
+			function onRefreshingChanged() { loadingLine.shown = false }
 		}
 	}
 

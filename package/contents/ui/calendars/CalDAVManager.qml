@@ -163,6 +163,9 @@ CalendarManager {
 			// Repeating events: read-only for now (a change would need the whole series).
 			event.canEdit = calendar.accessRole === 'owner' && !event.recurring
 		})
+		// What the calendar gave its events: an unchanged calendar (the same tag) with another
+		// color or rights is still shown anew (EventModel's unchanged check compares it).
+		data.look = calendar.backgroundColor + '|' + calendar.accessRole
 	}
 
 	//--- Writing

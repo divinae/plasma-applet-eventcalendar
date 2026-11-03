@@ -13,7 +13,6 @@ Item {
 	signal endReached()
 	// The first and last day in sight (the small month beside it marks them).
 	property date topDate: new Date(NaN)
-	property int topRow: -1 // Its row in the list
 	// The header's title (#16): the day at the top of the list, following the scroll, in the
 	// locale's long format; the year only when it's another one.
 	readonly property string title: {
@@ -38,7 +37,6 @@ Item {
 		return agendaItem && agendaItem.date ? agendaItem.date : null
 	}
 	function updateTopDate() {
-		topRow = rowAt(agendaList.contentY + 1)
 		var top = dateAt(agendaList.contentY + 1)
 		var bottom = dateAt(agendaList.contentY + agendaList.height - agendaList.spacing - 2) || (agendaList.count > 0 ? root.agendaModel.get(agendaList.count - 1).date : null)
 		if (top && top.getTime() !== topDate.getTime()) {
@@ -107,7 +105,7 @@ Item {
 	// The header's arrows and Today in the agenda (#16): day by day through the listed days (those
 	// with something on them). false: at the first one (the popup goes a month back then).
 	function goPrevious() {
-		var i = topRow
+		var i = rowAt(agendaList.contentY + 1) // Now: the list may have changed since the last scroll
 		if (i <= 0) {
 			return false
 		}
@@ -115,7 +113,7 @@ Item {
 		return true
 	}
 	function goNext() {
-		var i = topRow
+		var i = rowAt(agendaList.contentY + 1)
 		if (i >= 0 && i + 1 < root.agendaModel.count) {
 			agendaList.positionViewAtIndex(i + 1, ListView.Beginning)
 		} else {
