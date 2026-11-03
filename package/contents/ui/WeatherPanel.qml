@@ -714,6 +714,74 @@ ColumnLayout {
 				color: Kirigami.Theme.linkColor
 			}
 		}
+
+		// Mouse over: the hour under it, marked (a line, its point ringed) with what it brings in a box
+		// beside the line: its day and time, the temperature to a tenth (the labels round), the sky, the rain.
+		HoverHandler {
+			id: chartHover
+		}
+		readonly property int hoverIndex: chartHover.hovered && points.length > 1
+			? Math.max(0, Math.min(points.length - 1, Math.round((chartHover.point.position.x - 6) / ((width - 12) / (points.length - 1)))))
+			: -1
+		readonly property var hoverPoint: hoverIndex >= 0 ? points[hoverIndex] : null
+		Rectangle {
+			visible: !!hourChart.hoverPoint
+			x: Math.round(hourChart.xAt(hourChart.hoverIndex))
+			y: hourChart.plotTop - 4
+			width: 1
+			height: hourChart.plotBottom - hourChart.plotTop + 4
+			color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.4)
+		}
+		Rectangle {
+			readonly property real size: 9
+			visible: !!hourChart.hoverPoint
+			x: hourChart.xAt(hourChart.hoverIndex) - size / 2
+			y: hourChart.yAt(hourChart.hoverPoint ? hourChart.hoverPoint.temp : 0) - size / 2
+			width: size
+			height: size
+			radius: size / 2
+			color: Kirigami.Theme.backgroundColor
+			border.width: 2
+			border.color: panel.lineColor
+		}
+		Rectangle {
+			readonly property real lineX: hourChart.xAt(hourChart.hoverIndex)
+			readonly property real gap: Kirigami.Units.smallSpacing * 2
+			visible: !!hourChart.hoverPoint
+			// Right of the line, or left of it where there's no room.
+			x: lineX + gap + width <= hourChart.width ? lineX + gap : Math.max(0, lineX - gap - width)
+			y: hourChart.plotTop
+			width: hoverText.implicitWidth + Kirigami.Units.smallSpacing * 3
+			height: hoverText.implicitHeight + Kirigami.Units.smallSpacing * 2
+			radius: 4
+			color: Kirigami.Theme.backgroundColor
+			border.width: 1
+			border.color: ColorUtil.setAlpha(Kirigami.Theme.textColor, 0.25)
+			PlasmaComponents3.Label {
+				id: hoverText
+				anchors.centerIn: parent
+				font: Kirigami.Theme.smallFont
+				textFormat: Text.PlainText
+				text: {
+					var point = hourChart.hoverPoint
+					if (!point) {
+						return ""
+					}
+					var lines = [
+						Qt.locale().toString(new Date(point.dt * 1000), "ddd") + " " + panel.timeText(point.dt),
+						Number(point.temp).toLocaleString(Qt.locale(), 'f', 1) + "°",
+					]
+					var sky = point.text || point.description
+					if (sky) {
+						lines.push(sky)
+					}
+					if (point.precipitation > 0) {
+						lines.push(panel.precipitationText(point.precipitation))
+					}
+					return lines.join("\n")
+				}
+			}
+		}
 	}
 
 	//--- Next days: day, icon, high / low. With the chart's larger icons, larger here too and the
