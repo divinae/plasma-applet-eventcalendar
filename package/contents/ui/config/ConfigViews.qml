@@ -1,11 +1,16 @@
 import QtQuick
 import QtQuick.Controls as QQC2
+import QtQuick.Dialogs
 import QtQuick.Layouts
+import QtCore
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
 import ".."
 import "../lib"
+import "../ScriptPath.js" as ScriptPath
+import "../lib/SettingsTransfer.js" as SettingsTransfer
+import "../lib/Base64Compat.js" as Base64Compat
 
 // Popup views: month / week / agenda, calendar look and, for the agenda layout, its widgets.
 ConfigPage {
@@ -435,5 +440,144 @@ ConfigPage {
 				configKey: 'debugging'
 			}
 		}
+
+		//--- Settings backup (issue #21)
+		FormCard.FormHeader {
+			title: i18n("Settings Backup")
+		}
+		FormCard.FormCard {
+			FormCard.FormButtonDelegate {
+				icon.name: "document-export"
+				text: i18n("Export Settings…")
+				description: i18n("All settings of this widget to a file, without passwords and sign-ins")
+				enabled: !settingsBackup.busy
+				onClicked: exportDialog.open()
+			}
+			FormCard.FormDelegateSeparator {}
+			FormCard.FormButtonDelegate {
+				icon.name: "document-import"
+				text: i18n("Import Settings…")
+				description: i18n("From an exported file; press Apply or OK to keep them")
+				enabled: !settingsBackup.busy
+				onClicked: importDialog.open()
+			}
+			FormCard.AbstractFormDelegate {
+				visible: !!settingsBackup.message
+				background: null
+				contentItem: Kirigami.InlineMessage {
+					visible: true
+					type: settingsBackup.isError ? Kirigami.MessageType.Error : Kirigami.MessageType.Positive
+					text: settingsBackup.message
+				}
+			}
+		}
+		FormCard.FormSectionText {
+			text: i18n("Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring).")
+		}
+	}
+
+	readonly property alias settingsBackup: settingsBackup // Tests
+	QtObject {
+		id: settingsBackup
+		property bool busy: false
+		property string message: ""
+		property bool isError: false
+		readonly property string helperPath: ScriptPath.scriptPath("settings_file.py")
+
+		function say(text, error) {
+			message = text
+			isError = !!error
+		}
+
+		function pathOf(url) {
+			return decodeURIComponent(String(url).replace(/^file:\/\//, ""))
+		}
+
+		// The settings this page has (every one of the widget's: ConfigPage's cfg_ properties).
+		function keys() {
+			var out = []
+			for (var prop in page) {
+				if (prop.indexOf("cfg_") === 0 && !/Default$/.test(prop)) {
+					out.push(prop.slice(4))
+				}
+			}
+			return out
+		}
+
+		function exportTo(url) {
+			var path = pathOf(url)
+			if (!/\.json$/i.test(path)) {
+				path += ".json"
+			}
+			var version = (typeof plasmoid !== "undefined" && plasmoid && plasmoid.metaData) ? plasmoid.metaData.version : ""
+			var data = SettingsTransfer.build(keys(), function(key) { return page.configBridge.read(key, undefined) }, version)
+			var parts = SettingsTransfer.chunks(Base64Compat.base64EncodeString(JSON.stringify(data, null, "\t")), 48000)
+			busy = true
+			say("", false)
+			function writePart(n) {
+				var argv = ["python3", helperPath, "write", "--path", path, "--part", String(n), "--data", parts[n]]
+				if (n === parts.length - 1) {
+					argv.push("--last")
+				}
+				backupExec.execArgv(argv, function(cmd, exitCode, exitStatus, stdout, stderr) {
+					if (exitCode) {
+						settingsBackup.busy = false
+						settingsBackup.say(i18n("The file couldn't be written: %1", String(stderr || "").trim()), true)
+					} else if (n < parts.length - 1) {
+						writePart(n + 1)
+					} else {
+						settingsBackup.busy = false
+						settingsBackup.say(i18n("Exported to %1", path), false)
+					}
+				})
+			}
+			writePart(0)
+		}
+
+		function importFrom(url) {
+			var path = pathOf(url)
+			busy = true
+			say("", false)
+			backupExec.execArgv(["python3", helperPath, "read", "--path", path], function(cmd, exitCode, exitStatus, stdout, stderr) {
+				settingsBackup.busy = false
+				if (exitCode) {
+					settingsBackup.say(i18n("The file couldn't be read: %1", String(stderr || "").trim()), true)
+					return
+				}
+				var result = SettingsTransfer.parse(stdout, function(key) { return page.configBridge.read(key, undefined) })
+				if (result.error) {
+					settingsBackup.say(i18n("This isn't a settings file of Event Calendar."), true)
+					return
+				}
+				var keys = Object.keys(result.settings)
+				keys.forEach(function(key) {
+					page.configBridge.write(key, result.settings[key])
+				})
+				var text = i18np("Imported %1 setting. Press Apply or OK to keep it.", "Imported %1 settings. Press Apply or OK to keep them.", keys.length)
+				if (result.skipped.length) {
+					text += " " + i18np("Skipped %1 setting this version doesn't have: %2", "Skipped %1 settings this version doesn't have: %2", result.skipped.length, result.skipped.join(", "))
+				}
+				settingsBackup.say(text, false)
+			})
+		}
+	}
+	ExecUtil { id: backupExec }
+
+	FileDialog {
+		id: exportDialog
+		title: i18n("Export Settings")
+		fileMode: FileDialog.SaveFile
+		nameFilters: [i18n("Settings (*.json)")]
+		currentFolder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+		selectedFile: currentFolder + "/" + SettingsTransfer.fileName(new Date())
+		onAccepted: settingsBackup.exportTo(selectedFile)
+	}
+	FileDialog {
+		id: importDialog
+		title: i18n("Import Settings")
+		fileMode: FileDialog.OpenFile
+		nameFilters: [i18n("Settings (*.json)")]
+		currentFolder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+		onAccepted: settingsBackup.importFrom(selectedFile)
 	}
 }
