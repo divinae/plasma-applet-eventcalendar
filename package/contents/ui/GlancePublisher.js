@@ -79,12 +79,38 @@ function utf8Bytes(text) {
 
 // The payload Glance accepts: {"version": 1, "events": [...]}, kept under MAX_BYTES by leaving
 // out the latest events first (tomorrow before today)
-function payload(events, nowMs) {
+// The weather for Glance: now (logic.currentWeatherData) and today's high / low (weatherByDay's
+// day), as plain values; null without either
+function weather(current, today, units) {
+	var c = current && isFinite(current.temp) ? current : null
+	var t = today && today.temp ? today : null
+	if (!c && !t) {
+		return null
+	}
+	return {
+		temp: c ? Math.round(c.temp) : null,
+		text: c ? String(c.text || '') : '',
+		iconName: String((c && c.iconName) || (t && t.iconName) || ''),
+		high: t && isFinite(t.temp.max) ? Math.round(t.temp.max) : null,
+		low: t && isFinite(t.temp.min) ? Math.round(t.temp.min) : null,
+		place: c ? String(c.place || '') : '',
+		units: units === 'imperial' ? 'imperial' : 'metric',
+	}
+}
+
+function payload(events, nowMs, weatherNow) {
 	var list = events.slice()
-	var text = JSON.stringify({ version: 1, savedAt: nowMs, events: list })
+	var data = function() {
+		var out = { version: 1, savedAt: nowMs, events: list }
+		if (weatherNow) {
+			out.weather = weatherNow
+		}
+		return JSON.stringify(out)
+	}
+	var text = data()
 	while (utf8Bytes(text) > MAX_BYTES && list.length) {
 		list.pop()
-		text = JSON.stringify({ version: 1, savedAt: nowMs, events: list })
+		text = data()
 	}
 	return text
 }

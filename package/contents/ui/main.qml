@@ -46,6 +46,8 @@ PlasmoidItem {
 	GlancePublisher {
 		upcomingEvents: upcomingEvents
 		eventModel: eventModel
+		logic: logic
+		weatherByDay: root.weatherByDay
 	}
 
 	// An event's details in the popup (Glance, on a click on its line): the day it's on, then its

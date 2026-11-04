@@ -14,6 +14,9 @@ QtObject {
 
 	required property var upcomingEvents
 	required property var eventModel
+	// The weather (Logic's current, the widget's weatherByDay) when Event Calendar shows it
+	property var logic: null
+	property var weatherByDay: null
 	property bool enabled: plasmoid.configuration.glanceShareEvents === true // Off by default
 
 	// The last call reached Glance: changes go out at once; otherwise only the heartbeat tries
@@ -57,6 +60,14 @@ QtObject {
 		return GlancePublisher.select(items, nowMs)
 	}
 
+	function currentWeather(nowMs) {
+		if (!logic) {
+			return null
+		}
+		var today = weatherByDay ? weatherByDay[Shared.dayKey(new Date(nowMs))] || null : null
+		return GlancePublisher.weather(logic.currentWeatherData, today, plasmoid.configuration.weatherUnits)
+	}
+
 	function publish() {
 		if (!enabled) {
 			return
@@ -72,7 +83,7 @@ QtObject {
 			"--dest", "com.dv.glance",
 			"--object-path", "/Calendar",
 			"--method", "com.dv.glance.Calendar.Publish",
-			"1", String(plasmoid.id), GlancePublisher.payload(collect(now), now),
+			"1", String(plasmoid.id), GlancePublisher.payload(collect(now), now, currentWeather(now)),
 		], function(cmd, exitCode) {
 			publisher.busy = false
 			publisher.glanceSeen = exitCode === 0
@@ -108,6 +119,12 @@ QtObject {
 		function onEventAdded() { publisher.changed() }
 		function onEventRemoved() { publisher.changed() }
 		function onEventUpdated() { publisher.changed() }
+	}
+
+	property Connections onWeather: Connections {
+		target: publisher.logic
+		function onCurrentWeatherDataChanged() { publisher.changed() }
+		function onDailyWeatherDataChanged() { publisher.changed() }
 	}
 
 	onEnabledChanged: if (enabled) changed()

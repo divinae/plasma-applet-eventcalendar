@@ -75,3 +75,17 @@ assert.strictEqual(kept[0].id, 'e0')
 	const text = G.payload(titles, now)
 	assert.ok(Buffer.byteLength(text, 'utf8') <= G.MAX_BYTES, 'within the cap in bytes: ' + Buffer.byteLength(text, 'utf8'))
 }
+
+// The weather: now and today's high / low, rounded; nothing without either
+vm.runInNewContext(source + '\nObject.assign(out, { weather })', { out: G, Date, Math, JSON, isNaN, isFinite })
+const w = G.weather({ temp: 7.6, text: 'Broken clouds', iconName: 'weather-clouds', place: 'Warsaw, PL' },
+	{ temp: { max: 10.4, min: 2.5 }, iconName: 'weather-few-clouds' }, 'metric')
+assert.strictEqual(w.temp, 8)
+assert.strictEqual(w.high, 10)
+assert.strictEqual(w.low, 3)
+assert.strictEqual(w.iconName, 'weather-clouds')
+assert.strictEqual(G.weather(null, null, 'metric'), null)
+assert.strictEqual(G.weather(null, { temp: { max: 5, min: 1 }, iconName: 'weather-snow' }, 'imperial').temp, null)
+const withWeather = JSON.parse(G.payload([], now, w))
+assert.strictEqual(withWeather.weather.temp, 8)
+assert.strictEqual('weather' in JSON.parse(G.payload([], now, null)), false)
