@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:12+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -1382,6 +1382,10 @@ msgstr "アイランド: カレンダーのグリッド、日表示のパネル�
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands (cards)"
 msgstr "アイランド (カード)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands, translucent cards"
+msgstr "アイランド、半透明のカード"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"

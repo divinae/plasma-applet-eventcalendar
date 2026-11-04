@@ -543,7 +543,7 @@
 			<default>bar</default>
 		</entry>
 		<entry name="uiStyle" type="string">
-			<!-- islands: the Day view's panels, the agenda days and the task sections in their own rounded cards; flat: one surface -->
+			<!-- islands: the Day view's panels, the agenda days and the task sections in their own rounded cards; glass: those cards translucent (a faint wash, no border or shadow); flat: one surface -->
 			<default>islands</default>
 		</entry>
 		<entry name="animationsEnabled" type="bool">

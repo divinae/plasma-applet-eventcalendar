@@ -125,6 +125,7 @@ ConfigPage {
 				configKey: 'uiStyle'
 				model: [
 					{ value: 'islands', text: i18n("Islands (cards)") },
+					{ value: 'glass', text: i18n("Islands, translucent cards") },
 					{ value: 'flat', text: i18n("Flat") },
 				]
 			}

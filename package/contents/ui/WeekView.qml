@@ -1299,7 +1299,7 @@ Item {
 						y: freeNote.y - pad
 						radius: appletConfig.cardRadius
 						// Opaque: the hour lines don't show through.
-						color: ColorUtil.setAlpha(appletConfig.cardColor, 1)
+						color: appletConfig.solidCardColor
 						border.width: 1
 						border.color: appletConfig.cardBorderColor
 					}

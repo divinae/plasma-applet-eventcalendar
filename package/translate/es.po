@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:12+0100\n"
+"POT-Creation-Date: 2026-11-04 09:21+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -1389,6 +1389,10 @@ msgstr "Islas: las cuadrículas del calendario, los paneles de la vista de día,
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Islands (cards)"
 msgstr "Islas (tarjetas)"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Islands, translucent cards"
+msgstr "Islas, tarjetas translúcidas"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Flat"

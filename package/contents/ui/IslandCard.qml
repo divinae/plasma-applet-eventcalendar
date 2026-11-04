@@ -34,7 +34,8 @@ Item {
 	implicitHeight: (contentChild ? contentChild.implicitHeight : 0) + topPadding + bottomPadding
 
 	// The shadow's reach: the frame below is that much larger, except at an open (joined) edge.
-	readonly property real shadowSize: 6
+	// Translucent cards: none.
+	readonly property real shadowSize: appletConfig.glassCards ? 0 : 6
 	Item {
 		id: frame
 		visible: card.shown
