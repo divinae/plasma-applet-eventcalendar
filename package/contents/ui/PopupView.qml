@@ -1010,7 +1010,18 @@ MouseArea {
 			monthView.parseGCalEvents(eventModel.eventsData)
 		}
 	}
-	onShowAgendaChanged: if (showAgenda && agendaStale) updateAgenda()
+	// The Agenda shown (from another view): at today, as the Week and Day views are when shown again
+	// (weekViewShown), not where it was left or at the month's selected day. A day asked for
+	// afterwards (go to date, an event shown) still wins.
+	onShowAgendaChanged: {
+		if (!showAgenda) {
+			return
+		}
+		if (agendaStale) {
+			updateAgenda()
+		}
+		goToDay(timeModel.currentTime)
+	}
 	onShowCalendarChanged: if (showCalendar && monthStale) updateMonth()
 	// The kept Week / Day view shown again (from the month, the agenda, tasks): as a new one would
 	// be, the week (or day) with today, or the day asked for (showDayView). Two ticks later: after

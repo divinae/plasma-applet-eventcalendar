@@ -64,7 +64,12 @@ Item {
 		}
 		// At the end after scrolling (not a short list that fits): the next month.
 		onContentYChanged: agendaView.updateTopDate()
-		onCountChanged: Qt.callLater(agendaView.updateTopDate)
+		onCountChanged: {
+			Qt.callLater(agendaView.updateTopDate)
+			Qt.callLater(agendaView.follow)
+		}
+		onContentHeightChanged: Qt.callLater(agendaView.follow)
+		onMovementStarted: agendaView.stopFollowing()
 		onHeightChanged: Qt.callLater(agendaView.updateTopDate)
 		onAtYEndChanged: {
 			if (atYEnd && contentHeight > height && count > 0) {
@@ -73,11 +78,14 @@ Item {
 		}
 		// Not flicked with the mouse (as Plasma's ScrollView); wheel and touchpad as there.
 		interactive: Kirigami.Settings.hasTransientTouchInput
-		QQC2.ScrollBar.vertical: OverlayScrollBar {}
+		QQC2.ScrollBar.vertical: OverlayScrollBar {
+			onPressedChanged: if (pressed) agendaView.stopFollowing()
+		}
 		Kirigami.WheelHandler {
 			target: agendaList
 			filterMouseEvents: true
 			keyNavigationEnabled: false
+			onWheel: agendaView.stopFollowing()
 		}
 
 		delegate: AgendaListItem {
@@ -105,6 +113,7 @@ Item {
 	// The header's arrows and Today in the agenda (#16): day by day through the listed days (those
 	// with something on them). false: at the first one (the popup goes a month back then).
 	function goPrevious() {
+		stopFollowing()
 		var i = rowAt(agendaList.contentY + 1) // Now: the list may have changed since the last scroll
 		if (i <= 0) {
 			return false
@@ -113,6 +122,7 @@ Item {
 		return true
 	}
 	function goNext() {
+		stopFollowing()
 		var i = rowAt(agendaList.contentY + 1)
 		if (i >= 0 && i + 1 < root.agendaModel.count) {
 			agendaList.positionViewAtIndex(i + 1, ListView.Beginning)
@@ -124,7 +134,34 @@ Item {
 		scrollToDate(timeModel.currentTime)
 	}
 
+	// A day scrolled to (scrollToDate) stays at the top while the list settles: it fills in parts,
+	// the days take their real height only as they're built (a long description: much taller, seconds
+	// later), their weather comes later; each moved the day away. Until the user scrolls (wheel,
+	// dragging, the scroll bar, the header's arrows) or another day is scrolled to.
+	property var followDate: null
+	function stopFollowing() {
+		followDate = null
+	}
+	function follow() {
+		if (!followDate) {
+			return
+		}
+		positionAtDate(followDate)
+	}
+	Connections {
+		target: root.agendaModel
+		function onPopulatingChanged() {
+			if (!root.agendaModel.populating) {
+				Qt.callLater(agendaView.follow)
+			}
+		}
+	}
+
 	function scrollToDate(date) {
+		followDate = date
+		positionAtDate(date)
+	}
+	function positionAtDate(date) {
 		for (var i = 0; i < root.agendaModel.count; i++) {
 			var agendaItem = root.agendaModel.get(i)
 			if (Shared.isSameDate(date, agendaItem.date)) {
