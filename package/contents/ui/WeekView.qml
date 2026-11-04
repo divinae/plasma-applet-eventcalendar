@@ -681,6 +681,7 @@ Item {
 		isToday: weekView.showingToday
 		current: weekView.showingToday ? weekView.weatherCurrent : null
 		today: weekView.dayWeather(weekView.weekStart)
+		day: weekView.weekStart
 		latitude: weekView.weatherPlace.latitude
 		longitude: weekView.weatherPlace.longitude
 	}

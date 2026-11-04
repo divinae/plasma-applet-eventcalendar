@@ -21,9 +21,12 @@ ColumnLayout {
 	property bool isToday: true // false: the view shows another day
 	property bool isSetup: true
 	property string locationName: ""
-	// Its place (WeatherApi.place): the chart's nights by the sun there. NaN: by the hour.
+	// Its place (WeatherApi.place): the chart's nights by the sun there, sunrise and sunset. NaN: by
+	// the hour, no sunrise and sunset.
 	property real latitude: NaN
 	property real longitude: NaN
+	property date day: new Date() // The shown day: its sunrise and sunset
+	readonly property var sun: Moon.sunRiseSet(day, latitude, longitude)
 	property string forecastUrl: "" // The full forecast on the web (WeatherApi.forecastPageUrl): the location opens it
 	property bool compact: false // One row above the grid when the popup is narrow
 	// Sections left out where there's little height (the Day view's right column above the tasks).
@@ -392,6 +395,54 @@ ColumnLayout {
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			opacity: panel.dimOpacity
 		}
+	}
+	// Sunrise and sunset at the weather's place (worked out here, Moon.sunRiseSet): left out without
+	// a place (Weather Canada) and in the compact row.
+	RowLayout {
+		visible: panel.showData && !panel.compact && !!panel.sun
+		Layout.fillWidth: true
+		Layout.topMargin: Kirigami.Units.smallSpacing
+		spacing: Kirigami.Units.smallSpacing
+		opacity: panel.dimOpacity
+		readonly property bool crossing: !!panel.sun && (!!panel.sun.rise || !!panel.sun.set)
+		function sunTime(date) {
+			return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+		}
+		FontIcon {
+			visible: parent.crossing && !!panel.sun.rise
+			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+			source: "wi-sunrise"
+			color: Kirigami.Theme.textColor
+			showOutline: false
+		}
+		PlasmaComponents3.Label {
+			visible: parent.crossing && !!panel.sun.rise
+			text: panel.sun && panel.sun.rise ? parent.sunTime(panel.sun.rise) : ""
+			Accessible.name: i18nc("%1 = time", "Sunrise %1", text)
+		}
+		Item { visible: parent.crossing && !!panel.sun.rise && !!panel.sun.set; implicitWidth: Kirigami.Units.largeSpacing }
+		FontIcon {
+			visible: parent.crossing && !!panel.sun.set
+			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+			source: "wi-sunset"
+			color: Kirigami.Theme.textColor
+			showOutline: false
+		}
+		PlasmaComponents3.Label {
+			visible: parent.crossing && !!panel.sun.set
+			text: panel.sun && panel.sun.set ? parent.sunTime(panel.sun.set) : ""
+			Accessible.name: i18nc("%1 = time", "Sunset %1", text)
+		}
+		// Close to the pole
+		PlasmaComponents3.Label {
+			visible: !parent.crossing
+			Layout.fillWidth: true
+			wrapMode: Text.Wrap
+			text: panel.sun && panel.sun.alwaysUp ? i18nc("the sun", "Up all day (midnight sun)") : i18nc("the sun", "Down all day (polar night)")
+		}
+		Item { Layout.fillWidth: true; visible: parent.crossing }
 	}
 	// Another day: its rain (the high / low are in the heading).
 	PlasmaComponents3.Label {

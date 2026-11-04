@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 16:59+0100\n"
+"POT-Creation-Date: 2026-11-04 09:03+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -4654,6 +4654,26 @@ msgstr "最高 %1 · 最低 %2"
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
 msgstr "降雨：%1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunrise %1"
+msgstr "日出 %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunset %1"
+msgstr "日落 %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun"
+msgid "Up all day (midnight sun)"
+msgstr "全天在地平线以上（极昼）"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun"
+msgid "Down all day (polar night)"
+msgstr "全天在地平线以下（极夜）"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."

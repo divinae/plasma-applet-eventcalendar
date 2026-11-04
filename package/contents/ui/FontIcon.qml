@@ -55,6 +55,8 @@ Item {
 			'wi-smoke': '\uf062', // wi-smoke
 			'wi-tornado': '\uf056', // wi-tornado
 			'wi-windy': '\uf021', // wi-windy
+			'wi-sunrise': '\uf051', // wi-sunrise
+			'wi-sunset': '\uf052', // wi-sunset
 		}
 		// The moon by its age: moon-0 (new) .. moon-14 (full) .. moon-27, wi-moon-new .. wi-moon-waning-crescent-6.
 		var moon = /^moon-(\d+)$/.exec(name)

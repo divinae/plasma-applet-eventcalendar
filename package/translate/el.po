@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-03 16:59+0100\n"
+"POT-Creation-Date: 2026-11-04 09:03+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -4855,6 +4855,26 @@ msgstr "Μέγ. %1 · Ελάχ. %2"
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
 msgstr "Βροχή: %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunrise %1"
+msgstr "Ανατολή ηλίου %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunset %1"
+msgstr "Δύση ηλίου %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun"
+msgid "Up all day (midnight sun)"
+msgstr "Πάνω από τον ορίζοντα όλη μέρα (ήλιος του μεσονυκτίου)"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun"
+msgid "Down all day (polar night)"
+msgstr "Κάτω από τον ορίζοντα όλη μέρα (πολική νύχτα)"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."

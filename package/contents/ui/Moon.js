@@ -165,22 +165,22 @@ function nextPhase(from, target) {
 	return null
 }
 
-// When the moon rises and sets on day (local, from its start to the next) at latitude / longitude:
-// { rise, set } (Date or null: none that day), alwaysUp / alwaysDown when it neither rises nor sets.
-// SunCalc's way: the altitude by the hour, each two hours' curve solved for the horizon.
-function riseSet(day, lat, lon) {
+// When a body rises and sets on day (local, from its start to the next): { rise, set } (Date or
+// null: none that day), alwaysUp / alwaysDown when it neither rises nor sets. aboveHorizon(date):
+// how far it is above the horizon then (radians). SunCalc's way: by the hour, each two hours' curve
+// solved for the horizon.
+function horizonCrossings(day, aboveHorizon) {
 	var start = new Date(day.getFullYear(), day.getMonth(), day.getDate())
 	function hoursLater(h) {
 		return new Date(start.valueOf() + h * 3600000)
 	}
-	var hc = 0.133 * rad // The moon's radius and a little refraction: its upper edge at the horizon
-	var h0 = moonAltitude(start, lat, lon) - hc
+	var h0 = aboveHorizon(start)
 	var rise = null
 	var set = null
 	var ye = 0
 	for (var i = 1; i <= 24; i += 2) {
-		var h1 = moonAltitude(hoursLater(i), lat, lon) - hc
-		var h2 = moonAltitude(hoursLater(i + 1), lat, lon) - hc
+		var h1 = aboveHorizon(hoursLater(i))
+		var h2 = aboveHorizon(hoursLater(i + 1))
 		var a = (h0 + h2) / 2 - h1
 		var b = (h2 - h0) / 2
 		var xe = -b / (2 * a)
@@ -224,6 +224,23 @@ function riseSet(day, lat, lon) {
 		alwaysUp: !rise && !set && ye > 0,
 		alwaysDown: !rise && !set && ye <= 0,
 	}
+}
+
+// When the moon rises and sets on day (local) at latitude / longitude: as horizonCrossings, its
+// upper edge on the horizon (its radius and a little refraction).
+function riseSet(day, lat, lon) {
+	var hc = 0.133 * rad
+	return horizonCrossings(day, function(date) { return moonAltitude(date, lat, lon) - hc })
+}
+
+// When the sun rises and sets on day (local) at latitude / longitude: as horizonCrossings, its
+// upper edge on the horizon (-0.833 degrees: refraction and its radius, as published times).
+// null without a place.
+function sunRiseSet(day, lat, lon) {
+	if (typeof lat !== 'number' || typeof lon !== 'number' || !isFinite(lat) || !isFinite(lon)) {
+		return null
+	}
+	return horizonCrossings(day, function(date) { return (sunAltitude(date, lat, lon) + 0.833) * rad })
 }
 
 // The moon on day (local): {

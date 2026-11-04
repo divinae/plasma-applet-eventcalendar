@@ -151,6 +151,7 @@ Item {
 			isToday: panels.showingToday
 			current: panels.showingToday ? panels.weatherCurrent : null
 			today: panels.dayWeather(panels.day)
+			day: panels.day
 			latitude: panels.weatherPlace.latitude
 			longitude: panels.weatherPlace.longitude
 			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25

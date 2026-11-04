@@ -76,4 +76,13 @@ const bingen = M.sunDownAt(49.967, 7.899)
 assert.deepStrictEqual([bingen(new Date(2026, 10, 3, 7).getTime()), bingen(new Date(2026, 10, 3, 8).getTime())], [true, false])
 assert.strictEqual(M.sunDownAt(NaN, 7.9), null, 'no place: none')
 
+// Sunrise and sunset (published for Berlin on 21 June 2024: 04:43 and 21:33 CEST), within 3 minutes.
+const june = M.sunRiseSet(new Date(2024, 5, 21), berlin[0], berlin[1])
+near(june.rise, new Date(2024, 5, 21, 4, 43), 0.05, 'sunrise')
+near(june.set, new Date(2024, 5, 21, 21, 33), 0.05, 'sunset')
+// Close to the pole: the midnight sun in June, the polar night in December.
+assert.ok(M.sunRiseSet(new Date(2024, 5, 21), 78.2, 15.6).alwaysUp, 'midnight sun')
+assert.ok(M.sunRiseSet(new Date(2024, 11, 21), 78.2, 15.6).alwaysDown, 'polar night')
+assert.strictEqual(M.sunRiseSet(new Date(2024, 5, 21), NaN, 13.4), null, 'no place: none')
+
 console.log('PASS moon')
