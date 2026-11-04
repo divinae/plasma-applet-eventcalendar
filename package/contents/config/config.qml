@@ -5,6 +5,7 @@ import "../ui/calendars/PlasmaCalendarUtils.js" as PlasmaCalendarUtils
 
 ConfigModel {
 	id: configModel
+	// The pages' icons: Breeze's monochrome line icons, all drawn at the same size (no colored one).
 	property var eventPluginsManager: null
 	readonly property bool hasPlasmoidConfig: typeof plasmoid !== "undefined"
 		&& plasmoid
@@ -17,12 +18,12 @@ ConfigModel {
 
 	ConfigCategory {
 		name: i18n("Views")
-		icon: "view-calendar"
+		icon: "view-calendar-timeline"
 		source: "config/ConfigViews.qml"
 	}
 	ConfigCategory {
 		name: i18n("Clock")
-		icon: "clock"
+		icon: "view-history" // A plain clock face
 		source: "config/ConfigClock.qml"
 	}
 	ConfigCategory {
@@ -32,7 +33,7 @@ ConfigModel {
 	}
 	ConfigCategory {
 		name: i18n("Calendars")
-		icon: "office-calendar"
+		icon: "view-calendar"
 		source: "config/ConfigCalendars.qml"
 	}
 	ConfigCategory {
@@ -42,7 +43,7 @@ ConfigModel {
 	}
 	ConfigCategory {
 		name: i18n("Weather")
-		icon: "weather-clouds"
+		icon: "cloudstatus-symbolic" // An outline cloud
 		source: "config/ConfigWeather.qml"
 	}
 	ConfigCategory {
