@@ -610,7 +610,8 @@
 			<default>true</default>
 		</entry>
 		<entry name="dayShowMoon" type="bool">
-			<default>true</default>
+			<!-- Off by default: the box takes room in the side column (and makes one without tasks or weather) -->
+			<default>false</default>
 		</entry>
 		<entry name="dayShowTasks" type="bool">
 			<default>true</default>

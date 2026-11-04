@@ -326,13 +326,13 @@ ConfigPage {
 							model: [
 								{ key: 'dayShowMiniMonth', text: i18n("Small calendar") },
 								{ key: 'dayShowUpNext', text: i18n("Up next") },
-								{ key: 'dayShowMoon', text: i18n("Moon") },
+								{ key: 'dayShowMoon', text: i18n("Moon"), off: true }, // Off by default
 								{ key: 'dayShowWeather', text: i18n("Weather") },
 								{ key: 'dayShowTasks', text: i18n("Tasks") },
 							]
 							QQC2.CheckBox {
 								text: modelData.text
-								checked: page.configBridge.read(modelData.key, true) !== false
+								checked: page.configBridge.read(modelData.key, !modelData.off) === true
 								onToggled: page.configBridge.write(modelData.key, checked)
 							}
 						}
