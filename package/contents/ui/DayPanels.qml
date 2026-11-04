@@ -45,7 +45,8 @@ Item {
 	// Up next under the small month (not beside the Agenda: the list itself is what's next).
 	property bool upNextAllowed: true
 	readonly property bool wantsUpNext: upNextAllowed && plasmoid.configuration.dayShowUpNext !== false
-	readonly property bool wantsWeather: plasmoid.configuration.dayShowWeather !== false
+	// Settings > Views: weather in the views at all, and this panel.
+	readonly property bool wantsWeather: plasmoid.configuration.weatherShowInViews !== false && plasmoid.configuration.dayShowWeather !== false
 		&& (Object.keys(weatherByDay).length > 0 || weatherIsSetup)
 	readonly property bool wantsTasks: plasmoid.configuration.dayShowTasks !== false
 	readonly property bool wantsMoon: plasmoid.configuration.dayShowMoon === true // Off by default

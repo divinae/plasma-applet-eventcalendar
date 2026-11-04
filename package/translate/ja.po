@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -938,7 +938,7 @@ msgstr "スヌーズ"
 msgid "0 = no Snooze button"
 msgstr "0 = スヌーズボタンなし"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "音"
 
@@ -1531,12 +1531,12 @@ msgid "Search time zones"
 msgstr "タイムゾーンを検索"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "日の見出しに天気予報を、日ビューに天気パネルを表示します。"
+msgid "The forecast in the Week view's day headers, on each Agenda day, and the weather panel of the Day view and the Agenda."
+msgstr "週表示の日付見出し、予定の各日、日表示と予定の天気パネルの予報。"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "日表示に表示"
+msgid "Day view and Agenda show"
+msgstr "日表示と予定に表示"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1583,26 +1583,6 @@ msgstr "会議リンクボタン"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "複数日のイベントを毎日に表示"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "予定の上にメテオグラム"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "予定リストの上の天気予報グラフ"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "予定の上にタイマー"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "タイマーの音"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "メテオグラム / タイマーの高さ"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -1879,10 +1859,6 @@ msgid "Forecast chart"
 msgstr "予報グラフ"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "予定の上のメテオグラムにも適用"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "シンプル"
 
@@ -1895,8 +1871,8 @@ msgid "Hours shown"
 msgstr "表示する時間"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "日表示の今日のグラフと予定一覧の上のメテオグラム"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "日表示と予定の今日のグラフ"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3333,11 +3309,6 @@ msgstr "Esc: 閉じる"
 msgid "Meeting"
 msgstr "会議"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "マイクの音をスピーカーで再生できませんでした (pactl)。"
@@ -3575,20 +3546,6 @@ msgstr "接続できません。最後に読み込んだイベントを表示し
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "今すぐ再試行"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"天気が設定されていません\n"
-"天気の設定に行き都市を設定してください\n"
-"又はこのエリアでの天気予報を無効にしてください"
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "エラー天気を取得できませんでした。"
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -4004,58 +3961,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "完了"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "＆スタート"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "＆キャンセル"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "タイマー"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "タイマーが終了"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 経過"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "リピート"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "タイマー、残り %1。アクティブにすると一時停止します。"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "タイマー、残り %1。アクティブにすると開始します。"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "タイマーは %1 に設定されています。プラスまたはマイナスで時間を変更します。"
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "タイマーを一時停止"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "タイマーをスタート"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "スクロールするか、プラス/マイナスキーで時間を調整"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "タイマーセット"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4413,6 +4318,88 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "日の見出しに天気予報を、日ビューに天気パネルを表示します。"
+
+#~ msgid "Day view shows"
+#~ msgstr "日表示に表示"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "予定の上にメテオグラム"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "予定リストの上の天気予報グラフ"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "予定の上にタイマー"
+
+#~ msgid "Timer sound"
+#~ msgstr "タイマーの音"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "メテオグラム / タイマーの高さ"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "予定の上のメテオグラムにも適用"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "日表示の今日のグラフと予定一覧の上のメテオグラム"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "天気が設定されていません\n"
+#~ "天気の設定に行き都市を設定してください\n"
+#~ "又はこのエリアでの天気予報を無効にしてください"
+
+#~ msgid "Error fetching weather."
+#~ msgstr "エラー天気を取得できませんでした。"
+
+#~ msgid "&Start"
+#~ msgstr "＆スタート"
+
+#~ msgid "&Cancel"
+#~ msgstr "＆キャンセル"
+
+#~ msgid "Timer"
+#~ msgstr "タイマー"
+
+#~ msgid "Timer finished"
+#~ msgstr "タイマーが終了"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 経過"
+
+#~ msgid "Repeat"
+#~ msgstr "リピート"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "タイマー、残り %1。アクティブにすると一時停止します。"
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "タイマー、残り %1。アクティブにすると開始します。"
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr "タイマーは %1 に設定されています。プラスまたはマイナスで時間を変更します。"
+
+#~ msgid "Pause Timer"
+#~ msgstr "タイマーを一時停止"
+
+#~ msgid "Start Timer"
+#~ msgstr "タイマーをスタート"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "スクロールするか、プラス/マイナスキーで時間を調整"
+
+#~ msgid "Set Timer"
+#~ msgstr "タイマーセット"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

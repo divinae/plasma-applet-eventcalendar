@@ -402,7 +402,9 @@ ListModel {
 
 	function applyWeatherForecast(weatherByDay) {
 		for (var i = 0; i < agendaModel.count; i++) {
+			// None for the day (or weather off in the views): a weather shown before goes.
 			var weatherFields = agendaModel.weatherFields(weatherByDay, agendaModel.get(i).date)
+				|| (agendaModel.get(i).showWeather ? { showWeather: false } : null)
 			if (weatherFields) {
 				agendaModel.set(i, weatherFields) // One change signal per row instead of four.
 				agendaModel.rowSignatures[i] = null // Row changed outside finalizeAgendaItems.

@@ -164,28 +164,12 @@ QtObject {
 		}
 	}
 
-	// Meteogram
-	readonly property color meteogramTextColor: Kirigami.Theme.textColor
-	readonly property color meteogramScaleColor: ColorUtil.lerp(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.9)
-	readonly property color meteogramPrecipitationRawColor: "#acd"
-	property color meteogramPrecipitationColor: ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.6)
-	property color meteogramPrecipitationTextColor: Qt.tint(meteogramTextColor, ColorUtil.setAlpha(meteogramPrecipitationRawColor, 0.3))
-	readonly property color meteogramPositiveTempColor: "#900"
-	readonly property color meteogramNegativeTempColor: "#369"
-	readonly property color meteogramIconColor: Kirigami.Theme.textColor
-
 	property color agendaHoverBackground: alternateBackgroundColor
 	readonly property color agendaInProgressColor: Kirigami.Theme.highlightColor
 
 	readonly property int agendaDaySpacing: 20 * Screen.devicePixelRatio
 	readonly property int agendaEventSpacing: 10 * Screen.devicePixelRatio
 	property int eventIndicatorWidth: 2 * Screen.devicePixelRatio
-
-	property int timerClockFontHeight: 40 * Screen.devicePixelRatio
-	property int timerButtonWidth: 48 * Screen.devicePixelRatio
-
-	property int meteogramIconSize: 24 * Screen.devicePixelRatio
-	property int meteogramColumnWidth: 32 * Screen.devicePixelRatio // weatherIconSize = 32px (height = 24px but most icons are landscape)
 
 	// Own names of the tooltip's time zones (Settings > Time Zones, #17): { zone: name }.
 	property QtObject timezoneNames: Base64Json {

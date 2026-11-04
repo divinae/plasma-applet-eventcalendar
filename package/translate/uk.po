@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1156,7 +1156,7 @@ msgstr "Відкласти"
 msgid "0 = no Snooze button"
 msgstr "0 = без кнопки «Відкласти»"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Звук"
 
@@ -1845,12 +1845,16 @@ msgid "Search time zones"
 msgstr "Шукати часові пояси"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Прогноз у заголовках днів і панель погоди в поданні дня."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
+msgstr ""
+"Прогноз у заголовках днів тижневого перегляду, біля кожного дня порядку "
+"денного та панель погоди денного перегляду й порядку денного."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "У вигляді «День» показувати"
+msgid "Day view and Agenda show"
+msgstr "Денний перегляд і порядок денний показують"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1903,26 +1907,6 @@ msgstr "Кнопка посилання на зустріч"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Багатоденні події в кожному дні"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Метеограма над порядком денним"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Графік прогнозу погоди над списком порядку денного"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Таймер над порядком денним"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Звук таймера"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Висота метеограми / таймера"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2266,10 +2250,6 @@ msgid "Forecast chart"
 msgstr "Графік прогнозу"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Також метеограма над порядком денним"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Простий"
 
@@ -2282,8 +2262,8 @@ msgid "Hours shown"
 msgstr "Показані години"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Сьогоднішній графік у поданні «День» і метеограма над порядком денним"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Сьогоднішній графік у денному перегляді й порядку денному"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3831,11 +3811,6 @@ msgstr "Esc: закрити"
 msgid "Meeting"
 msgstr "Зустріч"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1мм"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Не вдалося відтворити мікрофон через динамік (pactl)."
@@ -4079,20 +4054,6 @@ msgstr "Не вдається з'єднатися. Показано останн
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Повторити зараз"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Погода не налаштована.\n"
-"Перейдіть до погоди в налаштуваннях і встановіть своє місто,\n"
-"і / або вимкнути метеограму, щоб приховати цю область."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Помилка отримання погоди."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4520,62 +4481,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Виконано"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Запустити"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Скасувати"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Таймер"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Таймер закінчився"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 пройшло"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Повторити"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Таймер, лишилося %1. Активуйте, щоб призупинити."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Таймер, лишилося %1. Активуйте, щоб запустити."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr ""
-"Таймер встановлено на %1. Скористайтеся плюсом або мінусом, щоб змінити "
-"тривалість."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Призупинити таймер"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Запустити таймер"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr ""
-"Прокрутіть коліщатко миші або скористайтеся клавішами плюс і мінус, щоб "
-"змінити тривалість"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Встановити таймер"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4954,6 +4859,93 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Прогноз у заголовках днів і панель погоди в поданні дня."
+
+#~ msgid "Day view shows"
+#~ msgstr "У вигляді «День» показувати"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Метеограма над порядком денним"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Графік прогнозу погоди над списком порядку денного"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Таймер над порядком денним"
+
+#~ msgid "Timer sound"
+#~ msgstr "Звук таймера"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Висота метеограми / таймера"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Також метеограма над порядком денним"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr ""
+#~ "Сьогоднішній графік у поданні «День» і метеограма над порядком денним"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1мм"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Погода не налаштована.\n"
+#~ "Перейдіть до погоди в налаштуваннях і встановіть своє місто,\n"
+#~ "і / або вимкнути метеограму, щоб приховати цю область."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Помилка отримання погоди."
+
+#~ msgid "&Start"
+#~ msgstr "&Запустити"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Скасувати"
+
+#~ msgid "Timer"
+#~ msgstr "Таймер"
+
+#~ msgid "Timer finished"
+#~ msgstr "Таймер закінчився"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 пройшло"
+
+#~ msgid "Repeat"
+#~ msgstr "Повторити"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Таймер, лишилося %1. Активуйте, щоб призупинити."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Таймер, лишилося %1. Активуйте, щоб запустити."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr ""
+#~ "Таймер встановлено на %1. Скористайтеся плюсом або мінусом, щоб змінити "
+#~ "тривалість."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Призупинити таймер"
+
+#~ msgid "Start Timer"
+#~ msgstr "Запустити таймер"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr ""
+#~ "Прокрутіть коліщатко миші або скористайтеся клавішами плюс і мінус, щоб "
+#~ "змінити тривалість"
+
+#~ msgid "Set Timer"
+#~ msgstr "Встановити таймер"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

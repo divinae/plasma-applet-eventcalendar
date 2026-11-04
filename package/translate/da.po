@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -1143,7 +1143,7 @@ msgstr "Udsæt"
 msgid "0 = no Snooze button"
 msgstr "0 = ingen Udsæt-knap"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Lyd"
 
@@ -1829,12 +1829,16 @@ msgid "Search time zones"
 msgstr "Søg efter tidszoner"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Vejrudsigt i dagenes overskrifter og, i dagsvisningen, et vejrpanel."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
+msgstr ""
+"Udsigten i ugevisningens dagoverskrifter, ved hver dag i agendaen og "
+"vejrpanelet i dagvisningen og agendaen."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Dagsvisningen viser"
+msgid "Day view and Agenda show"
+msgstr "Dagvisning og agenda viser"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1886,26 +1890,6 @@ msgstr "Knap til mødelink"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Flerdagsbegivenheder på hver dag"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogram over agendaen"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Vejrudsigtsdiagrammet over agendaens liste"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Timer over agendaen"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Timerlyd"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Højde for meteogram/timer"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2237,10 +2221,6 @@ msgid "Forecast chart"
 msgstr "Prognosediagram"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Også meteogrammet over agendaen"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Simpelt"
 
@@ -2253,8 +2233,8 @@ msgid "Hours shown"
 msgstr "Viste timer"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Dagens graf i dagsvisningen og meteogrammet over dagsordenen"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Dagens diagram i dagvisningen og agendaen"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3775,11 +3755,6 @@ msgstr "Esc: afvis"
 msgid "Meeting"
 msgstr "Møde"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Mikrofonen kunne ikke afspilles i højttaleren (pactl)."
@@ -4020,20 +3995,6 @@ msgstr "Kan ikke forbinde. Viser de senest indlæste begivenheder."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Prøv igen nu"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Vejrudsigten er ikke konfigureret.\n"
-"Gå til fanen 'Vejr' i indstillingerne, og indstil din by\n"
-"og/eller slå vejrgrafikken fra for at skjule dette område."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Fejl ved hentning af vejr."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4455,58 +4416,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Udført"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Start"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "Annuler"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Timer"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Timer udløbet"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 er udløbet"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Gentag"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Timer, %1 tilbage. Aktivér for at sætte på pause."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Timer, %1 tilbage. Aktivér for at starte."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Timer sat til %1. Brug plus eller minus for at ændre varigheden."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Sæt timer på pause"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Start timer"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Rul eller brug plus- og minustasterne for at justere varigheden"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Indstil timer"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4875,6 +4784,89 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr ""
+#~ "Vejrudsigt i dagenes overskrifter og, i dagsvisningen, et vejrpanel."
+
+#~ msgid "Day view shows"
+#~ msgstr "Dagsvisningen viser"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogram over agendaen"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Vejrudsigtsdiagrammet over agendaens liste"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Timer over agendaen"
+
+#~ msgid "Timer sound"
+#~ msgstr "Timerlyd"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Højde for meteogram/timer"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Også meteogrammet over agendaen"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Dagens graf i dagsvisningen og meteogrammet over dagsordenen"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Vejrudsigten er ikke konfigureret.\n"
+#~ "Gå til fanen 'Vejr' i indstillingerne, og indstil din by\n"
+#~ "og/eller slå vejrgrafikken fra for at skjule dette område."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Fejl ved hentning af vejr."
+
+#~ msgid "&Start"
+#~ msgstr "&Start"
+
+#~ msgid "&Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Timer"
+#~ msgstr "Timer"
+
+#~ msgid "Timer finished"
+#~ msgstr "Timer udløbet"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 er udløbet"
+
+#~ msgid "Repeat"
+#~ msgstr "Gentag"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Timer, %1 tilbage. Aktivér for at sætte på pause."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Timer, %1 tilbage. Aktivér for at starte."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr "Timer sat til %1. Brug plus eller minus for at ændre varigheden."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Sæt timer på pause"
+
+#~ msgid "Start Timer"
+#~ msgstr "Start timer"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Rul eller brug plus- og minustasterne for at justere varigheden"
+
+#~ msgid "Set Timer"
+#~ msgstr "Indstil timer"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

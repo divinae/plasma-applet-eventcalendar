@@ -305,7 +305,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Weather")
-				description: i18n("Forecast in the day headers and, in the Day view, a weather panel.")
+				description: i18n("The forecast in the Week view's day headers, on each Agenda day, and the weather panel of the Day view and the Agenda.")
 				configKey: 'weatherShowInViews'
 			}
 			FormCard.FormDelegateSeparator {}
@@ -316,7 +316,7 @@ ConfigPage {
 					spacing: Kirigami.Units.smallSpacing
 					QQC2.Label {
 						Layout.fillWidth: true
-						text: i18n("Day view shows")
+						text: i18n("Day view and Agenda show")
 						textFormat: Text.PlainText
 					}
 					Flow {
@@ -375,46 +375,6 @@ ConfigPage {
 			FormConfigSwitch {
 				text: i18n("Multi-day events on every day")
 				configKey: 'agendaBreakupMultiDayEvents'
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				text: i18n("Meteogram above the agenda")
-				description: i18n("The weather forecast chart above the Agenda's list")
-				configKey: 'widgetShowMeteogram'
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				id: widgetShowTimer
-				text: i18n("Timer above the agenda")
-				configKey: 'widgetShowTimer'
-			}
-			FormCard.FormDelegateSeparator {
-				visible: widgetShowTimer.checked
-			}
-			FormCard.AbstractFormDelegate {
-				visible: widgetShowTimer.checked
-				background: null
-				contentItem: RowLayout {
-					spacing: Kirigami.Units.largeSpacing
-					QQC2.Label {
-						text: i18n("Timer sound")
-					}
-					ConfigSound {
-						Layout.fillWidth: true
-						label: ""
-						sfxEnabledKey: 'timerSfxEnabled'
-						sfxPathKey: 'timerSfxFilepath'
-						sfxPathDefaultValue: '/usr/share/sounds/ocean/stereo/alarm-clock-elapsed.oga'
-					}
-				}
-			}
-			FormCard.FormDelegateSeparator {}
-			FormConfigSpin {
-				label: i18n("Meteogram / timer height")
-				configKey: 'topRowHeight'
-				suffix: i18n(" px")
-				from: 50
-				to: 3000
 			}
 		}
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1147,7 +1147,7 @@ msgstr "Ertele"
 msgid "0 = no Snooze button"
 msgstr "0 = Ertele düğmesi yok"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Ses"
 
@@ -1834,13 +1834,16 @@ msgid "Search time zones"
 msgstr "Saat dilimlerinde ara"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
 msgstr ""
-"Gün başlıklarında hava tahmini ve Gün görünümünde bir hava durumu paneli."
+"Hafta görünümünün gün başlıklarında, her ajanda gününde ve gün görünümü ile "
+"ajandanın hava durumu panelindeki tahmin."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Gün görünümü gösterir"
+msgid "Day view and Agenda show"
+msgstr "Gün görünümü ve ajanda gösterir"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1894,26 +1897,6 @@ msgstr "Toplantı bağlantısı düğmesi"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Çok günlü etkinlikler her günde"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Ajandanın üstünde meteogram"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Ajanda listesinin üstündeki hava tahmini grafiği"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Ajandanın üstünde zamanlayıcı"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Zamanlayıcı sesi"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Meteogram / zamanlayıcı yüksekliği"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2247,10 +2230,6 @@ msgid "Forecast chart"
 msgstr "Tahmin grafiği"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Ajandanın üstündeki meteogram da"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Basit"
 
@@ -2263,8 +2242,8 @@ msgid "Hours shown"
 msgstr "Gösterilen saatler"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Gün görünümündeki bugünün grafiği ve ajandanın üstündeki meteogram"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Gün görünümü ve ajandadaki bugünün grafiği"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3784,11 +3763,6 @@ msgstr "Esc: kapat"
 msgid "Meeting"
 msgstr "Toplantı"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Mikrofon hoparlörde çalınamadı (pactl)."
@@ -4029,20 +4003,6 @@ msgstr "Bağlanılamıyor. Son yüklenen etkinlikler gösteriliyor."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Şimdi Yeniden Dene"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Hava durumu henüz ayarlanmadı.\n"
-"Ayarlardan Hava Durumu'na girin ve şehrinizi seçin,\n"
-"sonrasında ise burada gözükmesi için meteogramı açın/kapatın."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Hava durumu alınırken hata oluştu."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4468,60 +4428,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Tamamlandı"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Başlat"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "İptal"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Zamanlayıcı"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Zamanlayıcı tamamlandı"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 geçti"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Tekrarla"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Zamanlayıcı, %1 kaldı. Duraklatmak için etkinleştirin."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Zamanlayıcı, %1 kaldı. Başlatmak için etkinleştirin."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr ""
-"Zamanlayıcı %1 olarak ayarlandı. Süreyi değiştirmek için artı veya eksi "
-"kullanın."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Zamanlayıcıyı Durdur"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Zamanlayıcıyı Başlat"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Süreyi ayarlamak için kaydırın veya artı ve eksi tuşlarını kullanın"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Zamanlayıcıyı Ayarla"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4892,6 +4798,91 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr ""
+#~ "Gün başlıklarında hava tahmini ve Gün görünümünde bir hava durumu paneli."
+
+#~ msgid "Day view shows"
+#~ msgstr "Gün görünümü gösterir"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Ajandanın üstünde meteogram"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Ajanda listesinin üstündeki hava tahmini grafiği"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Ajandanın üstünde zamanlayıcı"
+
+#~ msgid "Timer sound"
+#~ msgstr "Zamanlayıcı sesi"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Meteogram / zamanlayıcı yüksekliği"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Ajandanın üstündeki meteogram da"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Gün görünümündeki bugünün grafiği ve ajandanın üstündeki meteogram"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Hava durumu henüz ayarlanmadı.\n"
+#~ "Ayarlardan Hava Durumu'na girin ve şehrinizi seçin,\n"
+#~ "sonrasında ise burada gözükmesi için meteogramı açın/kapatın."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Hava durumu alınırken hata oluştu."
+
+#~ msgid "&Start"
+#~ msgstr "&Başlat"
+
+#~ msgid "&Cancel"
+#~ msgstr "İptal"
+
+#~ msgid "Timer"
+#~ msgstr "Zamanlayıcı"
+
+#~ msgid "Timer finished"
+#~ msgstr "Zamanlayıcı tamamlandı"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 geçti"
+
+#~ msgid "Repeat"
+#~ msgstr "Tekrarla"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Zamanlayıcı, %1 kaldı. Duraklatmak için etkinleştirin."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Zamanlayıcı, %1 kaldı. Başlatmak için etkinleştirin."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr ""
+#~ "Zamanlayıcı %1 olarak ayarlandı. Süreyi değiştirmek için artı veya eksi "
+#~ "kullanın."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Zamanlayıcıyı Durdur"
+
+#~ msgid "Start Timer"
+#~ msgstr "Zamanlayıcıyı Başlat"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Süreyi ayarlamak için kaydırın veya artı ve eksi tuşlarını kullanın"
+
+#~ msgid "Set Timer"
+#~ msgstr "Zamanlayıcıyı Ayarla"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

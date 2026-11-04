@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -1160,7 +1160,7 @@ msgstr "Sluimeren"
 msgid "0 = no Snooze button"
 msgstr "0 = geen sluimerknop"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Geluid"
 
@@ -1856,13 +1856,16 @@ msgid "Search time zones"
 msgstr "Tijdzones zoeken"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
 msgstr ""
-"Weersverwachting in de dagkoppen en, in de dagweergave, een weerpaneel."
+"De voorspelling in de dagkoppen van de weekweergave, bij elke agendadag en "
+"het weerpaneel van de dagweergave en de agenda."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Dagweergave toont"
+msgid "Day view and Agenda show"
+msgstr "Dagweergave en agenda tonen"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1915,26 +1918,6 @@ msgstr "Vergaderlinkknop"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Meerdaagse afspraken op elke dag"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogram boven de agenda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "De weersvoorspellingsgrafiek boven de agendalijst"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Tijdklok boven de agenda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Tijdklokgeluid"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Hoogte van meteogram / tijdklok"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2272,10 +2255,6 @@ msgid "Forecast chart"
 msgstr "Verwachtingsgrafiek"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Ook het meteogram boven de agenda"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Eenvoudig"
 
@@ -2288,9 +2267,8 @@ msgid "Hours shown"
 msgstr "Getoonde uren"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr ""
-"De grafiek van vandaag in de dagweergave en het meteogram boven de agenda"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "De grafiek van vandaag in de dagweergave en de agenda"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3818,11 +3796,6 @@ msgstr "Esc: sluiten"
 msgid "Meeting"
 msgstr "Vergadering"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "De microfoon kon niet via de luidspreker worden afgespeeld (pactl)."
@@ -4063,20 +4036,6 @@ msgstr "Kan geen verbinding maken. De laatst geladen afspraken worden getoond."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Nu opnieuw proberen"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Het weer is niet ingesteld.\n"
-"Open de pagina ‘Weer’ in de instellingen en stel een locatie in\n"
-"of schakel de weergrafiek uit om deze sectie te verbergen."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "De weerinformatie kan niet worden opgevraagd."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4502,58 +4461,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Voltooid"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Starten"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Annuleren"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Tijdklok"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Tijdklok verstreken"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 is verstreken"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Herhalen"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Tijdklok, nog %1. Activeer om te pauzeren."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Tijdklok, nog %1. Activeer om te starten."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Tijdklok ingesteld op %1. Gebruik plus of min om de duur te wijzigen."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Tijdklok onderbreken"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Tijdklok starten"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Scroll of gebruik de plus- en mintoetsen om de duur aan te passen"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Tijdklok instellen"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4924,6 +4831,91 @@ msgstr "Vandaag geen afspraken meer"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Werklocatie: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr ""
+#~ "Weersverwachting in de dagkoppen en, in de dagweergave, een weerpaneel."
+
+#~ msgid "Day view shows"
+#~ msgstr "Dagweergave toont"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogram boven de agenda"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "De weersvoorspellingsgrafiek boven de agendalijst"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Tijdklok boven de agenda"
+
+#~ msgid "Timer sound"
+#~ msgstr "Tijdklokgeluid"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Hoogte van meteogram / tijdklok"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Ook het meteogram boven de agenda"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr ""
+#~ "De grafiek van vandaag in de dagweergave en het meteogram boven de agenda"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Het weer is niet ingesteld.\n"
+#~ "Open de pagina ‘Weer’ in de instellingen en stel een locatie in\n"
+#~ "of schakel de weergrafiek uit om deze sectie te verbergen."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "De weerinformatie kan niet worden opgevraagd."
+
+#~ msgid "&Start"
+#~ msgstr "&Starten"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Annuleren"
+
+#~ msgid "Timer"
+#~ msgstr "Tijdklok"
+
+#~ msgid "Timer finished"
+#~ msgstr "Tijdklok verstreken"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 is verstreken"
+
+#~ msgid "Repeat"
+#~ msgstr "Herhalen"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Tijdklok, nog %1. Activeer om te pauzeren."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Tijdklok, nog %1. Activeer om te starten."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr ""
+#~ "Tijdklok ingesteld op %1. Gebruik plus of min om de duur te wijzigen."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Tijdklok onderbreken"
+
+#~ msgid "Start Timer"
+#~ msgstr "Tijdklok starten"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Scroll of gebruik de plus- en mintoetsen om de duur aan te passen"
+
+#~ msgid "Set Timer"
+#~ msgstr "Tijdklok instellen"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

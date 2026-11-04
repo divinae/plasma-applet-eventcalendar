@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -947,7 +947,7 @@ msgstr "Torkku"
 msgid "0 = no Snooze button"
 msgstr "0 = ei torkkupainiketta"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Ääni"
 
@@ -1540,12 +1540,12 @@ msgid "Search time zones"
 msgstr "Hae aikavyöhykkeitä"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Sääennuste päivien otsikoissa ja päivänäkymässä sääpaneeli."
+msgid "The forecast in the Week view's day headers, on each Agenda day, and the weather panel of the Day view and the Agenda."
+msgstr "Ennuste viikkonäkymän päiväotsikoissa, jokaisella esityslistan päivällä sekä päivänäkymän ja esityslistan sääpaneeli."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Päivänäkymä näyttää"
+msgid "Day view and Agenda show"
+msgstr "Päivänäkymä ja esityslista näyttävät"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1593,26 +1593,6 @@ msgstr "Kokouslinkin painike"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Monipäiväiset tapahtumat joka päivänä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogrammi agendan yläpuolella"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Sääennustekaavio esityslistan yläpuolella"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Ajastin agendan yläpuolella"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Ajastimen ääni"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Meteogrammin/ajastimen korkeus"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -1891,10 +1871,6 @@ msgid "Forecast chart"
 msgstr "Ennustekaavio"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Myös meteogrammi agendan yläpuolella"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Yksinkertainen"
 
@@ -1907,8 +1883,8 @@ msgid "Hours shown"
 msgstr "Näytettävät tunnit"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Tämän päivän kaavio päivänäkymässä ja meteogrammi asialistan yläpuolella"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Tämän päivän kaavio päivänäkymässä ja esityslistassa"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3369,11 +3345,6 @@ msgstr "Esc: hylkää"
 msgid "Meeting"
 msgstr "Kokous"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Mikrofonia ei voitu toistaa kaiuttimesta (pactl)."
@@ -3614,20 +3585,6 @@ msgstr "Yhteyttä ei saada. Näytetään viimeksi ladatut tapahtumat."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Yritä nyt uudelleen"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Sääasetuksia ei ole tehty.\n"
-"Mene asetuksissa Sää-kohtaan ja aseta kaupunkisi\n"
-"ja/tai estä sääkartan piilottaa tämä alue."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Virhe säätietojen haussa."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -4047,58 +4004,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Tehty"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Aloita"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Keskeytä"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Ajastin"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Ajastin lopetti."
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 on kulunut"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Toista"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Ajastin, %1 jäljellä. Keskeytä aktivoimalla."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Ajastin, %1 jäljellä. Käynnistä aktivoimalla."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Ajastimen kesto on %1. Muuta kestoa plus- tai miinusnäppäimellä."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Tauota ajastin"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Aloita ajastin"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Säädä kestoa vierittämällä tai plus- ja miinusnäppäimillä"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Aseta ajastin"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4466,6 +4371,88 @@ msgstr "Ei enää tapahtumia tänään"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Työskentelypaikka: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Sääennuste päivien otsikoissa ja päivänäkymässä sääpaneeli."
+
+#~ msgid "Day view shows"
+#~ msgstr "Päivänäkymä näyttää"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogrammi agendan yläpuolella"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Sääennustekaavio esityslistan yläpuolella"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Ajastin agendan yläpuolella"
+
+#~ msgid "Timer sound"
+#~ msgstr "Ajastimen ääni"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Meteogrammin/ajastimen korkeus"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Myös meteogrammi agendan yläpuolella"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Tämän päivän kaavio päivänäkymässä ja meteogrammi asialistan yläpuolella"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Sääasetuksia ei ole tehty.\n"
+#~ "Mene asetuksissa Sää-kohtaan ja aseta kaupunkisi\n"
+#~ "ja/tai estä sääkartan piilottaa tämä alue."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Virhe säätietojen haussa."
+
+#~ msgid "&Start"
+#~ msgstr "&Aloita"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Keskeytä"
+
+#~ msgid "Timer"
+#~ msgstr "Ajastin"
+
+#~ msgid "Timer finished"
+#~ msgstr "Ajastin lopetti."
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 on kulunut"
+
+#~ msgid "Repeat"
+#~ msgstr "Toista"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Ajastin, %1 jäljellä. Keskeytä aktivoimalla."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Ajastin, %1 jäljellä. Käynnistä aktivoimalla."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr "Ajastimen kesto on %1. Muuta kestoa plus- tai miinusnäppäimellä."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Tauota ajastin"
+
+#~ msgid "Start Timer"
+#~ msgstr "Aloita ajastin"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Säädä kestoa vierittämällä tai plus- ja miinusnäppäimillä"
+
+#~ msgid "Set Timer"
+#~ msgstr "Aseta ajastin"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

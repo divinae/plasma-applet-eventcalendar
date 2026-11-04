@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -949,7 +949,7 @@ msgstr "Drzemka"
 msgid "0 = no Snooze button"
 msgstr "0 = bez przycisku Drzemka"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Dźwięk"
 
@@ -1542,12 +1542,12 @@ msgid "Search time zones"
 msgstr "Szukaj stref czasowych"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Prognoza w nagłówkach dni oraz panel pogody w widoku dnia."
+msgid "The forecast in the Week view's day headers, on each Agenda day, and the weather panel of the Day view and the Agenda."
+msgstr "Prognoza w nagłówkach dni widoku tygodnia, przy każdym dniu agendy i panel pogody w widoku dnia i agendzie."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Widok dnia pokazuje"
+msgid "Day view and Agenda show"
+msgstr "Widok dnia i agenda pokazują"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1596,26 +1596,6 @@ msgstr "Przycisk łącza do spotkania"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Wydarzenia wielodniowe w każdym dniu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogram nad harmonogramem"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Wykres prognozy pogody nad listą agendy"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Minutnik nad harmonogramem"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Dźwięk minutnika"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Wysokość meteogramu / minutnika"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -1896,10 +1876,6 @@ msgid "Forecast chart"
 msgstr "Wykres prognozy"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Także meteogram nad harmonogramem"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Prosty"
 
@@ -1912,8 +1888,8 @@ msgid "Hours shown"
 msgstr "Pokazywane godziny"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Dzisiejszy wykres w widoku dnia i meteogram nad agendą"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Dzisiejszy wykres w widoku dnia i agendzie"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3398,11 +3374,6 @@ msgstr "Esc: zamknij"
 msgid "Meeting"
 msgstr "Spotkanie"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Nie udało się odtworzyć mikrofonu w głośniku (pactl)."
@@ -3646,20 +3617,6 @@ msgstr "Nie można połączyć. Wyświetlane są ostatnio wczytane wydarzenia."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Ponów teraz"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Pogoda nie jest skonfigurowana.\n"
-"Przejdź do zakładki Pogoda w ustawieniach i wybierz miasto\n"
-"i/lub wyłącz wykres prognozy pogody, by ukryć ten obszar."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Błąd pobierania pogody."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -4083,58 +4040,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Wykonane"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Start"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "Anuluj"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Minutnik"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Minutnik zakończył odmierzanie"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "Upłynęło %1"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Powtarzaj"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Minutnik, pozostało %1. Aktywuj, aby wstrzymać."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Minutnik, pozostało %1. Aktywuj, aby uruchomić."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Minutnik ustawiony na %1. Użyj plusa lub minusa, aby zmienić czas."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Zatrzymaj minutnik"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Uruchom minutnik"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Przewiń lub użyj klawiszy plus i minus, aby zmienić czas"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Ustaw minutnik"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4512,6 +4417,88 @@ msgstr "Dziś nie ma już wydarzeń"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Miejsce pracy: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Prognoza w nagłówkach dni oraz panel pogody w widoku dnia."
+
+#~ msgid "Day view shows"
+#~ msgstr "Widok dnia pokazuje"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogram nad harmonogramem"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Wykres prognozy pogody nad listą agendy"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Minutnik nad harmonogramem"
+
+#~ msgid "Timer sound"
+#~ msgstr "Dźwięk minutnika"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Wysokość meteogramu / minutnika"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Także meteogram nad harmonogramem"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Dzisiejszy wykres w widoku dnia i meteogram nad agendą"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Pogoda nie jest skonfigurowana.\n"
+#~ "Przejdź do zakładki Pogoda w ustawieniach i wybierz miasto\n"
+#~ "i/lub wyłącz wykres prognozy pogody, by ukryć ten obszar."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Błąd pobierania pogody."
+
+#~ msgid "&Start"
+#~ msgstr "&Start"
+
+#~ msgid "&Cancel"
+#~ msgstr "Anuluj"
+
+#~ msgid "Timer"
+#~ msgstr "Minutnik"
+
+#~ msgid "Timer finished"
+#~ msgstr "Minutnik zakończył odmierzanie"
+
+#~ msgid "%1 has passed"
+#~ msgstr "Upłynęło %1"
+
+#~ msgid "Repeat"
+#~ msgstr "Powtarzaj"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Minutnik, pozostało %1. Aktywuj, aby wstrzymać."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Minutnik, pozostało %1. Aktywuj, aby uruchomić."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr "Minutnik ustawiony na %1. Użyj plusa lub minusa, aby zmienić czas."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Zatrzymaj minutnik"
+
+#~ msgid "Start Timer"
+#~ msgstr "Uruchom minutnik"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Przewiń lub użyj klawiszy plus i minus, aby zmienić czas"
+
+#~ msgid "Set Timer"
+#~ msgstr "Ustaw minutnik"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

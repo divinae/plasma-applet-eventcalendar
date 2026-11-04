@@ -73,7 +73,7 @@ function updateDailyWeather(config, callback) {
 	}
 }
 
-/* Update the meteogram dataset. Will not be called if the meteogram isn't enabled. */
+/* The hourly forecast (the weather panel of the Day view and the Agenda). */
 /* @returns: callback(err, {
 	list: [
 		{

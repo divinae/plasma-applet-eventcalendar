@@ -36,7 +36,6 @@ PlasmoidItem {
 	property alias agendaModel: agendaModel
 	
 	TimeModel { id: timeModel }
-	TimerModel { id: timerModel }
 	EventCache { id: eventCache }
 	EventModel { id: eventModel }
 	UpcomingEvents {

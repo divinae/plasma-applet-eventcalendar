@@ -31,7 +31,6 @@ MouseArea {
 	property real widthScale: Math.max(1, screenWidth / 1920)
 	property real heightScale: Math.max(1, screenHeight / 1080)
 
-	property int topRowHeight: Math.round(plasmoid.configuration.topRowHeight * heightScale)
 	// All views share one size (Settings > Views).
 	property int bottomRowHeight: Math.round(plasmoid.configuration.monthModeHeight * heightScale)
 
@@ -39,25 +38,11 @@ MouseArea {
 	// DigitalClock RightColumn minWidth: Kirigami.Units.gridUnit * 14
 	// 14/(22+14) * 400 = 156
 	// rightColumnWidth=156 looks nice but is very thin for listing events + date + weather.
-	property int leftColumnWidth: Math.round(plasmoid.configuration.monthModeWidth * widthScale) // Meteogram + MonthView
-	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // TimerView + AgendaView
+	property int leftColumnWidth: Math.round(plasmoid.configuration.monthModeWidth * widthScale) // MonthView
+	property int rightColumnWidth: Math.round(plasmoid.configuration.rightColumnWidth * widthScale) // AgendaView
 
-	// Every view has the configured width. Height: the view, plus (agenda view) the meteogram and
-	// timer rows above it.
-	property int contentHeight: {
-		var rows = [bottomRowHeight]
-		if (showMeteogram) {
-			rows.push(topRowHeight)
-		}
-		if (showTimer) {
-			rows.push(topRowHeight)
-		}
-		var h = viewTabsHeight
-		for (var i = 0; i < rows.length; i++) {
-			h += rows[i]
-		}
-		return h + spacing * (rows.length - 1)
-	}
+	// Every view has the configured size.
+	property int contentHeight: viewTabsHeight + bottomRowHeight
 
 	Layout.minimumWidth: Kirigami.Units.gridUnit * 14
 	Layout.preferredWidth: leftColumnWidth + padding * 2
@@ -134,14 +119,12 @@ MouseArea {
 	// back): ~200 ms of each change between the month and the Week / Day views (measured).
 	readonly property bool hourGridMode: viewMode === 'week' || viewMode === 'today' // Both use WeekView
 	readonly property bool fullViewMode: viewMode === 'month' || viewMode === 'week' || viewMode === 'today' || viewMode === 'tasks'
-	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram && !fullViewMode
-	property bool showTimer: plasmoid.configuration.widgetShowTimer && !fullViewMode
-	// The agenda view is the agenda list only (plus optional meteogram / timer); the month view
-	// is the calendar.
+	// The agenda view is the agenda list (its side columns: DayPanels); the month view is the
+	// calendar.
 	property bool showAgenda: !fullViewMode
 	property bool showCalendar: monthMode
 	readonly property string viewSwitcher: plasmoid.configuration.viewSwitcher
-	// The agenda view (and its meteogram / timer) is a list: cap its width and center it.
+	// The agenda view is a list: cap its width and center it.
 	readonly property real agendaMaxWidth: Kirigami.Units.gridUnit * 32
 	// Month and week views put the top bar inside their header row, the agenda layout above.
 	readonly property int viewTabsHeight: header.implicitHeight + spacing
@@ -164,7 +147,7 @@ MouseArea {
 	Component.onCompleted: {
 		refreshTaskLists()
 		deferredUpdateUI()
-		if (dayMode || showMeteogram) {
+		if (dayMode || showAgenda) {
 			logic.updateWeather(true)
 		}
 	}
@@ -866,74 +849,6 @@ MouseArea {
 		columnSpacing: popup.spacing
 		rowSpacing: popup.spacing
 
-		// Created only when shown.
-		Loader {
-			id: meteogramView
-			visible: showMeteogram
-			active: showMeteogram
-			Layout.fillWidth: true
-			Layout.maximumWidth: popup.agendaMaxWidth
-			Layout.alignment: Qt.AlignHCenter
-			Layout.minimumHeight: popup.topRowHeight
-			Layout.preferredWidth: popup.leftColumnWidth
-			Layout.preferredHeight: popup.topRowHeight
-			Layout.maximumHeight: popup.topRowHeight * 1.5
-			onLoaded: popup.updateMeteogram()
-
-			sourceComponent: MeteogramView {
-				visibleDuration: plasmoid.configuration.meteogramHours
-				xAxisScale: 1 / hoursPerDataPoint
-				xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
-				property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
-				rainUnits: WeatherApi.getRainUnits(plasmoid.configuration)
-
-				Rectangle {
-					id: meteogramMessageBox
-					anchors.fill: parent
-					anchors.margins: Kirigami.Units.smallSpacing
-					color: "transparent"
-					border.color: Kirigami.Theme.buttonBackgroundColor ? Kirigami.Theme.buttonBackgroundColor : Kirigami.Theme.backgroundColor
-					border.width: 1
-
-					readonly property string message: {
-						if (!WeatherApi.weatherIsSetup(plasmoid.configuration)) {
-							return i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
-						} else if (logic.lastForecastErr) {
-							return i18n("Error fetching weather.") + '\n' + logic.lastForecastErr
-						} else {
-							return ''
-						}
-					}
-
-					visible: !!message
-
-					PlasmaComponents3.Label {
-						text: meteogramMessageBox.message
-						anchors.fill: parent
-						fontSizeMode: Text.Fit
-						wrapMode: Text.Wrap
-						horizontalAlignment: Text.AlignHCenter
-						verticalAlignment: Text.AlignVCenter
-					}
-				}
-			}
-		}
-
-		Loader {
-			id: timerView
-			visible: showTimer
-			active: showTimer
-			Layout.fillWidth: true
-			Layout.maximumWidth: popup.agendaMaxWidth
-			Layout.alignment: Qt.AlignHCenter
-			Layout.minimumHeight: Math.max(popup.topRowHeight, implicitHeight)
-			Layout.preferredWidth: popup.rightColumnWidth
-			Layout.preferredHeight: popup.topRowHeight
-			Layout.maximumHeight: popup.topRowHeight
-
-			sourceComponent: TimerView {}
-		}
-
 		MonthView {
 			id: monthView
 			visible: showCalendar
@@ -1015,12 +930,6 @@ MouseArea {
 		} // AgendaView
 	} // GridLayout
 
-	function updateMeteogram() {
-		if (meteogramView.item) {
-			meteogramView.item.parseWeatherForecast(logic.currentWeatherData, logic.hourlyWeatherData)
-		}
-	}
-
 	function showError(msg) {
 		errorBanner.errorText = msg
 	}
@@ -1058,7 +967,7 @@ MouseArea {
 	function updateUI() {
 		updateUITimer.stop()
 
-		agendaModel.parseWeatherForecast(root.weatherByDay)
+		agendaModel.parseWeatherForecast(weatherInViews ? root.weatherByDay : ({}))
 		updateAgenda()
 		updateMonth()
 		if (weekViewLoader.item) {

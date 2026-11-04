@@ -91,7 +91,7 @@ Item {
 	// The Day view's panels the user wants (Settings > Views > Day view shows).
 	readonly property bool dayWantsMiniMonth: plasmoid.configuration.dayShowMiniMonth !== false
 	readonly property bool dayWantsUpNext: plasmoid.configuration.dayShowUpNext !== false
-	readonly property bool dayWantsWeather: plasmoid.configuration.dayShowWeather !== false
+	readonly property bool dayWantsWeather: plasmoid.configuration.weatherShowInViews !== false && plasmoid.configuration.dayShowWeather !== false
 	readonly property bool dayWantsMoon: plasmoid.configuration.dayShowMoon === true // Off by default
 	readonly property bool dayWantsTasks: plasmoid.configuration.dayShowTasks !== false
 	// Three all-day events or more: side by side, three in a row (Settings > Views).

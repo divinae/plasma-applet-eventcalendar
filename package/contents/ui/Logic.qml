@@ -205,11 +205,11 @@ Item {
 		interval: 100
 		onTriggered: logic.deferredUpdateWeather()
 	}
-	// A view that shows the hourly forecast (the Day view, the Agenda, the meteogram) with none loaded yet:
+	// A view that shows the hourly forecast (the Day view, the Agenda) with none loaded yet:
 	// fetch it now (else it comes with the hourly refresh, not on each view switch).
 	function ensureHourlyWeather() {
 		var viewMode = popup ? popup.viewMode : ''
-		var wantsHourly = viewMode === 'today' || viewMode === 'classic' || (popup && popup.showMeteogram) // Day, Agenda (its weather panel)
+		var wantsHourly = viewMode === 'today' || viewMode === 'classic' // Day, Agenda (their weather panel)
 		if (wantsHourly && WeatherApi.weatherIsSetup(plasmoid.configuration)
 				&& !(logic.hourlyWeatherData && logic.hourlyWeatherData.list && logic.hourlyWeatherData.list.length > 0)) {
 			logic.updateHourlyWeather()
@@ -218,12 +218,11 @@ Item {
 	function deferredUpdateWeather() {
 		logic.updateDailyWeather()
 
-		// Hourly data feeds the meteogram (agenda view) and the Day view's weather panel.
+		// Hourly data feeds the weather panel of the Day view and the Agenda.
 		// The popup exists after its first open; before, the view it will open in.
 		var cfg = plasmoid.configuration
 		var viewMode = popup ? popup.viewMode : (cfg.popupOpenLastView && cfg.popupLastView ? cfg.popupLastView : cfg.popupMode)
-		var meteogramShown = popup ? popup.showMeteogram : cfg.widgetShowMeteogram && viewMode === 'classic'
-		if (meteogramShown || viewMode === 'today') {
+		if (viewMode === 'classic' || viewMode === 'today') {
 			logic.updateHourlyWeather()
 		}
 	}
@@ -357,7 +356,6 @@ Item {
 			logic.networkRecovered()
 			logic.hourlyWeatherData = localizedWeather(data)
 			logic.currentWeatherData = data.current || data.list[0]
-			if (popup) popup.updateMeteogram()
 		})
 	}
 
@@ -404,15 +402,10 @@ Item {
 		function onOpenWeatherMapApiChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherCanadaCityIdChanged() { logic.resetWeatherAndUpdate() }
 		function onWeatherUnitsChanged() { logic.updateWeather(true) }
-		function onWidgetShowMeteogramChanged() {
-			if (plasmoid.configuration.widgetShowMeteogram) {
-				logic.updateHourlyWeather()
-			}
-		}
 
 		//--- UI
 		function onAgendaBreakupMultiDayEventsChanged() { if (popup) popup.updateUI() }
-		function onMeteogramHoursChanged() { if (popup) popup.updateMeteogram() }
+		function onWeatherShowInViewsChanged() { if (popup) popup.updateUI() }
 	}
 
 	//---

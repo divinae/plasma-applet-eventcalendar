@@ -9,7 +9,7 @@ import "../lib"
 import "../weather/OpenMeteo.js" as OpenMeteo
 import "../weather/OpenWeatherMap.js" as OpenWeatherMap
 
-// Weather source, units and meteogram look.
+// Weather source, units and the forecast chart's look.
 ConfigPage {
 	id: page
 
@@ -288,7 +288,6 @@ ConfigPage {
 		FormCard.FormCard {
 			FormConfigCombo {
 				text: i18n("Style")
-				description: i18n("Also the meteogram above the agenda")
 				configKey: 'weatherChartStyle'
 				model: [
 					{ value: 'simple', text: i18n("Simple") },
@@ -298,7 +297,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Hours shown")
-				hint: i18n("Today's chart in the Day view and the meteogram above the agenda")
+				hint: i18n("Today's chart in the Day view and the Agenda")
 				configKey: 'meteogramHours'
 				suffix: i18n(" hours")
 				from: 9

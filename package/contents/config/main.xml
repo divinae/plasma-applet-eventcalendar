@@ -11,21 +11,6 @@
 			<label>Whether the popup should remain open when another window is activated</label>
 			<default>false</default>
 		</entry>
-		<entry name="widgetShowMeteogram" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="widgetShowTimer" type="bool">
-			<default>false</default>
-		</entry>
-		<entry name="timerSfxEnabled" type="bool">
-			<default>true</default>
-		</entry>
-		<entry name="timerSfxFilepath" type="string">
-			<default>/usr/share/sounds/ocean/stereo/alarm-clock-elapsed.oga</default>
-		</entry>
-		<entry name="timerRepeats" type="bool">
-			<default>false</default>
-		</entry>
 		<entry name="clockFontFamily" type="string">
 			<default></default>
 		</entry>
@@ -114,9 +99,6 @@
 		</entry>
 		<entry name="monthModeHeight" type="uint">
 			<default>600</default>
-		</entry>
-		<entry name="topRowHeight" type="uint">
-			<default>100</default>
 		</entry>
 		<entry name="rightColumnWidth" type="uint">
 			<default>400</default>

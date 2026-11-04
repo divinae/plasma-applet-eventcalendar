@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -1164,7 +1164,7 @@ msgstr "Отложить"
 msgid "0 = no Snooze button"
 msgstr "0 = без кнопки «Отложить»"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Звук"
 
@@ -1853,12 +1853,16 @@ msgid "Search time zones"
 msgstr "Поиск часовых поясов"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Прогноз в заголовках дней и панель погоды в представлении «День»."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
+msgstr ""
+"Прогноз в заголовках дней недельного вида, у каждого дня повестки и панель "
+"погоды дневного вида и повестки."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "В виде «День» показывать"
+msgid "Day view and Agenda show"
+msgstr "Дневной вид и повестка показывают"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1911,26 +1915,6 @@ msgstr "Кнопка ссылки на встречу"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Многодневные события в каждом дне"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Метеограмма над обзором дня"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "График прогноза погоды над списком повестки"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Таймер над обзором дня"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Звук таймера"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Высота метеограммы / таймера"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2271,10 +2255,6 @@ msgid "Forecast chart"
 msgstr "График прогноза"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Также метеограмма над обзором дня"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Простой"
 
@@ -2287,8 +2267,8 @@ msgid "Hours shown"
 msgstr "Показываемые часы"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Сегодняшний график в представлении «День» и метеограмма над повесткой"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Сегодняшний график в дневном виде и повестке"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3833,11 +3813,6 @@ msgstr "Esc: закрыть"
 msgid "Meeting"
 msgstr "Встреча"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Не удалось воспроизвести микрофон через динамик (pactl)."
@@ -4081,20 +4056,6 @@ msgstr "Не удается подключиться. Показаны посл�
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Повторить сейчас"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Погода не настроена.\n"
-"Перейдите в раздел «Погода» и установите своё местоположение,\n"
-"или отключите метеограмму, чтобы скрыть эту область."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Ошибка получения погоды."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4523,62 +4484,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Выполнена"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Пуск"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Отменить"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Таймер"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Таймер - Стоп"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 прошло"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Повтор"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Таймер, осталось %1. Активируйте, чтобы приостановить."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Таймер, осталось %1. Активируйте, чтобы запустить."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr ""
-"Таймер установлен на %1. Используйте плюс или минус, чтобы изменить "
-"длительность."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Таймер-Пауза"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Таймер-Пуск"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr ""
-"Прокрутите колесо мыши или используйте клавиши плюс и минус, чтобы изменить "
-"длительность"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Выставить таймер"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4959,6 +4864,93 @@ msgstr "Сегодня событий больше нет"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Место работы: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Прогноз в заголовках дней и панель погоды в представлении «День»."
+
+#~ msgid "Day view shows"
+#~ msgstr "В виде «День» показывать"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Метеограмма над обзором дня"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "График прогноза погоды над списком повестки"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Таймер над обзором дня"
+
+#~ msgid "Timer sound"
+#~ msgstr "Звук таймера"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Высота метеограммы / таймера"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Также метеограмма над обзором дня"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr ""
+#~ "Сегодняшний график в представлении «День» и метеограмма над повесткой"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Погода не настроена.\n"
+#~ "Перейдите в раздел «Погода» и установите своё местоположение,\n"
+#~ "или отключите метеограмму, чтобы скрыть эту область."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Ошибка получения погоды."
+
+#~ msgid "&Start"
+#~ msgstr "&Пуск"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Отменить"
+
+#~ msgid "Timer"
+#~ msgstr "Таймер"
+
+#~ msgid "Timer finished"
+#~ msgstr "Таймер - Стоп"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 прошло"
+
+#~ msgid "Repeat"
+#~ msgstr "Повтор"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Таймер, осталось %1. Активируйте, чтобы приостановить."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Таймер, осталось %1. Активируйте, чтобы запустить."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr ""
+#~ "Таймер установлен на %1. Используйте плюс или минус, чтобы изменить "
+#~ "длительность."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Таймер-Пауза"
+
+#~ msgid "Start Timer"
+#~ msgstr "Таймер-Пуск"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr ""
+#~ "Прокрутите колесо мыши или используйте клавиши плюс и минус, чтобы "
+#~ "изменить длительность"
+
+#~ msgid "Set Timer"
+#~ msgstr "Выставить таймер"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

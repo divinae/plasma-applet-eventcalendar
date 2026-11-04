@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1164,7 +1164,7 @@ msgstr "Dremež"
 msgid "0 = no Snooze button"
 msgstr "0 = brez gumba Dremež"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Zvok"
 
@@ -1851,12 +1851,16 @@ msgid "Search time zones"
 msgstr "Iskanje časovnih pasov"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Napoved v glavah dni ter vremenska plošča v dnevnem pogledu."
+msgid ""
+"The forecast in the Week view's day headers, on each Agenda day, and the "
+"weather panel of the Day view and the Agenda."
+msgstr ""
+"Napoved v glavah dni tedenskega pogleda, pri vsakem dnevu dnevnega reda in "
+"vremenska plošča dnevnega pogleda in dnevnega reda."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "Dnevni pogled prikazuje"
+msgid "Day view and Agenda show"
+msgstr "Dnevni pogled in dnevni red prikazujeta"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1910,26 +1914,6 @@ msgstr "Gumb za povezavo do sestanka"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Večdnevni dogodki na vsak dan"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogram nad dnevnim redom"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Grafikon vremenske napovedi nad seznamom dnevnega reda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Odštevalnik nad dnevnim redom"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Zvok odštevalnika"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Višina meteograma / odštevalnika"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -2270,10 +2254,6 @@ msgid "Forecast chart"
 msgstr "Graf napovedi"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Tudi meteogram nad dnevnim redom"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Preprost"
 
@@ -2286,8 +2266,8 @@ msgid "Hours shown"
 msgstr "Prikazane ure"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Današnji graf v dnevnem pogledu in meteogram nad dnevnim redom"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Današnji grafikon v dnevnem pogledu in dnevnem redu"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3859,11 +3839,6 @@ msgstr "Esc: opusti"
 msgid "Meeting"
 msgstr "Sestanek"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1 mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Mikrofona ni bilo mogoče predvajati na zvočniku (pactl)."
@@ -4110,20 +4085,6 @@ msgstr "Povezava ni mogoča. Prikazani so nazadnje naloženi dogodki."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Poskusi znova zdaj"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Vreme ni nastavljeno.\n"
-"V nastavitvah tega vtičnika kliknite na Vreme ter določite svoje mesto,\n"
-"in/ali onemogočite meteogram, da se skrije to območje."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Napaka pri prenosu podatkov o vremenu."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml
 #: ../contents/ui/TasksView.qml
@@ -4555,59 +4516,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Opravljeno"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Začni"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Prekliči"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Odštevalnik"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Odštevanje zaključeno"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "%1 je mimo"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Ponovi"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Odštevalnik, preostalo %1. Aktivirajte za premor."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Odštevalnik, preostalo %1. Aktivirajte za začetek."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Odštevalnik je nastavljen na %1. S plus ali minus spremenite trajanje."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Premor"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Začni z odštevanjem"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr ""
-"Za prilagoditev trajanja se pomaknite ali uporabite tipki plus in minus"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Določi ročno"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4996,6 +4904,90 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Napoved v glavah dni ter vremenska plošča v dnevnem pogledu."
+
+#~ msgid "Day view shows"
+#~ msgstr "Dnevni pogled prikazuje"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogram nad dnevnim redom"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Grafikon vremenske napovedi nad seznamom dnevnega reda"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Odštevalnik nad dnevnim redom"
+
+#~ msgid "Timer sound"
+#~ msgstr "Zvok odštevalnika"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Višina meteograma / odštevalnika"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Tudi meteogram nad dnevnim redom"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Današnji graf v dnevnem pogledu in meteogram nad dnevnim redom"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1 mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Vreme ni nastavljeno.\n"
+#~ "V nastavitvah tega vtičnika kliknite na Vreme ter določite svoje mesto,\n"
+#~ "in/ali onemogočite meteogram, da se skrije to območje."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Napaka pri prenosu podatkov o vremenu."
+
+#~ msgid "&Start"
+#~ msgstr "&Začni"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Prekliči"
+
+#~ msgid "Timer"
+#~ msgstr "Odštevalnik"
+
+#~ msgid "Timer finished"
+#~ msgstr "Odštevanje zaključeno"
+
+#~ msgid "%1 has passed"
+#~ msgstr "%1 je mimo"
+
+#~ msgid "Repeat"
+#~ msgstr "Ponovi"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Odštevalnik, preostalo %1. Aktivirajte za premor."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Odštevalnik, preostalo %1. Aktivirajte za začetek."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr ""
+#~ "Odštevalnik je nastavljen na %1. S plus ali minus spremenite trajanje."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Premor"
+
+#~ msgid "Start Timer"
+#~ msgstr "Začni z odštevanjem"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr ""
+#~ "Za prilagoditev trajanja se pomaknite ali uporabite tipki plus in minus"
+
+#~ msgid "Set Timer"
+#~ msgstr "Določi ročno"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

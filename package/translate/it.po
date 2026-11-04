@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:19+0100\n"
+"POT-Creation-Date: 2026-11-04 10:31+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -944,7 +944,7 @@ msgstr "Posticipa"
 msgid "0 = no Snooze button"
 msgstr "0 = nessun pulsante Posticipa"
 
-#: ../contents/ui/config/ConfigEvents.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigEvents.qml
 msgid "Sound"
 msgstr "Suono"
 
@@ -1537,12 +1537,12 @@ msgid "Search time zones"
 msgstr "Cerca fusi orari"
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Forecast in the day headers and, in the Day view, a weather panel."
-msgstr "Previsioni nelle intestazioni dei giorni e, nella vista Giorno, un pannello meteo."
+msgid "The forecast in the Week view's day headers, on each Agenda day, and the weather panel of the Day view and the Agenda."
+msgstr "Le previsioni nelle intestazioni dei giorni della vista settimana, su ogni giorno dell'agenda e il pannello meteo della vista giorno e dell'agenda."
 
 #: ../contents/ui/config/ConfigViews.qml
-msgid "Day view shows"
-msgstr "La vista Giorno mostra"
+msgid "Day view and Agenda show"
+msgstr "La vista giorno e l'agenda mostrano"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Small calendar"
@@ -1590,26 +1590,6 @@ msgstr "Pulsante del collegamento alla riunione"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Eventi di più giorni in ogni giorno"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram above the agenda"
-msgstr "Meteogramma sopra l'agenda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The weather forecast chart above the Agenda's list"
-msgstr "Il grafico delle previsioni meteo sopra l'elenco dell'agenda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer above the agenda"
-msgstr "Timer sopra l'agenda"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Timer sound"
-msgstr "Suono del timer"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Meteogram / timer height"
-msgstr "Altezza meteogramma / timer"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Offline"
@@ -1888,10 +1868,6 @@ msgid "Forecast chart"
 msgstr "Grafico delle previsioni"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Also the meteogram above the agenda"
-msgstr "Anche il meteogramma sopra l'agenda"
-
-#: ../contents/ui/config/ConfigWeather.qml
 msgid "Simple"
 msgstr "Semplice"
 
@@ -1904,8 +1880,8 @@ msgid "Hours shown"
 msgstr "Ore mostrate"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid "Today's chart in the Day view and the meteogram above the agenda"
-msgstr "Il grafico di oggi nella vista Giorno e il meteogramma sopra l'agenda"
+msgid "Today's chart in the Day view and the Agenda"
+msgstr "Il grafico di oggi nella vista giorno e nell'agenda"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgid " hours"
@@ -3366,11 +3342,6 @@ msgstr "Esc: chiudi"
 msgid "Meeting"
 msgstr "Riunione"
 
-#: ../contents/ui/MeteogramView.qml
-#, no-c-format
-msgid "%1mm"
-msgstr "%1mm"
-
 #: ../contents/ui/MicMeter.qml
 msgid "Couldn't play the microphone on the speaker (pactl)."
 msgstr "Impossibile riprodurre il microfono sull'altoparlante (pactl)."
@@ -3611,20 +3582,6 @@ msgstr "Impossibile connettersi. Vengono mostrati gli ultimi eventi caricati."
 #: ../contents/ui/PopupView.qml ../contents/ui/WeatherPanel.qml
 msgid "Retry Now"
 msgstr "Riprova ora"
-
-#: ../contents/ui/PopupView.qml
-msgid ""
-"Weather not configured.\n"
-"Go to Weather in the config and set your city,\n"
-"and/or disable the meteogram to hide this area."
-msgstr ""
-"Meteo non configurato.\n"
-"Vai al meteo nella configurazione e imposta la tua città,\n"
-"e/o disabilita il meteogramma per nascondere quest'area."
-
-#: ../contents/ui/PopupView.qml
-msgid "Error fetching weather."
-msgstr "Errore nello scaricamento del meteo."
 
 #: ../contents/ui/QuickAddTaskRow.qml ../contents/ui/TaskRow.qml ../contents/ui/TasksView.qml
 msgid "Today"
@@ -4044,58 +4001,6 @@ msgctxt "a task was checked"
 msgid "Completed"
 msgstr "Completata"
 
-#: ../contents/ui/TimerInputView.qml
-msgid "&Start"
-msgstr "&Avvia"
-
-#: ../contents/ui/TimerInputView.qml
-msgid "&Cancel"
-msgstr "&Cancella"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer"
-msgstr "Timer"
-
-#: ../contents/ui/TimerModel.qml
-msgid "Timer finished"
-msgstr "Tempo scaduto"
-
-#: ../contents/ui/TimerModel.qml
-msgid "%1 has passed"
-msgstr "Sono passati %1"
-
-#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Ripeti"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to pause."
-msgstr "Timer, %1 rimanenti. Attiva per mettere in pausa."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer, %1 remaining. Activate to start."
-msgstr "Timer, %1 rimanenti. Attiva per avviare."
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer set to %1. Use plus or minus to change the duration."
-msgstr "Timer impostato a %1. Usa più o meno per cambiare la durata."
-
-#: ../contents/ui/TimerView.qml
-msgid "Pause Timer"
-msgstr "Sospendi timer"
-
-#: ../contents/ui/TimerView.qml
-msgid "Start Timer"
-msgstr "Avvia timer"
-
-#: ../contents/ui/TimerView.qml
-msgid "Scroll or use plus and minus keys to adjust duration"
-msgstr "Scorri o usa i tasti più e meno per regolare la durata"
-
-#: ../contents/ui/TimerView.qml
-msgid "Set Timer"
-msgstr "Imposta timer"
-
 #: ../contents/ui/TooltipView.qml
 msgctxt "high / low temperature"
 msgid "%1 / %2"
@@ -4463,6 +4368,88 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
+#~ msgstr "Previsioni nelle intestazioni dei giorni e, nella vista Giorno, un pannello meteo."
+
+#~ msgid "Day view shows"
+#~ msgstr "La vista Giorno mostra"
+
+#~ msgid "Meteogram above the agenda"
+#~ msgstr "Meteogramma sopra l'agenda"
+
+#~ msgid "The weather forecast chart above the Agenda's list"
+#~ msgstr "Il grafico delle previsioni meteo sopra l'elenco dell'agenda"
+
+#~ msgid "Timer above the agenda"
+#~ msgstr "Timer sopra l'agenda"
+
+#~ msgid "Timer sound"
+#~ msgstr "Suono del timer"
+
+#~ msgid "Meteogram / timer height"
+#~ msgstr "Altezza meteogramma / timer"
+
+#~ msgid "Also the meteogram above the agenda"
+#~ msgstr "Anche il meteogramma sopra l'agenda"
+
+#~ msgid "Today's chart in the Day view and the meteogram above the agenda"
+#~ msgstr "Il grafico di oggi nella vista Giorno e il meteogramma sopra l'agenda"
+
+#, no-c-format
+#~ msgid "%1mm"
+#~ msgstr "%1mm"
+
+#~ msgid ""
+#~ "Weather not configured.\n"
+#~ "Go to Weather in the config and set your city,\n"
+#~ "and/or disable the meteogram to hide this area."
+#~ msgstr ""
+#~ "Meteo non configurato.\n"
+#~ "Vai al meteo nella configurazione e imposta la tua città,\n"
+#~ "e/o disabilita il meteogramma per nascondere quest'area."
+
+#~ msgid "Error fetching weather."
+#~ msgstr "Errore nello scaricamento del meteo."
+
+#~ msgid "&Start"
+#~ msgstr "&Avvia"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Cancella"
+
+#~ msgid "Timer"
+#~ msgstr "Timer"
+
+#~ msgid "Timer finished"
+#~ msgstr "Tempo scaduto"
+
+#~ msgid "%1 has passed"
+#~ msgstr "Sono passati %1"
+
+#~ msgid "Repeat"
+#~ msgstr "Ripeti"
+
+#~ msgid "Timer, %1 remaining. Activate to pause."
+#~ msgstr "Timer, %1 rimanenti. Attiva per mettere in pausa."
+
+#~ msgid "Timer, %1 remaining. Activate to start."
+#~ msgstr "Timer, %1 rimanenti. Attiva per avviare."
+
+#~ msgid "Timer set to %1. Use plus or minus to change the duration."
+#~ msgstr "Timer impostato a %1. Usa più o meno per cambiare la durata."
+
+#~ msgid "Pause Timer"
+#~ msgstr "Sospendi timer"
+
+#~ msgid "Start Timer"
+#~ msgstr "Avvia timer"
+
+#~ msgid "Scroll or use plus and minus keys to adjust duration"
+#~ msgstr "Scorri o usa i tasti più e meno per regolare la durata"
+
+#~ msgid "Set Timer"
+#~ msgstr "Imposta timer"
 
 #~ msgctxt "the sun"
 #~ msgid "Up all day (midnight sun)"

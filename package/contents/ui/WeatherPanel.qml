@@ -489,7 +489,7 @@ ColumnLayout {
 	readonly property bool chartRainAmounts: plasmoid.configuration.weatherChartRainAmounts
 	SectionTitle {
 		visible: panel.showData && !panel.compact && panel.showHourly && panel.hourly.length > 1
-		// The hours the chart spans (Settings > Weather > "Meteogram shows").
+		// The hours the chart spans (Settings > Weather > Forecast chart > Hours shown).
 		readonly property int hours: hourChart.points.length > 1 ? Math.round((hourChart.points[hourChart.points.length - 1].dt - hourChart.points[0].dt) / 3600) : 0
 		text: panel.isToday ? i18np("Next hour", "Next %1 hours", hours) : i18nc("weather by hour of the shown day", "During the day")
 		readonly property real rain: ForecastChart.rainTotal(hourChart.points)
@@ -501,7 +501,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.preferredHeight: Kirigami.Units.gridUnit * 7 + iconSize - Kirigami.Units.iconSizes.small
 
-		// Today: the next hours of Settings > Weather > "Meteogram shows" (as the agenda's meteogram);
+		// Today: the next hours of Settings > Weather > Forecast chart > Hours shown;
 		// another day: its hours.
 		readonly property int hoursShown: Math.max(9, plasmoid.configuration.meteogramHours || 24)
 		readonly property var points: {
