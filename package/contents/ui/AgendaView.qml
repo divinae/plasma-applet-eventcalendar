@@ -135,19 +135,15 @@ Item {
 	}
 
 	// A day scrolled to (scrollToDate) stays at the top while the list settles: it fills in parts,
-	// the days take their real height as they're built, their weather comes later; each moved the
-	// day away. Until the user scrolls (wheel, dragging, the scroll bar, the header's arrows), 5 s at most.
+	// the days take their real height only as they're built (a long description: much taller, seconds
+	// later), their weather comes later; each moved the day away. Until the user scrolls (wheel,
+	// dragging, the scroll bar, the header's arrows) or another day is scrolled to.
 	property var followDate: null
-	property real followUntil: 0
 	function stopFollowing() {
 		followDate = null
 	}
 	function follow() {
 		if (!followDate) {
-			return
-		}
-		if (Date.now() > followUntil) {
-			followDate = null
 			return
 		}
 		positionAtDate(followDate)
@@ -163,7 +159,6 @@ Item {
 
 	function scrollToDate(date) {
 		followDate = date
-		followUntil = Date.now() + 5000
 		positionAtDate(date)
 	}
 	function positionAtDate(date) {
