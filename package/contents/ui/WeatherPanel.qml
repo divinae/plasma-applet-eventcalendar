@@ -320,11 +320,10 @@ ColumnLayout {
 			}
 		}
 		// Today: the high and the low, then the rain (when there is any) on a light blue pill with a
-		// drop, on the right, in the room beside the temperature. Under the high and the low (another
-		// day: alone) sunrise and sunset at the weather's place (Moon.sunRiseSet; none without one).
+		// drop, on the right, in the room beside the temperature.
 		ColumnLayout {
 			readonly property bool todayRange: !!panel.today && panel.isToday
-			visible: !panel.compact && (todayRange || !!panel.sun)
+			visible: !panel.compact && todayRange
 			Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 			spacing: Kirigami.Units.smallSpacing
 			RowLayout {
@@ -340,53 +339,6 @@ ColumnLayout {
 					textFormat: Text.PlainText
 					text: panel.today ? "↓ " + Shared.formatTemp(panel.today.temp.min) : ""
 					opacity: panel.dimOpacity * 0.8
-				}
-			}
-			ColumnLayout {
-				id: sunRow
-				readonly property bool crossing: !!panel.sun && (!!panel.sun.rise || !!panel.sun.set)
-				function sunTime(date) {
-					return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
-				}
-				visible: !!panel.sun
-				Layout.alignment: Qt.AlignRight
-				spacing: 0 // One under the other: as narrow as the high and the low
-				opacity: panel.dimOpacity
-				Accessible.name: crossing
-					? [panel.sun.rise ? i18nc("%1 = time", "Sunrise %1", sunTime(panel.sun.rise)) : "",
-						panel.sun.set ? i18nc("%1 = time", "Sunset %1", sunTime(panel.sun.set)) : ""].filter(Boolean).join(" · ")
-					: sunPolar.text
-				// A glyph as tall as the text, then the time: as the high and the low.
-				component SunTime: RowLayout {
-					property string glyph
-					property string time
-					visible: !!time
-					Layout.alignment: Qt.AlignRight
-					spacing: 1
-					FontIcon {
-						Layout.preferredWidth: timeLabel.implicitHeight * 1.1
-						Layout.preferredHeight: timeLabel.implicitHeight
-						source: parent.glyph
-						color: Kirigami.Theme.textColor
-						showOutline: false
-					}
-					PlasmaComponents3.Label {
-						id: timeLabel
-						font: Kirigami.Theme.smallFont
-						textFormat: Text.PlainText
-						text: parent.time
-					}
-				}
-				SunTime { glyph: "wi-sunrise"; time: sunRow.crossing && panel.sun.rise ? sunRow.sunTime(panel.sun.rise) : "" }
-				SunTime { glyph: "wi-sunset"; time: sunRow.crossing && panel.sun.set ? sunRow.sunTime(panel.sun.set) : "" }
-				// Close to the pole
-				PlasmaComponents3.Label {
-					id: sunPolar
-					Layout.alignment: Qt.AlignRight
-					visible: !sunRow.crossing
-					font: Kirigami.Theme.smallFont
-					textFormat: Text.PlainText
-					text: panel.sun && panel.sun.alwaysUp ? i18nc("the sun up all day", "Midnight sun") : i18nc("the sun down all day", "Polar night")
 				}
 			}
 			Rectangle {
@@ -444,6 +396,55 @@ ColumnLayout {
 			visible: panel.compact && !!panel.today && !!panel.current
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			opacity: panel.dimOpacity
+		}
+	}
+	// Sunrise and sunset at the weather's place (Moon.sunRiseSet; none without one): on the right,
+	// a row under the high and the low, in their style (sunset dimmed as the low). A row of its own,
+	// so the conditions beside the temperature keep their room.
+	RowLayout {
+		id: sunRow
+		readonly property bool crossing: !!panel.sun && (!!panel.sun.rise || !!panel.sun.set)
+		function sunTime(date) {
+			return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+		}
+		visible: panel.showData && !panel.compact && !!panel.sun && (!!panel.current || !!panel.today)
+		Layout.alignment: Qt.AlignRight
+		spacing: Kirigami.Units.largeSpacing
+		Accessible.name: crossing
+			? [panel.sun.rise ? i18nc("%1 = time", "Sunrise %1", sunTime(panel.sun.rise)) : "",
+				panel.sun.set ? i18nc("%1 = time", "Sunset %1", sunTime(panel.sun.set)) : ""].filter(Boolean).join(" · ")
+			: sunPolar.text
+		// A glyph as tall as the text, then the time.
+		component SunTime: RowLayout {
+			property string glyph
+			property string time
+			visible: !!time
+			spacing: Kirigami.Units.smallSpacing
+			FontIcon {
+				Layout.preferredWidth: timeLabel.implicitHeight
+				Layout.preferredHeight: timeLabel.implicitHeight
+				source: parent.glyph
+				color: Kirigami.Theme.textColor
+				showOutline: false
+			}
+			PlasmaComponents3.Label {
+				id: timeLabel
+				textFormat: Text.PlainText
+				text: parent.time
+			}
+		}
+		SunTime { glyph: "wi-sunrise"; time: sunRow.crossing && panel.sun.rise ? sunRow.sunTime(panel.sun.rise) : "" }
+		SunTime {
+			glyph: "wi-sunset"
+			time: sunRow.crossing && panel.sun.set ? sunRow.sunTime(panel.sun.set) : ""
+			opacity: panel.dimOpacity * 0.8 // As the low
+		}
+		// Close to the pole
+		PlasmaComponents3.Label {
+			id: sunPolar
+			visible: !sunRow.crossing
+			textFormat: Text.PlainText
+			text: panel.sun && panel.sun.alwaysUp ? i18nc("the sun up all day", "Midnight sun") : i18nc("the sun down all day", "Polar night")
 		}
 	}
 	// Another day: its rain (the high / low are in the heading).
