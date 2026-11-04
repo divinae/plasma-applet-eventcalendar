@@ -190,3 +190,23 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(U.pimCalendarRows(accountTree, 
 	['id,name,checked', 'id,name,checked', 'id,name,checked'], 'without the accounts: rows as before')
 
 console.log('PASS plasma_calendar_utils')
+
+// enabledPlugins written only when the list changes: writing it unloads plugins, and reloading
+// them while in use crashed Plasma 6.3 (#14).
+{
+	const savedToPaths = U.pluginFilenameToPathList, savedEffective = U.getEffectivePluginFilenameList
+	U.pluginFilenameToPathList = (m, list) => list.map(name => '/plugins/' + name)
+	U.getEffectivePluginFilenameList = (m, list) => list
+	let writes = 0
+	const manager = {
+		_list: ['/plugins/holidays', '/plugins/pimevents'],
+		get enabledPlugins() { return this._list },
+		set enabledPlugins(list) { writes++; this._list = list },
+	}
+	assert.strictEqual(U.setEnabledPluginsByFilename(manager, ['pimevents', 'holidays'], false), false, 'same plugins, another order')
+	assert.strictEqual(writes, 0)
+	assert.strictEqual(U.setEnabledPluginsByFilename(manager, ['holidays'], false), true, 'one less')
+	assert.strictEqual(writes, 1)
+	U.pluginFilenameToPathList = savedToPaths
+	U.getEffectivePluginFilenameList = savedEffective
+}

@@ -366,12 +366,20 @@ function populateEnabledPluginsByFilename(eventPluginsManager, pluginFilenameLis
 	eventPluginsManager.populateEnabledPluginsList(pluginPathList)
 }
 
+// Only when the list changed: writing enabledPlugins unloads the plugins left out, and reloading
+// them while they're in use crashed Plasma 6.3 (#14).
 function setEnabledPluginsByFilename(eventPluginsManager, pluginFilenameList, allowEmpty) {
 	var pluginPathList = pluginFilenameToPathList(
 		eventPluginsManager,
 		getEffectivePluginFilenameList(eventPluginsManager, pluginFilenameList, allowEmpty)
 	)
+	var current = toArray(eventPluginsManager.enabledPlugins).slice().sort()
+	var next = pluginPathList.slice().sort()
+	if (current.length === next.length && current.every(function(path, i) { return path === next[i] })) {
+		return false
+	}
 	eventPluginsManager.enabledPlugins = pluginPathList
+	return true
 }
 
 //--- Akonadi events by color

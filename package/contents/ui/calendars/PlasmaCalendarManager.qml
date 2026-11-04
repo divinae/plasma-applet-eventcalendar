@@ -228,20 +228,12 @@ CalendarManager {
 		}
 	}
 
-	// Refresh: the plugins loaded anew, so they ask their sources again. A plugin can miss changes:
-	// the PIM one didn't see an event Akonadi synced later (only a plasmashell restart showed it).
-	// At most every 30 s: the plugins are C++ inside plasmashell, unloaded while they're still
-	// loading or sending their data (Refresh clicked again, Akonadi slow) Plasma can crash (#14).
-	// Otherwise Refresh just reads their data again (the fetch that follows).
-	property double lastPluginReload: 0
-	readonly property int pluginReloadInterval: 30000
+	// Refresh: the plugins' data read again. They aren't loaded anew: the Digital Clock loads them
+	// once too, and they send their changes themselves (dataReady, eventModified, eventRemoved
+	// below). Unloading these C++ plugins inside plasmashell while they're in use crashed Plasma 6.3
+	// (#14).
 	function reloadSources() {
-		if (!ensureEventPluginsManager() || Date.now() - lastPluginReload < pluginReloadInterval) {
-			return
-		}
-		lastPluginReload = Date.now()
-		eventPluginsManager.enabledPlugins = []
-		syncEnabledPlugins()
+		pluginDataTimer.restart()
 	}
 
 	// The plugins' data comes after they're asked (Akonadi takes a while) and changes (an event
