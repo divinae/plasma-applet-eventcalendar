@@ -703,22 +703,31 @@ CalendarManager {
 	//--- Meetings marked as ended (they often end early, or turn out not to be needed): no progress
 	// bar, chip or "Now:" line for them. Until the event's real end; not kept across restarts.
 	property var endedEvents: ({}) // key -> end time (ms)
+	property var endedAt: ({}) // key -> when it was marked (ms): its real end, for Glance
 	function endedKey(eventItem) {
 		return String(eventItem.calendarId || '') + '|' + String(eventItem.id || eventItem.summary || '') + '|' + new Date(eventItem.startDateTime).getTime()
 	}
 	function isMarkedEnded(eventItem) {
 		return !!endedEvents[endedKey(eventItem)]
 	}
+	// When it was marked as ended (ms), or 0
+	function markedEndedAt(eventItem) {
+		return endedAt[endedKey(eventItem)] || 0
+	}
 	function markEnded(eventItem) {
 		endMeetingCommand(meetingKey(eventItem)) // Its end command now, not at the planned end
 		var now = timeModel.currentTime.getTime()
 		var kept = {}
+		var keptAt = {}
 		for (var key in endedEvents) {
 			if (endedEvents[key] > now) {
 				kept[key] = endedEvents[key]
+				keptAt[key] = endedAt[key] || now
 			}
 		}
 		kept[endedKey(eventItem)] = new Date(eventItem.endDateTime).getTime()
+		keptAt[endedKey(eventItem)] = now
+		endedAt = keptAt
 		endedEvents = kept
 		focusMode.endIfOwn(meetingKey(eventItem), timeModel.currentTime) // Do Not Disturb off, if the widget set it
 		updateNextEvent()

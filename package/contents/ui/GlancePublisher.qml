@@ -53,6 +53,11 @@ QtObject {
 					Shared.myResponse(eventItem), summary.guestCount, names[eventItem.calendarId || calendarId],
 					eventItem.calendarId || calendarId)
 				if (item) {
+					// Marked as ended (it ended early): it ends then, for Glance too
+					var endedAt = upcomingEvents.markedEndedAt(eventItem)
+					if (endedAt > 0 && endedAt < item.end) {
+						item.end = Math.max(item.start, endedAt)
+					}
 					items.push(item)
 				}
 			}
@@ -119,6 +124,7 @@ QtObject {
 		function onEventAdded() { publisher.changed() }
 		function onEventRemoved() { publisher.changed() }
 		function onEventUpdated() { publisher.changed() }
+		function onEndedEventsChanged() { publisher.publish() } // At once: a meeting just ended
 	}
 
 	property Connections onWeather: Connections {
