@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:09+0100\n"
+"POT-Creation-Date: 2026-11-04 09:12+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -4763,6 +4763,26 @@ msgid "Unknown"
 msgstr "Ukendt"
 
 #: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunrise %1"
+msgstr "Solopgang %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunset %1"
+msgstr "Solnedgang %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun up all day"
+msgid "Midnight sun"
+msgstr "Midnatssol"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun down all day"
+msgid "Polar night"
+msgstr "Polarnat"
+
+#: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "Angiv en placering i Indstillinger > Vejr for at se vejrudsigten her."
 
@@ -4783,26 +4803,6 @@ msgstr "Høj %1 · Lav %2"
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
 msgstr "Regn: %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunrise %1"
-msgstr "Solopgang %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunset %1"
-msgstr "Solnedgang %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun up all day"
-msgid "Midnight sun"
-msgstr "Midnatssol"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun down all day"
-msgid "Polar night"
-msgstr "Polarnat"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."

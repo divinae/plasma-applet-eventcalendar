@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:09+0100\n"
+"POT-Creation-Date: 2026-11-04 09:12+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -4834,6 +4834,26 @@ msgid "Unknown"
 msgstr "Άγνωστο"
 
 #: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunrise %1"
+msgstr "Ανατολή ηλίου %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunset %1"
+msgstr "Δύση ηλίου %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun up all day"
+msgid "Midnight sun"
+msgstr "Ήλιος του μεσονυκτίου"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun down all day"
+msgid "Polar night"
+msgstr "Πολική νύχτα"
+
+#: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr ""
 "Ορίστε μια τοποθεσία στις Ρυθμίσεις > Καιρός για να βλέπετε εδώ την πρόγνωση."
@@ -4855,26 +4875,6 @@ msgstr "Μέγ. %1 · Ελάχ. %2"
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
 msgstr "Βροχή: %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunrise %1"
-msgstr "Ανατολή ηλίου %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunset %1"
-msgstr "Δύση ηλίου %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun up all day"
-msgid "Midnight sun"
-msgstr "Ήλιος του μεσονυκτίου"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun down all day"
-msgid "Polar night"
-msgstr "Πολική νύχτα"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:09+0100\n"
+"POT-Creation-Date: 2026-11-04 09:12+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -4880,6 +4880,26 @@ msgid "Unknown"
 msgstr "Neznano"
 
 #: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunrise %1"
+msgstr "Sončni vzhod %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "%1 = time"
+msgid "Sunset %1"
+msgstr "Sončni zahod %1"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun up all day"
+msgid "Midnight sun"
+msgstr "Polnočno sonce"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "the sun down all day"
+msgid "Polar night"
+msgstr "Polarna noč"
+
+#: ../contents/ui/WeatherPanel.qml
 msgid "Set a location in Settings > Weather to see the forecast here."
 msgstr "Nastavite lokacijo v Nastavitve > Vreme, da bo tu prikazana napoved."
 
@@ -4900,26 +4920,6 @@ msgstr "Najvišja %1 · Najnižja %2"
 msgctxt "precipitation during the day"
 msgid "Rain: %1"
 msgstr "Dež: %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunrise %1"
-msgstr "Sončni vzhod %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "%1 = time"
-msgid "Sunset %1"
-msgstr "Sončni zahod %1"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun up all day"
-msgid "Midnight sun"
-msgstr "Polnočno sonce"
-
-#: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun down all day"
-msgid "Polar night"
-msgstr "Polarna noč"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
