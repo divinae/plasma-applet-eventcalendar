@@ -209,7 +209,8 @@ Item {
 	// fetch it now (else it comes with the hourly refresh, not on each view switch).
 	function ensureHourlyWeather() {
 		var viewMode = popup ? popup.viewMode : ''
-		var wantsHourly = viewMode === 'today' || viewMode === 'classic' // Day, Agenda (their weather panel)
+		var wantsHourly = (viewMode === 'today' || viewMode === 'classic') // Day, Agenda (their weather panel)
+			&& plasmoid.configuration.weatherShowInViews !== false
 		if (wantsHourly && WeatherApi.weatherIsSetup(plasmoid.configuration)
 				&& !(logic.hourlyWeatherData && logic.hourlyWeatherData.list && logic.hourlyWeatherData.list.length > 0)) {
 			logic.updateHourlyWeather()
@@ -222,7 +223,7 @@ Item {
 		// The popup exists after its first open; before, the view it will open in.
 		var cfg = plasmoid.configuration
 		var viewMode = popup ? popup.viewMode : (cfg.popupOpenLastView && cfg.popupLastView ? cfg.popupLastView : cfg.popupMode)
-		if (viewMode === 'classic' || viewMode === 'today') {
+		if ((viewMode === 'classic' || viewMode === 'today') && cfg.weatherShowInViews !== false) {
 			logic.updateHourlyWeather()
 		}
 	}
@@ -405,7 +406,6 @@ Item {
 
 		//--- UI
 		function onAgendaBreakupMultiDayEventsChanged() { if (popup) popup.updateUI() }
-		function onWeatherShowInViewsChanged() { if (popup) popup.updateUI() }
 	}
 
 	//---

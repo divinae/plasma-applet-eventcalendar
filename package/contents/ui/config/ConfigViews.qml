@@ -16,7 +16,6 @@ import "../lib/Base64Compat.js" as Base64Compat
 ConfigPage {
 	id: page
 
-
 	ColumnLayout {
 		Layout.fillWidth: true
 		spacing: 0
@@ -325,7 +324,7 @@ ConfigPage {
 						Repeater {
 							model: [
 								{ key: 'dayShowMiniMonth', text: i18n("Small calendar") },
-								{ key: 'dayShowUpNext', text: i18n("Up next") },
+								{ key: 'dayShowUpNext', text: i18n("Up next (Day view)") }, // The Agenda is what's next
 								{ key: 'dayShowMoon', text: i18n("Moon"), off: true }, // Off by default
 								{ key: 'dayShowWeather', text: i18n("Weather") },
 								{ key: 'dayShowTasks', text: i18n("Tasks") },

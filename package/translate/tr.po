@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:31+0100\n"
+"POT-Creation-Date: 2026-11-04 10:35+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1849,9 +1849,9 @@ msgstr "Gün görünümü ve ajanda gösterir"
 msgid "Small calendar"
 msgstr "Küçük takvim"
 
-#: ../contents/ui/config/ConfigViews.qml ../contents/ui/UpNextPanel.qml
-msgid "Up next"
-msgstr "Sıradakiler"
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Up next (Day view)"
+msgstr "Sıradakiler (gün görünümü)"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Moon"
@@ -4580,6 +4580,10 @@ msgstr "Sıradaki: %1, %2"
 msgctxt "Up next: a day's heading"
 msgid "dddd, d MMM"
 msgstr "d MMM, dddd"
+
+#: ../contents/ui/UpNextPanel.qml
+msgid "Up next"
+msgstr "Sıradakiler"
 
 #: ../contents/ui/UpNextPanel.qml
 msgid "Nothing tomorrow."

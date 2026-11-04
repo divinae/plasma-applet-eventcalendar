@@ -147,7 +147,7 @@ MouseArea {
 	Component.onCompleted: {
 		refreshTaskLists()
 		deferredUpdateUI()
-		if (dayMode || showAgenda) {
+		if ((dayMode || showAgenda) && weatherInViews) {
 			logic.updateWeather(true)
 		}
 	}
@@ -760,6 +760,7 @@ MouseArea {
 			dayCount: popup.dayMode ? 1 : 7
 			workWeek: plasmoid.configuration.weekViewWorkWeek // Week view only
 			weatherByDay: popup.weatherInViews ? root.weatherByDay : ({})
+			weatherEnabled: popup.weatherInViews
 			weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
 			weatherCurrent: logic.currentWeatherData
 			weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
@@ -814,6 +815,7 @@ MouseArea {
 		onDayClicked: function(day) { popup.goToDay(day) }
 
 		weatherByDay: popup.weatherInViews ? root.weatherByDay : ({})
+		weatherEnabled: popup.weatherInViews
 		weatherHourly: logic.hourlyWeatherData && logic.hourlyWeatherData.list ? logic.hourlyWeatherData.list : []
 		weatherCurrent: logic.currentWeatherData
 		weatherIsSetup: WeatherApi.weatherIsSetup(plasmoid.configuration)
@@ -950,7 +952,15 @@ MouseArea {
 	}
 
 	//--- Weather for the views
-	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews
+	// Settings > Views > Weather: the forecast in the views at all (day headers, the Agenda's days,
+	// the weather panels). The one place it's read; the views get it from here.
+	readonly property bool weatherInViews: plasmoid.configuration.weatherShowInViews !== false
+	onWeatherInViewsChanged: {
+		agendaModel.parseWeatherForecast(weatherInViews ? root.weatherByDay : ({}))
+		if (weatherInViews) {
+			logic.ensureHourlyWeather() // Not fetched while off
+		}
+	}
 
 	// Week -> Day (the same view, the Loader stays): the day asked for (a click on a day).
 	onDayModeChanged: {
