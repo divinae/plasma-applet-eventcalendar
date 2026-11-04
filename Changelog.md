@@ -1,3 +1,13 @@
+## v1.20.0 - November 4 2026
+
+### Fixes (thanks to frispete)
+* **The Agenda no longer freezes Plasma** (#14, #28): an event's tile and its day's layout fought over the tile's width, a layout loop that kept Plasma at 100% CPU with some events.
+* **The Agenda opens at today** when switched to, and stays there while its days load (#26).
+* **The mouse wheel stays in the widget** where nothing in it scrolls: on the desktop it no longer switches virtual desktops (#27).
+
+### Glance
+* **Share events with Glance** (Settings > Calendars > General, off by default): today's and tomorrow's events and the current weather for the Glance panel widget, over D-Bus on this computer only (no descriptions or guests' addresses); a click on an event there opens it here.
+
 ## v1.19.0 - November 4 2026
 
 ### Agenda

@@ -148,9 +148,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.19.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.20.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.19.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.20.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a
