@@ -29,7 +29,7 @@ again.
   PIM (Akonadi), holidays and .ics files; an event that's in two calendars shows once.
 - ⚡ **Fast and offline-ready.** It opens instantly with your last events and tasks, even without a
   network, and stays quick with busy calendars and long task lists.
-- 🎨 **Looks at home in Plasma.** Rounded "islands" cards or a flat look, light and dark themes,
+- 🎨 **Looks at home in Plasma.** Rounded "islands" cards (solid or translucent) or a flat look, light and dark themes,
   calendar colors that stay readable, translated into 20 languages.
 - 🔒 **Private by design.** Sign-in tokens stay in your system keyring; no tracking, no servers of
   ours in between.
@@ -49,7 +49,7 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   **Go to date** (G: "next friday", "15 nov", "+2w"). The popup opens in your default view or the
   last one used; the view switcher is tabs or a drop-down, and a right click on the header picks
   the views and buttons it shows (in a small popup they fold into one menu).
-- **Islands style** (default, or flat): the month grid, the Week view's grid, the Day view's
+- **Islands style** (default, with translucent cards, or flat): the month grid, the Week view's grid, the Day view's
   weather, hour grid and tasks, each agenda day and each section of the Tasks tab sit in their own
   rounded cards; task sections fold, and the done tasks wait in a folded "Completed" card.
 - **Google Calendar**: several accounts at once, choose calendars and task lists per account.
@@ -107,7 +107,8 @@ It keeps the same widget id, so it replaces an existing Event Calendar and keeps
   Settings > Calendars > Akonadi.
 - **Weather** from Open-Meteo (free, no API key; search your city in the settings), or
   OpenWeatherMap (free or One Call 3.0) / Weather Canada; the system's icons or Yr's colored ones,
-  a simple or a fancy forecast chart.
+  a simple or a fancy forecast chart with details under the mouse, sunrise and sunset; a moon box
+  (phase, rise and set) in the Day view, optional.
 - **Starts instantly and works offline**: the last loaded events and tasks are shown right away
   and stay visible offline (Settings > Views > Offline turns it off; each widget keeps its own), fetches
   are retried automatically, and a banner shows when it can't connect. The Agenda and the Tasks tab
@@ -147,9 +148,9 @@ Download the `.plasmoid` file from the [latest release](https://github.com/divin
 then:
 
 ```
-kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.17.0.plasmoid
+kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-v1.18.0.plasmoid
 # or, to upgrade an installed Event Calendar:
-kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.17.0.plasmoid
+kpackagetool6 -t Plasma/Applet -u eventcalendar-ng-v1.18.0.plasmoid
 ```
 
 Restart Plasma (`systemctl --user restart plasma-plasmashell`) and add **Event Calendar NG** to a

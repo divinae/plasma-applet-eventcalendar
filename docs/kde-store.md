@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.17.0
+    1.18.0
 
 **License**
 
@@ -131,6 +131,16 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
+**Changelog (1.18.0)**
+
+```
+- Fix: Plasma no longer crashes on Refresh with the holidays / KDE PIM calendar plugins on
+- Weather: sunrise and sunset; details under the mouse in the charts; nights by the sun
+- Moon box in the Day view and Agenda (optional, Settings > Views; thanks to frispete)
+- Style: islands with translucent cards
+- Fixes from frispete: Day view all-day events after the Agenda, OpenWeatherMap texts in your language
+```
+
 **Changelog (1.17.0)**
 
 ```
@@ -202,8 +212,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.17.0.plasmoid` from the
-  [v1.17.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.17.0),
+- **Product file:** `eventcalendar-ng-v1.18.0.plasmoid` from the
+  [v1.18.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.18.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

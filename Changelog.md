@@ -1,3 +1,21 @@
+## v1.18.0 - November 4 2026
+
+### Fixes
+* **Plasma no longer crashes on Refresh** with Plasma's calendar plugins on (holidays, KDE PIM), #14: Refresh doesn't load them anew any more, as the Digital Clock doesn't; it reads their data again, and they send their changes themselves.
+* Day view: all-day events no longer drawn a week wide after switching from the Agenda (thanks to frispete, #22).
+* OpenWeatherMap: other days' conditions in the widget's language, not English (thanks to frispete, #25).
+
+### Weather
+* **Sunrise and sunset** in the weather card, beside the temperature (worked out locally at the weather's place; midnight sun and polar night too).
+* **Mouse-over details in the weather charts:** rest the mouse on the 24-hour chart or the Agenda's meteogram and the hour under it is marked, with its time, temperature, sky and rain, in the chart (the meteogram's tooltip opened at the screen's top) (thanks to frispete, #24).
+* The charts' nights follow the sun at the weather's place, not 20:00–6:00.
+
+### Moon (thanks to frispete, #23)
+* **A moon box** in the Day view and the Agenda's side column: the phase, how much is lit, moonrise and moonset, the next full or new moon, worked out locally. Off by default: Settings > Views > Day view shows > Moon.
+
+### Look
+* **Islands with translucent cards** (Settings > Views > Style): the cards a faint wash over the popup's blurred background, no border or shadow.
+
 ## v1.17.0 - November 3 2026
 
 ### Calendar colors (#20)
