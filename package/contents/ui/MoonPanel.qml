@@ -16,7 +16,11 @@ RowLayout {
 	property real latitude: NaN // The weather's place; NaN: no rise and set
 	property real longitude: NaN
 
-	readonly property var info: Moon.dayInfo(day, latitude, longitude)
+	property bool active: true // Worked out only while shown (off by default)
+	// The day's start: the day passed can be the current time, ticking (the same day: no change).
+	readonly property double dayStart: new Date(day.getFullYear(), day.getMonth(), day.getDate()).getTime()
+	readonly property var info: active ? Moon.dayInfo(new Date(dayStart), latitude, longitude)
+		: { fraction: 0, glyph: 0, phaseKey: 'new', mainAt: null, next: null, riseSet: null }
 	readonly property real dimOpacity: appletConfig.darkTheme ? 0.75 : 0.9
 
 	spacing: Kirigami.Units.largeSpacing
@@ -34,7 +38,7 @@ RowLayout {
 		}
 	}
 	function timeText(date) {
-		return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+		return Shared.formatTime(date, appletConfig.timeFormat)
 	}
 	readonly property string riseSetText: {
 		var rs = info.riseSet

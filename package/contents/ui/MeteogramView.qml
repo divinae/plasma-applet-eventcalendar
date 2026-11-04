@@ -720,18 +720,10 @@ Item {
 		var gData = []
 
 		function parseHourlyWeatherItem(item) {
-			var tooltipSubText = item.description
-			if (item.precipitation) {
-				tooltipSubText += ' (' + formatPrecipitation(item.precipitation) + ')'
-			}
-			tooltipSubText += '<br>' + item.temp + '°'
-
 			return {
 				y: item.temp,
 				xTimestamp: item.dt * 1000,
 				precipitation: item.precipitation,
-				tooltipMainText: new Date(item.dt * 1000),
-				tooltipSubText: tooltipSubText,
 				weatherIcon: item.iconName || 'question',
 				description: item.text || item.description || '',
 			}

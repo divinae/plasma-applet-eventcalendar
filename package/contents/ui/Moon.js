@@ -149,12 +149,15 @@ function nextPhase(from, target) {
 			// Between a and b: narrow it down.
 			var lo = a.valueOf()
 			var hi = b.valueOf()
+			var leftLo = left
 			while (hi - lo > 60000) {
 				var mid = (lo + hi) / 2
-				if (toGo(new Date(mid)) > toGo(new Date(lo))) {
+				var leftMid = toGo(new Date(mid))
+				if (leftMid > leftLo) {
 					hi = mid
 				} else {
 					lo = mid
+					leftLo = leftMid
 				}
 			}
 			return new Date(Math.round(hi / 60000) * 60000)
@@ -171,6 +174,9 @@ function nextPhase(from, target) {
 // solved for the horizon.
 function horizonCrossings(day, aboveHorizon) {
 	var start = new Date(day.getFullYear(), day.getMonth(), day.getDate())
+	// The local day: 23 or 25 hours on a daylight saving change.
+	var end = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1)
+	var hours = Math.round((end - start) / 3600000)
 	function hoursLater(h) {
 		return new Date(start.valueOf() + h * 3600000)
 	}
@@ -178,7 +184,7 @@ function horizonCrossings(day, aboveHorizon) {
 	var rise = null
 	var set = null
 	var ye = 0
-	for (var i = 1; i <= 24; i += 2) {
+	for (var i = 1; i <= hours; i += 2) {
 		var h1 = aboveHorizon(hoursLater(i))
 		var h2 = aboveHorizon(hoursLater(i + 1))
 		var a = (h0 + h2) / 2 - h1
@@ -218,6 +224,13 @@ function horizonCrossings(day, aboveHorizon) {
 		}
 		h0 = h2
 	}
+	// The last two hours' curve can reach past the day (an odd number of hours): not that day's.
+	if (rise && rise >= end) {
+		rise = null
+	}
+	if (set && set >= end) {
+		set = null
+	}
 	return {
 		rise: rise,
 		set: set,
@@ -256,7 +269,9 @@ function dayInfo(day, lat, lon) {
 	var lit = illumination(noon)
 	var info = {
 		fraction: lit.fraction,
-		glyph: Math.round(lit.phase * 28) % 28,
+		// Within its named phase's glyphs (1-6, 8-13, 15-20, 22-27): the main phases' own (0, 7, 14,
+		// 21) only on their day, below.
+		glyph: Math.min(Math.floor(lit.phase * 4) * 7 + 6, Math.max(Math.floor(lit.phase * 4) * 7 + 1, Math.round(lit.phase * 28))),
 		phaseKey: lit.phase < 0.25 ? 'waxingCrescent' : lit.phase < 0.5 ? 'waxingGibbous'
 			: lit.phase < 0.75 ? 'waningGibbous' : 'waningCrescent',
 		mainAt: null,

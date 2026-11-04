@@ -127,6 +127,7 @@ Item {
 		width: panels.sideWidth
 		height: implicitHeight
 		MoonPanel {
+			active: panels.moonShown
 			day: panels.day
 			latitude: panels.weatherPlace.latitude
 			longitude: panels.weatherPlace.longitude

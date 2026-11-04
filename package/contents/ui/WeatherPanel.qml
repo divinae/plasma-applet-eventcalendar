@@ -26,7 +26,9 @@ ColumnLayout {
 	property real latitude: NaN
 	property real longitude: NaN
 	property date day: new Date() // The shown day: its sunrise and sunset
-	readonly property var sun: Moon.sunRiseSet(day, latitude, longitude)
+	// The day's start: the day passed can be the current time, ticking (the same day: no change).
+	readonly property double dayStart: new Date(day.getFullYear(), day.getMonth(), day.getDate()).getTime()
+	readonly property var sun: Moon.sunRiseSet(new Date(dayStart), latitude, longitude)
 	// Sunrise and sunset beside the temperature, above the high and the low; a narrow card: below.
 	readonly property bool sunBeside: width >= Kirigami.Units.gridUnit * 14
 
@@ -38,7 +40,7 @@ ColumnLayout {
 		property real lowOpacity: 1
 		readonly property bool crossing: !!sun && (!!sun.rise || !!sun.set)
 		function timeText(date) {
-			return date ? Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP') : ""
+			return date ? Shared.formatTime(date, appletConfig.timeFormat) : ""
 		}
 		spacing: Kirigami.Units.largeSpacing
 		Accessible.name: crossing

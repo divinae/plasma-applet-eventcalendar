@@ -85,4 +85,29 @@ assert.ok(M.sunRiseSet(new Date(2024, 5, 21), 78.2, 15.6).alwaysUp, 'midnight su
 assert.ok(M.sunRiseSet(new Date(2024, 11, 21), 78.2, 15.6).alwaysDown, 'polar night')
 assert.strictEqual(M.sunRiseSet(new Date(2024, 5, 21), NaN, 13.4), null, 'no place: none')
 
+// A day's glyph within its named phase (not a main phase's glyph on a day without it).
+;[[2024, 11, 31], [2024, 6, 13], [2024, 3, 23]].forEach(([y, m, d]) => {
+	const info = M.dayInfo(new Date(y, m, d))
+	if (!info.mainAt) {
+		assert.ok(info.glyph % 7 !== 0, y + '-' + (m + 1) + '-' + d + ': glyph ' + info.glyph + ' for ' + info.phaseKey)
+	}
+})
+for (let day = 0; day < 400; day++) {
+	const info = M.dayInfo(new Date(2025, 0, 1 + day))
+	const quarter = { waxingCrescent: 0, waxingGibbous: 1, waningGibbous: 2, waningCrescent: 3 }[info.phaseKey]
+	if (quarter !== undefined) {
+		assert.ok(info.glyph >= quarter * 7 + 1 && info.glyph <= quarter * 7 + 6, 'glyph ' + info.glyph + ' in ' + info.phaseKey)
+	}
+}
+
+// Daylight saving change days (23 and 25 hours): rise and set only within the local day.
+;[new Date(2043, 2, 29), new Date(2013, 9, 27), new Date(2026, 2, 29), new Date(2026, 9, 25)].forEach(date => {
+	const end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+	;[M.riseSet(date, berlin[0], berlin[1]), M.sunRiseSet(date, berlin[0], berlin[1])].forEach(rs => {
+		;[rs.rise, rs.set].filter(Boolean).forEach(t => assert.ok(t >= date && t < end, 'within ' + date.toDateString() + ': ' + t.toISOString()))
+	})
+})
+// The 25-hour day's last hour is scanned: 27 Oct 2013, the moon rose at about 23:45 in Berlin.
+near(M.riseSet(new Date(2013, 9, 27), berlin[0], berlin[1]).rise, new Date(2013, 9, 27, 23, 45), 0.5, '23:45 moonrise')
+
 console.log('PASS moon')

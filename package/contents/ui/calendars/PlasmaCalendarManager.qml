@@ -228,13 +228,10 @@ CalendarManager {
 		}
 	}
 
-	// Refresh: the plugins' data read again. They aren't loaded anew: the Digital Clock loads them
-	// once too, and they send their changes themselves (dataReady, eventModified, eventRemoved
-	// below). Unloading these C++ plugins inside plasmashell while they're in use crashed Plasma 6.3
-	// (#14).
-	function reloadSources() {
-		pluginDataTimer.restart()
-	}
+	// Refresh: the plugins aren't loaded anew, and Refresh's fetch reads their
+	// data again. The Digital Clock loads them once too, and they send their changes themselves
+	// (dataReady, eventModified, eventRemoved below). Unloading these C++ plugins inside plasmashell
+	// while they're in use crashed Plasma 6.3 (#14).
 
 	// The plugins' data comes after they're asked (Akonadi takes a while) and changes (an event
 	// added, edited or removed in KOrganizer): read it again, ours only (no Google requests).

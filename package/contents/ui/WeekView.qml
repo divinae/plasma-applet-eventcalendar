@@ -459,6 +459,9 @@ Item {
 		rebuild()
 	}
 	onWorkWeekChanged: Qt.callLater(rebuild) // As above: once columnDays follows
+	// Other columns (Day, Week, the work week, the Agenda's kept view): the events laid out for them,
+	// also while hidden (a Day view shown after the Agenda had a week's all-day bars, #22).
+	onColumnCountChanged: Qt.callLater(rebuild)
 	Component.onCompleted: {
 		rebuild()
 		Qt.callLater(scrollToWorkingHours) // Once the grid has its height
@@ -750,6 +753,7 @@ Item {
 		height: implicitHeight
 
 		MoonPanel {
+			active: weekView.moonBeside
 			day: weekView.weekStart
 			latitude: weekView.weatherPlace.latitude
 			longitude: weekView.weatherPlace.longitude
