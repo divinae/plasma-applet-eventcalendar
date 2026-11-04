@@ -78,6 +78,12 @@ LinkRect {
 	opacity: ended && agendaItemIsToday ? appletConfig.pastOpacity : 1
 	// Not LinkRect's childrenRect size: the contents follow the tile's width (binding loop).
 	implicitWidth: contents.implicitWidth + Kirigami.Units.largeSpacing + Kirigami.Units.smallSpacing + (eventStyle.showBar ? 4 : 0)
+	// The day's column (Layout.fillWidth) gives the tile its width. LinkRect's width: implicitWidth
+	// stays bound beside it (a layout doesn't break it) and set it back to the contents' width,
+	// which follows the width (the wrapped title, the elided time and place): the two took turns
+	// every frame, a layout loop that froze plasmashell in the Agenda. The parent's width is the
+	// layout's, so the two agree.
+	width: parent ? parent.width : implicitWidth
 	implicitHeight: contents.implicitHeight + Kirigami.Units.smallSpacing * 2 + 2
 
 	// "Bar" event look: the bar in the event color along the left edge (EventStyle.showBar).
