@@ -124,7 +124,25 @@ Item {
 		scrollToDate(timeModel.currentTime)
 	}
 
+	// The day asked for (scrollToDate): again once the list is filled (AgendaModel.populating), as it
+	// fills in parts after a switch to the Agenda or a fetch and the days above grow; once.
+	property var pendingScrollDate: null
+	Connections {
+		target: root.agendaModel
+		function onPopulatingChanged() {
+			if (!root.agendaModel.populating && agendaView.pendingScrollDate) {
+				var date = agendaView.pendingScrollDate
+				agendaView.pendingScrollDate = null
+				agendaView.positionAtDate(date)
+			}
+		}
+	}
+
 	function scrollToDate(date) {
+		pendingScrollDate = root.agendaModel.populating || root.agendaModel.count === 0 ? date : null
+		positionAtDate(date)
+	}
+	function positionAtDate(date) {
 		for (var i = 0; i < root.agendaModel.count; i++) {
 			var agendaItem = root.agendaModel.get(i)
 			if (Shared.isSameDate(date, agendaItem.date)) {
