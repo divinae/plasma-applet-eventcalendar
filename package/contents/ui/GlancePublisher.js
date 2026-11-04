@@ -77,8 +77,6 @@ function utf8Bytes(text) {
 	return unescape(encodeURIComponent(text)).length
 }
 
-// The payload Glance accepts: {"version": 1, "events": [...]}, kept under MAX_BYTES by leaving
-// out the latest events first (tomorrow before today)
 // The weather for Glance: now (logic.currentWeatherData) and today's high / low (weatherByDay's
 // day), as plain values; null without either
 function weather(current, today, units) {
@@ -98,6 +96,8 @@ function weather(current, today, units) {
 	}
 }
 
+// The payload Glance accepts: {"version": 1, "events": [...], "weather": {...}}, kept under MAX_BYTES by leaving
+// out the latest events first (tomorrow before today)
 function payload(events, nowMs, weatherNow) {
 	var list = events.slice()
 	var data = function() {
