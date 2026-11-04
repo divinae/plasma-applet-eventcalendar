@@ -14,7 +14,7 @@ function read(file) {
 const Shared = {}
 vm.runInNewContext(read('Shared.js'), Shared)
 const B = {}
-vm.runInNewContext(read('EventBuckets.js') + '\nObject.assign(out, { layoutLanes, layoutTiles, layoutMonth, bucketByDay })', { out: B, Shared, Date })
+vm.runInNewContext(read('EventBuckets.js') + '\nObject.assign(out, { layoutLanes, layoutTiles, layoutMonth, bucketByDay, weekRowCounts })', { out: B, Shared, Date })
 
 const d = (day, h, m) => new Date(2026, 9, day, h || 0, m || 0)
 function allDay(summary, day, days) {
@@ -109,6 +109,12 @@ eq(m.bars.map(bar => [bar.eventItem.summary, bar.week, bar.first, bar.last, bar.
 eq(m.hiddenSpanCount.slice(7, 14), [0, 2, 2, 0, 0, 0, 0])
 eq(m.reservedRows.slice(7, 14), [2, 2, 1, 0, 0, 0, 0])
 eq(m.dayEvents[col(d(6))].map(x => x.summary), ['Lunch'])
+
+// "Show all events": every lane (no "+N"), each week's rows from its busiest day.
+const all = B.layoutMonth([s1, s2, s3, s4, lunch], dayTimes, 7, 1000)
+eq(all.hiddenSpanCount.slice(7, 14), [0, 0, 0, 0, 0, 0, 0], 'all lanes shown')
+eq(all.reservedRows.slice(7, 14), [2, 4, 4, 0, 0, 0, 0], 'a day keeps the rows down to its lowest lane')
+eq(B.weekRowCounts(all, 7).slice(0, 3), [0, 5, 0], 'Tuesday: its 4 lanes and the lunch')
 
 // All lanes fit when the cells under the last lane have nothing else to show.
 m = B.layoutMonth([s1, s2, s3], dayTimes, 7, 3)

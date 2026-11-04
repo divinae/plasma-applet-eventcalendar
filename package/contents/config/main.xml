@@ -140,6 +140,9 @@
 		<entry name="monthShowWeekNumbers" type="bool">
 			<default>false</default>
 		</entry>
+		<entry name="monthShowAllEvents" type="bool">
+			<default>false</default>
+		</entry>
 		<entry name="monthDayDoubleClick" type="string">
 			<default>GoogleCalWeb</default>
 		</entry>

@@ -864,6 +864,7 @@ MouseArea {
 			islands: appletConfig.islands
 			borderOpacity: appletConfig.faintGridLineOpacity
 			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
+			showAllEvents: plasmoid.configuration.monthShowAllEvents
 			highlightCurrentDayWeek: true
 
 			Layout.preferredWidth: popup.leftColumnWidth
@@ -884,6 +885,7 @@ MouseArea {
 			// (in the same frame as the layout change): a deferred refill showed the cells first
 			// filled the other way, then reordered.
 			onEventRowCapacityChanged: if (spanBarsActive) reparseGCalEvents()
+			onShowAllEventsChanged: reparseGCalEvents()
 			onSpanBarsActiveChanged: reparseGCalEvents()
 			function reparseGCalEvents() {
 				popup.updateMonth()
