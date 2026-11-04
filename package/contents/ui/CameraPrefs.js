@@ -67,3 +67,33 @@ function cameraName(description) {
 	}
 	return text
 }
+
+// The camera's format for the check, as video calls ask for it (Google Meet: 720p): the largest
+// at most 1280 wide, 16:9 first, then the highest frame rate, compressed (MJPEG: isJpeg) before
+// raw. Not the largest the camera has: a camera that zooms in its own firmware (its zoom button,
+// eg: Creative Live! Cam) crops its sensor for a smaller picture, and at its full size it has
+// nothing to crop, so the zoom did nothing here while it worked in Meet. formats: [{ width,
+// height, fps, isJpeg }]; the index of the one to use, -1 for none (the camera's own choice).
+function pickFormatIndex(formats) {
+	var best = -1
+	var bestKey = null
+	;(formats || []).forEach(function(f, i) {
+		if (!f || !(f.width > 0) || !(f.height > 0) || f.width > 1280) {
+			return
+		}
+		var wide = Math.abs(f.width / f.height - 16 / 9) < 0.02 ? 1 : 0
+		var key = [wide, f.width * f.height, Math.min(f.fps || 0, 30), f.isJpeg ? 1 : 0]
+		var better = !bestKey
+		for (var k = 0; !better && k < key.length; k++) {
+			if (key[k] !== bestKey[k]) {
+				better = key[k] > bestKey[k]
+				break
+			}
+		}
+		if (better) {
+			best = i
+			bestKey = key
+		}
+	})
+	return best
+}

@@ -29,6 +29,27 @@ ColumnLayout {
 	property string errorText: ""
 	readonly property string cameraState: CameraPrefs.cameraState(cameras.length, camera.active, errorText)
 
+	// The format video calls use (CameraPrefs.pickFormatIndex: 720p), not the camera's largest: a
+	// camera's own zoom (its button) works then as in Meet.
+	function applyFormat() {
+		var device = camera.cameraDevice
+		var formats = device ? device.videoFormats : null
+		var list = []
+		for (var i = 0; formats && i < formats.length; i++) {
+			var f = formats[i]
+			list.push({
+				width: f.resolution.width,
+				height: f.resolution.height,
+				fps: f.maxFrameRate,
+				isJpeg: f.pixelFormat === 29, // QVideoFrameFormat::Format_Jpeg (MJPEG): not in QML
+			})
+		}
+		var index = CameraPrefs.pickFormatIndex(list)
+		if (index >= 0) {
+			camera.cameraFormat = formats[index]
+		}
+	}
+
 	CaptureSession {
 		camera: Camera {
 			id: camera
@@ -37,7 +58,11 @@ ColumnLayout {
 			onErrorOccurred: function(error, errorString) {
 				mirror.errorText = errorString || i18n("The camera can't be used")
 			}
-			onCameraDeviceChanged: mirror.errorText = ""
+			onCameraDeviceChanged: {
+				mirror.errorText = ""
+				mirror.applyFormat()
+			}
+			Component.onCompleted: mirror.applyFormat()
 		}
 		videoOutput: videoOutput
 	}

@@ -46,3 +46,21 @@ assert.strictEqual(C.cameraName('USB Camera: Rear lens'), 'USB Camera: Rear lens
 assert.strictEqual(C.cameraName(''), '')
 
 console.log('camera_prefs: ok')
+
+//--- pickFormatIndex: 720p as Meet asks, not the camera's largest (its zoom crops the sensor)
+{
+	const live = [
+		{ width: 2560, height: 1440, fps: 30, isJpeg: true },
+		{ width: 1920, height: 1080, fps: 30, isJpeg: true },
+		{ width: 1280, height: 720, fps: 10, isJpeg: false },
+		{ width: 1280, height: 720, fps: 30, isJpeg: true },
+		{ width: 1600, height: 1200, fps: 30, isJpeg: true },
+		{ width: 640, height: 480, fps: 30, isJpeg: false },
+	]
+	assert.strictEqual(C.pickFormatIndex(live), 3, '1280x720 MJPEG at 30 fps')
+	assert.strictEqual(C.pickFormatIndex([{ width: 640, height: 480, fps: 30 }, { width: 1920, height: 1080, fps: 30 }]), 0, 'none 720p: the largest up to 1280 wide')
+	assert.strictEqual(C.pickFormatIndex([{ width: 1280, height: 720, fps: 60, isJpeg: false }, { width: 1280, height: 720, fps: 30, isJpeg: true }]), 1, 'up to 30 fps alike: MJPEG')
+	assert.strictEqual(C.pickFormatIndex([{ width: 1920, height: 1080 }]), -1, 'only larger: the camera\'s own choice')
+	assert.strictEqual(C.pickFormatIndex([]), -1)
+	assert.strictEqual(C.pickFormatIndex(null), -1)
+}
