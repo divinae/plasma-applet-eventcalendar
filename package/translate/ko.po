@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:21+0100\n"
+"POT-Creation-Date: 2026-11-04 10:19+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1869,6 +1869,10 @@ msgstr "여러 날 이벤트를 매일 표시"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meteogram above the agenda"
 msgstr "일정 위에 기상 그래프"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The weather forecast chart above the Agenda's list"
+msgstr "일정 목록 위의 일기 예보 차트"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Timer above the agenda"

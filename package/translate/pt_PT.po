@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:21+0100\n"
+"POT-Creation-Date: 2026-11-04 10:19+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -1592,6 +1592,10 @@ msgstr "Eventos de vários dias em todos os dias"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Meteogram above the agenda"
 msgstr "Meteograma acima da agenda"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "The weather forecast chart above the Agenda's list"
+msgstr "O gráfico da previsão do tempo acima da lista da agenda"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Timer above the agenda"

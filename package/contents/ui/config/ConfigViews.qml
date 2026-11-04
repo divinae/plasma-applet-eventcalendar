@@ -16,7 +16,6 @@ import "../lib/Base64Compat.js" as Base64Compat
 ConfigPage {
 	id: page
 
-	readonly property bool agendaMode: page.configBridge.read("popupMode", "classic") === 'classic'
 
 	ColumnLayout {
 		Layout.fillWidth: true
@@ -358,13 +357,11 @@ ConfigPage {
 			}
 		}
 
-		//--- Agenda (classic mode only)
+		//--- Agenda (shown also when it isn't the default view: its tab opens it)
 		FormCard.FormHeader {
-			visible: page.agendaMode
 			title: i18n("Agenda")
 		}
 		FormCard.FormCard {
-			visible: page.agendaMode
 			FormConfigSwitch {
 				text: i18n("Event descriptions")
 				configKey: 'agendaShowEventDescription'
@@ -382,6 +379,7 @@ ConfigPage {
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
 				text: i18n("Meteogram above the agenda")
+				description: i18n("The weather forecast chart above the Agenda's list")
 				configKey: 'widgetShowMeteogram'
 			}
 			FormCard.FormDelegateSeparator {}
