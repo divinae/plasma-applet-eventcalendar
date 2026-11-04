@@ -21,6 +21,12 @@ MouseArea {
 			focus = true
 		}
 	}
+	// The wheel where nothing in the widget takes it (a card, a label, the gaps between the cards):
+	// taken here, not passed on to what's below the widget (on the desktop its wheel action, eg:
+	// switching virtual desktops). What scrolls (lists, the hour grid) is above this and gets it first.
+	onWheel: function(wheel) {
+		wheel.accepted = true
+	}
 
 	property int padding: 0
 	property bool showPinButton: false // Assigned in main.qml
