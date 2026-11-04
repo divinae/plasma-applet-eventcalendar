@@ -1,0 +1,79 @@
+// The moon on a day (package/contents/ui/Moon.js): phase, lit share, rise and set, the next full or
+// new moon. Local days in Berlin.
+process.env.TZ = 'Europe/Berlin'
+const assert = require('assert')
+const fs = require('fs')
+const path = require('path')
+const vm = require('vm')
+
+const M = {}
+vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../package/contents/ui/Moon.js'), 'utf8')
+	.replace(/^\.pragma library\s*$/m, ''), M)
+
+const hours = ms => Math.abs(ms) / 3600000
+function near(actual, expected, maxHours, what) {
+	assert.ok(actual, what + ': none found')
+	assert.ok(hours(actual - expected) <= maxHours,
+		what + ': ' + actual.toISOString() + ' vs ' + expected.toISOString())
+}
+
+// The main phases of January 2024 (UTC, as published), from a week before each: within an hour.
+const main = [
+	[0, '2024-01-11T11:57:00Z', 'new moon'],
+	[0.25, '2024-01-18T03:52:00Z', 'first quarter'],
+	[0.5, '2024-01-25T17:54:00Z', 'full moon'],
+	[0.75, '2024-02-02T23:18:00Z', 'last quarter'],
+]
+main.forEach(([target, iso, what]) => {
+	const at = new Date(iso)
+	near(M.nextPhase(new Date(at - 7 * 86400000), target), at, 1, what)
+})
+
+// Lit share: full at the full moon, none at the new moon.
+assert.ok(M.illumination(new Date('2024-01-25T17:54:00Z')).fraction > 0.99, 'full: all lit')
+assert.ok(M.illumination(new Date('2024-01-11T11:57:00Z')).fraction < 0.01, 'new: none lit')
+
+// A day's phase: the main one only on its day, else between them.
+const full = M.dayInfo(new Date(2024, 0, 25))
+assert.strictEqual(full.phaseKey, 'full')
+assert.strictEqual(full.glyph, 14, 'the full moon glyph')
+near(full.mainAt, new Date('2024-01-25T17:54:00Z'), 1, 'its time')
+assert.strictEqual(full.next.key, 'new', 'after a full moon: the new moon')
+near(full.next.at, new Date('2024-02-09T22:59:00Z'), 1, 'the next new moon')
+assert.strictEqual(M.dayInfo(new Date(2024, 0, 21)).phaseKey, 'waxingGibbous')
+assert.strictEqual(M.dayInfo(new Date(2024, 0, 14)).phaseKey, 'waxingCrescent')
+assert.strictEqual(M.dayInfo(new Date(2024, 0, 29)).phaseKey, 'waningGibbous')
+assert.strictEqual(M.dayInfo(new Date(2024, 1, 6)).phaseKey, 'waningCrescent')
+const glyph = M.dayInfo(new Date(2024, 0, 21)).glyph
+assert.ok(glyph > 7 && glyph < 14, 'a waxing gibbous glyph: ' + glyph)
+assert.strictEqual(M.dayInfo(new Date(2024, 0, 21)).riseSet, null, 'no place: no rise and set')
+
+// Rise and set in Berlin: within the day, the moon's upper edge on the horizon then.
+const berlin = [52.52, 13.405]
+for (let day = 1; day <= 28; day += 3) {
+	const date = new Date(2024, 0, day)
+	const rs = M.dayInfo(date, berlin[0], berlin[1]).riseSet
+	assert.ok(rs.rise || rs.set, 'rises or sets on 2024-01-' + day)
+	;[rs.rise, rs.set].filter(Boolean).forEach(t => {
+		assert.ok(t >= date && t < new Date(2024, 0, day + 1), 'within the day')
+		const edge = (M.moonAltitude(t, berlin[0], berlin[1]) / M.rad) - 0.133
+		assert.ok(Math.abs(edge) < 0.25, 'on the horizon (within a minute) at ' + t.toISOString() + ': ' + edge)
+	})
+}
+// Close to the pole the moon can stay up or down all day.
+const polar = []
+for (let day = 1; day <= 28; day++) {
+	const rs = M.riseSet(new Date(2024, 0, day), 78.2, 15.6) // Longyearbyen
+	polar.push(rs.alwaysUp ? 'up' : rs.alwaysDown ? 'down' : '')
+}
+assert.ok(polar.includes('up') && polar.includes('down'), 'days always up and always down: ' + polar.join())
+
+// The sun: high at noon on the June solstice (Berlin: 90 - 52.5 + 23.4 = about 61 degrees), and
+// in Bingen on 3 November 2026 still down at 07:00, up at 08:00 (it rises about 07:20).
+const noon = M.sunAltitude(new Date(2024, 5, 21, 13, 10), berlin[0], berlin[1])
+assert.ok(Math.abs(noon - 61) < 1, 'June noon: ' + noon)
+const bingen = M.sunDownAt(49.967, 7.899)
+assert.deepStrictEqual([bingen(new Date(2026, 10, 3, 7).getTime()), bingen(new Date(2026, 10, 3, 8).getTime())], [true, false])
+assert.strictEqual(M.sunDownAt(NaN, 7.9), null, 'no place: none')
+
+console.log('PASS moon')

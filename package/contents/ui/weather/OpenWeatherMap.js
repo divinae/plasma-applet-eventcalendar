@@ -197,7 +197,7 @@ function parseCurrentData(data, units) {
 		return null
 	}
 	var weather = data.weather && data.weather[0]
-	return {
+	var current = {
 		dt: data.dt, // When it was measured
 		temp: temperature(data.main ? data.main.temp : data.temp, units),
 		iconName: iconName(weather),
@@ -207,6 +207,12 @@ function parseCurrentData(data, units) {
 		// The city's name (/weather; One Call has none), shown as the panel's location.
 		place: data.name ? String(data.name) + (data.sys && data.sys.country ? ', ' + data.sys.country : '') : '',
 	}
+	// Its place (/weather; One Call has it apart), eg: for the moon's rise and set.
+	if (data.coord) {
+		current.latitude = Number(data.coord.lat)
+		current.longitude = Number(data.coord.lon)
+	}
+	return current
 }
 
 // The days from the 3 hour steps (no /forecast/daily): per local day the low and the high, the rain,
@@ -342,17 +348,27 @@ function fetchOneCall(config, callback) {
 	})
 }
 
+// One Call's current weather, with its place (the response's, eg: for the moon's rise and set).
+function parseOneCallCurrent(data, units) {
+	var current = parseCurrentData(data.current, units)
+	if (current && isFinite(data.lat) && isFinite(data.lon)) {
+		current.latitude = Number(data.lat)
+		current.longitude = Number(data.lon)
+	}
+	return current
+}
+
 function parseOneCallDaily(data, units) {
 	return {
 		list: (data.daily || []).map(function(item) { return parseDay(item, units) }),
-		current: parseCurrentData(data.current, units),
+		current: parseOneCallCurrent(data, units),
 	}
 }
 
 function parseOneCallHourly(data, units) {
 	return {
 		list: (data.hourly || []).map(function(item) { return parseHour(item, units, '1h') }),
-		current: parseCurrentData(data.current, units),
+		current: parseOneCallCurrent(data, units),
 	}
 }
 

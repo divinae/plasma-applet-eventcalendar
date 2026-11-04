@@ -332,6 +332,8 @@ KCM.SimpleKCM {
 	property var cfg_dayShowUpNextDefault
 	property var cfg_dayShowWeather
 	property var cfg_dayShowWeatherDefault
+	property var cfg_dayShowMoon
+	property var cfg_dayShowMoonDefault
 	property var cfg_dayShowTasks
 	property var cfg_dayShowTasksDefault
 	property var cfg_dayAllDayTiles

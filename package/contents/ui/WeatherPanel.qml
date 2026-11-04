@@ -4,6 +4,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "ForecastChart.js" as ForecastChart
+import "Moon.js" as Moon
 import "Shared.js" as Shared
 import "WeatherIcons.js" as WeatherIcons
 import "lib/ColorUtil.js" as ColorUtil
@@ -20,6 +21,9 @@ ColumnLayout {
 	property bool isToday: true // false: the view shows another day
 	property bool isSetup: true
 	property string locationName: ""
+	// Its place (WeatherApi.place): the chart's nights by the sun there. NaN: by the hour.
+	property real latitude: NaN
+	property real longitude: NaN
 	property string forecastUrl: "" // The full forecast on the web (WeatherApi.forecastPageUrl): the location opens it
 	property bool compact: false // One row above the grid when the popup is narrow
 	// Sections left out where there's little height (the Day view's right column above the tasks).
@@ -524,7 +528,7 @@ ColumnLayout {
 				// Nights: shaded from the top of the plot to the hour labels.
 				if (fancy) {
 					ctx.fillStyle = dark ? "rgba(0, 0, 0, 0.22)" : "rgba(40, 60, 140, 0.08)"
-					ForecastChart.nightRanges(pts).forEach(function(range) {
+					ForecastChart.nightRanges(pts, Moon.sunDownAt(panel.latitude, panel.longitude)).forEach(function(range) {
 						var x1 = range.from === 0 ? 0 : hourChart.xAt(range.from)
 						var x2 = range.to === pts.length - 1 ? width : hourChart.xAt(range.to)
 						ctx.fillRect(x1, hourChart.plotTop - 4, x2 - x1, hourChart.plotBottom - hourChart.plotTop + 4)

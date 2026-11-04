@@ -5,7 +5,8 @@ import "Shared.js" as Shared
 import "./weather/WeatherApi.js" as WeatherApi
 
 // The Day view's side columns for the Agenda (the same layout): left a small month (MiniMonth) and
-// below it Up next (upNextAllowed); right the day's tasks (DayTasksPanel) and below them its weather (WeatherPanel).
+// below it Up next (upNextAllowed); right the day's tasks (DayTasksPanel), below them its moon
+// (MoonPanel) and its weather (WeatherPanel).
 // The view places them: leftX / rightX, from topY down to bottomY, sideWidth wide; leftShown /
 // rightShown say whether a column has room.
 Item {
@@ -47,11 +48,15 @@ Item {
 	readonly property bool wantsWeather: plasmoid.configuration.dayShowWeather !== false
 		&& (Object.keys(weatherByDay).length > 0 || weatherIsSetup)
 	readonly property bool wantsTasks: plasmoid.configuration.dayShowTasks !== false
+	readonly property bool wantsMoon: plasmoid.configuration.dayShowMoon !== false
 	readonly property bool tasksShown: rightShown && wantsTasks && tasksPanel.hasLists
+	readonly property bool moonShown: rightShown && wantsMoon
 	readonly property bool weatherShown: rightShown && wantsWeather
 	function dayWeather(d) {
 		return weatherByDay ? weatherByDay[Shared.dayKey(d)] : null
 	}
+	// The weather's place: the moon's rise and set, the weather chart's nights.
+	readonly property var weatherPlace: WeatherApi.place(plasmoid.configuration, weatherCurrent)
 
 	// Left: the small month.
 	IslandCard {
@@ -96,7 +101,9 @@ Item {
 	// Right, on top: the day's tasks, as tall as they are (the list scrolls past the room there is).
 	IslandCard {
 		id: tasksCard
-		readonly property real bottomLimit: panels.weatherShown ? panels.bottomY - Kirigami.Units.gridUnit * 9 - panels.cardGap : panels.bottomY
+		readonly property real bottomLimit: panels.bottomY
+			- (panels.moonShown ? moonCard.implicitHeight + panels.cardGap : 0)
+			- (panels.weatherShown ? Kirigami.Units.gridUnit * 9 + panels.cardGap : 0)
 		visible: panels.tasksShown
 		x: panels.rightX
 		y: panels.topY
@@ -111,12 +118,28 @@ Item {
 		}
 	}
 
-	// Under the tasks (or at the top without them): the day's weather, as tall as it is.
+	// Under the tasks (or at the top without them): the day's moon.
+	IslandCard {
+		id: moonCard
+		visible: panels.moonShown
+		x: panels.rightX
+		y: panels.tasksShown ? tasksCard.y + tasksCard.height + panels.cardGap : panels.topY
+		width: panels.sideWidth
+		height: implicitHeight
+		MoonPanel {
+			day: panels.day
+			latitude: panels.weatherPlace.latitude
+			longitude: panels.weatherPlace.longitude
+		}
+	}
+
+	// Under the moon and the tasks (or at the top without them): the day's weather, as tall as it is.
 	IslandCard {
 		id: weatherCard
 		visible: panels.weatherShown
 		x: panels.rightX
-		y: panels.tasksShown ? tasksCard.y + tasksCard.height + panels.cardGap : panels.topY
+		y: panels.moonShown ? moonCard.y + moonCard.height + panels.cardGap
+			: panels.tasksShown ? tasksCard.y + tasksCard.height + panels.cardGap : panels.topY
 		readonly property real room: panels.bottomY - y
 		width: panels.sideWidth
 		height: Math.max(0, Math.min(implicitHeight, room))
@@ -128,6 +151,8 @@ Item {
 			isToday: panels.showingToday
 			current: panels.showingToday ? panels.weatherCurrent : null
 			today: panels.dayWeather(panels.day)
+			latitude: panels.weatherPlace.latitude
+			longitude: panels.weatherPlace.longitude
 			showHourly: weatherCard.room >= Kirigami.Units.gridUnit * 25
 			showNextDays: weatherCard.room >= Kirigami.Units.gridUnit * 15.5
 			forecastUrl: WeatherApi.forecastPageUrl(plasmoid.configuration)

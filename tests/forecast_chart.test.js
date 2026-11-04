@@ -30,6 +30,16 @@ assert.deepStrictEqual(plain(C.nightFlags(icons(['weather-fog', 'weather-snow'])
 	const at = (h) => new Date(2026, 9, 30, h).getTime() / 1000
 	assert.deepStrictEqual(plain(C.nightFlags([{ iconName: 'weather-fog', dt: at(10) }, { iconName: 'weather-overcast', dt: at(22) }, { iconName: 'weather-clear-night', dt: at(23) }])),
 		[false, true, true], 'unknown: by the hour, not a later night icon')
+	// By the sun where it's known (a November morning: still down at 06:00 and 07:00, up at 08:00),
+	// not the hour: no day at 06:00 between nights.
+	const sunUpAt = at(7) + 1800 // 07:30
+	const sunDown = ms => ms < sunUpAt * 1000
+	const morning = [5, 6, 7, 8].map(h => ({ iconName: h === 7 ? 'weather-clouds-night' : 'weather-overcast', dt: at(h) }))
+	assert.deepStrictEqual(plain(C.nightFlags(morning)), [true, false, true, false], 'by the hour: a day at 06:00')
+	assert.deepStrictEqual(plain(C.nightFlags(morning, sunDown)), [true, true, true, false], 'by the sun')
+	assert.deepStrictEqual(plain(C.nightRanges(morning, sunDown)), [{ from: 0, to: 2.5 }], 'one night')
+	assert.deepStrictEqual(plain(C.nightFlags([{ iconName: 'weather-clear', dt: at(3) }], sunDown)), [false],
+		'an icon that tells still wins')
 }
 assert.deepStrictEqual(plain(C.nightRanges(icons(['weather-clear', 'weather-clear-night', 'weather-clear-night', 'weather-clear']))),
 	[{ from: 0.5, to: 2.5 }])

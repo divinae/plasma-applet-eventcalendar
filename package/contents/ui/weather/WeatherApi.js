@@ -101,6 +101,21 @@ function updateHourlyWeather(config, callback) {
 	}
 }
 
+// The weather's place as { latitude, longitude } (NaN without one, eg: for the moon's rise and set):
+// Open-Meteo's from the settings, else the current weather's (OpenWeatherMap's /weather has it).
+function place(config, current) {
+	if (config.weatherService == 'OpenMeteo') {
+		var lat = Number(config.openMeteoLatitude)
+		var lon = Number(config.openMeteoLongitude)
+		if (isFinite(lat) && isFinite(lon) && !(lat === 0 && lon === 0)) {
+			return { latitude: lat, longitude: lon }
+		}
+	} else if (current && isFinite(current.latitude) && isFinite(current.longitude)) {
+		return { latitude: current.latitude, longitude: current.longitude }
+	}
+	return { latitude: NaN, longitude: NaN }
+}
+
 // A web page with the full forecast for the configured place ('' when there's none): meteoblue for
 // Open-Meteo's coordinates, the city's page of OpenWeatherMap or Weather Canada.
 function forecastPageUrl(config) {

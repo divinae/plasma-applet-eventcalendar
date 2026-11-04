@@ -3,6 +3,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
 
 import "ForecastChart.js" as ForecastChart
+import "Moon.js" as Moon
 import "Shared.js" as Shared
 import "WeatherIcons.js" as WeatherIcons
 import "lib/ColorUtil.js" as ColorUtil
@@ -10,6 +11,8 @@ import "./weather/WeatherApi.js" as WeatherApi
 
 Item {
 	id: meteogramView
+	// The weather's place (WeatherApi.place, from the last forecast): the nights by the sun there.
+	property var weatherPlace: ({ latitude: NaN, longitude: NaN })
 	width: 400
 	height: 100
 	property bool clock24h: appletConfig.clock24h
@@ -263,12 +266,12 @@ Item {
 					var maxTemp = Math.max.apply(null, temps)
 					// The rain of an hour is drawn between its point and the one before.
 					var points = data.map(function(item, i) {
-						return { iconName: item.weatherIcon, precipitation: i > 0 ? item.precipitation || 0 : 0 }
+						return { iconName: item.weatherIcon, precipitation: i > 0 ? item.precipitation || 0 : 0, dt: item.xTimestamp / 1000 }
 					})
 
-					// Nights
+					// Nights (by the sun at the weather's place)
 					ctx.fillStyle = dark ? "rgba(0, 0, 0, 0.22)" : "rgba(40, 60, 140, 0.08)"
-					ForecastChart.nightRanges(points).forEach(function(range) {
+					ForecastChart.nightRanges(points, Moon.sunDownAt(meteogramView.weatherPlace.latitude, meteogramView.weatherPlace.longitude)).forEach(function(range) {
 						var x1 = range.from === 0 ? graph.gridX : graph.gridPoint(range.from, 0).x
 						var x2 = range.to === data.length - 1 ? graph.gridX2 : graph.gridPoint(range.to, 0).x
 						ctx.fillRect(x1, graph.gridY, x2 - x1, graph.gridHeight)
@@ -713,6 +716,7 @@ Item {
 	}
 
 	function parseWeatherForecast(currentWeatherData, data) {
+		weatherPlace = WeatherApi.place(plasmoid.configuration, currentWeatherData)
 		var gData = []
 
 		function parseHourlyWeatherItem(item) {

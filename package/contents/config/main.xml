@@ -609,6 +609,9 @@
 		<entry name="dayShowWeather" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="dayShowMoon" type="bool">
+			<default>true</default>
+		</entry>
 		<entry name="dayShowTasks" type="bool">
 			<default>true</default>
 		</entry>
