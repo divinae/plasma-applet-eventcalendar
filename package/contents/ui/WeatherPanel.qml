@@ -376,13 +376,13 @@ ColumnLayout {
 			// Above the high and the low (room enough): sunrise and sunset.
 			SunTimes {
 				visible: !!panel.sun && panel.sunBeside
-				Layout.alignment: Qt.AlignLeft // The rows here lined up on the left
+				Layout.alignment: Qt.AlignRight // The rows here lined up on the right
 				sun: panel.sun
 				lowOpacity: panel.dimOpacity * 0.8
 			}
 			RowLayout {
 				visible: parent.todayRange
-				Layout.alignment: Qt.AlignLeft
+				Layout.alignment: Qt.AlignRight
 				spacing: Kirigami.Units.largeSpacing
 				Accessible.name: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 				PlasmaComponents3.Label {
@@ -400,7 +400,7 @@ ColumnLayout {
 				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
 				readonly property color tint: appletConfig.darkTheme ? "#7db8ff" : "#1f6fd6"
 				visible: !!rain && parent.todayRange
-				Layout.alignment: Qt.AlignLeft
+				Layout.alignment: Qt.AlignRight
 				implicitWidth: rainRow.implicitWidth + Kirigami.Units.largeSpacing * 2
 				implicitHeight: rainRow.implicitHeight + Kirigami.Units.smallSpacing * 2
 				radius: height / 2
