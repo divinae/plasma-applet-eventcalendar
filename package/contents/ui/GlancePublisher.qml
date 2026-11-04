@@ -14,7 +14,7 @@ QtObject {
 
 	required property var upcomingEvents
 	required property var eventModel
-	property bool enabled: plasmoid.configuration.glanceShareEvents
+	property bool enabled: plasmoid.configuration.glanceShareEvents === true // Off by default
 
 	// The last call reached Glance: changes go out at once; otherwise only the heartbeat tries
 	property bool glanceSeen: true
