@@ -47,7 +47,8 @@ QtObject {
 				var eventItem = list[i]
 				var summary = Shared.attendeeSummary(eventItem.attendees)
 				var item = GlancePublisher.plain(eventItem, MeetingLink.find(eventItem),
-					Shared.myResponse(eventItem), summary.guestCount, names[eventItem.calendarId || calendarId])
+					Shared.myResponse(eventItem), summary.guestCount, names[eventItem.calendarId || calendarId],
+					eventItem.calendarId || calendarId)
 				if (item) {
 					items.push(item)
 				}

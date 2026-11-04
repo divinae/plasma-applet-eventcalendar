@@ -16,7 +16,7 @@ const meeting = G.plain({
 	id: 'm1', summary: 'Standup', startDateTime: at(0, 10, 30), endDateTime: at(0, 11),
 	start: { dateTime: '…' }, location: 'Room 1', backgroundColor: '#3366cc', description: 'secret',
 	htmlLink: 'https://calendar.google.com/x', transparency: 'opaque',
-}, { url: 'https://meet.google.com/abc-defg-hij', label: 'Google Meet' }, 'accepted', 3, 'Work')
+}, { url: 'https://meet.google.com/abc-defg-hij', label: 'Google Meet' }, 'accepted', 3, 'Work', 'acc::work')
 assert.strictEqual(meeting.start, at(0, 10, 30).getTime())
 assert.strictEqual(meeting.end, at(0, 11).getTime())
 assert.strictEqual(meeting.allDay, false)
@@ -24,6 +24,7 @@ assert.strictEqual(meeting.meetingUrl, 'https://meet.google.com/abc-defg-hij')
 assert.strictEqual(meeting.response, 'accepted')
 assert.strictEqual(meeting.guests, 3)
 assert.strictEqual(meeting.calendar, 'Work')
+assert.strictEqual(meeting.calendarId, 'acc::work')
 assert.strictEqual(meeting.busy, true)
 assert.strictEqual('description' in meeting, false)
 

@@ -30,7 +30,7 @@ function timeOf(date) {
 
 // One event, or null for a task, a cancelled event or one without a usable start. meeting: MeetingLink.find's { url, label } or
 // null; response, guests: Shared.attendeeSummary's; calendarName: its calendar's title.
-function plain(eventItem, meeting, response, guests, calendarName) {
+function plain(eventItem, meeting, response, guests, calendarName, calendarId) {
 	if (!eventItem || eventItem.kind === 'tasks#task' || eventItem.status === 'cancelled') {
 		return null
 	}
@@ -53,6 +53,7 @@ function plain(eventItem, meeting, response, guests, calendarName) {
 		location: String(eventItem.location || ''),
 		color: String(eventItem.backgroundColor || ''),
 		calendar: String(calendarName || ''),
+		calendarId: String(calendarId || eventItem.calendarId || ''), // For Glance to open it (showEvent)
 		meetingUrl: /^https?:\/\//i.test(url) ? url : '',
 		meetingLabel: meeting && meeting.label ? String(meeting.label) : '',
 		response: String(response || ''),
