@@ -320,12 +320,15 @@ ColumnLayout {
 			}
 		}
 		// Today: the high and the low, then the rain (when there is any) on a light blue pill with a
-		// drop, on the right, in the room beside the temperature.
+		// drop, on the right, in the room beside the temperature. Under the high and the low (another
+		// day: alone) sunrise and sunset at the weather's place (Moon.sunRiseSet; none without one).
 		ColumnLayout {
-			visible: !panel.compact && !!panel.today && panel.isToday
+			readonly property bool todayRange: !!panel.today && panel.isToday
+			visible: !panel.compact && (todayRange || !!panel.sun)
 			Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 			spacing: Kirigami.Units.smallSpacing
 			RowLayout {
+				visible: parent.todayRange
 				Layout.alignment: Qt.AlignRight
 				spacing: Kirigami.Units.largeSpacing
 				Accessible.name: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
@@ -339,11 +342,58 @@ ColumnLayout {
 					opacity: panel.dimOpacity * 0.8
 				}
 			}
+			ColumnLayout {
+				id: sunRow
+				readonly property bool crossing: !!panel.sun && (!!panel.sun.rise || !!panel.sun.set)
+				function sunTime(date) {
+					return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
+				}
+				visible: !!panel.sun
+				Layout.alignment: Qt.AlignRight
+				spacing: 0 // One under the other: as narrow as the high and the low
+				opacity: panel.dimOpacity
+				Accessible.name: crossing
+					? [panel.sun.rise ? i18nc("%1 = time", "Sunrise %1", sunTime(panel.sun.rise)) : "",
+						panel.sun.set ? i18nc("%1 = time", "Sunset %1", sunTime(panel.sun.set)) : ""].filter(Boolean).join(" · ")
+					: sunPolar.text
+				// A glyph as tall as the text, then the time: as the high and the low.
+				component SunTime: RowLayout {
+					property string glyph
+					property string time
+					visible: !!time
+					Layout.alignment: Qt.AlignRight
+					spacing: 1
+					FontIcon {
+						Layout.preferredWidth: timeLabel.implicitHeight * 1.1
+						Layout.preferredHeight: timeLabel.implicitHeight
+						source: parent.glyph
+						color: Kirigami.Theme.textColor
+						showOutline: false
+					}
+					PlasmaComponents3.Label {
+						id: timeLabel
+						font: Kirigami.Theme.smallFont
+						textFormat: Text.PlainText
+						text: parent.time
+					}
+				}
+				SunTime { glyph: "wi-sunrise"; time: sunRow.crossing && panel.sun.rise ? sunRow.sunTime(panel.sun.rise) : "" }
+				SunTime { glyph: "wi-sunset"; time: sunRow.crossing && panel.sun.set ? sunRow.sunTime(panel.sun.set) : "" }
+				// Close to the pole
+				PlasmaComponents3.Label {
+					id: sunPolar
+					Layout.alignment: Qt.AlignRight
+					visible: !sunRow.crossing
+					font: Kirigami.Theme.smallFont
+					textFormat: Text.PlainText
+					text: panel.sun && panel.sun.alwaysUp ? i18nc("the sun up all day", "Midnight sun") : i18nc("the sun down all day", "Polar night")
+				}
+			}
 			Rectangle {
 				id: rainPill
 				readonly property string rain: panel.today ? panel.precipitationText(panel.today.precipitation) : ""
 				readonly property color tint: appletConfig.darkTheme ? "#7db8ff" : "#1f6fd6"
-				visible: !!rain
+				visible: !!rain && parent.todayRange
 				Layout.alignment: Qt.AlignRight
 				implicitWidth: rainRow.implicitWidth + Kirigami.Units.largeSpacing * 2
 				implicitHeight: rainRow.implicitHeight + Kirigami.Units.smallSpacing * 2
@@ -395,54 +445,6 @@ ColumnLayout {
 			text: panel.today ? i18nc("high / low temperature", "High %1 · Low %2", Shared.formatTemp(panel.today.temp.max), Shared.formatTemp(panel.today.temp.min)) : ""
 			opacity: panel.dimOpacity
 		}
-	}
-	// Sunrise and sunset at the weather's place (worked out here, Moon.sunRiseSet): left out without
-	// a place (Weather Canada) and in the compact row.
-	RowLayout {
-		visible: panel.showData && !panel.compact && !!panel.sun
-		Layout.fillWidth: true
-		Layout.topMargin: Kirigami.Units.smallSpacing
-		spacing: Kirigami.Units.smallSpacing
-		opacity: panel.dimOpacity
-		readonly property bool crossing: !!panel.sun && (!!panel.sun.rise || !!panel.sun.set)
-		function sunTime(date) {
-			return Shared.formatTime(date, appletConfig.clock24h ? 'HH:mm' : 'h:mm AP')
-		}
-		FontIcon {
-			visible: parent.crossing && !!panel.sun.rise
-			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
-			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
-			source: "wi-sunrise"
-			color: Kirigami.Theme.textColor
-			showOutline: false
-		}
-		PlasmaComponents3.Label {
-			visible: parent.crossing && !!panel.sun.rise
-			text: panel.sun && panel.sun.rise ? parent.sunTime(panel.sun.rise) : ""
-			Accessible.name: i18nc("%1 = time", "Sunrise %1", text)
-		}
-		Item { visible: parent.crossing && !!panel.sun.rise && !!panel.sun.set; implicitWidth: Kirigami.Units.largeSpacing }
-		FontIcon {
-			visible: parent.crossing && !!panel.sun.set
-			Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
-			Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
-			source: "wi-sunset"
-			color: Kirigami.Theme.textColor
-			showOutline: false
-		}
-		PlasmaComponents3.Label {
-			visible: parent.crossing && !!panel.sun.set
-			text: panel.sun && panel.sun.set ? parent.sunTime(panel.sun.set) : ""
-			Accessible.name: i18nc("%1 = time", "Sunset %1", text)
-		}
-		// Close to the pole
-		PlasmaComponents3.Label {
-			visible: !parent.crossing
-			Layout.fillWidth: true
-			wrapMode: Text.Wrap
-			text: panel.sun && panel.sun.alwaysUp ? i18nc("the sun", "Up all day (midnight sun)") : i18nc("the sun", "Down all day (polar night)")
-		}
-		Item { Layout.fillWidth: true; visible: parent.crossing }
 	}
 	// Another day: its rain (the high / low are in the heading).
 	PlasmaComponents3.Label {

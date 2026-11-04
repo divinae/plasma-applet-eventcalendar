@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:03+0100\n"
+"POT-Creation-Date: 2026-11-04 09:07+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -4651,11 +4651,6 @@ msgid "High %1 · Low %2"
 msgstr "最高 %1 · 最低 %2"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "precipitation during the day"
-msgid "Rain: %1"
-msgstr "降雨：%1"
-
-#: ../contents/ui/WeatherPanel.qml
 msgctxt "%1 = time"
 msgid "Sunrise %1"
 msgstr "日出 %1"
@@ -4666,14 +4661,19 @@ msgid "Sunset %1"
 msgstr "日落 %1"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun"
-msgid "Up all day (midnight sun)"
-msgstr "全天在地平线以上（极昼）"
+msgctxt "the sun up all day"
+msgid "Midnight sun"
+msgstr "极昼"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun"
-msgid "Down all day (polar night)"
-msgstr "全天在地平线以下（极夜）"
+msgctxt "the sun down all day"
+msgid "Polar night"
+msgstr "极夜"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the day"
+msgid "Rain: %1"
+msgstr "降雨：%1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
@@ -4736,6 +4736,14 @@ msgstr "今天没有更多事件"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "工作地点：%1"
+
+#~ msgctxt "the sun"
+#~ msgid "Up all day (midnight sun)"
+#~ msgstr "全天在地平线以上（极昼）"
+
+#~ msgctxt "the sun"
+#~ msgid "Down all day (polar night)"
+#~ msgstr "全天在地平线以下（极夜）"
 
 #~ msgid "Skipped %1 setting this version doesn't have: %2"
 #~ msgid_plural "Skipped %1 settings this version doesn't have: %2"

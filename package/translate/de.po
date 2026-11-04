@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 09:03+0100\n"
+"POT-Creation-Date: 2026-11-04 09:07+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -4846,11 +4846,6 @@ msgid "High %1 · Low %2"
 msgstr "Max. %1 · Min. %2"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "precipitation during the day"
-msgid "Rain: %1"
-msgstr "Regen: %1"
-
-#: ../contents/ui/WeatherPanel.qml
 msgctxt "%1 = time"
 msgid "Sunrise %1"
 msgstr "Sonnenaufgang %1"
@@ -4861,14 +4856,19 @@ msgid "Sunset %1"
 msgstr "Sonnenuntergang %1"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun"
-msgid "Up all day (midnight sun)"
-msgstr "Den ganzen Tag oben (Mitternachtssonne)"
+msgctxt "the sun up all day"
+msgid "Midnight sun"
+msgstr "Mitternachtssonne"
 
 #: ../contents/ui/WeatherPanel.qml
-msgctxt "the sun"
-msgid "Down all day (polar night)"
-msgstr "Den ganzen Tag unten (Polarnacht)"
+msgctxt "the sun down all day"
+msgid "Polar night"
+msgstr "Polarnacht"
+
+#: ../contents/ui/WeatherPanel.qml
+msgctxt "precipitation during the day"
+msgid "Rain: %1"
+msgstr "Regen: %1"
 
 #: ../contents/ui/WeatherPanel.qml
 msgid "No forecast for this day."
@@ -4934,6 +4934,14 @@ msgstr "Heute keine Termine mehr"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbeitsort: %1"
+
+#~ msgctxt "the sun"
+#~ msgid "Up all day (midnight sun)"
+#~ msgstr "Den ganzen Tag oben (Mitternachtssonne)"
+
+#~ msgctxt "the sun"
+#~ msgid "Down all day (polar night)"
+#~ msgstr "Den ganzen Tag unten (Polarnacht)"
 
 #~ msgid "Skipped %1 setting this version doesn't have: %2"
 #~ msgid_plural "Skipped %1 settings this version doesn't have: %2"
