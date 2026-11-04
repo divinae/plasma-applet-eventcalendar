@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:35+0100\n"
+"POT-Creation-Date: 2026-11-04 10:49+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -601,6 +601,19 @@ msgstr "Importer des événements"
 #: ../contents/ui/config/CalendarsICal.qml ../contents/ui/main.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/CalendarsGeneral.qml
+msgid "Share events with Glance"
+msgstr "Partager les événements avec Glance"
+
+#: ../contents/ui/config/CalendarsGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"Les événements d'aujourd'hui et de demain, avec les liens de réunion, pour "
+"le widget de tableau de bord Glance. Uniquement sur cet ordinateur ; sans "
+"descriptions ni adresses des invités."
 
 #: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"

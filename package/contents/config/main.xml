@@ -395,6 +395,10 @@
 		<entry name="monthClickOpensDay" type="bool">
 			<default>true</default>
 		</entry>
+		<entry name="glanceShareEvents" type="bool">
+			<!-- Today's and tomorrow's events sent to the Glance panel widget over D-Bus (GlancePublisher) -->
+			<default>true</default>
+		</entry>
 		<entry name="showDeclinedEvents" type="bool">
 			<!-- Events the user declined: shown struck through (true) or left out of the views (false) -->
 			<default>true</default>

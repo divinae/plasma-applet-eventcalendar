@@ -42,6 +42,11 @@ PlasmoidItem {
 		id: upcomingEvents
 		onMeetingAlertRequested: function(eventItem) { root.showMeetingAlert(eventItem) }
 	}
+	// Today's and tomorrow's events for Glance (the panel widget), over D-Bus
+	GlancePublisher {
+		upcomingEvents: upcomingEvents
+		eventModel: eventModel
+	}
 
 	// The popup opened in a view (a notification's Show All / Show Tasks): after it opens in the
 	// Default view, this one.
