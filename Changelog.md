@@ -1,3 +1,20 @@
+## v1.19.0 - November 4 2026
+
+### Agenda
+* **The Agenda no longer freezes Plasma with the weather not set up** (#14): the meteogram above it showed a "Weather not configured" text that could make the layout loop.
+* **The meteogram and the timer above the Agenda are removed**; the weather panel beside the Agenda shows the forecast.
+* Settings > Views: the Agenda's settings show also when it isn't the default view.
+
+### Weather
+* **Settings > Views > Week and Day > Weather** turns the forecast off in all the views: the Week view's day headers, the Agenda's days and the weather panel of the Day view and the Agenda (it left some of them on), and no hourly forecast is fetched then.
+* "Day view and Agenda show": the side panels' checkboxes are for both views.
+
+### Camera check
+* **The camera's own zoom works** (eg: a Creative Live! Cam's zoom button): the check opens the camera at 720p, as video calls do, not at its largest size.
+
+### Settings
+* The pages' icons are alike: monochrome line icons of one size.
+
 ## v1.18.0 - November 4 2026
 
 ### Fixes

@@ -27,7 +27,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.18.0
+    1.19.0
 
 **License**
 
@@ -131,6 +131,15 @@ Source and install from source: https://github.com/divinae/plasma-applet-eventca
 Support the development: https://ko-fi.com/divinae4535
 ```
 
+**Changelog (1.19.0)**
+
+```
+- Fix: the Agenda no longer freezes Plasma with the weather not set up; the meteogram and timer above it are removed
+- The Weather switch (Settings > Views) turns the forecast off in all the views
+- Camera check: the camera's own zoom works (opened at 720p, as video calls)
+- Settings: alike monochrome page icons
+```
+
 **Changelog (1.18.0)**
 
 ```
@@ -212,8 +221,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.18.0.plasmoid` from the
-  [v1.18.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.18.0),
+- **Product file:** `eventcalendar-ng-v1.19.0.plasmoid` from the
+  [v1.19.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.19.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)
