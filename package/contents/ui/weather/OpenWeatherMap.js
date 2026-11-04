@@ -158,7 +158,8 @@ function parseDay(item, units) {
 		dt: item.dt,
 		temp: temp,
 		iconName: iconName(weather),
-		text: weather ? weather.main : '',
+		// The description, in the language asked for (weather.main is English: "Clouds").
+		text: sentence(weather ? weather.description : ''),
 		description: weather ? weather.description : '',
 		precipitation: amount(item.rain) + amount(item.snow),
 		notes: dayNotes(temp),
