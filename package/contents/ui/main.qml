@@ -43,7 +43,12 @@ PlasmoidItem {
 		onMeetingAlertRequested: function(eventItem) { root.showMeetingAlert(eventItem) }
 	}
 	// Today's and tomorrow's events for Glance (the panel widget), over D-Bus
+	// Glance asks for the events when it starts (it may come up after the last send)
+	function publishToGlance() {
+		if (glancePublisher.hasData) glancePublisher.publish()
+	}
 	GlancePublisher {
+		id: glancePublisher
 		upcomingEvents: upcomingEvents
 		eventModel: eventModel
 		logic: logic
