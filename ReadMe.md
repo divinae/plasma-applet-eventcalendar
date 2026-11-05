@@ -34,9 +34,12 @@ again.
 - 🔒 **Private by design.** Sign-in tokens stay in your system keyring; no tracking, no servers of
   ours in between.
 
-This is a maintained fork of [Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar)
-by Chris Holland (Zren), via [ALikesToCode's Plasma 6 port](https://github.com/ALikesToCode/plasma-applet-eventcalendar).
-It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings.
+Not just another fork: Event Calendar NG is a complete redesign. It started from
+[Event Calendar](https://github.com/Zren/plasma-applet-eventcalendar) by Chris Holland (Zren), via
+[ALikesToCode's Plasma 6 port](https://github.com/ALikesToCode/plasma-applet-eventcalendar), and
+has since been rebuilt: a new look and new views (Week, Day, Agenda), tasks, meetings, CalDAV and
+KDE PIM, offline start, quick add in plain sentences and much more. It keeps the same widget id,
+so it replaces an existing Event Calendar and keeps its settings.
 
 <details>
 <summary><b>All features</b></summary>

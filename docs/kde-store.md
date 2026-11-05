@@ -8,8 +8,8 @@ version, the changelog and the file for each release.
 - **Same widget id as the original.** The original Event Calendar by Zren is on the store as
   [p/998901](https://store.kde.org/p/998901/) (Plasma 5), with the same id
   `org.kde.plasma.eventcalendar`. That's intended, since this fork replaces it and keeps its
-  settings. But installing either one replaces the other, so the page must say clearly that this
-  is a fork, and link the original.
+  settings. But installing either one replaces the other, so the page must say clearly what it
+  is based on (a complete redesign of the original), and link the original.
 - **Google sign-in.** The built-in Google OAuth client is in the package. Google's consent screen
   links a privacy policy and terms (`docs/privacy.html`, `docs/terms.html`), online through GitHub
   Pages (from `docs/` on `master`): https://divinae.github.io/plasma-applet-eventcalendar/privacy.html
@@ -68,7 +68,7 @@ Why you'll like it
 🎨 At home in Plasma: rounded cards or flat, light and dark themes, 20 languages.
 🔒 Private: sign-in tokens stay in your system keyring.
 
-A maintained Plasma 6 fork of Event Calendar by Chris Holland (Zren), via ALikesToCode's Plasma 6 port. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
+Not just another fork: a complete redesign of Event Calendar by Chris Holland (Zren), started from ALikesToCode's Plasma 6 port and rebuilt since, with a new look, new views, tasks, meetings, CalDAV and much more. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
 
 In detail
 
