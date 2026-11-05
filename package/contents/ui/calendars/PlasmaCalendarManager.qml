@@ -13,11 +13,11 @@ CalendarManager {
 	calendarManagerId: "plasma"
 
 	property var executable: ExecUtil { id: executable }
-	// The KDE PIM calendars (Akonadi): made when first needed with the KDE PIM plugin on, not at
-	// load (it starts Akonadi, slow at login). See pimCalendarModel.
+	// The KDE PIM calendars (Akonadi): made when first needed with the KDE PIM plugin on, once the
+	// plugins started (pluginsStartTimer), not at load (it starts Akonadi, slow at login).
 	property var calendarModel: null
 	function pimCalendarModel() {
-		if (!calendarModel && pimEventsPluginEnabled()) {
+		if (!calendarModel && pluginsStarted && pimEventsPluginEnabled()) {
 			calendarModel = PlasmaCalendarUtils.createPimCalendarsModel(plasmaCalendarManager)
 		}
 		return calendarModel

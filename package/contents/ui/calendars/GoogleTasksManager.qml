@@ -405,31 +405,38 @@ CalendarManager {
 	// none) from a request with it. callback(errObj, { scopedTasklistId, data }): errObj is
 	// { err, data, xhr } or null; data.items is both, merged (Tasks.mergeTaskPages).
 	function fetchGoogleTasks(tasklistId, callback) {
-		fetchTasklistPages(tasklistId, {
-			showCompleted: false,
-		}, null, null, function(err, openData, xhr) {
-			if (err) {
-				return callback({ err: err, data: openData, xhr: xhr }, null)
+		var results = {}
+		var failed = false
+		function arrived(key, err, data, xhr) {
+			if (failed) {
+				return
 			}
-			fetchTasklistPages(tasklistId, {
-				showCompleted: true,
-				showHidden: true, // Tasks done in Google's apps come back hidden
-				completedMin: new Date(Date.now() - completedDays * 86400000).toISOString(),
-			}, null, null, function(err, doneData, xhr) {
-				if (err) {
-					return callback({ err: err, data: doneData, xhr: xhr }, null)
-				}
-				openData.items = Tasks.mergeTaskPages(openData.items, doneData.items)
+			if (err) {
+				failed = true
+				return callback({ err: err, data: data, xhr: xhr }, null)
+			}
+			results[key] = data
+			if (results.open && results.done) {
+				results.open.items = Tasks.mergeTaskPages(results.open.items, results.done.items)
 				callback(null, {
 					scopedTasklistId: scopedTasklistId(tasklistId),
-					data: openData,
+					data: results.open,
 				})
-			})
-		})
+			}
+		}
+		// At once: they don't depend on each other.
+		fetchTasklistPages(tasklistId, {
+			showCompleted: false,
+		}, null, null, arrived.bind(null, 'open'))
+		fetchTasklistPages(tasklistId, {
+			showCompleted: true,
+			showHidden: true, // Tasks done in Google's apps come back hidden
+			completedMin: new Date(Date.now() - completedDays * 86400000).toISOString(),
+		}, null, null, arrived.bind(null, 'done'))
 	}
 
-	// Done tasks shown: those completed in the last 30 days (like TickTick's completedDays).
-	readonly property int completedDays: 30
+	// Done tasks shown: those completed in the last completedDays days (like TickTick's).
+	readonly property int completedDays: Tasks.COMPLETED_DAYS
 
 	// Every page of a list for the query params. callback(err, data, xhr): data.items is all of them.
 	function fetchTasklistPages(tasklistId, params, pageToken, allItems, callback) {

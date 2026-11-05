@@ -756,6 +756,7 @@ same(T.capabilities('GoogleTasks'), { dueTime: false, priority: false, repeat: f
 	const done1 = task({ id: 'b', status: 'completed', completed: '2026-10-20T10:00:00.000Z', hidden: true })
 	const raced = task({ id: 'a', status: 'completed', completed: '2026-10-26T10:00:00.000Z' })
 	same(T.mergeTaskPages([open1], [done1, raced]).map(t => t.id), ['a', 'b'], 'each task once, open first')
+	same(T.mergeTaskPages([open1], [done1, raced])[0].status, 'completed', 'completed while the requests ran: the done copy')
 	same(T.mergeTaskPages(undefined, [done1]).map(t => t.id), ['b'], 'a list with only done tasks')
 	same(T.mergeTaskPages([open1], [task({ id: 'c' })]).map(t => t.id), ['a'], 'the second request adds only done ones')
 	same(T.mergeTaskPages([], []), [], 'empty list')

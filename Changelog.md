@@ -1,14 +1,22 @@
-## Unreleased
+## v1.22.0 - November 5 2026
 
 ### Tasks
 * **New Google tasks no longer disappear** after a restart or the next refresh: since 1.5 the list was asked only for tasks done in the last 30 days, and Google then left out the open ones. Open and done tasks are now fetched apart.
 * **Completed tasks are those of the last 30 days** (Google and TickTick), as the Completed section now says.
 * **New tasks go to a list that's shown**: the list pickers offer only the task lists selected in settings (a task added to another list was made but never shown).
-* **The offline copy keeps a new, edited or deleted task** right away, not only after the next refresh; a copy that couldn't be refreshed no longer passes for a new one.
+* **The offline copy keeps a new, edited or deleted task** right away, not only after the next refresh; a calendar that keeps failing to refresh leaves it after 14 days.
 
 ### Faster start
 * **Plasma no longer waits for the widget at login**: the KDE PIM calendars (Akonadi) and the calendar plugins load a few seconds after it, the camera check's Qt Multimedia when the popup first opens, and the network status in the background.
 * **New installs show the holidays without KDE PIM** (Settings > Calendars turns it on); existing setups keep their plugins.
+
+### Clock and new events (from ALikesToCode's fork)
+* **The seconds change with the system clock** (they could be up to a second late).
+* **New events start in your primary calendar**, not the first one you can write to (eg: a shared family calendar), and the picker reads "Calendar (account)".
+
+### Google sign-in
+* **What signing in allows**, and a link to the privacy policy, next to the Sign in button.
+* **Event Calendar NG's own website**: https://divinae.github.io/plasma-applet-eventcalendar/ (install, screenshots, privacy policy).
 
 ## v1.21.0 - November 5 2026
 

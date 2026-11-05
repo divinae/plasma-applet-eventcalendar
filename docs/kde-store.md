@@ -28,7 +28,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.21.0
+    1.22.0
 
 **License**
 
@@ -130,6 +130,17 @@ Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/is
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
 
 Support the development: https://ko-fi.com/divinae4535
+```
+
+**Changelog (1.22.0)**
+
+```
+- Tasks: new Google tasks no longer disappear after a restart or refresh
+- Completed tasks: those of the last 30 days, as the list now says
+- Faster login: Plasma no longer waits for the widget (KDE PIM and plugins load after it)
+- The clock's seconds change with the system clock
+- New events start in your primary calendar
+- Google sign-in: what it allows, and the privacy policy; a new website
 ```
 
 **Changelog (1.21.0)**
@@ -239,8 +250,8 @@ Support the development: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.21.0.plasmoid` from the
-  [v1.21.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.21.0),
+- **Product file:** `eventcalendar-ng-v1.22.0.plasmoid` from the
+  [v1.22.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.22.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

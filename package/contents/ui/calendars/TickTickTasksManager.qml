@@ -35,8 +35,8 @@ CalendarManager {
 	// The Inbox's real project id ('inbox123...'), learned from its tasks; 'inbox' works in paths.
 	property string inboxProjectId: ""
 
-	// Done tasks shown: those completed in the last 30 days.
-	readonly property int completedDays: 30
+	// Done tasks shown: those completed in the last completedDays days.
+	readonly property int completedDays: Tasks.COMPLETED_DAYS
 
 	Logger {
 		id: logger

@@ -41,12 +41,21 @@ Item {
 	}
 
 	// When the shown cache was saved (ms). Calendars still from it (not fetched since, eg: an
-	// error) are saved again with this time, not now, so the cache's age limit still applies.
+	// error) are left out of the saved copy once that's older than the cache's age limit, so a
+	// calendar that keeps failing isn't kept (and shown at start) for ever.
 	property double cacheSavedAt: 0
 	function saveEventCache() {
-		var stale = Object.keys(eventModel.cachedEventsByCalendar || {}).length > 0 && cacheSavedAt > 0
-		eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax,
-			stale ? new Date(cacheSavedAt) : null)
+		var calendars = eventModel.eventsByCalendar
+		var cached = eventModel.cachedEventsByCalendar || {}
+		if (cacheSavedAt > 0 && Date.now() - cacheSavedAt > EventCacheUtil.MAX_AGE_MS) {
+			calendars = {}
+			for (var calendarId in eventModel.eventsByCalendar) {
+				if (eventModel.eventsByCalendar[calendarId] !== cached[calendarId]) {
+					calendars[calendarId] = eventModel.eventsByCalendar[calendarId]
+				}
+			}
+		}
+		eventCache.scheduleSave(calendars, eventModel.dateMin, eventModel.dateMax)
 	}
 	// A task or event changed in the widget: in the cache right away, not at the next fetch round
 	// (a restart before it showed the copy without the change). Not while a round is running: its

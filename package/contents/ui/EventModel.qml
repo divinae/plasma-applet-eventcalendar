@@ -1018,7 +1018,17 @@ CalendarManager {
 	function getTaskLists(accountPrefix) {
 		var prefix = accountPrefix ? accountPrefix + '::' : ''
 		var shown = {}
-		getSelectedTaskLists().forEach(function(list) { shown[list.id] = true })
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			var method = typeof calendarManager.isTasklistSelected === 'function' ? 'isTasklistSelected'
+				: typeof calendarManager.isProjectSelected === 'function' ? 'isProjectSelected' : ''
+			var list = method ? calendarManager.getCalendarList() : []
+			for (var j = 0; j < list.length; j++) {
+				if (list[j] && list[j].isTasklist === true && calendarManager[method](list[j].id)) {
+					shown[list[j].id] = true
+				}
+			}
+		}
 		return getCalendarList().filter(function(c) {
 			return c.isTasklist === true && shown[c.id] === true
 				&& (!c.accessRole || c.accessRole === 'owner' || c.accessRole === 'writer')

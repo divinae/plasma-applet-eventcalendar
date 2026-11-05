@@ -119,13 +119,29 @@ PlasmoidItem {
 	// meeting's Join (meetingLink from MeetingLink.find, or null). Probed when the popup first
 	// opens or a little after start, not while the widget loads: importing Qt Multimedia can take
 	// long at login (its backend, the audio and video devices).
+	// Loaded asynchronously, so the probe doesn't hold up the popup or an alert either.
 	property bool cameraCheckAvailable: false
+	property var cameraProbe: null
 	function probeCameraCheck() {
-		cameraCheckAvailable = moduleAvailable("MultimediaProbe.qml")
+		if (cameraProbe) {
+			return
+		}
+		cameraProbeTimer.stop()
+		cameraProbe = Qt.createComponent(Qt.resolvedUrl("MultimediaProbe.qml"), Component.Asynchronous)
+		function settle() {
+			if (cameraProbe.status === Component.Loading) {
+				return
+			}
+			cameraCheckAvailable = cameraProbe.status === Component.Ready
+		}
+		if (cameraProbe.status === Component.Loading) {
+			cameraProbe.statusChanged.connect(settle)
+		} else {
+			settle()
+		}
 	}
 	onExpandedChanged: {
-		if (expanded && cameraProbeTimer.running) {
-			cameraProbeTimer.stop()
+		if (expanded) {
 			probeCameraCheck()
 		}
 	}
@@ -167,6 +183,7 @@ PlasmoidItem {
 	}
 	function showMeetingAlert(eventItem) {
 		alertSnoozeTimer.stop()
+		probeCameraCheck() // Its camera check, once Qt Multimedia is known to be there
 		var layer = moduleAvailable("LayerShellProbe.qml")
 		var blur = moduleAvailable("KickerProbe.qml")
 		alertSetUrl = blur && layer ? "MeetingAlertSetBlurLayer.qml"

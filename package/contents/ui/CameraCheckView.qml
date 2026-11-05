@@ -50,7 +50,7 @@ Item {
 
 			Loader {
 				Layout.fillWidth: true
-				source: root.moduleAvailable("MultimediaProbe.qml") ? "CameraMirror.qml" : ""
+				source: root.cameraCheckAvailable ? "CameraMirror.qml" : ""
 				onLoaded: item.running = Qt.binding(function() { return cameraCheck.running })
 			}
 			Loader {

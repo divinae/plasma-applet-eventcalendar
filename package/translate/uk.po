@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 11:14+0100\n"
+"POT-Creation-Date: 2026-11-05 11:21+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -4523,8 +4523,11 @@ msgid "No date"
 msgstr "Без дати"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed (last 30 days)"
-msgstr "Виконані (останні 30 днів)"
+msgid "Completed (last day)"
+msgid_plural "Completed (last %1 days)"
+msgstr[0] "Виконані (останній %1 день)"
+msgstr[1] "Виконані (останні %1 дні)"
+msgstr[2] "Виконані (останні %1 днів)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4913,6 +4916,9 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "Completed (last 30 days)"
+#~ msgstr "Виконані (останні 30 днів)"
 
 #~ msgid "Completed"
 #~ msgstr "Виконані"

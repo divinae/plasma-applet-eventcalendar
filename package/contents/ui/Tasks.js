@@ -106,21 +106,31 @@ function isClearedTask(item, clearedAtMs) {
 	return !isNaN(completedMs) && completedMs <= watermark
 }
 
+// The done tasks fetched and shown: those completed in the last COMPLETED_DAYS days (Google:
+// completedMin, TickTick: its completed tasks' window), as the Completed section says.
+var COMPLETED_DAYS = 30
+
 // A Google list's tasks from its two requests (GoogleTasksManager.fetchGoogleTasks): the open ones,
-// then the done ones of the second (it may repeat a task the first has, eg completed in between),
-// each task once.
+// then the done ones of the second, each task once. A task in both (completed while they ran) is
+// the done copy, in the open one's place.
 function mergeTaskPages(openItems, doneItems) {
-	var seen = {}
+	var done = {}
+	;(doneItems || []).forEach(function(item) {
+		if (item && item.id && isDone(item)) {
+			done[item.id] = item
+		}
+	})
 	var merged = []
+	var seen = {}
 	function add(item) {
 		if (item && item.id && !seen[item.id]) {
 			seen[item.id] = true
-			merged.push(item)
+			merged.push(done[item.id] || item)
 		}
 	}
 	;(openItems || []).forEach(add)
 	;(doneItems || []).forEach(function(item) {
-		if (isDone(item)) {
+		if (done[item && item.id] === item) {
 			add(item)
 		}
 	})

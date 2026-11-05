@@ -45,8 +45,10 @@ Item {
 		interval: 60000
 		intervalAlignment: Plasma5Support.Types.AlignToMinute
 		onNewData: function(sourceName, data) {
-			if (sourceName === 'Local' && !timeModel.needsSeconds && !timeModel.testing) {
-				timeModel.currentTime = new Date()
+			// The engine's time (of timezone): it's computed for the minute it aligned to, so a
+			// timer firing a little before the minute still gives the new one.
+			if (sourceName === timeModel.timezone && !timeModel.needsSeconds && !timeModel.testing) {
+				timeModel.currentTime = data && data.DateTime ? new Date(data.DateTime) : new Date()
 				timeModel.tick()
 			}
 		}

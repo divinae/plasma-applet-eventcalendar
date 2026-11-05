@@ -124,14 +124,13 @@ QtObject {
 		return EventCacheUtil.deserialize(String(text || ''), new Date(), isSelected)
 	}
 
-	// Debounced: a refresh can finish several rounds in a row. savedAt: the time to store (a Date),
-	// else now.
-	function scheduleSave(eventsByCalendar, dateMin, dateMax, savedAt) {
+	// Debounced: a refresh can finish several rounds in a row.
+	function scheduleSave(eventsByCalendar, dateMin, dateMax) {
 		if (!enabled) {
 			return
 		}
 		pendingSnapshot = {
-			text: EventCacheUtil.serialize(eventsByCalendar, dateMin, dateMax, savedAt || new Date()),
+			text: EventCacheUtil.serialize(eventsByCalendar, dateMin, dateMax, new Date()),
 		}
 		saveTimer.restart()
 	}

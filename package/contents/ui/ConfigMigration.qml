@@ -31,6 +31,12 @@ QtObject {
 			logMigration('weatherService => OpenWeatherMap (its city is set)')
 		}
 
+		// A new install: no migration ran yet and the plugin list is main.xml's default (a config of
+		// an older version has v72Migration, or its plugins stored as paths before v72).
+		var newInstall = !plasmoid.configuration.v72Migration && !plasmoid.configuration.v73Migration
+			&& !plasmoid.configuration.enabledCalendarPluginsAllowEmpty
+			&& PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins).join(',') === 'holidaysevents.so,pimevents.so'
+
 		// Modified in: v72
 		if (!plasmoid.configuration.v72Migration) {
 			var oldValue = plasmoid.configuration.enabledCalendarPlugins
@@ -41,13 +47,11 @@ QtObject {
 			plasmoid.configuration.v72Migration = true
 		}
 
-		// Added in: v73. Also the first run of a new install: the holidays only, not KDE PIM (its
-		// plugin starts Akonadi at login, slow; Settings > Calendars turns it on). The plugin list
-		// left at main.xml's default (holidays, KDE PIM: what existing setups rely on) is the sign.
+		// Added in: v73. Also a new install: the holidays only, not KDE PIM (its plugin starts
+		// Akonadi at login, slow; Settings > Calendars turns it on). Existing setups keep main.xml's
+		// default (holidays, KDE PIM), which they rely on.
 		if (!plasmoid.configuration.v73Migration) {
-			var defaultPlugins = 'holidaysevents.so,pimevents.so'
-			if (PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins).join(',') === defaultPlugins
-				&& !plasmoid.configuration.enabledCalendarPluginsAllowEmpty) {
+			if (newInstall) {
 				plasmoid.configuration.enabledCalendarPlugins = ['holidaysevents.so']
 				logMigration('new install: enabledCalendarPlugins => holidaysevents.so')
 			} else if (!plasmoid.configuration.enabledCalendarPluginsAllowEmpty) {
