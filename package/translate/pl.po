@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:13+0100\n"
+"POT-Creation-Date: 2026-11-05 09:37+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -601,6 +601,14 @@ msgstr "Zaloguj się przez Google…"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Waiting for the browser sign-in…"
 msgstr "Oczekiwanie na zalogowanie w przeglądarce…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Signing in lets the widget show your calendars and task lists, and change the events and tasks you edit in it. Your data goes only between this computer and Google; the sign-in is kept in the system keyring."
+msgstr "Zalogowanie pozwala widżetowi pokazywać Twoje kalendarze i listy zadań oraz zmieniać wydarzenia i zadania, które w nim edytujesz. Twoje dane przesyłane są tylko między tym komputerem a Google; logowanie jest przechowywane w systemowym pęku kluczy."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Privacy policy"
+msgstr "Polityka prywatności"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Advanced sign-in options"

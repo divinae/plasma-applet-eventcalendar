@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:13+0100\n"
+"POT-Creation-Date: 2026-11-05 09:37+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -731,6 +731,20 @@ msgstr "Google로 로그인…"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Waiting for the browser sign-in…"
 msgstr "브라우저 로그인 대기 중…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid ""
+"Signing in lets the widget show your calendars and task lists, and change "
+"the events and tasks you edit in it. Your data goes only between this "
+"computer and Google; the sign-in is kept in the system keyring."
+msgstr ""
+"로그인하면 위젯이 캘린더와 할 일 목록을 표시하고, 위젯에서 편집한 일정과 할 "
+"일을 변경할 수 있습니다. 데이터는 이 컴퓨터와 Google 사이에서만 오가며, 로그"
+"인 정보는 시스템 키링에 보관됩니다."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Privacy policy"
+msgstr "개인정보 처리방침"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Advanced sign-in options"

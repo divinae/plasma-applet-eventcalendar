@@ -419,6 +419,14 @@ ConfigSection {
 			visible: !!authConfigurationMessage && !page.showAdvancedSignIn // Shown in Client Credentials when open
 			text: authConfigurationMessage
 		}
+		// What signing in allows, before Google's consent screen (after ALikesToCode's fork, 78cde01c).
+		FormCard.FormSectionText {
+			visible: !googleLoginManager.isLoggedIn
+			text: i18n("Signing in lets the widget show your calendars and task lists, and change the events and tasks you edit in it. Your data goes only between this computer and Google; the sign-in is kept in the system keyring.")
+				+ " <a href=\"https://github.com/divinae/plasma-applet-eventcalendar/blob/master/docs/privacy.html\">" + i18n("Privacy policy") + "</a>"
+			textFormat: Text.StyledText
+			onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+		}
 
 		// Advanced sign-in options (collapsed)
 		FormCard.FormCard {

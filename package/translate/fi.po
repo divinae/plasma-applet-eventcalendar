@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:13+0100\n"
+"POT-Creation-Date: 2026-11-05 09:37+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -600,6 +600,14 @@ msgstr "Kirjaudu Googlella…"
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Waiting for the browser sign-in…"
 msgstr "Odotetaan kirjautumista selaimessa…"
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Signing in lets the widget show your calendars and task lists, and change the events and tasks you edit in it. Your data goes only between this computer and Google; the sign-in is kept in the system keyring."
+msgstr "Kirjautuminen antaa sovelman näyttää kalenterisi ja tehtävälistasi sekä muuttaa siinä muokkaamiasi tapahtumia ja tehtäviä. Tietosi kulkevat vain tämän tietokoneen ja Googlen välillä; kirjautuminen säilytetään järjestelmän avainnipussa."
+
+#: ../contents/ui/config/CalendarsGoogle.qml
+msgid "Privacy policy"
+msgstr "Tietosuojakäytäntö"
 
 #: ../contents/ui/config/CalendarsGoogle.qml
 msgid "Advanced sign-in options"
