@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 15:31+0100\n"
+"POT-Creation-Date: 2026-11-05 09:03+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1121,8 +1121,16 @@ msgid " min"
 msgstr " dk"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Use the reminder times set in Google Calendar"
-msgstr "Google Takvim'de ayarlanan anımsatıcı sürelerini kullan"
+msgid "Use the reminder times set in the calendar"
+msgstr "Takvimde ayarlanan hatırlatma sürelerini kullan"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Google Calendar's, and the alarms of CalDAV and .ics events; off or without "
+"one: the time above"
+msgstr ""
+"Google Takvim'inkiler ve CalDAV ile .ics etkinliklerinin alarmları; "
+"kapalıysa veya yoksa: yukarıdaki süre"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
@@ -4827,6 +4835,9 @@ msgstr "Bugün başka etkinlik yok"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Çalışma konumu: %1"
+
+#~ msgid "Use the reminder times set in Google Calendar"
+#~ msgstr "Google Takvim'de ayarlanan anımsatıcı sürelerini kullan"
 
 #~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 #~ msgstr ""

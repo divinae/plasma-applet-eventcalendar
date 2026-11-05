@@ -82,6 +82,8 @@ def reminder_minutes(event, start_date, end_date):
 				offset = value + (ensure_date_time(end_date) - ensure_date_time(start_date))
 			before = -offset
 		elif isinstance(value, datetime.date):
+			if "RRULE" in event or "RDATE" in event or "RECURRENCE-ID" in event:
+				continue  # A fixed time: one occurrence's, not each repeat's
 			before = ensure_date_time(start_date) - ensure_date_time(value)
 		else:
 			continue
@@ -148,10 +150,10 @@ def events_to_json(event_list=None, indent=4):
 			item["description"] = stringify(event.get("DESCRIPTION"))
 		reminders = reminder_minutes(event, start_date, end_date)
 		if reminders:
-			# The event's own alarms: notified at their times, as a Google event's own reminders
-			# (UpcomingEvents.reminderMinutesFor); without them the widget's reminder time.
+			# Its alarms, as a Google calendar's reminders: used with "Use the reminder times set in
+			# the calendar" (UpcomingEvents.reminderMinutesFor; many feeds put a default alarm on
+			# every event); otherwise and without them the widget's reminder time.
 			item["reminderMinutes"] = reminders
-			item["reminderOwn"] = True
 
 		data["items"].append(item)
 

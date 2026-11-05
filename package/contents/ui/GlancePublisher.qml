@@ -55,7 +55,7 @@ QtObject {
 				if (item) {
 					// Marked as ended (it ended early): it ends then, for Glance too
 					var endedAt = upcomingEvents.markedEndedAt(eventItem)
-					if (endedAt > 0 && endedAt < item.end) {
+					if (endedAt > 0 && endedAt < item.end && !item.allDay) { // All-day: kept whole
 						item.end = Math.max(item.start, endedAt)
 					}
 					items.push(item)

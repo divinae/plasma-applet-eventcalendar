@@ -108,7 +108,8 @@ ConfigPage {
 			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }
 			FormConfigSwitch {
 				visible: reminderEnabled.checked
-				text: i18n("Use the reminder times set in Google Calendar")
+				text: i18n("Use the reminder times set in the calendar")
+				description: i18n("Google Calendar's, and the alarms of CalDAV and .ics events; off or without one: the time above")
 				configKey: 'eventReminderUseGoogle'
 			}
 			FormCard.FormDelegateSeparator { visible: reminderEnabled.checked }

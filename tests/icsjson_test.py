@@ -30,7 +30,7 @@ class IcsJsonTests(unittest.TestCase):
 	def reminders(self, alarms: str, start="DTSTART:20260703T100000Z\r\nDTEND:20260703T110000Z\r\n"):
 		calendar = parse_calendar("BEGIN:VEVENT\r\nUID:alarm\r\nSUMMARY:x\r\n" + start + alarms + "END:VEVENT\r\n")
 		item = json.loads(icsjson.events_to_json(list(calendar.walk("VEVENT"))))["items"][0]
-		self.assertEqual(item.get("reminderOwn"), True if item.get("reminderMinutes") else None)
+		self.assertIsNone(item.get("reminderOwn"), "the calendar's, as Google's defaults: the setting decides")
 		return item.get("reminderMinutes")
 
 	def test_alarms_as_reminder_minutes(self):
@@ -43,6 +43,9 @@ class IcsJsonTests(unittest.TestCase):
 		self.assertIsNone(self.reminders(alarm("TRIGGER:PT5M")), "after the start: none")
 		self.assertIsNone(self.reminders(""), "no alarms: the widget's own time")
 		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15M") + alarm("TRIGGER:-PT15M")), [15], "twice the same: once")
+		weekly = "DTSTART:20260703T100000Z\r\nDTEND:20260703T110000Z\r\nRRULE:FREQ=WEEKLY\r\n"
+		self.assertIsNone(self.reminders(alarm("TRIGGER;VALUE=DATE-TIME:20260703T094500Z"), weekly), "a fixed time on a series: not each repeat's")
+		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15M"), weekly), [15], "relative on a series: each repeat")
 		allday = "DTSTART;VALUE=DATE:20260703\r\nDTEND;VALUE=DATE:20260704\r\n"
 		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15H"), allday), [900], "all-day: before its midnight")
 

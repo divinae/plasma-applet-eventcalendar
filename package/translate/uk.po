@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 15:31+0100\n"
+"POT-Creation-Date: 2026-11-05 09:03+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -1128,8 +1128,16 @@ msgid " min"
 msgstr " хв"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Use the reminder times set in Google Calendar"
-msgstr "Використовувати час нагадувань із Календаря Google"
+msgid "Use the reminder times set in the calendar"
+msgstr "Використовувати час нагадувань, заданий у календарі"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Google Calendar's, and the alarms of CalDAV and .ics events; off or without "
+"one: the time above"
+msgstr ""
+"З Календаря Google і сигнали подій CalDAV та .ics; вимкнено або без них: час "
+"вище"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
@@ -4887,6 +4895,9 @@ msgstr "Сьогодні подій більше немає"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Місце роботи: %1"
+
+#~ msgid "Use the reminder times set in Google Calendar"
+#~ msgstr "Використовувати час нагадувань із Календаря Google"
 
 #~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 #~ msgstr "Прогноз у заголовках днів і панель погоди в поданні дня."

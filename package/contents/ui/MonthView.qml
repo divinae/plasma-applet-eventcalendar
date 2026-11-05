@@ -39,6 +39,7 @@ PinchArea {
 	readonly property string title: currentTitle
 	function goToday() {
 		resetToToday()
+		startFollowingToday() // Also when the month stays the same (scrolled away from today)
 	}
 	function goPrevious() {
 		if (stack.currentItem) {
@@ -101,18 +102,48 @@ PinchArea {
 		followToday = true
 		Qt.callLater(centerCurrentWeek)
 	}
+	// Cell index of a date in the shown month (-1: not shown).
+	function dayIndexOf(date) {
+		if (!daysModel || daysModel.count === 0) {
+			return -1
+		}
+		var index = WeekDrag.dayDelta(dayCellDate(0), date)
+		return index >= 0 && index < daysModel.count ? index : -1
+	}
+	// The top and height of a cell's week in the scrolled month: from the heading and the row tops,
+	// not the grid's y (it follows its height only at the next polish).
+	function weekSpan(index) {
+		var week = Math.floor(index / calendarBackend.days)
+		var top = mainDaysCalendar.headingRowHeight + mainDaysCalendar.gridLineY(week + (mainDaysCalendar.headerModel ? 1 : 0))
+		return { top: top, height: mainDaysCalendar.rowHeight(week) }
+	}
+	function clampedContentY(y) {
+		return Math.max(0, Math.min(Math.max(0, monthScroll.contentHeight - monthScroll.height), Math.round(y)))
+	}
 	function centerCurrentWeek() {
-		if (!followToday || !visible || !showAllEvents || !currentMonthContainsToday || mainDaysCalendar.weekRowCounts.length === 0) {
+		if (!followToday || !visible || !showAllEvents || mainDaysCalendar.weekRowCounts.length === 0) {
 			return
 		}
-		for (var i = 0; i < daysModel.count; i++) {
-			if (Shared.isSameDate(dayCellDate(i), root.today)) {
-				var week = Math.floor(i / calendarBackend.days)
-				var middle = mainDaysCalendar.cellY(i) + mainDaysCalendar.rowHeight(week) / 2
-				var maxY = Math.max(0, monthScroll.contentHeight - monthScroll.height)
-				monthScroll.contentY = Math.max(0, Math.min(maxY, Math.round(middle - monthScroll.height / 2)))
-				return
-			}
+		var index = dayIndexOf(root.today)
+		if (index >= 0) {
+			var span = weekSpan(index)
+			monthScroll.contentY = clampedContentY(span.top + span.height / 2 - monthScroll.height / 2)
+		}
+	}
+	// The selected day in view (keyboard): scrolled only as far as needed.
+	function ensureDateVisible(date) {
+		var index = dayIndexOf(date)
+		if (index < 0 || monthScroll.contentHeight <= monthScroll.height) {
+			return
+		}
+		if (!Shared.isSameDate(date, root.today)) {
+			followToday = false // Another day chosen: not pulled back to today's week
+		}
+		var span = weekSpan(index)
+		if (span.top < monthScroll.contentY) {
+			monthScroll.contentY = clampedContentY(span.top)
+		} else if (span.top + span.height > monthScroll.contentY + monthScroll.height) {
+			monthScroll.contentY = clampedContentY(span.top + span.height - monthScroll.height)
 		}
 	}
 
@@ -267,6 +298,9 @@ PinchArea {
 	function setSelectedDate(d) {
 		currentDate = d
 		dateSelected(currentDate)
+		if (keyboardActive) {
+			Qt.callLater(ensureDateVisible, d) // After a new month's weeks
+		}
 	}
 
 	// Back to the month from the year / decade view (the month view left: the agenda shows its
@@ -570,6 +604,8 @@ PinchArea {
 				// The month as tall as its weeks (with "show all events" taller than the view); the
 				// year overview pushed on it: the view's height.
 				height: Math.max(monthScroll.height, stack.depth === 1 ? mainDaysCalendar.fullHeight : 0)
+				// Back from the year overview: today's week in the middle again.
+				onDepthChanged: if (depth === 1) root.startFollowingToday()
 				// Paging (previous / next): the new month slides in from its side.
 				transform: Translate { id: pageShift }
 				SlideIn {

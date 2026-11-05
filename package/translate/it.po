@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 15:31+0100\n"
+"POT-Creation-Date: 2026-11-05 09:03+0100\n"
 "PO-Revision-Date: 2020-11-12 19:45+0100\n"
 "Last-Translator: Guido Mazzone <guido.mazzone93@outlook.it>\n"
 "Language-Team: Italian <guido.mazzone93@outlook.it>\n"
@@ -917,8 +917,12 @@ msgid " min"
 msgstr " min"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Use the reminder times set in Google Calendar"
-msgstr "Usa gli orari dei promemoria impostati in Google Calendar"
+msgid "Use the reminder times set in the calendar"
+msgstr "Usa i tempi di promemoria impostati nel calendario"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid "Google Calendar's, and the alarms of CalDAV and .ics events; off or without one: the time above"
+msgstr "Quelli di Google Calendar e gli allarmi degli eventi CalDAV e .ics; disattivato o senza: il tempo sopra"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
@@ -4388,6 +4392,9 @@ msgstr "Nessun altro evento oggi"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Luogo di lavoro: %1"
+
+#~ msgid "Use the reminder times set in Google Calendar"
+#~ msgstr "Usa gli orari dei promemoria impostati in Google Calendar"
 
 #~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 #~ msgstr "Previsioni nelle intestazioni dei giorni e, nella vista Giorno, un pannello meteo."

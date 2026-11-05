@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 15:31+0100\n"
+"POT-Creation-Date: 2026-11-05 09:03+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1112,8 +1112,15 @@ msgid " min"
 msgstr " דק׳"
 
 #: ../contents/ui/config/ConfigEvents.qml
-msgid "Use the reminder times set in Google Calendar"
-msgstr "שימוש בזמני התזכורת שהוגדרו ב־Google Calendar"
+msgid "Use the reminder times set in the calendar"
+msgstr "שימוש בזמני התזכורות שהוגדרו בלוח השנה"
+
+#: ../contents/ui/config/ConfigEvents.qml
+msgid ""
+"Google Calendar's, and the alarms of CalDAV and .ics events; off or without "
+"one: the time above"
+msgstr ""
+"של יומן Google והתראות של אירועי CalDAV ו־.ics; כבוי או בלעדיהן: הזמן שלמעלה"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Keep until dismissed"
@@ -4878,6 +4885,9 @@ msgstr "אין עוד אירועים היום"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "מיקום עבודה: %1"
+
+#~ msgid "Use the reminder times set in Google Calendar"
+#~ msgstr "שימוש בזמני התזכורת שהוגדרו ב־Google Calendar"
 
 #~ msgid "Forecast in the day headers and, in the Day view, a weather panel."
 #~ msgstr "תחזית בכותרות הימים, ובתצוגת יום – חלונית מזג אוויר."
