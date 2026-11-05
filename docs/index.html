@@ -13,6 +13,11 @@
   <meta property="og:title" content="Event Calendar NG for Plasma 6">
   <meta property="og:description"
     content="Your day, one click from the clock: calendar, agenda, tasks, meetings and weather in the Plasma panel.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://divinae.github.io/plasma-applet-eventcalendar/screenshots/today.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="logo.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/command-line/prism-command-line.min.css">
@@ -27,9 +32,9 @@
     <div class="nav-content">
       <a href="./" class="nav-logo">Event Calendar NG</a>
       <div class="nav-links">
+        <a href="#install">Install</a>
         <a href="https://github.com/divinae/plasma-applet-eventcalendar">GitHub</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
       </div>
     </div>
   </nav>
@@ -42,7 +47,8 @@
       <div class="hero-copy">
         <div class="eyebrow">For KDE Plasma 6</div>
         <h1>Event Calendar NG</h1>
-        <p><strong>Your day, one click from the clock.</strong> Calendar, agenda, tasks, meetings and weather in the
+        <p class="tagline">Your day, one click from the clock.</p>
+        <p>Calendar, agenda, tasks, meetings and weather in the
           Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting again.</p>
         <div class="row" style="justify-content: center;">
           <a href="https://store.kde.org/p/2379570/" role="button"><button>Get it on the KDE Store</button></a>
@@ -53,7 +59,7 @@
     </header>
 
     <section id="redesign">
-      <div class="card">
+      <div class="callout">
         <p><strong>Not just another fork.</strong> Event Calendar NG is a complete redesign of the classic Event
           Calendar widget: a new look, new views, tasks, meetings, CalDAV and KDE PIM, offline start and much more.
           It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings.</p>
@@ -113,20 +119,20 @@
 
     <section id="screenshots">
       <h2 class="section-title">Screenshots</h2>
-      <p class="status" style="text-align: center;">All shots use mock data.</p>
+      <p class="status" style="text-align: center;">All shots use mock data. Click one to see it full size.</p>
       <div class="screenshot-grid">
-        <div class="screenshot-frame"><img src="screenshots/month.png" alt="Month view" loading="lazy"></div>
-        <div class="screenshot-frame"><img src="screenshots/week.png" alt="Week view" loading="lazy"></div>
-        <div class="screenshot-frame"><img src="screenshots/today.png" alt="Day view" loading="lazy"></div>
-        <div class="screenshot-frame"><img src="screenshots/agenda.png" alt="Agenda" loading="lazy"></div>
-        <div class="screenshot-frame"><img src="screenshots/tasks.png" alt="Tasks" loading="lazy"></div>
-        <div class="screenshot-frame"><img src="screenshots/event-details.png" alt="Event details" loading="lazy"></div>
+        <figure class="screenshot-frame"><a href="screenshots/month.png"><img src="screenshots/month.png" alt="Month view" loading="lazy"></a><figcaption>Month view</figcaption></figure>
+        <figure class="screenshot-frame"><a href="screenshots/week.png"><img src="screenshots/week.png" alt="Week view" loading="lazy"></a><figcaption>Week view</figcaption></figure>
+        <figure class="screenshot-frame"><a href="screenshots/today.png"><img src="screenshots/today.png" alt="Day view" loading="lazy"></a><figcaption>Day view</figcaption></figure>
+        <figure class="screenshot-frame"><a href="screenshots/agenda.png"><img src="screenshots/agenda.png" alt="Agenda" loading="lazy"></a><figcaption>Agenda</figcaption></figure>
+        <figure class="screenshot-frame"><a href="screenshots/tasks.png"><img src="screenshots/tasks.png" alt="Tasks" loading="lazy"></a><figcaption>Tasks</figcaption></figure>
+        <figure class="screenshot-frame"><a href="screenshots/event-details.png"><img src="screenshots/event-details.png" alt="Event details" loading="lazy"></a><figcaption>Event details</figcaption></figure>
       </div>
     </section>
 
     <section id="install">
       <h2 class="section-title">Install</h2>
-      <div class="grid">
+      <div class="stack">
         <div class="card">
           <h3>From the KDE Store (recommended)</h3>
           <ol class="steps-list">
@@ -148,6 +154,11 @@
 cd eventcalendar
 ./install</code></pre>
           <p class="status"><code>./update</code> pulls and reinstalls; <code>./uninstall</code> removes the widget.</p>
+          <h3>Requirements</h3>
+          <p>KDE Plasma 6 and Python 3; KWallet or the Secret Service (<code>secret-tool</code>) keeps sign-ins. For
+            CalDAV and .ics calendars, two Python modules (<code>icalendar</code>, <code>recurring-ical-events</code>):
+            the install script adds them, or the widget's settings offer an Install button. KDE PIM calendars need
+            Akonadi. The full list is in the <a href="https://github.com/divinae/plasma-applet-eventcalendar#dependencies">ReadMe</a>.</p>
           <h3>Setup</h3>
           <ol class="steps-list">
             <li>Add <strong>Event Calendar NG</strong> to a panel, or replace the Digital Clock with it.</li>
@@ -159,11 +170,35 @@ cd eventcalendar
       </div>
     </section>
 
+    <section id="help">
+      <h2 class="section-title">Help and news</h2>
+      <div class="features-grid help-grid">
+        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/issues">
+          <h3>Report a problem</h3>
+          <p>Something wrong or missing? Open an issue on GitHub. Settings &gt; General &gt; Troubleshooting turns on
+            debug logging to help find it.</p>
+        </a>
+        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/blob/master/Changelog.md">
+          <h3>What's new</h3>
+          <p>Every change, release by release, in the changelog; downloads on the
+            releases page.</p>
+        </a>
+        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/blob/master/package/translate/ReadMe.md">
+          <h3>Translate</h3>
+          <p>20 languages so far. Missing or wrong words in yours? Translations are plain .po files.</p>
+        </a>
+        <a class="feature-card link-card" href="https://ko-fi.com/divinae4535">
+          <h3>Support</h3>
+          <p>Free and open source (GPL). If it saves your day, you can buy the developer a coffee on Ko-fi.</p>
+        </a>
+      </div>
+    </section>
+
     <!-- Google sign-in: the page Google can send you back to with the code (js/main.js) -->
     <section id="oauth-helper" class="oauth-container">
       <div class="oauth-inner">
         <div class="hero-copy" style="text-align: center; margin-bottom: 32px;">
-          <div class="eyebrow">Google sign-in</div>
+          <div class="eyebrow pill">Google sign-in</div>
           <h2 style="font-size: 2rem;">Authorization code</h2>
           <p>Usually the widget catches the sign-in by itself. If your browser landed here instead, paste the address
             to get the code for the widget.</p>
@@ -224,14 +259,17 @@ cd eventcalendar
     </section>
 
     <footer>
-      Event Calendar NG, a complete redesign of <a href="https://github.com/Zren/plasma-applet-eventcalendar">Event
+      <p>Event Calendar NG, a complete redesign of <a href="https://github.com/Zren/plasma-applet-eventcalendar">Event
         Calendar</a> by Chris Holland (Zren), started from <a
-        href="https://github.com/ALikesToCode/plasma-applet-eventcalendar">ALikesToCode's Plasma 6 port</a>. GPL-2.0-or-later.
-      <br>
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="terms.html">Terms of Service</a> |
-      <a href="https://github.com/divinae/plasma-applet-eventcalendar">GitHub</a> |
-      <a href="https://ko-fi.com/divinae4535">Support on Ko-fi</a>
+        href="https://github.com/ALikesToCode/plasma-applet-eventcalendar">ALikesToCode's Plasma 6 port</a>.
+        GPL-2.0-or-later.</p>
+      <nav class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/divinae/plasma-applet-eventcalendar">GitHub</a>
+        <a href="https://store.kde.org/p/2379570/">KDE Store</a>
+        <a href="https://ko-fi.com/divinae4535">Support on Ko-fi</a>
+      </nav>
     </footer>
   </main>
 
