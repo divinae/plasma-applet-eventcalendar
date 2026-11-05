@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2019-06-02 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -238,7 +238,6 @@ msgid "Todo"
 msgstr "Yapılacaklar"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Diğer"
 
@@ -1070,14 +1069,6 @@ msgstr "Toplantı adının altında, takviminin renginde ince bir çubuk."
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Geçerli veya sonraki toplantıya katılmak için saate orta tıklayın."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Arka planı göster"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Masaüstü araç takımı"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Bir etkinliğe tıklayınca açılan"
@@ -1384,6 +1375,14 @@ msgid ""
 msgstr ""
 "Her bildirim türü için açılır pencereler ve sesler Sistem Ayarları > "
 "Bildirimler > Event Calendar bölümünden de ayarlanabilir."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Masaüstü araç takımı"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Arka planı göster"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

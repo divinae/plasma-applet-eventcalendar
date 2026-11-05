@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2021-04-09 19:18+0200\n"
 "Last-Translator: Tim Lehner <tim.le20tl@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -240,7 +240,6 @@ msgid "Todo"
 msgstr "Aufgabe"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Sonstige"
 
@@ -1093,14 +1092,6 @@ msgstr ""
 "Mittelklick auf die Uhr, um der aktuellen oder nächsten Besprechung "
 "beizutreten."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Hintergrund anzeigen"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Arbeitsflächen-Widget"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Klick auf einen Termin öffnet"
@@ -1409,6 +1400,14 @@ msgid ""
 msgstr ""
 "Pop-ups und Klänge für jede Art von Benachrichtigung lassen sich auch unter "
 "Systemeinstellungen > Benachrichtigungen > Ereigniskalender festlegen."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Arbeitsflächen-Widget"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Hintergrund anzeigen"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

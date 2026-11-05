@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -238,7 +238,6 @@ msgid "Todo"
 msgstr "Εργασίες"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Άλλο"
 
@@ -1092,14 +1091,6 @@ msgid "Middle-click the clock to join the current or next meeting."
 msgstr ""
 "Μεσαίο κλικ στο ρολόι για συμμετοχή στην τρέχουσα ή την επόμενη σύσκεψη."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Εμφάνιση φόντου"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Γραφικό συστατικό επιφάνειας εργασίας"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Το κλικ σε συμβάν ανοίγει"
@@ -1409,6 +1400,14 @@ msgid ""
 msgstr ""
 "Τα αναδυόμενα και οι ήχοι για κάθε είδος ειδοποίησης ρυθμίζονται επίσης στις "
 "Ρυθμίσεις συστήματος > Ειδοποιήσεις > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Γραφικό συστατικό επιφάνειας εργασίας"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Εμφάνιση φόντου"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -236,7 +236,6 @@ msgid "Todo"
 msgstr "Te doen"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Overig"
 
@@ -1082,14 +1081,6 @@ msgstr ""
 "Klik met de middelste muisknop op de klok om deel te nemen aan de huidige of "
 "volgende vergadering."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Achtergrond tonen"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Bureaubladwidget"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Klikken op een afspraak opent"
@@ -1397,6 +1388,14 @@ msgid ""
 msgstr ""
 "Pop-ups en geluiden per soort melding kunnen ook worden ingesteld in "
 "Systeeminstellingen > Meldingen > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Bureaubladwidget"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Achtergrond tonen"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

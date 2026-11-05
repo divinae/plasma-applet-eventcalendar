@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
 "Last-Translator: Kepa Badiola <badiol@yahoo.es>\n"
 "Language-Team: Spanish <LL@li.org>\n"
@@ -198,7 +198,7 @@ msgstr "Festivos"
 msgid "Todo"
 msgstr "Pendiente"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Other"
 msgstr "Otro"
 
@@ -872,14 +872,6 @@ msgstr "Una barra fina bajo el nombre de la reunión, del color de su calendario
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Haz clic con el botón central en el reloj para unirte a la reunión actual o la siguiente."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Mostrar fondo"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Widget de escritorio"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Al hacer clic en un evento se abre"
@@ -1131,6 +1123,14 @@ msgstr "Recordatorios y eventos que empiezan solo de los calendarios con el bot�
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Las ventanas emergentes y los sonidos de cada tipo de notificación también se pueden ajustar en Preferencias del sistema > Notificaciones > Calendario de Eventos."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Widget de escritorio"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Mostrar fondo"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

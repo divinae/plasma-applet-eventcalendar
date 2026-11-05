@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2019-10-30 13:29+0900\n"
 "Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -238,7 +238,6 @@ msgid "Todo"
 msgstr "À faire"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Autre"
 
@@ -1088,14 +1087,6 @@ msgstr ""
 "Cliquez avec le bouton du milieu sur l'horloge pour rejoindre la réunion en "
 "cours ou la suivante."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Afficher l'arrière-plan"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Widget de bureau"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Cliquer sur un événement ouvre"
@@ -1406,6 +1397,14 @@ msgstr ""
 "Les fenêtres et sons de chaque type de notification peuvent aussi être "
 "réglés dans Configuration du système > Notifications > Calendrier des "
 "événements."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Widget de bureau"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Afficher l'arrière-plan"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

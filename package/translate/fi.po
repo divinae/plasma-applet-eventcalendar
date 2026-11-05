@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -200,7 +200,7 @@ msgstr "Pyhäpäivät"
 msgid "Todo"
 msgstr "Tehtävät"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Other"
 msgstr "Muut"
 
@@ -874,14 +874,6 @@ msgstr "Ohut palkki kokouksen nimen alla, sen kalenterin värillä."
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Liity nykyiseen tai seuraavaan kokoukseen napsauttamalla kelloa keskipainikkeella."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Näytä tausta"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Työpöytäsovelma"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Tapahtuman napsautus avaa"
@@ -1133,6 +1125,14 @@ msgstr "Muistutukset ja alkavat tapahtumat vain kalentereista, joiden kellopaini
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Kunkin ilmoitustyypin ponnahdukset ja äänet voi asettaa myös kohdassa Järjestelmäasetukset > Ilmoitukset > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Työpöytäsovelma"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Näytä tausta"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

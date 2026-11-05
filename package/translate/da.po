@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -238,7 +238,6 @@ msgid "Todo"
 msgstr "Gøremål"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Andet"
 
@@ -1065,14 +1064,6 @@ msgstr "En tynd bjælke under mødets navn i kalenderens farve."
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Midterklik på uret for at deltage i det aktuelle eller næste møde."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Vis baggrund"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Skrivebordswidget"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Klik på en begivenhed åbner"
@@ -1380,6 +1371,14 @@ msgid ""
 msgstr ""
 "Pop op-vinduer og lyde for hver slags bekendtgørelse kan også indstilles i "
 "Systemindstillinger > Bekendtgørelser > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Skrivebordswidget"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Vis baggrund"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

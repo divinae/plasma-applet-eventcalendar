@@ -242,17 +242,5 @@ ConfigPage {
 		FormCard.FormSectionText {
 			text: i18n("Middle-click the clock to join the current or next meeting.")
 		}
-
-		//--- Other
-		FormCard.FormHeader {
-			title: i18n("Other")
-		}
-		FormCard.FormCard {
-			FormConfigSwitch {
-				text: i18n("Show background")
-				description: i18n("Desktop widget")
-				configKey: 'showBackground'
-			}
-		}
 	}
 }

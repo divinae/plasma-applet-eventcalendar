@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -238,7 +238,6 @@ msgid "Todo"
 msgstr "מטלות"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "אחר"
 
@@ -1062,14 +1061,6 @@ msgstr "פס דק מתחת לשם הפגישה, בצבע של לוח השנה ש
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "לחיצה אמצעית על השעון מצרפת אותך לפגישה הנוכחית או הבאה."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "הצגת רקע"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "יישומון לשולחן העבודה"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "לחיצה על אירוע פותחת"
@@ -1369,6 +1360,14 @@ msgid ""
 msgstr ""
 "ניתן להגדיר חלונות קופצים וצלילים לכל סוג התראה גם בהגדרות המערכת > התראות > "
 "לוח שנה עם אירועים."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "יישומון לשולחן העבודה"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "הצגת רקע"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

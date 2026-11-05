@@ -12,14 +12,25 @@ import "../ScriptPath.js" as ScriptPath
 import "../lib/SettingsTransfer.js" as SettingsTransfer
 import "../lib/Base64Compat.js" as Base64Compat
 
-// General: what's about the widget as a whole, not one of its views or sources: sharing with
-// Glance, the offline start, the settings backup and troubleshooting.
+// General: what's about the widget as a whole, not one of its views or sources: its background on
+// the desktop, sharing with Glance, the offline start, the settings backup and troubleshooting.
 ConfigPage {
 	id: page
 
 	ColumnLayout {
 		Layout.fillWidth: true
 		spacing: 0
+
+		//--- On the desktop
+		FormCard.FormHeader {
+			title: i18n("Desktop widget")
+		}
+		FormCard.FormCard {
+			FormConfigSwitch {
+				text: i18n("Show background")
+				configKey: 'showBackground'
+			}
+		}
 
 		//--- Glance (GlancePublisher)
 		FormCard.FormHeader {

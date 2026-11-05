@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Mathias <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -197,7 +197,7 @@ msgstr "Helgdagar"
 msgid "Todo"
 msgstr "Att göra"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Other"
 msgstr "Övrigt"
 
@@ -871,14 +871,6 @@ msgstr "En tunn stapel under mötets namn, i kalenderns färg."
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Mittenklicka på klockan för att ansluta till pågående eller nästa möte."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Visa bakgrund"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Skrivbordskomponent"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Klick på en händelse öppnar"
@@ -1130,6 +1122,14 @@ msgstr "Påminnelser och händelser som börjar endast från kalendrarna med klo
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Poppuppfönster och ljud för varje typ av underrättelse kan också ställas in i Systeminställningar > Underrättelser > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Skrivbordskomponent"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Visa bakgrund"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

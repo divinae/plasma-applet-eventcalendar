@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -196,7 +196,7 @@ msgstr "祝日"
 msgid "Todo"
 msgstr "ToDo"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Other"
 msgstr "その他"
 
@@ -866,14 +866,6 @@ msgstr "会議名の下に、カレンダーの色で細いバーを表示しま
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "時計を中クリックすると、現在または次の会議に参加します。"
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "背景を表示"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "デスクトップウィジェット"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "イベントをクリックしたときに開くもの"
@@ -1124,6 +1116,14 @@ msgstr "ポップアップのカレンダーメニューで時計ボタンがオ
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "通知の種類ごとのポップアップとサウンドは、システム設定 > 通知 > イベントカレンダー でも設定できます。"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "デスクトップウィジェット"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "背景を表示"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

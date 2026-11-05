@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2021-03-16 12:00-0500\n"
 "Last-Translator: DMMLeal <dmleal.doc@gmail.com>\n"
 "Language: pt_PT\n"
@@ -195,7 +195,7 @@ msgstr "Feriados"
 msgid "Todo"
 msgstr "A fazer"
 
-#: ../contents/ui/calendars/PlasmaCalendarManager.qml ../contents/ui/config/ConfigClock.qml
+#: ../contents/ui/calendars/PlasmaCalendarManager.qml
 msgid "Other"
 msgstr "Outro"
 
@@ -869,14 +869,6 @@ msgstr "Uma barra fina por baixo do nome da reunião, na cor do respetivo calend
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "Carregue com o botão do meio no relógio para participar na reunião atual ou na seguinte."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Mostrar o fundo"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Widget do ambiente de trabalho"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Carregar num evento abre"
@@ -1128,6 +1120,14 @@ msgstr "Lembretes e eventos que começam apenas dos calendários com o botão do
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "As janelas e os sons de cada tipo de notificação também podem ser definidos em Configuração do Sistema > Notificações > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Widget do ambiente de trabalho"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Mostrar o fundo"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2019-04-17 16:43+0800\n"
 "Last-Translator: Core小睿 <i@coreja.com>\n"
 "Language-Team: \n"
@@ -231,7 +231,6 @@ msgid "Todo"
 msgstr "待办事项"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "其他"
 
@@ -1027,14 +1026,6 @@ msgstr "会议名称下方的细条，使用其日历的颜色。"
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "中键点击时钟可加入当前或下一个会议。"
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "显示背景"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "桌面小部件"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "点击事件时打开"
@@ -1326,6 +1317,14 @@ msgid ""
 "Popups and sounds for each kind of notification can also be set in System "
 "Settings > Notifications > Event Calendar."
 msgstr "各类通知的弹窗和声音也可以在 系统设置 > 通知 > 事件日历 中设置。"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "桌面小部件"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "显示背景"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

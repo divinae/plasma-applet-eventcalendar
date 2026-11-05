@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -235,7 +235,6 @@ msgid "Todo"
 msgstr "할 일"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "기타"
 
@@ -1050,14 +1049,6 @@ msgstr "회의 이름 아래에 달력 색상으로 얇은 막대를 표시합�
 msgid "Middle-click the clock to join the current or next meeting."
 msgstr "시계를 가운데 단추로 클릭하면 현재 또는 다음 회의에 참가합니다."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "배경 표시"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "바탕 화면 위젯"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "이벤트를 클릭하면 열기"
@@ -1357,6 +1348,14 @@ msgid ""
 msgstr ""
 "알림 종류별 팝업과 소리는 시스템 설정 > 알림 > 이벤트 달력에서도 설정할 수 있"
 "습니다."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "바탕 화면 위젯"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "배경 표시"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

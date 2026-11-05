@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -240,7 +240,6 @@ msgid "Todo"
 msgstr "Opravila"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Drugo"
 
@@ -1084,14 +1083,6 @@ msgid "Middle-click the clock to join the current or next meeting."
 msgstr ""
 "S srednjim klikom na uro se pridružite trenutnemu ali naslednjemu sestanku."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Prikaži ozadje"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Gradnik namizja"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Klik na dogodek odpre"
@@ -1401,6 +1392,14 @@ msgid ""
 msgstr ""
 "Pojavna okna in zvoke za vsako vrsto obvestil lahko nastavite tudi v "
 "Sistemske nastavitve > Obvestila > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Gradnik namizja"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Prikaži ozadje"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"

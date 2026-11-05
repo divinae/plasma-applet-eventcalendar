@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:11+0100\n"
+"POT-Creation-Date: 2026-11-05 09:13+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -243,7 +243,6 @@ msgid "Todo"
 msgstr "Задачи"
 
 #: ../contents/ui/calendars/PlasmaCalendarManager.qml
-#: ../contents/ui/config/ConfigClock.qml
 msgid "Other"
 msgstr "Другое"
 
@@ -1086,14 +1085,6 @@ msgstr ""
 "Щелчок средней кнопкой мыши по часам — подключиться к текущей или следующей "
 "встрече."
 
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Show background"
-msgstr "Показывать фон"
-
-#: ../contents/ui/config/ConfigClock.qml
-msgid "Desktop widget"
-msgstr "Виджет на рабочем столе"
-
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Clicking an event opens"
 msgstr "Щелчок по событию открывает"
@@ -1401,6 +1392,14 @@ msgid ""
 msgstr ""
 "Всплывающие окна и звуки для каждого типа уведомлений также можно настроить "
 "в разделе «Параметры системы» > «Уведомления» > «Event Calendar»."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Desktop widget"
+msgstr "Виджет на рабочем столе"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Show background"
+msgstr "Показывать фон"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Glance"
