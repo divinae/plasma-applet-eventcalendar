@@ -237,3 +237,15 @@ function layoutMonth(items, dayTimes, weekLength, maxRows) {
 	}
 	return { bars: bars, dayEvents: dayEvents, reservedRows: reservedRows, hiddenSpanCount: hiddenSpanCount }
 }
+
+// The event rows each week of a layoutMonth (all rows shown) needs: its busiest day's bars and
+// events ("show all events": the week as tall as that).
+function weekRowCounts(layout, weekLength) {
+	var counts = []
+	for (var d = 0; d < layout.dayEvents.length; d++) {
+		var week = Math.floor(d / weekLength)
+		var rows = (layout.reservedRows[d] || 0) + layout.dayEvents[d].length
+		counts[week] = Math.max(counts[week] || 0, rows)
+	}
+	return counts
+}

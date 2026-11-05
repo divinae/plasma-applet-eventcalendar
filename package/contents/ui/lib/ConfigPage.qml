@@ -54,6 +54,8 @@ KCM.SimpleKCM {
 	property var cfg_displayTimezoneAsCodeDefault
 	property var cfg_monthShowWeekNumbers
 	property var cfg_monthShowWeekNumbersDefault
+	property var cfg_monthShowAllEvents
+	property var cfg_monthShowAllEventsDefault
 	property var cfg_monthDayDoubleClick
 	property var cfg_monthDayDoubleClickDefault
 	property var cfg_monthEventBadgeType

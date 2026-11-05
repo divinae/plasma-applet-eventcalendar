@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-04 10:49+0100\n"
+"POT-Creation-Date: 2026-11-04 15:31+0100\n"
 "PO-Revision-Date: 2018-09-03 HO:MI+ZONE\n"
 "Last-Translator: Jakub Starzyk <jstarzyk98@gmail.com>\n"
 "Language-Team: Jakub Starzyk <jstarzyk98@gmail.com>\n"
@@ -1465,6 +1465,14 @@ msgstr "Pierwszy dzień tygodnia"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Week numbers"
 msgstr "Numery tygodni"
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Show all events"
+msgstr ""
+
+#: ../contents/ui/config/ConfigViews.qml
+msgid "Month view: no \"+N\", each week as tall as its busiest day; the month scrolls when it doesn't fit."
+msgstr ""
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

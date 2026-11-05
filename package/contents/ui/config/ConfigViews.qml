@@ -188,6 +188,12 @@ ConfigPage {
 			}
 			FormCard.FormDelegateSeparator {}
 			FormConfigSwitch {
+				text: i18n("Show all events")
+				description: i18n("Month view: no \"+N\", each week as tall as its busiest day; the month scrolls when it doesn't fit.")
+				configKey: 'monthShowAllEvents'
+			}
+			FormCard.FormDelegateSeparator {}
+			FormConfigSwitch {
 				text: i18n("Clicking a day opens it in the Day view")
 				description: i18n("Month view")
 				configKey: 'monthClickOpensDay'
