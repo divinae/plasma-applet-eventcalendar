@@ -43,6 +43,7 @@ CalendarManager {
 				out.push({
 					id: calendarIdOf(account, calendar),
 					summary: String(calendar.name || calendar.href),
+					calendarName: String(calendar.name || calendar.href), // The picker's label (CalendarSelection)
 					backgroundColor: String(calendar.userColor || calendar.color || Kirigami.Theme.highlightColor), // userColor: picked in the widget
 					accessRole: calendar.writable === false ? 'reader' : 'owner',
 					isTasklist: false,

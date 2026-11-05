@@ -73,6 +73,9 @@ CalendarManager {
 		}
 		decorated.id = scopedCalendarId(calendar.id)
 		decorated.summary = formatCalendarSummary(calendar)
+		// The picker's label parts (CalendarSelection.choiceLabel: "Calendar (account)")
+		decorated.calendarName = calendar.summaryOverride || calendar.summary
+		decorated.accountLabel = accountLabel
 		decorated.isTasklist = false
 		return decorated
 	}
