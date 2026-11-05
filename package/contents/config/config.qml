@@ -17,11 +17,6 @@ ConfigModel {
 	)
 
 	ConfigCategory {
-		name: i18n("General")
-		icon: "configure" // Monochrome, as the others
-		source: "config/ConfigGeneral.qml"
-	}
-	ConfigCategory {
 		name: i18n("Views")
 		icon: "view-calendar-timeline"
 		source: "config/ConfigViews.qml"
@@ -55,6 +50,11 @@ ConfigModel {
 		name: i18n("Time Zones")
 		icon: "globe"
 		source: "config/ConfigTimezones.qml"
+	}
+	ConfigCategory {
+		name: i18n("General")
+		icon: "configure" // Monochrome, as the others
+		source: "config/ConfigGeneral.qml"
 	}
 	ConfigCategory {
 		name: i18n("Advanced")

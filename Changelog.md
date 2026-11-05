@@ -7,7 +7,7 @@
 * **CalDAV and .ics events remind at their own alarms**, as set on the server or in the file (display and sound alarms), like Google Calendar's reminder times: Settings > Events > "Use the reminder times set in the calendar" (#14, asked by sbstn87). Off, or for events without one, the widget's reminder time.
 
 ### Settings
-* **A General page:** sharing with Glance, the offline start, the settings backup and troubleshooting, in one place (they were spread over Views and Calendars).
+* **A General page** (at the end): sharing with Glance, the offline start, the settings backup and troubleshooting, in one place (they were spread over Views and Calendars).
 
 ### Glance
 * "Share events with Glance" is in Settings > General. With it on: the current weather too, a click on an event there opens it here, and a meeting marked as ended ends there as well.
