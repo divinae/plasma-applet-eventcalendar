@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
 [![KDE Store](https://img.shields.io/badge/KDE%20Store-Event%20Calendar%20NG-1d99f3?logo=kde&logoColor=white)](https://store.kde.org/p/2379570/)
+[![Website](https://img.shields.io/badge/Website-divinae.github.io-2ea44f?logo=githubpages&logoColor=white)](https://divinae.github.io/plasma-applet-eventcalendar/)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
 **Your day, one click from the clock.** Calendar, agenda, tasks, meetings and weather in the
