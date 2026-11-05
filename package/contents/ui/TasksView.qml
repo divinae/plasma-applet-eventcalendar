@@ -2200,7 +2200,9 @@ Item {
 								case 'week': return i18n("This week")
 								case 'later': return i18n("Later")
 								case 'nodate': return i18n("No date")
-								case 'done': return i18n("Completed")
+								// Google and TickTick lists are fetched with the tasks done in the
+								// last 30 days only (GoogleTasksManager / TickTickTasksManager.completedDays).
+								case 'done': return i18n("Completed (last 30 days)")
 							}
 							return ""
 						}

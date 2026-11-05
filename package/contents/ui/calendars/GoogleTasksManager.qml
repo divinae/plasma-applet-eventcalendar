@@ -400,39 +400,49 @@ CalendarManager {
 		return eventData
 	}
 
-	// callback(errObj, { scopedTasklistId, data }): errObj is { err, data, xhr } or null.
+	// A list's open tasks and the ones done in the last completedDays days, in two requests:
+	// completedMin filters on the completion date, so Google leaves out the open tasks (they have
+	// none) from a request with it. callback(errObj, { scopedTasklistId, data }): errObj is
+	// { err, data, xhr } or null; data.items is both, merged (Tasks.mergeTaskPages).
 	function fetchGoogleTasks(tasklistId, callback) {
-		fetchTasklistPages(tasklistId, null, null, function(err, data, xhr) {
+		fetchTasklistPages(tasklistId, {
+			showCompleted: false,
+		}, null, null, function(err, openData, xhr) {
 			if (err) {
-				return callback({ err: err, data: data, xhr: xhr }, null)
+				return callback({ err: err, data: openData, xhr: xhr }, null)
 			}
-			callback(null, {
-				scopedTasklistId: scopedTasklistId(tasklistId),
-				data: data,
+			fetchTasklistPages(tasklistId, {
+				showCompleted: true,
+				showHidden: true, // Tasks done in Google's apps come back hidden
+				completedMin: new Date(Date.now() - completedDays * 86400000).toISOString(),
+			}, null, null, function(err, doneData, xhr) {
+				if (err) {
+					return callback({ err: err, data: doneData, xhr: xhr }, null)
+				}
+				openData.items = Tasks.mergeTaskPages(openData.items, doneData.items)
+				callback(null, {
+					scopedTasklistId: scopedTasklistId(tasklistId),
+					data: openData,
+				})
 			})
 		})
 	}
 
 	// Done tasks shown: those completed in the last 30 days (like TickTick's completedDays).
-	// completedMin only filters done tasks: open ones are always listed.
 	readonly property int completedDays: 30
 
-	// Every page of a list, open tasks and the ones done in the last completedDays days, hidden ones
-	// too. callback(err, data, xhr): data.items is all of them.
-	function fetchTasklistPages(tasklistId, pageToken, allItems, callback) {
-		tasksRequest('GET', taskPath(tasklistId), {
-			showCompleted: true,
-			showHidden: true,
-			completedMin: new Date(Date.now() - completedDays * 86400000).toISOString(),
+	// Every page of a list for the query params. callback(err, data, xhr): data.items is all of them.
+	function fetchTasklistPages(tasklistId, params, pageToken, allItems, callback) {
+		tasksRequest('GET', taskPath(tasklistId), Object.assign({
 			maxResults: 100, // API max. Default 20 means many sequential pages.
 			pageToken: pageToken,
-		}, null, function(err, data, xhr) {
+		}, params), null, function(err, data, xhr) {
 			if (err || !data) {
 				return callback(err || 'fetchTasklistPages: no data', data, xhr)
 			}
 			var items = (allItems || []).concat(data.items || [])
 			if (data.nextPageToken) {
-				fetchTasklistPages(tasklistId, data.nextPageToken, items, callback)
+				fetchTasklistPages(tasklistId, params, data.nextPageToken, items, callback)
 			} else {
 				data.items = items
 				callback(null, data, xhr)

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -4457,8 +4457,8 @@ msgid "No date"
 msgstr "Ingen dato"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
-msgstr "Fuldført"
+msgid "Completed (last 30 days)"
+msgstr "Fuldført (seneste 30 dage)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4837,6 +4837,9 @@ msgstr "Ikke flere begivenheder i dag"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Arbejdssted: %1"
+
+#~ msgid "Completed"
+#~ msgstr "Fuldført"
 
 #~ msgid "Use the reminder times set in Google Calendar"
 #~ msgstr "Brug påmindelsestiderne fra Google Kalender"

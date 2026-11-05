@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4052,7 +4052,7 @@ msgid "No date"
 msgstr ""
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
+msgid "Completed (last 30 days)"
 msgstr ""
 
 #: ../contents/ui/TaskUndoBar.qml

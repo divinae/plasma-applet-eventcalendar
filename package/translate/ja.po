@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -3985,8 +3985,8 @@ msgid "No date"
 msgstr "日付なし"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
-msgstr "完了済み"
+msgid "Completed (last 30 days)"
+msgstr "完了 (過去 30 日間)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4354,6 +4354,9 @@ msgstr "今日はこれ以上予定がありません"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "勤務場所: %1"
+
+#~ msgid "Completed"
+#~ msgstr "完了済み"
 
 #~ msgid "Use the reminder times set in Google Calendar"
 #~ msgstr "Google Calendar で設定されたリマインダー時間を使用"

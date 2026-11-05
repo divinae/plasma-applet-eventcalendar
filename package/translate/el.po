@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -4522,8 +4522,8 @@ msgid "No date"
 msgstr "Χωρίς ημερομηνία"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
-msgstr "Ολοκληρωμένες"
+msgid "Completed (last 30 days)"
+msgstr "Ολοκληρωμένες (τελευταίες 30 ημέρες)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4904,6 +4904,9 @@ msgstr "Δεν υπάρχουν άλλα γεγονότα σήμερα"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Τοποθεσία εργασίας: %1"
+
+#~ msgid "Completed"
+#~ msgstr "Ολοκληρωμένες"
 
 #~ msgid "Use the reminder times set in Google Calendar"
 #~ msgstr "Χρήση των χρόνων υπενθύμισης του Ημερολογίου Google"

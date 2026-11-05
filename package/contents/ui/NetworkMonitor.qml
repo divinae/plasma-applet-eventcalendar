@@ -8,6 +8,9 @@ QtObject {
 	// We need to dynamically import PlasmaNM since it's not preinstalled on every distro (Issue #212)
 	readonly property Loader plasmaNMStatusLoader: Loader {
 		id: plasmaNMStatusLoader
+		// Not on the GUI thread at login: NetworkManager may be slow to answer then. Until it's
+		// loaded, connectivity is -1 (connected).
+		asynchronous: true
 		source: "NetworkMonitorPlasmaNM.qml"
 	}
 

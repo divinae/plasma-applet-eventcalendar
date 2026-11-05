@@ -116,8 +116,25 @@ PlasmoidItem {
 	}
 	// The camera check (CameraCheckView.qml) needs Qt Multimedia (MultimediaProbe.qml). Its own
 	// window (CameraCheckWindow.qml), one at a time: opened again, it's brought up with the new
-	// meeting's Join (meetingLink from MeetingLink.find, or null).
-	readonly property bool cameraCheckAvailable: moduleAvailable("MultimediaProbe.qml")
+	// meeting's Join (meetingLink from MeetingLink.find, or null). Probed when the popup first
+	// opens or a little after start, not while the widget loads: importing Qt Multimedia can take
+	// long at login (its backend, the audio and video devices).
+	property bool cameraCheckAvailable: false
+	function probeCameraCheck() {
+		cameraCheckAvailable = moduleAvailable("MultimediaProbe.qml")
+	}
+	onExpandedChanged: {
+		if (expanded && cameraProbeTimer.running) {
+			cameraProbeTimer.stop()
+			probeCameraCheck()
+		}
+	}
+	Timer {
+		id: cameraProbeTimer
+		interval: 30000
+		running: true
+		onTriggered: root.probeCameraCheck()
+	}
 	property var cameraCheckWindow: null
 	function openCameraCheck(meetingLink) {
 		if (!cameraCheckAvailable) {

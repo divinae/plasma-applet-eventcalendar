@@ -106,6 +106,27 @@ function isClearedTask(item, clearedAtMs) {
 	return !isNaN(completedMs) && completedMs <= watermark
 }
 
+// A Google list's tasks from its two requests (GoogleTasksManager.fetchGoogleTasks): the open ones,
+// then the done ones of the second (it may repeat a task the first has, eg completed in between),
+// each task once.
+function mergeTaskPages(openItems, doneItems) {
+	var seen = {}
+	var merged = []
+	function add(item) {
+		if (item && item.id && !seen[item.id]) {
+			seen[item.id] = true
+			merged.push(item)
+		}
+	}
+	;(openItems || []).forEach(add)
+	;(doneItems || []).forEach(function(item) {
+		if (isDone(item)) {
+			add(item)
+		}
+	})
+	return merged
+}
+
 // items without the cleared ones (isClearedTask).
 function withoutCleared(items, clearedAtMs) {
 	return (items || []).filter(function(item) { return !isClearedTask(item, clearedAtMs) })

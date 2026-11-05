@@ -13,7 +13,7 @@ const names = ['isTask', 'isDone', 'dueDay', 'completedDay', 'isOverdue', 'place
 	'fromTickTick', 'toTickTick', 'withoutTasks', 'sortOpenTasks', 'sortDoneTasks', 'dueInfo', 'firstLine', 'taskRows', 'dayTasks',
 	'nextWeekStart', 'dateSections', 'dateRows', 'completedRows', 'cardRows', 'collapseRows', 'sectionDueDay', 'listAccount', 'listDrop', 'quickAddBody', 'quickAddList',
 	'flatRows', 'progressKey', 'isInProgress', 'withProgress', 'stampInProgress', 'pruneProgress', 'filterListId', 'validFilter', 'filterTasks', 'filterLists', 'filterCounts', 'filterEntries', 'filterQuickAdd',
-	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'dayAllTaskSections', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt']
+	'priorityOf', 'editorChanges', 'priorityKey', 'dueTimeOf', 'subtaskProgress', 'capabilities', 'dayTaskRows', 'dayAllTaskSections', 'reorderPrevious', 'subtaskTree', 'googleBody', 'parseTickTickReminder', 'formatTickTickReminder', 'tickTickItems', 'isClearedTask', 'withoutCleared', 'clearedAt', 'mergeTaskPages']
 const T = {}
 const plain = o => JSON.parse(JSON.stringify(o))
 const same = (a, b, msg) => assert.deepStrictEqual(plain(a), b, msg)
@@ -748,6 +748,17 @@ same(T.capabilities('GoogleTasks'), { dueTime: false, priority: false, repeat: f
 		{ priority: 5, reminders: [], subtasks: [{ id: 'a', title: 'Oat', done: true }] })
 	same(T.editorChanges(item, Object.assign({}, unchanged, { title: 'Buy oat milk', priority: 5 }), none), { title: 'Buy oat milk' })
 	same(T.editorChanges(item, Object.assign({}, unchanged, { dueDay: '' }), all), { dueDay: '', dueTime: '' }, 'undated: no time')
+}
+
+// mergeTaskPages: the open request's tasks, then the done ones of the completed request, each once.
+{
+	const open1 = task({ id: 'a', title: 'Open' })
+	const done1 = task({ id: 'b', status: 'completed', completed: '2026-10-20T10:00:00.000Z', hidden: true })
+	const raced = task({ id: 'a', status: 'completed', completed: '2026-10-26T10:00:00.000Z' })
+	same(T.mergeTaskPages([open1], [done1, raced]).map(t => t.id), ['a', 'b'], 'each task once, open first')
+	same(T.mergeTaskPages(undefined, [done1]).map(t => t.id), ['b'], 'a list with only done tasks')
+	same(T.mergeTaskPages([open1], [task({ id: 'c' })]).map(t => t.id), ['a'], 'the second request adds only done ones')
+	same(T.mergeTaskPages([], []), [], 'empty list')
 }
 
 console.log('PASS tasks')

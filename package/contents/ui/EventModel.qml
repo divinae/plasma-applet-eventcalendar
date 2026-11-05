@@ -1012,12 +1012,15 @@ CalendarManager {
 		calendarManager.reorderTask(item.calendarId, item.id, previousTaskId || '', cb)
 	}
 
-	// The task lists tasks can be added to or moved to: [{ id, summary, backgroundColor }].
+	// The task lists tasks can be added to or moved to: [{ id, summary, backgroundColor }]. Only the
+	// ones shown (selected in settings): a task added to another list was made but never shown.
 	// accountPrefix: optional, only that account's lists (the part of the ids before '::').
 	function getTaskLists(accountPrefix) {
 		var prefix = accountPrefix ? accountPrefix + '::' : ''
+		var shown = {}
+		getSelectedTaskLists().forEach(function(list) { shown[list.id] = true })
 		return getCalendarList().filter(function(c) {
-			return c.isTasklist === true
+			return c.isTasklist === true && shown[c.id] === true
 				&& (!c.accessRole || c.accessRole === 'owner' || c.accessRole === 'writer')
 				&& (!prefix || String(c.id).indexOf(prefix) === 0)
 		}).map(function(c) {

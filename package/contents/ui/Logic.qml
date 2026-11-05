@@ -35,8 +35,26 @@ Item {
 			return
 		}
 		logger.debug('showCachedEvents', Object.keys(cached.calendars).length, 'calendars from', new Date(cached.savedAt))
+		cacheSavedAt = cached.savedAt || 0
 		eventModel.showCachedEvents(cached.calendars)
 		if (popup) popup.updateUI()
+	}
+
+	// When the shown cache was saved (ms). Calendars still from it (not fetched since, eg: an
+	// error) are saved again with this time, not now, so the cache's age limit still applies.
+	property double cacheSavedAt: 0
+	function saveEventCache() {
+		var stale = Object.keys(eventModel.cachedEventsByCalendar || {}).length > 0 && cacheSavedAt > 0
+		eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax,
+			stale ? new Date(cacheSavedAt) : null)
+	}
+	// A task or event changed in the widget: in the cache right away, not at the next fetch round
+	// (a restart before it showed the copy without the change). Not while a round is running: its
+	// calendars arrive one by one.
+	function saveEventCacheAfterChange() {
+		if (!eventModel.fetchRound) {
+			saveEventCache()
+		}
 	}
 
 	// Ids of the Google and TickTick accounts in config.
@@ -513,7 +531,7 @@ Item {
 			} else {
 				// Event cache: the last loaded Google events and tasks (see showCachedEvents).
 				eventModel.settleCachedCalendars()
-				eventCache.scheduleSave(eventModel.eventsByCalendar, eventModel.dateMin, eventModel.dateMax)
+				logic.saveEventCache()
 				eventModel.rememberRange()
 				logic.eventsNetworkFailed = false
 				if (logic.currentErrorType !== ErrorType.NoError && logic.currentErrorType !== ErrorType.NetworkError) {
@@ -531,15 +549,18 @@ Item {
 		}
 		function onEventCreated(calendarId, data) {
 			if (popup) popup.deferredUpdateUI()
+			logic.saveEventCacheAfterChange()
 		}
 		function onCachedRangeShown() {
 			if (popup) popup.updateUI() // Right away: before the paged month's first frame
 		}
 		function onEventUpdated(calendarId, eventId, data) {
 			if (popup) popup.deferredUpdateUI()
+			logic.saveEventCacheAfterChange()
 		}
 		function onEventDeleted(calendarId, eventId, data) {
 			if (popup) popup.deferredUpdateUI()
+			logic.saveEventCacheAfterChange()
 		}
 	}
 

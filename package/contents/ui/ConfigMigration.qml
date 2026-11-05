@@ -41,9 +41,16 @@ QtObject {
 			plasmoid.configuration.v72Migration = true
 		}
 
-		// Added in: v73
+		// Added in: v73. Also the first run of a new install: the holidays only, not KDE PIM (its
+		// plugin starts Akonadi at login, slow; Settings > Calendars turns it on). The plugin list
+		// left at main.xml's default (holidays, KDE PIM: what existing setups rely on) is the sign.
 		if (!plasmoid.configuration.v73Migration) {
-			if (!plasmoid.configuration.enabledCalendarPluginsAllowEmpty) {
+			var defaultPlugins = 'holidaysevents.so,pimevents.so'
+			if (PlasmaCalendarUtils.toArray(plasmoid.configuration.enabledCalendarPlugins).join(',') === defaultPlugins
+				&& !plasmoid.configuration.enabledCalendarPluginsAllowEmpty) {
+				plasmoid.configuration.enabledCalendarPlugins = ['holidaysevents.so']
+				logMigration('new install: enabledCalendarPlugins => holidaysevents.so')
+			} else if (!plasmoid.configuration.enabledCalendarPluginsAllowEmpty) {
 				var oldEnabledCalendarPlugins = plasmoid.configuration.enabledCalendarPlugins
 				var newEnabledCalendarPlugins = PlasmaCalendarUtils.getEffectivePluginFilenameList(
 					null,

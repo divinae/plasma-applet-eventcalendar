@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -4401,8 +4401,8 @@ msgid "No date"
 msgstr "날짜 없음"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
-msgstr "완료됨"
+msgid "Completed (last 30 days)"
+msgstr "완료됨 (최근 30일)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4771,6 +4771,9 @@ msgstr "오늘은 더 이상 일정이 없습니다"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "근무 위치: %1"
+
+#~ msgid "Completed"
+#~ msgstr "완료됨"
 
 #~ msgid "Use the reminder times set in Google Calendar"
 #~ msgstr "Google 캘린더에 설정된 미리 알림 시간 사용"

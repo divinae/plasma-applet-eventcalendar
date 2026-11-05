@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:37+0100\n"
+"POT-Creation-Date: 2026-11-05 11:14+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -4558,8 +4558,8 @@ msgid "No date"
 msgstr "Brez datuma"
 
 #: ../contents/ui/TasksView.qml
-msgid "Completed"
-msgstr "Dokončano"
+msgid "Completed (last 30 days)"
+msgstr "Dokončana (zadnjih 30 dni)"
 
 #: ../contents/ui/TaskUndoBar.qml
 msgctxt "a task was checked"
@@ -4958,6 +4958,9 @@ msgstr "Danes ni več dogodkov"
 msgctxt "%1 = Home, Office, ..."
 msgid "Working location: %1"
 msgstr "Delovna lokacija: %1"
+
+#~ msgid "Completed"
+#~ msgstr "Dokončano"
 
 #~ msgid "Use the reminder times set in Google Calendar"
 #~ msgstr "Uporabi čase opomnikov, nastavljene v Googlovem koledarju"

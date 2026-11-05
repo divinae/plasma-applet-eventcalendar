@@ -13,8 +13,19 @@ CalendarManager {
 	calendarManagerId: "plasma"
 
 	property var executable: ExecUtil { id: executable }
-	property var calendarModel: PlasmaCalendarUtils.createPimCalendarsModel(plasmaCalendarManager)
+	// The KDE PIM calendars (Akonadi): made when first needed with the KDE PIM plugin on, not at
+	// load (it starts Akonadi, slow at login). See pimCalendarModel.
+	property var calendarModel: null
+	function pimCalendarModel() {
+		if (!calendarModel && pimEventsPluginEnabled()) {
+			calendarModel = PlasmaCalendarUtils.createPimCalendarsModel(plasmaCalendarManager)
+		}
+		return calendarModel
+	}
 	property var eventPluginsManager: null
+	// The plugins load a few seconds after the widget (pluginsStartTimer), so they don't hold up
+	// plasmashell at login: KDE PIM's starts Akonadi.
+	property bool pluginsStarted: false
 
 	function ensureEventPluginsManager() {
 		if (eventPluginsManager) {
@@ -33,7 +44,7 @@ CalendarManager {
 		}
 	}
 	function syncEnabledPlugins() {
-		if (!ensureEventPluginsManager()) {
+		if (!pluginsStarted || !ensureEventPluginsManager()) {
 			return
 		}
 		PlasmaCalendarUtils.setEnabledPluginsByFilename(
@@ -46,13 +57,14 @@ CalendarManager {
 		// https://github.com/KDE/kdepim-addons/blob/master/plugins/plasma/pimeventsplugin/PimEventsConfig.qml
 		// https://github.com/KDE/kdepim-addons/blob/master/plugins/plasma/pimeventsplugin/pimcalendarsmodel.cpp
 
-		if (!calendarModel) {
-			logger.debug('KDEPIM Not installed as PimCalendarsModel import failed.', calendarModel)
+		var model = pimCalendarModel()
+		if (!model) {
+			logger.debug('KDE PIM off, or not installed (PimCalendarsModel import failed).')
 			return
 		}
 
-		logger.debug('calendarModel.count', calendarModel.rowCount())
-		var rows = PlasmaCalendarUtils.pimCalendarRows(calendarModel, Qt.UserRole, Qt.DisplayRole)
+		logger.debug('calendarModel.count', model.rowCount())
+		var rows = PlasmaCalendarUtils.pimCalendarRows(model, Qt.UserRole, Qt.DisplayRole)
 		var shownNames = []
 		for (var i = 0; i < rows.length; i++) {
 			if (!rows[i].checked) {
@@ -221,10 +233,16 @@ CalendarManager {
 	// So we need to use PlasmaCalendar.Calendar which has a DaysModel property that has a function
 	// to get a list of events for a specific day.
 
-	Component.onCompleted: {
-		syncEnabledPlugins()
-		if (pimEventsPluginEnabled()) {
-			readAkonadiColors()
+	Timer {
+		id: pluginsStartTimer
+		interval: 5000
+		running: true
+		onTriggered: {
+			plasmaCalendarManager.pluginsStarted = true
+			plasmaCalendarManager.syncEnabledPlugins()
+			if (plasmaCalendarManager.pimEventsPluginEnabled()) {
+				plasmaCalendarManager.readAkonadiColors()
+			}
 		}
 	}
 
@@ -428,7 +446,7 @@ CalendarManager {
 		var allEvents = getEventsForDuration(dateMin, dateMax)
 		// Akonadi events in a color only Akonadi's copies of signed-in Google calendars have: theirs.
 		var mirroredKeys = PlasmaCalendarUtils.mirroredColorKeys(
-			PlasmaCalendarUtils.pimCalendarRows(calendarModel, Qt.UserRole, Qt.DisplayRole), akonadiColors, mirroredCollections)
+			PlasmaCalendarUtils.pimCalendarRows(pimCalendarModel(), Qt.UserRole, Qt.DisplayRole), akonadiColors, mirroredCollections)
 		allEvents = allEvents.filter(function(event) {
 			var prefix = calendarManagerId + "_EventsColor_"
 			return event.calendarId.indexOf(prefix) !== 0 || !mirroredKeys[event.calendarId.slice(prefix.length)]
