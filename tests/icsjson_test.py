@@ -27,6 +27,25 @@ def parse_calendar(events: str) -> Calendar:
 
 
 class IcsJsonTests(unittest.TestCase):
+	def reminders(self, alarms: str, start="DTSTART:20260703T100000Z\r\nDTEND:20260703T110000Z\r\n"):
+		calendar = parse_calendar("BEGIN:VEVENT\r\nUID:alarm\r\nSUMMARY:x\r\n" + start + alarms + "END:VEVENT\r\n")
+		item = json.loads(icsjson.events_to_json(list(calendar.walk("VEVENT"))))["items"][0]
+		self.assertEqual(item.get("reminderOwn"), True if item.get("reminderMinutes") else None)
+		return item.get("reminderMinutes")
+
+	def test_alarms_as_reminder_minutes(self):
+		alarm = lambda trigger, action="DISPLAY": "BEGIN:VALARM\r\nACTION:" + action + "\r\n" + trigger + "\r\nEND:VALARM\r\n"
+		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15M")), [15])
+		self.assertEqual(self.reminders(alarm("TRIGGER:-P1D") + alarm("TRIGGER:-PT15M", "AUDIO")), [15, 1440], "sorted")
+		self.assertEqual(self.reminders(alarm("TRIGGER;RELATED=END:-PT90M")), [30], "from the end: the event lasts an hour")
+		self.assertEqual(self.reminders(alarm("TRIGGER;VALUE=DATE-TIME:20260703T094500Z")), [15], "an absolute time")
+		self.assertIsNone(self.reminders(alarm("TRIGGER:-PT15M", "EMAIL")), "an email alarm isn't a notification")
+		self.assertIsNone(self.reminders(alarm("TRIGGER:PT5M")), "after the start: none")
+		self.assertIsNone(self.reminders(""), "no alarms: the widget's own time")
+		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15M") + alarm("TRIGGER:-PT15M")), [15], "twice the same: once")
+		allday = "DTSTART;VALUE=DATE:20260703\r\nDTEND;VALUE=DATE:20260704\r\n"
+		self.assertEqual(self.reminders(alarm("TRIGGER:-PT15H"), allday), [900], "all-day: before its midnight")
+
 	def test_timezone_aware_values_are_normalized_to_local_naive_time(self):
 		aware = datetime.datetime(2026, 7, 3, 0, 30, tzinfo=datetime.timezone.utc)
 		expected = aware.astimezone().replace(tzinfo=None)

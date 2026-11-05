@@ -63,6 +63,34 @@ def get_event_bounds(event):
 	return start, end
 
 
+def reminder_minutes(event, start_date, end_date):
+	"""The event's alarms (VALARM, as set on the server or in the file) as minutes before its start:
+	display and audio alarms (not email), at or before the start, sorted; [] for none."""
+	minutes = set()
+	for alarm in getattr(event, "subcomponents", []):
+		if getattr(alarm, "name", "") != "VALARM":
+			continue
+		action = stringify(alarm.get("ACTION")).strip().upper()
+		if action and action not in ("DISPLAY", "AUDIO"):
+			continue
+		trigger = alarm.get("TRIGGER")
+		value = getattr(trigger, "dt", None)
+		if isinstance(value, datetime.timedelta):
+			related = stringify(trigger.params.get("RELATED") if hasattr(trigger, "params") else "").upper()
+			offset = value
+			if related == "END":
+				offset = value + (ensure_date_time(end_date) - ensure_date_time(start_date))
+			before = -offset
+		elif isinstance(value, datetime.date):
+			before = ensure_date_time(start_date) - ensure_date_time(value)
+		else:
+			continue
+		total = before.total_seconds() / 60
+		if total >= 0:
+			minutes.add(int(round(total)))
+	return sorted(minutes)
+
+
 def build_event_uid(event, start_date, end_date):
 	uid = stringify(event.get("UID")).strip()
 	if uid:
@@ -118,6 +146,12 @@ def events_to_json(event_list=None, indent=4):
 			item["location"] = stringify(event.get("LOCATION"))
 		if "DESCRIPTION" in event:
 			item["description"] = stringify(event.get("DESCRIPTION"))
+		reminders = reminder_minutes(event, start_date, end_date)
+		if reminders:
+			# The event's own alarms: notified at their times, as a Google event's own reminders
+			# (UpcomingEvents.reminderMinutesFor); without them the widget's reminder time.
+			item["reminderMinutes"] = reminders
+			item["reminderOwn"] = True
 
 		data["items"].append(item)
 

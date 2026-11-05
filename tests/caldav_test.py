@@ -320,6 +320,10 @@ RECURRING = vcal(
 	"BEGIN:VEVENT\r\nUID:weekly-1\r\nDTSTAMP:20261101T000000Z\r\nRECURRENCE-ID:20261103T080000Z\r\n"
 	"DTSTART:20261103T120000Z\r\nDTEND:20261103T130000Z\r\nSUMMARY:Daily (moved)\r\nEND:VEVENT\r\n")
 
+ALARMED = vcal(
+	"BEGIN:VEVENT\r\nUID:alarm-1\r\nDTSTAMP:20261101T000000Z\r\nDTSTART:20261102T080000Z\r\n"
+	"DTEND:20261102T090000Z\r\nRRULE:FREQ=DAILY;COUNT=3\r\nSUMMARY:Standup\r\n"
+	"BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Standup\r\nTRIGGER:-PT10M\r\nEND:VALARM\r\nEND:VEVENT\r\n")
 
 def report_response(*resources):
 	return ms(*[
@@ -454,6 +458,14 @@ class QueryTests(unittest.TestCase):
 		# Stable ids: the same query gives the same ids.
 		again = self.run_query(("/cal/weekly-1.ics", '"e4"', RECURRING))
 		self.assertEqual([i["id"] for i in items], [i["id"] for i in again])
+
+	@unittest.skipUnless(HAS_RIE, "recurring-ical-events is not installed")
+	def test_server_alarms_as_reminders(self):
+		# The server's alarm (VALARM) on every occurrence: notified as set there (#14).
+		items = self.run_query(("/cal/alarm-1.ics", '"e5"', ALARMED))
+		self.assertEqual(len(items), 3)
+		for item in items:
+			self.assertEqual(item["reminderMinutes"], [10])
 
 	def test_without_recurring_ical_events_only_plain_events(self):
 		with mock.patch.object(icsjson, "recurring_ical_events", None):
