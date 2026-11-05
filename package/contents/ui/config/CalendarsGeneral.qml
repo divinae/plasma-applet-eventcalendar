@@ -66,12 +66,6 @@ ConfigSection {
 				onAccepted: page.configBridge.write("importRequest", Date.now() + "|" + String(selectedFile))
 			}
 			FormCard.FormDelegateSeparator {}
-			FormConfigSwitch {
-				text: i18n("Share events with Glance")
-				description: i18n("Today's and tomorrow's events, with meeting links, for the Glance panel widget. Only on this computer; no descriptions or guest addresses.")
-				configKey: 'glanceShareEvents'
-			}
-			FormCard.FormDelegateSeparator {}
 			FormConfigSpin {
 				label: i18n("Refresh every")
 				configKey: 'eventsPollInterval'

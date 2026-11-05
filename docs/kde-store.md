@@ -137,6 +137,7 @@ Support the development: https://ko-fi.com/divinae4535
 - Month view: an option to show all events, each week as tall as its busiest day (thanks to frispete)
 - CalDAV and .ics events remind at their own alarms (Settings > Events)
 - Glance sharing: the weather, opening events from Glance
+- Settings: a General page (Glance, offline start, settings backup, troubleshooting)
 ```
 
 **Changelog (1.20.0)**

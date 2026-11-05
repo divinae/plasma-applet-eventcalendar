@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Γενικά"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -607,19 +612,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Κοινή χρήση συμβάντων με το Glance"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid ""
-"Today's and tomorrow's events, with meeting links, for the Glance panel "
-"widget. Only on this computer; no descriptions or guest addresses."
-msgstr ""
-"Τα σημερινά και αυριανά συμβάντα, με συνδέσμους συσκέψεων, για το γραφικό "
-"στοιχείο πίνακα Glance. Μόνο σε αυτόν τον υπολογιστή· χωρίς περιγραφές ή "
-"διευθύνσεις καλεσμένων."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Ανανέωση κάθε"
 
@@ -953,11 +945,6 @@ msgstr ""
 "ανάγνωση, και εκτός σύνδεσης. Τα τοπικά αρχεία διαβάζονται από το %1. Για να "
 "προσθέσετε αντί γι' αυτό συμβάντα σε ένα από τα ημερολόγιά σας, εισαγάγετε "
 "το αρχείο σε ημερολόγιο Google ή CalDAV (Ημερολόγια > Γενικά)."
-
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Γενικά"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1422,6 +1409,131 @@ msgid ""
 msgstr ""
 "Τα αναδυόμενα και οι ήχοι για κάθε είδος ειδοποίησης ρυθμίζονται επίσης στις "
 "Ρυθμίσεις συστήματος > Ειδοποιήσεις > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Κοινή χρήση συμβάντων με το Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"Τα σημερινά και αυριανά συμβάντα, με συνδέσμους συσκέψεων, για το γραφικό "
+"στοιχείο πίνακα Glance. Μόνο σε αυτόν τον υπολογιστή· χωρίς περιγραφές ή "
+"διευθύνσεις καλεσμένων."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "Εκτός σύνδεσης"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Διατήρηση γεγονότων και εργασιών για εκκίνηση εκτός σύνδεσης"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Τα τελευταία φορτωμένα γεγονότα και εργασίες (χωρίς περιγραφές ή σημειώσεις) "
+"αποθηκεύονται στο ~/.cache/plasma-eventcalendar και εμφανίζονται έως την "
+"πρώτη ανανέωση. Ανενεργό: δεν αποθηκεύεται τίποτα και το αποθηκευμένο "
+"αντίγραφο διαγράφεται."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "Αντίγραφο ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "Εξαγωγή ρυθμίσεων…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr ""
+"Όλες οι ρυθμίσεις αυτού του γραφικού στοιχείου σε αρχείο, χωρίς κωδικούς και "
+"συνδέσεις"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "Εισαγωγή ρυθμίσεων…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Από αρχείο εξαγωγής· πατήστε Εφαρμογή ή OK για να τις κρατήσετε"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Οι λογαριασμοί επιστρέφουν με τα ημερολόγιά τους. Σε αυτόν τον υπολογιστή "
+"παραμένουν συνδεδεμένοι· σε άλλον, συνδεθείτε ξανά (οι κωδικοί και οι "
+"συνδέσεις μένουν στη θήκη κλειδιών του συστήματος)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "Αντιμετώπιση προβλημάτων"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Καταγραφή αποσφαλμάτωσης και επιπλέον σελίδες ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "Δεν ήταν δυνατή η εγγραφή του αρχείου: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "Εξήχθη στο %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "Δεν ήταν δυνατή η ανάγνωση του αρχείου: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Αυτό δεν είναι αρχείο ρυθμίσεων του Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "Εισήχθη %1 ρύθμιση. Πατήστε Εφαρμογή ή OK για να την κρατήσετε."
+msgstr[1] ""
+"Εισήχθησαν %1 ρυθμίσεις. Πατήστε Εφαρμογή ή OK για να τις κρατήσετε."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Δεν εισήχθη (δεν υπάρχει σε αυτή την έκδοση, κωδικός ή σύνδεση, ή τιμή άλλου "
+"είδους): %2"
+msgstr[1] ""
+"%1 δεν εισήχθησαν (δεν υπάρχουν σε αυτή την έκδοση, κωδικοί ή συνδέσεις, ή "
+"τιμές άλλου είδους): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "Εξαγωγή ρυθμίσεων"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "Ρυθμίσεις (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "Εισαγωγή ρυθμίσεων"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1966,114 +2078,6 @@ msgstr "Κουμπί συνδέσμου σύσκεψης"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Πολυήμερα συμβάντα σε κάθε ημέρα"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "Εκτός σύνδεσης"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "Διατήρηση γεγονότων και εργασιών για εκκίνηση εκτός σύνδεσης"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"Τα τελευταία φορτωμένα γεγονότα και εργασίες (χωρίς περιγραφές ή σημειώσεις) "
-"αποθηκεύονται στο ~/.cache/plasma-eventcalendar και εμφανίζονται έως την "
-"πρώτη ανανέωση. Ανενεργό: δεν αποθηκεύεται τίποτα και το αποθηκευμένο "
-"αντίγραφο διαγράφεται."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "Αντιμετώπιση προβλημάτων"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Καταγραφή αποσφαλμάτωσης και επιπλέον σελίδες ρυθμίσεων"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "Αντίγραφο ρυθμίσεων"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "Εξαγωγή ρυθμίσεων…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr ""
-"Όλες οι ρυθμίσεις αυτού του γραφικού στοιχείου σε αρχείο, χωρίς κωδικούς και "
-"συνδέσεις"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "Εισαγωγή ρυθμίσεων…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr "Από αρχείο εξαγωγής· πατήστε Εφαρμογή ή OK για να τις κρατήσετε"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Accounts come back with their calendars. On this computer they stay signed "
-"in; on another one, sign in again (passwords and sign-ins stay in the system "
-"keyring)."
-msgstr ""
-"Οι λογαριασμοί επιστρέφουν με τα ημερολόγιά τους. Σε αυτόν τον υπολογιστή "
-"παραμένουν συνδεδεμένοι· σε άλλον, συνδεθείτε ξανά (οι κωδικοί και οι "
-"συνδέσεις μένουν στη θήκη κλειδιών του συστήματος)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "Δεν ήταν δυνατή η εγγραφή του αρχείου: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "Εξήχθη στο %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "Δεν ήταν δυνατή η ανάγνωση του αρχείου: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "Αυτό δεν είναι αρχείο ρυθμίσεων του Event Calendar."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] "Εισήχθη %1 ρύθμιση. Πατήστε Εφαρμογή ή OK για να την κρατήσετε."
-msgstr[1] ""
-"Εισήχθησαν %1 ρυθμίσεις. Πατήστε Εφαρμογή ή OK για να τις κρατήσετε."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Not imported (not in this version, a password or sign-in, or a value of "
-"another kind): %2"
-msgid_plural ""
-"%1 not imported (not in this version, passwords or sign-ins, or values of "
-"another kind): %2"
-msgstr[0] ""
-"Δεν εισήχθη (δεν υπάρχει σε αυτή την έκδοση, κωδικός ή σύνδεση, ή τιμή άλλου "
-"είδους): %2"
-msgstr[1] ""
-"%1 δεν εισήχθησαν (δεν υπάρχουν σε αυτή την έκδοση, κωδικοί ή συνδέσεις, ή "
-"τιμές άλλου είδους): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "Εξαγωγή ρυθμίσεων"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "Ρυθμίσεις (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "Εισαγωγή ρυθμίσεων"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

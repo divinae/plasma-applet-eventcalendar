@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -19,6 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && "
 "n%100<=4 ? 2 : 3);\n"
 "X-Generator: Poedit 3.0\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Splošno"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -610,18 +615,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Deli dogodke z Glance"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid ""
-"Today's and tomorrow's events, with meeting links, for the Glance panel "
-"widget. Only on this computer; no descriptions or guest addresses."
-msgstr ""
-"Današnji in jutrišnji dogodki s povezavami do sestankov za gradnik pulta "
-"Glance. Samo na tem računalniku; brez opisov in naslovov gostov."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Osveži vsakih"
 
@@ -946,11 +939,6 @@ msgstr ""
 "tudi brez povezave. Krajevne datoteke se berejo iz %1. Če želite dogodke "
 "namesto tega dodati v enega od svojih koledarjev, uvozite datoteko v koledar "
 "Google ali CalDAV (Koledarji > Splošno)."
-
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Splošno"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1413,6 +1401,135 @@ msgid ""
 msgstr ""
 "Pojavna okna in zvoke za vsako vrsto obvestil lahko nastavite tudi v "
 "Sistemske nastavitve > Obvestila > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Deli dogodke z Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"Današnji in jutrišnji dogodki s povezavami do sestankov za gradnik pulta "
+"Glance. Samo na tem računalniku; brez opisov in naslovov gostov."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "Brez povezave"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Ohrani dogodke in opravila za zagon brez povezave"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Nazadnje naloženi dogodki in opravila (brez opisov ali opomb) so shranjeni v "
+"~/.cache/plasma-eventcalendar in prikazani do prve osvežitve. Izklopljeno: "
+"nič se ne shrani, shranjena kopija pa se izbriše."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "Varnostna kopija nastavitev"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "Izvozi nastavitve …"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Vse nastavitve tega gradnika v datoteko, brez gesel in prijav"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "Uvozi nastavitve …"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Iz izvožene datoteke; za ohranitev pritisnite Uveljavi ali V redu"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Računi se vrnejo s svojimi koledarji. Na tem računalniku ostanejo "
+"prijavljeni; na drugem se znova prijavite (gesla in prijave ostanejo v "
+"sistemski shrambi ključev)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "Odpravljanje težav"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "Datoteke ni bilo mogoče zapisati: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "Izvoženo v %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "Datoteke ni bilo mogoče prebrati: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "To ni datoteka z nastavitvami Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+"Uvoženih %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[1] "Uvožena %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[2] "Uvoženi %1 nastavitvi. Za ohranitev pritisnite Uveljavi ali V redu."
+msgstr[3] "Uvožene %1 nastavitve. Za ohranitev pritisnite Uveljavi ali V redu."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"%1 nastavitev ni uvoženih (ni v tej različici, gesla ali prijave ali "
+"vrednosti druge vrste): %2"
+msgstr[1] ""
+"%1 nastavitev ni uvožena (ni v tej različici, geslo ali prijava ali vrednost "
+"druge vrste): %2"
+msgstr[2] ""
+"%1 nastavitvi nista uvoženi (ni v tej različici, gesli ali prijavi ali "
+"vrednosti druge vrste): %2"
+msgstr[3] ""
+"%1 nastavitve niso uvožene (ni v tej različici, gesla ali prijave ali "
+"vrednosti druge vrste): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "Izvozi nastavitve"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "Nastavitve (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "Uvozi nastavitve"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1946,119 +2063,6 @@ msgstr "Gumb za povezavo do sestanka"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Večdnevni dogodki na vsak dan"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "Brez povezave"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "Ohrani dogodke in opravila za zagon brez povezave"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"Nazadnje naloženi dogodki in opravila (brez opisov ali opomb) so shranjeni v "
-"~/.cache/plasma-eventcalendar in prikazani do prve osvežitve. Izklopljeno: "
-"nič se ne shrani, shranjena kopija pa se izbriše."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "Odpravljanje težav"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Beleženje za razhroščevanje in dodatne strani nastavitev"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "Varnostna kopija nastavitev"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "Izvozi nastavitve …"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr "Vse nastavitve tega gradnika v datoteko, brez gesel in prijav"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "Uvozi nastavitve …"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr "Iz izvožene datoteke; za ohranitev pritisnite Uveljavi ali V redu"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Accounts come back with their calendars. On this computer they stay signed "
-"in; on another one, sign in again (passwords and sign-ins stay in the system "
-"keyring)."
-msgstr ""
-"Računi se vrnejo s svojimi koledarji. Na tem računalniku ostanejo "
-"prijavljeni; na drugem se znova prijavite (gesla in prijave ostanejo v "
-"sistemski shrambi ključev)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "Datoteke ni bilo mogoče zapisati: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "Izvoženo v %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "Datoteke ni bilo mogoče prebrati: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "To ni datoteka z nastavitvami Event Calendar."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] ""
-"Uvoženih %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
-msgstr[1] "Uvožena %1 nastavitev. Za ohranitev pritisnite Uveljavi ali V redu."
-msgstr[2] "Uvoženi %1 nastavitvi. Za ohranitev pritisnite Uveljavi ali V redu."
-msgstr[3] "Uvožene %1 nastavitve. Za ohranitev pritisnite Uveljavi ali V redu."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Not imported (not in this version, a password or sign-in, or a value of "
-"another kind): %2"
-msgid_plural ""
-"%1 not imported (not in this version, passwords or sign-ins, or values of "
-"another kind): %2"
-msgstr[0] ""
-"%1 nastavitev ni uvoženih (ni v tej različici, gesla ali prijave ali "
-"vrednosti druge vrste): %2"
-msgstr[1] ""
-"%1 nastavitev ni uvožena (ni v tej različici, geslo ali prijava ali vrednost "
-"druge vrste): %2"
-msgstr[2] ""
-"%1 nastavitvi nista uvoženi (ni v tej različici, gesli ali prijavi ali "
-"vrednosti druge vrste): %2"
-msgstr[3] ""
-"%1 nastavitve niso uvožene (ni v tej različici, gesla ali prijave ali "
-"vrednosti druge vrste): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "Izvozi nastavitve"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "Nastavitve (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "Uvozi nastavitve"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

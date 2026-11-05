@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi_FI\n"
 "X-Source-Language: C\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Yleiset"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -479,14 +483,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Jaa tapahtumat Glancelle"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Today's and tomorrow's events, with meeting links, for the Glance panel widget. Only on this computer; no descriptions or guest addresses."
-msgstr "Tämän päivän ja huomisen tapahtumat kokouslinkkeineen Glance-paneelisovelmalle. Vain tällä tietokoneella; ei kuvauksia eikä vieraiden osoitteita."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Päivitä joka"
 
@@ -740,10 +736,6 @@ msgstr "Tiedosto kansiossa %1"
 #: ../contents/ui/config/CalendarsICal.qml
 msgid ".ics files and links show here as calendars, read-only, offline too. Local files are read from %1. To add events to one of your calendars instead, import the file into a Google or CalDAV calendar (Calendars > General)."
 msgstr ".ics-tiedostot ja -linkit näkyvät täällä kalentereina, vain luku, myös ilman yhteyttä. Paikalliset tiedostot luetaan kansiosta %1. Jos haluat lisätä tapahtumat johonkin kalenteriisi, tuo tiedosto Google- tai CalDAV-kalenteriin (Kalenterit > Yleiset)."
-
-#: ../contents/ui/config/ConfigCalendars.qml ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Yleiset"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1141,6 +1133,102 @@ msgstr "Muistutukset ja alkavat tapahtumat vain kalentereista, joiden kellopaini
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Popups and sounds for each kind of notification can also be set in System Settings > Notifications > Event Calendar."
 msgstr "Kunkin ilmoitustyypin ponnahdukset ja äänet voi asettaa myös kohdassa Järjestelmäasetukset > Ilmoitukset > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Jaa tapahtumat Glancelle"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Today's and tomorrow's events, with meeting links, for the Glance panel widget. Only on this computer; no descriptions or guest addresses."
+msgstr "Tämän päivän ja huomisen tapahtumat kokouslinkkeineen Glance-paneelisovelmalle. Vain tällä tietokoneella; ei kuvauksia eikä vieraiden osoitteita."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "Offline"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Säilytä tapahtumat ja tehtävät offline-käynnistystä varten"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
+msgstr "Viimeksi ladatut tapahtumat ja tehtävät (ilman kuvauksia tai muistiinpanoja) tallennetaan kansioon ~/.cache/plasma-eventcalendar ja näytetään ensimmäiseen päivitykseen asti. Pois: mitään ei tallenneta, ja tallennettu kopio poistetaan."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "Asetusten varmuuskopio"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "Vie asetukset…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Kaikki tämän sovelman asetukset tiedostoon, ilman salasanoja ja kirjautumisia"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "Tuo asetukset…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Viedystä tiedostosta; säilytä ne painamalla Käytä tai OK"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring)."
+msgstr "Tilit palaavat kalentereineen. Tällä tietokoneella ne pysyvät kirjautuneina; toisella kirjaudu uudelleen (salasanat ja kirjautumiset pysyvät järjestelmän avainnipussa)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "Vianmääritys"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Vianjäljityslokit ja lisäasetussivut"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "Tiedostoa ei voitu kirjoittaa: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "Viety kohteeseen %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "Tiedostoa ei voitu lukea: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Tämä ei ole Event Calendarin asetustiedosto."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "Tuotiin %1 asetus. Säilytä se painamalla Käytä tai OK."
+msgstr[1] "Tuotiin %1 asetusta. Säilytä ne painamalla Käytä tai OK."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Not imported (not in this version, a password or sign-in, or a value of another kind): %2"
+msgid_plural "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2"
+msgstr[0] "Ei tuotu (ei tässä versiossa, salasana tai kirjautuminen tai erityyppinen arvo): %2"
+msgstr[1] "%1 ei tuotu (ei tässä versiossa, salasanoja tai kirjautumisia tai erityyppisiä arvoja): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "Vie asetukset"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "Asetukset (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "Tuo asetukset"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1613,90 +1701,6 @@ msgstr "Kokouslinkin painike"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Monipäiväiset tapahtumat joka päivänä"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "Offline"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "Säilytä tapahtumat ja tehtävät offline-käynnistystä varten"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The last loaded events and tasks (no descriptions or notes) are stored in ~/.cache/plasma-eventcalendar and shown until the first refresh. Off: nothing is stored, and the stored copy is deleted."
-msgstr "Viimeksi ladatut tapahtumat ja tehtävät (ilman kuvauksia tai muistiinpanoja) tallennetaan kansioon ~/.cache/plasma-eventcalendar ja näytetään ensimmäiseen päivitykseen asti. Pois: mitään ei tallenneta, ja tallennettu kopio poistetaan."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "Vianmääritys"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Vianjäljityslokit ja lisäasetussivut"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "Asetusten varmuuskopio"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "Vie asetukset…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr "Kaikki tämän sovelman asetukset tiedostoon, ilman salasanoja ja kirjautumisia"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "Tuo asetukset…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr "Viedystä tiedostosta; säilytä ne painamalla Käytä tai OK"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Accounts come back with their calendars. On this computer they stay signed in; on another one, sign in again (passwords and sign-ins stay in the system keyring)."
-msgstr "Tilit palaavat kalentereineen. Tällä tietokoneella ne pysyvät kirjautuneina; toisella kirjaudu uudelleen (salasanat ja kirjautumiset pysyvät järjestelmän avainnipussa)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "Tiedostoa ei voitu kirjoittaa: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "Viety kohteeseen %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "Tiedostoa ei voitu lukea: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "Tämä ei ole Event Calendarin asetustiedosto."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] "Tuotiin %1 asetus. Säilytä se painamalla Käytä tai OK."
-msgstr[1] "Tuotiin %1 asetusta. Säilytä ne painamalla Käytä tai OK."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Not imported (not in this version, a password or sign-in, or a value of another kind): %2"
-msgid_plural "%1 not imported (not in this version, passwords or sign-ins, or values of another kind): %2"
-msgstr[0] "Ei tuotu (ei tässä versiossa, salasana tai kirjautuminen tai erityyppinen arvo): %2"
-msgstr[1] "%1 ei tuotu (ei tässä versiossa, salasanoja tai kirjautumisia tai erityyppisiä arvoja): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "Vie asetukset"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "Asetukset (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "Tuo asetukset"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

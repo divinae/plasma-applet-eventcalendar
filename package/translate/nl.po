@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2022-04-05 13:49+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <>\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.03.80\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Algemeen"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -602,18 +607,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Afspraken delen met Glance"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid ""
-"Today's and tomorrow's events, with meeting links, for the Glance panel "
-"widget. Only on this computer; no descriptions or guest addresses."
-msgstr ""
-"De afspraken van vandaag en morgen, met vergaderlinks, voor de paneelwidget "
-"Glance. Alleen op deze computer; geen beschrijvingen of adressen van gasten."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Herladen om de"
 
@@ -942,11 +935,6 @@ msgstr ""
 "offline. Lokale bestanden worden gelezen uit %1. Om de afspraken in plaats "
 "daarvan aan een van je agenda's toe te voegen, importeer je het bestand in "
 "een Google- of CalDAV-agenda (Agenda's > Algemeen)."
-
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Algemeen"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1409,6 +1397,131 @@ msgid ""
 msgstr ""
 "Pop-ups en geluiden per soort melding kunnen ook worden ingesteld in "
 "Systeeminstellingen > Meldingen > Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Afspraken delen met Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"De afspraken van vandaag en morgen, met vergaderlinks, voor de paneelwidget "
+"Glance. Alleen op deze computer; geen beschrijvingen of adressen van gasten."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "Offline"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Afspraken en taken bewaren voor offline starten"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"De laatst geladen afspraken en taken (zonder beschrijvingen of notities) "
+"worden opgeslagen in ~/.cache/plasma-eventcalendar en getoond tot de eerste "
+"vernieuwing. Uit: er wordt niets opgeslagen en de opgeslagen kopie wordt "
+"verwijderd."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "Reservekopie van instellingen"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "Instellingen exporteren…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr ""
+"Alle instellingen van deze widget naar een bestand, zonder wachtwoorden en "
+"aanmeldingen"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "Instellingen importeren…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "Uit een geëxporteerd bestand; druk op Toepassen of OK om ze te bewaren"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Accounts komen terug met hun agenda's. Op deze computer blijven ze "
+"aangemeld; op een andere opnieuw aanmelden (wachtwoorden en aanmeldingen "
+"blijven in de sleutelbos van het systeem)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "Probleemoplossing"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Foutopsporingslogboek en extra instellingenpagina's"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "Het bestand kon niet worden geschreven: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "Geëxporteerd naar %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "Het bestand kon niet worden gelezen: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Dit is geen instellingenbestand van Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+"%1 instelling geïmporteerd. Druk op Toepassen of OK om die te bewaren."
+msgstr[1] ""
+"%1 instellingen geïmporteerd. Druk op Toepassen of OK om ze te bewaren."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Niet geïmporteerd (niet in deze versie, een wachtwoord of aanmelding, of een "
+"waarde van een ander soort): %2"
+msgstr[1] ""
+"%1 niet geïmporteerd (niet in deze versie, wachtwoorden of aanmeldingen, of "
+"waarden van een ander soort): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "Instellingen exporteren"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "Instellingen (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "Instellingen importeren"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1950,115 +2063,6 @@ msgstr "Vergaderlinkknop"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Meerdaagse afspraken op elke dag"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "Offline"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "Afspraken en taken bewaren voor offline starten"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"De laatst geladen afspraken en taken (zonder beschrijvingen of notities) "
-"worden opgeslagen in ~/.cache/plasma-eventcalendar en getoond tot de eerste "
-"vernieuwing. Uit: er wordt niets opgeslagen en de opgeslagen kopie wordt "
-"verwijderd."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "Probleemoplossing"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Foutopsporingslogboek en extra instellingenpagina's"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "Reservekopie van instellingen"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "Instellingen exporteren…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr ""
-"Alle instellingen van deze widget naar een bestand, zonder wachtwoorden en "
-"aanmeldingen"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "Instellingen importeren…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr "Uit een geëxporteerd bestand; druk op Toepassen of OK om ze te bewaren"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Accounts come back with their calendars. On this computer they stay signed "
-"in; on another one, sign in again (passwords and sign-ins stay in the system "
-"keyring)."
-msgstr ""
-"Accounts komen terug met hun agenda's. Op deze computer blijven ze "
-"aangemeld; op een andere opnieuw aanmelden (wachtwoorden en aanmeldingen "
-"blijven in de sleutelbos van het systeem)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "Het bestand kon niet worden geschreven: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "Geëxporteerd naar %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "Het bestand kon niet worden gelezen: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "Dit is geen instellingenbestand van Event Calendar."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] ""
-"%1 instelling geïmporteerd. Druk op Toepassen of OK om die te bewaren."
-msgstr[1] ""
-"%1 instellingen geïmporteerd. Druk op Toepassen of OK om ze te bewaren."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Not imported (not in this version, a password or sign-in, or a value of "
-"another kind): %2"
-msgid_plural ""
-"%1 not imported (not in this version, passwords or sign-ins, or values of "
-"another kind): %2"
-msgstr[0] ""
-"Niet geïmporteerd (niet in deze versie, een wachtwoord of aanmelding, of een "
-"waarde van een ander soort): %2"
-msgstr[1] ""
-"%1 niet geïmporteerd (niet in deze versie, wachtwoorden of aanmeldingen, of "
-"waarden van een ander soort): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "Instellingen exporteren"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "Instellingen (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "Instellingen importeren"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

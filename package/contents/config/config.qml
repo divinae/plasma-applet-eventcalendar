@@ -17,6 +17,11 @@ ConfigModel {
 	)
 
 	ConfigCategory {
+		name: i18n("General")
+		icon: "configure" // Monochrome, as the others
+		source: "config/ConfigGeneral.qml"
+	}
+	ConfigCategory {
 		name: i18n("Views")
 		icon: "view-calendar-timeline"
 		source: "config/ConfigViews.qml"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2022-10-25 17:15+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.1.1\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "일반"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -582,18 +587,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Glance와 일정 공유"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid ""
-"Today's and tomorrow's events, with meeting links, for the Glance panel "
-"widget. Only on this computer; no descriptions or guest addresses."
-msgstr ""
-"오늘과 내일의 일정을 회의 링크와 함께 패널 위젯 Glance에 제공합니다. 이 컴퓨"
-"터에서만; 설명이나 게스트 주소는 포함하지 않습니다."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "새로고침 간격"
 
@@ -913,11 +906,6 @@ msgstr ""
 ".ics 파일과 링크는 여기에 읽기 전용 달력으로 표시되며 오프라인에서도 작동합니"
 "다. 로컬 파일은 %1에서 읽습니다. 대신 내 달력에 일정을 추가하려면 파일을 "
 "Google 또는 CalDAV 달력으로 가져오십시오(달력 > 일반)."
-
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "일반"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1369,6 +1357,122 @@ msgid ""
 msgstr ""
 "알림 종류별 팝업과 소리는 시스템 설정 > 알림 > 이벤트 달력에서도 설정할 수 있"
 "습니다."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Glance와 일정 공유"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"오늘과 내일의 일정을 회의 링크와 함께 패널 위젯 Glance에 제공합니다. 이 컴퓨"
+"터에서만; 설명이나 게스트 주소는 포함하지 않습니다."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "오프라인"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "오프라인 시작을 위해 일정과 작업 보관"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"마지막으로 불러온 일정과 작업(설명과 메모 제외)은 ~/.cache/plasma-"
+"eventcalendar에 저장되어 첫 새로 고침까지 표시됩니다. 끔: 아무것도 저장되지 "
+"않으며 저장된 사본은 삭제됩니다."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "설정 백업"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "설정 내보내기…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "이 위젯의 모든 설정을 파일로 (비밀번호와 로그인 제외)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "설정 가져오기…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr "내보낸 파일에서; 유지하려면 적용 또는 확인을 누르세요"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"계정은 캘린더와 함께 돌아옵니다. 이 컴퓨터에서는 로그인 상태가 유지되고, 다"
+"른 컴퓨터에서는 다시 로그인하세요 (비밀번호와 로그인은 시스템 키링에 남습니"
+"다)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "문제 해결"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "디버그 로그 및 추가 설정 페이지"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "파일을 쓸 수 없습니다: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "%1(으)로 내보냈습니다"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "파일을 읽을 수 없습니다: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Event Calendar 설정 파일이 아닙니다."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] "설정 %1개를 가져왔습니다. 유지하려면 적용 또는 확인을 누르세요."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"%1개를 가져오지 않았습니다 (이 버전에 없음, 비밀번호나 로그인, 또는 다른 종류"
+"의 값): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "설정 내보내기"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "설정 (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "설정 가져오기"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1899,106 +2003,6 @@ msgstr "회의 링크 단추"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "여러 날 이벤트를 매일 표시"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "오프라인"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "오프라인 시작을 위해 일정과 작업 보관"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"마지막으로 불러온 일정과 작업(설명과 메모 제외)은 ~/.cache/plasma-"
-"eventcalendar에 저장되어 첫 새로 고침까지 표시됩니다. 끔: 아무것도 저장되지 "
-"않으며 저장된 사본은 삭제됩니다."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "문제 해결"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "디버그 로그 및 추가 설정 페이지"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "설정 백업"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "설정 내보내기…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr "이 위젯의 모든 설정을 파일로 (비밀번호와 로그인 제외)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "설정 가져오기…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr "내보낸 파일에서; 유지하려면 적용 또는 확인을 누르세요"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Accounts come back with their calendars. On this computer they stay signed "
-"in; on another one, sign in again (passwords and sign-ins stay in the system "
-"keyring)."
-msgstr ""
-"계정은 캘린더와 함께 돌아옵니다. 이 컴퓨터에서는 로그인 상태가 유지되고, 다"
-"른 컴퓨터에서는 다시 로그인하세요 (비밀번호와 로그인은 시스템 키링에 남습니"
-"다)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "파일을 쓸 수 없습니다: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "%1(으)로 내보냈습니다"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "파일을 읽을 수 없습니다: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "Event Calendar 설정 파일이 아닙니다."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] "설정 %1개를 가져왔습니다. 유지하려면 적용 또는 확인을 누르세요."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Not imported (not in this version, a password or sign-in, or a value of "
-"another kind): %2"
-msgid_plural ""
-"%1 not imported (not in this version, passwords or sign-ins, or values of "
-"another kind): %2"
-msgstr[0] ""
-"%1개를 가져오지 않았습니다 (이 버전에 없음, 비밀번호나 로그인, 또는 다른 종류"
-"의 값): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "설정 내보내기"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "설정 (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "설정 가져오기"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:03+0100\n"
+"POT-Creation-Date: 2026-11-05 09:07+0100\n"
 "PO-Revision-Date: 2017-10-31 20:08+0200\n"
 "Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
 "Language-Team: \n"
@@ -19,6 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.8.7.1\n"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Загальне"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -603,18 +608,6 @@ msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/CalendarsGeneral.qml
-msgid "Share events with Glance"
-msgstr "Передавати події в Glance"
-
-#: ../contents/ui/config/CalendarsGeneral.qml
-msgid ""
-"Today's and tomorrow's events, with meeting links, for the Glance panel "
-"widget. Only on this computer; no descriptions or guest addresses."
-msgstr ""
-"Події на сьогодні й завтра, з посиланнями на зустрічі, для віджета панелі "
-"Glance. Лише на цьому комп'ютері; без описів і адрес гостей."
-
-#: ../contents/ui/config/CalendarsGeneral.qml
 msgid "Refresh every"
 msgstr "Оновлювати кожні"
 
@@ -939,11 +932,6 @@ msgstr ""
 "зокрема без мережі. Локальні файли читаються з %1. Щоб натомість додати "
 "події до одного з ваших календарів, імпортуйте файл до календаря Google або "
 "CalDAV (Календарі > Загальне)."
-
-#: ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Загальне"
 
 #: ../contents/ui/config/ConfigCalendars.qml
 msgid "Google Calendar"
@@ -1406,6 +1394,137 @@ msgid ""
 msgstr ""
 "Контекстні вікна і звуки для кожного типу сповіщень також можна налаштувати "
 "у «Параметри системи» > «Сповіщення» > «Event Calendar»."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Glance"
+msgstr "Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Share events with Glance"
+msgstr "Передавати події в Glance"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Today's and tomorrow's events, with meeting links, for the Glance panel "
+"widget. Only on this computer; no descriptions or guest addresses."
+msgstr ""
+"Події на сьогодні й завтра, з посиланнями на зустрічі, для віджета панелі "
+"Glance. Лише на цьому комп'ютері; без описів і адрес гостей."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Offline"
+msgstr "Офлайн"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Keep events and tasks for offline start"
+msgstr "Зберігати події та завдання для запуску без мережі"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"The last loaded events and tasks (no descriptions or notes) are stored in "
+"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
+"nothing is stored, and the stored copy is deleted."
+msgstr ""
+"Останні завантажені події та завдання (без описів і нотаток) зберігаються в "
+"~/.cache/plasma-eventcalendar і показуються до першого оновлення. Вимкнено: "
+"нічого не зберігається, а збережена копія видаляється."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings Backup"
+msgstr "Резервна копія налаштувань"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings…"
+msgstr "Експортувати налаштування…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "All settings of this widget to a file, without passwords and sign-ins"
+msgstr "Усі налаштування цього віджета у файл, без паролів і входів"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings…"
+msgstr "Імпортувати налаштування…"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "From an exported file; press Apply or OK to keep them"
+msgstr ""
+"З експортованого файла; натисніть «Застосувати» або «Гаразд», щоб зберегти їх"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Accounts come back with their calendars. On this computer they stay signed "
+"in; on another one, sign in again (passwords and sign-ins stay in the system "
+"keyring)."
+msgstr ""
+"Облікові записи повертаються зі своїми календарями. На цьому комп'ютері вхід "
+"зберігається; на іншому увійдіть знову (паролі та входи лишаються в "
+"системній в'язці ключів)."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Troubleshooting"
+msgstr "Усунення несправностей"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Debug logging and extra settings pages"
+msgstr "Журнал діагностики та додаткові сторінки параметрів"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be written: %1"
+msgstr "Не вдалося записати файл: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Exported to %1"
+msgstr "Експортовано до %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "The file couldn't be read: %1"
+msgstr "Не вдалося прочитати файл: %1"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "This isn't a settings file of Event Calendar."
+msgstr "Це не файл налаштувань Event Calendar."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Imported %1 setting. Press Apply or OK to keep it."
+msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
+msgstr[0] ""
+"Імпортовано %1 налаштування. Натисніть «Застосувати» або «Гаразд», щоб "
+"зберегти його."
+msgstr[1] ""
+"Імпортовано %1 налаштування. Натисніть «Застосувати» або «Гаразд», щоб "
+"зберегти їх."
+msgstr[2] ""
+"Імпортовано %1 налаштувань. Натисніть «Застосувати» або «Гаразд», щоб "
+"зберегти їх."
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid ""
+"Not imported (not in this version, a password or sign-in, or a value of "
+"another kind): %2"
+msgid_plural ""
+"%1 not imported (not in this version, passwords or sign-ins, or values of "
+"another kind): %2"
+msgstr[0] ""
+"Не імпортовано %1 налаштування (немає в цій версії, пароль або вхід, чи "
+"значення іншого типу): %2"
+msgstr[1] ""
+"Не імпортовано %1 налаштування (немає в цій версії, паролі або входи, чи "
+"значення іншого типу): %2"
+msgstr[2] ""
+"Не імпортовано %1 налаштувань (немає в цій версії, паролі або входи, чи "
+"значення іншого типу): %2"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Export Settings"
+msgstr "Експорт налаштувань"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Settings (*.json)"
+msgstr "Налаштування (*.json)"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Import Settings"
+msgstr "Імпорт налаштувань"
 
 #: ../contents/ui/config/ConfigTasks.qml
 msgid "TickTick did not accept the API token. Check it and try again."
@@ -1939,121 +2058,6 @@ msgstr "Кнопка посилання на зустріч"
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Multi-day events on every day"
 msgstr "Багатоденні події в кожному дні"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Offline"
-msgstr "Офлайн"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Keep events and tasks for offline start"
-msgstr "Зберігати події та завдання для запуску без мережі"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"The last loaded events and tasks (no descriptions or notes) are stored in "
-"~/.cache/plasma-eventcalendar and shown until the first refresh. Off: "
-"nothing is stored, and the stored copy is deleted."
-msgstr ""
-"Останні завантажені події та завдання (без описів і нотаток) зберігаються в "
-"~/.cache/plasma-eventcalendar і показуються до першого оновлення. Вимкнено: "
-"нічого не зберігається, а збережена копія видаляється."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Troubleshooting"
-msgstr "Усунення несправностей"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Debug logging and extra settings pages"
-msgstr "Журнал діагностики та додаткові сторінки параметрів"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings Backup"
-msgstr "Резервна копія налаштувань"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings…"
-msgstr "Експортувати налаштування…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "All settings of this widget to a file, without passwords and sign-ins"
-msgstr "Усі налаштування цього віджета у файл, без паролів і входів"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings…"
-msgstr "Імпортувати налаштування…"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "From an exported file; press Apply or OK to keep them"
-msgstr ""
-"З експортованого файла; натисніть «Застосувати» або «Гаразд», щоб зберегти їх"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Accounts come back with their calendars. On this computer they stay signed "
-"in; on another one, sign in again (passwords and sign-ins stay in the system "
-"keyring)."
-msgstr ""
-"Облікові записи повертаються зі своїми календарями. На цьому комп'ютері вхід "
-"зберігається; на іншому увійдіть знову (паролі та входи лишаються в "
-"системній в'язці ключів)."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be written: %1"
-msgstr "Не вдалося записати файл: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Exported to %1"
-msgstr "Експортовано до %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "The file couldn't be read: %1"
-msgstr "Не вдалося прочитати файл: %1"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "This isn't a settings file of Event Calendar."
-msgstr "Це не файл налаштувань Event Calendar."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Imported %1 setting. Press Apply or OK to keep it."
-msgid_plural "Imported %1 settings. Press Apply or OK to keep them."
-msgstr[0] ""
-"Імпортовано %1 налаштування. Натисніть «Застосувати» або «Гаразд», щоб "
-"зберегти його."
-msgstr[1] ""
-"Імпортовано %1 налаштування. Натисніть «Застосувати» або «Гаразд», щоб "
-"зберегти їх."
-msgstr[2] ""
-"Імпортовано %1 налаштувань. Натисніть «Застосувати» або «Гаразд», щоб "
-"зберегти їх."
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid ""
-"Not imported (not in this version, a password or sign-in, or a value of "
-"another kind): %2"
-msgid_plural ""
-"%1 not imported (not in this version, passwords or sign-ins, or values of "
-"another kind): %2"
-msgstr[0] ""
-"Не імпортовано %1 налаштування (немає в цій версії, пароль або вхід, чи "
-"значення іншого типу): %2"
-msgstr[1] ""
-"Не імпортовано %1 налаштування (немає в цій версії, паролі або входи, чи "
-"значення іншого типу): %2"
-msgstr[2] ""
-"Не імпортовано %1 налаштувань (немає в цій версії, паролі або входи, чи "
-"значення іншого типу): %2"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Export Settings"
-msgstr "Експорт налаштувань"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Settings (*.json)"
-msgstr "Налаштування (*.json)"
-
-#: ../contents/ui/config/ConfigViews.qml
-msgid "Import Settings"
-msgstr "Імпорт налаштувань"
 
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "an API the app id may use"
