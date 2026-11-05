@@ -71,6 +71,12 @@ function select(items, nowMs) {
 	}).sort(function(a, b) { return a.start - b.start })
 }
 
+// A string as GVariant text ('...', its backslashes and quotes escaped), so gdbus takes it as
+// that string whatever it holds
+function gvariantString(text) {
+	return "'" + String(text).replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'"
+}
+
 // The text's size in UTF-8 bytes (what goes on the command line): titles in other alphabets take
 // 2-3 bytes a character
 function utf8Bytes(text) {

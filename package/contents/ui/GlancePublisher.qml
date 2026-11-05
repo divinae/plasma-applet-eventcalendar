@@ -104,6 +104,11 @@ QtObject {
 			pending = true
 			return
 		}
+		// No calendars in the model yet (just started): sending would tell Glance there's nothing
+		// today. The model's next change sends
+		if (Object.keys(eventModel.eventsByCalendar || {}).length === 0) {
+			return
+		}
 		var now = Date.now()
 		busy = true
 		var serial = ++callSerial
@@ -113,7 +118,10 @@ QtObject {
 			"--dest", "com.dv.glance",
 			"--object-path", "/Calendar",
 			"--method", "com.dv.glance.Calendar.Publish",
-			"1", String(plasmoid.id), GlancePublisher.payload(collect(now), now, currentWeather(now)),
+			// As GVariant strings: gdbus reads each argument as GVariant text first, and some JSON
+			// read as another value ("can not parse as value of type 's'"): nothing was sent
+			"1", GlancePublisher.gvariantString(String(plasmoid.id)),
+			GlancePublisher.gvariantString(GlancePublisher.payload(collect(now), now, currentWeather(now))),
 		], function(cmd, exitCode) {
 			if (serial !== publisher.callSerial) {
 				return // The watchdog gave up on this one

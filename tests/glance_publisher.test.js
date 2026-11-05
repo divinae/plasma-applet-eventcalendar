@@ -6,7 +6,7 @@ const vm = require('vm')
 const source = fs.readFileSync(path.join(__dirname, '../package/contents/ui/GlancePublisher.js'), 'utf8')
 	.replace(/^\.pragma library\s*/, '')
 const G = {}
-vm.runInNewContext(source + '\nObject.assign(out, { plain, select, payload, windowOf, MAX_BYTES })', { out: G, Date, Math, JSON, isNaN })
+vm.runInNewContext(source + '\nObject.assign(out, { plain, select, payload, windowOf, MAX_BYTES, gvariantString })', { out: G, Date, Math, JSON, isNaN })
 
 const now = new Date(2026, 10, 4, 10, 0).getTime()
 const at = (d, h, m) => new Date(2026, 10, 4 + d, h, m || 0)
@@ -89,3 +89,7 @@ assert.strictEqual(G.weather(null, { temp: { max: 5, min: 1 }, iconName: 'weathe
 const withWeather = JSON.parse(G.payload([], now, w))
 assert.strictEqual(withWeather.weather.temp, 8)
 assert.strictEqual('weather' in JSON.parse(G.payload([], now, null)), false)
+
+// As a GVariant string for gdbus: quotes and backslashes escaped, the rest as it is
+assert.strictEqual(G.gvariantString('{"a":"it\'s \\ x"}'), '\'{"a":"it\\\'s \\\\ x"}\'')
+assert.strictEqual(G.gvariantString('426'), "'426'")
