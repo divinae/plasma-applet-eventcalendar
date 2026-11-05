@@ -11,9 +11,10 @@ version, the changelog and the file for each release.
   settings. But installing either one replaces the other, so the page must say clearly that this
   is a fork, and link the original.
 - **Google sign-in.** The built-in Google OAuth client is in the package. Google's consent screen
-  links a privacy policy and terms (`docs/privacy.html`, `docs/terms.html`). GitHub Pages isn't
-  enabled for the fork, so those pages aren't online yet. Turn on Pages (from `docs/` on
-  `master`), or link the files on GitHub, before the listing points people to Google sign-in.
+  links a privacy policy and terms (`docs/privacy.html`, `docs/terms.html`), online through GitHub
+  Pages (from `docs/` on `master`): https://divinae.github.io/plasma-applet-eventcalendar/privacy.html
+  and https://divinae.github.io/plasma-applet-eventcalendar/terms.html. The widget's Google tab
+  links the privacy policy under "Sign in with Google".
 
 ## Fields
 

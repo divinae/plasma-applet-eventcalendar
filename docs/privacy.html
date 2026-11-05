@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KDE Plasma Event Calendar Fork - Privacy Policy</title>
-  <meta name="description" content="Privacy policy for the KDE Event Calendar widget and OAuth helper page.">
+  <title>Event Calendar NG - Privacy Policy</title>
+  <meta name="description" content="Privacy policy of the Event Calendar NG widget for KDE Plasma 6 and its sign-in helper page.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -13,64 +13,113 @@
 
   <main>
     <header>
-      <div class="eyebrow">KDE Plasma Event Calendar Fork</div>
+      <div class="eyebrow">Event Calendar NG</div>
       <h1>Privacy Policy</h1>
-      <p>Last updated: 2025-12-31</p>
+      <p>Last updated: 2026-11-05</p>
     </header>
+
+    <section class="card">
+      <h2>In short</h2>
+      <p>
+        Event Calendar NG is a widget that runs on your computer. It connects only to the services you set up in it,
+        directly from your computer: there are no servers of the developer in between, and it collects no usage data
+        or analytics. Sign-ins and passwords are kept in your system keyring (KWallet or the Secret Service), not in
+        the widget's settings.
+      </p>
+    </section>
 
     <section class="card">
       <h2>Downloads</h2>
       <p>
-        By downloading the widget from the KDE panel directly, you are downloading from the KDE Store which has a
-        privacy policy at
-        <a href="https://store.kde.org/privacy">https://store.kde.org/privacy</a>.
-        By downloading the widget from Arch Linux's AUR, you are downloading from GitHub which has their own privacy
-        policy.
-      </p>
-      <p>
-        The widget developer has access to the number of downloads for each release of the widget. The developer does
-        not have access to where each download originates.
+        Installed from the KDE panel or <a href="https://store.kde.org/p/2379570/">store.kde.org</a>, the widget comes
+        from the KDE Store (<a href="https://store.kde.org/privacy">its privacy policy</a>); from a release or the
+        source, from GitHub (<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">its
+        privacy statement</a>). The developer sees how many times each release was downloaded, not who downloaded it.
       </p>
     </section>
 
     <section class="card">
-      <h2>Google</h2>
+      <h2>Google Calendar and Google Tasks</h2>
       <p>
-        By default the widget will not connect to the Google Calendar API. You need to click a link in the widget's
-        config that will open up a login form in your web browser.
-        Once you have logged in, it will give you a login code to paste into the widget. The widget will then fetch
-        your calendar, event, and task data from the Google Calendar
-        and Google Tasks API. This data will be displayed in your KDE Plasma panel. The widget will periodically
-        synchronize this data in order to keep it up to date.
-        The user can also manually synchronize the data. The widget will store a cached list of your
-        events/calendars/tasks locally on your computer so it can fallback to the
-        cached copy when your PC is offline. The widget will also store a login/refresh token in your widget config
-        <code>~/.config/plasma-org.kde.plasma.desktop-appletsrc</code> so you do not need to login every time you
-        restart KDE Plasma.
+        The widget connects to Google only after you sign in from its settings. Signing in opens Google's own page in
+        your browser; the widget then reads your calendars, events, task lists and tasks from the Google Calendar and
+        Google Tasks APIs to show them, and changes events and tasks only when you edit them in the widget. It
+        refreshes them now and then while it runs.
       </p>
       <p>
-        The developer has access to Google API's application metrics for this widget. This allows the developer to see
-        the total number of correct API responses, or errors,
-        broken down by action. The totals are not broken down by user. Each action has a sum of requests by all users.
-        This is useful for knowing how close to the Google API
-        quota the widget is, and if there are any spikes in errors. The errors are displayed as HTTP Error codes and
-        do not expose any personal data to the developer.
+        The sign-in (access and refresh tokens) is kept in your system keyring. The widget's settings keep your
+        account's name and which calendars and task lists to show.
+      </p>
+      <p>
+        Google's API console shows the owner of the sign-in client (the one built into the widget, or your own if you
+        set one up) the number of requests and errors per API method, summed over all users: no personal data and no
+        per-user figures.
       </p>
     </section>
 
     <section class="card">
-      <h2>OpenWeatherMap</h2>
+      <h2>CalDAV, KDE PIM and .ics calendars</h2>
       <p>
-        By default the widget will not connect to OpenWeatherMap.org. You need to manually select your city in the
-        widget's config. Once you have selected a city,
-        you will then fetch the current weather forecast every hour. OpenWeatherMap will be able to know the city you
-        requested as well as your IP address.
-        You may wish to read OpenWeatherMap's privacy policy as well.
+        A CalDAV account (Nextcloud, Fastmail, iCloud…) is read and changed directly on the server you enter; its
+        password is kept in your system keyring. Calendars of KDE PIM (Akonadi) are read through Plasma's own calendar
+        plugin, on your computer. An .ics link is downloaded from the address you enter; a local .ics file is read from
+        the widget's own folder only.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>TickTick</h2>
+      <p>
+        With a TickTick account added, the widget reads and changes your TickTick tasks through its API; the sign-in is
+        kept in your system keyring.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Weather</h2>
+      <p>
+        The widget asks for a forecast only once you set a location, from the service you choose:
+        <a href="https://open-meteo.com/en/terms">Open-Meteo</a> (the coordinates of the place you picked),
+        <a href="https://openweather.co.uk/privacy-policy">OpenWeatherMap</a> (the city) or
+        <a href="https://weather.gc.ca/">Weather Canada</a> (the city). That service sees the place and your IP
+        address.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>On your computer</h2>
+      <ul>
+        <li><strong>Offline start:</strong> the last loaded events and tasks (no descriptions or notes) are kept in
+          <code>~/.cache/plasma-eventcalendar</code> to show them before the first refresh. Settings &gt; General
+          &gt; Offline turns it off and deletes the copy.</li>
+        <li><strong>Python modules:</strong> for CalDAV and .ics calendars the widget can install the
+          <code>icalendar</code> and <code>recurring-ical-events</code> modules from the Python Package Index (PyPI)
+          when you click Install.</li>
+        <li><strong>Sharing with Glance</strong> (off by default): today's and tomorrow's events and the weather are
+          sent to the Glance panel widget over D-Bus, on this computer only; no descriptions or guests'
+          addresses.</li>
+        <li><strong>Settings backup:</strong> an exported settings file contains no passwords or sign-ins.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>This website</h2>
+      <p>
+        These pages are hosted on GitHub Pages (<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub's
+        privacy statement</a>). The sign-in helper on the home page runs only in your browser: the address you paste is
+        read there and sent nowhere.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Questions</h2>
+      <p>
+        Open an issue on <a href="https://github.com/divinae/plasma-applet-eventcalendar/issues">GitHub</a>.
       </p>
     </section>
 
     <footer>
-      <a href="index.html">Home</a> |
+      <a href="./">Home</a> |
       <a href="terms.html">Terms of Service</a>
     </footer>
   </main>
