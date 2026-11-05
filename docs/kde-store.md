@@ -50,24 +50,35 @@ version, the changelog and the file for each release.
 
     Your day, one click from the clock: calendar, agenda, tasks, meetings and weather in the Plasma panel.
 
-**Description**
+**Description** (each line its own paragraph: the store joins lines that have only a single line break between them)
 
 ```
 Your day, one click from the clock: calendar, agenda, tasks, meetings and weather in the Plasma panel. See what's next at a glance, join a call in one click, never miss a meeting.
 
 Not just another fork: a complete redesign of the classic Event Calendar widget.
+
 Website and screenshots: https://divinae.github.io/plasma-applet-eventcalendar/
 
 🗓️ Month, Week, Day and Agenda views; drag events to move or resize them
+
 ⏰ The clock shows your next meeting ("in 5 min"), with an optional full-screen alert and a big Join button
+
 🎥 One-click Join for Google Meet, Zoom, Teams, Webex, Slack and about 35 more; camera check before a call
+
 ✅ Google Tasks and TickTick: smart lists, priorities, subtasks, quick add ("Call mom tomorrow 17:00 !high")
+
 ✍️ Create, edit and answer events in the widget; quick add in plain sentences
+
 ☁️ Several Google accounts, CalDAV (Nextcloud, Fastmail, iCloud…), KDE PIM, holidays, .ics files
+
 🔔 Reminders, invitations and a daily agenda in KDE's notifications
+
 🌤️ Weather from Open-Meteo (no key), OpenWeatherMap or Weather Canada
+
 ⚡ Opens instantly and works offline with your last events and tasks
+
 🎨 Rounded cards or flat, light and dark themes, 20 languages
+
 🔒 Sign-ins stay in your system keyring; no tracking, no servers of ours
 
 Based on Event Calendar by Chris Holland (Zren) and ALikesToCode's Plasma 6 port. Same widget id: it replaces an existing Event Calendar and keeps its settings. For Plasma 5: https://store.kde.org/p/998901/
@@ -75,6 +86,7 @@ Based on Event Calendar by Chris Holland (Zren) and ALikesToCode's Plasma 6 port
 Requires Plasma 6 and python3; secret-tool or KWallet for sign-ins. CalDAV and .ics need two Python modules (the widget offers to install them).
 
 Bugs and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
+
 Support: https://ko-fi.com/divinae4535
 ```
 
