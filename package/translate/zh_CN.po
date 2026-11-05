@@ -1693,13 +1693,14 @@ msgstr "周数"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "显示所有事件"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"月视图：不显示“+N”，每周的高度与其最忙的一天相同；放不下时月视图可滚动。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

@@ -1763,13 +1763,15 @@ msgstr "Hafta numaraları"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "Tüm etkinlikleri göster"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"Ay görünümü: \"+N\" yok, her hafta en yoğun günü kadar yüksek; sığmadığında "
+"ay kaydırılır."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

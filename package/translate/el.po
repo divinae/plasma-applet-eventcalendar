@@ -1799,13 +1799,15 @@ msgstr "Αριθμοί εβδομάδων"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "Εμφάνιση όλων των συμβάντων"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"Μηνιαία προβολή: χωρίς «+N», κάθε εβδομάδα τόσο ψηλή όσο η πιο φορτωμένη "
+"ημέρα της· ο μήνας κυλά όταν δεν χωρά."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

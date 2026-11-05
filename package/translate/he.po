@@ -1744,13 +1744,15 @@ msgstr "מספרי שבועות"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "הצגת כל האירועים"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"תצוגת חודש: ללא „+N”, כל שבוע גבוה כמו היום העמוס ביותר בו; החודש נגלל "
+"כשאינו נכנס."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

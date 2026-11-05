@@ -1457,11 +1457,11 @@ msgstr "週番号"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "すべての予定を表示"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view: no \"+N\", each week as tall as its busiest day; the month scrolls when it doesn't fit."
-msgstr ""
+msgstr "月表示:「+N」なし、各週を最も予定の多い日に合わせた高さに。収まらないときは月がスクロールします。"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

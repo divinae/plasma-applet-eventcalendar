@@ -1468,11 +1468,11 @@ msgstr "Numery tygodni"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "Pokazuj wszystkie wydarzenia"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Month view: no \"+N\", each week as tall as its busiest day; the month scrolls when it doesn't fit."
-msgstr ""
+msgstr "Widok miesiąca: bez „+N”, każdy tydzień tak wysoki jak jego najbardziej zajęty dzień; miesiąc przewija się, gdy się nie mieści."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

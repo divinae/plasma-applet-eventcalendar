@@ -1759,13 +1759,15 @@ msgstr "Ugenumre"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "Vis alle begivenheder"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"Månedsvisning: ingen \"+N\", hver uge så høj som dens travleste dag; måneden "
+"ruller, når den ikke kan være der."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"

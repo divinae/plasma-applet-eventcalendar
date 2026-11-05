@@ -1783,13 +1783,15 @@ msgstr "Номера недель"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Show all events"
-msgstr ""
+msgstr "Показывать все события"
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid ""
 "Month view: no \"+N\", each week as tall as its busiest day; the month "
 "scrolls when it doesn't fit."
 msgstr ""
+"Месячный вид: без «+N», каждая неделя высотой с её самый загруженный день; "
+"месяц прокручивается, если не помещается."
 
 #: ../contents/ui/config/ConfigViews.qml
 msgid "Clicking a day opens it in the Day view"
