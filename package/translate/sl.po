@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:07+0100\n"
+"POT-Creation-Date: 2026-11-05 09:11+0100\n"
 "PO-Revision-Date: 2021-07-29 01:08+0200\n"
 "Last-Translator: Ugo Ugowsky <ugowsky@gmail.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -19,11 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && "
 "n%100<=4 ? 2 : 3);\n"
 "X-Generator: Poedit 3.0\n"
-
-#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "Splošno"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -60,6 +55,11 @@ msgstr "Vreme"
 #: ../contents/config/config.qml
 msgid "Time Zones"
 msgstr "Časovni pasovi"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "Splošno"
 
 #: ../contents/config/config.qml
 msgid "Advanced"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 09:07+0100\n"
+"POT-Creation-Date: 2026-11-05 09:11+0100\n"
 "PO-Revision-Date: 2022-04-05 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,11 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
 "X-Generator: Poedit 3.0.1\n"
-
-#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
-#: ../contents/ui/config/ConfigTasks.qml
-msgid "General"
-msgstr "כללי"
 
 #: ../contents/config/config.qml
 msgid "Views"
@@ -60,6 +55,11 @@ msgstr "מזג האוויר"
 #: ../contents/config/config.qml
 msgid "Time Zones"
 msgstr "אזורי זמן"
+
+#: ../contents/config/config.qml ../contents/ui/config/ConfigCalendars.qml
+#: ../contents/ui/config/ConfigTasks.qml
+msgid "General"
+msgstr "כללי"
 
 #: ../contents/config/config.qml
 msgid "Advanced"
