@@ -10,7 +10,7 @@
 * **A General page** (at the end): the desktop widget's background, sharing with Glance, the offline start, the settings backup and troubleshooting, in one place (they were spread over Views, Clock and Calendars).
 
 ### Glance
-* Today's events reach Glance from the start (it got an empty list until a whole online round), and sending never stalls.
+* **Today's events reach Glance**: lists with events didn't get through (gdbus read the JSON as another value), and from the start (an empty list until a whole online round); sending never stalls.
 * "Share events with Glance" is in Settings > General. With it on: the current weather too, a click on an event there opens it here, and a meeting marked as ended ends there as well.
 
 ## v1.20.0 - November 4 2026
