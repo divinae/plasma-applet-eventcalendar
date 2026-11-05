@@ -138,7 +138,8 @@ function layoutTiles(events, columns, maxRows) {
 
 // Month grid with multi-day events as bars across the days, like Google Calendar.
 // dayTimes: ascending midnight timestamps of the visible days, weekLength days per row.
-// maxRows: event rows that fit in a day cell (bars and titles, including a "+N" row).
+// maxRows: event rows that fit in a day cell (bars and titles, including a "+N" row); Infinity: all
+// of them, no "+N" (the Month view's "Show all events").
 // Events covering more than one day become bars in lanes at the top of each week row;
 // the others are listed in their day cell below the lanes used on that day.
 // Returns {

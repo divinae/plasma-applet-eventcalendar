@@ -124,7 +124,7 @@ QtObject {
 		function onEventAdded() { publisher.changed() }
 		function onEventRemoved() { publisher.changed() }
 		function onEventUpdated() { publisher.changed() }
-		function onEndedEventsChanged() { publisher.publish() } // At once: a meeting just ended
+		function onEndedEventsChanged() { if (publisher.glanceSeen) publisher.publish() } // At once: a meeting just ended
 	}
 
 	property Connections onWeather: Connections {

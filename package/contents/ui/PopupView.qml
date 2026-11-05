@@ -885,7 +885,7 @@ MouseArea {
 			// (in the same frame as the layout change): a deferred refill showed the cells first
 			// filled the other way, then reordered.
 			onEventRowCapacityChanged: if (spanBarsActive) reparseGCalEvents()
-			onShowAllEventsChanged: reparseGCalEvents()
+			onShowAllEventsChanged: if (spanBarsActive) reparseGCalEvents()
 			onSpanBarsActiveChanged: reparseGCalEvents()
 			function reparseGCalEvents() {
 				popup.updateMonth()

@@ -92,27 +92,21 @@ PinchArea {
 	property bool showAllEvents: false
 	// The month's visible height (DaysCalendar.cellHeight): the stack is taller when it scrolls.
 	readonly property real gridViewportHeight: monthScroll.height
-	// Another month: from its top, or its current week in the middle (centerCurrentWeek).
-	Connections {
-		target: root.calendarBackend
-		function onDisplayedDateChanged() {
-			monthScroll.contentY = 0
-			root.centerWeekPending = true
-		}
+	// "Show all events": the current week in the middle of the view (the month is taller than the
+	// view), kept there while the weeks settle (a cached fill, then the calendars as they come), as
+	// the Agenda follows its day (AgendaView.followDate), until one scrolls. Each time the month is
+	// shown or another month comes; another month without today starts at its top.
+	property bool followToday: true
+	function startFollowingToday() {
+		followToday = true
+		Qt.callLater(centerCurrentWeek)
 	}
-	// "Show all events": the current week in the middle of the view (the month has it, it's taller
-	// than the view), once the weeks have their heights: each time the month is shown or another
-	// month comes, not at each refresh (the month as one scrolled it stays).
-	property bool centerWeekPending: true
 	function centerCurrentWeek() {
-		if (!centerWeekPending || !visible || !showAllEvents || mainDaysCalendar.weekRowCounts.length === 0) {
+		if (!followToday || !visible || !showAllEvents || !currentMonthContainsToday || mainDaysCalendar.weekRowCounts.length === 0) {
 			return
 		}
-		centerWeekPending = false
-		var todayTime = Shared.startOfDay(root.today).getTime()
 		for (var i = 0; i < daysModel.count; i++) {
-			var day = daysModel.get(i)
-			if (new Date(day.yearNumber, day.monthNumber - 1, day.dayNumber).getTime() === todayTime) {
+			if (Shared.isSameDate(dayCellDate(i), root.today)) {
 				var week = Math.floor(i / calendarBackend.days)
 				var middle = mainDaysCalendar.cellY(i) + mainDaysCalendar.rowHeight(week) / 2
 				var maxY = Math.max(0, monthScroll.contentHeight - monthScroll.height)
@@ -140,8 +134,7 @@ PinchArea {
 	onVisibleChanged: {
 		if (visible) {
 			showsTitles = fitsTitles
-			centerWeekPending = true // centerCurrentWeek
-			Qt.callLater(centerCurrentWeek)
+			startFollowingToday()
 		}
 	}
 	property bool spanBarsEnabled: false
@@ -400,7 +393,7 @@ PinchArea {
 		}
 		var showAll = showAllEvents && spanBarsActive
 		var layout = spanBarsActive
-			? EventBuckets.layoutMonth(items, dayTimes, calendarBackend.days, showAll ? 1000 : eventRowCapacity)
+			? EventBuckets.layoutMonth(items, dayTimes, calendarBackend.days, showAll ? Infinity : eventRowCapacity)
 			: { bars: [], dayEvents: EventBuckets.bucketByDay(items, dayTimes), reservedRows: [], hiddenSpanCount: [] }
 		// The events as plain arrays (dayEvents): copying them into the cells' nested ListModels took
 		// most of the time of a fill.
@@ -422,9 +415,11 @@ PinchArea {
 		}
 		root.dayEvents = layout.dayEvents
 		spanBars = layout.bars
-		mainDaysCalendar.weekRowCounts = showAll ? EventBuckets.weekRowCounts(layout, calendarBackend.days) : []
-		if (centerWeekPending) {
-			Qt.callLater(centerCurrentWeek)
+		// Set only when changed: a new array re-lays the whole grid out (every refresh otherwise).
+		var weekRows = showAll ? EventBuckets.weekRowCounts(layout, calendarBackend.days) : []
+		if (JSON.stringify(weekRows) !== JSON.stringify(mainDaysCalendar.weekRowCounts)) {
+			mainDaysCalendar.weekRowCounts = weekRows
+			Qt.callLater(centerCurrentWeek) // The weeks' heights changed: today's week moved
 		}
 	}
 
@@ -476,6 +471,9 @@ PinchArea {
 
 		onDisplayedDateChanged: {
 			updateMonthOverview()
+			// Another month: from its top, or its current week in the middle (centerCurrentWeek)
+			monthScroll.contentY = 0
+			root.startFollowingToday()
 		}
 
 		onYearChanged: {
@@ -553,19 +551,25 @@ PinchArea {
 			contentWidth: width
 			contentHeight: stack.height
 			boundsBehavior: Flickable.StopAtBounds
+			onMovementStarted: root.followToday = false // Scrolled: stays where one put it
 			// Wheel and touchpad, the scroll bar; not flicked with the mouse (the days take clicks and drags).
 			interactive: Kirigami.Settings.hasTransientTouchInput
-			QQC2.ScrollBar.vertical: OverlayScrollBar {}
+			QQC2.ScrollBar.vertical: OverlayScrollBar {
+				onPressedChanged: if (pressed) root.followToday = false
+			}
 			Kirigami.WheelHandler {
 				target: monthScroll
 				filterMouseEvents: true
 				keyNavigationEnabled: false
+				onWheel: root.followToday = false
 			}
 
 			QQC2.StackView {
 				id: stack
 				width: monthScroll.width
-				height: Math.max(monthScroll.height, stack.depth === 1 && root.showAllEvents ? mainDaysCalendar.fullHeight : 0)
+				// The month as tall as its weeks (with "show all events" taller than the view); the
+				// year overview pushed on it: the view's height.
+				height: Math.max(monthScroll.height, stack.depth === 1 ? mainDaysCalendar.fullHeight : 0)
 				// Paging (previous / next): the new month slides in from its side.
 				transform: Translate { id: pageShift }
 				SlideIn {

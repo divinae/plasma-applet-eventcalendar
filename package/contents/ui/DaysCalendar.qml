@@ -88,30 +88,27 @@ Item {
 	// "Show all events" (MonthView.showAllEvents): the event rows each week needs (its busiest day:
 	// its bars and its events); the week as tall as that, at least cellHeight. Empty: all cellHeight.
 	property var weekRowCounts: []
-	onWeekRowCountsChanged: canvas.requestPaint()
 	// The height of week row w (a day cell's).
 	function rowHeight(w) {
-		var rowsNeeded = weekRowCounts && w < weekRowCounts.length ? weekRowCounts[w] : 0
-		if (!rowsNeeded) {
-			return cellHeight
-		}
-		// As EventTitlesBadge counts its rows (availableHeight, maxRows), one pixel to spare.
-		var needed = eventTitlesTopOffset + eventRowBottomInset + eventTitleRowSpacing
-			+ rowsNeeded * (eventTitleRowHeight + eventTitleRowSpacing) + 1
-		return Math.max(cellHeight, needed)
+		var rowsNeeded = weekRowCounts[w] || 0
+		// heightForRows is exact for eventTitleRowCapacity; EventTitlesBadge measures its own height
+		// (one row spacing less): that and a pixel to spare.
+		return rowsNeeded ? Math.max(cellHeight, heightForRows(rowsNeeded) + eventTitleRowSpacing + 1) : cellHeight
 	}
-	// Y of the line above grid row i (row 0 is the header row when there is one).
+	// Y of the line above each grid row (row 0 is the header row when there is one), and the grid's
+	// bottom: the rows as tall as they are, once for every use (lines, cells, bars, the cell at a point).
+	readonly property var rowTops: {
+		var tops = [0]
+		for (var i = 0; i < calendarGrid.rows; i++) {
+			var isHeader = !!headerModel && i === 0
+			var week = headerModel ? i - 1 : i
+			tops.push(tops[i] + (isHeader ? headerHeight : rowHeight(week)) + root.borderWidth)
+		}
+		return tops
+	}
+	onRowTopsChanged: canvas.requestPaint()
 	function gridLineY(i) {
-		var y = 0
-		var week = i
-		if (headerModel && i > 0) {
-			y = headerHeight + root.borderWidth
-			week = i - 1
-		}
-		for (var w = 0; w < week; w++) {
-			y += rowHeight(w) + root.borderWidth
-		}
-		return y
+		return rowTops[i] || 0
 	}
 	// The whole month's height: its heading, the grid with the weeks as tall as they are (taller
 	// than the view with "show all events": then it scrolls).
@@ -134,7 +131,14 @@ Item {
 	// the bottom. EventTitlesBadge uses the same insets.
 	readonly property int eventRowInset: 3
 	readonly property int eventRowBottomInset: 2
-	readonly property int eventTitleRowCapacity: Math.max(0, Math.floor((cellHeight - eventTitlesTopOffset - eventRowBottomInset) / (eventTitleRowHeight + eventTitleRowSpacing)))
+	// Event rows that fit in a height, and the height n rows need: one formula, both ways.
+	function rowsForHeight(height) {
+		return Math.max(0, Math.floor((height - eventTitlesTopOffset - eventRowBottomInset) / (eventTitleRowHeight + eventTitleRowSpacing)))
+	}
+	function heightForRows(n) {
+		return eventTitlesTopOffset + eventRowBottomInset + n * (eventTitleRowHeight + eventTitleRowSpacing)
+	}
+	readonly property int eventTitleRowCapacity: rowsForHeight(cellHeight)
 	// Multi-day events as bars across the days (EventBuckets.layoutMonth bars), in eventTitles mode.
 	property var spanBars: []
 
@@ -150,9 +154,9 @@ Item {
 	function cellIndexAt(x, y) {
 		var step = cellWidth + root.borderWidth
 		var column = Math.max(0, Math.min(columns - 1, Math.floor((x - calendarGrid.x) / step)))
-		var top = calendarGrid.y + (headerModel ? headerHeight + root.borderWidth : 0)
+		var firstWeek = headerModel ? 1 : 0 // rowTops' index of the first week
 		var row = 0
-		for (var bottom = top + rowHeight(0) + root.borderWidth; row < rows - 1 && y >= bottom; bottom += rowHeight(row) + root.borderWidth) {
+		while (row < rows - 1 && y >= calendarGrid.y + gridLineY(firstWeek + row + 1)) {
 			row++
 		}
 		return row * columns + column

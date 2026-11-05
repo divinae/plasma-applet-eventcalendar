@@ -111,7 +111,7 @@ eq(m.reservedRows.slice(7, 14), [2, 2, 1, 0, 0, 0, 0])
 eq(m.dayEvents[col(d(6))].map(x => x.summary), ['Lunch'])
 
 // "Show all events": every lane (no "+N"), each week's rows from its busiest day.
-const all = B.layoutMonth([s1, s2, s3, s4, lunch], dayTimes, 7, 1000)
+const all = B.layoutMonth([s1, s2, s3, s4, lunch], dayTimes, 7, Infinity)
 eq(all.hiddenSpanCount.slice(7, 14), [0, 0, 0, 0, 0, 0, 0], 'all lanes shown')
 eq(all.reservedRows.slice(7, 14), [2, 4, 4, 0, 0, 0, 0], 'a day keeps the rows down to its lowest lane')
 eq(B.weekRowCounts(all, 7).slice(0, 3), [0, 5, 0], 'Tuesday: its 4 lanes and the lunch')
