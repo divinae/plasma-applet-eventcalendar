@@ -57,6 +57,10 @@ Your day, one click from the clock.
 
 Calendar, agenda, tasks, meetings and weather in the Plasma panel: see what's next at a glance, join a call in one click, and never miss a meeting again.
 
+Not just another fork: Event Calendar NG is a complete redesign of the classic Event Calendar widget, with a new look, new views, tasks, meetings, CalDAV and much more.
+
+Website, screenshots and install guide: https://divinae.github.io/plasma-applet-eventcalendar/
+
 Why you'll like it
 🗓️ Every view you need: Month, Week, Day and Agenda. The Day view puts your hours, a small month, what's up next, today's tasks and the weather side by side.
 ⏰ Never late again: the clock shows your next meeting ("in 5 min") and its progress; when it starts, an optional full-screen alert with one big Join button.
@@ -66,9 +70,9 @@ Why you'll like it
 ☁️ All your calendars: several Google accounts, CalDAV (Nextcloud, Fastmail, iCloud…), KDE PIM (Akonadi), holidays and .ics files; an event in two calendars shows once.
 ⚡ Fast and offline-ready: opens instantly with your last events and tasks, even without a network.
 🎨 At home in Plasma: rounded cards or flat, light and dark themes, 20 languages.
-🔒 Private: sign-in tokens stay in your system keyring.
+🔒 Private by design: sign-ins stay in your system keyring; no tracking, no servers of ours in between.
 
-Not just another fork: a complete redesign of Event Calendar by Chris Holland (Zren), started from ALikesToCode's Plasma 6 port and rebuilt since, with a new look, new views, tasks, meetings, CalDAV and much more. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
+Based on Event Calendar by Chris Holland (Zren), started from ALikesToCode's Plasma 6 port and rebuilt since. It keeps the same widget id, so it replaces an existing Event Calendar and keeps its settings. For Plasma 5 use the original: https://store.kde.org/p/998901/
 
 In detail
 
@@ -84,15 +88,15 @@ Views (switch from the popup's header)
 - Opens in your default view or the last one used; tabs or a drop-down view switcher; right click the header to pick its views and buttons
 
 Google Calendar
-- Several accounts; choose calendars and task lists per account
+- Several accounts; choose calendars and task lists per account; new events start in your primary calendar
 - Create, edit, duplicate and delete events: color, guests, Google Meet, reminders, recurring events (ends on a date / after N times, custom repeats; one occurrence or the whole series)
 - Quick add ("Lunch with Anna tomorrow 13:00"), search, answer invitations (Yes / Maybe / No), undo after a delete or move
 - Move events between calendars, busy / free, visibility, time zones, out of office, focus time, working locations
 - Find a time (free slots for you and the guests), attachments, Email Guests, import .ics files
 - Rename and recolor calendars
 - An event in several calendars (yours and a shared one) shows once
-- KDE PIM (Akonadi) calendars and holidays side by side with a direct Google sign-in
-- Tokens are kept in the system keyring
+- KDE PIM (Akonadi) calendars (Settings > Calendars) and holidays side by side with a direct Google sign-in
+- Tokens are kept in the system keyring; what signing in allows: https://divinae.github.io/plasma-applet-eventcalendar/privacy.html
 
 CalDAV
 - Nextcloud, Fastmail, iCloud (with an app password), Radicale, Baïkal and others: choose the calendars of each account
@@ -105,6 +109,7 @@ Tasks
 - Priorities, due times, repeats, reminders, checklists (TickTick) and subtasks (Google); mark tasks in progress; drag between days, lists and accounts; undo, keyboard, search
 - Manage lists: rename, color, clear completed, delete, hide from the smart lists
 - Task reminders, a morning summary, and the day's tasks in the Day view
+- Completed tasks of the last 30 days
 
 Meetings
 - Camera check before a meeting: the camera as a mirror, the microphone's level, hear yourself, a speaker test, then Join
@@ -120,12 +125,13 @@ Notifications (KDE's notification system)
 
 Weather from Open-Meteo (free, no API key), OpenWeatherMap or Weather Canada.
 
-Starts instantly and works offline: the last loaded events and tasks are shown right away. The Agenda and the Tasks tab open fast even with busy calendars and long task lists.
+Starts instantly and works offline: the last loaded events and tasks are shown right away, and Plasma doesn't wait for the widget at login. The Agenda and the Tasks tab open fast even with busy calendars and long task lists.
 
 Translated into 20 languages.
 
 Requirements: Plasma 6, python3, the KNotifications QML module, Kirigami Addons; secret-tool (libsecret) or KWallet for Google, TickTick and CalDAV sign-in. Optional: the Python packages icalendar and recurring-ical-events for .ics files and CalDAV.
 
+Website: https://divinae.github.io/plasma-applet-eventcalendar/
 Bug reports and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
 Source and install from source: https://github.com/divinae/plasma-applet-eventcalendar
 
