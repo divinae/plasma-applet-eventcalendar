@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
-"Report-Msgid-Bugs-To: https://github.com/divinae/event-calendar-ng-plasmoid\n"
-"POT-Creation-Date: 2026-11-05 11:21+0100\n"
+"Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-eventcalendar\n"
+"POT-Creation-Date: 2026-11-06 11:28+0100\n"
 "PO-Revision-Date: 2022-03-21 23:40+ZONE\n"
 "Last-Translator: Ilpo Kantonen <ilpo@iki.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,6 +98,10 @@ msgstr "CalDAV: %1 ei hyväksynyt käyttäjänimeä tai salasanaa"
 #: ../contents/ui/calendars/CalDAVManager.qml ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/calendars/GoogleTasksManager.qml ../contents/ui/calendars/ICalManager.qml ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Ei voitu yhdistää"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: the password couldn't be read from the keyring"
+msgstr "CalDAV: salasanaa ei voitu lukea avainnipusta"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid "CalDAV needs Python modules: install them in Settings > Calendars > CalDAV"

@@ -1,7 +1,8 @@
 """CalDAV client for the widget: discover calendars, query, create/update/delete and import events.
 
 python3 caldav.py <command> ... prints JSON on stdout and exits 0. On failure it exits 1 with one
-line on stderr, "KIND: message", KIND being AUTH, NOTFOUND, CONFLICT, NETWORK, PROTOCOL or INPUT.
+line on stderr, "KIND: message", KIND being AUTH, NOTFOUND, CONFLICT, NETWORK, PROTOCOL, INPUT,
+DEPS or KEYRING (the keyring couldn't be read, eg: not up yet at login; try again later).
 
 Commands (all take --account ID --user USERNAME):
 	discover --url URL
@@ -64,7 +65,7 @@ NS_CS = "http://calendarserver.org/ns/"
 NS_ICAL = "http://apple.com/ns/ical/"
 PREFIXES = {NS_DAV: "d", NS_CALDAV: "c", NS_CS: "cs", NS_ICAL: "ical"}
 
-ERROR_KINDS = ("AUTH", "NOTFOUND", "CONFLICT", "NETWORK", "PROTOCOL", "INPUT", "DEPS")
+ERROR_KINDS = ("AUTH", "NOTFOUND", "CONFLICT", "NETWORK", "PROTOCOL", "INPUT", "DEPS", "KEYRING")
 
 
 def tag(ns, name):
@@ -925,7 +926,7 @@ def keyring_password(account):
 	if found and value:
 		return value
 	if error:
-		raise CalDavError("AUTH", "The keyring could not be read: {}".format(error))
+		raise CalDavError("KEYRING", "The keyring could not be read: {}".format(error))
 	raise CalDavError("AUTH", "No password stored for this account")
 
 

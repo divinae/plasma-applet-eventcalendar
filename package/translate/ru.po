@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/divinae/plasma-applet-"
 "eventcalendar\n"
-"POT-Creation-Date: 2026-11-05 11:21+0100\n"
+"POT-Creation-Date: 2026-11-06 11:28+0100\n"
 "PO-Revision-Date: 2020-01-05 22:01+0300\n"
 "Last-Translator: aliger14 <aliger14@mail.ru>\n"
 "Language-Team: ru\n"
@@ -114,6 +114,10 @@ msgstr "CalDAV: %1 не принял имя пользователя или па
 #: ../contents/ui/calendars/TickTickTasksManager.qml
 msgid "Could not connect"
 msgstr "Невозможно установить соединение"
+
+#: ../contents/ui/calendars/CalDAVManager.qml
+msgid "CalDAV: the password couldn't be read from the keyring"
+msgstr "CalDAV: не удалось прочитать пароль из связки ключей"
 
 #: ../contents/ui/calendars/CalDAVManager.qml
 msgid ""

@@ -231,6 +231,11 @@ class ErrorKindTests(unittest.TestCase):
 			with self.assertRaises(caldav.CalDavError) as ctx:
 				caldav.keyring_password("acc_1")
 		self.assertEqual(ctx.exception.kind, "AUTH")
+		# Not answering (eg: at login, before the Secret Service is up): try again later.
+		with mock.patch("secret_store.lookup_secret_detailed", return_value=(False, "", "Secret storage backend unavailable.")):
+			with self.assertRaises(caldav.CalDavError) as ctx:
+				caldav.keyring_password("acc_1")
+		self.assertEqual(ctx.exception.kind, "KEYRING")
 
 
 @mock.patch.object(caldav, "resolve_host", fake_resolve)

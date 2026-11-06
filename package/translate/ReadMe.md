@@ -8,7 +8,7 @@ Go to `~/.local/share/plasma/plasmoids/org.kde.plasma.eventcalendar/translate/` 
 
 ## New Translations
 
-1. Fill out [`template.pot`](template.pot) with your translations then open a [new issue](https://github.com/divinae/event-calendar-ng-plasmoid/issues/new), name the file `spanish.txt`, attach the txt file to the issue (drag and drop).
+1. Fill out [`template.pot`](template.pot) with your translations then open a [new issue](https://github.com/divinae/plasma-applet-eventcalendar/issues/new), name the file `spanish.txt`, attach the txt file to the issue (drag and drop).
 
 Or if you know how to make a pull request
 
@@ -35,24 +35,24 @@ Or if you know how to make a pull request
 ## Status
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
-| Template |     958 |       |
-| da       | 958/958 |  100% |
-| de       | 958/958 |  100% |
-| el       | 958/958 |  100% |
-| es       | 958/958 |  100% |
-| fi       | 958/958 |  100% |
-| fr       | 958/958 |  100% |
-| he       | 958/958 |  100% |
-| it       | 958/958 |  100% |
-| ja       | 958/958 |  100% |
-| ko       | 958/958 |  100% |
-| nl       | 958/958 |  100% |
-| pl       | 958/958 |  100% |
-| pt_BR    | 958/958 |  100% |
-| pt_PT    | 958/958 |  100% |
-| ru       | 958/958 |  100% |
-| sl       | 958/958 |  100% |
-| sv       | 958/958 |  100% |
-| tr       | 958/958 |  100% |
-| uk       | 958/958 |  100% |
-| zh_CN    | 958/958 |  100% |
+| Template |     959 |       |
+| da       | 959/959 |  100% |
+| de       | 959/959 |  100% |
+| el       | 959/959 |  100% |
+| es       | 959/959 |  100% |
+| fi       | 959/959 |  100% |
+| fr       | 959/959 |  100% |
+| he       | 959/959 |  100% |
+| it       | 959/959 |  100% |
+| ja       | 959/959 |  100% |
+| ko       | 959/959 |  100% |
+| nl       | 959/959 |  100% |
+| pl       | 959/959 |  100% |
+| pt_BR    | 959/959 |  100% |
+| pt_PT    | 959/959 |  100% |
+| ru       | 959/959 |  100% |
+| sl       | 959/959 |  100% |
+| sv       | 959/959 |  100% |
+| tr       | 959/959 |  100% |
+| uk       | 959/959 |  100% |
+| zh_CN    | 959/959 |  100% |

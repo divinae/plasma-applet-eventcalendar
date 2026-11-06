@@ -68,6 +68,9 @@ CalendarManager {
 		if (kind === "NETWORK") {
 			return { kind: kind, message: i18n("Could not connect") }
 		}
+		if (kind === "KEYRING") {
+			return { kind: kind, message: i18n("CalDAV: the password couldn't be read from the keyring") }
+		}
 		if (kind === "DEPS") {
 			return { kind: kind, message: i18n("CalDAV needs Python modules: install them in Settings > Calendars > CalDAV") }
 		}
@@ -108,6 +111,21 @@ CalendarManager {
 		return Base64Compat.base64EncodeString(JSON.stringify(body)) // UTF-8
 	}
 
+	// The keyring couldn't be read (KEYRING): at login the Secret Service or KWallet may answer only
+	// a little after the widget's first fetch. Fetched again a few times before it's an error.
+	Timer {
+		id: keyringRetry
+		property int attempts: 0
+		readonly property int maxAttempts: 6
+		interval: 15000
+		onTriggered: {
+			attempts += 1
+			if (caldavManager.dateMin < caldavManager.dateMax) {
+				caldavManager.fetchAll() // The last range
+			}
+		}
+	}
+
 	//--- Reading
 	// The calendar unchanged since the last fetch of the same range (its change tag, see caldav.py
 	// query --if-ctag): its events aren't downloaded and parsed again, the last ones are kept (with
@@ -133,9 +151,14 @@ CalendarManager {
 			try {
 				if (err) {
 					restorePreviousCalendar(calendarId) // Keep what was shown
+					if (err.kind === "KEYRING" && keyringRetry.attempts < keyringRetry.maxAttempts) {
+						keyringRetry.start() // Quietly: at login the keyring may not be up yet
+						return
+					}
 					caldavManager.error(err.message, err.kind === "NETWORK" ? ErrorType.NetworkError : ErrorType.UnknownError)
 					return
 				}
+				keyringRetry.attempts = 0
 				if (data && data.unchanged && previous) {
 					setCalendarData(calendarId, previous) // This range's, current; parsed again
 					return

@@ -1,3 +1,8 @@
+## Unreleased
+
+### CalDAV
+* **CalDAV events load at login by themselves** (#14, sbstn87): when the keyring isn't up yet at the first fetch, the widget tries again a few times (every 15 s) instead of waiting for Refresh.
+
 ## v1.22.0 - November 5 2026
 
 ### Tasks
