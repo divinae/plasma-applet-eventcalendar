@@ -423,7 +423,7 @@ ConfigSection {
 		FormCard.FormSectionText {
 			visible: !googleLoginManager.isLoggedIn
 			text: i18n("Signing in lets the widget show your calendars and task lists, and change the events and tasks you edit in it. Your data goes only between this computer and Google; the sign-in is kept in the system keyring.")
-				+ " <a href=\"https://divinae.github.io/plasma-applet-eventcalendar/privacy.html\">" + i18n("Privacy policy") + "</a>"
+				+ " <a href=\"https://divinae.github.io/event-calendar-ng-plasmoid/privacy.html\">" + i18n("Privacy policy") + "</a>"
 			textFormat: Text.StyledText
 			onLinkActivated: function(link) { Qt.openUrlExternally(link) }
 		}

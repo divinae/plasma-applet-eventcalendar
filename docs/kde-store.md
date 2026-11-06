@@ -12,8 +12,8 @@ version, the changelog and the file for each release.
   is based on (a complete redesign of the original), and link the original.
 - **Google sign-in.** The built-in Google OAuth client is in the package. Google's consent screen
   links a privacy policy and terms (`docs/privacy.html`, `docs/terms.html`), online through GitHub
-  Pages (from `docs/` on `master`): https://divinae.github.io/plasma-applet-eventcalendar/privacy.html
-  and https://divinae.github.io/plasma-applet-eventcalendar/terms.html. The widget's Google tab
+  Pages (from `docs/` on `master`): https://divinae.github.io/event-calendar-ng-plasmoid/privacy.html
+  and https://divinae.github.io/event-calendar-ng-plasmoid/terms.html. The widget's Google tab
   links the privacy policy under "Sign in with Google".
 
 ## Fields
@@ -44,7 +44,7 @@ version, the changelog and the file for each release.
 
 **Source / homepage**
 
-    https://github.com/divinae/plasma-applet-eventcalendar
+    https://github.com/divinae/event-calendar-ng-plasmoid
 
 **Summary (one line)**
 
@@ -57,7 +57,7 @@ Your day, one click from the clock: calendar, agenda, tasks, meetings and weathe
 
 Not just another fork: a complete redesign of the classic Event Calendar widget.
 
-Website and screenshots: https://divinae.github.io/plasma-applet-eventcalendar/
+Website and screenshots: https://divinae.github.io/event-calendar-ng-plasmoid/
 
 🗓️ Month, Week, Day and Agenda views; drag events to move or resize them
 
@@ -85,7 +85,7 @@ Based on Event Calendar by Chris Holland (Zren) and ALikesToCode's Plasma 6 port
 
 Requires Plasma 6 and python3; secret-tool or KWallet for sign-ins. CalDAV and .ics need two Python modules (the widget offers to install them).
 
-Bugs and ideas: https://github.com/divinae/plasma-applet-eventcalendar/issues
+Bugs and ideas: https://github.com/divinae/event-calendar-ng-plasmoid/issues
 
 Support: https://ko-fi.com/divinae4535
 ```
@@ -209,7 +209,7 @@ Support: https://ko-fi.com/divinae4535
 ## Files
 
 - **Product file:** `eventcalendar-ng-v1.22.0.plasmoid` from the
-  [v1.22.0 release](https://github.com/divinae/plasma-applet-eventcalendar/releases/tag/v1.22.0),
+  [v1.22.0 release](https://github.com/divinae/event-calendar-ng-plasmoid/releases/tag/v1.22.0),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

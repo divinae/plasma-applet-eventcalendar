@@ -23,7 +23,7 @@ Describe the bug clearly and concisely.
 ## Logs
 
 If possible, attach the widget's log, and for a crash of Plasma its backtrace: see
-[Logs and crashes](https://github.com/divinae/plasma-applet-eventcalendar#logs-and-crashes) in the README.
+[Logs and crashes](https://github.com/divinae/event-calendar-ng-plasmoid#logs-and-crashes) in the README.
 
 - `journalctl --user -b --since "-15min" | grep -i -E "eventcalendar|plasmashell"`
 - A crash: `coredumpctl info plasmashell` (or the "Developer Information" tab of KDE's crash dialog)

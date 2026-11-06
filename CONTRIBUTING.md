@@ -11,7 +11,7 @@ issue first.
 2. Clone it:
 
 ```bash
-git clone https://github.com/divinae/plasma-applet-eventcalendar.git
+git clone https://github.com/divinae/event-calendar-ng-plasmoid.git
 cd plasma-applet-eventcalendar
 ```
 

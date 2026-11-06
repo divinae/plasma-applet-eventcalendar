@@ -35,7 +35,7 @@ Item {
 	property var tasklistIdList: []
 
 	property string localRedirectUri: "http://127.0.0.1:53682/"
-	property string hostedRedirectUri: "https://alikestocode.github.io/plasma-applet-eventcalendar/"
+	property string hostedRedirectUri: "https://divinae.github.io/event-calendar-ng-plasmoid/"
 	property string redirectMode: "local"
 	function normalizedRedirectMode(mode) {
 		return mode === "hosted" ? "hosted" : "local"

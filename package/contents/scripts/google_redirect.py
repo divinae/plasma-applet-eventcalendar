@@ -30,7 +30,7 @@ except OSError:
     pass
 
 # The hosted helper page (redirect mode "hosted") posts the code back from this origin.
-HELPER_ORIGIN = "https://alikestocode.github.io"
+HELPER_ORIGIN = "https://divinae.github.io"
 LISTEN_TIMEOUT = 5 * 60  # seconds: give up if the browser never comes back
 
 listen_port = expected_state = None

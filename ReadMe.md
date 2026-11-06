@@ -1,8 +1,8 @@
 # Event Calendar NG for Plasma 6
 
-[![CI](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/plasma-applet-eventcalendar/actions/workflows/ci.yml)
+[![CI](https://github.com/divinae/event-calendar-ng-plasmoid/actions/workflows/ci.yml/badge.svg)](https://github.com/divinae/event-calendar-ng-plasmoid/actions/workflows/ci.yml)
 [![KDE Store](https://img.shields.io/badge/KDE%20Store-Event%20Calendar%20NG-1d99f3?logo=kde&logoColor=white)](https://store.kde.org/p/2379570/)
-[![Website](https://img.shields.io/badge/Website-divinae.github.io-2ea44f?logo=githubpages&logoColor=white)](https://divinae.github.io/plasma-applet-eventcalendar/)
+[![Website](https://img.shields.io/badge/Website-divinae.github.io-2ea44f?logo=githubpages&logoColor=white)](https://divinae.github.io/event-calendar-ng-plasmoid/)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/divinae4535)
 
 **Your day, one click from the clock.** Calendar, agenda, tasks, meetings and weather in the
@@ -148,7 +148,7 @@ search for **Event Calendar NG**, or get it from [store.kde.org](https://store.k
 
 ### From a release
 
-Download the `.plasmoid` file from the [latest release](https://github.com/divinae/plasma-applet-eventcalendar/releases),
+Download the `.plasmoid` file from the [latest release](https://github.com/divinae/event-calendar-ng-plasmoid/releases),
 then:
 
 ```
@@ -163,7 +163,7 @@ panel (right click the panel > Add or Manage Widgets), or replace the Digital Cl
 ### From source
 
 ```
-git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
+git clone https://github.com/divinae/event-calendar-ng-plasmoid.git eventcalendar
 cd eventcalendar
 sh ./install
 ```
@@ -212,7 +212,7 @@ authors of the original Event Calendar (Chris Holland / Zren) or of the Plasma 6
 
 ## Bugs and ideas
 
-Report them in [GitHub Issues](https://github.com/divinae/plasma-applet-eventcalendar/issues): your distribution, the Plasma version, the widget version,
+Report them in [GitHub Issues](https://github.com/divinae/event-calendar-ng-plasmoid/issues): your distribution, the Plasma version, the widget version,
 and for a problem the logs below.
 
 ### Logs and crashes

@@ -16,7 +16,7 @@
 
 ### Google sign-in
 * **What signing in allows**, and a link to the privacy policy, next to the Sign in button.
-* **Event Calendar NG's own website**: https://divinae.github.io/plasma-applet-eventcalendar/ (install, screenshots, privacy policy).
+* **Event Calendar NG's own website**: https://divinae.github.io/event-calendar-ng-plasmoid/ (install, screenshots, privacy policy).
 
 ## v1.21.0 - November 5 2026
 

@@ -7,14 +7,14 @@
   <title>Event Calendar NG for Plasma 6</title>
   <meta name="description"
     content="Event Calendar NG: calendar, agenda, tasks, meetings and weather in the KDE Plasma 6 panel. Google Calendar, CalDAV, KDE PIM and .ics calendars.">
-  <link rel="canonical" href="https://divinae.github.io/plasma-applet-eventcalendar/">
-  <link rel="home" href="https://divinae.github.io/plasma-applet-eventcalendar/">
-  <meta property="og:url" content="https://divinae.github.io/plasma-applet-eventcalendar/">
+  <link rel="canonical" href="https://divinae.github.io/event-calendar-ng-plasmoid/">
+  <link rel="home" href="https://divinae.github.io/event-calendar-ng-plasmoid/">
+  <meta property="og:url" content="https://divinae.github.io/event-calendar-ng-plasmoid/">
   <meta property="og:title" content="Event Calendar NG for Plasma 6">
   <meta property="og:description"
     content="Your day, one click from the clock: calendar, agenda, tasks, meetings and weather in the Plasma panel.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://divinae.github.io/plasma-applet-eventcalendar/screenshots/today.png">
+  <meta property="og:image" content="https://divinae.github.io/event-calendar-ng-plasmoid/screenshots/today.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="logo.png">
@@ -33,7 +33,7 @@
       <a href="./" class="nav-logo">Event Calendar NG</a>
       <div class="nav-links">
         <a href="#install">Install</a>
-        <a href="https://github.com/divinae/plasma-applet-eventcalendar">GitHub</a>
+        <a href="https://github.com/divinae/event-calendar-ng-plasmoid">GitHub</a>
         <a href="privacy.html">Privacy</a>
       </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="row" style="justify-content: center;">
           <a href="https://store.kde.org/p/2379570/" role="button"><button>Get it on the KDE Store</button></a>
           <a href="#install" role="button"><button class="secondary">Install</button></a>
-          <a href="https://github.com/divinae/plasma-applet-eventcalendar" role="button"><button class="secondary">Source on GitHub</button></a>
+          <a href="https://github.com/divinae/event-calendar-ng-plasmoid" role="button"><button class="secondary">Source on GitHub</button></a>
         </div>
       </div>
     </header>
@@ -144,13 +144,13 @@
             Discover and in the same Download New Plasma Widgets window.</p>
           <h3>From a release</h3>
           <p>Download the <code>.plasmoid</code> file from the
-            <a href="https://github.com/divinae/plasma-applet-eventcalendar/releases">latest release</a>, then:</p>
+            <a href="https://github.com/divinae/event-calendar-ng-plasmoid/releases">latest release</a>, then:</p>
           <pre class="code-block command-line" data-prompt="$"><code class="language-bash">kpackagetool6 -t Plasma/Applet -i eventcalendar-ng-*.plasmoid</code></pre>
           <p class="status">To upgrade an installed Event Calendar, use <code>-u</code> instead of <code>-i</code>, then restart Plasma.</p>
         </div>
         <div class="card">
           <h3>From source</h3>
-          <pre class="code-block command-line" data-prompt="$"><code class="language-bash">git clone https://github.com/divinae/plasma-applet-eventcalendar.git eventcalendar
+          <pre class="code-block command-line" data-prompt="$"><code class="language-bash">git clone https://github.com/divinae/event-calendar-ng-plasmoid.git eventcalendar
 cd eventcalendar
 ./install</code></pre>
           <p class="status"><code>./update</code> pulls and reinstalls; <code>./uninstall</code> removes the widget.</p>
@@ -158,7 +158,7 @@ cd eventcalendar
           <p>KDE Plasma 6 and Python 3; KWallet or the Secret Service (<code>secret-tool</code>) keeps sign-ins. For
             CalDAV and .ics calendars, two Python modules (<code>icalendar</code>, <code>recurring-ical-events</code>):
             the install script adds them, or the widget's settings offer an Install button. KDE PIM calendars need
-            Akonadi. The full list is in the <a href="https://github.com/divinae/plasma-applet-eventcalendar#dependencies">ReadMe</a>.</p>
+            Akonadi. The full list is in the <a href="https://github.com/divinae/event-calendar-ng-plasmoid#dependencies">ReadMe</a>.</p>
           <h3>Setup</h3>
           <ol class="steps-list">
             <li>Add <strong>Event Calendar NG</strong> to a panel, or replace the Digital Clock with it.</li>
@@ -173,17 +173,17 @@ cd eventcalendar
     <section id="help">
       <h2 class="section-title">Help and news</h2>
       <div class="features-grid help-grid">
-        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/issues">
+        <a class="feature-card link-card" href="https://github.com/divinae/event-calendar-ng-plasmoid/issues">
           <h3>Report a problem</h3>
           <p>Something wrong or missing? Open an issue on GitHub. Settings &gt; General &gt; Troubleshooting turns on
             debug logging to help find it.</p>
         </a>
-        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/blob/master/Changelog.md">
+        <a class="feature-card link-card" href="https://github.com/divinae/event-calendar-ng-plasmoid/blob/master/Changelog.md">
           <h3>What's new</h3>
           <p>Every change, release by release, in the changelog; downloads on the
             releases page.</p>
         </a>
-        <a class="feature-card link-card" href="https://github.com/divinae/plasma-applet-eventcalendar/blob/master/package/translate/ReadMe.md">
+        <a class="feature-card link-card" href="https://github.com/divinae/event-calendar-ng-plasmoid/blob/master/package/translate/ReadMe.md">
           <h3>Translate</h3>
           <p>20 languages so far. Missing or wrong words in yours? Translations are plain .po files.</p>
         </a>
@@ -209,7 +209,7 @@ cd eventcalendar
             <h3>Paste the address</h3>
             <label for="redirectUrl">The address from the browser's address bar:</label>
             <textarea id="redirectUrl"
-              placeholder="https://divinae.github.io/plasma-applet-eventcalendar/?code=..."></textarea>
+              placeholder="https://divinae.github.io/event-calendar-ng-plasmoid/?code=..."></textarea>
             <div class="row">
               <button id="extractBtn">Extract Code</button>
               <button class="secondary" id="clearBtn">Clear</button>
@@ -266,7 +266,7 @@ cd eventcalendar
       <nav class="footer-links">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
-        <a href="https://github.com/divinae/plasma-applet-eventcalendar">GitHub</a>
+        <a href="https://github.com/divinae/event-calendar-ng-plasmoid">GitHub</a>
         <a href="https://store.kde.org/p/2379570/">KDE Store</a>
         <a href="https://ko-fi.com/divinae4535">Support on Ko-fi</a>
       </nav>
