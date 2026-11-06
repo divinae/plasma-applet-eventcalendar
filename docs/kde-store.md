@@ -28,7 +28,7 @@ version, the changelog and the file for each release.
 
 **Version**
 
-    1.22.0
+    1.22.1
 
 **License**
 
@@ -88,6 +88,13 @@ Requires Plasma 6 and python3; secret-tool or KWallet for sign-ins. CalDAV and .
 Bugs and ideas: https://github.com/divinae/event-calendar-ng-plasmoid/issues
 
 Support: https://ko-fi.com/divinae4535
+```
+
+**Changelog (1.22.1)**
+
+```
+- CalDAV events load at login by themselves (no Refresh needed when the keyring starts late)
+- Links point to the renamed repository and its website
 ```
 
 **Changelog (1.22.0)**
@@ -208,8 +215,8 @@ Support: https://ko-fi.com/divinae4535
 
 ## Files
 
-- **Product file:** `eventcalendar-ng-v1.22.0.plasmoid` from the
-  [v1.22.0 release](https://github.com/divinae/event-calendar-ng-plasmoid/releases/tag/v1.22.0),
+- **Product file:** `eventcalendar-ng-v1.22.1.plasmoid` from the
+  [v1.22.1 release](https://github.com/divinae/event-calendar-ng-plasmoid/releases/tag/v1.22.1),
   or `./build`.
 - **Screenshots** (`docs/screenshots/`, mock data; the store takes at most 5), in this order:
   1. `month.png` (the cover)

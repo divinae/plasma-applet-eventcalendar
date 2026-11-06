@@ -1,7 +1,10 @@
-## Unreleased
+## v1.22.1 - November 6 2026
 
 ### CalDAV
 * **CalDAV events load at login by themselves** (#14, sbstn87): when the keyring isn't up yet at the first fetch, the widget tries again a few times (every 15 s) instead of waiting for Refresh.
+
+### Links
+* The repository is now **divinae/event-calendar-ng-plasmoid**, with its website at https://divinae.github.io/event-calendar-ng-plasmoid/: the widget's links (privacy policy, sign-in helper, issues) point there.
 
 ## v1.22.0 - November 5 2026
 
